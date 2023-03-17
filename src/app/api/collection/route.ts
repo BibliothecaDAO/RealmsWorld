@@ -10,6 +10,7 @@ export async function POST(request: any) {
           'Content-Type': 'application/json',
           'accept': '*/*',
           'x-api-key': process.env.NEXT_PUBLIC_RESERVOIR_API_KEY || '',
+          'Access-Control-Allow-Origin': '*'
         },
       });
       const data: any = await res.json()
