@@ -8,7 +8,6 @@ export async function POST(request: any) {
       const res = await fetch(`https://api.reservoir.tools/collections/v5?${queryParams}`, {
         headers: {
           'Content-Type': 'application/json',
-          'accept': '*/*',
           'x-api-key': process.env.NEXT_PUBLIC_RESERVOIR_API_KEY || '',
           'Access-Control-Allow-Origin': '*'
         },
