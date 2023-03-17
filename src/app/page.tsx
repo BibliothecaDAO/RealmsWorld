@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import Sidebar from './components/SideMenu'
-import Body from './components/Body'
 
 
 const inter = Inter({ subsets: ['latin'] })
