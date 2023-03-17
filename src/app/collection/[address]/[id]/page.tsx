@@ -1,5 +1,4 @@
 import { getData } from "@/functions";
-import { stringify } from "querystring";
 
 export default async function Page({
   params,
@@ -7,7 +6,7 @@ export default async function Page({
   params: { address: string; id: string };
 }) {
   const data = await getData(
-    stringify({ tokens: params.address + ":" + params.id }),
+    { tokens: params.address + ":" + params.id },
     "token"
   );
 
