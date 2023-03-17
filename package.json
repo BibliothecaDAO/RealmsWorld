@@ -16,13 +16,13 @@
     "autoprefixer": "^10.4.14",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
-    "ethers": "^6.1.0",
+    "ethers": "^5.1.0",
     "next": "13.2.4",
     "postcss": "^8.4.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.2.7",
     "typescript": "5.0.2",
-    "wagmi": "^0.10.2"
+    "wagmi": "^0.9.2"
   }
 }

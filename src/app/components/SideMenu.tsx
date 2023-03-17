@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
+import Profile from "./LoginButton";
 
 const Sidebar = () => {
   //   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,7 +29,7 @@ const Sidebar = () => {
       <div className="p-4">
         <h2 className="text-2xl font-bold"> <Link href="/">Menu </Link> </h2>
         <ul className="mt-4">
-          <li className="mb-2 flex flex-col">
+          <li className="flex flex-col mb-2">
             {collections.map((collection, index) => {
               return (
                 <Link
@@ -41,6 +42,7 @@ const Sidebar = () => {
               );
             })}
           </li>
+          <Profile/>
         </ul>
       </div>
     </div>

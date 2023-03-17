@@ -1,3 +1,4 @@
+import { BuyButton } from "@/app/components/BuyModal";
 import { getData } from "@/functions";
 
 export default async function Page({
@@ -14,5 +15,10 @@ export default async function Page({
 
   const token = query.tokens[0].token;
 
-  return <h1>{token.name}</h1>;
+  return (
+    <div>
+      <BuyButton address={params.address}  id={params.id} />
+
+    </div>
+  );
 }
