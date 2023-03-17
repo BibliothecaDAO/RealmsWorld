@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
 
-export const config = {
-  runtime: 'edge',
-};
 
 export async function POST(request: any) {
   const query: any = await request.json()
