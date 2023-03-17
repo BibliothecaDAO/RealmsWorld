@@ -17,9 +17,11 @@ export default async function Page({
 
   const token_response: any = await tokens.json();
 
+  console.log(token_response);
+
   return (
     <div className="p-8">
-      <h1>{collection_name}</h1>{" "}
+      {/* <h1>{collection_name}</h1>{" "}
       <div className="grid grid-cols-6 gap-4">
         {token_response.tokens.map((token: any, index: number) => {
           return (
@@ -29,7 +31,7 @@ export default async function Page({
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 }
