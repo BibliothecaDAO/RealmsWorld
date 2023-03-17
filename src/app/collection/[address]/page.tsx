@@ -12,6 +12,7 @@ export default async function Page({
 
   const collection_name = response.collections[0].name;
 
+  // this could be loaded after data is loaded
   const tokens = await getData({ collection: params.address }, "token");
 
   const token_response: any = await tokens.json();
