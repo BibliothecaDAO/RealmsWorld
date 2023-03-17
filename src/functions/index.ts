@@ -12,4 +12,4 @@ export async function getData(query: any, route: string) {
     }
 
     return res;
-}
+} 

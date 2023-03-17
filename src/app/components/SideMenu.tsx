@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 
 const Sidebar = () => {
@@ -25,18 +26,18 @@ const Sidebar = () => {
   return (
     <div className={`w-64 md:block md:w-64 bg-white shadow-md `}>
       <div className="p-4">
-        <h2 className="text-2xl font-bold">Menu</h2>
+        <h2 className="text-2xl font-bold"> <Link href="/">Menu </Link> </h2>
         <ul className="mt-4">
           <li className="mb-2 flex flex-col">
             {collections.map((collection, index) => {
               return (
-                <a
+                <Link
                   key={index}
                   href={`/collection/${collection.address}`}
                   className="text-gray-800 hover:text-gray-600"
                 >
                   {collection.name}
-                </a>
+                </Link>
               );
             })}
           </li>

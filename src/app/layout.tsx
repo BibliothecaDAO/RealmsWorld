@@ -17,7 +17,6 @@ export default function RootLayout({
       <body>
         <main className="flex h-screen">
           <Sidebar />
-
           {/* <Provider>{children}</Provider> */}
           <div className="p-2">{children}</div>
         </main>

@@ -5,14 +5,15 @@ export default async function Page({
 }: {
   params: { address: string; id: string };
 }) {
-  const data = await getData(
-    { tokens: params.address + ":" + params.id },
-    "token"
-  );
+  // const data = await getData(
+  //   { tokens: params.address + ":" + params.id },
+  //   "token"
+  // );
 
-  const query: any = await data.json();
+  // const query: any = await data.json();
 
-  const token = query.tokens[0].token;
+  // const token = query.tokens[0].token;
 
-  return <h1>{token.name}</h1>;
+  // return <h1>{token.name}</h1>;
+  return <h1>hello</h1>;
 }

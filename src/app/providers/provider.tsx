@@ -25,7 +25,7 @@ export function Provider({ children }: any) {
               id: 1,
               baseApiUrl: "https://api.reservoir.tools",
               default: true,
-              apiKey: process.env.RESERVOIR_API_KEY,
+              apiKey: process.env.NEXT_PUBLIC_RESERVOIR_API_KEY,
             },
           ],
         }}
