@@ -12,7 +12,7 @@ export default async function Page({
 
   const query: any = await data.json();
 
-  console.log(query);
+  const token = query.tokens[0].token;
 
-  return <h1>Token</h1>;
+  return <h1>{token.name}</h1>;
 }

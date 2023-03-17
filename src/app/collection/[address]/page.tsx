@@ -1,19 +1,34 @@
 import { getData } from "@/functions";
+import Link from "next/link";
 
 export default async function Page({
-    params
-  }: {
-    params: { address: string };
-  }) {
+  params,
+}: {
+  params: { address: string };
+}) {
+  const data = await getData({ id: params.address }, "collection");
 
-    const data = await getData({id: params.address}, 'collection');
+  const response: any = await data.json();
 
-    
-    const query: any = await data.json()
+  const collection_name = response.collections[0].name;
 
-    
-    console.log(query)
+  const tokens = await getData({ collection: params.address }, "token");
 
-    return <h1>My Page</h1>;
-  }
-  
+  const token_response: any = await tokens.json();
+
+  return (
+    <div className="p-8">
+      <h1>{collection_name}</h1>{" "}
+      <div className="grid grid-cols-6 gap-4">
+        {token_response.tokens.map((token: any, index: number) => {
+          return (
+            <div className="border p-6" key={index}>
+              <h5>{token.token.name}</h5>
+              <Link href={`/collection/${params.address}/${token.token.tokenId}`} >page</Link>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

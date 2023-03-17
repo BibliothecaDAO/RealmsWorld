@@ -3,6 +3,6 @@ export default function Page({
   }: {
     params: { slug: string };
   }) {
-    return <h1>My Page</h1>;
+    return <h1>Collections</h1>;
   }
   
