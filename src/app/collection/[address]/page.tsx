@@ -6,20 +6,20 @@ export default async function Page({
 }: {
   params: { address: string };
 }) {
-  // const data = await getData({ id: params.address }, "collection");
+  const data = await getData({ id: params.address }, "collection");
 
-  // const response: any = await data.json();
+  const response: any = await data.json();
 
-  // const collection_name = response.collections[0].name;
+  const collection_name = response.collections[0].name;
 
-  // // this could be loaded after data is loaded
-  // const tokens = await getData({ collection: params.address }, "token");
+  // this could be loaded after data is loaded
+  const tokens = await getData({ collection: params.address }, "token");
 
-  // const token_response: any = await tokens.json();
+  const token_response: any = await tokens.json();
 
   return (
     <div className="p-8">
-      {/* <h1>{collection_name}</h1>{" "}
+      <h1>{collection_name}</h1>{" "}
       <div className="grid grid-cols-6 gap-4">
         {token_response.tokens.map((token: any, index: number) => {
           return (
@@ -29,7 +29,7 @@ export default async function Page({
             </div>
           );
         })}
-      </div> */}
+      </div>
     </div>
   );
 }
