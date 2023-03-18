@@ -5,7 +5,7 @@ import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 export const BuyButton = ({address, id}: any) => {
     return (
         <BuyModal
-        trigger={<button>Buy Token</button>}
+        trigger={<button>Buy</button>}
         collectionId={address}
         tokenId={id}
         onPurchaseComplete={(data) => console.log("Purchase Complete")}

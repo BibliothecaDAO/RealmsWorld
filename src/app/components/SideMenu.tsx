@@ -27,7 +27,7 @@ const Sidebar = () => {
   return (
     <div className={`w-48 md:block shadow-md flex-none`}>
       <div className="p-4">
-        <h2 className="text-2xl font-bold"> <Link href="/">Menu </Link> </h2>
+        
         <ul className="mt-4">
           <li className="flex flex-col mb-2">
             {collections.map((collection, index) => {
@@ -42,7 +42,7 @@ const Sidebar = () => {
               );
             })}
           </li>
-          <Profile/>
+          
         </ul>
       </div>
     </div>

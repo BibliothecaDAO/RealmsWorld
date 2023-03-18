@@ -1,3 +1,10 @@
+import Link from "next/link";
+import Profile from "./LoginButton";
+
 export const TopNav = () => {
-   return <div className="sticky top-0 w-full p-8">nav</div> 
-}
+  return (
+    <div className="flex justify-between w-full p-8 border border-white">
+      <Link href="/">Relic </Link> <Profile />
+    </div>
+  );
+};
