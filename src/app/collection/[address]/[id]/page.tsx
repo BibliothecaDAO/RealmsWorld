@@ -11,14 +11,11 @@ export default async function Page({
     "token"
   );
 
-  const query: any = await data.json();
-
-  const token = query.tokens[0].token;
+  // const query: any = await data.json();
 
   return (
     <div>
       <BuyButton address={params.address}  id={params.id} />
-
     </div>
   );
 }

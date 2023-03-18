@@ -8,9 +8,11 @@ export async function getData(query: any, route: string) {
         body: JSON.stringify(query)
     });
 
+    console.log(process.env.NEXT_PUBLIC_LOCAL_API + route)
+
     if (!res.ok) {
         throw new Error('Failed to fetch data');
     }
 
-    return res;
+    return await res.json();;
 } 

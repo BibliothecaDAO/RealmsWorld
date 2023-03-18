@@ -25,7 +25,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className={`w-64 md:block md:w-64 bg-white shadow-md `}>
+    <div className={`w-48 md:block shadow-md flex-none`}>
       <div className="p-4">
         <h2 className="text-2xl font-bold"> <Link href="/">Menu </Link> </h2>
         <ul className="mt-4">
@@ -35,7 +35,7 @@ const Sidebar = () => {
                 <Link
                   key={index}
                   href={`/collection/${collection.address}`}
-                  className="text-gray-800 hover:text-gray-600"
+                  
                 >
                   {collection.name}
                 </Link>

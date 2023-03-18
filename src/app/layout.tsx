@@ -1,6 +1,7 @@
 import { Provider } from "./providers/provider";
 import "./globals.css";
 import Sidebar from "./components/SideMenu";
+import { TopNav } from "./components/TopNav";
 
 export const metadata = {
   title: "Bibliotheca DAO",
@@ -14,13 +15,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="text-white bg-theme-gray">
         <main className="flex h-screen">
           <Provider>
             <Sidebar />
-            {children}
+            <div className="flex-grow overflow-y-scroll">
+              <TopNav />
+              {children}
+            </div>
           </Provider>
-          {/* <div className="p-2">{children}</div> */}
         </main>
       </body>
     </html>
