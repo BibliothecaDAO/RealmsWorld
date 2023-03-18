@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function POST(request: any) {
+export async function POST(request: NextRequest) {
   const query: any = await request.json()
   const queryParams =  new URLSearchParams(query);
 

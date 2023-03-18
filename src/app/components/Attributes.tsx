@@ -10,8 +10,20 @@ export const Attributes = ({ attributes }: any) => {
 
   const handleAttributeClick = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
-    params.set(key, value);
+  
+    if (params.has(key) && params.get(key) === value) {
+      // If the attribute with the same value exists, delete it.
+      params.delete(key);
+    } else {
+      // Otherwise, set the attribute to the new value.
+      params.set(key, value);
+    }
+  
     router.replace(`${pathname}?${params}`);
+  };
+
+  const isAttributeInQuery = (key: string, value: string): boolean => {
+    return searchParams.has(key) && searchParams.get(key) === value;
   };
 
   return (
@@ -42,7 +54,7 @@ export const Attributes = ({ attributes }: any) => {
                             onClick={() =>
                               handleAttributeClick(attribute.key, a.value)
                             }
-                            className="px-1 py-1 mr-2 text-xs text-white bg-gray-500 rounded"
+                            className={`${isAttributeInQuery(attribute.key, a.value) ? 'bg-blue-500' : 'bg-gray-500'} px-1 py-1 mr-2 text-xs text-white  rounded`}
                           >
                             {a.value}
                           </button>

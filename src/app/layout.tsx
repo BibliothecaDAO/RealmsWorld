@@ -20,7 +20,7 @@ export default function RootLayout({
           <Provider>
             <Sidebar />
             <div className="flex-grow overflow-y-scroll">
-              <TopNav />
+              {/* <TopNav /> */}
               {children}
             </div>
           </Provider>

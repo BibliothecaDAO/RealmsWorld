@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
 function buildQueryString(queryObject: any) {
   const queryParams = Object.entries(queryObject)
@@ -10,9 +10,10 @@ function buildQueryString(queryObject: any) {
       }
       return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     })
-    .join('&');
+    .join('&')
+    .replace(/%2B/g, '+');
 
-    console.log(queryParams)
+  console.log(queryParams);
 
   return `${queryParams}`;
 }

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { convertToJSON, decodeAndSplit } from "@/functions/utils";
+import { TokenCard } from "./TokenCard";
+import { TokenMarketData } from "@/types";
 
 export const TokenTable = ({ address }: any) => {
   const searchParams = useSearchParams();
@@ -22,6 +24,8 @@ export const TokenTable = ({ address }: any) => {
       );
       setTokens(tokens.tokens);
       setLoading(false);
+
+      console.log(tokens);
     } catch (e) {
       console.log(e);
       setLoading(false);
@@ -41,14 +45,9 @@ export const TokenTable = ({ address }: any) => {
   return (
     <div className="grid grid-cols-6 gap-4">
       {tokens && !loading
-        ? tokens.map((token: any, index: number) => {
+        ? tokens.map((token: TokenMarketData, index: number) => {
             return (
-              <div className="p-6 border" key={index}>
-                <h5>{token.token.name}</h5>
-                <Link href={`/collection/${address}/${token.token.tokenId}`}>
-                  page
-                </Link>
-              </div>
+              <TokenCard key={index} token={token}/>
             );
           })
         : "Loading"}

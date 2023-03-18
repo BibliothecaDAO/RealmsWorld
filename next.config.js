@@ -4,7 +4,8 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['i.seadn.io'],
+    dangerouslyAllowSVG: true,
+    domains: ['i.seadn.io','api.reservoir.tools'],
   }
 }
 
