@@ -1,17 +1,31 @@
 import { NextResponse } from "next/server";
 
+function buildQueryString(queryObject: any) {
+  const queryParams = Object.entries(queryObject)
+    .map(([key, value]: any) => {
+      if (typeof value === 'object') {
+        return Object.entries(value)
+          .map(([subKey, subValue]: any) => `${encodeURIComponent(key)}[${encodeURIComponent(subKey)}]=${encodeURIComponent(subValue)}`)
+          .join('&');
+      }
+      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    })
+    .join('&');
+
+    console.log(queryParams)
+
+  return `${queryParams}`;
+}
 
 export async function POST(request: any) {
   const query: any = await request.json()
-  const queryParams =  new URLSearchParams(query);
-
-  console.log(`https://api.reservoir.tools/tokens/v5?${queryParams}`)
-
+  const queryString = buildQueryString(query);
+  
     try {
-      const res = await fetch(`https://api.reservoir.tools/tokens/v5?${queryParams}`, {
+      const res = await fetch(`https://api.reservoir.tools/tokens/v5?${queryString}`, {
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': process.env.NEXT_PUBLIC_RESERVOIR_API_KEY || '',
+          'x-api-key': process.env.RESERVOIR_API_KEY || '',
         },
       });
       const data: any = await res.json()
