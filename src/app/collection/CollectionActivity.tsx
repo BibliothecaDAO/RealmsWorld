@@ -5,12 +5,13 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { convertToJSON, decodeAndSplit } from "@/functions/utils";
-import { TokenCard } from "./TokenCard";
-import { TokenMarketData } from "@/types";
+import { Activity, TokenMarketData } from "@/types";
+import Image from "next/image";
+import { ActivityCard } from "../components/ActivityCard";
 
-export const TokenTable = ({ address, SSRtokens }: any) => {
+export const CollectionActivity = ({ address }: any) => {
   const searchParams = useSearchParams();
-  const [tokens, setTokens] = useState(SSRtokens);
+  const [tokens, setTokens] = useState([]);
   const [query, setQuery] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -18,11 +19,8 @@ export const TokenTable = ({ address, SSRtokens }: any) => {
     setLoading(true);
 
     try {
-      const tokens = await getData(
-        { collection: address, attributes: { ...query } },
-        "token"
-      );
-      setTokens(tokens.tokens);
+      const tokens = await getData({ collection: address }, "activity");
+      setTokens(tokens.activities);
       setLoading(false);
 
       console.log(tokens);
@@ -43,11 +41,11 @@ export const TokenTable = ({ address, SSRtokens }: any) => {
   }, [query]);
 
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-1">
       {tokens && !loading
-        ? tokens.map((token: TokenMarketData, index: number) => {
+        ? tokens.map((activity: Activity, index: number) => {
             return (
-              <TokenCard key={index} token={token}/>
+              <ActivityCard key={index} activity={activity}/>
             );
           })
         : "Loading"}

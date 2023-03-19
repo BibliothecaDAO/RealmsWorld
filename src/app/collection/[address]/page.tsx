@@ -15,6 +15,11 @@ export default async function Page({
     "attributes"
   );
 
+  const tokens = await getData(
+    { collection: params.address },
+    "token"
+  );
+
   return (
     <div className="flex h-full p-8 -mt-56">
       <div className="flex-none w-64 pt-8 rounded-t-full shadow bg-gradient-to-b from-theme-gray-light/50 shadow-white/20">
@@ -27,7 +32,7 @@ export default async function Page({
         />
         <Attributes address={params.address} attributes={attributes} />
       </div>
-      <CollectionContent collection={collection.collections[0]}/>
+      <CollectionContent collection={collection.collections[0]} tokens={tokens.tokens}/>
     </div>
   );
 }

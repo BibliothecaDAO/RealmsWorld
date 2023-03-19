@@ -1,20 +1,22 @@
 "use client";
 
-import { Collection } from "@/types";
+import { Collection, Token } from "@/types";
 import { TokenTable } from "../components/TokenTable";
 import { Tab } from "@headlessui/react";
+import { CollectionActivity } from "./CollectionActivity";
 
 interface Props {
   collection: Collection;
+  tokens: Token[]
 }
 
-export const CollectionContent = ({ collection }: Props) => {
+export const CollectionContent = ({ collection, tokens }: Props) => {
   const tabs = [
     {
       name: "Trade",
-      content: <TokenTable address={collection.id} collection={collection} />,
+      content: <TokenTable address={collection.id} collection={collection} tokens={tokens} />,
     },
-    { name: "Analytics", content: "Content 2" },
+    { name: "Analytics", content: <CollectionActivity address={collection.id}/>},
   ];
 
   return (

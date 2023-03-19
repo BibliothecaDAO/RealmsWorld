@@ -154,3 +154,43 @@ export interface Collection {
   collectionBidSupported: boolean;
   contractKind: string;
 }
+
+export interface Activity {
+  type: string;
+  fromAddress: string;
+  toAddress: string | null;
+  price: number;
+  amount: number;
+  timestamp: number;
+  createdAt: string;
+  contract: string;
+  token: {
+    tokenId: string | null;
+    tokenName: string | null;
+    tokenImage: string | null;
+  };
+  collection: {
+    collectionId: string;
+    collectionImage: string;
+    collectionName: string;
+  };
+  order: {
+    id: string;
+    side: string;
+    source: {
+      domain: string;
+      name: string;
+      icon: string;
+    };
+    criteria: {
+      kind: string;
+      data: {
+        collection: {
+          id: string;
+          name: string;
+          image: string;
+        };
+      };
+    };
+  };
+}
