@@ -32,7 +32,6 @@ export const TokenCard = (props: TokenCardProps) => {
             : ""}{" "}
           ETH
         </h5>
-        {/* <h6>${token.market.floorAsk.price ? token.market.floorAsk.price.amount.usd : ''}</h6> */}
         <div className="flex justify-between">
           <Link
             href={`/collection/${token.token.contract}/${token.token.tokenId}`}

@@ -2,6 +2,13 @@ import { Provider } from "./providers/provider";
 import "./globals.css";
 import Sidebar from "./components/SideMenu";
 import { TopNav } from "./components/TopNav";
+import { Inconsolata } from "next/font/google";
+import { Footer } from "./components/Footer";
+
+const inconsolata = Inconsolata({
+  subsets: ["latin"],
+  variable: "--font-inconsolata",
+});
 
 export const metadata = {
   title: "Bibliotheca DAO",
@@ -15,15 +22,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="text-white bg-theme-gray">
-        <main className="flex h-screen">
+      <body
+        className={`"text-white bg-theme-gray ${inconsolata.variable} font-sans text-white`}
+      >
+        <main className="flex flex-wrap h-screen">
           <Provider>
             <Sidebar />
-            <div className="flex-grow overflow-y-scroll ">
+            <div className="flex-grow ">
               <TopNav />
               {children}
             </div>
           </Provider>
+          <Footer />
         </main>
       </body>
     </html>

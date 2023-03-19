@@ -10,7 +10,7 @@ export const Attributes = ({ attributes }: any) => {
 
   const handleAttributeClick = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
-  
+
     if (params.has(key) && params.get(key) === value) {
       // If the attribute with the same value exists, delete it.
       params.delete(key);
@@ -18,7 +18,7 @@ export const Attributes = ({ attributes }: any) => {
       // Otherwise, set the attribute to the new value.
       params.set(key, value);
     }
-  
+
     router.replace(`${pathname}?${params}`);
   };
 
@@ -27,7 +27,7 @@ export const Attributes = ({ attributes }: any) => {
   };
 
   return (
-    <div className="p-4">
+    <div className="flex-none hidden sm:w-72 sm:block">
       {attributes.attributes.map((attribute: any, index: number) => {
         return (
           <Disclosure key={index}>
@@ -54,7 +54,11 @@ export const Attributes = ({ attributes }: any) => {
                             onClick={() =>
                               handleAttributeClick(attribute.key, a.value)
                             }
-                            className={`${isAttributeInQuery(attribute.key, a.value) ? 'bg-blue-500' : 'bg-gray-500'} px-1 py-1 mr-2 text-xs text-white  rounded`}
+                            className={`${
+                              isAttributeInQuery(attribute.key, a.value)
+                                ? "bg-blue-500"
+                                : "bg-gray-500"
+                            } px-1 py-1 mr-2 text-xs text-white  rounded`}
                           >
                             {a.value}
                           </button>

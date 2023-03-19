@@ -43,12 +43,10 @@ export const TokenTable = ({ address, SSRtokens }: any) => {
   }, [query]);
 
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:pl-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {tokens && !loading
         ? tokens.map((token: TokenMarketData, index: number) => {
-            return (
-              <TokenCard key={index} token={token}/>
-            );
+            return <TokenCard key={index} token={token} />;
           })
         : "Loading"}
     </div>
