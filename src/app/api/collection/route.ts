@@ -13,6 +13,8 @@ export async function POST(request: NextRequest) {
         },
       });
       const data: any = await res.json()
+
+      console.log(data)
       return NextResponse.json(data)
     } catch (error) {
       return NextResponse.json({ message: 'Internal server error' })

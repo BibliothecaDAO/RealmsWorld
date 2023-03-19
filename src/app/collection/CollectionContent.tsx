@@ -16,7 +16,8 @@ export const CollectionContent = ({ collection, tokens }: Props) => {
       name: "Trade",
       content: <TokenTable address={collection.id} collection={collection} tokens={tokens} />,
     },
-    { name: "Analytics", content: <CollectionActivity address={collection.id}/>},
+    { name: "Analytics", content: <div>coming soon</div>},
+    { name: "Activity", content: <CollectionActivity address={collection.id}/>},
   ];
 
   return (

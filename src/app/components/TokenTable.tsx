@@ -43,7 +43,7 @@ export const TokenTable = ({ address, SSRtokens }: any) => {
   }, [query]);
 
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
       {tokens && !loading
         ? tokens.map((token: TokenMarketData, index: number) => {
             return (

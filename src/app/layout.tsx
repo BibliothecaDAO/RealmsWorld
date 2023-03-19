@@ -19,7 +19,7 @@ export default function RootLayout({
         <main className="flex h-screen">
           <Provider>
             <Sidebar />
-            <div className="flex-grow overflow-y-scroll">
+            <div className="flex-grow overflow-y-scroll ">
               <TopNav />
               {children}
             </div>
