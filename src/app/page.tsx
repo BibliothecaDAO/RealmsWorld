@@ -55,9 +55,10 @@ export default async function Home() {
       <div className="container px-8 mx-auto">
         <h1>Relic</h1>
         <div className="grid w-full grid-cols-1 gap-3">
-          {collections.map((collection: Collection) => {
+          {collections.map((collection: Collection, index) => {
             return (
               <Link
+                key={index}
                 href={`/collection/${collection.primaryContract}`}
                 className="flex p-5 border-2 bg-black/50 rounded-xl border-white/10 hover:bg-black/60"
               >

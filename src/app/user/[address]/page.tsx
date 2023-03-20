@@ -13,8 +13,6 @@ export default async function Page({
 
   const id = hexToNumber(params.address, 1, 10);
 
-  console.log(data.tokens[0].ownership);
-
   const tokens: UserTokenData[] = data.tokens;
 
   return (
