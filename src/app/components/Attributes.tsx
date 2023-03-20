@@ -2,11 +2,14 @@
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Disclosure, Transition } from "@headlessui/react";
+import NumberSelect from "./NumberSelect";
 
 export const Attributes = ({ attributes }: any) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+
+  console.log(attributes);
 
   const handleAttributeClick = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
@@ -64,6 +67,24 @@ export const Attributes = ({ attributes }: any) => {
                           </button>
                         );
                       })}
+                    {attribute.kind === "number" && (
+                      <div>
+                        <NumberSelect
+                          min={attribute.minRange}
+                          max={attribute.maxRange}
+                          onChange={(value) =>
+                            handleAttributeClick(attribute.key, value)
+                          }
+                        />
+                        <button
+                          onClick={() =>
+                            handleAttributeClick(attribute.key, "")
+                          }
+                        >
+                          clear
+                        </button>
+                      </div>
+                    )}
                   </Disclosure.Panel>
                 </Transition>
               </>

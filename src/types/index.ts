@@ -63,6 +63,11 @@ export interface TokenMarketData {
   market: Market;
 }
 
+export interface UserTokenData {
+  token: Token;
+  ownership: TokenOwnership;
+}
+
 export interface Collection {
   id: string;
   slug: string;
@@ -193,4 +198,20 @@ export interface Activity {
       };
     };
   };
+}
+
+interface FloorAsk {
+  id: string | null;
+  price: number | null;
+  maker: string | null;
+  validFrom: string | null;
+  validUntil: string | null;
+  source: Record<string, unknown>;
+}
+
+export interface TokenOwnership {
+  tokenCount: string;
+  onSaleCount: string;
+  floorAsk: FloorAsk;
+  acquiredAt: string;
 }

@@ -1,12 +1,25 @@
-"use client"
+"use client";
 
 import { ReservoirKitProvider, darkTheme } from "@reservoir0x/reservoir-kit-ui";
-import { WagmiConfig, createClient } from "wagmi";
+import { WagmiConfig, createClient, configureChains } from "wagmi";
 import { getDefaultProvider } from "ethers";
+import { mainnet, optimism } from "wagmi/chains";
+import { publicProvider } from "wagmi/providers/public";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { InjectedConnector } from "wagmi/connectors/injected";
+
+const { chains, provider } = configureChains(
+  [mainnet],
+  [
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API || "" }),
+    publicProvider(),
+  ]
+);
 
 const wagmiClient = createClient({
   autoConnect: true,
-  provider: getDefaultProvider("mainnet"),
+  connectors: [new InjectedConnector({ chains })],
+  provider,
 });
 
 const theme = darkTheme({
@@ -18,22 +31,20 @@ const theme = darkTheme({
 
 export function Provider({ children }: any) {
   return (
-      <ReservoirKitProvider
-        options={{
-          chains: [
-            {
-              id: 1,
-              baseApiUrl: "https://api.reservoir.tools",
-              default: true,
-              apiKey: process.env.RESERVOIR_API_KEY,
-            },
-          ],
-        }}
-        theme={theme}
-      >
-        <WagmiConfig client={wagmiClient}>
-          {children}
-        </WagmiConfig>
-      </ReservoirKitProvider>
+    <ReservoirKitProvider
+      options={{
+        chains: [
+          {
+            id: 1,
+            baseApiUrl: "https://api.reservoir.tools",
+            default: true,
+            apiKey: process.env.RESERVOIR_API_KEY,
+          },
+        ],
+      }}
+      theme={theme}
+    >
+      <WagmiConfig client={wagmiClient}>{children}</WagmiConfig>
+    </ReservoirKitProvider>
   );
 }

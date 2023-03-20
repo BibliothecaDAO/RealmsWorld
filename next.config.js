@@ -5,7 +5,7 @@ const nextConfig = {
   },
   images: {
     dangerouslyAllowSVG: true,
-    domains: ['i.seadn.io','api.reservoir.tools', 'raw.githubusercontent.com', 'blur.io', 'www.loot.exchange'],
+    domains: ['i.seadn.io','api.reservoir.tools', 'raw.githubusercontent.com', 'blur.io', 'www.loot.exchange', 'gem.xyz', 'sudoswap.xyz'],
   }
 }
 

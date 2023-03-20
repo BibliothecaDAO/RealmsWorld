@@ -33,3 +33,36 @@ export function shortenHex(hexString: string, numDigits = 6) {
   const secondHalf = hexString.slice(-halfDigits);
   return `${firstHalf}...${secondHalf}`;
 }
+
+export function buildQueryString(queryObject: any) {
+  const queryParams = Object.entries(queryObject)
+    .map(([key, value]: any) => {
+      if (typeof value === "object") {
+        return Object.entries(value)
+          .map(
+            ([subKey, subValue]: any) =>
+              `${encodeURIComponent(key)}[${encodeURIComponent(
+                subKey
+              )}]=${encodeURIComponent(subValue)}`
+          )
+          .join("&");
+      }
+      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    })
+    .join("&")
+    .replace(/%2B/g, "+");
+
+  console.log(queryParams);
+
+  return `${queryParams}`;
+}
+
+export function formatQueryString(querybatch: any, type: string = "contract") {
+  if (querybatch && Array.isArray(querybatch) && querybatch.length > 0) {
+    const queryString = querybatch
+      .map((contractObj) => `${type}=${contractObj[type]}`)
+      .join("&");
+    return queryString;
+  }
+  return "";
+}

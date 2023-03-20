@@ -8,7 +8,7 @@ const Sidebar = () => {
   const menu_items = [
     { name: "Base", href: "/" },
     {
-      name: "Realms",
+      name: "",
       href: "/collection/0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
     },
     {

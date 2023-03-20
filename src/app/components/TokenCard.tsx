@@ -14,7 +14,7 @@ interface TokenCardProps {
 export const TokenCard = (props: TokenCardProps) => {
   const { token } = props;
   return (
-    <div className="border rounded-xl border-white/10">
+    <div className="duration-300 transform border rounded-xl border-white/10 hover:-translate-y-1">
       <Image
         src={token.token.image} // Use the path to your image
         alt="An example image" // Provide a descriptive alt text

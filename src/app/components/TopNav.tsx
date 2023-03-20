@@ -4,7 +4,7 @@ import { Input } from "postcss";
 
 export const TopNav = () => {
   return (
-    <div className="w-full p-3 pl-4 sm:pl-8 md:pl-32">
+    <div className="relative w-full p-3 pl-4 sm:pl-8 md:pl-32 z-100">
       <div className="flex justify-between ">
         <Link
           className="self-center text-xl font-semibold sm:text-2xl"
