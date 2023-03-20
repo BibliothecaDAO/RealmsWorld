@@ -1,6 +1,3 @@
-import { BuyButton } from "@/app/components/BuyModal";
-import { TokenCard } from "@/app/components/TokenCard";
-import { TokenTable } from "@/app/components/TokenTable";
 import { getData } from "@/functions";
 import { hexToNumber, shortenHex } from "@/functions/utils";
 import { UserTokenData } from "@/types";
