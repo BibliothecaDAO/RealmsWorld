@@ -25,3 +25,7 @@ h5 {
 h6 {
   @apply my-1 text-base sm:text-lg md:text-xl sm:my-1 md:my-2;
 }
+
+.theme-shadow {
+  @apply shadow-lg shadow-red-300;
+}

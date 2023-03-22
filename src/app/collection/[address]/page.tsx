@@ -18,11 +18,6 @@ export default async function Page({
 
   return (
     <div className="flex h-full -mt-56 sm:p-8">
-      {/* <CollectionAttributes
-        address={params.address}
-        collection={collection.collections[0]}
-        attributes={attributes}
-      /> */}
       <CollectionContent
         collection={collection.collections[0]}
         tokens={tokens.tokens}

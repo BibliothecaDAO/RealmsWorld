@@ -24,9 +24,9 @@ export default function RootLayout({
 
   return (
     <div className="w-full h-full">
-      <motion.div
-        initial={{ opacity: 0.2 }}
-        animate={{ opacity: 1 }}
+      <div
+        // initial={{ opacity: 0.2 }}
+        // animate={{ opacity: 1 }}
         className="w-full -mt-24 h-96"
         style={backgroundImageStyle}
       />

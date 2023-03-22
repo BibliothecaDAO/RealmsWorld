@@ -48,8 +48,6 @@ export default async function Home() {
 
   const collections: Collection[] = data.collections;
 
-  console.log(collections);
-
   return (
     <main>
       <div className="container px-8 mx-auto">
@@ -74,7 +72,7 @@ export default async function Home() {
                   <h5 className="self-center">{collection.name}</h5>
                   <div className="self-center text-xl font-semibold">
                     {formatEther(
-                      collection.floorAsk.price
+                      collection.floorAsk
                         ? collection.floorAsk.price.amount.raw
                         : ""
                     )}{" "}

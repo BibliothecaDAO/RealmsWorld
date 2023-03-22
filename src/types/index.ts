@@ -26,6 +26,18 @@ export interface Token {
     timestamp: number | null;
   };
   owner: string;
+  attributes: Attributes[];
+}
+
+export interface Attributes {
+  key: string;
+  kind: string;
+  value: string;
+  tokenCount: number;
+  onSaleCount: number;
+  floorAskPrice: number;
+  topBidValue: number | null;
+  createdAt: string;
 }
 
 export interface Market {

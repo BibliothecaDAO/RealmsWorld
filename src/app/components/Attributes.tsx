@@ -1,8 +1,14 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { Disclosure, Transition } from "@headlessui/react";
 import NumberSelect from "./NumberSelect";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/app/components/ui/accordion";
+import { Button } from "./ui/button";
 
 export const Attributes = ({ attributes }: any) => {
   const searchParams = useSearchParams();
@@ -33,63 +39,54 @@ export const Attributes = ({ attributes }: any) => {
     <div className="flex-none hidden sm:w-72 sm:block">
       {attributes.attributes.map((attribute: any, index: number) => {
         return (
-          <Disclosure key={index}>
-            {({ open }) => (
-              <>
-                <Disclosure.Button className="w-full py-2 border rounded border-white/20 bg-theme-gray">
-                  {attribute.key}
-                </Disclosure.Button>
-                <Transition
-                  show={open}
-                  enter="transition duration-100 ease-out"
-                  enterFrom="transform scale-95 opacity-0"
-                  enterTo="transform scale-100 opacity-100"
-                  leave="transition duration-75 ease-out"
-                  leaveFrom="transform scale-100 opacity-100"
-                  leaveTo="transform scale-95 opacity-0"
-                >
-                  <Disclosure.Panel static className="p-2 text-gray-500">
-                    {attribute.kind === "string" &&
-                      attribute.values.map((a: any, i: any) => {
-                        return (
-                          <button
-                            key={i}
-                            onClick={() =>
-                              handleAttributeClick(attribute.key, a.value)
-                            }
-                            className={`${
-                              isAttributeInQuery(attribute.key, a.value)
-                                ? "bg-blue-500"
-                                : "bg-gray-500"
-                            } px-1 py-1 mr-2 text-xs text-white  rounded`}
-                          >
-                            {a.value}
-                          </button>
-                        );
-                      })}
-                    {attribute.kind === "number" && (
-                      <div>
-                        <NumberSelect
-                          min={attribute.minRange}
-                          max={attribute.maxRange}
-                          onChange={(value) =>
-                            handleAttributeClick(attribute.key, value)
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger className="text-lg">
+                {attribute.key}
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="flex flex-wrap p-1">
+                  {attribute.kind === "string" &&
+                    attribute.values.map((a: any, i: any) => {
+                      return (
+                        <Button
+                          key={i}
+                          size={"sm"}
+                          variant={
+                            isAttributeInQuery(attribute.key, a.value)
+                              ? "default"
+                              : "outline"
                           }
-                        />
-                        <button
                           onClick={() =>
-                            handleAttributeClick(attribute.key, "")
+                            handleAttributeClick(attribute.key, a.value)
                           }
+                          className="my-1 mr-1"
                         >
-                          clear
-                        </button>
-                      </div>
-                    )}
-                  </Disclosure.Panel>
-                </Transition>
-              </>
-            )}
-          </Disclosure>
+                          {a.value}
+                        </Button>
+                      );
+                    })}
+                </div>
+
+                {attribute.kind === "number" && (
+                  <div className="px-4">
+                    <NumberSelect
+                      min={attribute.minRange}
+                      max={attribute.maxRange}
+                      onChange={(value) =>
+                        handleAttributeClick(attribute.key, value)
+                      }
+                    />
+                    <button
+                      onClick={() => handleAttributeClick(attribute.key, "")}
+                    >
+                      clear
+                    </button>
+                  </div>
+                )}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         );
       })}
     </div>

@@ -6,6 +6,7 @@ import { formatEther } from "ethers/lib/utils.js";
 import Link from "next/link";
 import { BuyButton } from "./BuyModal";
 import Image from "next/image";
+import { Button } from "./ui/button";
 
 interface TokenCardProps {
   token: TokenMarketData;
@@ -13,8 +14,10 @@ interface TokenCardProps {
 
 export const TokenCard = (props: TokenCardProps) => {
   const { token } = props;
+
+  console.log(token);
   return (
-    <div className="duration-300 transform border rounded-xl border-white/10 hover:-translate-y-1">
+    <div className="duration-300 transform border-4 rounded-xl border-white/5 hover:-translate-y-1">
       <Image
         src={token.token.image} // Use the path to your image
         alt="An example image" // Provide a descriptive alt text
@@ -22,22 +25,35 @@ export const TokenCard = (props: TokenCardProps) => {
         width={800} // Set the original width of the image
         height={800} // Set the original height of the image'fill')
       />
-      <div className="px-3 pt-4 pb-4">
-        <div className="text-sm">#{token.token.tokenId}</div>
-        <h6>{token.token.name}</h6>
+      <div className="w-full px-3 pt-4 pb-4">
+        <div className="flex justify-between w-full text-sm">
+          <span className="font-semibold">#{token.token.tokenId} </span>
 
-        <h5>
+          <Image
+            src={token.market.floorAsk.source.icon} // Use the path to your image
+            alt="An example image" // Provide a descriptive alt text
+            width={20} // Set the original width of the image
+            height={20} // Set the original height of the image'fill')
+            className=""
+          />
+        </div>
+        <h5>{token.token.name}</h5>
+
+        <h6 className="font-semibold">
           {token.market.floorAsk.price
             ? formatEther(token.market.floorAsk.price.amount.raw)
             : ""}{" "}
           ETH
-        </h5>
+        </h6>
+
         <div className="flex justify-between">
-          <Link
+          <Button
             href={`/collection/${token.token.contract}/${token.token.tokenId}`}
+            variant={"default"}
+            className="w-full"
           >
-            More
-          </Link>
+            view
+          </Button>
           <BuyButton address={token.token.contract} id={token.token.tokenId} />
         </div>
       </div>
