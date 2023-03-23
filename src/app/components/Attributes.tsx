@@ -39,7 +39,7 @@ export const Attributes = ({ attributes }: any) => {
     <div className="flex-none hidden sm:w-72 sm:block">
       {attributes.attributes.map((attribute: any, index: number) => {
         return (
-          <Accordion type="single" collapsible>
+          <Accordion key={index} type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-lg">
                 {attribute.key}

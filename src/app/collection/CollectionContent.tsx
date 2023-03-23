@@ -110,7 +110,7 @@ export const CollectionContent = ({
             <div className="flex mb-3 space-x-2">
               {contract_details.map((detail, index) => {
                 return (
-                  <div className="uppercase">
+                  <div key={index} className="uppercase">
                     {" "}
                     <span className="opacity-50 ">{detail.title}</span>{" "}
                     {detail.value}
