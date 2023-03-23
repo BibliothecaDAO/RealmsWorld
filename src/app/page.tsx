@@ -70,14 +70,14 @@ export default async function Home() {
                 />
                 <div className="flex justify-between flex-grow pl-4">
                   <h5 className="self-center">{collection.name}</h5>
-                  <div className="self-center text-xl font-semibold">
+                  {/* <div className="self-center text-xl font-semibold">
                     {formatEther(
                       collection.floorAsk
                         ? collection.floorAsk.price.amount.raw
                         : ""
                     )}{" "}
                     ETH
-                  </div>
+                  </div> */}
                 </div>
               </Link>
             );
