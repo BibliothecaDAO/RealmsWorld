@@ -1,5 +1,7 @@
+import { shortenHex } from "@/functions/utils";
 import { Activity } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 
 interface ActivityCardProps {
   activity: Activity;
@@ -15,36 +17,78 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
   // get time difference in hours
   const hours = Math.floor(timeDiff / 1000 / 60 / 60);
   return (
-    <div className="flex justify-between w-full p-2 border border-white/30 bg-black/5">
-      <div className="flex w-full">
-        <span className="self-center px-4 py-1 mr-6 rounded bg-black/50">
-          {activity.type}
-        </span>
-        <h6 className="flex-none">
-          {activity.token.tokenName ? (
-            <span>
-              #{activity.token.tokenId} {activity.token.tokenName}
+    <div className="flex flex-wrap w-full p-2 border-b border-white/30">
+      <div className="flex flex-wrap justify-start w-full sm:w-5/12">
+        <div className="self-center flex-none w-full px-4 py-1 mr-6 font-semibold rounded sm:w-32 opacity-60">
+          {!activity.token.tokenName ? "collection offer" : activity.type}
+        </div>
+        <Image
+          src={
+            activity.token.tokenImage
+              ? activity.token.tokenImage
+              : activity.collection.collectionImage
+          } // Use the path to your image
+          alt="An example image" // Provide a descriptive alt text
+          width={60} // Set the original width of the image
+          height={60} // Set the original height of the image'fill')
+          className="self-start rounded-lg"
+        />
+        {activity.token.tokenName && (
+          <Link
+            className="self-center flex-none ml-3"
+            href={`/collection/${activity.collection.collectionId}/${activity.token.tokenId}`}
+          >
+            <span className="font-semibold ">
+              <span className="text-xs opacity-50">
+                #{activity.token.tokenId}
+              </span>{" "}
+              <br />
+              {activity.token.tokenName}
             </span>
-          ) : (
-            "Collection Offer"
-          )}
-        </h6>
-        <div className="flex self-center justify-end w-full px-4 space-x-4">
-          <div className="self-center">{activity.price} </div>
-
-          <span className="px-4 py-1 rounded bg-black/50">
-            {date.toLocaleString()} {hours} hours ago
+          </Link>
+        )}
+      </div>
+      <div className="w-1/2 sm:w-1/12">
+        <span className="text-xs opacity-50">to:</span> <br />
+        {activity.toAddress ? (
+          <Link href={`/user/${activity.toAddress}`}>
+            {activity.toAddress ? shortenHex(activity.toAddress) : ""}
+          </Link>
+        ) : (
+          "-"
+        )}
+      </div>
+      <div className="w-1/2 sm:w-1/12">
+        <span className="text-xs opacity-50">from:</span> <br />
+        {activity.fromAddress ? (
+          <Link href={`/user/${activity.fromAddress}`}>
+            {activity.fromAddress ? shortenHex(activity.fromAddress) : ""}
+          </Link>
+        ) : (
+          "-"
+        )}
+      </div>
+      <div className="flex self-center w-1/2 font-semibold sm:justify-end sm:w-2/12">
+        {" "}
+        <div className="self-center">{activity.price} ETH</div>
+      </div>
+      <div className="flex justify-end w-1/2 mt-2 sm:w-3/12 sm:mt-0">
+        <div className="flex self-center px-4 space-x-4">
+          <span className="flex-none px-4 py-1 rounded bg-black/50">
+            {hours} hours ago
           </span>
         </div>
-      </div>
-      <div className="flex">
-        <Image
-          src={activity.order ? activity.order.source.icon : ""} // Use the path to your image
-          alt="An example image" // Provide a descriptive alt text
-          width={40} // Set the original width of the image
-          height={40} // Set the original height of the image'fill')
-          className="p-2 mx-auto border rounded border-white/20"
-        />
+        <div className="self-center">
+          {activity.order && (
+            <Image
+              src={activity.order ? activity.order.source.icon : ""} // Use the path to your image
+              alt="An example image" // Provide a descriptive alt text
+              width={40} // Set the original width of the image
+              height={40} // Set the original height of the image'fill')
+              className="flex-none p-2 mx-auto"
+            />
+          )}
+        </div>
       </div>
     </div>
   );

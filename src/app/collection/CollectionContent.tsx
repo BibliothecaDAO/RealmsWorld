@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { Collection, Token } from "@/types";
 import { TokenTable } from "../components/TokenTable";
 import { Tab } from "@headlessui/react";
@@ -93,7 +94,7 @@ export const CollectionContent = ({
             height={200} // Set the original height of the image'fill')
             className="mx-auto border-4 rounded shadow-2xl border-white/10"
           />
-          <div className="flex mx-auto mt-4 space-x-2">
+          <div className="flex justify-center mx-auto my-4 space-x-2">
             {links.map((social, index) => {
               if (social.value)
                 return (
@@ -106,46 +107,52 @@ export const CollectionContent = ({
         </div>
 
         <div>
-          <div>
-            <div className="flex mb-3 space-x-2">
-              {contract_details.map((detail, index) => {
-                return (
-                  <div key={index} className="uppercase">
-                    {" "}
-                    <span className="opacity-50 ">{detail.title}</span>{" "}
-                    {detail.value}
-                  </div>
-                );
-              })}
-            </div>
-            <h1>{collection.name}</h1>
+          <div className="flex flex-wrap mb-3 space-x-2">
+            {contract_details.map((detail, index) => {
+              return (
+                <div key={index} className="uppercase">
+                  {" "}
+                  <span className="opacity-50 ">{detail.title}</span>{" "}
+                  {detail.value}
+                </div>
+              );
+            })}
+          </div>
+          <h1>{collection.name}</h1>
 
-            <div className="flex space-x-2">
-              {statistics.map((statistic, index) => {
-                return (
-                  <div key={index} className="px-6 py-2 rounded bg-black/40">
-                    <div className="text-xs">{statistic.title}</div>
-                    <div className="text-xl">{statistic.value}</div>
-                  </div>
-                );
-              })}
-            </div>
+          <div className="flex flex-wrap sm:space-x-2">
+            {statistics.map((statistic, index) => {
+              return (
+                <div key={index} className="px-6 py-2 rounded bg-black/40">
+                  <div className="text-xs">{statistic.title}</div>
+                  <div className="text-xl">{statistic.value}</div>
+                </div>
+              );
+            })}
+          </div>
 
-            {/* <p
+          {/* <p
               dangerouslySetInnerHTML={{ __html: collection.description }}
               className="hidden sm:block"
             /> */}
-          </div>
         </div>
       </div>
 
       <Tab.Group>
         <Tab.List
-          className={"w-full flex text-xl justify-center py-3 border-b mb-4"}
+          className={
+            "w-full flex text-xl justify-center py-3 border-b border-white/20 mb-4 space-x-4"
+          }
         >
           {tabs.map((tab, index) => (
-            <Tab className={"px-4"} key={index}>
-              {tab.name}
+            <Tab key={index} as={Fragment}>
+              {({ selected }) => (
+                <button
+                  className={selected ? " " : "opacity-50 hover:opacity-100"}
+                >
+                  {tab.name}
+                </button>
+              )}
             </Tab>
           ))}
         </Tab.List>

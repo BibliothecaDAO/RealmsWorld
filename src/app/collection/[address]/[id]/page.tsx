@@ -1,10 +1,13 @@
-import { ActivityCard } from "@/app/components/ActivityCard";
 import { BuyButton } from "@/app/components/BuyModal";
 import { getData } from "@/functions";
-import { Activity, Attributes, Market, Token } from "@/types";
+import { Activity, Attributes, Collection, Market, Token } from "@/types";
 import { formatEther } from "ethers/lib/utils.js";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { shortenHex } from "@/functions/utils";
+import { TokenContent } from "./TokenContent";
+import { ListingModal } from "@/app/components/ListingModal";
 
 export default async function Page({
   params,
@@ -18,14 +21,11 @@ export default async function Page({
     "token"
   );
 
-  const token_activity = await getData(
-    { token: token_params },
-    "tokenActivity"
-  );
+  const collection_data = await getData({ id: params.address }, "collection");
 
   const token: Token = data.tokens[0].token;
   const market: Market = data.tokens[0].market;
-  const activity: Activity[] = token_activity.activities;
+  const collection: Collection = collection_data.collections[0];
 
   return (
     <div className="flex flex-wrap h-full p-4 -mt-64 sm:p-8">
@@ -46,9 +46,23 @@ export default async function Page({
                 className="w-1/2 p-1"
               >
                 <div className="p-4 rounded bg-black/50 hover:bg-black/60">
-                  {attributes.key}: {attributes.value} [{attributes.tokenCount}]
-                  <div className="mt-4 text-xs">
-                    Floor {attributes.floorAskPrice}ETH
+                  <div className="w-full uppercase size-xs opacity-70">
+                    {attributes.key}
+                  </div>
+                  <div className="flex justify-between w-full">
+                    <div className="text-lg font-semibold">
+                      {attributes.value}
+                    </div>
+                    <div className="ml-3">{attributes.floorAskPrice}</div>
+                  </div>
+                  <div className="w-full opacity-70">
+                    {attributes.tokenCount} (
+                    {(
+                      (attributes.tokenCount /
+                        parseInt(collection.tokenCount)) *
+                      100
+                    ).toFixed(2)}
+                    %)
                   </div>
                 </div>
               </Link>
@@ -57,17 +71,27 @@ export default async function Page({
         </div>
       </div>
       <div className="flex-grow p-8">
-        <h6>#{token.tokenId}</h6>
-        <h1>{token.name}</h1> <hr />
+        <Link
+          className="flex opacity-70 hover:opacity-100"
+          href={`/collection/${token.collection.id}`}
+        >
+          <ArrowLeft className="self-center w-4 mr-2" /> {token.collection.name}
+        </Link>
+
+        <h1>
+          {token.name} #{token.tokenId}
+        </h1>
+        <div className="flex space-x-4">
+          <div>owner </div>
+          <Link href={`/user/${token.owner}`}>
+            {shortenHex(token.owner)}
+          </Link>{" "}
+        </div>
         {market.floorAsk.price && (
           <h2>{formatEther(market.floorAsk.price.amount.raw)} ETH</h2>
         )}
-        <BuyButton address={token.contract} id={token.tokenId} />
-        <div className="grid grid-cols-1">
-          {activity.map((activity: Activity, index: number) => {
-            return <ActivityCard key={index} activity={activity} />;
-          })}
-        </div>
+
+        <TokenContent collection={collection} token={token} />
       </div>
     </div>
   );

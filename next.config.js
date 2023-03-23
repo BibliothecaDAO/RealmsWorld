@@ -5,7 +5,7 @@ const nextConfig = {
   },
   images: {
     dangerouslyAllowSVG: true,
-    domains: ['i.seadn.io','api.reservoir.tools', 'raw.githubusercontent.com', 'blur.io', 'www.loot.exchange', 'gem.xyz', 'sudoswap.xyz'],
+    domains: ['i.seadn.io','api.reservoir.tools', 'raw.githubusercontent.com', 'blur.io', 'www.loot.exchange', 'gem.xyz', 'sudoswap.xyz', 'openseauserdata.com', 'alienswap.xyz', 'www.ens.vision'],
   },
   webpack(config) {
     config.module.rules.push({

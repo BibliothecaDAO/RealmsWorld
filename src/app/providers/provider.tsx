@@ -6,7 +6,10 @@ import { getDefaultProvider } from "ethers";
 import { mainnet, optimism } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { InjectedConnector } from "wagmi/connectors/injected";
+import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 
 const { chains, provider } = configureChains(
   [mainnet],
@@ -18,7 +21,15 @@ const { chains, provider } = configureChains(
 
 const wagmiClient = createClient({
   autoConnect: true,
-  connectors: [new InjectedConnector({ chains })],
+  connectors: [
+    new CoinbaseWalletConnector({
+      chains,
+      options: {
+        appName: "wagmi",
+      },
+    }),
+    new InjectedConnector({ chains }),
+  ],
   provider,
 });
 

@@ -56,7 +56,7 @@ export const CollectionActivity = ({ address }: any) => {
 
   return (
     <div className="flex">
-      <div className="flex flex-col pr-8 space-y-3 w-72">
+      <div className="flex-col hidden pr-8 space-y-3 w-72 sm:flex">
         {searchAttributes.map((attribute: string, index: number) => {
           return (
             <div

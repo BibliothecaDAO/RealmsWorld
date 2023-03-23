@@ -3,12 +3,20 @@
 import Link from "next/link";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/app/components/ui/dialog";
+import { Button } from "./ui/button";
 
 function Profile() {
   const { address, isConnected } = useAccount();
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
+  const { connect, connectors, error, isLoading, pendingConnector } =
+    useConnect();
   const { disconnect } = useDisconnect();
 
   if (isConnected)
@@ -21,7 +29,32 @@ function Profile() {
     );
   return (
     <div className="self-center">
-      <button onClick={() => connect()}>Connect Wallet</button>
+      <div>
+        <Dialog>
+          <DialogTrigger>Open</DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogDescription>
+                {connectors.map((connector) => (
+                  <Button
+                    variant={"default"}
+                    disabled={!connector.ready}
+                    key={connector.id}
+                    onClick={() => connect({ connector })}
+                  >
+                    {connector.name}
+                    {!connector.ready && " (unsupported)"}
+                    {isLoading &&
+                      connector.id === pendingConnector?.id &&
+                      " (connecting)"}
+                  </Button>
+                ))}
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+        {error && <div>{error.message}</div>}
+      </div>
     </div>
   );
 }
