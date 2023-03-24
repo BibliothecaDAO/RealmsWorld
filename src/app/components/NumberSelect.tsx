@@ -23,7 +23,7 @@ const NumberSelect = ({ onChange, min, max }: Props) => {
       max={max}
       onChange={handleNumber1Change}
       placeholder="Enter a number"
-      className="block w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-100"
+      className="block w-full p-2 mt-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-100 bg-black/60"
     />
   );
 };

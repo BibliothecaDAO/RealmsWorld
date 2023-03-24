@@ -7,9 +7,23 @@ import { Tab } from "@headlessui/react";
 import { CollectionActivity } from "./CollectionActivity";
 import Image from "next/image";
 import { Attributes } from "../components/Attributes";
-import { Globe, Twitter } from "lucide-react";
+import { Globe, Twitter, X } from "lucide-react";
 import Link from "next/link";
 import { formatEther } from "ethers/lib/utils.js";
+import { useQuery } from "@/composables/useQuery";
+import { Button } from "../components/ui/button";
+import { Switch } from "../components/Switch";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/app/components/ui/dropdown-menu";
+import { sortDirection, sortOptions } from "@/constants";
+
 interface Props {
   collection: Collection;
   tokens: Token[];
@@ -21,17 +35,80 @@ export const CollectionContent = ({
   tokens,
   attributes,
 }: Props) => {
+  const { handleAttributeClick, getQueriesFromUrl } = useQuery();
+
   const tabs = [
     {
       name: "Trade",
       content: (
-        <div className="flex">
-          <Attributes address={collection.id} attributes={attributes} />
-          <TokenTable
-            address={collection.id}
-            collection={collection}
-            tokens={tokens}
-          />
+        <div>
+          <div className="flex justify-between w-full mb-3">
+            <div className="flex flex-wrap pr-8 space-x-1">
+              {getQueriesFromUrl().map((query, index) => {
+                return (
+                  <Button
+                    variant={"outline"}
+                    size={"sm"}
+                    key={index}
+                    onClick={() => handleAttributeClick(query.key, query.value)}
+                  >
+                    {query.key}:{" "}
+                    <span className="font-semibold">{query.value} </span>
+                    <X className="w-3 ml-3" />
+                  </Button>
+                );
+              })}
+            </div>
+            <div className="ml-auto">
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  {" "}
+                  <Button variant={"default"}>Direction</Button>{" "}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {sortDirection.map((query, index) => {
+                    return (
+                      <DropdownMenuItem
+                        key={index}
+                        onClick={() =>
+                          handleAttributeClick(query.key, query.value)
+                        }
+                      >
+                        {query.title}
+                      </DropdownMenuItem>
+                    );
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Button variant={"default"}>Sort By</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {sortOptions.map((query, index) => {
+                    return (
+                      <DropdownMenuItem
+                        key={index}
+                        onClick={() =>
+                          handleAttributeClick(query.key, query.value)
+                        }
+                      >
+                        {query.title}
+                      </DropdownMenuItem>
+                    );
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+          <div className="flex">
+            <Attributes address={collection.id} attributes={attributes} />
+            <TokenTable
+              address={collection.id}
+              collection={collection}
+              tokens={tokens}
+            />
+          </div>
         </div>
       ),
     },
@@ -124,7 +201,9 @@ export const CollectionContent = ({
             {statistics.map((statistic, index) => {
               return (
                 <div key={index} className="px-6 py-2 rounded bg-black/40">
-                  <div className="text-xs">{statistic.title}</div>
+                  <div className="text-xs font-sans-serif">
+                    {statistic.title}
+                  </div>
                   <div className="text-xl">{statistic.value}</div>
                 </div>
               );

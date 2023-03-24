@@ -1,6 +1,5 @@
 import { getData } from "@/functions";
 import { CollectionContent } from "../CollectionContent";
-import { CollectionAttributes } from "../CollectionAttributes";
 
 export default async function Page({
   params,

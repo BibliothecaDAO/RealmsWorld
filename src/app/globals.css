@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+h1,h2,h3,h4,h5,h6 {
+  @apply font-sans-serif;
+}
+
 h1 {
   @apply my-4 text-4xl sm:text-5xl md:text-6xl sm:my-6 md:my-8;
 }
@@ -28,4 +32,8 @@ h6 {
 
 .theme-shadow {
   @apply shadow-lg shadow-red-300;
+}
+
+body {
+  @apply font-sans;
 }

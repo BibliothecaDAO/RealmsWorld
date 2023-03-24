@@ -17,10 +17,15 @@ export default async function Page({
   const token_params = params.address + ":" + params.id;
 
   const data = await getData(
-    { tokens: token_params, includeAttributes: true, includeQuantity: true },
+    {
+      tokens: token_params,
+      includeAttributes: true,
+      includeQuantity: true,
+    },
     "token"
   );
 
+  console.log(data.tokens[0].token.attributes);
   const collection_data = await getData({ id: params.address }, "collection");
 
   const token: Token = data.tokens[0].token;
@@ -50,7 +55,7 @@ export default async function Page({
                     {attributes.key}
                   </div>
                   <div className="flex justify-between w-full">
-                    <div className="text-lg font-semibold">
+                    <div className="text-lg font-sans-serif">
                       {attributes.value}
                     </div>
                     <div className="ml-3">{attributes.floorAskPrice}</div>

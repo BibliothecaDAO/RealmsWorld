@@ -18,10 +18,7 @@ export const TokenTable = ({ address, SSRtokens }: any) => {
     setLoading(true);
 
     try {
-      const tokens = await getData(
-        { collection: address, attributes: { ...query } },
-        "token"
-      );
+      const tokens = await getData({ collection: address, ...query }, "token");
       setTokens(tokens.tokens);
       setLoading(false);
 

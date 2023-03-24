@@ -2,12 +2,18 @@ import { Provider } from "./providers/provider";
 import "./globals.css";
 import Sidebar from "./components/SideMenu";
 import { TopNav } from "./components/TopNav";
-import { Inconsolata } from "next/font/google";
+import { Inconsolata, Karla } from "next/font/google";
 import { Footer } from "./components/Footer";
 
 const inconsolata = Inconsolata({
   subsets: ["latin"],
   variable: "--font-inconsolata",
+});
+
+const karla = Karla({
+  subsets: ["latin"],
+  variable: "--font-karla",
+  weight: "800",
 });
 
 export const metadata = {
@@ -23,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`"text-white bg-theme-gray ${inconsolata.variable} font-sans text-white`}
+        className={`bg-theme-gray ${inconsolata.variable} ${karla.variable}  text-white/80`}
       >
         <main className="flex flex-wrap h-screen">
           <Provider>

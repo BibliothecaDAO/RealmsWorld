@@ -11,6 +11,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['var(--font-inconsolata)', ...fontFamily.sans],
+        "sans-serif": ['var(--font-karla)', ...fontFamily.serif],
       },
     },
   },

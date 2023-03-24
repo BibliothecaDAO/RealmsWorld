@@ -31,7 +31,10 @@ function Profile() {
     <div className="self-center">
       <div>
         <Dialog>
-          <DialogTrigger>Open</DialogTrigger>
+          <DialogTrigger>
+            {" "}
+            <Button variant={"default"}>Login</Button>
+          </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogDescription>
