@@ -5,14 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { games } from "@/constants";
 import { Canvas } from "@react-three/fiber";
-import {
-  SoftShadows,
-  Float,
-  CameraControls,
-  Sky,
-  PerformanceMonitor,
-} from "@react-three/drei";
-import { LandingScene } from "./LandingScene";
+
 import { GameCard } from "./components/GameCard";
 
 export default async function Home() {

@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div>
         <div className="flex space-x-2 uppercase">
           {game?.chains.map((a, i) => (
-            <div>chain:{a}</div>
+            <div key={i}>chain:{a}</div>
           ))}
           <div>|</div>
           <div>status: {game?.status}</div>
