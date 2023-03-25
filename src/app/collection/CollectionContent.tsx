@@ -22,7 +22,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
-import { sortDirection, sortOptions } from "@/constants";
+import { games, sortDirection, sortOptions } from "@/constants";
+import { getGamesByContract } from "@/functions/getters";
 
 interface Props {
   collection: Collection;
@@ -160,6 +161,8 @@ export const CollectionContent = ({
     },
   ];
 
+  const comptatible_games = getGamesByContract(games, collection.id);
+
   return (
     <div className="flex-grow p-8">
       <div className="sm:flex">
@@ -196,7 +199,19 @@ export const CollectionContent = ({
             })}
           </div>
           <h1>{collection.name}</h1>
-
+          <div className="flex flex-wrap mb-4 sm:space-x-2">
+            {comptatible_games.map((game: any, index: any) => {
+              return (
+                <Button
+                  key={index}
+                  href={`/games/${game.id}`}
+                  className="text-xs font-sans-serif"
+                >
+                  {game.name}
+                </Button>
+              );
+            })}
+          </div>
           <div className="flex flex-wrap sm:space-x-2">
             {statistics.map((statistic, index) => {
               return (

@@ -4,6 +4,7 @@ import Sidebar from "./components/SideMenu";
 import { TopNav } from "./components/TopNav";
 import { Inconsolata, Karla } from "next/font/google";
 import { Footer } from "./components/Footer";
+import { LandingScene } from "./LandingScene";
 
 const inconsolata = Inconsolata({
   subsets: ["latin"],
@@ -34,11 +35,14 @@ export default function RootLayout({
         <main className="flex flex-wrap h-screen">
           <Provider>
             <Sidebar />
-            <div className="flex-grow ">
+            <div className="z-10 flex-grow">
               <TopNav />
               {children}
             </div>
           </Provider>
+          {/* <div className="absolute top-0 z-0 w-full h-screen">
+            <LandingScene />
+          </div> */}
           <Footer />
         </main>
       </body>

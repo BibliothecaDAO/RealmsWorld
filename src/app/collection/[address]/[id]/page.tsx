@@ -25,7 +25,6 @@ export default async function Page({
     "token"
   );
 
-  console.log(data.tokens[0].token.attributes);
   const collection_data = await getData({ id: params.address }, "collection");
 
   const token: Token = data.tokens[0].token;

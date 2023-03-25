@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
-import { Collection, Token } from "@/types";
+import { Collection, Game, Token } from "@/types";
 
 import { Tab } from "@headlessui/react";
 
@@ -12,6 +12,10 @@ import { TokenActivity } from "./TokenActivity";
 import { BuyButton } from "@/app/components/BuyModal";
 import { ListingModal } from "@/app/components/ListingModal";
 import { useAccount } from "wagmi";
+import { getGamesByContract } from "@/functions/getters";
+import { games } from "@/constants";
+import { Button } from "@/app/components/ui/button";
+import { GameCard } from "@/app/components/GameCard";
 
 interface Props {
   collection: Collection;
@@ -22,13 +26,27 @@ interface Props {
 export const TokenContent = ({ token, collection }: Props) => {
   const { address, isConnecting, isConnected } = useAccount();
 
+  const comptatible_games = getGamesByContract(games, collection.id);
+
   const owner = address
     ? token.owner.toUpperCase() === address.toUpperCase()
     : false;
 
   const tabs = [
     { name: "Info", content: <div>coming soon</div> },
-    { name: "Games", content: <div>coming soon</div> },
+    {
+      name: "Games",
+      content: (
+        <div>
+          {" "}
+          <div className="flex flex-wrap mb-4 sm:space-x-2">
+            {comptatible_games.map((game: Game, index: any) => {
+              return <GameCard key={index} game={game} />;
+            })}
+          </div>
+        </div>
+      ),
+    },
     {
       name: "Activity",
       content: (

@@ -1,6 +1,3 @@
-import Link from "next/link";
-import { useState } from "react";
-import Profile from "./LoginButton";
 import { Backpack, Map, Boxes, Twitter, Github } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -39,7 +36,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`hidden md:flex flex-col fixed z-100 h-screen  top-0 px-4 py-8 bg-black/30`}
+      className={`hidden md:flex flex-col fixed z-100 h-screen  top-0 px-4 py-8 bg-black/30 z-20`}
     >
       <div className="flex flex-col mt-4 space-y-6">
         {menu.map((item, index) => {

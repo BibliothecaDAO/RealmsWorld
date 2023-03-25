@@ -1,4 +1,7 @@
-## Getting Started
+#  Atlas
+
+The center of the Loot on-chain game world. Your place for anything Realms and Loot releated.
+
 
 First, run the development server:
 

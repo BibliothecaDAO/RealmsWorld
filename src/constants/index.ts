@@ -1,10 +1,5 @@
-export const sortOptions = [
-    { title: "Price", key: "sortBy", value: "floorAskPrice" },
-    { title: "TokenId", key: "sortBy", value: "tokenId" },
-    { title: "Rarity", key: "sortBy", value: "rarity" },
-];
+import { games } from './games';
+import { sortOptions, sortDirection } from './filters';
+import { allWhiteListed } from './whiteListedContracts';
 
-export const sortDirection = [
-    { title: "Asc", key: "sortDirection", value: "asc" },
-    { title: "Dsc", key: "sortDirection", value: "dsc" },
-];
+export { games, sortOptions, sortDirection, allWhiteListed }

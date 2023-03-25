@@ -1,17 +1,16 @@
 "use client";
 
-import Link from "next/link";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { Button } from "./ui/button";
+import { shortenHex } from "@/functions/utils";
+import { LogOut } from "lucide-react";
 
 function Profile() {
   const { address, isConnected } = useAccount();
@@ -21,10 +20,15 @@ function Profile() {
 
   if (isConnected)
     return (
-      <div className="self-center">
-        Connected to
-        <Link href={`/user/${address}`}>[0xAccount]</Link>
-        <button onClick={() => disconnect()}>Disconnect</button>
+      <div className="flex self-center">
+        <Button href={`/user/${address}`}>{shortenHex(address || "")}</Button>
+        <Button
+          className="self-center"
+          variant={"default"}
+          onClick={() => disconnect()}
+        >
+          <LogOut className="self-center w-3" />
+        </Button>
       </div>
     );
   return (

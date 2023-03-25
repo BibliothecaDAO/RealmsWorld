@@ -1,3 +1,4 @@
+import { allWhiteListed } from "@/constants";
 import { getData } from "@/functions";
 import { Collection } from "@/types";
 import { formatEther } from "ethers/lib/utils.js";
@@ -7,23 +8,7 @@ import Link from "next/link";
 export default async function Page() {
   const data = await getData(
     {
-      contracts: [
-        {
-          contract: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
-        },
-        {
-          contract: "0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7",
-        },
-        {
-          contract: "0x8db687aceb92c66f013e1d614137238cc698fedb",
-        },
-        {
-          contract: "0x86f7692569914b5060ef39aab99e62ec96a6ed45",
-        },
-        {
-          contract: "0x527a4206ac04c2017295cf32f1fc2f9e034a7c40",
-        },
-      ],
+      contracts: allWhiteListed,
     },
     "collection"
   );

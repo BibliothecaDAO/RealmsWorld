@@ -227,3 +227,36 @@ export interface TokenOwnership {
   floorAsk: FloorAsk;
   acquiredAt: string;
 }
+
+interface Link {
+  website: string;
+  discord: string;
+  twitter: string;
+  whitepaper: string;
+}
+
+interface CompatibleToken {
+  name: string;
+  contract: string;
+  icon: string;
+  image: string;
+}
+
+interface ScreenShot {
+  src: string;
+  alt: string;
+}
+
+export interface Game {
+  name: string;
+  id: string;
+  icon: string;
+  status: string;
+  image: string;
+  color: string;
+  chains: string[];
+  description: string;
+  links: Link;
+  compatibleTokens: CompatibleToken[];
+  screenshots: ScreenShot[];
+}
