@@ -7,7 +7,7 @@ import { Tab } from "@headlessui/react";
 import { CollectionActivity } from "./CollectionActivity";
 import Image from "next/image";
 import { Attributes } from "../components/Attributes";
-import { Globe, Twitter, X } from "lucide-react";
+import { Globe, Twitter, X, Filter } from "lucide-react";
 import Link from "next/link";
 import { formatEther } from "ethers/lib/utils.js";
 import { useQuery } from "@/composables/useQuery";
@@ -24,6 +24,7 @@ import {
 } from "@/app/components/ui/dropdown-menu";
 import { games, sortDirection, sortOptions } from "@/constants";
 import { getGamesByContract } from "@/functions/getters";
+import { useUIContext } from "../providers/UIProvider";
 
 interface Props {
   collection: Collection;
@@ -37,6 +38,7 @@ export const CollectionContent = ({
   attributes,
 }: Props) => {
   const { handleAttributeClick, getQueriesFromUrl } = useQuery();
+  const { isFilterOpen, toggleFilter } = useUIContext();
 
   const tabs = [
     {
@@ -44,27 +46,21 @@ export const CollectionContent = ({
       content: (
         <div>
           <div className="flex justify-between w-full mb-3">
-            <div className="flex flex-wrap pr-8 space-x-1">
-              {getQueriesFromUrl().map((query, index) => {
-                return (
-                  <Button
-                    variant={"outline"}
-                    size={"sm"}
-                    key={index}
-                    onClick={() => handleAttributeClick(query.key, query.value)}
-                  >
-                    {query.key}:{" "}
-                    <span className="font-semibold">{query.value} </span>
-                    <X className="w-3 ml-3" />
-                  </Button>
-                );
-              })}
-            </div>
-            <div className="ml-auto">
+            <div className="flex ml-auto space-x-2">
+              <Button
+                className="self-center sm:hidden"
+                size={"xs"}
+                onClick={toggleFilter}
+                variant={"default"}
+              >
+                <Filter className="w-3" />
+              </Button>{" "}
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   {" "}
-                  <Button variant={"default"}>Direction</Button>{" "}
+                  <Button size={"xs"} variant={"default"}>
+                    Direction
+                  </Button>{" "}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   {sortDirection.map((query, index) => {
@@ -83,7 +79,9 @@ export const CollectionContent = ({
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <Button variant={"default"}>Sort By</Button>
+                  <Button size={"xs"} variant={"default"}>
+                    Sort By
+                  </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   {sortOptions.map((query, index) => {
@@ -102,13 +100,33 @@ export const CollectionContent = ({
               </DropdownMenu>
             </div>
           </div>
+
           <div className="flex">
             <Attributes address={collection.id} attributes={attributes} />
-            <TokenTable
-              address={collection.id}
-              collection={collection}
-              tokens={tokens}
-            />
+            <div>
+              <div className="flex flex-wrap px-4 pr-8 mb-2 space-x-1">
+                {getQueriesFromUrl().map((query, index) => {
+                  return (
+                    <Button
+                      variant={"outline"}
+                      size={"xs"}
+                      key={index}
+                      onClick={() =>
+                        handleAttributeClick(query.key, query.value)
+                      }
+                    >
+                      {query.key}: <span> {query.value} </span>
+                      <X className="w-3 ml-3" />
+                    </Button>
+                  );
+                })}
+              </div>
+              <TokenTable
+                address={collection.id}
+                collection={collection}
+                tokens={tokens}
+              />
+            </div>
           </div>
         </div>
       ),
@@ -144,7 +162,7 @@ export const CollectionContent = ({
     { icon: <Globe />, value: collection.onSaleCount, title: "Listed" },
     {
       icon: <Globe />,
-      value: collection.volume.allTime,
+      value: collection.volume.allTime.toFixed(2),
       title: "Total Volume",
     },
     { icon: <Globe />, value: collection.tokenCount, title: "Count" },
@@ -164,9 +182,9 @@ export const CollectionContent = ({
   const comptatible_games = getGamesByContract(games, collection.id);
 
   return (
-    <div className="flex-grow p-8">
-      <div className="sm:flex">
-        <div className="self-center flex-none pr-10">
+    <div className="flex-grow p-4 sm:p-8">
+      <div className="-mt-16 sm:mt-0 sm:flex">
+        <div className="self-center flex-none sm:pr-10">
           <Image
             src={collection.image} // Use the path to your image
             alt="An example image" // Provide a descriptive alt text
@@ -187,7 +205,7 @@ export const CollectionContent = ({
         </div>
 
         <div>
-          <div className="flex flex-wrap mb-3 space-x-2">
+          <div className="flex flex-wrap mb-3 space-x-2 text-xs">
             {contract_details.map((detail, index) => {
               return (
                 <div key={index} className="uppercase">
@@ -212,14 +230,17 @@ export const CollectionContent = ({
               );
             })}
           </div>
-          <div className="flex flex-wrap sm:space-x-2">
+          <div className="flex flex-wrap justify-between sm:space-x-2">
             {statistics.map((statistic, index) => {
               return (
-                <div key={index} className="px-6 py-2 rounded bg-black/40">
+                <div
+                  key={index}
+                  className="px-2 py-2 rounded sm:px-6 bg-black/40"
+                >
                   <div className="text-xs font-sans-serif">
                     {statistic.title}
                   </div>
-                  <div className="text-xl">{statistic.value}</div>
+                  <div className="text-sm sm:text-xl">{statistic.value}</div>
                 </div>
               );
             })}

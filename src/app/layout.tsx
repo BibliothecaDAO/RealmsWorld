@@ -4,6 +4,7 @@ import Sidebar from "./components/SideMenu";
 import { TopNav } from "./components/TopNav";
 import { Inconsolata, Karla } from "next/font/google";
 import { Footer } from "./components/Footer";
+import { UIContextProvider } from "./providers/UIProvider";
 
 const inconsolata = Inconsolata({
   subsets: ["latin"],
@@ -32,13 +33,15 @@ export default function RootLayout({
         className={`bg-theme-gray ${inconsolata.variable} ${karla.variable}  text-white/80`}
       >
         <main className="flex flex-wrap h-screen">
-          <Provider>
-            <Sidebar />
-            <div className="z-10 flex-grow">
-              <TopNav />
-              {children}
-            </div>
-          </Provider>
+          <UIContextProvider>
+            <Provider>
+              <Sidebar />
+              <div className="z-10 flex-grow">
+                <TopNav />
+                {children}
+              </div>
+            </Provider>
+          </UIContextProvider>
           <Footer />
         </main>
       </body>

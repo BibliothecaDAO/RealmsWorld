@@ -74,7 +74,7 @@ export default async function Page({
           })}
         </div>
       </div>
-      <div className="flex-grow p-8">
+      <div className="flex-grow p-4 sm:p-8">
         <Link
           className="flex opacity-70 hover:opacity-100"
           href={`/collection/${token.collection.id}`}

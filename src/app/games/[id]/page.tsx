@@ -38,7 +38,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
 
-        <div className="flex my-4">
+        {/* <div className="flex my-4">
           {game?.screenshots.map((screenshot, index) => (
             <Image
               key={index}
@@ -49,7 +49,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               className="w-full rounded sm:1/2"
             />
           ))}
-        </div>
+        </div> */}
       </div>
     </main>
   );

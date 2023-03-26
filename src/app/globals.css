@@ -7,7 +7,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 h1 {
-  @apply my-4 text-4xl sm:text-5xl md:text-6xl sm:my-6 md:my-8;
+  @apply my-4 text-3xl sm:text-4xl md:text-5xl sm:my-6 md:my-8;
 }
 
 h2 {
@@ -15,11 +15,11 @@ h2 {
 }
 
 h3 {
-  @apply my-2 text-2xl sm:text-3xl md:text-4xl sm:my-4 md:my-5;
+  @apply my-0 text-2xl sm:text-3xl md:text-4xl sm:my-1 md:my-2;
 }
 
 h4 {
-  @apply my-2 text-xl sm:text-2xl md:text-3xl sm:my-3 md:my-4;
+  @apply my-1 text-xl sm:text-2xl md:text-3xl sm:my-3 md:my-4;
 }
 
 h5 {

@@ -9,12 +9,21 @@ import {
 } from "@/app/components/ui/accordion";
 import { Button } from "./ui/button";
 import { useQuery } from "@/composables/useQuery";
+import { useUIContext } from "../providers/UIProvider";
 
 export const Attributes = ({ attributes }: any) => {
   const { handleAttributeClick, isAttributeInQuery, isKeyInQuery } = useQuery();
+  const { isFilterOpen, toggleFilter } = useUIContext();
 
   return (
-    <div className="flex-none hidden sm:w-72 sm:block">
+    <div
+      className={` ${
+        isFilterOpen ? "block" : "hidden"
+      } fixed top-0 left-0 z-10 w-screen h-screen p-3 bg-theme-gray sm:relative sm:flex-none sm:w-72 sm:block overflow-scroll sm:overflow-y-hidden sm:overscroll-none overscroll-y-none`}
+    >
+      <Button className="sm:hidden" onClick={toggleFilter} variant={"default"}>
+        Close
+      </Button>{" "}
       {attributes.attributes.map((attribute: any, index: number) => {
         return (
           <Accordion key={index} type="single" collapsible>
