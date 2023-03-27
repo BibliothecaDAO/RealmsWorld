@@ -8,7 +8,7 @@ export async function getData(query: any, route: string) {
         body: JSON.stringify(query)
     });
 
-    console.log(process.env.NEXT_PUBLIC_LOCAL_API + route)
+    console.log(process.env.NEXT_PUBLIC_LOCAL_API + route, JSON.stringify(query))
 
     if (!res.ok) {
         throw new Error('Failed to fetch data');

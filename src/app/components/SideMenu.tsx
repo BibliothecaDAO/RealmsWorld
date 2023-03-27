@@ -4,6 +4,7 @@ import { Backpack, Map, Boxes, Twitter, Github, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { useUIContext } from "../providers/UIProvider";
 import { useRouter } from "next/navigation";
+import BibliothecaDAO from "../../icons/BibliothecaBook.svg";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -57,11 +58,12 @@ const Sidebar = () => {
       >
         <X />
       </Button>
+
       <div className="flex flex-col mt-4 space-y-6">
         {menu.map((item, index) => {
           return (
             <Button
-              className="flex justify-start transition-all duration-450"
+              className="flex justify-start transition-all duration-450 group"
               key={index}
               onClick={() => handleClick(item.href)}
             >
@@ -69,7 +71,7 @@ const Sidebar = () => {
                 {item.icon}{" "}
               </span>
 
-              <span className="visible mr-auto transition-all opacity-100 sm:invisible duration-450 group-hover:visible sm:opacity-40 group-hover:opacity-100 group-hover:flex sm:group-hover:-translate-x-3">
+              <span className="visible pl-3 transition-all duration-150 opacity-100 sm:invisible group-hover:visible sm:opacity-0 group-hover:opacity-100 group-hover:flex ">
                 {item.name}
               </span>
             </Button>

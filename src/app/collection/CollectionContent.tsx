@@ -7,7 +7,7 @@ import { Tab } from "@headlessui/react";
 import { CollectionActivity } from "./CollectionActivity";
 import Image from "next/image";
 import { Attributes } from "../components/Attributes";
-import { Globe, Twitter, X, Filter } from "lucide-react";
+import { Globe, Twitter, X, Filter, Grid } from "lucide-react";
 import Link from "next/link";
 import { formatEther } from "ethers/lib/utils.js";
 import { useQuery } from "@/composables/useQuery";
@@ -38,7 +38,7 @@ export const CollectionContent = ({
   attributes,
 }: Props) => {
   const { handleAttributeClick, getQueriesFromUrl } = useQuery();
-  const { isFilterOpen, toggleFilter } = useUIContext();
+  const { isFilterOpen, toggleFilter, toggleGrid } = useUIContext();
 
   const tabs = [
     {
@@ -54,6 +54,14 @@ export const CollectionContent = ({
                 variant={"default"}
               >
                 <Filter className="w-3" />
+              </Button>{" "}
+              <Button
+                onClick={toggleGrid}
+                className="self-center"
+                size={"xs"}
+                variant={"default"}
+              >
+                <Grid className="self-center w-4" />
               </Button>{" "}
               <DropdownMenu>
                 <DropdownMenuTrigger>
@@ -101,9 +109,9 @@ export const CollectionContent = ({
             </div>
           </div>
 
-          <div className="flex">
+          <div className="flex w-full">
             <Attributes address={collection.id} attributes={attributes} />
-            <div>
+            <div className="w-full">
               <div className="flex flex-wrap px-4 pr-8 mb-2 space-x-1">
                 {getQueriesFromUrl().map((query, index) => {
                   return (

@@ -8,6 +8,8 @@ interface UIContextValue {
   toggleSidebar: () => void;
   isFilterOpen: boolean;
   toggleFilter: () => void;
+  isGrid: boolean;
+  toggleGrid: () => void;
 }
 
 // Create the UI context
@@ -33,6 +35,7 @@ export const UIContextProvider: React.FC<UIContextProviderProps> = ({
   // State for sidebar
   const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [isFilterOpen, setFilterOpen] = useState<boolean>(false);
+  const [isGrid, setGrid] = useState<boolean>(true);
 
   // Function to toggle sidebar state
   const toggleSidebar = () => {
@@ -44,11 +47,18 @@ export const UIContextProvider: React.FC<UIContextProviderProps> = ({
     setFilterOpen(!isFilterOpen);
   };
 
+  // Function to toggle grid state
+  const toggleGrid = () => {
+    setGrid(!isGrid);
+  };
+
   const value = {
     isSidebarOpen,
     toggleSidebar,
     isFilterOpen,
     toggleFilter,
+    isGrid,
+    toggleGrid,
   };
 
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>;
