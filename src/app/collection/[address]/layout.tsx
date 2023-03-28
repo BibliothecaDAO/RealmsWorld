@@ -33,7 +33,7 @@ export default function RootLayout({
       <motion.div
         initial={{ opacity: 0.5 }}
         animate={{ opacity: 1 }}
-        className="sm:pl-32 "
+        className="lg:pl-32 "
       >
         {children}
       </motion.div>

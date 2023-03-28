@@ -8,6 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import { shortenHex } from "@/functions/utils";
 import { TokenContent } from "./TokenContent";
 import { ListingModal } from "@/app/components/ListingModal";
+import { TokenAttributes } from "./TokenAttributes";
 
 export default async function Page({
   params,
@@ -33,7 +34,7 @@ export default async function Page({
 
   return (
     <div className="flex flex-wrap h-full p-4 -mt-64 sm:p-8">
-      <div className="flex-none w-full p-2 rounded-t sm:w-1/3 bg-gradient-to-b from-theme-gray-light">
+      <div className="flex-none w-full p-2 rounded-t md:w-1/3 bg-gradient-to-b from-theme-gray-light">
         <Image
           src={token.image} // Use the path to your image
           alt="An example image" // Provide a descriptive alt text
@@ -42,39 +43,10 @@ export default async function Page({
           className="mx-auto border-4 rounded border-white/10"
         />
         <div className="flex flex-wrap">
-          {token.attributes.map((attributes: Attributes, index) => {
-            return (
-              <Link
-                href={`/collection/${token.contract}?${attributes.key}=${attributes.value}`}
-                key={index}
-                className="w-1/2 p-1"
-              >
-                <div className="p-4 rounded bg-black/50 hover:bg-black/60">
-                  <div className="w-full uppercase size-xs opacity-70">
-                    {attributes.key}
-                  </div>
-                  <div className="flex justify-between w-full">
-                    <div className="text-lg font-sans-serif">
-                      {attributes.value}
-                    </div>
-                    <div className="ml-3">{attributes.floorAskPrice}</div>
-                  </div>
-                  <div className="w-full opacity-70">
-                    {attributes.tokenCount} (
-                    {(
-                      (attributes.tokenCount /
-                        parseInt(collection.tokenCount)) *
-                      100
-                    ).toFixed(2)}
-                    %)
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+          <TokenAttributes token={token} collection={collection} />
         </div>
       </div>
-      <div className="flex-grow p-4 sm:p-8">
+      <div className="w-auto p-4 md:p-8 md:w-2/3">
         <Link
           className="flex opacity-70 hover:opacity-100"
           href={`/collection/${token.collection.id}`}
@@ -94,8 +66,9 @@ export default async function Page({
         {market.floorAsk.price && (
           <h2>{formatEther(market.floorAsk.price.amount.raw)} ETH</h2>
         )}
-
-        <TokenContent collection={collection} token={token} />
+        <div>
+          <TokenContent collection={collection} token={token} />
+        </div>
       </div>
     </div>
   );

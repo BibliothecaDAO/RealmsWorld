@@ -238,17 +238,17 @@ export const CollectionContent = ({
               );
             })}
           </div>
-          <div className="flex flex-wrap justify-between sm:space-x-2">
+          <div className="flex flex-wrap justify-between lg:space-x-2">
             {statistics.map((statistic, index) => {
               return (
                 <div
                   key={index}
-                  className="px-2 py-2 rounded sm:px-6 bg-black/40"
+                  className="px-2 py-2 rounded lg:px-6 bg-black/40"
                 >
                   <div className="text-xs font-sans-serif">
                     {statistic.title}
                   </div>
-                  <div className="text-sm sm:text-xl">{statistic.value}</div>
+                  <div className="text-sm lg:text-xl">{statistic.value}</div>
                 </div>
               );
             })}

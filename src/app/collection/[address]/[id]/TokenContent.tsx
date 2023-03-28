@@ -33,7 +33,7 @@ export const TokenContent = ({ token, collection }: Props) => {
     : false;
 
   const tabs = [
-    { name: "Info", content: <div>coming soon</div> },
+    { name: "Info", content: <div>{collection.description}</div> },
     {
       name: "Games",
       content: (

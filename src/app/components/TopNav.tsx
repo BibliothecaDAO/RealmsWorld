@@ -10,9 +10,9 @@ import { Button } from "./ui/button";
 export const TopNav = () => {
   const { isSidebarOpen, toggleSidebar } = useUIContext();
   return (
-    <div className="relative w-full p-3 pl-4 sm:pl-8 md:pl-32 z-100">
+    <div className="relative w-full p-3 pl-4 sm:pl-8 lg:pl-32 z-100">
       <div className="flex justify-between ">
-        <Button className="sm:hidden" onClick={toggleSidebar}>
+        <Button className="lg:hidden" onClick={toggleSidebar}>
           <Menu className="self-center" />
         </Button>
 

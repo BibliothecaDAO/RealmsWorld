@@ -16,7 +16,7 @@ export default async function Page({
   const tokens = await getData({ collection: params.address }, "token");
 
   return (
-    <div className="flex h-full -mt-56 sm:p-8">
+    <div className="flex h-full -mt-56">
       <CollectionContent
         collection={collection.collections[0]}
         tokens={tokens.tokens}
