@@ -1,0 +1,14 @@
+query getHistoricPriceData($dateFrom: String!, $dateTo: String!, $tokenId: Int!)
+@api(name: starkIndexer) {
+  exchangeRates(
+    where: { date: { gt: $dateFrom, lte: $dateTo } tokenId:{equals: $tokenId} }
+    orderBy: { date: asc }
+  ) {
+    date
+    hour
+    tokenId
+    amount
+    buyAmount
+    sellAmount
+  }
+}

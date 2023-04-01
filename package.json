@@ -6,9 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "graphql-codegen --config config.yml"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.10",
+    "@graphql-codegen/client-preset": "^2.1.1",
+    "@habx/apollo-multi-endpoint-link": "^2.9.0",
     "@headlessui/react": "^1.7.13",
     "@radix-ui/react-accessible-icon": "^1.0.1",
     "@radix-ui/react-accordion": "^1.1.0",
@@ -46,16 +50,19 @@
     "@types/react-dom": "18.0.11",
     "@types/three": "^0.149.0",
     "autoprefixer": "^10.4.14",
+    "chart.js": "^4.2.1",
     "class-variance-authority": "^0.4.0",
     "cmdk": "^0.2.0",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "ethers": "^5.1.0",
     "framer-motion": "^10.6.0",
+    "graphql": "^16.6.0",
     "lucide-react": "^0.127.0",
     "next": "13.2.4",
     "postcss": "^8.4.21",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "sharp": "^0.32.0",
     "tailwind-merge": "^1.10.0",
@@ -65,6 +72,11 @@
     "wagmi": "^0.9.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^3.2.2",
+    "@graphql-codegen/typescript": "^3.0.2",
+    "@graphql-codegen/typescript-graphql-request": "^4.5.9",
+    "@graphql-codegen/typescript-operations": "^3.0.2",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@svgr/webpack": "^6.5.1"
   }
 }

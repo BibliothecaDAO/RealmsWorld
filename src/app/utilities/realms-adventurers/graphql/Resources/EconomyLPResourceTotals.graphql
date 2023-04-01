@@ -1,0 +1,12 @@
+query getEconomyLpResourceTotals @api(name: starkIndexer) {
+  economyLpResourceMintedTotals {
+    resourceId
+    resourceName
+    amount
+  }
+  economyLpResourceBurnedTotals {
+    resourceId
+    resourceName
+    amount
+  }
+}

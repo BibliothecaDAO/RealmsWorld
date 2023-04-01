@@ -1,0 +1,8 @@
+schema:
+  - "https://dev-indexer-gu226.ondigitalocean.app/graphql"
+documents:
+  - "./src/app/utilities/realms-adventurers/graphql/**/*.graphql"
+generates:
+  './src/generated/': {
+    preset: 'client'
+  }

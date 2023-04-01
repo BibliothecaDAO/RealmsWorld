@@ -38,6 +38,17 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
 
+        <div>
+          <h5>Tools and Utilities</h5>
+          <div className="flex">
+            {game?.utilities.map((utility, index) => (
+              <Button href={utility.url} key={index}>
+                {utility.name}
+              </Button>
+            ))}
+          </div>
+        </div>
+
         {/* <div className="flex my-4">
           {game?.screenshots.map((screenshot, index) => (
             <Image

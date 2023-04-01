@@ -33,7 +33,13 @@ export const games = [
                 src: '/screenshots/eternum-2.png',
                 alt: 'Realms: Eternum',
             }
-
+        ],
+        utilities: [
+            {
+                id: 'economic-dashboard',
+                name: 'Economic Dashboard',
+                url: '/utilities/realms-adventurers/economic-dashboard'
+            }
         ]
     }
 ]
