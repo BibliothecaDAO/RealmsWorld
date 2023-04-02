@@ -9,12 +9,14 @@ import { UIContextProvider } from "./providers/UIProvider";
 const inconsolata = Inconsolata({
   subsets: ["latin"],
   variable: "--font-inconsolata",
+  display: "swap"
 });
 
 const karla = Karla({
   subsets: ["latin"],
   variable: "--font-karla",
   weight: "800",
+  display: "swap"
 });
 
 export const metadata = {
@@ -29,9 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`bg-theme-gray ${inconsolata.variable} ${karla.variable}  text-white/80`}
-      >
+      <body className={`bg-theme-gray ${inconsolata.variable} ${karla.variable} text-white/80`}>
         <UIContextProvider>
           <Provider>
             <main className="flex flex-wrap min-h-screen">
