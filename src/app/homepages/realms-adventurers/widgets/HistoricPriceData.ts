@@ -3,7 +3,7 @@ import client from "../apolloClient";
 import {
     GetHistoricPriceDataDocument,
     GetHistoricPriceDataQuery
-} from "../../../../../generated/graphql";
+} from "@/generated/graphql";
 import { Widget, WidgetType, WidgetViewData } from "./DashboardWidget";
 import { LineViewData } from "./WidgetViewTypes";
 

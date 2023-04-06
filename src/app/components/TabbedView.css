@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.tab-container {
+    @apply flex mt-4 mb-4 border-b border-slate-600;
+}
+
+.tab-button {
+    @apply px-4 py-2 mr-1 border border-transparent rounded-t font-semibold transition-all;
+}
+
+.tab-button:not(:last-child) {
+    @apply mr-1;
+}
+
+.tab-button.active {
+    @apply bg-slate-800 text-white border-slate-800;
+}
+
+.tab-button.inactive {
+    @apply bg-gray-300 text-black border-gray-300;
+}
+
+.tab-button.inactive:hover {
+    @apply bg-gray-400;
+}
+
+.tab-button.inactive:not(.bg-blue-500) {
+    @apply border-b-0;
+}

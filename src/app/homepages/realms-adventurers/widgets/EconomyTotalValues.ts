@@ -4,7 +4,7 @@ import client from "../apolloClient";
 import {
     GetEconomyTotalValuesDocument,
     GetEconomyTotalValuesQuery
-} from "../../../../../generated/graphql";
+} from "@/generated/graphql";
 import { Widget, WidgetType, WidgetViewData } from "./DashboardWidget";
 import { TextViewData } from "./WidgetViewTypes";
 

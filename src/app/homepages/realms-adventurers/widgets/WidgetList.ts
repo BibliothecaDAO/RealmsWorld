@@ -1,4 +1,4 @@
-import { EconomyResourceTotals } from "../widgets/EconomyResourceTotals";
+import { EconomyResourceTotals } from "./EconomyResourceTotals";
 import { WidgetType } from "./DashboardWidget";
 import { EconomyLPResourceTotals } from "./EconomyLPResourceTotals";
 import { EconomyTotalValues } from "./EconomyTotalValues";

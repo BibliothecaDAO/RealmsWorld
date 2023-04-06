@@ -34,12 +34,6 @@ export const games = [
                 alt: 'Realms: Eternum',
             }
         ],
-        utilities: [
-            {
-                id: 'economic-dashboard',
-                name: 'Economic Dashboard',
-                url: '/utilities/realms-adventurers/economic-dashboard'
-            }
-        ]
+        homepage: '/homepages/realms-adventurers'
     }
 ]

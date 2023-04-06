@@ -10,7 +10,14 @@ import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { chains, provider } from "@/app/lib/utils"
+
+const { chains, provider } = configureChains(
+  [mainnet],
+  [
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API || "" }),
+    publicProvider(),
+  ]
+);
 
 const theme = darkTheme({
   headlineFont: "Sans Serif",

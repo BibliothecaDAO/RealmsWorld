@@ -7,16 +7,16 @@ import PieChartGrid from "./PieChartGrid";
 import TextViewGrid from "./TextViewGrid";
 import LineChart from "./LineChart";
 import WidgetList from "../widgets/WidgetList";
+import "@/app/components/TabbedView.css";
 
 interface TabsProps {
-    initial: React.ReactNode;
     initialActiveTab: string;
     initialViewType: WidgetType;
 }
 
-const Tabs: React.FC<TabsProps> = ({ initial, initialActiveTab, initialViewType }) => {
+const WidgetTabs: React.FC<TabsProps> = ({ initialActiveTab, initialViewType }) => {
     const [activeTab, setActiveTab] = useState(initialActiveTab);
-    const [content, setContent] = useState<React.ReactNode>(initial);
+    const [content, setContent] = useState<React.ReactNode>();
     const [viewType, setViewType] = useState<WidgetType>(initialViewType);
 
     const availableViewTypes = useMemo(() => (
@@ -61,19 +61,22 @@ const Tabs: React.FC<TabsProps> = ({ initial, initialActiveTab, initialViewType 
 
     return (
         <div>
-            <div className="flex">
+            <div className="tab-container">
                 {WidgetList.map((tab) => (
                     <button
                         key={tab.widget.widgetName}
                         onClick={() => handleTabChange(tab.widget.widgetName)}
-                        className={`p-2 ${activeTab === tab.widget.widgetName ? "bg-blue-500 text-white" : "bg-gray-300 text-black"
+                        className={`tab-button ${activeTab === tab.widget.widgetName ? "active" : "inactive"
                             }`}
                     >
                         {tab.widget.widgetName}
                     </button>
                 ))}
             </div>
-            <h4>{WidgetList.find((tab) => tab.widget.widgetName === activeTab)?.widget.description}</h4>
+            <h4>
+                {WidgetList.find((tab) => tab.widget.widgetName === activeTab)?.widget
+                    .description}
+            </h4>
             <p>Select Visualization Type:</p>
             <select
                 id="viewTypeSelector"
@@ -92,4 +95,4 @@ const Tabs: React.FC<TabsProps> = ({ initial, initialActiveTab, initialViewType 
     );
 };
 
-export default Tabs;
+export default WidgetTabs;

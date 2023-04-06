@@ -11,7 +11,7 @@ export const GameCard = ({ game }: GameCardProps) => {
   return (
     <Link
       className="relative flex flex-col items-center justify-center p-4 space-y-4 text-center duration-300 shadow-xl backdrop-grayscale rounded-2xl h-72 hover:scale-105 hover:opacity-80 shadow-white/10 group"
-      href={`/games/${game.id}`}
+      href={game.homepage || `/games/${game.id}`} // navigate to a custom game homepage if one is specified, default page otherwise
     >
       <Image
         src={game.image}

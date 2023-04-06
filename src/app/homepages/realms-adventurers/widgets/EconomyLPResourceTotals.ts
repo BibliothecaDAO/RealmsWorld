@@ -2,17 +2,19 @@ import { formatEther } from "ethers/lib/utils.js";
 import { ApolloQueryResult } from "@apollo/client";
 import client from "../apolloClient";
 import {
-    GetEconomyResourceTotalsDocument, GetEconomyResourceTotalsQuery
-} from "../../../../../generated/graphql";
+    GetEconomyLpResourceTotalsDocument,
+    GetEconomyLpResourceTotalsQuery
+} from "@/generated/graphql"
 import { Widget, WidgetType, WidgetViewData } from "./DashboardWidget";
 import { TableViewData, PieViewData } from "./WidgetViewTypes";
 
-export class EconomyResourceTotals extends Widget {
+export class EconomyLPResourceTotals extends Widget {
 
-    public static widgetID: string = "economy-resource-totals";
-    public static widgetName: string = "Economy Resource Totals";
-    public static description: string = "View of the total amount of each resource minted and burned";
-    public static types = [WidgetType.Pie, WidgetType.Table];
+    public static widgetID: string = "economy-lp-resource-totals";
+    public static widgetName: string = "Economy LP Resource Totals";
+    public static description: string = "View of the total amount of each LP resource minted and burned";
+
+    public static types = [WidgetType.Table, WidgetType.Pie];
 
     constructor() {
         super();
@@ -21,17 +23,17 @@ export class EconomyResourceTotals extends Widget {
     static async getViewData(type: WidgetType): Promise<WidgetViewData> {
         switch (type) {
             case WidgetType.Table:
-                return await EconomyResourceTotals.getTableData();
+                return await EconomyLPResourceTotals.getTableData();
             case WidgetType.Pie:
-                return await EconomyResourceTotals.getPieData();
+                return await EconomyLPResourceTotals.getPieData();
             default:
                 throw new Error("Invalid widget type");
         }
     }
 
     static async getPieData(): Promise<WidgetViewData> {
-        const queryResult = await EconomyResourceTotals.getQueryData();
-        const data = EconomyResourceTotals.transformToPieData(queryResult);
+        const queryResult = await EconomyLPResourceTotals.getQueryData();
+        const data = EconomyLPResourceTotals.transformToPieData(queryResult);
 
         return {
             type: WidgetType.Pie,
@@ -39,9 +41,9 @@ export class EconomyResourceTotals extends Widget {
         };
     }
 
-    private static transformToPieData(queryResult: ApolloQueryResult<GetEconomyResourceTotalsQuery>): PieViewData["data"] {
-        return queryResult?.data.economyResourceMintedTotals.map((resource: any) => {
-            const burntAmount = queryResult.data.economyResourceBurnedTotals.find((x: any) => x.resourceId === resource.resourceId)?.amount || 0;
+    private static transformToPieData(queryResult: ApolloQueryResult<GetEconomyLpResourceTotalsQuery>): PieViewData["data"] {
+        return queryResult?.data.economyLpResourceMintedTotals.map((resource: any) => {
+            const burntAmount = queryResult.data.economyLpResourceBurnedTotals.find((x: any) => x.resourceId === resource.resourceId)?.amount || 0;
             const mintedAmount = resource.amount;
             return {
                 resource: resource.resourceName,
@@ -59,8 +61,8 @@ export class EconomyResourceTotals extends Widget {
         });
     }
 
-    private static async getQueryData(): Promise<ApolloQueryResult<GetEconomyResourceTotalsQuery>> {
-        return await client.query({ query: GetEconomyResourceTotalsDocument });
+    private static async getQueryData(): Promise<ApolloQueryResult<GetEconomyLpResourceTotalsQuery>> {
+        return await client.query({ query: GetEconomyLpResourceTotalsDocument });
     }
 
     static async getTableData(): Promise<TableViewData> {
@@ -70,15 +72,15 @@ export class EconomyResourceTotals extends Widget {
             data: []
         }
 
-        const queryResult = await EconomyResourceTotals.getQueryData();
+        const queryResult = await EconomyLPResourceTotals.getQueryData();
 
-        tableData.data = queryResult?.data.economyResourceMintedTotals.map((resource) => {
+        tableData.data = queryResult?.data.economyLpResourceMintedTotals.map((resource) => {
             return {
                 id: resource.resourceId,
                 resource: resource.resourceName,
                 minted: +formatEther(resource.amount).toLocaleString(),
                 burnt: +formatEther(
-                    queryResult.data.economyResourceBurnedTotals.find((x) => x.resourceId === resource.resourceId)?.amount || 0
+                    queryResult.data.economyLpResourceBurnedTotals.find((x) => x.resourceId === resource.resourceId)?.amount || 0
                 ).toLocaleString(),
             }
         });
