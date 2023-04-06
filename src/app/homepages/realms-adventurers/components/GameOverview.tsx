@@ -23,7 +23,7 @@ const GameOverview: React.FC<OverviewProps> = ({ game }) => {
                 <p className="mb-4 text-3xl">{game?.description}</p>
                 <div>
                     <h5>Links</h5>
-                    <Button href={game?.links.whitepaper}>White paper</Button>
+                    <Button className="mr-2" href={game?.links.whitepaper}>White paper</Button>
                     <Button href={game?.links.website}>Website</Button>
                 </div>
 
