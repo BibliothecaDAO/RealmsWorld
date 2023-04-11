@@ -33,7 +33,7 @@ export const games = [
                 src: '/screenshots/eternum-2.png',
                 alt: 'Realms: Eternum',
             }
-
-        ]
+        ],
+        homepage: '/homepages/realms-adventurers'
     }
 ]

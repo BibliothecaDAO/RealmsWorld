@@ -1,0 +1,4 @@
+query getEconomyTotalValues @api(name: starkIndexer) {
+  economySettledRealmsTotal
+  economyExchangeLordsPurchasedTotal
+}

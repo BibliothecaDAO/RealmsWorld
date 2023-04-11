@@ -1,8 +1,3 @@
-import { getData } from "@/functions";
-import { Collection } from "@/types";
-import { formatEther } from "ethers/lib/utils.js";
-import Image from "next/image";
-import Link from "next/link";
 import { games } from "@/constants/games";
 import { Button } from "@/app/components/ui/button";
 
@@ -23,7 +18,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <p className="mb-4 text-3xl">{game?.description}</p>
         <div>
           <h5>Links</h5>
-          <Button href={game?.links.whitepaper}>White paper</Button>
+          <Button className="mr-2" href={game?.links.whitepaper}>White paper</Button>
           <Button href={game?.links.website}>Website</Button>
         </div>
 

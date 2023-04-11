@@ -19,20 +19,6 @@ const { chains, provider } = configureChains(
   ]
 );
 
-const wagmiClient = createClient({
-  autoConnect: true,
-  connectors: [
-    new CoinbaseWalletConnector({
-      chains,
-      options: {
-        appName: "wagmi",
-      },
-    }),
-    new InjectedConnector({ chains }),
-  ],
-  provider,
-});
-
 const theme = darkTheme({
   headlineFont: "Sans Serif",
   font: "Serif",
@@ -55,7 +41,21 @@ export function Provider({ children }: any) {
       }}
       theme={theme}
     >
-      <WagmiConfig client={wagmiClient}>{children}</WagmiConfig>
+      <WagmiConfig client={
+        createClient({
+          autoConnect: true,
+          connectors: [
+            new CoinbaseWalletConnector({
+              chains,
+              options: {
+                appName: "wagmi",
+              },
+            }),
+            new InjectedConnector({ chains }),
+          ],
+          provider,
+        })
+      }>{children}</WagmiConfig>
     </ReservoirKitProvider>
   );
 }

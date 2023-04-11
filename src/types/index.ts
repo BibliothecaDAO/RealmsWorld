@@ -259,4 +259,5 @@ export interface Game {
   links: Link;
   compatibleTokens: CompatibleToken[];
   screenshots: ScreenShot[];
+  homepage?: string;
 }
