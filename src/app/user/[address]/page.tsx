@@ -2,64 +2,78 @@ import { getData } from "@/functions";
 import { hexToNumber, shortenHex } from "@/functions/utils";
 import { UserTokenData } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
+import TabbedView from "@/app/components/TabbedView";
+import UserTokenGrid from "@/app/components/UserTokenGrid";
+import { customContractNames } from "@/constants/whiteListedContracts";
+import { Suspense } from "react";
+import { Metadata } from "next";
 
-export default async function Page({
-  params,
-}: {
-  params: { address: string };
-}) {
-  const data = await getData({ address: params.address }, "user");
+export async function generateMetadata(
+  { params }: { params: { address: string } }
+): Promise<Metadata> {
+  return {
+    title: `Atlas - Collections Profile: ${params.address}`,
+    description: `Collection Details page for ${params.address} - Created for Adventurers by Bibliotheca DAO`
+  };
+}
 
+export default async function Page({ params }: { params: { address: string } }) {
   const id = hexToNumber(params.address, 1, 10);
-
+  const data = await getData({ address: params.address }, "user");
   const tokens: UserTokenData[] = data.tokens;
+
+  // Group tokens by contract
+  const tokensByContract = tokens.reduce<Record<string, UserTokenData[]>>(
+    (acc, token) => {
+      const contract = customContractNames[token.token.contract]
+        ? token.token.contract
+        : "All";
+
+      acc[contract] = acc[contract] || [];
+      acc[contract].push(token);
+
+      return acc;
+    },
+    {}
+  );
+
+  const contractOrder = Object.keys(customContractNames);
+
+  // Create TabInfo array for TabbedView
+  const tabs = Object.entries(tokensByContract)
+    .map(([contract, tokens]) => ({
+      name: customContractNames[contract] || "All",
+      component: (
+        <Suspense fallback={<div>Loading...</div>}>
+          <UserTokenGrid tokens={tokens} />
+        </Suspense>
+      ),
+    }))
+    .sort((a, b) => {
+      if (a.name === "All") return 1;
+      if (b.name === "All") return -1;
+
+      const aIndex = contractOrder.indexOf(a.name);
+      const bIndex = contractOrder.indexOf(b.name);
+
+      return aIndex - bIndex;
+    });
 
   return (
     <div className="flex h-full p-8 -mt-64">
       <div className="flex-none w-1/3 p-4 rounded-t-2xl bg-gradient-to-b from-theme-gray-light">
         <Image
-          src={`/users/${id}.png`} // Use the path to your image
-          alt="An example image" // Provide a descriptive alt text
-          width={2000} // Set the original width of the image
-          height={2000} // Set the original height of the image'fill')
+          src={`/users/${id}.png`}
+          alt="An example image"
+          width={2000}
+          height={2000}
           className="mx-auto rounded"
         />
       </div>
       <div className="flex-grow p-8">
-        <h1>{shortenHex(params.address)}</h1> <hr />
-        <div className="grid grid-cols-3 gap-3">
-          {tokens.map((token: UserTokenData, index) => {
-            console.log(token.token.image);
-            return (
-              <div
-                key={index}
-                className="duration-300 transform border rounded-xl border-white/10 hover:-translate-y-1"
-              >
-                {/* <Image
-                src={token.token.image} // Use the path to your image
-                alt="An example image" // Provide a descriptive alt text
-                className="mx-auto rounded-t-xl"
-                width={800} // Set the original width of the image
-                height={800} // Set the original height of the image'fill')
-              /> */}
-                <div className="px-3 pt-4 pb-4">
-                  <div className="text-sm truncate">#{token.token.tokenId}</div>
-                  <h6>{token.token.name}</h6>
-
-                  <h5>ETH</h5>
-                  <div className="flex justify-between">
-                    <Link
-                      href={`/collection/${token.token.contract}/${token.token.tokenId}`}
-                    >
-                      More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <h1>{shortenHex(params.address)}</h1>
+        <hr />
+        <TabbedView tabs={tabs} initialActiveTab={tabs[0]?.name} />
       </div>
     </div>
   );

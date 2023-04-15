@@ -47,3 +47,9 @@ export const allWhiteListed = [
     },
 ]
 
+export const customContractNames: { [index: string]: string } = {
+    "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d": "Realms",
+    "0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7": "Loot",
+    "0x86f7692569914b5060ef39aab99e62ec96a6ed45": "Crypts",
+    "0x527a4206ac04c2017295cf32f1fc2f9e034a7c40": "Banners"
+}
