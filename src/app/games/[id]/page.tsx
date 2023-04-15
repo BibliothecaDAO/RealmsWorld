@@ -1,5 +1,15 @@
 import { games } from "@/constants/games";
 import { Button } from "@/app/components/ui/button";
+import { Metadata } from "next";
+
+export async function generateMetadata(
+  { params }: { params: { id: string } }
+): Promise<Metadata> {
+  return {
+    title: `Atlas - Homepage for: ${params.id}`,
+    description: `Homepage for ${params.id} - Created for Adventurers by Bibliotheca DAO`
+  };
+}
 
 export default async function Page({ params }: { params: { id: string } }) {
   const game = games.find((game) => game.id === params.id);

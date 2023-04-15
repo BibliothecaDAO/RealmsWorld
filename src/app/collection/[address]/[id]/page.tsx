@@ -9,6 +9,7 @@ import { shortenHex } from "@/functions/utils";
 import { TokenContent } from "./TokenContent";
 import { ListingModal } from "@/app/components/ListingModal";
 import { TokenAttributes } from "./TokenAttributes";
+import { Metadata } from "next";
 
 export default async function Page({
   params,

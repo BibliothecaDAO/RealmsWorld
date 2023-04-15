@@ -1,10 +1,11 @@
-import { getData } from "@/functions";
-import { Collection, Game } from "@/types";
-import { formatEther } from "ethers/lib/utils.js";
-import Image from "next/image";
-import Link from "next/link";
+import { Game } from "@/types";
 import { GameCard } from "../components/GameCard";
 import { games } from "@/constants";
+
+export const metadata = {
+  title: 'Atlas - Games of the Realms',
+  description: 'Various games in the onchain world of Realms - Created for adventurers by Bibliotheca DAO'
+}
 
 export default async function Page() {
   return (

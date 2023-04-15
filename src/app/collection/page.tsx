@@ -1,9 +1,13 @@
 import { allWhiteListed } from "@/constants";
 import { getData } from "@/functions";
 import { Collection } from "@/types";
-import { formatEther } from "ethers/lib/utils.js";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata = {
+  title: 'Atlas - Collections of the Lootverse',
+  description: 'Various collections of the Lootverse - Created for adventurers by Bibliotheca DAO'
+}
 
 export default async function Page() {
   const data = await getData(
