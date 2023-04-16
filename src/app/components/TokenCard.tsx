@@ -49,24 +49,26 @@ export const TokenCard = (props: TokenCardProps) => {
               />
             )}
           </div>
-          <h5>{token.token.name}</h5>
+          <h6>{token.token.name}</h6>
 
-          <h6 className="font-semibold">
+          <div className="my-3 text-sm">
             {token.market.floorAsk.price
-              ? formatEther(token.market.floorAsk.price.amount.raw)
+              ? (formatEther(token.market.floorAsk.price.amount.raw)).toLocaleLowerCase()
               : ""}{" "}
             ETH
-          </h6>
+          </div>
 
           <div className="flex justify-between space-x-2">
             <Button
               href={`/collection/${token.token.contract}/${token.token.tokenId}`}
-              variant={"outline"}
+              variant={"ghost"}
+              size={"xs"}
               className="w-full"
             >
               view
             </Button>
             <BuyButton
+              size="xs"
               address={token.token.contract}
               id={token.token.tokenId}
             />
@@ -82,7 +84,7 @@ export const TokenCard = (props: TokenCardProps) => {
 
             <h6 className="self-center ml-auto">
               {token.market.floorAsk.price
-                ? formatEther(token.market.floorAsk.price.amount.raw)
+                ? (formatEther(token.market.floorAsk.price.amount.raw)).toLocaleLowerCase()
                 : ""}{" "}
               ETH
             </h6>
@@ -108,6 +110,7 @@ export const TokenCard = (props: TokenCardProps) => {
               view
             </Button>
             <BuyButton
+
               address={token.token.contract}
               id={token.token.tokenId}
             />

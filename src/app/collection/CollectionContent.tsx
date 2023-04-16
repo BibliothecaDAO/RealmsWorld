@@ -13,7 +13,6 @@ import { formatEther } from "ethers/lib/utils.js";
 import { useQuery } from "@/composables/useQuery";
 import { Button } from "../components/ui/button";
 import { Switch } from "../components/Switch";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +24,7 @@ import {
 import { games, sortDirection, sortOptions } from "@/constants";
 import { getGamesByContract } from "@/functions/getters";
 import { useUIContext } from "../providers/UIProvider";
+import { Tabs } from "../components/Tabs";
 
 interface Props {
   collection: Collection;
@@ -260,31 +260,7 @@ export const CollectionContent = ({
             /> */}
         </div>
       </div>
-
-      <Tab.Group>
-        <Tab.List
-          className={
-            "w-full flex text-xl justify-center py-3 border-b border-white/20 mb-4 space-x-4"
-          }
-        >
-          {tabs.map((tab, index) => (
-            <Tab key={index} as={Fragment}>
-              {({ selected }) => (
-                <button
-                  className={selected ? " " : "opacity-50 hover:opacity-100"}
-                >
-                  {tab.name}
-                </button>
-              )}
-            </Tab>
-          ))}
-        </Tab.List>
-        <Tab.Panels>
-          {tabs.map((tab, index) => (
-            <Tab.Panel key={index}>{tab.content}</Tab.Panel>
-          ))}
-        </Tab.Panels>
-      </Tab.Group>
+      <Tabs tabs={tabs} />
     </div>
   );
 };

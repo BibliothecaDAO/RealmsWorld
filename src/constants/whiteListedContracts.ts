@@ -53,3 +53,5 @@ export const customContractNames: { [index: string]: string } = {
     "0x86f7692569914b5060ef39aab99e62ec96a6ed45": "Crypts",
     "0x527a4206ac04c2017295cf32f1fc2f9e034a7c40": "Banners"
 }
+
+export const reservoirLootCollectionSetId = '1afb3695e2ce4bfa976acca874c213c4f582434830a4c2791cd8b3def5edb2b9'

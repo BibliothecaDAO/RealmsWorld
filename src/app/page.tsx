@@ -48,7 +48,7 @@ export default async function Home() {
         <div className="container px-8 mx-auto pt-72">
           <h1>Atlas</h1>
           <p className="text-2xl">
-            Your window into the onchain world of Realms.
+            Your window into the Realms Autonomous World.
           </p>
 
           <div className="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">

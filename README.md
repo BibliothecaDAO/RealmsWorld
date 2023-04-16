@@ -1,9 +1,18 @@
-#  Atlas
+## Atlas - Open Source Marketplace for Loot and Realms
+Atlas is a comprehensive and interactive marketplace dedicated to the Loot and Realms ecosystem. It serves as a central hub for all activities, information, and transactions related to the Loot on-chain game world. Atlas is built on Next.js 13, utilizing server and client components to achieve high performance and scalability.
 
-The center of the Loot on-chain game world. Your place for anything Realms and Loot releated.
+#### Table of Contents
+- Getting Started
+- Development Guidelines
+- - Overview
+- - API Routes
+- - Server Components
+- Running the Development Server
+- Contributing
+- License
 
-
-First, run the development server:
+### Getting Started
+To start using Atlas, you need to run the development server:
 
 ```bash
 npm run dev
@@ -13,16 +22,43 @@ yarn dev
 pnpm dev
 ```
 
+Once the server is up and running, you can access the Atlas marketplace through your browser.
 
-# Development guidelines
+## Development Guidelines
 
 ### Overview
-
-This app uses Nextjs 13 to leverage server and client components. The goal is to use the Vercel cache along with local cache to maximise performance and scalability.
+Atlas is built using Next.js 13, which allows for a seamless integration of server and client components. The application aims to maximize performance and scalability by leveraging Vercel's cache and local cache.
 
 ### API Routes
-All external fetches should have an API route. This allows us to cache the routes along.
+To ensure efficient data fetching and caching, all external fetches should use API routes. By doing so, the routes can be cached, improving the overall performance of the application.
 
-### Server components
-Any component that can be rendered on the server _should be_ rendered on the server. The obvious examples are the page layouts. Nested within these layouts we use Server components to add interactivity. This abstraction will allow the page loads to be as fast as possible for the end user.
+### Server Components
+Any component that can be rendered on the server should be rendered on the server to optimize the user experience. Page layouts are the most obvious examples of server-rendered components. Within these layouts, server components can be used to add interactivity. This abstraction ensures that page loads are as fast as possible for the end user.
 
+### Running the Development Server
+To run the development server, use one of the following commands:
+
+```bash
+Copy code
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+The server will start, and you can access Atlas through your browser.
+
+
+### Contributing
+We welcome contributions from the community to help improve Atlas. If you are interested in contributing, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your changes.
+3. Make your changes and commit them to your branch.
+4. Submit a pull request with a detailed description of your changes.
+
+We will review your contribution and provide feedback. Once your changes have been approved, they will be merged into the main branch.
+
+### License
+Atlas is an open-source project released under the MIT License. This license allows you to freely use, modify, and distribute the code, as long as you include the original copyright and permission notice in any copy of the software or substantial portions of it.
