@@ -2,22 +2,10 @@
 
 import { ReservoirKitProvider, darkTheme } from "@reservoir0x/reservoir-kit-ui";
 import { WagmiConfig, createClient, configureChains } from "wagmi";
-import { getDefaultProvider } from "ethers";
-import { mainnet, optimism } from "wagmi/chains";
-import { publicProvider } from "wagmi/providers/public";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
+import { mainnet, arbitrum } from "wagmi/chains";
+import { ConnectKitProvider, getDefaultClient } from "connectkit";
 
-const { chains, provider } = configureChains(
-  [mainnet],
-  [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API || "" }),
-    publicProvider(),
-  ]
-);
+const chains = [mainnet, arbitrum];
 
 const theme = darkTheme({
   headlineFont: "Sans Serif",
@@ -41,21 +29,17 @@ export function Provider({ children }: any) {
       }}
       theme={theme}
     >
-      <WagmiConfig client={
-        createClient({
-          autoConnect: true,
-          connectors: [
-            new CoinbaseWalletConnector({
-              chains,
-              options: {
-                appName: "wagmi",
-              },
-            }),
-            new InjectedConnector({ chains }),
-          ],
-          provider,
-        })
-      }>{children}</WagmiConfig>
+      <WagmiConfig
+        client={createClient(
+          getDefaultClient({
+            appName: "Your App Name",
+            alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_API,
+            chains,
+          })
+        )}
+      >
+        <ConnectKitProvider theme="midnight">{children}</ConnectKitProvider>
+      </WagmiConfig>
     </ReservoirKitProvider>
   );
 }

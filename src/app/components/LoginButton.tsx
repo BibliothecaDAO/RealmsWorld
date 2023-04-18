@@ -1,6 +1,12 @@
 "use client";
 
-import { useAccount, useConnect, useDisconnect, useEnsName, useBalance } from "wagmi";
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useEnsName,
+  useBalance,
+} from "wagmi";
 import {
   Dialog,
   DialogContent,
@@ -11,6 +17,7 @@ import {
 import { Button } from "./ui/button";
 import { shortenHex } from "@/functions/utils";
 import { LogOut } from "lucide-react";
+import { ConnectKitButton } from "connectkit";
 
 function Profile() {
   const { address, isConnected } = useAccount();
@@ -18,31 +25,38 @@ function Profile() {
     useConnect();
   const { disconnect } = useDisconnect();
 
-  const { data: EnsAddress, isError } = useEnsName({
+  const { data: ensAddress, isError } = useEnsName({
     address: address,
-  })
+  });
 
-  const { data: lords, isError: lordsError, isLoading: lordsLoading } = useBalance({
+  const {
+    data: lords,
+    isError: lordsError,
+    isLoading: lordsLoading,
+  } = useBalance({
     address: address,
-    token: '0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0',
-  })
+    token: "0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0",
+  });
 
-  const { data: eth, isError: ethError, isLoading: ethLoading } = useBalance({
-    address: address
-  })
+  const {
+    data: eth,
+    isError: ethError,
+    isLoading: ethLoading,
+  } = useBalance({
+    address: address,
+  });
 
   if (isConnected)
     return (
       <div className="flex self-center space-x-3">
         <Button>
-          {eth?.symbol}  {eth?.formatted}
+          {eth?.symbol} {parseFloat(eth?.formatted || "").toFixed(3)}
         </Button>
         <Button>
-          {lords?.symbol}  {lords?.formatted}
+          {lords?.symbol} {lords?.formatted}
         </Button>
         <Button href={`/user/${address}`}>
-          {EnsAddress ? EnsAddress : shortenHex(address || "")}
-
+          {ensAddress ? ensAddress : shortenHex(address || "")}
         </Button>
         <Button
           className="self-center"
@@ -55,35 +69,26 @@ function Profile() {
     );
   return (
     <div className="self-center">
-
-      <Dialog>
-        <DialogTrigger>
-          {" "}
-          <Button variant={"default"}>Login</Button>
-        </DialogTrigger>
-        <DialogContent className="bg-black">
-          <DialogHeader>
-            <DialogDescription className="grid grid-cols-2 gap-4 p-4">
-              {connectors.map((connector) => (
-                <button
-                  className="p-8 text-2xl border rounded border-white/20 hover:bg-slate-800"
-                  disabled={!connector.ready}
-                  key={connector.id}
-                  onClick={() => connect({ connector })}
-                >
-                  {connector.name}
-                  {!connector.ready && " (unsupported)"}
-                  {isLoading &&
-                    connector.id === pendingConnector?.id &&
-                    " (connecting)"}
-                </button>
-              ))}
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <ConnectKitButton.Custom>
+        {({ show, isConnected, truncatedAddress, ensName }) => {
+          return (
+            <>
+              <Button
+                className="self-center"
+                variant={"default"}
+                onClick={show}
+              >
+                {isConnected ? (
+                  ensName ?? truncatedAddress
+                ) : (
+                  <span className="uppercase">Connect Wallet</span>
+                )}
+              </Button>
+            </>
+          );
+        }}
+      </ConnectKitButton.Custom>{" "}
       {error && <div>{error.message}</div>}
-
     </div>
   );
 }
