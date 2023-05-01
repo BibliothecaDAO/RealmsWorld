@@ -66,11 +66,10 @@ export const CollectionContent = ({
                 <Grid className="self-center w-4" />
               </Button>{" "}
               <DropdownMenu>
-                <DropdownMenuTrigger>
-                  {" "}
+                <DropdownMenuTrigger asChild>
                   <Button size={"xs"} variant={"default"}>
                     Direction
-                  </Button>{" "}
+                  </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   {sortDirection.map((query, index) => {
@@ -88,7 +87,7 @@ export const CollectionContent = ({
                 </DropdownMenuContent>
               </DropdownMenu>
               <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger asChild>
                   <Button size={"xs"} variant={"default"}>
                     Sort By
                   </Button>

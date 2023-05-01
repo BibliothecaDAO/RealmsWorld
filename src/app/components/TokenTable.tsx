@@ -9,14 +9,12 @@ import { TokenCard } from "./TokenCard";
 import { TokenMarketData } from "@/types";
 import { useUIContext } from "../providers/UIProvider";
 
-export const TokenTable = ({ address, SSRtokens }: any) => {
+export const TokenTable = ({ address, tokens }: any) => {
   const { isGrid } = useUIContext();
   const searchParams = useSearchParams();
-  const [tokens, setTokens] = useState(SSRtokens);
   const [query, setQuery] = useState({});
-  const [loading, setLoading] = useState(true);
 
-  async function getIt() {
+  /*async function getIt() {
     setLoading(true);
 
     try {
@@ -35,11 +33,13 @@ export const TokenTable = ({ address, SSRtokens }: any) => {
     const paramsArray = decodeAndSplit(searchParams.toString());
     const jsonObject = convertToJSON(paramsArray);
     setQuery(jsonObject);
+    console.log("setting " + jsonObject);
   }, [address, searchParams]);
 
   useMemo(() => {
+    console.log('using memo')
     getIt();
-  }, [query]);
+  }, [query]);*/
 
   const grid =
     "grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
@@ -47,7 +47,7 @@ export const TokenTable = ({ address, SSRtokens }: any) => {
 
   return (
     <div className={isGrid ? grid : list}>
-      {tokens && !loading
+      {tokens
         ? tokens.map((token: TokenMarketData, index: number) => {
             return (
               <TokenCard
@@ -57,7 +57,7 @@ export const TokenTable = ({ address, SSRtokens }: any) => {
               />
             );
           })
-        : "Loading"}
+        : "No Assets Found"}
     </div>
   );
 };
