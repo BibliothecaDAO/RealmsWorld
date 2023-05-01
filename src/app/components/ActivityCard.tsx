@@ -27,10 +27,10 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
             activity.token.tokenImage
               ? activity.token.tokenImage
               : activity.collection.collectionImage
-          } // Use the path to your image
-          alt="An example image" // Provide a descriptive alt text
-          width={60} // Set the original width of the image
-          height={60} // Set the original height of the image'fill')
+          }
+          alt="An example image"
+          width={60}
+          height={60}
           className="self-start rounded-lg"
         />
         {activity.token.tokenName && (
@@ -81,10 +81,10 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
         <div className="self-center">
           {activity.order && (
             <Image
-              src={activity.order ? activity.order.source.icon : ""} // Use the path to your image
-              alt="An example image" // Provide a descriptive alt text
-              width={40} // Set the original width of the image
-              height={40} // Set the original height of the image'fill')
+              src={activity.order ? activity.order.source.icon : ""}
+              alt="An example image"
+              width={40}
+              height={40}
               className="flex-none p-2 mx-auto"
             />
           )}

@@ -29,11 +29,11 @@ export const TokenCard = (props: TokenCardProps) => {
   return (
     <div className={layout === "grid" ? grid : list}>
       <Image
-        src={token.token.image || ""} // Use the path to your image
-        alt="An example image" // Provide a descriptive alt text
+        src={token.token.image || ""}
+        alt="An example image"
         className={`${isGrid ? "mx-auto rounded-t-xl" : "rounded-xl"}`}
-        width={imageSize} // Set the original width of the image
-        height={imageSize} // Set the original height of the image'fill')
+        width={imageSize}
+        height={imageSize}
       />
       {isGrid ? (
         <div className={`w-full px-3 pt-4 pb-2`}>
@@ -41,10 +41,10 @@ export const TokenCard = (props: TokenCardProps) => {
             <span className="font-semibold">#{token.token.tokenId} </span>
             {token.market.floorAsk.source.icon && (
               <Image
-                src={token.market.floorAsk.source.icon} // Use the path to your image
-                alt="An example image" // Provide a descriptive alt text
-                width={20} // Set the original width of the image
-                height={20} // Set the original height of the image'fill')
+                src={token.market.floorAsk.source.icon}
+                alt="An example image"
+                width={20}
+                height={20}
                 className=""
               />
             )}
@@ -53,7 +53,9 @@ export const TokenCard = (props: TokenCardProps) => {
 
           <div className="my-3 text-sm">
             {token.market.floorAsk.price
-              ? (formatEther(token.market.floorAsk.price.amount.raw)).toLocaleLowerCase()
+              ? formatEther(
+                  token.market.floorAsk.price.amount.raw
+                ).toLocaleLowerCase()
               : ""}{" "}
             ETH
           </div>
@@ -84,17 +86,19 @@ export const TokenCard = (props: TokenCardProps) => {
 
             <h6 className="self-center ml-auto">
               {token.market.floorAsk.price
-                ? (formatEther(token.market.floorAsk.price.amount.raw)).toLocaleLowerCase()
+                ? formatEther(
+                    token.market.floorAsk.price.amount.raw
+                  ).toLocaleLowerCase()
                 : ""}{" "}
               ETH
             </h6>
             <div className="self-center justify-between px-3 text-sm">
               {token.market.floorAsk.source.icon && (
                 <Image
-                  src={token.market.floorAsk.source.icon} // Use the path to your image
-                  alt="An example image" // Provide a descriptive alt text
-                  width={20} // Set the original width of the image
-                  height={20} // Set the original height of the image'fill')
+                  src={token.market.floorAsk.source.icon}
+                  alt="An example image"
+                  width={20}
+                  height={20}
                   className=""
                 />
               )}
@@ -110,7 +114,6 @@ export const TokenCard = (props: TokenCardProps) => {
               view
             </Button>
             <BuyButton
-
               address={token.token.contract}
               id={token.token.tokenId}
             />

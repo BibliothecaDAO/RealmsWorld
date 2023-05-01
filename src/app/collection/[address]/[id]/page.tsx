@@ -37,10 +37,10 @@ export default async function Page({
     <div className="flex flex-wrap h-full p-4 -mt-64 sm:p-8">
       <div className="flex-none w-full p-2 rounded-t md:w-1/3 bg-gradient-to-b from-theme-gray-light">
         <Image
-          src={token.image} // Use the path to your image
-          alt="An example image" // Provide a descriptive alt text
-          width={2000} // Set the original width of the image
-          height={2000} // Set the original height of the image'fill')
+          src={token.image}
+          alt={token.name}
+          width={2000}
+          height={2000}
           className="mx-auto border-4 rounded border-white/10"
         />
         <div className="flex flex-wrap">
@@ -56,7 +56,8 @@ export default async function Page({
         </Link>
 
         <h1>
-          {token.name} #{token.tokenId}
+          {token.name}{" "}
+          {token.collection.name == "Realms" && <span>#{token.tokenId}</span>}
         </h1>
         <div className="flex space-x-4">
           <div>owner </div>

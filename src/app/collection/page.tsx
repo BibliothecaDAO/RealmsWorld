@@ -5,9 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const metadata = {
-  title: 'Atlas - Collections of the Lootverse',
-  description: 'Various collections of the Lootverse - Created for adventurers by Bibliotheca DAO'
-}
+  title: "Atlas - Collections of the Lootverse",
+  description:
+    "Various collections of the Lootverse - Created for adventurers by Bibliotheca DAO",
+};
 
 export default async function Page() {
   const data = await getData(
@@ -42,10 +43,10 @@ export default async function Page() {
                 >
                   {" "}
                   <Image
-                    src={collection.image} // Use the path to your image
-                    alt="An example image" // Provide a descriptive alt text
-                    width={70} // Set the original width of the image
-                    height={70} // Set the original height of the image'fill')
+                    src={collection.image}
+                    alt="An example image"
+                    width={70}
+                    height={70}
                     className="rounded-full"
                   />
                   <div className="flex justify-between flex-grow pl-4">

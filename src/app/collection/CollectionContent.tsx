@@ -1,4 +1,5 @@
 "use client";
+import Discord from "../../icons/discord.svg";
 
 import { Fragment } from "react";
 import { Collection, Token } from "@/types";
@@ -25,6 +26,7 @@ import { games, sortDirection, sortOptions } from "@/constants";
 import { getGamesByContract } from "@/functions/getters";
 import { useUIContext } from "../providers/UIProvider";
 import { Tabs } from "../components/Tabs";
+import { ExternalLink } from "lucide-react";
 
 interface Props {
   collection: Collection;
@@ -148,10 +150,13 @@ export const CollectionContent = ({
 
   const links = [
     {
-      icon: <Twitter />,
+      icon: <ExternalLink />,
       value: `https://etherscan.io/address/${collection.id}`,
     },
-    { icon: <Twitter />, value: collection.discordUrl },
+    {
+      icon: <Discord className="w-[28px] h-[28px] fill-white" />,
+      value: collection.discordUrl,
+    },
     { icon: <Twitter />, value: collection.twitterUsername },
     { icon: <Globe />, value: collection.externalUrl },
   ];
@@ -194,10 +199,10 @@ export const CollectionContent = ({
       <div className="-mt-16 sm:mt-0 sm:flex">
         <div className="self-center flex-none sm:pr-10">
           <Image
-            src={collection.image} // Use the path to your image
-            alt="An example image" // Provide a descriptive alt text
-            width={200} // Set the original width of the image
-            height={200} // Set the original height of the image'fill')
+            src={collection.image}
+            alt={collection.name}
+            width={200}
+            height={200}
             className="mx-auto border-4 rounded shadow-2xl border-white/10"
           />
           <div className="flex justify-center mx-auto my-4 space-x-2">
