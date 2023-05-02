@@ -41,7 +41,6 @@ export default async function Page() {
                   href={`/collection/${collection.primaryContract}`}
                   className="flex p-5 border-2 bg-black/50 rounded-xl border-white/10 hover:bg-black/60"
                 >
-                  {" "}
                   <Image
                     src={collection.image}
                     alt="An example image"

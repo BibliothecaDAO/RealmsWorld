@@ -1,5 +1,3 @@
-"use client";
-
 import { TokenMarketData } from "@/types";
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 import { formatEther } from "ethers/lib/utils.js";
