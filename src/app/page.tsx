@@ -1,12 +1,8 @@
 import { getData } from "@/functions";
 import { Collection, Game } from "@/types";
-import { formatEther } from "ethers/lib/utils.js";
-import Image from "next/image";
-import Link from "next/link";
 import { games } from "@/constants";
-import { Canvas } from "@react-three/fiber";
-
 import { GameCard } from "./components/GameCard";
+import { CollectionCard } from "./components/CollectionCard";
 
 export default async function Home() {
   const data = await getData(
@@ -16,13 +12,7 @@ export default async function Home() {
           contract: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
         },
         {
-          contract: "0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7",
-        },
-        {
           contract: "0x8db687aceb92c66f013e1d614137238cc698fedb",
-        },
-        {
-          contract: "0x86f7692569914b5060ef39aab99e62ec96a6ed45",
         },
         {
           contract: "0x527a4206ac04c2017295cf32f1fc2f9e034a7c40",
@@ -46,16 +36,25 @@ export default async function Home() {
     <main className="z-0" style={backgroundImageStyle}>
       <div className="w-full h-screen -mt-24 sm:pl-32">
         <div className="container px-8 mx-auto pt-72">
-          <h1>Atlas</h1>
-          <p className="text-2xl">
-            Your window into the Realms Autonomous World.
-          </p>
+          <h1>Your window into the <br /> Realms Autonomous World</h1>
+          <hr className="mt-8 border-white/40" />
 
+          <h5>World Games</h5>
           <div className="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
             {games.map((game: Game, index) => (
               <GameCard key={index} game={game} />
             ))}
           </div>
+          <hr className="mt-8 border-white/40" />
+          <h5>World Collections</h5>
+          <div className="grid w-full grid-cols-1 gap-3">
+            {collections.map((collection: Collection, index) => {
+              return (
+                <CollectionCard collection={collection} key={index} />
+              );
+            })}
+          </div>
+
         </div>
       </div>
     </main>

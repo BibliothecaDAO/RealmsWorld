@@ -14,7 +14,7 @@ export const Footer = () => {
     <div className="w-full h-[500px]  mt-40" style={backgroundImageStyle}>
       <div className="container px-10 pt-10 mx-auto">
         <h1>Atlas</h1>
-        <h5>Home to the Adventurers</h5>
+        <h5>Home to the Realms Autonomous World</h5>
       </div>
     </div>
   );

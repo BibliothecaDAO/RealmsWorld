@@ -47,9 +47,8 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`${
-        isSidebarOpen ? "" : "hidden"
-      } w-screen lg:flex flex-col fixed z-100 h-screen top-0 p-4 bg-black/90 lg:bg-black/30 z-20 lg:hover:w-72 transition-all duration-300 lg:w-24 hover:bg-black/80 group`}
+      className={`${isSidebarOpen ? "" : "hidden"
+        } w-screen lg:flex flex-col fixed z-100 h-screen top-0 p-4 bg-black/90 lg:bg-black/30 z-20 lg:hover:w-72 transition-all duration-300 lg:w-24 hover:bg-black/80 group`}
     >
       <Button
         className="block lg:hidden"

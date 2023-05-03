@@ -30,7 +30,7 @@ const GameOverview: React.FC<OverviewProps> = ({ game }) => {
                 <div>
                     <h5>Tokens</h5>
                     <div className="flex">
-                        {game?.compatibleTokens.map((token, index) => (
+                        {game?.compatibleTokens?.map((token, index) => (
                             <Button href={`/collection/${token.contract}`} key={index}>
                                 {token.name}
                             </Button>

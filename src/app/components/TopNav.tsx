@@ -16,7 +16,7 @@ export const TopNav = () => {
         </Button>
 
         <Link
-          className="flex self-center mx-auto text-xl font-semibold sm:mr-3 sm:text-2xl font-sans-serif"
+          className="flex self-center text-xl font-semibold sm:mr-3 sm:text-2xl font-sans-serif"
           href="/"
         >
           <Compass className="self-center mr-3" />
