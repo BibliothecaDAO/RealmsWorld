@@ -1,6 +1,6 @@
 import { formatQueryString } from "@/functions/utils";
 
-export const getCollections = async (contracts) => {
+export const getCollections = async (contracts: Array<{ contract: string }>) => {
 
     let queryParams;
 
