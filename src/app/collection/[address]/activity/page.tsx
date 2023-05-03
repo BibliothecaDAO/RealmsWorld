@@ -10,15 +10,16 @@ export default async function Page({
   params: { address: string };
   searchParams: any;
 }) {
-  const types = searchParams.types || "undefined";
-  console.log(types);
-
+  const types =
+    typeof searchParams.types === "string"
+      ? [{ types: searchParams.types }]
+      : searchParams.types?.map((q: any) => {
+          return { types: q };
+        });
   const { activities } = await getData(
     {
       collection: params.address,
-      types: types.split(",").map((q: any) => {
-        return { types: q };
-      }),
+      types: types,
     },
     "activity"
   );

@@ -4,7 +4,7 @@ import { getData } from "@/functions";
 import { useMemo, useState } from "react";
 import { Activity } from "@/types";
 import { ActivityCard } from "../components/ActivityCard";
-import { Switch } from "../components/Switch";
+import { Switch } from "../components/ui/switch";
 import { useQuery } from "@/composables/useQuery";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -16,25 +16,28 @@ export const CollectionActivity = ({ address }: any) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [typesState, setTypesState] = useState<{
+    [key: string]: boolean;
+  }>({ sale: false, transfer: false, bid: false, ask: false });
 
   const handleSwitchChange = (value: any) => {
+    let newState: {
+      [key: string]: boolean;
+    } = {};
+    newState[value] = !newState[value];
+    setTypesState(newState);
+    // @ts-ignore
     const params = new URLSearchParams(searchParams);
     const valueExists =
       params.has("types") && params.getAll("types").includes(value);
 
-    console.log(valueExists);
-
-    const newValue = valueExists
-      ? params.get("types")?.replace(value, "")
-      : params.get("types");
-
-    if (newValue) {
-      params.set("types", newValue);
+    if (!valueExists) {
+      params.append("types", value);
     } else {
-      params.set("types", value);
+      const types = params.getAll("types").filter((type) => type !== value);
+      params.delete("types");
+      for (const type of types) params.append("types", type);
     }
-    console.log(newValue);
-    // If the value exists, remove it; otherwise, add it
 
     router.replace(`${pathname}?${params}`);
   };
@@ -50,7 +53,10 @@ export const CollectionActivity = ({ address }: any) => {
             key={index}
           >
             <span className="font-semibold">{attribute} </span>
-            <Switch onChange={() => handleSwitchChange(attribute)} />
+            <Switch
+              checked={typesState[attribute]}
+              onCheckedChange={() => handleSwitchChange(attribute)}
+            />
           </div>
         );
       })}
