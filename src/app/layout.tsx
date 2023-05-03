@@ -2,11 +2,11 @@ import { Provider } from "./providers/provider";
 import "./globals.css";
 import Sidebar from "./components/SideMenu";
 import { TopNav } from "./components/TopNav";
-import { Inconsolata, Karla } from "next/font/google";
+import { Space_Grotesk, Karla } from "next/font/google";
 import { Footer } from "./components/Footer";
 import { UIContextProvider } from "./providers/UIProvider";
 
-const inconsolata = Inconsolata({
+const inconsolata = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-inconsolata",
   display: "swap"
@@ -19,10 +19,6 @@ const karla = Karla({
   display: "swap"
 });
 
-export const metadata = {
-  title: "Atlas - Home to the Adventurers",
-  description: "Created for Adventurers by Bibliotheca DAO - your window into the onchain world of Realms and the Lootverse."
-};
 
 export default function RootLayout({
   children,
@@ -48,3 +44,59 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+const title = "Atlas - Home to the Adventurers";
+const description = "Created for Adventurers by Bibliotheca DAO - your window into the onchain world of Realms and the Lootverse.";
+
+
+export const metadata = {
+  title: title,
+  description: description,
+  icons: {
+    icon: '/vercel.svg',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: title,
+    description: description,
+    siteId: '1467726470533754880',
+    creator: '@bibliothecadao',
+    creatorId: '1467726470533754880',
+    images: ['https://nextjs.org/og.png'],
+  },
+  openGraph: {
+    title: title,
+    description: description,
+    url: 'https://atlas.bibliothecadao.xyz',
+    siteName: 'Atlas',
+    images: [
+      {
+        url: '/map.png',
+        width: 800,
+        height: 600,
+      },
+      {
+        url: '/map.png',
+        width: 1800,
+        height: 1600,
+        alt: 'My custom alt',
+      },
+    ],
+    locale: 'en-US',
+    type: 'website',
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: false,
+      noimageindex: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+};
