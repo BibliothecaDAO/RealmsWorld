@@ -1,26 +1,21 @@
-import { getData } from "@/functions";
 import { Collection, Game } from "@/types";
 import { games } from "@/constants";
 import { GameCard } from "./components/GameCard";
 import { CollectionCard } from "./components/CollectionCard";
+import { getCollections } from "./lib/getCollections";
 
 export default async function Home() {
-  const data = await getData(
+  const data = await getCollections([
     {
-      contracts: [
-        {
-          contract: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
-        },
-        {
-          contract: "0x8db687aceb92c66f013e1d614137238cc698fedb",
-        },
-        {
-          contract: "0x527a4206ac04c2017295cf32f1fc2f9e034a7c40",
-        },
-      ],
+      contract: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
     },
-    "collection"
-  );
+    {
+      contract: "0x8db687aceb92c66f013e1d614137238cc698fedb",
+    },
+    {
+      contract: "0x527a4206ac04c2017295cf32f1fc2f9e034a7c40",
+    },
+  ]);
 
   const collections: Collection[] = data.collections;
   const defaultImage = "/backgrounds/map.png";
@@ -36,7 +31,9 @@ export default async function Home() {
     <main className="z-0" style={backgroundImageStyle}>
       <div className="w-full h-screen -mt-24 sm:pl-32">
         <div className="container px-8 mx-auto pt-72">
-          <h1>Your window into the <br /> Realms Autonomous World</h1>
+          <h1>
+            Your window into the <br /> Realms Autonomous World
+          </h1>
           <hr className="mt-8 border-white/40" />
 
           <h5>World Games</h5>
@@ -49,12 +46,9 @@ export default async function Home() {
           <h5>World Collections</h5>
           <div className="grid w-full grid-cols-1 gap-3">
             {collections.map((collection: Collection, index) => {
-              return (
-                <CollectionCard collection={collection} key={index} />
-              );
+              return <CollectionCard collection={collection} key={index} />;
             })}
           </div>
-
         </div>
       </div>
     </main>

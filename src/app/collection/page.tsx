@@ -2,6 +2,7 @@ import { allWhiteListed } from "@/constants";
 import { getData } from "@/functions";
 import { Collection } from "@/types";
 import { CollectionCard } from "../components/CollectionCard";
+import { getCollections } from "../lib/getCollections";
 
 export const metadata = {
   title: "Atlas - Collections of the Lootverse",
@@ -10,12 +11,7 @@ export const metadata = {
 };
 
 export default async function Page() {
-  const data = await getData(
-    {
-      contracts: allWhiteListed,
-    },
-    "collection"
-  );
+  const data = await getCollections(allWhiteListed);
 
   const collections: Collection[] = data.collections;
   const defaultImage = "/backgrounds/map.png";
@@ -34,9 +30,7 @@ export default async function Page() {
           <h1>Atlas</h1>
           <div className="grid w-full grid-cols-1 gap-3">
             {collections.map((collection: Collection, index) => {
-              return (
-                <CollectionCard collection={collection} key={index} />
-              );
+              return <CollectionCard collection={collection} key={index} />;
             })}
           </div>
         </div>
