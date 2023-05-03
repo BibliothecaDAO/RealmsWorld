@@ -10,6 +10,7 @@ import { TokenContent } from "./TokenContent";
 import { ListingModal } from "@/app/components/ListingModal";
 import { TokenAttributes } from "./TokenAttributes";
 import { Metadata } from "next";
+import { getCollections } from "@/app/lib/getCollections";
 
 export default async function Page({
   params,
@@ -27,11 +28,11 @@ export default async function Page({
     "token"
   );
 
-  const collection_data = await getData({ id: params.address }, "collection");
+  const collectionData = await getCollections([{ contract: params.address }]);
 
   const token: Token = data.tokens[0].token;
   const market: Market = data.tokens[0].market;
-  const collection: Collection = collection_data.collections[0];
+  const collection: Collection = collectionData.collections[0];
 
   return (
     <div className="flex flex-wrap h-full p-4 -mt-64 sm:p-8">

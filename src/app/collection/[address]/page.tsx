@@ -7,6 +7,9 @@ import { Button } from "@/app/components/ui/button";
 import { TradeFilters } from "../TradeFilters";
 import { AttributesDropdown } from "@/app/components/AttributesDropdown";
 import { AttributeTags } from "../AttributeTags";
+import { getCollections } from "@/app/lib/getCollections";
+import { getToken } from "@/app/lib/getToken";
+import { getAttributes } from "@/app/lib/getAttributes";
 
 export async function generateMetadata({
   params,
@@ -31,18 +34,15 @@ export default async function Page({
     page?: string;
   };
 }) {
-  /*const paramsArray = decodeAndSplit(searchParams?.toString());
-  const jsonObject = convertToJSON(paramsArray);*/
+  const tokensData = getToken({
+    collection: params.address,
+    query: searchParams,
+  });
 
-  const attributesData = await getData(
-    { collection: params.address },
-    "attributes"
-  );
-
-  const { tokens } = await getData(
-    { collection: params.address, ...searchParams },
-    "token"
-  );
+  const attributesData = getAttributes({
+    collection: params.address,
+  });
+  const [tokens, attributes] = await Promise.all([tokensData, attributesData]);
   return (
     <div>
       <div className="flex justify-between w-full mb-3">
@@ -50,13 +50,10 @@ export default async function Page({
       </div>
 
       <div className="flex w-full">
-        <AttributesDropdown
-          address={params.address}
-          attributes={attributesData}
-        />
+        <AttributesDropdown address={params.address} attributes={attributes} />
         <div className="w-full">
           <AttributeTags />
-          <TokenTable address={params.address} tokens={tokens} />
+          <TokenTable address={params.address} tokens={tokens.tokens} />
         </div>
       </div>
     </div>

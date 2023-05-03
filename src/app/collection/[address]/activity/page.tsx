@@ -2,6 +2,7 @@ import { getData } from "@/functions";
 import { CollectionActivity } from "../../CollectionActivity";
 import { ActivityCard } from "@/app/components/ActivityCard";
 import { Activity } from "@/types";
+import { getActivity } from "@/app/lib/getActivity";
 
 export default async function Page({
   params,
@@ -16,13 +17,11 @@ export default async function Page({
       : searchParams.types?.map((q: any) => {
           return { types: q };
         });
-  const { activities } = await getData(
-    {
-      collection: params.address,
-      types: types,
-    },
-    "activity"
-  );
+
+  const { activities } = await getActivity({
+    collection: params.address,
+    query: { types: types },
+  });
 
   return (
     <div className="flex">

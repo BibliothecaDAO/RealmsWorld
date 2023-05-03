@@ -1,22 +1,15 @@
 import { formatQueryString } from "@/functions/utils";
 
-export const getCollections = async (contracts: Array<{ contract: string }>) => {
+export const getActivity = async ({ collection, query }: { collection: string, query: any }) => {
 
-    let queryParams;
-
-    if (contracts) {
-        queryParams = formatQueryString(contracts);
-    } else {
-    }
-    console.log('fetch')
+    console.log(`https://api.reservoir.tools/collections/activity/v5?collection=${collection}&${formatQueryString(query.types, 'types')}`)
     try {
-        const res = await fetch(`https://api.reservoir.tools/collections/v5?${queryParams}`, {
+        const res = await fetch(`https://api.reservoir.tools/collections/activity/v5?collection=${collection}&${formatQueryString(query.types, 'types')}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-api-key': process.env.RESERVOIR_API_KEY || '',
                 'Access-Control-Allow-Origin': '*'
             },
-            next: { revalidate: 60 }
         });
         const data: any = await res.json()
         return data

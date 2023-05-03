@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { motion } from "framer-motion";
 import CollectionSummary from "../CollectionSummary";
@@ -42,30 +40,25 @@ export default function RootLayout({
         className="w-full -mt-24 h-96"
         style={backgroundImageStyle}
       />
-      <motion.div
-        initial={{ opacity: 0.5 }}
-        animate={{ opacity: 1 }}
-        className="lg:pl-32 "
-      >
-        <div className="flex h-full -mt-56">
-          <div className="flex-grow p-4 sm:p-8">
-            {/* @ts-expect-error Async Server Component */}
-            <CollectionSummary address={params.address} />
-            <div className="flex gap-4 justify-center">
-              {tabs.map((tab) => (
-                <Button
-                  key={tab.name}
-                  variant={"default"}
-                  href={`/collection/${params.address}/${tab.link}`}
-                >
-                  {tab.name}
-                </Button>
-              ))}
-            </div>
-            {children}
+
+      <div className="flex h-full lg:pl-32 -mt-56">
+        <div className="flex-grow p-4 sm:p-8">
+          {/* @ts-expect-error Async Server Component */}
+          <CollectionSummary address={params.address} />
+          <div className="flex gap-4 justify-center">
+            {tabs.map((tab) => (
+              <Button
+                key={tab.name}
+                variant={"default"}
+                href={`/collection/${params.address}/${tab.link}`}
+              >
+                {tab.name}
+              </Button>
+            ))}
           </div>
+          {children}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

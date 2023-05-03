@@ -1,4 +1,3 @@
-import { convertToJSON, decodeAndSplit } from "@/functions/utils";
 import { Button } from "@/app/components/ui/button";
 import { games } from "@/constants";
 import { getGamesByContract } from "@/functions/getters";
@@ -6,13 +5,14 @@ import { formatEther } from "ethers/lib/utils.js";
 import { ExternalLink, Twitter, Globe, Link } from "lucide-react";
 import Image from "next/image";
 import Discord from "@/icons/discord.svg";
-import { getData } from "@/functions";
+import { getCollections } from "../lib/getCollections";
 
 export default async function CollectionSummary({ address }: any) {
-  const collectionData = await getData({ id: address }, "collection");
+  const collectionData = await getCollections([{ contract: address }]);
+
   //const attributesData = getData({ collection: params.address }, "attributes");
 
-  const collection = collectionData.collections[0];
+  const collection = collectionData?.collections[0];
 
   const links = [
     {
