@@ -10,7 +10,7 @@ interface GameCardProps {
 export const GameCard = ({ game }: GameCardProps) => {
   return (
     <Link
-      className="relative flex flex-col items-center justify-center p-4 space-y-4 text-center duration-300 shadow-xl backdrop-grayscale rounded-2xl h-72 hover:scale-105 hover:opacity-80 shadow-white/10 group"
+      className="relative flex flex-col items-center justify-center p-4 space-y-4 text-center duration-300 border-4 shadow-xl backdrop-grayscale rounded-2xl h-72 hover:scale-105 hover:opacity-80 shadow-white/10 group border-white/10"
       href={`/games/${game.id}`} // navigate to a custom game homepage if one is specified, default page otherwise
     >
       <Image
@@ -18,7 +18,7 @@ export const GameCard = ({ game }: GameCardProps) => {
         alt={game.name}
         layout="fill"
         objectFit="cover"
-        className="absolute inset-0 z-0 rounded-2xl "
+        className="absolute inset-0 z-0 transition-all duration-300 brightness-50 rounded-2xl filter sepia hover:filter-none"
       />
       <div className="relative z-10">
         <h4>{game.name}</h4>

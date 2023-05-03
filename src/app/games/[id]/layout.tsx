@@ -8,12 +8,14 @@ export default function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { address: string };
+  params: { id: string };
 }) {
   const defaultImage = "/backgrounds/dummy_background.png";
-  const imageUrl = params.address
-    ? `/backgrounds/${params.address}.png`
+  const imageUrl = params.id
+    ? `/backgrounds/${params.id}.png`
     : defaultImage;
+
+  console.log(params)
 
   const backgroundImageStyle = {
     backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(32, 32, 32, 1)), url(${imageUrl}), url(${defaultImage})`,
@@ -25,8 +27,6 @@ export default function RootLayout({
   return (
     <div className="w-full h-full bg-theme-gray">
       <div
-        // initial={{ opacity: 0.2 }}
-        // animate={{ opacity: 1 }}
         className="w-full -mt-24 h-96"
         style={backgroundImageStyle}
       />

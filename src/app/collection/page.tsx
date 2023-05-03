@@ -1,8 +1,7 @@
 import { allWhiteListed } from "@/constants";
 import { getData } from "@/functions";
 import { Collection } from "@/types";
-import Image from "next/image";
-import Link from "next/link";
+import { CollectionCard } from "../components/CollectionCard";
 
 export const metadata = {
   title: "Atlas - Collections of the Lootverse",
@@ -36,31 +35,7 @@ export default async function Page() {
           <div className="grid w-full grid-cols-1 gap-3">
             {collections.map((collection: Collection, index) => {
               return (
-                <Link
-                  key={index}
-                  href={`/collection/${collection.primaryContract}`}
-                  className="flex p-5 border-2 bg-black/50 rounded-xl border-white/10 hover:bg-black/60"
-                >
-                  {" "}
-                  <Image
-                    src={collection.image}
-                    alt="An example image"
-                    width={70}
-                    height={70}
-                    className="rounded-full"
-                  />
-                  <div className="flex justify-between flex-grow pl-4">
-                    <h5 className="self-center">{collection.name}</h5>
-                    {/* <div className="self-center text-xl font-semibold">
-                    {formatEther(
-                      collection.floorAsk
-                        ? collection.floorAsk.price.amount.raw
-                        : ""
-                    )}{" "}
-                    ETH
-                  </div> */}
-                  </div>
-                </Link>
+                <CollectionCard collection={collection} key={index} />
               );
             })}
           </div>
