@@ -2,7 +2,7 @@ import { allWhiteListed } from "@/constants";
 import { getData } from "@/functions";
 import { Collection } from "@/types";
 import { CollectionCard } from "../components/CollectionCard";
-import { getCollections } from "../lib/resevoir/getCollections";
+import { getCollections } from "../lib/reservoir/getCollections";
 
 export const metadata = {
   title: "Atlas - Collections of the Lootverse",

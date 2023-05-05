@@ -21,17 +21,11 @@ export const OwnerDistribution = ({
     0
   );
 
-  function sumOwnerCountsByTokenRange(data: any) {
-    const ownerCountsByTokenRange = tokenRanges.map(({ min, max }) =>
-      data
-        .filter(({ tokenCount }) => tokenCount >= min && tokenCount <= max)
-        .reduce((sum, { ownerCount, tokenCount }) => sum + ownerCount, 0)
-    );
-
-    return ownerCountsByTokenRange;
-  }
-  const ownerCountsByTokenRange =
-    sumOwnerCountsByTokenRange(ownersDistribution);
+  const ownerCountsByTokenRange = tokenRanges.map(({ min, max }) =>
+    ownersDistribution
+      .filter(({ tokenCount }) => tokenCount >= min && tokenCount <= max)
+      .reduce((sum, { ownerCount, tokenCount }) => sum + ownerCount, 0)
+  );
 
   return (
     <div>

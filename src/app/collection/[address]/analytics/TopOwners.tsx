@@ -3,8 +3,18 @@ import { Progress } from "@/app/components/ui/progress";
 import Table from "@/app/homepages/realms-adventurers/components/Table";
 import { shortenHex } from "@/functions/utils";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
-
-export const TopOwners = ({ owners }: { owners: any }) => {
+import { useOwnerListings } from "@reservoir0x/reservoir-kit-ui";
+export const TopOwners = ({
+  owners,
+}: {
+  owners: Array<{
+    address: string;
+    ownership: {
+      tokenCount: number;
+      onSaleCount: number;
+    };
+  }>;
+}) => {
   return (
     <div>
       <h4>Owners</h4>

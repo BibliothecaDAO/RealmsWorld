@@ -5,7 +5,7 @@ import { formatEther } from "ethers/lib/utils.js";
 import { ExternalLink, Twitter, Globe, Link } from "lucide-react";
 import Image from "next/image";
 import Discord from "@/icons/discord.svg";
-import { getCollections } from "@/app/lib/resevoir/getCollections";
+import { getCollections } from "@/app/lib/reservoir/getCollections";
 
 export default async function CollectionSummary({ address }: any) {
   const collectionData = await getCollections([{ contract: address }]);

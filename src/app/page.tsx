@@ -2,7 +2,7 @@ import { Collection, Game } from "@/types";
 import { games } from "@/constants";
 import { GameCard } from "./components/GameCard";
 import { CollectionCard } from "./components/CollectionCard";
-import { getCollections } from "./lib/resevoir/getCollections";
+import { getCollections } from "./lib/reservoir/getCollections";
 
 export default async function Home() {
   const data = await getCollections([

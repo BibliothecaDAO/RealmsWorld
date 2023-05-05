@@ -1,6 +1,6 @@
-import { getOwnersDistribution } from "@/app/lib/resevoir/getOwnerDistribution";
+import { getOwnersDistribution } from "@/app/lib/reservoir/getOwnerDistribution";
 import { OwnerDistribution } from "./OwnerDistribution";
-import { getOwners } from "@/app/lib/resevoir/getOwners";
+import { getOwners } from "@/app/lib/reservoir/getOwners";
 import { TopOwners } from "./TopOwners";
 
 export default async function Page({

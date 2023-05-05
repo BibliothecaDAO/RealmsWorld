@@ -10,7 +10,7 @@ import { TokenContent } from "./TokenContent";
 import { ListingModal } from "@/app/components/ListingModal";
 import { TokenAttributes } from "./TokenAttributes";
 import { Metadata } from "next";
-import { getCollections } from "@/app/lib/resevoir/getCollections";
+import { getCollections } from "@/app/lib/reservoir/getCollections";
 
 export default async function Page({
   params,
