@@ -49,13 +49,11 @@ export const TokenCard = (props: TokenCardProps) => {
           </div>
           <h6>{token.token.name}</h6>
 
-          <div className="my-3 text-sm">
-            {token.market.floorAsk.price
-              ? formatEther(
-                  token.market.floorAsk.price.amount.raw
-                ).toLocaleLowerCase()
-              : ""}{" "}
-            ETH
+          <div className="my-3 text-sm h-6">
+            {token.market.floorAsk.price &&
+              formatEther(
+                token.market.floorAsk.price.amount.raw
+              ).toLocaleLowerCase() + "ETH"}
           </div>
 
           <div className="flex justify-between space-x-2">
@@ -67,11 +65,13 @@ export const TokenCard = (props: TokenCardProps) => {
             >
               view
             </Button>
-            <BuyButton
-              size="xs"
-              address={token.token.contract}
-              id={token.token.tokenId}
-            />
+            {token.market.floorAsk.id && (
+              <BuyButton
+                size="xs"
+                address={token.token.contract}
+                id={token.token.tokenId}
+              />
+            )}
           </div>
         </div>
       ) : (
