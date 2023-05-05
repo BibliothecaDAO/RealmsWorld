@@ -4,6 +4,7 @@ import Table from "@/app/homepages/realms-adventurers/components/Table";
 import { shortenHex } from "@/functions/utils";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import { useOwnerListings } from "@reservoir0x/reservoir-kit-ui";
+import Link from "next/link";
 export const TopOwners = ({
   owners,
 }: {
@@ -28,14 +29,18 @@ export const TopOwners = ({
         <ScrollArea.Viewport className="h-96">
           {owners.map((owner) => (
             <div key={owner.address} className="grid grid-cols-5 py-1">
-              <div className="col-span-2">{shortenHex(owner.address, 8)}</div>
+              <div className="col-span-2">
+                <Link href={`/user/${owner.address}`}>
+                  {shortenHex(owner.address, 8)}
+                </Link>
+              </div>
               <div>{owner.ownership.tokenCount}</div>
               <div>{owner.ownership.onSaleCount}</div>
               <div>
                 {((owner.ownership.tokenCount / 8000) * 100).toFixed(2)}
               </div>
             </div>
-          ))}{" "}
+          ))}
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar
           className="ScrollAreaScrollbar"

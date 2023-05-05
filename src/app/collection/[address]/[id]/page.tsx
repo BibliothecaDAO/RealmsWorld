@@ -35,7 +35,7 @@ export default async function Page({
   const collection: Collection = collectionData.collections[0];
 
   return (
-    <div className="flex flex-wrap h-full p-4 -mt-64 sm:p-8">
+    <div className="flex flex-wrap h-full p-4 sm:p-8">
       <div className="flex-none w-full p-2 rounded-t md:w-1/3 bg-gradient-to-b from-theme-gray-light">
         <Image
           src={token.image}

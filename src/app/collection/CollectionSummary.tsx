@@ -2,10 +2,11 @@ import { Button } from "@/app/components/ui/button";
 import { games } from "@/constants";
 import { getGamesByContract } from "@/functions/getters";
 import { formatEther } from "ethers/lib/utils.js";
-import { ExternalLink, Twitter, Globe, Link } from "lucide-react";
+import { ExternalLink, Twitter, Globe } from "lucide-react";
 import Image from "next/image";
 import Discord from "@/icons/discord.svg";
 import { getCollections } from "@/app/lib/reservoir/getCollections";
+import Link from "next/link";
 
 export default async function CollectionSummary({ address }: any) {
   const collectionData = await getCollections([{ contract: address }]);
@@ -87,7 +88,6 @@ export default async function CollectionSummary({ address }: any) {
           {contract_details.map((detail, index) => {
             return (
               <div key={index} className="uppercase">
-                {" "}
                 <span className="opacity-50 ">{detail.title}</span>{" "}
                 {detail.value}
               </div>
