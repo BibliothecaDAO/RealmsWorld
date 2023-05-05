@@ -1,8 +1,8 @@
 
-export const getAttributes = async ({ collection }: { collection: string }) => {
+export const getOwnersDistribution = async ({ collection }: { collection: string }) => {
 
     try {
-        const res = await fetch(`https://api.reservoir.tools/collections/${collection}/attributes/all/v3`, {
+        const res = await fetch(`https://api.reservoir.tools/collections/${collection}/owners-distribution/v1`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-api-key': process.env.RESERVOIR_API_KEY || '',
@@ -10,7 +10,6 @@ export const getAttributes = async ({ collection }: { collection: string }) => {
             },
             next: { revalidate: 1000 }
         });
-        console.log('att')
         const data: any = await res.json()
         return data
     } catch (error) {

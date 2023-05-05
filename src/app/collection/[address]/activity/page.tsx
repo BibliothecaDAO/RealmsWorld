@@ -1,8 +1,7 @@
-import { getData } from "@/functions";
 import { CollectionActivity } from "../../CollectionActivity";
 import { ActivityCard } from "@/app/components/ActivityCard";
 import { Activity } from "@/types";
-import { getActivity } from "@/app/lib/getActivity";
+import { getActivity } from "@/app/lib/resevoir/getActivity";
 
 export default async function Page({
   params,
@@ -22,7 +21,6 @@ export default async function Page({
     collection: params.address,
     query: { types: types },
   });
-
   return (
     <div className="flex">
       <CollectionActivity address={params.address} />

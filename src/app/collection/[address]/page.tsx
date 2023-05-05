@@ -7,9 +7,9 @@ import { Button } from "@/app/components/ui/button";
 import { TradeFilters } from "../TradeFilters";
 import { AttributesDropdown } from "@/app/components/AttributesDropdown";
 import { AttributeTags } from "../AttributeTags";
-import { getCollections } from "@/app/lib/getCollections";
-import { getToken } from "@/app/lib/getToken";
-import { getAttributes } from "@/app/lib/getAttributes";
+import { getCollections } from "@/app/lib/resevoir/getCollections";
+import { getToken } from "@/app/lib/resevoir/getToken";
+import { getAttributes } from "@/app/lib/resevoir/getAttributes";
 
 export async function generateMetadata({
   params,
