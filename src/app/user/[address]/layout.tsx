@@ -10,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { address: string };
 }) {
-  const defaultImage = "/backgrounds/dummy_background.png";
+  const defaultImage = "/backgrounds/dummy_background.webp";
   const imageUrl = params.address
     ? `/backgrounds/${params.address}.png`
     : defaultImage;

@@ -1,7 +1,7 @@
 "use client";
 
 export const Footer = () => {
-  const defaultImage = "/backgrounds/footer.png";
+  const defaultImage = "/backgrounds/footer.webp";
 
   const backgroundImageStyle = {
     backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.1), rgba(32, 32, 32, 1)), url(${defaultImage})`,

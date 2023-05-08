@@ -4,8 +4,6 @@ import { NextResponse, NextRequest } from "next/server";
 export async function POST(request: NextRequest) {
   const query: any = await request.json()
 
-  const queryParams = new URLSearchParams(query);
-
   console.log(`https://api.reservoir.tools/collections/activity/v5?collection=${query.collection}&${formatQueryString(query.types, 'types')}`)
   try {
     const res = await fetch(`https://api.reservoir.tools/collections/activity/v5?collection=${query.collection}&${formatQueryString(query.types, 'types')}`, {

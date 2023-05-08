@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
     queryParams = new URLSearchParams(query);
   }
 
-  console.log(`https://api.reservoir.tools/collections/v5?${queryParams}`)
 
   try {
     const res = await fetch(`https://api.reservoir.tools/collections/v5?${queryParams}`, {

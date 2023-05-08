@@ -11,11 +11,9 @@ export default function RootLayout({
   params: { id: string };
 }) {
   const defaultImage = "/backgrounds/dummy_background.png";
-  const imageUrl = params.id
-    ? `/backgrounds/${params.id}.png`
-    : defaultImage;
+  const imageUrl = params.id ? `/backgrounds/${params.id}.png` : defaultImage;
 
-  console.log(params)
+  console.log(params);
 
   const backgroundImageStyle = {
     backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(32, 32, 32, 1)), url(${imageUrl}), url(${defaultImage})`,
@@ -26,10 +24,7 @@ export default function RootLayout({
 
   return (
     <div className="w-full h-full bg-theme-gray">
-      <div
-        className="w-full -mt-24 h-96"
-        style={backgroundImageStyle}
-      />
+      <div className="w-full -mt-24 h-96" style={backgroundImageStyle} />
       <motion.div
         initial={{ opacity: 0.5 }}
         animate={{ opacity: 1 }}
