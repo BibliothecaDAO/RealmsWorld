@@ -26,13 +26,15 @@ export const TokenCard = (props: TokenCardProps) => {
 
   return (
     <div className={layout === "grid" ? grid : list}>
-      <Image
-        src={token.token.image || ""}
-        alt="An example image"
-        className={`${isGrid ? "mx-auto rounded-t-xl" : "rounded-xl"}`}
-        width={imageSize}
-        height={imageSize}
-      />
+      <Link href={`/collection/${token.token.contract}/${token.token.tokenId}`}>
+        <Image
+          src={token.token.image || ""}
+          alt={token.token.name}
+          className={`${isGrid ? "mx-auto rounded-t-xl" : "rounded-xl"}`}
+          width={imageSize}
+          height={imageSize}
+        />
+      </Link>
       {isGrid ? (
         <div className={`w-full px-3 pt-4 pb-2`}>
           <div className="flex justify-between w-full text-sm">

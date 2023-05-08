@@ -1,7 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import CollectionSummary from "../CollectionSummary";
+import CollectionSummary from "@/app/collection/CollectionSummary";
 import { Button } from "@/app/components/ui/button";
+import { NavLink } from "@/app/components/ui/nav-link";
 
 export default function RootLayout({
   children,
@@ -24,7 +25,7 @@ export default function RootLayout({
   const tabs = [
     {
       name: "Trade",
-      link: "/",
+      link: "",
     },
     { name: "Analytics", link: "analytics" },
     {
@@ -47,13 +48,15 @@ export default function RootLayout({
           <CollectionSummary address={params.address} />
           <div className="flex gap-4 justify-center">
             {tabs.map((tab) => (
-              <Button
+              <NavLink
                 key={tab.name}
-                variant={"default"}
-                href={`/collection/${params.address}/${tab.link}`}
+                exact
+                href={`/collection/${params.address}${
+                  tab.link && "/" + tab.link
+                }`}
               >
                 {tab.name}
-              </Button>
+              </NavLink>
             ))}
           </div>
           {children}

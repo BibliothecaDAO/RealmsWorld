@@ -4,9 +4,9 @@ import { Collection } from "@/types";
 
 import { TokenTable } from "@/app/components/TokenTable";
 import { Button } from "@/app/components/ui/button";
-import { TradeFilters } from "../TradeFilters";
+import { TradeFilters } from "@/app/collection/TradeFilters";
 import { AttributesDropdown } from "@/app/components/AttributesDropdown";
-import { AttributeTags } from "../AttributeTags";
+import { AttributeTags } from "@/app/collection/AttributeTags";
 import { getCollections } from "@/app/lib/reservoir/getCollections";
 import { getToken } from "@/app/lib/reservoir/getToken";
 import { getAttributes } from "@/app/lib/reservoir/getAttributes";

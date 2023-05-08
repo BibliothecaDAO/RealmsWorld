@@ -1,4 +1,4 @@
-import { CollectionActivity } from "../../CollectionActivity";
+import { CollectionActivity } from "../../../CollectionActivity";
 import { ActivityCard } from "@/app/components/ActivityCard";
 import { Activity } from "@/types";
 import { getActivity } from "@/app/lib/reservoir/getActivity";
