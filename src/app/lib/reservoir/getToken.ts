@@ -27,9 +27,9 @@ function cleanQuery(query: any) {
     return cleanQuery;
 }
 
-export const getToken = async ({ collection, query }: { collection: string, query: any }) => {
+export const getToken = async ({ collection, query }: { collection?: string, query: any }) => {
 
-    query.collection = collection
+    if (collection) query.collection = collection
     const queryString = buildQueryString({ attributes: cleanQuery(query) });
 
     const check = () => {
@@ -49,7 +49,6 @@ export const getToken = async ({ collection, query }: { collection: string, quer
         }
         return new URLSearchParams(params);
     }
-
     try {
         const res = await fetch(`https://api.reservoir.tools/tokens/v5?${queryString}&${check()}`, {
             headers: {

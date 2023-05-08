@@ -21,8 +21,6 @@ export const TokenActivity = ({ token }: Props) => {
         "tokenActivity"
       );
       setTokenActivity(token_activity.activities);
-
-      console.log(token_activity);
     } catch (e) {
       console.log(e);
     }
