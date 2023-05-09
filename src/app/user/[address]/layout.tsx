@@ -31,8 +31,6 @@ export default function RootLayout({
         style={backgroundImageStyle}
       />
       <motion.div
-        initial={{ opacity: 0.5 }}
-        animate={{ opacity: 1 }}
         className="sm:pl-32 "
       >
         {children}
