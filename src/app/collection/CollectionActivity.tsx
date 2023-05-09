@@ -1,18 +1,10 @@
 "use client";
 
-import { getData } from "@/functions";
-import { useMemo, useState } from "react";
-import { Activity } from "@/types";
-import { ActivityCard } from "../components/ActivityCard";
+import { useState } from "react";
 import { Switch } from "../components/ui/switch";
-import { useQuery } from "@/composables/useQuery";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const CollectionActivity = ({ address }: any) => {
-  const [tokens, setTokens] = useState([]);
-  const [query, setQuery] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { handleAttributeClick, getQueriesFromUrl } = useQuery();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();

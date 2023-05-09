@@ -10,9 +10,6 @@ import Link from "next/link";
 
 export default async function CollectionSummary({ address }: any) {
   const collectionData = await getCollections([{ contract: address }]);
-
-  //const attributesData = getData({ collection: params.address }, "attributes");
-
   const collection = collectionData?.collections[0];
 
   const links = [

@@ -1,4 +1,3 @@
-import { getData } from "@/functions";
 import { hexToNumber, shortenHex } from "@/functions/utils";
 import { UserTokenData } from "@/types";
 import Image from "next/image";
@@ -8,22 +7,29 @@ import { customContractNames } from "@/constants/whiteListedContracts";
 import { Suspense } from "react";
 import { Metadata } from "next";
 import { Tabs } from "@/app/components/Tabs";
+import { getUser } from "@/app/lib/reservoir/getUser";
+import { getUsersActivity } from "@/app/lib/reservoir/getUsersActivity";
 
-export async function generateMetadata(
-  { params }: { params: { address: string } }
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { address: string };
+}): Promise<Metadata> {
   return {
     title: `Atlas - Collections Profile: ${params.address}`,
-    description: `Collection Details page for ${params.address} - Created for Adventurers by Bibliotheca DAO`
+    description: `Collection Details page for ${params.address} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
-export default async function Page({ params }: { params: { address: string } }) {
-  const id = hexToNumber(params.address, 1, 10);
-  const data = await getData({ address: params.address }, "user");
-
-  console.log(data);
-  const tokens: UserTokenData[] = data.tokens;
+export default async function Page({
+  params,
+}: {
+  params: { address: string };
+}) {
+  const { tokens }: { tokens: UserTokenData[] } = await getUser({
+    address: params.address,
+  });
+  const activityData = getUsersActivity({ address: params.address });
 
   // // Group tokens by contract
   // const tokensByContract = tokens.reduce<Record<string, UserTokenData[]>>(
@@ -62,45 +68,5 @@ export default async function Page({ params }: { params: { address: string } }) 
   //     return aIndex - bIndex;
   //   });
 
-  const tabs = [
-    {
-      name: "Mainnet",
-      content: (
-        <Suspense fallback={<div>Loading...</div>}>
-          <UserTokenGrid tokens={tokens} />
-        </Suspense>
-      ),
-    },
-    {
-      name: "Starknet",
-      content: <div>Coming soon</div>,
-    },
-    {
-      name: "Activity",
-      content: <div>Coming soon</div>
-    }
-  ];
-
-  return (
-    <div className="flex h-full p-8 -mt-64">
-      <div className="flex-none w-1/3 p-4 rounded-t-2xl bg-gradient-to-b from-theme-gray-light">
-        <h5>{shortenHex(params.address)}</h5>
-        <Image
-          src={`/users/${id}.png`}
-          alt="An example image"
-          width={2000}
-          height={2000}
-          className="mx-auto rounded"
-        />
-      </div>
-      <div className="flex-grow p-8">
-
-        <Tabs align="left" tabs={tabs} />
-        {/* <Suspense fallback={<div>Loading...</div>}>
-          <UserTokenGrid tokens={tokens} />
-        </Suspense> */}
-        {/* <TabbedView tabs={tabs} initialActiveTab={tabs[0]?.name} /> */}
-      </div>
-    </div>
-  );
+  return <UserTokenGrid tokens={tokens} />;
 }

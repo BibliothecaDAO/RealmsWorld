@@ -1,15 +1,11 @@
-import { BuyButton } from "@/app/components/BuyModal";
-import { getData } from "@/functions";
-import { Activity, Attributes, Collection, Market, Token } from "@/types";
+import { Collection, Market, Token } from "@/types";
 import { formatEther } from "ethers/lib/utils.js";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { shortenHex } from "@/functions/utils";
 import { TokenContent } from "./TokenContent";
-import { ListingModal } from "@/app/components/ListingModal";
 import { TokenAttributes } from "./TokenAttributes";
-import { Metadata } from "next";
 import { getCollections } from "@/app/lib/reservoir/getCollections";
 import { getToken } from "@/app/lib/reservoir/getToken";
 
@@ -20,18 +16,23 @@ export default async function Page({
 }) {
   const token_params = params.address + ":" + params.id;
 
-  const tokensData = await getToken({
+  const tokensData = getToken({
     query: {
       tokens: token_params,
       includeAttributes: true,
       includeQuantity: true,
     },
   });
-  const collectionData = await getCollections([{ contract: params.address }]);
+  const collectionData = getCollections([{ contract: params.address }]);
 
-  const token: Token = tokensData.tokens[0].token;
-  const market: Market = tokensData.tokens[0].market;
-  const collection: Collection = collectionData.collections[0];
+  const [{ tokens }, { collections }] = await Promise.all([
+    tokensData,
+    collectionData,
+  ]);
+
+  const token: Token = tokens[0].token;
+  const market: Market = tokens[0].market;
+  const collection: Collection = collections[0];
 
   return (
     <div className="ml-16 flex flex-wrap h-full p-4 sm:p-8">

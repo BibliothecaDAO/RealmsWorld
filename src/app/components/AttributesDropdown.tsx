@@ -10,8 +10,6 @@ import {
 import { Button } from "./ui/button";
 import { useQuery } from "@/composables/useQuery";
 import { useUIContext } from "../providers/UIProvider";
-import { getData } from "@/functions";
-import { X } from "lucide-react";
 
 export const AttributesDropdown = ({ address, attributes }: any) => {
   const {

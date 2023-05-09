@@ -2,6 +2,9 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { hexToNumber, shortenHex } from "@/functions/utils";
+import Image from "next/image";
+import { NavLink } from "@/app/components/ui/nav-link";
 
 export default function RootLayout({
   children,
@@ -21,7 +24,18 @@ export default function RootLayout({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   };
-
+  const id = hexToNumber(params.address, 1, 10);
+  const tabs = [
+    {
+      name: "Mainnet",
+      link: "",
+    },
+    { name: "Starknet", link: "starknet" },
+    {
+      name: "Activity",
+      link: "activity",
+    },
+  ];
   return (
     <div className="w-full h-full">
       <motion.div
@@ -35,7 +49,32 @@ export default function RootLayout({
         animate={{ opacity: 1 }}
         className="sm:pl-32 "
       >
-        {children}
+        <div className="flex h-full p-8 -mt-64">
+          <div className="flex-none w-1/3 p-4 rounded-t-2xl bg-gradient-to-b from-theme-gray-light">
+            <h5>{shortenHex(params.address)}</h5>
+            <Image
+              src={`/users/${id}.png`}
+              alt="An example image"
+              width={2000}
+              height={2000}
+              className="mx-auto rounded"
+            />
+          </div>
+          <div className="flex-grow p-8">
+            <div className="flex w-full flex text-xl py-3 border-b border-white/20 mb-4 space-x-4">
+              {tabs.map((tab) => (
+                <NavLink
+                  key={tab.name}
+                  exact
+                  href={`/user/${params.address}${tab.link && "/" + tab.link}`}
+                >
+                  {tab.name}
+                </NavLink>
+              ))}
+            </div>
+            {children}
+          </div>
+        </div>
       </motion.div>
     </div>
   );

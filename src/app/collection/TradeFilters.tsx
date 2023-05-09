@@ -26,7 +26,7 @@ export const TradeFilters = () => {
         variant={"default"}
       >
         <Filter className="w-3" />
-      </Button>{" "}
+      </Button>
       <Button
         onClick={toggleGrid}
         className="self-center"
@@ -34,7 +34,7 @@ export const TradeFilters = () => {
         variant={"default"}
       >
         <Grid className="self-center w-4" />
-      </Button>{" "}
+      </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button size={"xs"} variant={"default"}>
