@@ -1,13 +1,10 @@
-import { getData } from "@/functions";
 import { hexToNumber, shortenHex } from "@/functions/utils";
-import { UserTokenData } from "@/types";
 import Image from "next/image";
-import TabbedView from "@/app/components/TabbedView";
 import UserTokenGrid from "@/app/components/UserTokenGrid";
-import { customContractNames } from "@/constants/whiteListedContracts";
 import { Suspense } from "react";
 import { Metadata } from "next";
 import { Tabs } from "@/app/components/Tabs";
+import UserTokenGridSkeleton from "@/app/components/UserTokenGridSkeleton";
 
 export async function generateMetadata(
   { params }: { params: { address: string } }
@@ -20,10 +17,10 @@ export async function generateMetadata(
 
 export default async function Page({ params }: { params: { address: string } }) {
   const id = hexToNumber(params.address, 1, 10);
-  const data = await getData({ address: params.address }, "user");
+  //const data = await getData({ address: params.address }, "user");
 
-  console.log(data);
-  const tokens: UserTokenData[] = data.tokens;
+  //console.log(data);
+  //const tokens: UserTokenData[] = data.tokens;
 
   // // Group tokens by contract
   // const tokensByContract = tokens.reduce<Record<string, UserTokenData[]>>(
@@ -65,11 +62,10 @@ export default async function Page({ params }: { params: { address: string } }) 
   const tabs = [
     {
       name: "Mainnet",
-      content: (
-        <Suspense fallback={<div>Loading...</div>}>
-          <UserTokenGrid tokens={tokens} />
-        </Suspense>
-      ),
+      content: <Suspense fallback=<UserTokenGridSkeleton />>
+        {/** @ts-expect-error Server Component */}
+        <UserTokenGrid address={params.address} continuation="" />
+      </Suspense>
     },
     {
       name: "Starknet",
@@ -83,7 +79,7 @@ export default async function Page({ params }: { params: { address: string } }) 
 
   return (
     <div className="flex h-full p-8 -mt-64">
-      <div className="flex-none w-1/3 p-4 rounded-t-2xl bg-gradient-to-b from-theme-gray-light">
+      <div className="flex-none w-1/3 p-4 rounded-t-2xl bg-gradient-to-b from-theme-gray-light sm:block hidden">
         <h5>{shortenHex(params.address)}</h5>
         <Image
           src={`/users/${id}.png`}
@@ -93,13 +89,8 @@ export default async function Page({ params }: { params: { address: string } }) 
           className="mx-auto rounded"
         />
       </div>
-      <div className="flex-grow p-8">
-
+      <div className="flex-shrink w-full p-4 sm:w-2/3">
         <Tabs align="left" tabs={tabs} />
-        {/* <Suspense fallback={<div>Loading...</div>}>
-          <UserTokenGrid tokens={tokens} />
-        </Suspense> */}
-        {/* <TabbedView tabs={tabs} initialActiveTab={tabs[0]?.name} /> */}
       </div>
     </div>
   );

@@ -5,11 +5,20 @@ import Profile from "./LoginButton";
 import { Compass, Menu } from "lucide-react";
 import { useUIContext } from "../providers/UIProvider";
 import { Button } from "./ui/button";
+import { useMotionValueEvent, useScroll } from "framer-motion"
+import { useState } from "react";
 
 export const TopNav = () => {
-  const { isSidebarOpen, toggleSidebar } = useUIContext();
+  const { toggleSidebar } = useUIContext();
+  const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 0);
+  });
+
   return (
-    <div className="fixed w-full p-3 pl-4 sm:pl-8 lg:pl-32 z-100">
+    <div id="topnav" className={`fixed w-full p-3 pl-4 sm:pl-8 lg:pl-32 z-[100] ${isScrolled ? 'bg-opacity-30 backdrop-blur-md bg-black' : ''}`}>
       <div className="flex justify-between ">
         <Button className="lg:hidden" onClick={toggleSidebar}>
           <Menu className="self-center" />
