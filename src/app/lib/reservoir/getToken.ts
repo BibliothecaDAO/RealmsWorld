@@ -53,6 +53,7 @@ export const getToken = async ({ collection, query }: { collection?: string, que
                 'Content-Type': 'application/json',
                 'x-api-key': process.env.RESERVOIR_API_KEY || '',
             },
+            next: { revalidate: 60 }
         });
         const data: any = await res.json()
         return data
