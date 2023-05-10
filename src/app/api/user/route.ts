@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const queryString = query.continuation ? `&continuation=${query.continuation}` : "";
 
     const url = `https://api.reservoir.tools/users/${query.address}/tokens/v7?collectionsSetId=${reservoirLootCollectionSetId}&${queryString}&limit=24`;
-    console.log(url)
+
     const res = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
