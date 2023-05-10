@@ -1,8 +1,6 @@
 import { formatQueryString } from "@/functions/utils";
 
 export const getActivity = async ({ collection, query }: { collection: string, query: any }) => {
-
-    console.log(`https://api.reservoir.tools/collections/activity/v5?collection=${collection}&${formatQueryString(query.types, 'types')}`)
     try {
         const res = await fetch(`https://api.reservoir.tools/collections/activity/v5?collection=${collection}&${formatQueryString(query.types, 'types')}`, {
             headers: {

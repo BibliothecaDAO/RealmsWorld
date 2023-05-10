@@ -1,19 +1,16 @@
 "use client";
-import { getData } from "@/functions";
-import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { convertToJSON, decodeAndSplit } from "@/functions/utils";
+
 import { TokenCard } from "./TokenCard";
-import { TokenMarketData } from "@/types";
+import { Token, TokenMarketData } from "@/types";
 import { useUIContext } from "../providers/UIProvider";
+//import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
 
 export const TokenTable = ({
   address,
   tokens,
 }: {
   address: string;
-  tokens: any;
+  tokens: TokenMarketData[];
 }) => {
   const { isGrid } = useUIContext();
 
@@ -24,7 +21,7 @@ export const TokenTable = ({
   return (
     <div className={isGrid ? grid : list}>
       {tokens
-        ? tokens.map((token: TokenMarketData, index: number) => {
+        ? tokens.map((token, index) => {
             return (
               <TokenCard
                 key={index}

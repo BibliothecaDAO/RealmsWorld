@@ -11,10 +11,11 @@ interface Props {
 
 export const TokenActivity = ({ token }: Props) => {
   const [tokenActivity, setTokenActivity] = useState<Activity[]>([]);
-
+  const [loading, setLoading] = useState(true);
   const token_params = token.collection.id + ":" + token.tokenId;
 
   const getActivity = async () => {
+    setLoading(true);
     try {
       const token_activity = await getData(
         { token: token_params },
@@ -24,6 +25,7 @@ export const TokenActivity = ({ token }: Props) => {
     } catch (e) {
       console.log(e);
     }
+    setLoading(false);
   };
 
   useMemo(() => {
@@ -36,6 +38,16 @@ export const TokenActivity = ({ token }: Props) => {
         tokenActivity.map((activity: Activity, index: number) => {
           return <ActivityCard key={index} activity={activity} />;
         })}
+      {loading && (
+        <>
+          {new Array(6).fill(0).map((index) => (
+            <div
+              key={index}
+              className="flex flex-wrap w-full p-2 border-b bg-gray-600 border-white/30 animate-pulse h-20"
+            ></div>
+          ))}
+        </>
+      )}
     </div>
   );
 };

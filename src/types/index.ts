@@ -176,7 +176,7 @@ export interface Activity {
   type: string;
   fromAddress: string;
   toAddress: string | null;
-  price: number;
+  price: { currency: { symbol: string }; amount: { native: number } } & number;
   amount: number;
   timestamp: number;
   createdAt: string;

@@ -3,12 +3,22 @@ import UserTokenCard from "./UserTokenCard";
 import { UserTokenData } from "@/types";
 import { Suspense } from "react";
 import UserTokenGridSkeleton from "./UserTokenGridSkeleton";
+import { getUser } from "../lib/reservoir/getUser";
 
-async function UserTokenGrid({ address, continuation }: { address: string, continuation: string | undefined }) {
-
-  const data = await getData({ address, continuation }, "user");
-
-  const tokens: UserTokenData[] = data.tokens;
+async function UserTokenGrid({
+  address,
+  continuation,
+}: {
+  address: string;
+  continuation: string | undefined;
+}) {
+  const {
+    tokens,
+    continuation: dataContinuation,
+  }: { tokens: UserTokenData[]; continuation: string } = await getUser({
+    address,
+    continuation,
+  });
 
   return (
     <>
@@ -17,11 +27,12 @@ async function UserTokenGrid({ address, continuation }: { address: string, conti
           <UserTokenCard key={token.token.tokenId} token={token} />
         ))}
       </div>
-      {data.continuation && <Suspense fallback=<UserTokenGridSkeleton />>
-        {/** @ts-expect-error Server Component */}
-        <UserTokenGrid address={address} continuation={data.continuation} />
-      </Suspense>
-      }
+      {dataContinuation && (
+        <Suspense fallback=<UserTokenGridSkeleton />>
+          {/** @ts-expect-error Server Component */}
+          <UserTokenGrid address={address} continuation={dataContinuation} />
+        </Suspense>
+      )}
     </>
   );
 }

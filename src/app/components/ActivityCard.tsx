@@ -69,8 +69,14 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
         )}
       </div>
       <div className="flex self-center w-1/2 font-semibold sm:justify-end sm:w-2/12">
-        {" "}
-        <div className="self-center">{activity.price} ETH</div>
+        {activity.type != "transfer" &&
+          (activity.price?.currency ? (
+            <div className="self-center">
+              {activity.price?.amount.native} {activity.price?.currency.symbol}
+            </div>
+          ) : (
+            <div className="self-center">{activity.price || "null"} ETH</div>
+          ))}
       </div>
       <div className="flex justify-end w-1/2 mt-2 sm:w-3/12 sm:mt-0">
         <div className="flex self-center px-4 space-x-4">
@@ -81,7 +87,7 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
         <div className="self-center">
           {activity.order && (
             <Image
-              src={activity.order ? activity.order.source.icon : ""}
+              src={activity.order?.source ? activity.order.source.icon : ""}
               alt="An example image"
               width={40}
               height={40}

@@ -1,9 +1,7 @@
-import { getData } from "@/functions";
 import { Metadata } from "next";
 import { Collection } from "@/types";
 
 import { TokenTable } from "@/app/components/TokenTable";
-import { Button } from "@/app/components/ui/button";
 import { TradeFilters } from "@/app/collection/TradeFilters";
 import { AttributesDropdown } from "@/app/components/AttributesDropdown";
 import { AttributeTags } from "@/app/collection/AttributeTags";
@@ -16,8 +14,8 @@ export async function generateMetadata({
 }: {
   params: { address: string };
 }): Promise<Metadata> {
-  const collection_data = await getData({ id: params.address }, "collection");
-  const collection: Collection = collection_data.collections[0];
+  const collectionData = await getCollections([{ contract: params.address }]);
+  const collection: Collection = collectionData.collections[0];
 
   return {
     title: `Atlas - Collection: ${collection.name}`,

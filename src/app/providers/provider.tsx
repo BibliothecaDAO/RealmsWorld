@@ -22,7 +22,7 @@ export function Provider({ children }: any) {
           {
             id: 1,
             baseApiUrl: "https://api.reservoir.tools",
-            default: true,
+            active: true,
             apiKey: process.env.RESERVOIR_API_KEY,
           },
         ],
@@ -32,7 +32,7 @@ export function Provider({ children }: any) {
       <WagmiConfig
         client={createClient(
           getDefaultClient({
-            appName: "Your App Name",
+            appName: "RAW: Atlas",
             alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_API,
             chains,
           })
