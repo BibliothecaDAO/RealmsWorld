@@ -1,13 +1,10 @@
-import { getData } from "@/functions";
 import { hexToNumber, shortenHex } from "@/functions/utils";
-import { UserTokenData } from "@/types";
 import Image from "next/image";
-import TabbedView from "@/app/components/TabbedView";
 import UserTokenGrid from "@/app/components/UserTokenGrid";
-import { customContractNames } from "@/constants/whiteListedContracts";
 import { Suspense } from "react";
 import { Metadata } from "next";
 import { Tabs } from "@/app/components/Tabs";
+import UserTokenGridSkeleton from "@/app/components/UserTokenGridSkeleton";
 
 export async function generateMetadata(
   { params }: { params: { address: string } }
@@ -20,10 +17,10 @@ export async function generateMetadata(
 
 export default async function Page({ params }: { params: { address: string } }) {
   const id = hexToNumber(params.address, 1, 10);
-  const data = await getData({ address: params.address }, "user");
+  //const data = await getData({ address: params.address }, "user");
 
-  console.log(data);
-  const tokens: UserTokenData[] = data.tokens;
+  //console.log(data);
+  //const tokens: UserTokenData[] = data.tokens;
 
   // // Group tokens by contract
   // const tokensByContract = tokens.reduce<Record<string, UserTokenData[]>>(
@@ -65,11 +62,10 @@ export default async function Page({ params }: { params: { address: string } }) 
   const tabs = [
     {
       name: "Mainnet",
-      content: (
-        <Suspense fallback={<div>Loading...</div>}>
-          <UserTokenGrid tokens={tokens} />
-        </Suspense>
-      ),
+      content: <Suspense fallback=<UserTokenGridSkeleton />>
+        {/** @ts-expect-error Server Component */}
+        <UserTokenGrid address={params.address} continuation="" />
+      </Suspense>
     },
     {
       name: "Starknet",
@@ -96,10 +92,6 @@ export default async function Page({ params }: { params: { address: string } }) 
       <div className="flex-grow p-8">
 
         <Tabs align="left" tabs={tabs} />
-        {/* <Suspense fallback={<div>Loading...</div>}>
-          <UserTokenGrid tokens={tokens} />
-        </Suspense> */}
-        {/* <TabbedView tabs={tabs} initialActiveTab={tabs[0]?.name} /> */}
       </div>
     </div>
   );
