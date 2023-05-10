@@ -12,7 +12,7 @@ async function UserTokenGrid({ address, continuation }: { address: string, conti
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-3 my-3">
+      <div className="my-3 grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {tokens.map((token) => (
           <UserTokenCard key={token.token.tokenId} token={token} />
         ))}

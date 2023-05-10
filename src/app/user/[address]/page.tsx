@@ -79,7 +79,7 @@ export default async function Page({ params }: { params: { address: string } }) 
 
   return (
     <div className="flex h-full p-8 -mt-64">
-      <div className="flex-none w-1/3 p-4 rounded-t-2xl bg-gradient-to-b from-theme-gray-light">
+      <div className="flex-none w-1/3 p-4 rounded-t-2xl bg-gradient-to-b from-theme-gray-light sm:block hidden">
         <h5>{shortenHex(params.address)}</h5>
         <Image
           src={`/users/${id}.png`}
@@ -89,8 +89,7 @@ export default async function Page({ params }: { params: { address: string } }) 
           className="mx-auto rounded"
         />
       </div>
-      <div className="flex-grow p-8">
-
+      <div className="flex-shrink w-full p-4 sm:w-2/3">
         <Tabs align="left" tabs={tabs} />
       </div>
     </div>
