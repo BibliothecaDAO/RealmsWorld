@@ -1,5 +1,3 @@
-"use client";
-
 import { TokenMarketData } from "@/types";
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 import { formatEther } from "ethers/lib/utils.js";
@@ -28,13 +26,15 @@ export const TokenCard = (props: TokenCardProps) => {
 
   return (
     <div className={layout === "grid" ? grid : list}>
-      <Image
-        src={token.token.image || ""}
-        alt="An example image"
-        className={`${isGrid ? "mx-auto rounded-t-xl" : "rounded-xl"}`}
-        width={imageSize}
-        height={imageSize}
-      />
+      <Link href={`/collection/${token.token.contract}/${token.token.tokenId}`}>
+        <Image
+          src={token.token.image || ""}
+          alt={token.token.name}
+          className={`${isGrid ? "mx-auto rounded-t-xl" : "rounded-xl"}`}
+          width={imageSize}
+          height={imageSize}
+        />
+      </Link>
       {isGrid ? (
         <div className={`w-full px-3 pt-4 pb-2`}>
           <div className="flex justify-between w-full text-sm">
@@ -51,13 +51,11 @@ export const TokenCard = (props: TokenCardProps) => {
           </div>
           <h6>{token.token.name}</h6>
 
-          <div className="my-3 text-sm">
-            {token.market.floorAsk.price
-              ? formatEther(
-                  token.market.floorAsk.price.amount.raw
-                ).toLocaleLowerCase()
-              : ""}{" "}
-            ETH
+          <div className="my-3 text-sm h-6">
+            {token.market.floorAsk.price &&
+              formatEther(
+                token.market.floorAsk.price.amount.raw
+              ).toLocaleLowerCase() + "ETH"}
           </div>
 
           <div className="flex justify-between space-x-2">
@@ -69,11 +67,13 @@ export const TokenCard = (props: TokenCardProps) => {
             >
               view
             </Button>
-            <BuyButton
-              size="xs"
-              address={token.token.contract}
-              id={token.token.tokenId}
-            />
+            {token.market.floorAsk.id && (
+              <BuyButton
+                size="xs"
+                address={token.token.contract}
+                id={token.token.tokenId}
+              />
+            )}
           </div>
         </div>
       ) : (

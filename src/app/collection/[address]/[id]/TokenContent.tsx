@@ -38,7 +38,6 @@ export const TokenContent = ({ token, collection }: Props) => {
       name: "Games",
       content: (
         <div>
-          {" "}
           <div className="flex flex-wrap mb-4 sm:space-x-2">
             {comptatible_games.map((game: Game, index: any) => {
               return <GameCard key={index} game={game} />;

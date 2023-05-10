@@ -21,6 +21,7 @@ export const useQuery = () => {
     }
 
     const handleAttributeClick = (key: string, value: string) => {
+        // @ts-ignore
         const params = new URLSearchParams(searchParams);
 
         if (params.has(key) || params.get(key) === "") {

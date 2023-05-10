@@ -10,9 +10,16 @@ import {
 import { Button } from "./ui/button";
 import { useQuery } from "@/composables/useQuery";
 import { useUIContext } from "../providers/UIProvider";
+import { getData } from "@/functions";
+import { X } from "lucide-react";
 
-export const Attributes = ({ attributes }: any) => {
-  const { handleAttributeClick, isAttributeInQuery, isKeyInQuery } = useQuery();
+export const AttributesDropdown = ({ address, attributes }: any) => {
+  const {
+    handleAttributeClick,
+    isAttributeInQuery,
+    isKeyInQuery,
+    getQueriesFromUrl,
+  } = useQuery();
   const { isFilterOpen, toggleFilter } = useUIContext();
 
   return (
