@@ -24,8 +24,6 @@ export default async function Page({
 }: {
   params: { address: string };
 }) {
-  const activityData = getUsersActivity({ address: params.address });
-
   // // Group tokens by contract
   // const tokensByContract = tokens.reduce<Record<string, UserTokenData[]>>(
   //   (acc, token) => {
@@ -63,5 +61,10 @@ export default async function Page({
   //     return aIndex - bIndex;
   //   });
 
-  return <UserTokenGrid address={params.address} />;
+  return (
+    <>
+      {/* @ts-expect-error Async Server Component*/}
+      <UserTokenGrid address={params.address} continuation="" />;
+    </>
+  );
 }

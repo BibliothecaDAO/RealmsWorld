@@ -30,7 +30,6 @@ export default async function Page({
   const { activities }: { activities: Activity[] } = await getUsersActivity({
     address: params.address,
   });
-  console.log(activities);
 
   return (
     <div className="grid grid-cols-1 my-4 overflow-y-scroll border rounded border-white/20 h-96">

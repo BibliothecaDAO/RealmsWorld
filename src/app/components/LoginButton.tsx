@@ -49,15 +49,19 @@ function Profile() {
   if (isConnected)
     return (
       <div className="flex self-center space-x-3">
-        <Button>
+        <Button className="sm:block hidden">
           {eth?.symbol} {parseFloat(eth?.formatted || "").toFixed(3)}
         </Button>
-        <Button>
-          {lords?.symbol} {lords?.formatted}
-        </Button>
-        <Button href={`/user/${address}`}>
-          {ensAddress ? ensAddress : shortenHex(address || "")}
-        </Button>
+        {lords && (
+          <Button className="sm:block hidden">
+            {lords?.symbol} {lords?.formatted}
+          </Button>
+        )}
+        {address && (
+          <Button href={`/user/${address}`}>
+            {ensAddress ? ensAddress : shortenHex(address || "")}
+          </Button>
+        )}
         <Button
           className="self-center"
           variant={"default"}
@@ -69,25 +73,27 @@ function Profile() {
     );
   return (
     <div className="self-center">
-      <ConnectKitButton.Custom>
-        {({ show, isConnected, truncatedAddress, ensName }) => {
-          return (
-            <>
-              <Button
-                className="self-center"
-                variant={"default"}
-                onClick={show}
-              >
-                {isConnected ? (
-                  ensName ?? truncatedAddress
-                ) : (
-                  <span className="uppercase">Connect Wallet</span>
-                )}
-              </Button>
-            </>
-          );
-        }}
-      </ConnectKitButton.Custom>{" "}
+      {connectors && (
+        <ConnectKitButton.Custom>
+          {({ show, isConnected, truncatedAddress, ensName }) => {
+            return (
+              <>
+                <Button
+                  className="self-center"
+                  variant={"default"}
+                  onClick={show}
+                >
+                  {isConnected ? (
+                    ensName ?? truncatedAddress
+                  ) : (
+                    <span className="uppercase">Connect Wallet</span>
+                  )}
+                </Button>
+              </>
+            );
+          }}
+        </ConnectKitButton.Custom>
+      )}
       {error && <div>{error.message}</div>}
     </div>
   );

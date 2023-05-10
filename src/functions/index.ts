@@ -1,5 +1,5 @@
 export async function getData(query: any, route: string, forceRefresh?: boolean) {
-    const url = process.env.NEXT_PUBLIC_LOCAL_API || 'http://' + process.env.NEXT_PUBLIC_VERCEL_URL + '/api/'
+    const url = process.env.NEXT_PUBLIC_LOCAL_API || 'https://' + process.env.NEXT_PUBLIC_VERCEL_URL + '/api/'
     const res = await fetch(url + route, {
         method: 'POST',
         headers: {

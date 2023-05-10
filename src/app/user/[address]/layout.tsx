@@ -44,11 +44,9 @@ export default function RootLayout({
         className="w-full -mt-24 h-96"
         style={backgroundImageStyle}
       />
-      <motion.div
-        className="sm:pl-32 "
-      >
+      <motion.div className="sm:pl-32 ">
         <div className="flex h-full p-8 -mt-64">
-          <div className="flex-none w-1/3 p-4 rounded-t-2xl bg-gradient-to-b from-theme-gray-light">
+          <div className="flex-none w-1/3 p-4 rounded-t-2xl bg-gradient-to-b from-theme-gray-light sm:block hidden">
             <h5>{shortenHex(params.address)}</h5>
             <Image
               src={`/users/${id}.png`}
@@ -58,7 +56,7 @@ export default function RootLayout({
               className="mx-auto rounded"
             />
           </div>
-          <div className="flex-grow p-8">
+          <div className="flex-shrink p-8 p-4 sm:w-2/3">
             <div className="flex w-full flex text-xl py-3 border-b border-white/20 mb-4 space-x-4">
               {tabs.map((tab) => (
                 <NavLink
