@@ -11,11 +11,30 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
   // convert unix to time
   const date = new Date(activity.timestamp * 1000);
 
-  // get time difference from now
-  const timeDiff = Math.abs(Date.now() - date.getTime());
+  const getElapsedTime = () => {
+    // get time difference from now
+    const timeDiff = Math.abs(Date.now() - date.getTime());
 
-  // get time difference in hours
-  const hours = Math.floor(timeDiff / 1000 / 60 / 60);
+    // get time difference in hours
+    const hours = Math.floor(timeDiff / 1000 / 60 / 60);
+
+    // get the difference in other units to change the display
+    const days = Math.floor(hours / 24);
+    const weeks = Math.floor(days / 7);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
+
+    if (hours < 48) return `${hours} hours ago`;
+    if (days < 7) return `${days} days ago`;
+    if (weeks < 4) return `${weeks} weeks ago`;
+    if (months < 12) return `${months} months ago`;
+    return `${years} years ago`;
+  };
+
+  const getLocalizedDate = () => {
+    return date.toLocaleString();
+  };
+
   return (
     <div className="flex flex-wrap w-full p-2 border-b border-white/30">
       <div className="flex flex-wrap justify-start w-full sm:w-5/12">
@@ -75,17 +94,18 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
               {activity.price?.amount.native} {activity.price?.currency.symbol}
             </div>
           ) : (
-            <div className="self-center">{activity.price || "null"} ETH</div>
+            <div className="self-center">{activity.price || 0} ETH</div>
           ))}
       </div>
       <div className="flex justify-end w-1/2 mt-2 sm:w-3/12 sm:mt-0">
         <div className="flex self-center px-4 space-x-4">
-          <span className="flex-none px-4 py-1 rounded bg-black/50">
-            {hours} hours ago
+          <span className="flex-none px-4 py-1 rounded bg-black/50"
+            title={getLocalizedDate()}>
+            {getElapsedTime()}
           </span>
         </div>
         <div className="self-center">
-          {activity.order && (
+          {activity.order ? (
             <Image
               src={activity.order?.source ? activity.order.source.icon : ""}
               alt="An example image"
@@ -93,6 +113,8 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
               height={40}
               className="flex-none p-2 mx-auto"
             />
+          ) : (
+            <div className="min-w-[40px] min-h-[40px]"></div>
           )}
         </div>
       </div>
