@@ -14,22 +14,22 @@ export default async function Page({
     typeof searchParams.types === "string"
       ? [{ types: searchParams.types }]
       : searchParams.types?.map((q: any) => {
-          return { types: q };
-        });
+        return { types: q };
+      });
 
   const { activities } = await getActivity({
     collection: params.address,
     query: { types: types },
   });
+
   return (
     <div className="flex">
-      <CollectionActivity address={params.address} />
-
-      <div className="grid flex-grow grid-cols-1">
-        {activities &&
+      <CollectionActivity />
+      <div id="activity-container" className="grid flex-grow grid-cols-1">
+        {activities ?
           activities.map((activity: Activity, index: number) => {
             return <ActivityCard key={index} activity={activity} />;
-          })}
+          }) : "Encountered a temporary error. Please refresh the page and retry."}
       </div>
     </div>
   );

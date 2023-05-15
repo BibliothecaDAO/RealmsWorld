@@ -18,7 +18,7 @@ export const TopNav = () => {
   });
 
   return (
-    <div id="topnav" className={`fixed w-full p-3 pl-4 sm:pl-8 lg:pl-32 z-[100] ${isScrolled ? 'bg-opacity-30 backdrop-blur-md bg-black' : ''}`}>
+    <div id="topnav" className={`fixed w-full p-3 pl-4 sm:pl-8 lg:pl-32 z-[100] ${isScrolled ? 'bg-opacity-30 backdrop-blur-sm bg-black' : ''}`}>
       <div className="flex justify-between ">
         <Button className="lg:hidden" onClick={toggleSidebar}>
           <Menu className="self-center" />
