@@ -44,7 +44,7 @@
     "@radix-ui/react-tooltip": "^1.0.3",
     "@react-three/drei": "^9.58.4",
     "@react-three/fiber": "^8.12.0",
-    "@reservoir0x/reservoir-kit-ui": "^0.16.2",
+    "@reservoir0x/reservoir-kit-ui": "^0.16.5",
     "@types/node": "18.16.3",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
@@ -53,12 +53,12 @@
     "chart.js": "^4.3.0",
     "class-variance-authority": "^0.6.0",
     "cmdk": "^0.2.0",
-    "connectkit": "^1.2.3",
+    "connectkit": "^1.2.4",
     "ethers": "^5.6.5",
-    "framer-motion": "^10.12.8",
+    "framer-motion": "^10.12.11",
     "graphql": "^16.6.0",
     "lucide-react": "^0.214.0",
-    "next": "13.4.1",
+    "next": "13.4.2",
     "postcss": "^8.4.23",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -79,9 +79,9 @@
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@svgr/webpack": "^8.0.1",
     "eslint": "8.40.0",
-    "eslint-config-next": "13.4.1"
+    "eslint-config-next": "13.4.2"
   },
   "resolutions": {
-    "@walletconnect/ethereum-provider": "2.7.0"
+    "@walletconnect/ethereum-provider": "2.7.4"
   }
 }
