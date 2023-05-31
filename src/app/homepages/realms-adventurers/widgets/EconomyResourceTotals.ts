@@ -1,4 +1,4 @@
-import { formatEther } from "ethers/lib/utils.js";
+import { formatEther } from 'viem'
 import { ApolloQueryResult } from "@apollo/client";
 import client from "../apolloClient";
 import {

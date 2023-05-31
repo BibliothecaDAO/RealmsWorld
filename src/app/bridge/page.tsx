@@ -1,21 +1,22 @@
-import {
-  Select,
-  SelectContent,
-  SelectTrigger,
-  SelectItem,
-} from "../components/ui/select";
+"use client";
+
+import { Tabs } from "@/app/components/Tabs";
+import { Deposit } from "./Deposit";
 
 export default async function Page() {
+  const tabs = [
+    {
+      name: "Deposit",
+      content: <Deposit />,
+    },
+    {
+      name: "Withdraw",
+      content: <div>test</div>,
+    },
+  ];
   return (
-    <div className="w-full">
-      <div className="m-auto border w-60 rounded-lg">
-        <Select>
-          <SelectTrigger />
-          <SelectContent className="w-full h-32">
-            <SelectItem value="test">test</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+    <div className="mx-auto border w-60 rounded-lg container flex-col mt-20 w-96 p-8">
+      <Tabs tabs={tabs} />
     </div>
   );
 }

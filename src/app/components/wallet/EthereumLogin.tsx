@@ -19,6 +19,7 @@ import { shortenHex } from "@/functions/utils";
 import { LogOut } from "lucide-react";
 import { ConnectKitButton } from "connectkit";
 import { useNetwork } from "wagmi";
+import { tokens } from "@/constants/tokens";
 
 function EthereumLogin() {
   const { address, isConnected } = useAccount();
@@ -37,7 +38,7 @@ function EthereumLogin() {
     isLoading: lordsLoading,
   } = useBalance({
     address: address,
-    token: "0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0",
+    token: tokens.L1.LORDS.tokenAddress?.[chain?.id || 1],
   });
 
   const {

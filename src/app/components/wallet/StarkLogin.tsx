@@ -17,11 +17,13 @@ import {
   useStarkName,
   useContractRead,
   useNetwork,
+  useBalance,
 } from "@starknet-react/core";
 import { useState, useEffect } from "react";
 import compiledErc20 from "@/abi/compiledErc20.json";
-import { uint256 } from "starknet";
-import { formatEther } from "ethers/lib/utils.js";
+import l2Erc20 from "@/abi/l2Erc20.json";
+import { uint256, validateAndParseAddress } from "starknet";
+import { formatEther } from "viem";
 import { cn } from "@/app/lib/utils";
 import { tokens } from "@/constants/tokens";
 
@@ -62,23 +64,25 @@ function StarkLogin() {
   const {
     data: eth,
     isLoading: ethLoading,
-    error,
     refetch,
-  } = useContractRead({
-    address: tokens.L2.ETH.tokenAddress?.[NETWORK_ID[network]],
-    abi: compiledErc20,
-    functionName: "balanceOf",
-    args: [address],
+  } = useBalance({
+    address: address,
     watch: false,
   });
-  const { data: lords, isLoading: lordsLoading } = useContractRead({
+  console.log(address);
+  const {
+    data: lords,
+    isLoading: lordsLoading,
+    error,
+  } = useContractRead({
     address: tokens.L2.LORDS.tokenAddress?.[NETWORK_ID[network]],
-    abi: compiledErc20,
-    functionName: "balanceOf",
-    args: [address],
+    abi: l2Erc20,
+    functionName: "balance_of",
+    args: [validateAndParseAddress(address)],
     watch: false,
   });
 
+  console.log(error);
   const onDisconnect = () => {
     disconnect();
     //setIsConnected(false);
@@ -111,13 +115,7 @@ function StarkLogin() {
           </>
         )}
         <Button variant="outline" size={"lg"} className="group">
-          <span className="group-hover:hidden">
-            {eth
-              ? parseFloat(
-                  formatEther(uint256.uint256ToBN(eth.balance).toString())
-                ).toFixed(2)
-              : 0}
-          </span>
+          <span className="group-hover:hidden">{eth ? eth.formatted : 0}</span>
           <span className="group-hover:block hidden">Buy Lords</span>
         </Button>
         {lords && (

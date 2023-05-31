@@ -7,7 +7,7 @@ import { tokens, ChainType } from '@/constants/tokens';
 import { useContractWrite as useL2ContractWrite } from '@starknet-react/core';
 import { number, uint256 } from 'starknet';
 
-export const useBridgeContractAPI = () => {
+export const useBridgeContract = () => {
     const [amount, setAmount] = useState(0);
     const { address: addressL1 } = useL1Account();
     const network =
@@ -15,23 +15,27 @@ export const useBridgeContractAPI = () => {
     const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]]
     const l2BridgeAddress = tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[network]]
 
-    const { config: depostConfig } = usePrepareContractWrite({
+    /* const { config: depostConfig } = usePrepareContractWrite({
+         address: l1BridgeAddress as `0x${string}`,
+         abi: L1_BRIDGE_ABI,
+         functionName: "deposit",
+         enabled: Boolean(addressL1),
+     });*/
+
+    const { write: deposit } = useL1ContractWrite({
         address: l1BridgeAddress as `0x${string}`,
         abi: L1_BRIDGE_ABI,
         functionName: "deposit",
-        enabled: Boolean(addressL1),
-    });
+    })
 
-    const { write: deposit } = useL1ContractWrite(depostConfig)
+    /* const { config: withdrawConfig } = usePrepareContractWrite({
+     });*/
 
-    const { config: withdrawConfig } = usePrepareContractWrite({
+    const { write: withdraw } = useL1ContractWrite({
         address: l1BridgeAddress as `0x${string}`,
         abi: L1_BRIDGE_ABI,
         functionName: "withdraw",
-        enabled: Boolean(addressL1),
-    });
-
-    const { write: withdraw } = useL1ContractWrite(withdrawConfig)
+    })
 
     const calls = useMemo(() => {
         const tx = {

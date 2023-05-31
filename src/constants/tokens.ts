@@ -1,4 +1,4 @@
-const ChainType = {
+export const ChainType = {
     L1: {
         MAIN: 1,
         GOERLI: 5
@@ -26,11 +26,11 @@ export const tokens = {
             decimals: 18,
             bridgeAddress: {
                 [ChainType.L1.MAIN]: '',
-                [ChainType.L1.GOERLI]: '0x160e7631f22035149A01420cADD1012267551181'
+                [ChainType.L1.GOERLI]: '0xD9A9aA6c479115d530C834FbEc8579D1987a2AeE'
             },
             tokenAddress: {
                 [ChainType.L1.MAIN]: '0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0',
-                [ChainType.L1.GOERLI]: '0xd44BB808bfE43095dBb94c83077766382D63952a'
+                [ChainType.L1.GOERLI]: '0x7543919933eef56f754daf6835fa97f6dfd785d8'
             }
         }
     },
@@ -54,11 +54,11 @@ export const tokens = {
             decimals: 18,
             bridgeAddress: {
                 [ChainType.L2.MAIN]: '',
-                [ChainType.L2.GOERLI]: ''
+                [ChainType.L2.GOERLI]: '0x59ed05a42af8cc47269faedf8f025465bdfff8742e07689d9e90f99655f83ff'
             },
             tokenAddress: {
                 [ChainType.L2.MAIN]: '',
-                [ChainType.L2.GOERLI]: ''
+                [ChainType.L2.GOERLI]: '0x7f1c84a2a4ec1da5ce9d862884245fef2f23be6f1a52bd16399f910f440fedc'
             }
         }
     }

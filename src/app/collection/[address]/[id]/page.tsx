@@ -1,5 +1,5 @@
 import { Collection, Market, Token } from "@/types";
-import { formatEther } from "ethers/lib/utils.js";
+import { formatEther } from "viem";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";

@@ -1,6 +1,6 @@
 import { TokenMarketData } from "@/types";
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
-import { formatEther } from "ethers/lib/utils.js";
+import { formatEther } from "viem";
 import Link from "next/link";
 import { BuyButton } from "./BuyModal";
 import Image from "next/image";
