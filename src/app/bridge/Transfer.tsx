@@ -42,7 +42,13 @@ export const Transfer = ({ action }: { action: string }) => {
 
   const onTransferClick = async () => {
     if (action == "withdraw") {
-      transferToL2(amount);
+      /*approve({
+      args: [l1BridgeAddress, amount],
+    });*/
+      deposit({
+        args: [BigInt(amount), BigInt(l2Account || "0x"), BigInt(1)],
+        value: BigInt(1),
+      });
     } else {
       initiateWithdraw();
     }
@@ -142,7 +148,7 @@ export const Transfer = ({ action }: { action: string }) => {
       {l1Account && l2Account && (
         <Button
           className="w-full bg-white/80 !text-black/70"
-          onClick={onTransferClick}
+          onClick={() => onTransferClick()}
           size={"lg"}
           disabled={!amount}
         >
@@ -153,7 +159,7 @@ export const Transfer = ({ action }: { action: string }) => {
             : "Transfer to L1"}
         </Button>
       )}
-      {/*<ProgressModal open={showProgressModal} />*/}
+      <ProgressModal open={showProgressModal} />
     </div>
   );
 };
