@@ -159,7 +159,7 @@ export const Transfer = ({ action }: { action: string }) => {
             : "Transfer to L1"}
         </Button>
       )}
-      <ProgressModal open={showProgressModal} />
+      {/*<ProgressModal open={showProgressModal} />*/}
     </div>
   );
 };
