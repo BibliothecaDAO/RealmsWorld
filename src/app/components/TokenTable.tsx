@@ -2,7 +2,7 @@
 
 import { TokenCard } from "./TokenCard";
 import { Token, TokenMarketData } from "@/types";
-import { useUIContext } from "../providers/UIProvider";
+import { useUIContext } from "@/app/providers/UIProvider";
 //import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
 
 export const TokenTable = ({

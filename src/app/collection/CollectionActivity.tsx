@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Switch } from "../components/ui/switch";
+import { Switch } from "@/app/components/ui/switch";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const CollectionActivity = () => {
@@ -15,7 +15,9 @@ export const CollectionActivity = () => {
 
   const handleSwitchChange = (value: any) => {
     setLoading(true);
-    document.getElementById("activity-container")?.classList.add("opacity-30", "pointer-events-none");
+    document
+      .getElementById("activity-container")
+      ?.classList.add("opacity-30", "pointer-events-none");
     let newState: {
       [key: string]: boolean;
     } = {};
@@ -42,17 +44,22 @@ export const CollectionActivity = () => {
     // @ts-ignore
     const params = new URLSearchParams(searchParams);
     const newState = searchAttributes.reduce((acc, attribute) => {
-      const valueExists = params.has("types") && params.getAll("types").includes(attribute);
+      const valueExists =
+        params.has("types") && params.getAll("types").includes(attribute);
       return { ...acc, [attribute]: valueExists };
     }, {});
     setTypesState(newState);
-    document.getElementById("activity-container")?.classList.remove("opacity-30", "pointer-events-none");
+    document
+      .getElementById("activity-container")
+      ?.classList.remove("opacity-30", "pointer-events-none");
     setLoading(false);
   }, [searchParams]);
 
   return (
     <div className="flex-col hidden pr-8 space-y-3 w-72 sm:flex">
-      {loading ? <CollectionActivitySkeleton /> :
+      {loading ? (
+        <CollectionActivitySkeleton />
+      ) : (
         searchAttributes.map((attribute: string, index: number) => {
           return (
             <div
@@ -66,7 +73,8 @@ export const CollectionActivity = () => {
               />
             </div>
           );
-        })}
+        })
+      )}
     </div>
   );
 };

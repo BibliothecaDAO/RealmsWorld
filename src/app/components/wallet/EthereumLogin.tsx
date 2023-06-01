@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
-import { Button } from "../ui/button";
+import { Button } from "@/app/components/ui/button";
 import { shortenHex } from "@/functions/utils";
 import { LogOut } from "lucide-react";
 import { ConnectKitButton } from "connectkit";

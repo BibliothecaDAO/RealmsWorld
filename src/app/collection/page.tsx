@@ -1,6 +1,6 @@
 import { allWhiteListed } from "@/constants";
 import { Collection } from "@/types";
-import { CollectionCard } from "../components/CollectionCard";
+import { CollectionCard } from "@/app/components/CollectionCard";
 import { getCollections } from "../lib/reservoir/getCollections";
 
 export const metadata = {

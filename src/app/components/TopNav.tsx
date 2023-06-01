@@ -4,7 +4,7 @@ import Link from "next/link";
 import EthereumLogin from "./wallet/EthereumLogin";
 import StarkLogin from "./wallet/StarkLogin";
 import { Compass, Menu, Wallet } from "lucide-react";
-import { useUIContext } from "../providers/UIProvider";
+import { useUIContext } from "@/app/providers/UIProvider";
 import { Button } from "./ui/button";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";

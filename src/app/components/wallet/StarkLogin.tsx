@@ -3,29 +3,23 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
-import { Button } from "../ui/button";
+import { Button } from "@/app/components/ui/button";
 import { shortenHex } from "@/functions/utils";
 import { LogOut } from "lucide-react";
 import {
   useConnectors,
   useAccount,
   useStarkName,
-  useContractRead,
   useNetwork,
   useBalance,
 } from "@starknet-react/core";
 import { useState, useEffect } from "react";
-import compiledErc20 from "@/abi/compiledErc20.json";
-import l2Erc20 from "@/abi/l2Erc20.json";
-import { uint256, validateAndParseAddress } from "starknet";
-import { formatEther } from "viem";
 import { cn } from "@/app/lib/utils";
-import { tokens } from "@/constants/tokens";
+import { useTokenContractAPI } from "@/composables/useTokenContract";
 
 function StarkLogin() {
   const { available, connect, connectors, disconnect } = useConnectors();
@@ -69,20 +63,8 @@ function StarkLogin() {
     address: address,
     watch: false,
   });
-  console.log(address);
-  const {
-    data: lords,
-    isLoading: lordsLoading,
-    error,
-  } = useContractRead({
-    address: tokens.L2.LORDS.tokenAddress?.[NETWORK_ID[network]],
-    abi: l2Erc20,
-    functionName: "balance_of",
-    args: [validateAndParseAddress(address)],
-    watch: false,
-  });
+  const { balanceOfL2 } = useTokenContractAPI();
 
-  console.log(error);
   const onDisconnect = () => {
     disconnect();
     //setIsConnected(false);
@@ -118,18 +100,19 @@ function StarkLogin() {
           <span className="group-hover:hidden">{eth ? eth.formatted : 0}</span>
           <span className="group-hover:block hidden">Buy Lords</span>
         </Button>
-        {lords && (
+        {/*balanceOfL2 && (
           <Button variant="outline" size={"lg"} className="group">
             <span className="group-hover:hidden">
-              {lords
+              {balanceOfL2
                 ? parseFloat(
-                    formatEther(uint256.uint256ToBN(lords.balance).toString())
+                    formatEther(uint256.uint256ToBN(balanceOfL2.balance).toString())
                   ).toFixed(2)
                 : 0}
             </span>
             <span className="group-hover:block hidden ">Buy Coins</span>
           </Button>
         )}
+                <Button onClick={refetchLords}>Refetch Lrods</Button>*/}
         {isWrongNetwork && (
           <Dialog open={isWrongNetwork}>
             <DialogContent className="w-full">
