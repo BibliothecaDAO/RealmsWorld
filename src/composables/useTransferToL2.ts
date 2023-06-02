@@ -13,11 +13,16 @@ import { useTransfer } from './useTransfer';
 import { useIsMaxTotalBalanceExceeded } from './useIsMaxTotalBalanceExceeded';
 import { useTransfersLog } from '../providers/TransfersLogProvider';*/
 
-import { useTransferProgress } from './useTransferProgress';
 import { ChainType, tokens } from '@/constants/tokens';
+import { TransferStep, TransferToL2Steps } from '@/constants/transferSteps';
+import { useTransfer } from './useTransfer';
+import { useTransferProgress } from './useTransferProgress';
+
+export const stepOf = (step, steps) => {
+    return steps.indexOf(step);
+};
 
 export const useTransferToL2 = () => {
-    console.log('using transfer')
     //onst [trackInitiated, trackSuccess, trackError, trackReject] = useTransferToL2Tracking();
     const { deposit } = useBridgeContract();
     const { allowance, approve } = useTokenContractAPI();
@@ -26,7 +31,7 @@ export const useTransferToL2 = () => {
     const { address: l1Account } = useL1Account();
     const { address: l2Account } = useL2Account();
 
-    //const { handleProgress, handleData, handleError } = useTransfer(TransferToL2Steps);
+    const { handleProgress, handleData, handleError } = useTransfer(TransferToL2Steps);
     //const selectedToken = useSelectedToken();
     const progressOptions = useTransferProgress();
     //const isMaxTotalBalanceExceeded = useIsMaxTotalBalanceExceeded();
@@ -91,9 +96,10 @@ export const useTransferToL2 = () => {
                     handleError(error);
                 } else {*/
                 console.log('Token needs approval');
-                /*handleProgress(
-                    progressOptions.approval(symbol, stepOf(TransferStep.APPROVE, TransferToL2Steps))
-                );*/
+                console.log(handleProgress)
+                handleProgress(
+                    progressOptions.approval('Lords', stepOf(TransferStep.APPROVE, TransferToL2Steps))
+                );
 
                 console.log('Current allow value', { allowance });
                 if (Number(allowance) < Number(amount)) {
@@ -102,12 +108,12 @@ export const useTransferToL2 = () => {
                         args: [l1BridgeAddress, amount],
                     })
                 }
-                /*handleProgress(
+                handleProgress(
                     progressOptions.waitForConfirm(
                         l1Account,
                         stepOf(TransferStep.CONFIRM_TX, TransferToL2Steps)
                     )
-                );*/
+                );
                 console.log('Calling deposit');
                 const receipt = await deposit({
                     args: [BigInt(amount), BigInt(l2Account || "0x"), BigInt(1)],

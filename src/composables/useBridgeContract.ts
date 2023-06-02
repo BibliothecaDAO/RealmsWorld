@@ -22,7 +22,7 @@ export const useBridgeContract = () => {
          enabled: Boolean(addressL1),
      });*/
 
-    const { write: deposit } = useL1ContractWrite({
+    const { writeAsync: deposit, data: depositData } = useL1ContractWrite({
         address: l1BridgeAddress as `0x${string}`,
         abi: L1_BRIDGE_ABI,
         functionName: "deposit",
@@ -53,6 +53,7 @@ export const useBridgeContract = () => {
         amount,
         setAmount,
         deposit,
+        depositData,
         //depositEth,
         withdraw,
         initiateWithdraw

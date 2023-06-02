@@ -1,19 +1,11 @@
 "use client";
 import { useAccount } from "@starknet-react/core";
-import NumberSelect from "@/app/components/NumberSelect";
-import { Button } from "@/app/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectTrigger,
-  SelectItem,
-} from "@/app/components/ui/select";
-import { Tabs } from "@/app/components/Tabs";
+
+import { Button } from "../components/ui/button";
 import { useAccount as useL1Account } from "wagmi";
 import { ConnectKitButton } from "connectkit";
 import StarkLogin from "@/app/components/wallet/StarkLogin";
 import { useBridgeContract } from "@/composables/useBridgeContract";
-import { parseEther } from "viem";
 import { useState } from "react";
 import { Input } from "@/app/components/ui/input";
 import { useTokenContractAPI } from "@/composables/useTokenContract";
@@ -24,6 +16,8 @@ import StarknetLogo from "@/icons/starknet.svg";
 import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { useTransferToL2 } from "@/composables/useTransferToL2";
+import { useBridgeModal } from "../providers/BridgeModalProvider";
+import { BridgeModalWrapper } from "./BridgeModalWrapper";
 
 const network =
   process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
@@ -37,20 +31,13 @@ export const Transfer = ({ action }: { action: string }) => {
   const [amount, setAmount] = useState("");
   const { allowance, approve, balanceOfL1, balanceOfL2 } =
     useTokenContractAPI();
-  const [showProgressModal, setShowProgressModal] = useState(false);
   const transferToL2 = useTransferToL2();
 
   const onTransferClick = async () => {
     if (action == "withdraw") {
-      /*approve({
-      args: [l1BridgeAddress, amount],
-    });*/
-      deposit({
-        args: [BigInt(amount), BigInt(l2Account || "0x"), BigInt(1)],
-        value: BigInt(1),
-      });
-    } else {
       initiateWithdraw();
+    } else {
+      transferToL2(amount);
     }
   };
 
@@ -159,6 +146,7 @@ export const Transfer = ({ action }: { action: string }) => {
             : "Transfer to L1"}
         </Button>
       )}
+      <BridgeModalWrapper />
       {/*<ProgressModal open={showProgressModal} />*/}
     </div>
   );

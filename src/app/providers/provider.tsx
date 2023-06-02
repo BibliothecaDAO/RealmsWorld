@@ -68,7 +68,7 @@ const wagmiConfig = createConfig({
 export function Provider({ children }: any) {
   //TODO update wagmi config for testnet env NEXT_PUBLIC_IS_TESTNET once v1 ecosystem is ready
   return (
-    <StarknetConfig connectors={starkConnectors}>
+    <StarknetConfig autoConnect connectors={starkConnectors}>
       {/*<ReservoirKitProvider
         options={{
           chains: [
