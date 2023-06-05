@@ -27,7 +27,7 @@ export const useBridgeContract = () => {
         abi: L1_BRIDGE_ABI,
         functionName: "deposit",
     })
-    const { data: depositReceipt, isLoading, status: depositTxStatus, isSuccess: depositIsSuccess } = useWaitForTransaction({
+    const { data: depositReceipt, isLoading, status: depositTxStatus, isSuccess: depositIsSuccess, isError: depostTxError } = useWaitForTransaction({
         hash: depositData?.hash,
     })
 
@@ -58,7 +58,7 @@ export const useBridgeContract = () => {
         deposit,
         depositData,
         depositIsSuccess,
-        depositError,
+        error: depositError || depostTxError,
         depositTxStatus,
         depositReceipt,
         //depositEth,

@@ -35,8 +35,9 @@ export const stepOf = (step: any, steps: any) => {
 
 export const useTransferToL2 = () => {
     //onst [trackInitiated, trackSuccess, trackError, trackReject] = useTransferToL2Tracking();
-    const { deposit, depositIsSuccess, depositError, depositTxStatus, depositReceipt } = useBridgeContract();
+    const { deposit, depositIsSuccess, error: depositError, depositTxStatus, depositReceipt } = useBridgeContract();
     const [amount, setAmount] = useState('')
+
     const { allowance, approve, approveHash } = useTokenContractAPI();
     const { data, isError, isSuccess: approveIsSuccess } = useWaitForTransaction({
         hash: approveHash?.hash

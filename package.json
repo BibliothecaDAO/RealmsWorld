@@ -16,7 +16,7 @@
     "@graphql-codegen/client-preset": "^3.0.1",
     "@habx/apollo-multi-endpoint-link": "^2.9.0",
     "@headlessui/react": "^1.7.15",
-    "@mui/material": "^5.13.3",
+    "@mui/material": "^5.13.4",
     "@mui/styles": "^5.13.2",
     "@radix-ui/react-accessible-icon": "^1.0.3",
     "@radix-ui/react-accordion": "^1.1.2",
