@@ -1,4 +1,4 @@
-[
+export const StarknetBridgeLords = [
   {
     "inputs": [
       {
@@ -144,4 +144,4 @@
     "stateMutability": "nonpayable",
     "type": "function"
   }
-]
+] as const

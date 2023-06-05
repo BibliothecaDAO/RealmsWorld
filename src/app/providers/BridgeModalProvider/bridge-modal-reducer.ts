@@ -25,7 +25,7 @@ export const initialState = {
     exitable: false
 };
 
-export const reducer = (state, action) => {
+export const reducer = (state: typeof initialState, action: any) => {
     switch (action.type) {
         case actions.SHOW_MODAL: {
             return {

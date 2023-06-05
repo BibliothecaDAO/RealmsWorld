@@ -38,7 +38,7 @@ function EthereumLogin() {
     isLoading: lordsLoading,
   } = useBalance({
     address: address,
-    token: tokens.L1.LORDS.tokenAddress?.[chain?.id || 1],
+    token: tokens.L1.LORDS.tokenAddress?.[chain?.id || 1] as `0x${string}`,
   });
 
   const {

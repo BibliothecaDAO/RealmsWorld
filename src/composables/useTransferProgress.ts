@@ -48,7 +48,7 @@ export const useTransferProgress = () => {
 
     return useMemo(
         () => ({
-            approval: (symbol, activeStep) => {
+            approval: (symbol: string, activeStep: number) => {
                 const { approval } = transferProgressStrings;
                 const message = approval.message
                 return {
@@ -57,7 +57,7 @@ export const useTransferProgress = () => {
                     activeStep
                 };
             },
-            deposit: (amount, symbol, activeStep) => {
+            deposit: (amount: number, symbol: string, activeStep: number) => {
                 const { deposit } = transferProgressStrings;
                 const message = evaluate(deposit.message, { amount, symbol });
                 return {
@@ -66,7 +66,7 @@ export const useTransferProgress = () => {
                     activeStep
                 };
             },
-            initiateWithdraw: (amount, symbol, activeStep) => {
+            initiateWithdraw: (amount: number, symbol: string, activeStep: number) => {
                 const { initiateWithdraw } = transferProgressStrings;
                 const message = evaluate(initiateWithdraw.message, { amount, symbol });
                 return {
@@ -75,7 +75,7 @@ export const useTransferProgress = () => {
                     activeStep
                 };
             },
-            waitForConfirm: (walletName, activeStep) => {
+            waitForConfirm: (walletName: string, activeStep: number) => {
                 const { waitForConfirm } = transferProgressStrings;
                 const type = evaluate(waitForConfirm.type, { walletName });
                 const message = evaluate(waitForConfirm.message, { walletName });
@@ -85,7 +85,7 @@ export const useTransferProgress = () => {
                     activeStep
                 };
             },
-            withdraw: (amount, symbol, activeStep) => {
+            withdraw: (amount: number, symbol: string, activeStep: number) => {
                 const { withdraw } = transferProgressStrings;
                 const message = evaluate(withdraw.message, { amount, symbol });
                 return {
@@ -94,7 +94,7 @@ export const useTransferProgress = () => {
                     activeStep
                 };
             },
-            error: (type, err, data) => {
+            error: (type: any, err: any, data: any) => {
                 /*if (type === TransferError.MAX_TOTAL_BALANCE_ERROR) {
                   const {limitationErrorTitle, maxTotalBalanceErrorMsg} = transferProgressStrings;
                   return {

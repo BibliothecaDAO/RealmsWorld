@@ -9,7 +9,7 @@ export const actions = {
 
 export const initialState = [];
 
-export const reducer = (state, action) => {
+export const reducer = (state: any, action: any) => {
     switch (action.type) {
         case actions.SET_TRANSFERS:
             return action.transfers;
@@ -22,7 +22,7 @@ export const reducer = (state, action) => {
         case actions.UPDATE_TRANSFERS: {
             const { updatedTransfers } = action;
             const transfers = [...state];
-            updatedTransfers.forEach(updatedTransfer => {
+            updatedTransfers.forEach((updatedTransfer: any) => {
                 const index = transfers.findIndex(t => t.id === updatedTransfer.id);
                 if (index > -1) {
                     transfers[index] = updatedTransfer;

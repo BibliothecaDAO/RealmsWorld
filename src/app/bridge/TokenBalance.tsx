@@ -1,6 +1,12 @@
 import { formatEther, formatGwei } from "viem";
 
-export const TokenBalance = ({ balance, symbol }) => {
+export const TokenBalance = ({
+  balance,
+  symbol,
+}: {
+  balance: bigint;
+  symbol: string;
+}) => {
   return (
     <div className="right-0 absolute">
       <span className="text-sm">Available Balance</span>

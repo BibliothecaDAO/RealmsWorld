@@ -33,11 +33,15 @@ import {
   useNetwork,
   useStarknet,
 } from "@starknet-react/core";
-import L1_MESSAGING_ABI from "@/abi/L1/StarknetMessaging.json";
+import { StarknetMessaging as L1_MESSAGING_ABI } from "@/abi/L1/StarknetMessaging";
 import { useAccountChange } from "@/composables/useAccountChange";
 import { useWalletsProviderContext } from "../WalletsProvider";
 
-export const TransfersLogProvider = ({ children }) => {
+export const TransfersLogProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { library } = useStarknet();
   const [transfers, dispatch] = useReducer(reducer, initialState);
   //const { updateTokenBalance } = useTokens();
@@ -58,7 +62,7 @@ export const TransfersLogProvider = ({ children }) => {
     abi: L1_MESSAGING_ABI,
   });
 
-  useAccountChange((accountHash) => {
+  useAccountChange((accountHash: string) => {
     if (accountHash) {
       const storedTransfers = getTransfersFromStorage();
       console.log("Extract transfers from local storage", storedTransfers);
@@ -104,13 +108,13 @@ export const TransfersLogProvider = ({ children }) => {
     blockHash && checkTransfers();
   }, [blockHash]);
 
-  const checkTransaction = async (transfer) => {
+  const checkTransaction = async (transfer: any) => {
     if (!(isCompleted(transfer.status) || transfer.lastChecked === blockHash)) {
       console.log(`Checking tx status ${transfer.l2hash}`);
       /*const [{ tx_status }, error] = await promiseHandler(
         getStarknet().provider.getTransactionStatus(transfer.l2hash)
       );*/
-      const tx = await library.getTransaction(transfer.l2hash);
+      const tx: any = await library.getTransaction(transfer.l2hash);
 
       console.log(tx);
       if (tx) {
@@ -131,7 +135,7 @@ export const TransfersLogProvider = ({ children }) => {
     }
   };
 
-  const getMessageToL2 = async (depositEvent) => {
+  const getMessageToL2 = async (depositEvent: any) => {
     console.log("Getting L2 message for deposit event", { depositEvent });
     const { blockNumber, transactionHash } = depositEvent;
     const [pastEvents, error] = await promiseHandler(
@@ -154,7 +158,7 @@ export const TransfersLogProvider = ({ children }) => {
     return pastEvents.find((e) => e.transactionHash === transactionHash);
   };
 
-  const calcL2TransactionHash = async (transfer) => {
+  const calcL2TransactionHash = async (transfer: any) => {
     const messageToL2Event = await getMessageToL2(transfer.event);
     if (messageToL2Event) {
       console.log("Found L2 message. calculating L2 transaction hash...", {
@@ -186,7 +190,7 @@ export const TransfersLogProvider = ({ children }) => {
     return storedTransfers[accountHash] || [];
   };
 
-  const saveTransfersToStorage = (transfers) => {
+  const saveTransfersToStorage = (transfers: any) => {
     const storedTransfers =
       getStorageItem(LOCAL_STORAGE_TRANSFERS_LOG_KEY) || {};
     const updatedTransfers = {
@@ -196,7 +200,7 @@ export const TransfersLogProvider = ({ children }) => {
     setStorageItem(LOCAL_STORAGE_TRANSFERS_LOG_KEY, updatedTransfers);
   };
 
-  const updateTransfers = (updatedTransfers) => {
+  const updateTransfers = (updatedTransfers: any) => {
     dispatch({
       type: actions.UPDATE_TRANSFERS,
       updatedTransfers: Array.isArray(updatedTransfers)
@@ -205,14 +209,14 @@ export const TransfersLogProvider = ({ children }) => {
     });
   };
 
-  const addTransfer = (newTransfer) => {
+  const addTransfer = (newTransfer: any) => {
     dispatch({
       type: actions.ADD_TRANSFER,
       newTransfer,
     });
   };
 
-  const setTransfers = (transfers) => {
+  const setTransfers = (transfers: any) => {
     dispatch({
       type: actions.SET_TRANSFERS,
       transfers,

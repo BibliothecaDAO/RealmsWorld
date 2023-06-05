@@ -54,7 +54,7 @@ export const TokenCard = (props: TokenCardProps) => {
           <div className="my-3 text-sm h-6">
             {token.market.floorAsk.price &&
               formatEther(
-                token.market.floorAsk.price.amount.raw
+                BigInt(token.market.floorAsk.price.amount.raw)
               ).toLocaleLowerCase() + "ETH"}
           </div>
 
@@ -87,7 +87,7 @@ export const TokenCard = (props: TokenCardProps) => {
             <h6 className="self-center ml-auto">
               {token.market.floorAsk.price
                 ? formatEther(
-                    token.market.floorAsk.price.amount.raw
+                    BigInt(token.market.floorAsk.price.amount.raw)
                   ).toLocaleLowerCase()
                 : ""}{" "}
               ETH

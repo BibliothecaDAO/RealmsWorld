@@ -1,9 +1,9 @@
 
 import { useCallback } from 'react';
 //import { constants } from 'starknet';
-
+import { EventName } from '@starkware-industries/commons-js-enums';
 import { useAccount as useL2Account } from "@starknet-react/core";
-import { useAccount as useL1Account } from "wagmi";
+import { useAccount as useL1Account, useWaitForTransaction } from "wagmi";
 
 //import { useSelectedToken } from '../providers/TransferProvider';
 import { useBridgeContract } from './useBridgeContract';
@@ -17,14 +17,20 @@ import { ChainType, tokens } from '@/constants/tokens';
 import { TransferStep, TransferToL2Steps } from '@/constants/transferSteps';
 import { useTransfer } from './useTransfer';
 import { useTransferProgress } from './useTransferProgress';
+import { useTransfersLog } from '@/app/providers/TransfersLogProvider';
 
-export const stepOf = (step, steps) => {
+export const ActionType = {
+    TRANSFER_TO_L2: 1,
+    TRANSFER_TO_L1: 2
+};
+
+export const stepOf = (step: any, steps: any) => {
     return steps.indexOf(step);
 };
 
 export const useTransferToL2 = () => {
     //onst [trackInitiated, trackSuccess, trackError, trackReject] = useTransferToL2Tracking();
-    const { deposit } = useBridgeContract();
+    const { deposit, depositReceipt } = useBridgeContract();
     const { allowance, approve } = useTokenContractAPI();
     // const { account: l1Account, config: configL1 } = useL1Wallet();
 
@@ -37,25 +43,25 @@ export const useTransferToL2 = () => {
     //const isMaxTotalBalanceExceeded = useIsMaxTotalBalanceExceeded();
 
     //TODO refactor for wagmi/SN-react
-    //const { addTransfer } = useTransfersLog();
+    const { addTransfer } = useTransfersLog();
     const network =
         process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
     const tokenAddressL2 = tokens.L2.LORDS.tokenAddress?.[ChainType.L2[network]]
-    const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]]
+    const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]] as `0x${string}`
 
     return useCallback(
-        async amount => {
+        async (amount: any) => {
 
-            /*const onTransactionHash = (error, transactionHash) => {
+            const onTransactionHash = (error: any, transactionHash: string) => {
                 if (!error) {
                     console.log('Tx signed', { transactionHash });
                     handleProgress(
-                        progressOptions.deposit(amount, symbol, stepOf(TransferStep.DEPOSIT, TransferToL2Steps))
+                        progressOptions.deposit(amount, 'Lords', stepOf(TransferStep.DEPOSIT, TransferToL2Steps))
                     );
                 }
             };
 
-            const onDeposit = event => {
+            const onDeposit = (event: any) => {
                 console.log('Deposit event dispatched', event);
                 //trackSuccess(event.transactionHash);
                 const transferData = {
@@ -64,13 +70,13 @@ export const useTransferToL2 = () => {
                     recipient: l2Account,
                     l1hash: event.transactionHash,
                     name,
-                    symbol,
+                    symbol: 'Lords',
                     amount,
                     event
                 };
                 addTransfer(transferData);
                 handleData(transferData);
-            };*/
+            };
 
             /* const maybeAddToken = async () => {
                  const [, error] = await promiseHandler(addToken(tokenAddressL2));
@@ -110,20 +116,21 @@ export const useTransferToL2 = () => {
                 }
                 handleProgress(
                     progressOptions.waitForConfirm(
-                        l1Account,
+                        l1Account || '0x',
                         stepOf(TransferStep.CONFIRM_TX, TransferToL2Steps)
                     )
                 );
                 console.log('Calling deposit');
-                const receipt = await deposit({
+                const { hash } = await deposit({
                     args: [BigInt(amount), BigInt(l2Account || "0x"), BigInt(1)],
                     value: BigInt(1),
-                });;
-                console.log(receipt)
-                //onDeposit(receipt.events[EventName.L1.LOG_DEPOSIT]);
+                });
+
+                console.log(depositReceipt)
+                onDeposit(depositReceipt?.logs/*[EventName.L1.LOG_DEPOSIT]*/);
                 //await maybeAddToken(tokenAddressL2);
 
-            } catch (ex) {
+            } catch (ex: any) {
                 //trackError(ex);
                 console.error(ex?.message, ex);
                 //handleError(progressOptions.error(TransferError.TRANSACTION_ERROR, ex));

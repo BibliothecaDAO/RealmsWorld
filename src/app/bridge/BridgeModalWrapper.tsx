@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, lazy } from "react";
+import { ComponentType, LazyExoticComponent, Suspense, lazy } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,12 +11,16 @@ import { useBridgeModal } from "../providers/BridgeModalProvider";
 import Loading from "../loading";
 import dynamic from "next/dynamic";
 
+export type Component = {
+  component: LazyExoticComponent<ComponentType<any>>;
+  props: any;
+};
 export const BridgeModalWrapper = () => {
   const { show, withHeader, header, body, footer } = useBridgeModal();
 
-  const getComponents = (components: any) => {
+  const getComponents = (components: string[]) => {
     return components
-      ? components.map((c) => ({
+      ? components.map((c: any) => ({
           component: lazy(() => import(`../components/${c.path}`)),
           props: c.props,
         }))
@@ -40,13 +44,16 @@ export const BridgeModalWrapper = () => {
       </div>
     );
   };
-  const renderComponents = (components: any, fallbackComponent?: any) => {
+  const renderComponents = (
+    components: Component[],
+    fallbackComponent?: any
+  ) => {
     return components.length > 0
       ? components.map((c, i) => <c.component key={i} {...c.props} />)
       : fallbackComponent;
   };
   // Temporary fix for next/react dynamic imports https://github.com/vercel/next.js/issues/49382
-  const headerComponents = header.components.map((component) => {
+  const headerComponents: any = header.components.map((component: any) => {
     if (component.path == "ui/stepper") {
       return { component: Views["stepper"], props: component.props };
     }
@@ -54,6 +61,10 @@ export const BridgeModalWrapper = () => {
       return {
         component: Views["progressModalHeader"],
         props: component.props,
+      };
+    } else {
+      return {
+        component: Views["progressModalHeader"],
       };
     }
   });

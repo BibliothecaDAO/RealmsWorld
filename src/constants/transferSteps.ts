@@ -21,6 +21,6 @@ export const TransferToL1Steps = [
 
 export const CompleteTransferToL1Steps = [TransferStep.CONFIRM_TX, TransferStep.WITHDRAW];
 
-export const stepOf = (step, steps) => {
+export const stepOf = (step: any, steps: any) => {
     return steps.indexOf(step);
 };

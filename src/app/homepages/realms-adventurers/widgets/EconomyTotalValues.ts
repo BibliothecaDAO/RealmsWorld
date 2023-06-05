@@ -45,7 +45,7 @@ export class EconomyTotalValues extends Widget {
                 },
                 {
                     label: "Exchange $LORDS Purchased Total",
-                    value: parseFloat(formatEther(queryResult.data.economyExchangeLordsPurchasedTotal)).toFixed(4).toString()
+                    value: parseFloat(formatEther(BigInt(queryResult.data.economyExchangeLordsPurchasedTotal))).toFixed(4).toString()
                 }
             ]
         };

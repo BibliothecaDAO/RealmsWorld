@@ -66,7 +66,7 @@ const Stepper = ({
     <StepperTheme>
       <div className="w-full">
         <MuiStepper alternativeLabel activeStep={activeStep}>
-          {steps.map((label, index) => (
+          {steps.map((label: string, index: number) => (
             <Step key={index}>
               <StepLabel>{label}</StepLabel>
             </Step>

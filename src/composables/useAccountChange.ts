@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useWalletsProviderContext } from '@/app/providers/WalletsProvider';
 import { useAccount } from 'wagmi'
 
-export const useAccountChange = (fn, deps = []) => {
+export const useAccountChange = (fn: any, deps = []) => {
     const { isConnected } = useAccount()
     const { accountHash } = useWalletsProviderContext();
 

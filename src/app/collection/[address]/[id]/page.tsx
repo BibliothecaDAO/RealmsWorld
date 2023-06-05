@@ -65,7 +65,7 @@ export default async function Page({
           <Link href={`/user/${token.owner}`}>{shortenHex(token.owner)}</Link>
         </div>
         {market.floorAsk.price && (
-          <h2>{formatEther(market.floorAsk.price.amount.raw)} ETH</h2>
+          <h2>{formatEther(BigInt(market.floorAsk.price.amount.raw))} ETH</h2>
         )}
         <div>
           <TokenContent collection={collection} token={token} />

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
-import L1_BRIDGE_ABI from '@/abi/L1/StarknetBridgeLords.json'
+import { StarknetBridgeLords as L1_BRIDGE_ABI } from '@/abi/L1/StarknetBridgeLords'
 
-import { useAccount as useL1Account, useContractWrite as useL1ContractWrite, usePrepareContractWrite } from 'wagmi';
+import { useAccount as useL1Account, useContractWrite as useL1ContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import { } from 'wagmi'
 import { tokens, ChainType } from '@/constants/tokens';
 import { useContractWrite as useL2ContractWrite } from '@starknet-react/core';
@@ -26,6 +26,9 @@ export const useBridgeContract = () => {
         address: l1BridgeAddress as `0x${string}`,
         abi: L1_BRIDGE_ABI,
         functionName: "deposit",
+    })
+    const { data: depositReceipt, isLoading, isSuccess } = useWaitForTransaction({
+        hash: depositData?.hash,
     })
 
     /* const { config: withdrawConfig } = usePrepareContractWrite({
@@ -54,6 +57,7 @@ export const useBridgeContract = () => {
         setAmount,
         deposit,
         depositData,
+        depositReceipt,
         //depositEth,
         withdraw,
         initiateWithdraw

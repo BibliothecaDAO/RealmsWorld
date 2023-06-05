@@ -1,5 +1,5 @@
-import { useContractRead, useAccount as useL1Account, useContractWrite as useL1ContractWrite, usePrepareContractWrite } from 'wagmi';
-import L1_LORDS_ABI from '@/abi/L1/LordsERC20.json'
+import { useContractRead, useContractReads, useAccount as useL1Account, useContractWrite as useL1ContractWrite, usePrepareContractWrite } from 'wagmi';
+import { lordsERC20 as L1_LORDS_ABI } from '@/abi/L1/LordsERC20'
 import L2_ERC20 from "@/abi/L2/C1ERC20.json";
 
 import { ChainType, tokens } from '@/constants/tokens';
@@ -12,10 +12,11 @@ import {
     useBalance,
 } from "@starknet-react/core";
 
+
 export const useTokenContractAPI = () => {
     const network =
         process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
-    const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]]
+    const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]] as `0x${string}`
     const l1LordsAddress = tokens.L1.LORDS.tokenAddress?.[ChainType.L1[network]]
     const l2BridgeAddress = tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[network]]
     const l2LordsAddress = tokens.L2.LORDS.tokenAddress?.[ChainType.L2[network]]
@@ -26,19 +27,34 @@ export const useTokenContractAPI = () => {
         abi: L1_LORDS_ABI,
         functionName: "approve",
     })
-    const { data: allowance/*, isError, isLoading */ } = useContractRead({
+
+    const l1LordsContract = {
         address: l1LordsAddress as `0x${string}`,
         abi: L1_LORDS_ABI,
-        functionName: 'allowance',
-        args: [address, l1BridgeAddress]
+    }
+    const { data: l1Data/*, isError, isLoading */ } = useContractReads({
+        contracts: [
+            {
+                ...l1LordsContract,
+                functionName: 'allowance',
+                args: [address as `0x${string}`, l1BridgeAddress],
+            },
+            {
+                ...l1LordsContract,
+                functionName: 'balanceOf',
+                args: [address as `0x${string}`],
+            }
+        ],
+        enabled: !!address,
     })
 
-    const { data: balanceOfL1/*, isError, isLoading*/ } = useContractRead({
+    /*const { data: balanceOfL1, isError, isLoading } = useContractRead({
         address: l1LordsAddress as `0x${string}`,
         abi: L1_LORDS_ABI,
         functionName: 'balanceOf',
-        args: [address]
-    })
+        args: [address],
+        enabled: !!address,
+    })*/
     const {
         data: balanceOfL2,
         isLoading: lordsLoading,
@@ -54,8 +70,8 @@ export const useTokenContractAPI = () => {
 
     return {
         approve,
-        allowance,
-        balanceOfL1,
+        allowance: l1Data?.[0].result,
+        balanceOfL1: l1Data?.[1].result,
         balanceOfL2,/*
         balanceOfEth*/
     };

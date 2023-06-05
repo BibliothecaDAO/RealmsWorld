@@ -65,7 +65,10 @@ export const Transfer = ({ action }: { action: string }) => {
     return (
       <>
         {balanceOfL2 && (
-          <TokenBalance balance={balanceOfL2?.balance} symbol="Lords" />
+          <TokenBalance
+            balance={(balanceOfL2 as any)?.balance}
+            symbol="Lords"
+          />
         )}
         <div className="">
           <span className="px-1 text-xs tracking-wide text-black/60 font-bold uppercase rounded bg-white/40">

@@ -63,8 +63,7 @@ export const useProgressModal = (steps = []) => {
   const { containerStyle } = TRANSACTION_MODAL_STYLE;
 
   return useCallback(
-    (title, message, activeStep = 0, type = ModalType.INFO) => {
-      console.log('showing progress modal')
+    (title: string, message: any, activeStep = 0, type = ModalType.INFO) => {
       showModal({
         header: {
           components: steps.length > 0 && [
