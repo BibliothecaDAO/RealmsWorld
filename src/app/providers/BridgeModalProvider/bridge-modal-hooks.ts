@@ -150,18 +150,18 @@ export const useProgressModal = (steps = []) => {
     [showModal]
   );
 };
-
+*/
 export const useErrorModal = () => {
   const { showModal } = useContext(BridgeModalContext);
   const { buttonProps, containerStyle } = MODAL_HEADER_WITH_ICON_STYLE;
 
   return useCallback(
-    (title, text) => {
+    (title: string, text: string) => {
       showModal({
         header: {
           components: [
             {
-              path: 'UI/Modal/ModalHeaderWithIcon/ModalHeaderWithIcon',
+              path: 'modal/ModalHeaderWithIcon',
               props: {
                 title,
                 icon: XOctagon
@@ -172,7 +172,7 @@ export const useErrorModal = () => {
         body: {
           components: [
             {
-              path: 'UI/Modal/ErrorModal/ErrorModal',
+              path: 'modal/ErrorModal',
               props: {
                 text
               }

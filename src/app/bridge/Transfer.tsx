@@ -149,7 +149,6 @@ export const Transfer = ({ action }: { action: string }) => {
             : "Transfer to L1"}
         </Button>
       )}
-      <BridgeModalWrapper />
       {/*<ProgressModal open={showProgressModal} />*/}
     </div>
   );

@@ -94,7 +94,7 @@ export const useTransferProgress = () => {
                     activeStep
                 };
             },
-            error: (type: any, err: any, data: any) => {
+            error: (type: any, err: any, data?: any) => {
                 /*if (type === TransferError.MAX_TOTAL_BALANCE_ERROR) {
                   const {limitationErrorTitle, maxTotalBalanceErrorMsg} = transferProgressStrings;
                   return {

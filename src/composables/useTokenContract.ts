@@ -1,4 +1,4 @@
-import { useContractRead, useContractReads, useAccount as useL1Account, useContractWrite as useL1ContractWrite, usePrepareContractWrite } from 'wagmi';
+import { useContractRead, useContractReads, useAccount as useL1Account, useContractWrite as useL1ContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 import { lordsERC20 as L1_LORDS_ABI } from '@/abi/L1/LordsERC20'
 import L2_ERC20 from "@/abi/L2/C1ERC20.json";
 
@@ -22,7 +22,7 @@ export const useTokenContractAPI = () => {
     const l2LordsAddress = tokens.L2.LORDS.tokenAddress?.[ChainType.L2[network]]
 
     const { address } = useL1Account()
-    const { writeAsync: approve } = useL1ContractWrite({
+    const { writeAsync: approve, data: approveHash, isLoading: approveWriteLoading } = useL1ContractWrite({
         address: l1LordsAddress as `0x${string}`,
         abi: L1_LORDS_ABI,
         functionName: "approve",
@@ -70,6 +70,8 @@ export const useTokenContractAPI = () => {
 
     return {
         approve,
+        approveWriteLoading,
+        approveHash,
         allowance: l1Data?.[0].result,
         balanceOfL1: l1Data?.[1].result,
         balanceOfL2,/*

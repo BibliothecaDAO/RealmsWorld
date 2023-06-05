@@ -3,6 +3,7 @@ import { BridgeModalProvider } from "../providers/BridgeModalProvider";
 import { TransfersLogProvider } from "../providers/TransfersLogProvider";
 import { Transfer } from "./Transfer";
 import { NavLink } from "@/app/components/ui/nav-link";
+import { BridgeModalWrapper } from "./BridgeModalWrapper";
 
 export default async function Page({
   searchParams: { action = "deposit" },
@@ -43,6 +44,7 @@ export default async function Page({
           </div>
           <Transfer action={action} />
         </div>
+        <BridgeModalWrapper />
       </TransfersLogProvider>
     </BridgeModalProvider>
   );

@@ -1,5 +1,5 @@
 import {
-    //useErrorModal,
+    useErrorModal,
     useHideModal,
     useProgressModal,
     // useTransactionSubmittedModal
@@ -9,7 +9,7 @@ import {useAmount} from '../providers/TransferProvider';*/
 
 export const useTransfer = (steps: any) => {
     const showProgressModal = useProgressModal(steps);
-    //const showErrorModal = useErrorModal();
+    const showErrorModal = useErrorModal();
     const hideModal = useHideModal();
     //const showTransactionSubmittedModal = useTransactionSubmittedModal(steps);
     /*const {updateTokenBalance} = useTokens();
@@ -21,7 +21,8 @@ export const useTransfer = (steps: any) => {
 
     const handleError = (error: any) => {
         hideModal();
-        //showErrorModal(error.type, error.message);
+        console.log('show error modal')
+        showErrorModal(error.type, error.message);
     };
 
     const handleData = (transfer: any) => {

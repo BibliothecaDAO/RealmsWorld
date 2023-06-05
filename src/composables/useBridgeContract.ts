@@ -22,12 +22,12 @@ export const useBridgeContract = () => {
          enabled: Boolean(addressL1),
      });*/
 
-    const { writeAsync: deposit, data: depositData } = useL1ContractWrite({
+    const { writeAsync: deposit, data: depositData, error: depositError } = useL1ContractWrite({
         address: l1BridgeAddress as `0x${string}`,
         abi: L1_BRIDGE_ABI,
         functionName: "deposit",
     })
-    const { data: depositReceipt, isLoading, isSuccess } = useWaitForTransaction({
+    const { data: depositReceipt, isLoading, status: depositTxStatus, isSuccess: depositIsSuccess } = useWaitForTransaction({
         hash: depositData?.hash,
     })
 
@@ -57,6 +57,9 @@ export const useBridgeContract = () => {
         setAmount,
         deposit,
         depositData,
+        depositIsSuccess,
+        depositError,
+        depositTxStatus,
         depositReceipt,
         //depositEth,
         withdraw,

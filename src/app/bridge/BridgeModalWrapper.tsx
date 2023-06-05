@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../components/ui/dialog";
-import { useBridgeModal } from "../providers/BridgeModalProvider";
+import { useBridgeModal, useHideModal } from "../providers/BridgeModalProvider";
 import Loading from "../loading";
 import dynamic from "next/dynamic";
 
@@ -17,6 +17,7 @@ export type Component = {
 };
 export const BridgeModalWrapper = () => {
   const { show, withHeader, header, body, footer } = useBridgeModal();
+  const hideModal = useHideModal();
 
   const getComponents = (components: string[]) => {
     return components
@@ -29,11 +30,11 @@ export const BridgeModalWrapper = () => {
 
   const Views = {
     stepper: dynamic(() => import("../components/ui/stepper")),
-    proressModalBody: dynamic(
-      () => import("../components/modal/ProgressModal/ProgressModalBody")
-    ),
     progressModalHeader: dynamic(
       () => import("../components/modal/ProgressModal/ProgressModalHeader")
+    ),
+    modalHeaderWithIcon: dynamic(
+      () => import("../components/modal/ModalHeaderWithIcon")
     ),
   };
 
@@ -62,6 +63,12 @@ export const BridgeModalWrapper = () => {
         component: Views["progressModalHeader"],
         props: component.props,
       };
+    }
+    if (component.path == "modal/ModalHeaderWithIcon") {
+      return {
+        component: Views["modalHeaderWithIcon"],
+        props: component.props,
+      };
     } else {
       return {
         component: Views["progressModalHeader"],
@@ -72,7 +79,7 @@ export const BridgeModalWrapper = () => {
   const footerComponents = getComponents(footer.components);
 
   return (
-    <Dialog open={show}>
+    <Dialog open={show} onOpenChange={hideModal}>
       <DialogContent className="w-full">
         {withHeader && (
           <DialogHeader>
