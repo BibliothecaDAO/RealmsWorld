@@ -35,7 +35,7 @@ export const BridgeModalWrapper = () => {
 
   const renderLoading = () => {
     return (
-      <div className={"center"}>
+      <div className={"center w-full h-full"}>
         <Loading />
       </div>
     );
@@ -45,7 +45,7 @@ export const BridgeModalWrapper = () => {
       ? components.map((c, i) => <c.component key={i} {...c.props} />)
       : fallbackComponent;
   };
-
+  // Temporary fix for next/react dynamic imports https://github.com/vercel/next.js/issues/49382
   const headerComponents = header.components.map((component) => {
     if (component.path == "ui/stepper") {
       return { component: Views["stepper"], props: component.props };

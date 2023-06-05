@@ -1,6 +1,6 @@
 import { useContractRead, useAccount as useL1Account, useContractWrite as useL1ContractWrite, usePrepareContractWrite } from 'wagmi';
-import L1_LORDS_ABI from '@/abi/l1Lords.json'
-import l2Erc20 from "@/abi/l2Erc20.json";
+import L1_LORDS_ABI from '@/abi/L1/LordsERC20.json'
+import L2_ERC20 from "@/abi/L2/C1ERC20.json";
 
 import { ChainType, tokens } from '@/constants/tokens';
 import {
@@ -46,7 +46,7 @@ export const useTokenContractAPI = () => {
         refetch: refetchLords,
     } = useL2ContractRead({
         address: l2LordsAddress,
-        abi: l2Erc20,
+        abi: L2_ERC20,
         functionName: "balance_of",
         args: [address],
         watch: false,

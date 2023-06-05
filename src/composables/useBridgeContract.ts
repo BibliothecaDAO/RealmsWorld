@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import L1_BRIDGE_ABI from '@/abi/l1BridgeLords.json'
+import L1_BRIDGE_ABI from '@/abi/L1/StarknetBridgeLords.json'
 
 import { useAccount as useL1Account, useContractWrite as useL1ContractWrite, usePrepareContractWrite } from 'wagmi';
 import { } from 'wagmi'

@@ -5,6 +5,7 @@ import { TopNav } from "./components/TopNav";
 import { Space_Grotesk, Karla } from "next/font/google";
 import { Footer } from "./components/Footer";
 import { UIContextProvider } from "./providers/UIProvider";
+import { WalletsProvider } from "./providers/WalletsProvider";
 
 const inconsolata = Space_Grotesk({
   subsets: ["latin"],
@@ -31,13 +32,15 @@ export default function RootLayout({
       >
         <UIContextProvider>
           <Provider>
-            <main className="flex flex-wrap min-h-screen">
-              <Sidebar />
-              <div className="z-10 flex flex-col flex-grow">
-                <TopNav />
-                <div className="flex-grow">{children}</div>
-              </div>
-            </main>
+            <WalletsProvider>
+              <main className="flex flex-wrap min-h-screen">
+                <Sidebar />
+                <div className="z-10 flex flex-col flex-grow">
+                  <TopNav />
+                  <div className="flex-grow">{children}</div>
+                </div>
+              </main>
+            </WalletsProvider>
           </Provider>
         </UIContextProvider>
         <Footer />
