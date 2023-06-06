@@ -1,4 +1,4 @@
-import { formatEther, formatGwei } from "viem";
+import { formatEther } from "viem";
 
 export const TokenBalance = ({
   balance,
@@ -8,12 +8,12 @@ export const TokenBalance = ({
   symbol: string;
 }) => {
   return (
-    <div className="right-0 absolute">
-      <span className="text-sm">Available Balance</span>
-      <div className="flex justify-end align-center">
+    <div className="h-full justify-center text-end pb-4">
+      <span className="text-sm text-white/50">Available Balance</span>
+      <div className="flex justify-end">
         <div className="flex text-sm">
           {parseInt(formatEther(balance)).toLocaleString()}
-          <div className="mx-2">{symbol}</div>
+          <div className="ml-2">{symbol}</div>
         </div>
         {/*<RefreshIcon
             size={RefreshIconSize.SMALL}

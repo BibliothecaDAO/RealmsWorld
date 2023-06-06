@@ -100,12 +100,9 @@ export const useTransferToL2 = () => {
     }, [approveIsSuccess])
 
     useEffect(() => {
-        async function initDepost() {
-            if (depositIsSuccess) {
-                onDeposit(depositReceipt)
-            }
+        if (depositIsSuccess) {
+            onDeposit(depositReceipt)
         }
-        initDepost()
     }, [depositIsSuccess])
 
     return useCallback(
@@ -164,7 +161,7 @@ export const useTransferToL2 = () => {
                     console.log('Calling deposit');
                     await sendDeposit()
                     /*if (depositError) handleError(progressOptions.error(TransferError.TRANSACTION_ERROR, depositError));
-
+    
                     console.log(depositReceipt)
                     onDeposit(depositReceipt?.logs/*[EventName.L1.LOG_DEPOSIT]);
                     //await maybeAddToken(tokenAddressL2);*/

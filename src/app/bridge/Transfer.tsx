@@ -16,8 +16,8 @@ import StarknetLogo from "@/icons/starknet.svg";
 import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { useTransferToL2 } from "@/composables/useTransferToL2";
-import { useBridgeModal } from "../providers/BridgeModalProvider";
-import { BridgeModalWrapper } from "./BridgeModalWrapper";
+import LordsIcon from "@/icons/lords.svg";
+import { Toast, ToastDescription, ToastTitle } from "../components/ui/toast";
 
 const network =
   process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
@@ -26,7 +26,7 @@ const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]];
 export const Transfer = ({ action }: { action: string }) => {
   const { address: l1Account } = useL1Account();
   const { address: l2Account } = useAccount();
-
+  const [toastOpen, setToastOpen] = useState(false);
   const { deposit, initiateWithdraw } = useBridgeContract();
   const [amount, setAmount] = useState("");
   const { allowance, approve, balanceOfL1, balanceOfL2 } =
@@ -44,19 +44,21 @@ export const Transfer = ({ action }: { action: string }) => {
   const renderL1Network = () => {
     return (
       <>
-        {balanceOfL1 && <TokenBalance balance={balanceOfL1} symbol="Lords" />}
-        <div className="">
-          <span className="px-1 text-xs tracking-wide text-black/60 font-bold uppercase rounded bg-white/40">
-            From
-          </span>
-          <div className="flex text-lg my-4">
-            <div className="mr-2 bg-white rounded-full h-[32px] w-[32px]">
-              <div className="w-4 h-4 m-auto mt-0.5">
-                <EthereumLogo />
+        <div className="relative flex items-center justify-between">
+          <div className="flex-col">
+            <span className="px-1 text-xs tracking-wide text-black/60 font-bold uppercase rounded bg-white/40">
+              From
+            </span>
+            <div className="flex text-lg my-4">
+              <div className="mr-2 bg-white rounded-full h-[32px] w-[32px]">
+                <div className="w-4 h-4 m-auto mt-0.5">
+                  <EthereumLogo />
+                </div>
               </div>
+              Ethereum
             </div>
-            Ethereum
           </div>
+          <TokenBalance balance={balanceOfL1 || BigInt(0)} symbol="Lords" />
         </div>
       </>
     );
@@ -64,24 +66,25 @@ export const Transfer = ({ action }: { action: string }) => {
   const renderL2Network = () => {
     return (
       <>
-        {balanceOfL2 && (
+        <div className="relative flex items-center justify-between">
+          <div className="flex-col">
+            <span className="px-1 text-xs tracking-wide text-black/60 font-bold uppercase rounded bg-white/40">
+              To
+            </span>
+            <div className="flex text-lg my-4">
+              <div className="mr-2 bg-white rounded-full h-[32px] w-[32px]">
+                <div className="w-6 h-6 m-auto mt-1">
+                  <StarknetLogo />
+                </div>
+              </div>
+              Starknet
+            </div>
+          </div>
+
           <TokenBalance
-            balance={(balanceOfL2 as any)?.balance}
+            balance={(balanceOfL2 as any)?.balance || BigInt(0)}
             symbol="Lords"
           />
-        )}
-        <div className="">
-          <span className="px-1 text-xs tracking-wide text-black/60 font-bold uppercase rounded bg-white/40">
-            To
-          </span>
-          <div className="flex text-lg my-4">
-            <div className="mr-2 bg-white rounded-full h-[32px] w-[32px]">
-              <div className="w-6 h-6 m-auto mt-1">
-                <StarknetLogo />
-              </div>
-            </div>
-            Starknet
-          </div>
         </div>
       </>
     );
@@ -99,7 +102,10 @@ export const Transfer = ({ action }: { action: string }) => {
             setAmount(event.target.value);
           }}
         />
-        <div className="absolute right-0 top-0 pt-4 pr-4">LORDS</div>
+        <div className="absolute right-0 top-0 pt-4 pr-4 flex">
+          <LordsIcon className="fill-white w-6 h-6 mr-3" />
+          LORDS
+        </div>
       </div>
     );
   };
