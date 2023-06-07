@@ -6,7 +6,7 @@ const ProgressModalHeader = ({ title }: { title?: string }) => {
   return (
     <div className="flex align-center mt-3">
       {/*<Loading size={LoadingSize.SMALL} type={LoadingType.CIRCULAR} />*/}
-      <div className="text-lg">{title}</div>
+      <div className="text-lg flex align-center">{title}</div>
     </div>
   );
 };

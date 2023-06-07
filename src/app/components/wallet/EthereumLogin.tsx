@@ -20,6 +20,7 @@ import { LogOut } from "lucide-react";
 import { ConnectKitButton } from "connectkit";
 import { useNetwork } from "wagmi";
 import { tokens } from "@/constants/tokens";
+import { useAccountTransfersLog } from "@/app/providers/TransfersLogProvider";
 
 function EthereumLogin() {
   const { address, isConnected } = useAccount();
@@ -31,6 +32,8 @@ function EthereumLogin() {
   const { data: ensAddress, isError } = useEnsName({
     address: address,
   });
+
+  //const transfers = useAccountTransfersLog(address);
 
   const {
     data: lords,

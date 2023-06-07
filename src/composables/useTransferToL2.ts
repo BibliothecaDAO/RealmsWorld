@@ -18,7 +18,7 @@ import { TransferStep, TransferToL2Steps } from '@/constants/transferSteps';
 import { useTransfer } from './useTransfer';
 import { useTransferProgress } from './useTransferProgress';
 import { useTransfersLog } from '@/app/providers/TransfersLogProvider';
-import { formatEther } from 'viem';
+import { formatEther, parseGwei } from 'viem';
 
 export const ActionType = {
     TRANSFER_TO_L2: 1,
@@ -56,13 +56,20 @@ export const useTransferToL2 = () => {
 
     const onTransactionHash = (error: any, transactionHash: string) => {
         if (!error) {
-            console.log('Tx signed', { transactionHash });
+            console.log('Tx signed', { transactionHash, amount });
             handleProgress(
-                progressOptions.deposit(parseInt(amount), 'Lords', stepOf(TransferStep.DEPOSIT, TransferToL2Steps))
+                progressOptions.deposit(amount, 'Lords', stepOf(TransferStep.DEPOSIT, TransferToL2Steps))
             );
         }
     };
 
+    const toObject = (object: any) => {
+        return JSON.parse(JSON.stringify(object, (key, value) =>
+            typeof value === 'bigint'
+                ? value.toString()
+                : value // return everything else unchanged
+        ));
+    }
 
     const onDeposit = (event: any) => {
         console.log('Deposit event dispatched', event);
@@ -72,12 +79,12 @@ export const useTransferToL2 = () => {
             sender: l1Account,
             recipient: l2Account,
             l1hash: event.transactionHash,
-            name,
-            symbol: 'Lords',
-            amount,
+            name: 'Lords',
+            symbol: 'LORDS',
+            amount: amount.toString(),
             event
         };
-        addTransfer(transferData);
+        addTransfer(toObject(transferData));
         handleData(transferData);
     };
     useEffect(() => {
@@ -93,7 +100,7 @@ export const useTransferToL2 = () => {
                     args: [BigInt(amount), BigInt(l2Account || "0x"), BigInt(1)],
                     value: BigInt(1),
                 });
-                onTransactionHash(null, hash)
+                onTransactionHash(depositError, hash)
             }
         }
         initDepost()
@@ -110,7 +117,7 @@ export const useTransferToL2 = () => {
             setAmount(amount)
             const sendDeposit = async () => {
                 const { hash } = await deposit({
-                    args: [BigInt(amount), BigInt(l2Account || "0x"), BigInt(1)],
+                    args: [parseGwei(amount), BigInt(l2Account || "0x"), BigInt(1)],
                     value: BigInt(1),
                 });
                 onTransactionHash(depositError, hash)
@@ -144,10 +151,10 @@ export const useTransferToL2 = () => {
                     progressOptions.approval('Lords', stepOf(TransferStep.APPROVE, TransferToL2Steps))
                 );
                 console.log('Current allow value', allowance?.toString());
-                if (allowance && Number(formatEther(allowance)) < Number(amount)) {
+                if (Number(formatEther(allowance || BigInt(0))) < Number(amount)) {
                     console.log('Allow value is smaller then amount, sending approve tx...', { amount });
                     await approve({
-                        args: [l1BridgeAddress, amount],
+                        args: [l1BridgeAddress, parseGwei(amount)],
                     })
                 }
                 handleProgress(

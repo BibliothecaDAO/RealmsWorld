@@ -57,7 +57,7 @@ export const useTransferProgress = () => {
                     activeStep
                 };
             },
-            deposit: (amount: number, symbol: string, activeStep: number) => {
+            deposit: (amount: string, symbol: string, activeStep: number) => {
                 const { deposit } = transferProgressStrings;
                 const message = evaluate(deposit.message, { amount, symbol });
                 return {

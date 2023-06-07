@@ -13,7 +13,7 @@ export const ModalType = {
 
 //import {useL2Wallet} from '../WalletsProvider';
 import { BridgeModalContext } from './bridge-modal-context';
-import { AlertCircle, XOctagon } from 'lucide-react';
+import { XOctagon } from 'lucide-react';
 
 const TRANSACTION_MODAL_STYLE = {
   containerStyle: {
@@ -100,12 +100,12 @@ export const useProgressModal = (steps = []) => {
   );
 };
 
-/*export const useTransactionSubmittedModal = steps => {
+export const useTransactionSubmittedModal = (steps: any) => {
   const { showModal } = useContext(BridgeModalContext);
   const { containerStyle, buttonProps } = TRANSACTION_MODAL_STYLE;
 
   return useCallback(
-    transfer => {
+    (transfer: any) => {
       showModal({
         header: {
           components: [
@@ -117,14 +117,14 @@ export const useProgressModal = (steps = []) => {
               }
             },
             {
-              path: 'UI/Modal/TransactionSubmittedModal/TransactionSubmittedModalHeader/TransactionSubmittedModalHeader'
+              path: 'modal/TransactionSubmittedModal/TransactionSubmittedModalHeader'
             }
           ]
         },
         body: {
           components: [
             {
-              path: 'UI/Modal/TransactionSubmittedModal/TransactionSubmittedModalBody/TransactionSubmittedModalBody',
+              path: 'modal/TransactionSubmittedModal/TransactionSubmittedModalBody',
               props: {
                 transfer
               }
@@ -135,7 +135,7 @@ export const useProgressModal = (steps = []) => {
           withButtons: true,
           components: [
             {
-              path: 'UI/Modal/TransactionSubmittedModal/TransactionSubmittedModalButton',
+              path: 'modal/TransactionSubmittedModal/TransactionSubmittedModalButton',
               props: {
                 transfer,
                 buttonProps
@@ -150,7 +150,7 @@ export const useProgressModal = (steps = []) => {
     [showModal]
   );
 };
-*/
+
 export const useErrorModal = () => {
   const { showModal } = useContext(BridgeModalContext);
   const { buttonProps, containerStyle } = MODAL_HEADER_WITH_ICON_STYLE;

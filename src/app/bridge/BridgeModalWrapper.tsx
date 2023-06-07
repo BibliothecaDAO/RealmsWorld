@@ -36,6 +36,12 @@ export const BridgeModalWrapper = () => {
     modalHeaderWithIcon: dynamic(
       () => import("../components/modal/ModalHeaderWithIcon")
     ),
+    transactionSubmittedModalHeader: dynamic(
+      () =>
+        import(
+          "../components/modal/TransactionSubmittedModal/TransactionSubmittedModalHeader"
+        )
+    ),
   };
 
   const renderLoading = () => {
@@ -69,6 +75,15 @@ export const BridgeModalWrapper = () => {
         component: Views["modalHeaderWithIcon"],
         props: component.props,
       };
+    }
+    if (
+      component.path ==
+      "modal/TransactionSubmittedModal/TransactionSubmittedModalHeader"
+    ) {
+      return {
+        component: Views["transactionSubmittedModalHeader"],
+        props: component.props,
+      };
     } else {
       return {
         component: Views["progressModalHeader"],
@@ -92,14 +107,14 @@ export const BridgeModalWrapper = () => {
         <Suspense fallback={renderLoading()}>
           {renderComponents(bodyComponents, <div>{body.text}</div>)}
         </Suspense>
+        {footer.withButtons && (
+          <DialogFooter>
+            <Suspense fallback={renderLoading()}>
+              {renderComponents(footerComponents)}
+            </Suspense>
+          </DialogFooter>
+        )}
       </DialogContent>
-      {footer.withButtons && (
-        <DialogFooter>
-          <Suspense fallback={renderLoading()}>
-            {renderComponents(footerComponents)}
-          </Suspense>
-        </DialogFooter>
-      )}
     </Dialog>
   );
 };

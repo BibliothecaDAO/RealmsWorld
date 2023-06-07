@@ -26,7 +26,7 @@ export const tokens = {
             decimals: 18,
             bridgeAddress: {
                 [ChainType.L1.MAIN]: '',
-                [ChainType.L1.GOERLI]: '0xD9A9aA6c479115d530C834FbEc8579D1987a2AeE'
+                [ChainType.L1.GOERLI]: '0xd6e62a152d28e6E79B3991D64BB4fAAD94C4705A'
             },
             tokenAddress: {
                 [ChainType.L1.MAIN]: '0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0',
@@ -54,7 +54,7 @@ export const tokens = {
             decimals: 18,
             bridgeAddress: {
                 [ChainType.L2.MAIN]: '',
-                [ChainType.L2.GOERLI]: '0x59ed05a42af8cc47269faedf8f025465bdfff8742e07689d9e90f99655f83ff'
+                [ChainType.L2.GOERLI]: '0x0197d189d0d8607f2369adbec9a56250fbf0c82aae7685261cc3ed4f85a2a5ac'
             },
             tokenAddress: {
                 [ChainType.L2.MAIN]: '',
