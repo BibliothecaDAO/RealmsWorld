@@ -14,9 +14,9 @@ import { useAccount as useL1Account } from "wagmi";
 import { shortenHex } from "@/functions/utils";
 import EthereumLogo from "@/icons/ethereum.svg";
 import StarknetLogo from "@/icons/starknet.svg";
+import { Account } from "../bridge/Account";
 
 export const TopNav = () => {
-  const { toggleSidebar } = useUIContext();
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -35,10 +35,6 @@ export const TopNav = () => {
       }`}
     >
       <div className="flex justify-between ">
-        <Button className="lg:hidden" onClick={toggleSidebar}>
-          <Menu className="self-center" />
-        </Button>
-
         <Link
           className="flex self-center text-xl font-semibold sm:mr-3 sm:text-2xl font-sans-serif"
           href="/"
@@ -81,6 +77,8 @@ export const TopNav = () => {
               )}
               <EthereumLogin />
               <StarkLogin />
+              <Account isL1={true} />
+              <Account isL1={false} />
             </div>
           </SheetContent>
         </Sheet>

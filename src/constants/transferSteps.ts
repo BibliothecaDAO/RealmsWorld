@@ -24,3 +24,13 @@ export const CompleteTransferToL1Steps = [TransferStep.CONFIRM_TX, TransferStep.
 export const stepOf = (step: any, steps: any) => {
     return steps.indexOf(step);
 };
+
+export const TransferError = {
+    TRANSACTION_ERROR: 0,
+    MAX_TOTAL_BALANCE_ERROR: 1
+};
+
+export const ActionType = {
+    TRANSFER_TO_L2: 1,
+    TRANSFER_TO_L1: 2
+};

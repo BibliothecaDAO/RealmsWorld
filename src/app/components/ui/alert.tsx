@@ -1,7 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { XOctagon, CheckCircleIcon, InfoIcon } from "lucide-react";
+import {
+  XOctagon,
+  CheckCircleIcon,
+  InfoIcon,
+  AlertTriangleIcon,
+} from "lucide-react";
 
 import { cn } from "@/app/lib/utils";
 import { VariantProps, cva } from "class-variance-authority";
@@ -18,12 +23,12 @@ export const AlertAlign = {
   CENTER: "alignCenter",
   RIGHT: "alignRight",
 };
-const alertVariants = cva("flex rounded text-lg p-4", {
+const alertVariants = cva("flex rounded border text-lg p-4", {
   variants: {
     variant: {
-      success: "",
-      warning: "",
-      info: "",
+      success: "border-cyan-400 bg-emerald-300",
+      warning: "border-yellow-500 bg-amber-100 !text-yellow-600",
+      info: "border-slate-600 bg-slate-400",
       error: "",
     },
     align: {
@@ -50,7 +55,7 @@ export const Alert = ({
       case AlertType.SUCCESS:
         return <CheckCircleIcon />;
       case AlertType.WARNING:
-        return <XOctagon />;
+        return <AlertTriangleIcon />;
       case AlertType.ERROR:
       case AlertType.INFO:
       default:
@@ -59,15 +64,10 @@ export const Alert = ({
   };
 
   return (
-    <div
-      className={cn(
-        "flex  rounded text-lg p-4",
-        alertVariants({ variant, align })
-      )}
-    >
+    <div className={cn("flex rounded p-4", alertVariants({ variant, align }))}>
       <div className={cn("flex w-full" /*, styles[align]*/)}>
-        <div className="mr-3 flex justify-around">{renderIcon()}</div>
-        <div className="flex flex-col">
+        <div className="mr-2 flex justify-around w-5 h-5">{renderIcon()}</div>
+        <div className="flex flex-col text-left ">
           {title && (
             <div
               dangerouslySetInnerHTML={{ __html: title }}
@@ -77,7 +77,7 @@ export const Alert = ({
           {message && (
             <div
               dangerouslySetInnerHTML={{ __html: message }}
-              className="font-normal mt-2"
+              className="font-normal text-sm mt-2"
             ></div>
           )}
         </div>

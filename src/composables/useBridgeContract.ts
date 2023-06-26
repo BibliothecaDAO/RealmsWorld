@@ -1,3 +1,4 @@
+'use client'
 import { useMemo, useState } from 'react';
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from '@/abi/L1/StarknetBridgeLords'
 
@@ -5,10 +6,10 @@ import { useAccount as useL1Account, useContractWrite as useL1ContractWrite, use
 import { } from 'wagmi'
 import { tokens, ChainType } from '@/constants/tokens';
 import { useContractWrite as useL2ContractWrite } from '@starknet-react/core';
-import { number, uint256 } from 'starknet';
+import { cairo, uint256 } from 'starknet';
 
 export const useBridgeContract = () => {
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState("");
     const { address: addressL1 } = useL1Account();
     const network =
         process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
@@ -31,29 +32,28 @@ export const useBridgeContract = () => {
         hash: depositData?.hash,
     })
 
-    /* const { config: withdrawConfig } = usePrepareContractWrite({
-     });*/
-
-    const { write: withdraw } = useL1ContractWrite({
+    const { writeAsync: withdraw, error: withdrawError } = useL1ContractWrite({
         address: l1BridgeAddress as `0x${string}`,
         abi: L1_BRIDGE_ABI,
         functionName: "withdraw",
     })
+    const { data: withdrawReceipt, isSuccess: withdrawIsSuccess, isError: withdrawTxError } = useWaitForTransaction({
+        hash: depositData?.hash,
+    })
 
     const calls = useMemo(() => {
-        const tx = {
+        return {
             contractAddress: l2BridgeAddress,
             entrypoint: 'initiate_withdrawal',
-            calldata: [number.toBN(addressL1).toString(), uint256.bnToUint256(amount ** 18)
-            ]
+            calldata: [addressL1 || 0, amount, 0] // Fix with proper u256 (low,high) types
         }
-        return Array().fill(tx)
     }, [addressL1, amount, l2BridgeAddress])
 
-    const { write: initiateWithdraw } = useL2ContractWrite({ calls })
+    const { write: initiateWithdraw, data: withdrawHash } = useL2ContractWrite({ calls })
 
     return {
         amount,
+        calls,
         setAmount,
         deposit,
         depositData,
@@ -63,6 +63,10 @@ export const useBridgeContract = () => {
         depositReceipt,
         //depositEth,
         withdraw,
-        initiateWithdraw
+        withdrawError,
+        withdrawReceipt,
+        withdrawIsSuccess,
+        initiateWithdraw,
+        withdrawHash
     };
 };

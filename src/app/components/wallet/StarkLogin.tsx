@@ -15,16 +15,17 @@ import {
   useAccount,
   useStarkName,
   useNetwork,
-  useBalance,
 } from "@starknet-react/core";
 import { useState, useEffect } from "react";
-import { cn } from "@/app/lib/utils";
-import { useTokenContractAPI } from "@/composables/useTokenContract";
+import { cn, formatBigInt } from "@/app/lib/utils";
+import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 
 function StarkLogin() {
   const { available, connect, connectors, disconnect } = useConnectors();
   const { account, address, status } = useAccount();
-  const { data, isLoading, isError } = useStarkName({
+  const { balances, refetch } = useWalletsProviderContext();
+
+  /* const { data, isLoading, isError } = useStarkName({
     address: address || "",
   });
   const [starknetID, setStarknetID] = useState("");
@@ -32,7 +33,7 @@ function StarkLogin() {
     if (data) {
       setStarknetID(data);
     }
-  }, [data]);
+  }, [data]);*/
   const { chain } = useNetwork();
   const [isWrongNetwork, setIsWrongNetwork] = useState(false);
   const network =
@@ -55,16 +56,6 @@ function StarkLogin() {
     }
   }, [chain, network, address /*, isConnected*/]);
 
-  const {
-    data: eth,
-    isLoading: ethLoading,
-    refetch,
-  } = useBalance({
-    address: address,
-    watch: false,
-  });
-  const { balanceOfL2 } = useTokenContractAPI();
-
   const onDisconnect = () => {
     disconnect();
     //setIsConnected(false);
@@ -83,7 +74,7 @@ function StarkLogin() {
               className="flex justify-around w-full col-span-2"
               onClick={() => onDisconnect()}
             >
-              {starknetID ? starknetID : shortenHex(address || "", 8)}
+              {/*{starknetID ? starknetID : shortenHex(address || "", 8)} */}
               <span
                 className={cn(
                   "border border-white/50 font-sans ml-3 px-1.5 py-0.5 rounded bg-sky-300/50 text-xs normal-case",
@@ -97,22 +88,20 @@ function StarkLogin() {
           </>
         )}
         <Button variant="outline" size={"lg"} className="group">
-          <span className="group-hover:hidden">{eth ? eth.formatted : 0}</span>
+          <span className="group-hover:hidden">
+            {formatBigInt(balances.l2.eth, 3)}
+          </span>
           <span className="group-hover:block hidden">Buy Lords</span>
         </Button>
-        {/*balanceOfL2 && (
+        {balances.l2.lords && (
           <Button variant="outline" size={"lg"} className="group">
             <span className="group-hover:hidden">
-              {balanceOfL2
-                ? parseFloat(
-                    formatEther(uint256.uint256ToBN(balanceOfL2.balance).toString())
-                  ).toFixed(2)
-                : 0}
+              {formatBigInt(balances.l2.lords, 3)}
             </span>
             <span className="group-hover:block hidden ">Buy Coins</span>
           </Button>
         )}
-                <Button onClick={refetchLords}>Refetch Lrods</Button>*/}
+        <Button onClick={refetch}>Refetch Lrods</Button>
         {isWrongNetwork && (
           <Dialog open={isWrongNetwork}>
             <DialogContent className="w-full">

@@ -1,4 +1,4 @@
-export const lordsERC20 = [
+export const ERC20 = [
   {
     "constant": true,
     "inputs": [],

@@ -14,16 +14,12 @@ import { useIsMaxTotalBalanceExceeded } from './useIsMaxTotalBalanceExceeded';
 import { useTransfersLog } from '../providers/TransfersLogProvider';*/
 
 import { ChainType, tokens } from '@/constants/tokens';
-import { TransferStep, TransferToL2Steps } from '@/constants/transferSteps';
+import { TransferStep, TransferToL2Steps, ActionType } from '@/constants/transferSteps';
 import { useTransfer } from './useTransfer';
 import { useTransferProgress } from './useTransferProgress';
-import { useTransfersLog } from '@/app/providers/TransfersLogProvider';
-import { formatEther, parseGwei } from 'viem';
+import { useTransferLog } from '@/app/providers/TransferLogProvider';
+import { formatEther, parseGwei, parseUnits } from 'viem';
 
-export const ActionType = {
-    TRANSFER_TO_L2: 1,
-    TRANSFER_TO_L1: 2
-};
 export const TransferError = {
     TRANSACTION_ERROR: 0,
     MAX_TOTAL_BALANCE_ERROR: 1
@@ -38,23 +34,23 @@ export const useTransferToL2 = () => {
     const { deposit, depositIsSuccess, error: depositError, depositTxStatus, depositReceipt } = useBridgeContract();
     const [amount, setAmount] = useState('')
 
-    const { allowance, approve, approveHash } = useTokenContractAPI();
+    const { allowance, approve, approveHash } = useTokenContractAPI("LORDS", true);
     const { data, isError, isSuccess: approveIsSuccess } = useWaitForTransaction({
         hash: approveHash?.hash
     })
 
-    const { address: l1Account } = useL1Account();
+    const { address: l1Account, connector } = useL1Account();
     const { address: l2Account } = useL2Account();
     const { handleProgress, handleData, handleError } = useTransfer(TransferToL2Steps);
     const progressOptions = useTransferProgress();
 
-    const { addTransfer } = useTransfersLog();
+    const { refetch } = useTransferLog();
     const network =
         process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
     const tokenAddressL2 = tokens.L2.LORDS.tokenAddress?.[ChainType.L2[network]]
     const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]] as `0x${string}`
 
-    const onTransactionHash = (error: any, transactionHash: string) => {
+    const onTransactionHash = (error: any, transactionHash: string, amount: string) => {
         if (!error) {
             console.log('Tx signed', { transactionHash, amount });
             handleProgress(
@@ -84,7 +80,8 @@ export const useTransferToL2 = () => {
             amount: amount.toString(),
             event
         };
-        addTransfer(toObject(transferData));
+        //addTransfer(toObject(transferData));
+        refetch()
         handleData(transferData);
     };
     useEffect(() => {
@@ -93,17 +90,24 @@ export const useTransferToL2 = () => {
         }
     }, [depositError])
 
+    const sendDeposit = async (amount: any) => {
+        handleProgress(
+            progressOptions.waitForConfirm(
+                connector?.name || 'Wallet',
+                stepOf(TransferStep.CONFIRM_TX, TransferToL2Steps)
+            )
+        );
+        const { hash } = await deposit({
+            args: [parseUnits(amount, 18), BigInt(l2Account || "0x"), BigInt(1)],
+            value: BigInt(1),
+        });
+        onTransactionHash(depositError, hash, amount)
+    }
+
     useEffect(() => {
-        async function initDepost() {
-            if (approveIsSuccess) {
-                const { hash } = await deposit({
-                    args: [BigInt(amount), BigInt(l2Account || "0x"), BigInt(1)],
-                    value: BigInt(1),
-                });
-                onTransactionHash(depositError, hash)
-            }
+        if (approveIsSuccess) {
+            sendDeposit(amount)
         }
-        initDepost()
     }, [approveIsSuccess])
 
     useEffect(() => {
@@ -115,66 +119,24 @@ export const useTransferToL2 = () => {
     return useCallback(
         async (amount: any) => {
             setAmount(amount)
-            const sendDeposit = async () => {
-                const { hash } = await deposit({
-                    args: [parseGwei(amount), BigInt(l2Account || "0x"), BigInt(1)],
-                    value: BigInt(1),
-                });
-                onTransactionHash(depositError, hash)
-            }
-
-            /* const maybeAddToken = async () => {
-                 const [, error] = await promiseHandler(addToken(tokenAddressL2));
-                 if (error) {
-                     console.warn(error.message);
-                 }
-             };*/
-
             try {
                 console.log('TransferToL2 called');
-                /*const { exceeded, currentTotalBalance, maxTotalBalance } = await isMaxTotalBalanceExceeded(
-                    amount
-                );
-                if (exceeded) {
-                    const error = progressOptions.error(TransferError.MAX_TOTAL_BALANCE_ERROR, null, {
-                        maxTotalBalance,
-                        symbol,
-                        currentTotalBalance,
-                        amount
-                    });
-                    console.error(`Prevented ${symbol} deposit due to maxTotalBalance exceeded`);
-                    trackReject(error);
-                    handleError(error);
-                } else {*/
+
                 console.log('Token needs approval');
                 handleProgress(
                     progressOptions.approval('Lords', stepOf(TransferStep.APPROVE, TransferToL2Steps))
                 );
                 console.log('Current allow value', allowance?.toString());
                 if (Number(formatEther(allowance || BigInt(0))) < Number(amount)) {
-                    console.log('Allow value is smaller then amount, sending approve tx...', { amount });
-                    await approve({
+                    console.log('Allow value is smaller then amount, sending approve tx...', { amount, l1BridgeAddress });
+                    approve({
                         args: [l1BridgeAddress, parseGwei(amount)],
                     })
                 }
-                handleProgress(
-                    progressOptions.waitForConfirm(
-                        l1Account || '0x',
-                        stepOf(TransferStep.CONFIRM_TX, TransferToL2Steps)
-                    )
-                );
                 if (allowance && Number(formatEther(allowance)) >= Number(amount)) {
-
                     console.log('Calling deposit');
-                    await sendDeposit()
-                    /*if (depositError) handleError(progressOptions.error(TransferError.TRANSACTION_ERROR, depositError));
-    
-                    console.log(depositReceipt)
-                    onDeposit(depositReceipt?.logs/*[EventName.L1.LOG_DEPOSIT]);
-                    //await maybeAddToken(tokenAddressL2);*/
+                    sendDeposit(amount)
                 }
-
-
             } catch (ex: any) {
                 //trackError(ex);
                 console.error(ex?.message, ex);

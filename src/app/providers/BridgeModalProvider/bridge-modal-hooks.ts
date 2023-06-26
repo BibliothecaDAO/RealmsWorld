@@ -110,7 +110,7 @@ export const useTransactionSubmittedModal = (steps: any) => {
         header: {
           components: [
             {
-              path: 'UI/Stepper/Stepper',
+              path: 'ui/stepper',
               props: {
                 steps,
                 activeStep: steps.length

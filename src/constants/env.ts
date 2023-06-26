@@ -21,3 +21,5 @@ export const STARKSCAN_ACCOUNT_URL = (contract: any) =>
     evaluate(`${STARKSCAN_URL}/contract/{{contract}}`, { contract });
 export const LOCAL_STORAGE_TRANSFERS_LOG_KEY = process.env.NEXT_PUBLIC_LOCAL_STORAGE_TRANSFERS_LOG_KEY;
 export const LOCAL_STORAGE_ACCEPT_TERMS_KEY = process.env.NEXT_PUBLIC_LOCAL_STORAGE_ACCEPT_TERMS;
+export const GET_PENDING_WITHDRAWALS_ENDPOINT = "https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli"
+export const GET_TRANSFERS_ENDPOINT = "https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli"

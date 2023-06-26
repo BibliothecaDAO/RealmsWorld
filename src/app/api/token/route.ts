@@ -13,7 +13,6 @@ function buildQueryString(queryObject: any) {
     .join('&')
     .replace(/%2B/g, '+');
 
-  console.log(queryParams);
 
   return `${queryParams}`;
 }

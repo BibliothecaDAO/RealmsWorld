@@ -9,7 +9,6 @@ import {
 } from "@/app/components/ui/accordion";
 import { Button } from "./ui/button";
 import { useQuery } from "@/composables/useQuery";
-import { useUIContext } from "@/app/providers/UIProvider";
 
 export const AttributesDropdown = ({ address, attributes }: any) => {
   const {
@@ -18,15 +17,12 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
     isKeyInQuery,
     getQueriesFromUrl,
   } = useQuery();
-  const { isFilterOpen, toggleFilter } = useUIContext();
 
   return (
     <div
-      className={` ${
-        isFilterOpen ? "block" : "hidden"
-      } fixed top-0 left-0 z-[100] w-screen h-screen p-3 bg-theme-gray sm:relative sm:flex-none sm:w-24 lg:w-72 sm:block overflow-scroll sm:overflow-y-hidden sm:overscroll-none overscroll-y-none`}
+      className={` ${"hidden"} fixed top-0 left-0 z-[100] w-screen h-screen p-3 bg-theme-gray sm:relative sm:flex-none sm:w-24 lg:w-72 sm:block overflow-scroll sm:overflow-y-hidden sm:overscroll-none overscroll-y-none`}
     >
-      <Button className="sm:hidden" onClick={toggleFilter} variant={"default"}>
+      <Button className="sm:hidden" variant={"default"}>
         Close
       </Button>{" "}
       {attributes.attributes.map((attribute: any, index: number) => {

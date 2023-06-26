@@ -1,10 +1,11 @@
 import { formatEther } from "viem";
+import { formatBigInt } from "../lib/utils";
 
 export const TokenBalance = ({
   balance,
   symbol,
 }: {
-  balance: bigint;
+  balance: any;
   symbol: string;
 }) => {
   return (
@@ -12,7 +13,9 @@ export const TokenBalance = ({
       <span className="text-sm text-white/50">Available Balance</span>
       <div className="flex justify-end">
         <div className="flex text-sm">
-          {parseInt(formatEther(balance)).toLocaleString()}
+          {formatBigInt(balance, 3)
+            .toLocaleString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           <div className="ml-2">{symbol}</div>
         </div>
         {/*<RefreshIcon

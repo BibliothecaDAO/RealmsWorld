@@ -20,7 +20,8 @@ import { LogOut } from "lucide-react";
 import { ConnectKitButton } from "connectkit";
 import { useNetwork } from "wagmi";
 import { tokens } from "@/constants/tokens";
-import { useAccountTransfersLog } from "@/app/providers/TransfersLogProvider";
+import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
+import { formatBigInt } from "@/app/lib/utils";
 
 function EthereumLogin() {
   const { address, isConnected } = useAccount();
@@ -28,27 +29,8 @@ function EthereumLogin() {
     useConnect();
   const { disconnect } = useDisconnect();
   const { chain } = useNetwork();
-
+  const { balances, refetch } = useWalletsProviderContext();
   const { data: ensAddress, isError } = useEnsName({
-    address: address,
-  });
-
-  //const transfers = useAccountTransfersLog(address);
-
-  const {
-    data: lords,
-    isError: lordsError,
-    isLoading: lordsLoading,
-  } = useBalance({
-    address: address,
-    token: tokens.L1.LORDS.tokenAddress?.[chain?.id || 1] as `0x${string}`,
-  });
-
-  const {
-    data: eth,
-    isError: ethError,
-    isLoading: ethLoading,
-  } = useBalance({
     address: address,
   });
 
@@ -71,18 +53,20 @@ function EthereumLogin() {
         )}
         <Button variant="outline" size={"lg"} className="group">
           <span className="group-hover:hidden">
-            {parseFloat(eth?.formatted || "").toFixed(2)}
+            {formatBigInt(balances?.l1.eth, 3)}
           </span>
           <span className="group-hover:block hidden">Buy Lords</span>
         </Button>
-        {lords && (
+        {balances?.l1.lords && (
           <Button
             variant="outline"
             size={"lg"}
             className="group"
             href="/bridge"
           >
-            <span className="group-hover:hidden">{lords?.formatted}</span>
+            <span className="group-hover:hidden">
+              {formatBigInt(balances?.l1.lords, 3)}
+            </span>
             <span className="group-hover:block hidden">Bridge</span>
           </Button>
         )}

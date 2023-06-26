@@ -60,36 +60,7 @@ export const BridgeModalWrapper = () => {
       : fallbackComponent;
   };
   // Temporary fix for next/react dynamic imports https://github.com/vercel/next.js/issues/49382
-  const headerComponents: any = header.components.map((component: any) => {
-    if (component.path == "ui/stepper") {
-      return { component: Views["stepper"], props: component.props };
-    }
-    if (component.path == "modal/ProgressModal/ProgressModalHeader") {
-      return {
-        component: Views["progressModalHeader"],
-        props: component.props,
-      };
-    }
-    if (component.path == "modal/ModalHeaderWithIcon") {
-      return {
-        component: Views["modalHeaderWithIcon"],
-        props: component.props,
-      };
-    }
-    if (
-      component.path ==
-      "modal/TransactionSubmittedModal/TransactionSubmittedModalHeader"
-    ) {
-      return {
-        component: Views["transactionSubmittedModalHeader"],
-        props: component.props,
-      };
-    } else {
-      return {
-        component: Views["progressModalHeader"],
-      };
-    }
-  });
+  const headerComponents = getComponents(header.components);
   const bodyComponents = getComponents(body.components);
   const footerComponents = getComponents(footer.components);
 
@@ -97,7 +68,7 @@ export const BridgeModalWrapper = () => {
     <Dialog open={show} onOpenChange={hideModal}>
       <DialogContent className="w-full">
         {withHeader && (
-          <DialogHeader>
+          <DialogHeader className="items-center">
             <Suspense fallback={renderLoading()}>
               {renderComponents(headerComponents)}
             </Suspense>

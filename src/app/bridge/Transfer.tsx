@@ -16,8 +16,10 @@ import StarknetLogo from "@/icons/starknet.svg";
 import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { useTransferToL2 } from "@/composables/useTransferToL2";
+import { useTransferToL1 } from "@/composables/useTransferToL1";
 import LordsIcon from "@/icons/lords.svg";
 import { Toast, ToastDescription, ToastTitle } from "../components/ui/toast";
+import { useWalletsProviderContext } from "../providers/WalletsProvider";
 
 const network =
   process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
@@ -27,15 +29,15 @@ export const Transfer = ({ action }: { action: string }) => {
   const { address: l1Account } = useL1Account();
   const { address: l2Account } = useAccount();
   const [toastOpen, setToastOpen] = useState(false);
-  const { deposit, initiateWithdraw } = useBridgeContract();
-  const [amount, setAmount] = useState("");
-  const { allowance, approve, balanceOfL1, balanceOfL2 } =
-    useTokenContractAPI();
+  const { amount, setAmount, calls } = useBridgeContract();
+  const { balances, refetch } = useWalletsProviderContext();
+
+  const transferToL1 = useTransferToL1();
   const transferToL2 = useTransferToL2();
 
   const onTransferClick = async () => {
     if (action == "withdraw") {
-      initiateWithdraw();
+      transferToL1(amount);
     } else {
       transferToL2(amount);
     }
@@ -58,7 +60,10 @@ export const Transfer = ({ action }: { action: string }) => {
               Ethereum
             </div>
           </div>
-          <TokenBalance balance={balanceOfL1 || BigInt(0)} symbol="Lords" />
+          <TokenBalance
+            balance={balances.l1?.lords || BigInt(0)}
+            symbol="Lords"
+          />
         </div>
       </>
     );
@@ -82,7 +87,7 @@ export const Transfer = ({ action }: { action: string }) => {
           </div>
 
           <TokenBalance
-            balance={(balanceOfL2 as any)?.balance || BigInt(0)}
+            balance={balances.l2?.lords || BigInt(0)}
             symbol="Lords"
           />
         </div>

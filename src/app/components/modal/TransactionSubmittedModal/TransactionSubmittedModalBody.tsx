@@ -3,7 +3,7 @@ import React from "react";
 
 import { XOctagon } from "lucide-react";
 
-import { ActionType } from "@/composables/useTransferToL2";
+import { ActionType } from "@/constants/transferSteps";
 import { Alert, AlertType } from "../../ui/alert";
 
 const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
@@ -24,7 +24,7 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
           "Completing a Ethereum → StarkNet transfer may take up to several hours depending on the congestion. It may take a while for your wallet balance to update."
         }
         title={"This is an Alpha version"}
-        type={AlertType.WARNING}
+        variant="warning"
       />
     ) : !isTransferCompleted ? (
       <Alert
@@ -32,13 +32,13 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
           "The StarkNet → Ethereum transfer divided into two stages:\n• A waiting period of several hours is expected between the stages.\n• At the end of the first step, you will be required to sign in order to complete the transfer."
         }
         title={"This is an Alpha version"}
-        type={AlertType.WARNING}
+        variant="warning"
       />
     ) : null;
 
   return (
-    <div className="flex flex-col align-center mb-6 px-2">
-      <div className="w-1/2">{textMessage}</div>
+    <div className="flex flex-col items-center text-center mb-6 px-2 ">
+      <div className="w-1/2 text-sm  mb-4">{textMessage}</div>
       {messageComponent}
     </div>
   );

@@ -20,8 +20,8 @@ import {
 } from '@/composables/';*/
 
 //import {Circle} from '../../Circle/Circle';
-import { ActionType } from "@/composables/useTransferToL2";
 import { Button } from "../../ui/button";
+import { ActionType } from "@/constants/transferSteps";
 
 const TransactionSubmittedModalButton = ({
   transfer,
@@ -74,11 +74,13 @@ const TransactionSubmittedModalButton = ({
     <Button
       key={explorer.name}
       height={48}
-      width={"100%"}
+      className="w-full normal-case"
+      variant={"outline"}
+      size={"lg"}
       onClick={() => onClick(explorer.url)}
       {...buttonProps}
     >
-      {explorer.logo}
+      <span className="mr-2">{explorer.logo}</span>
       {evaluate("View on {{explorer}}", { explorer: explorer.name })}
     </Button>
   ));

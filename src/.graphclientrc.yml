@@ -1,0 +1,8 @@
+sources:
+  - name: lordsbridgegoerli
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli
+
+documents:
+  - "./queries/**/*.graphql"
