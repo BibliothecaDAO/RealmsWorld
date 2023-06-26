@@ -1,7 +1,7 @@
 "use client";
 
 import { X, Filter, Grid } from "lucide-react";
-import { Button } from "../components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +12,7 @@ import {
 } from "@/app/components/ui/dropdown-menu";
 import { sortDirection, sortOptions } from "@/constants";
 import { useQuery } from "@/composables/useQuery";
-import { useUIContext } from "../providers/UIProvider";
+import { useUIContext } from "@/app/providers/UIProvider";
 
 export const TradeFilters = () => {
   const { handleAttributeClick, getQueriesFromUrl } = useQuery();

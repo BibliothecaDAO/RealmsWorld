@@ -1,0 +1,15 @@
+query Deposits($where: Deposit_filter) {
+  deposits(where: $where) {
+    id
+    l1Sender
+    depositEvents {
+      id
+      status
+      l2Recipient
+      amount
+      createdTxHash
+      finishedTxHash
+      finishedAtDate
+    }
+  }
+}

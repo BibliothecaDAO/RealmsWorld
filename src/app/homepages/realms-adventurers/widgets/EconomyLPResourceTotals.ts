@@ -1,4 +1,4 @@
-import { formatEther } from "ethers/lib/utils.js";
+import { formatEther } from 'viem'
 import { ApolloQueryResult } from "@apollo/client";
 import client from "../apolloClient";
 import {
@@ -51,7 +51,7 @@ export class EconomyLPResourceTotals extends Widget {
                     labels: ["Minted", "Burnt"],
                     datasets: [
                         {
-                            data: [parseFloat(formatEther(mintedAmount)), parseFloat(formatEther(burntAmount))],
+                            data: [parseFloat(formatEther(mintedAmount)), parseFloat(formatEther(BigInt(burntAmount)))],
                             backgroundColor: ["#36A2EB", "#FF6384"],
                             hoverBackgroundColor: ["#36A2EB", "#FF6384"]
                         }
@@ -78,9 +78,9 @@ export class EconomyLPResourceTotals extends Widget {
             return {
                 id: resource.resourceId,
                 resource: resource.resourceName,
-                minted: +formatEther(resource.amount).toLocaleString(),
+                minted: +formatEther(BigInt(resource.amount)).toLocaleString(),
                 burnt: +formatEther(
-                    queryResult.data.economyLpResourceBurnedTotals.find((x) => x.resourceId === resource.resourceId)?.amount || 0
+                    BigInt(queryResult.data.economyLpResourceBurnedTotals.find((x) => x.resourceId === resource.resourceId)?.amount || 0)
                 ).toLocaleString(),
             }
         });

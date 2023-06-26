@@ -1,6 +1,6 @@
 import { TokenMarketData } from "@/types";
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
-import { formatEther } from "ethers/lib/utils.js";
+import { formatEther } from "viem";
 import Link from "next/link";
 import { BuyButton } from "./BuyModal";
 import Image from "next/image";
@@ -54,7 +54,7 @@ export const TokenCard = (props: TokenCardProps) => {
           <div className="my-3 text-sm h-6">
             {token.market.floorAsk.price &&
               formatEther(
-                token.market.floorAsk.price.amount.raw
+                BigInt(token.market.floorAsk.price.amount.raw)
               ).toLocaleLowerCase() + "ETH"}
           </div>
 
@@ -87,7 +87,7 @@ export const TokenCard = (props: TokenCardProps) => {
             <h6 className="self-center ml-auto">
               {token.market.floorAsk.price
                 ? formatEther(
-                    token.market.floorAsk.price.amount.raw
+                    BigInt(token.market.floorAsk.price.amount.raw)
                   ).toLocaleLowerCase()
                 : ""}{" "}
               ETH

@@ -1,6 +1,6 @@
 "use client";
 import { X } from "lucide-react";
-import { Button } from "../components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { useQuery } from "@/composables/useQuery";
 
 export const AttributeTags = () => {

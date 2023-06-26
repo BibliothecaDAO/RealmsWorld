@@ -5,7 +5,7 @@ export default function Loading() {
 
 export const LoadingSkeleton = () => {
   return (
-    <div className="w-screen h-screen flex justify-center align-center py-20">
+    <div className="w-screen h-screen flex justify-center items-center py-20">
       loading....
     </div>
   );

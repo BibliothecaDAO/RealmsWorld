@@ -7,7 +7,7 @@ import { Tab } from "@headlessui/react";
 
 import { Globe, Twitter } from "lucide-react";
 import Link from "next/link";
-import { formatEther } from "ethers/lib/utils.js";
+import { formatEther } from "viem";
 import { TokenActivity } from "./TokenActivity";
 import { BuyButton } from "@/app/components/BuyModal";
 import { ListingModal } from "@/app/components/ListingModal";

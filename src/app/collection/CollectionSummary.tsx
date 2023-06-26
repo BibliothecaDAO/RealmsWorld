@@ -1,7 +1,7 @@
 import { Button } from "@/app/components/ui/button";
 import { games } from "@/constants";
 import { getGamesByContract } from "@/functions/getters";
-import { formatEther } from "ethers/lib/utils.js";
+import { formatEther } from "viem";
 import { ExternalLink, Twitter, Globe } from "lucide-react";
 import Image from "next/image";
 import Discord from "@/icons/discord.svg";

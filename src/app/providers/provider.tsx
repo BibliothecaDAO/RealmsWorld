@@ -1,11 +1,19 @@
 "use client";
 
 import { ReservoirKitProvider, darkTheme } from "@reservoir0x/reservoir-kit-ui";
-import { WagmiConfig, createClient, configureChains } from "wagmi";
-import { mainnet, arbitrum } from "wagmi/chains";
-import { ConnectKitProvider, getDefaultClient } from "connectkit";
+import { WagmiConfig, createConfig, configureChains } from "wagmi";
+import { mainnet, goerli } from "wagmi/chains";
+import { StarknetConfig } from "@starknet-react/core";
+import { publicProvider } from "wagmi/providers/public";
+import { InjectedConnector } from "./StarknetProvider/InjectedConnector";
+import { ConnectKitProvider, getDefaultConfig } from "connectkit";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
 
-const chains = [mainnet, arbitrum];
+const starkConnectors = [
+  new InjectedConnector({ options: { id: "braavos" } }),
+  new InjectedConnector({ options: { id: "argentX" } }),
+];
 
 const theme = darkTheme({
   headlineFont: "Sans Serif",
@@ -14,32 +22,48 @@ const theme = darkTheme({
   primaryHoverColor: "#252ea5",
 });
 
+const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [...(process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? [goerli] : [mainnet])],
+  [publicProvider()]
+);
+
+const projectId = "YOUR_PROJECT_ID";
+
 export function Provider({ children }: any) {
+  const [queryClient] = useState(() => new QueryClient());
+
+  //TODO update wagmi config for testnet env NEXT_PUBLIC_IS_TESTNET once v1 ecosystem is ready
   return (
-    <ReservoirKitProvider
-      options={{
-        chains: [
-          {
-            id: 1,
-            baseApiUrl: "https://api.reservoir.tools",
-            active: true,
-            apiKey: process.env.RESERVOIR_API_KEY,
-          },
-        ],
-      }}
-      theme={theme}
-    >
-      <WagmiConfig
-        client={createClient(
-          getDefaultClient({
-            appName: "RAW: Atlas",
-            alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_API,
-            chains,
-          })
-        )}
-      >
-        <ConnectKitProvider theme="midnight">{children}</ConnectKitProvider>
-      </WagmiConfig>
-    </ReservoirKitProvider>
+    <QueryClientProvider client={queryClient}>
+      <StarknetConfig autoConnect connectors={starkConnectors}>
+        <ReservoirKitProvider
+          options={{
+            chains: [
+              {
+                id: 1,
+                baseApiUrl: "https://api.reservoir.tools",
+                active: true,
+                apiKey: process.env.RESERVOIR_API_KEY,
+              },
+            ],
+          }}
+          theme={theme}
+        >
+          <WagmiConfig
+            config={createConfig(
+              getDefaultConfig({
+                appName: "RAW: Atlas",
+                alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_API,
+                chains,
+                walletConnectProjectId:
+                  process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+              })
+            )}
+          >
+            <ConnectKitProvider theme="midnight">{children}</ConnectKitProvider>
+          </WagmiConfig>
+        </ReservoirKitProvider>
+      </StarknetConfig>
+    </QueryClientProvider>
   );
 }

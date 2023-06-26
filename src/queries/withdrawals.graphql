@@ -1,0 +1,12 @@
+query Withdrawals {
+  withdrawals {
+    id
+    l2Sender
+    l1Recipient
+    withdrawalEvents {
+      id
+      status
+      l1Recipient
+    }
+  }
+}

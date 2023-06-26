@@ -8,7 +8,7 @@ import { AttributeTags } from "@/app/collection/AttributeTags";
 import { getCollections } from "@/app/lib/reservoir/getCollections";
 import { getToken } from "@/app/lib/reservoir/getToken";
 import { getAttributes } from "@/app/lib/reservoir/getAttributes";
-import { SweepButton } from "@/app/components/SweepModal";
+//import { SweepButton } from "@/app/components/SweepModal";
 
 export async function generateMetadata({
   params,
