@@ -1,4 +1,18 @@
+<a href="https://twitter.com/lootrealms">
+<img src="https://img.shields.io/twitter/follow/lootrealms?style=social"/>
+</a>
+<a href="https://twitter.com/BibliothecaDAO">
+<img src="https://img.shields.io/twitter/follow/BibliothecaDAO?style=social"/>
+</a>
+
+
+[![discord](https://img.shields.io/badge/join-bibliothecadao-black?logo=discord&logoColor=white)](https://discord.gg/bibliothecadao)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+![background](./.github/bg.png)
+
 ## Atlas - Open Source Marketplace for Loot and Realms
+---
 Atlas is a comprehensive and interactive marketplace dedicated to the Loot and Realms ecosystem. It serves as a central hub for all activities, information, and transactions related to the Loot on-chain game world. Atlas is built on Next.js 13, utilizing server and client components to achieve high performance and scalability.
 
 #### Table of Contents
@@ -39,7 +53,6 @@ Any component that can be rendered on the server should be rendered on the serve
 To run the development server, use one of the following commands:
 
 ```bash
-Copy code
 npm run dev
 # or
 yarn dev
