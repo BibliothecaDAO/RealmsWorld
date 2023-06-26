@@ -96,7 +96,6 @@ export const useTransferToL2 = () => {
     useEffect(() => {
         async function initDepost() {
             if (approveIsSuccess) {
-                console.log(amount)
                 const { hash } = await deposit({
                     args: [parseEther(amount), BigInt(l2Account || "0x"), BigInt(1)],
                     value: BigInt(1),
@@ -155,7 +154,7 @@ export const useTransferToL2 = () => {
                 if (Number(formatEther(allowance || BigInt(0))) < Number(amount)) {
                     console.log('Allow value is smaller then amount, sending approve tx...', { amount });
                     await approve({
-                        args: [l1BridgeAddress, parseGwei(amount)],
+                        args: [l1BridgeAddress, parseEther(amount)],
                     })
                 }
                 handleProgress(
