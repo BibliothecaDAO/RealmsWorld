@@ -69,5 +69,5 @@ export const useTransfers = () => {
 //@ts-ignore
 const flattenPages = data => {
     console.log(data)
-    return data && Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []
+    return data /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
 };
