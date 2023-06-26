@@ -18,7 +18,7 @@ import { TransferStep, TransferToL2Steps } from '@/constants/transferSteps';
 import { useTransfer } from './useTransfer';
 import { useTransferProgress } from './useTransferProgress';
 import { useTransfersLog } from '@/app/providers/TransfersLogProvider';
-import { formatEther, parseGwei } from 'viem';
+import { formatEther, parseEther, parseGwei, parseUnits } from 'viem';
 
 export const ActionType = {
     TRANSFER_TO_L2: 1,
@@ -96,8 +96,9 @@ export const useTransferToL2 = () => {
     useEffect(() => {
         async function initDepost() {
             if (approveIsSuccess) {
+                console.log(amount)
                 const { hash } = await deposit({
-                    args: [BigInt(amount), BigInt(l2Account || "0x"), BigInt(1)],
+                    args: [parseEther(amount), BigInt(l2Account || "0x"), BigInt(1)],
                     value: BigInt(1),
                 });
                 onTransactionHash(depositError, hash)
@@ -117,7 +118,7 @@ export const useTransferToL2 = () => {
             setAmount(amount)
             const sendDeposit = async () => {
                 const { hash } = await deposit({
-                    args: [parseGwei(amount), BigInt(l2Account || "0x"), BigInt(1)],
+                    args: [parseEther(amount), BigInt(l2Account || "0x"), BigInt(1)],
                     value: BigInt(1),
                 });
                 onTransactionHash(depositError, hash)
