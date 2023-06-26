@@ -132,7 +132,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     }
   }, [l1Account, l2Account]);
 
-  const updateTokenBalance = (symbol: any) => {
+  /*const updateTokenBalance = (symbol: any) => {
     console.log(
       symbol ? `Update ${symbol} token balance` : "Update all tokens balances"
     );
@@ -169,7 +169,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
         return updateToken(token.index, { balance, isLoading: false });
       }
     });
-  };
+  };*/
 
   const updateToken = (
     index: any,
@@ -193,7 +193,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   const value = {
     accountHash,
     tokens,
-    updateTokenBalance,
+    // updateTokenBalance,
     refetch,
     balances: {
       l1: {
@@ -201,8 +201,10 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
         lords: l1LordsBalance?.value,
       },
       l2: {
+        //@ts-ignore
         eth: l2EthBalance?.balance
-          ? uint256.uint256ToBN(l2EthBalance?.balance)
+          ? //@ts-ignore
+            uint256.uint256ToBN(l2EthBalance?.balance)
           : 0n,
         lords: l2LordsBalance,
       },

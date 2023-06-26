@@ -63,7 +63,6 @@ export default async function Page({
 
   return (
     <>
-      {/* @ts-expect-error Async Server Component*/}
       <UserTokenGrid address={params.address} continuation="" />;
     </>
   );
