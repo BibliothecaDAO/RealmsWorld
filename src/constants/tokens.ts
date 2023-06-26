@@ -25,8 +25,8 @@ export const tokens = {
             symbol: 'LORDS',
             decimals: 18,
             bridgeAddress: {
-                [ChainType.L1.MAIN]: '',
-                [ChainType.L1.GOERLI]: '0xd6e62a152d28e6E79B3991D64BB4fAAD94C4705A'
+                [ChainType.L1.MAIN]: '0x023A2aAc5d0fa69E3243994672822BA43E34E5C9',
+                [ChainType.L1.GOERLI]: '0x6406465603487eE0Ad7A813b2bB6B0DFfB8f6aa7'
             },
             tokenAddress: {
                 [ChainType.L1.MAIN]: '0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0',
@@ -53,12 +53,12 @@ export const tokens = {
             symbol: 'LORDS',
             decimals: 18,
             bridgeAddress: {
-                [ChainType.L2.MAIN]: '',
-                [ChainType.L2.GOERLI]: '0x0197d189d0d8607f2369adbec9a56250fbf0c82aae7685261cc3ed4f85a2a5ac'
+                [ChainType.L2.MAIN]: '0x7c76a71952ce3acd1f953fd2a3fda8564408b821ff367041c89f44526076633',
+                [ChainType.L2.GOERLI]: '0x042331a29c53f6084f08964cbd83b94c1a141e6d14009052d55b03793b21d5b3'
             },
             tokenAddress: {
-                [ChainType.L2.MAIN]: '',
-                [ChainType.L2.GOERLI]: '0x7f1c84a2a4ec1da5ce9d862884245fef2f23be6f1a52bd16399f910f440fedc'
+                [ChainType.L2.MAIN]: '0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49',
+                [ChainType.L2.GOERLI]: '0x0488c4091e5c57309f4acdce4f746898a82f50351d8c85278ad2e877c8c032bd'
             }
         }
     }

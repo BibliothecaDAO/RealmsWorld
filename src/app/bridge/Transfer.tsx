@@ -18,10 +18,13 @@ import Link from "next/link";
 import { useTransferToL2 } from "@/composables/useTransferToL2";
 import LordsIcon from "@/icons/lords.svg";
 import { Toast, ToastDescription, ToastTitle } from "../components/ui/toast";
+import { Alert } from "../components/ui/alert";
+import { STARKSCAN_URL } from "@/constants/env";
 
 const network =
   process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
 const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]];
+const l2BridgeAddress = tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[network]];
 
 export const Transfer = ({ action }: { action: string }) => {
   const { address: l1Account } = useL1Account();
@@ -112,6 +115,13 @@ export const Transfer = ({ action }: { action: string }) => {
   return (
     <div>
       <div className="mb-3 bg-white/10 rounded p-4 relative">
+        {action == "withdraw" && (
+          <Alert
+            variant={"warning"}
+            title={"Withdraw not current available on frontend"}
+            message={`Visit <a class="!text-amber-800" href="${STARKSCAN_URL}/contract/${l2BridgeAddress}#read-write-contract-sub-write" target="_blank">StarkScan</a> to initiate a withdraw to L1`}
+          ></Alert>
+        )}
         {action == "withdraw" ? renderL2Network() : renderL1Network()}
         {renderTokenInput()}
         {/*allowance: {allowance?.toString()}*/}
@@ -146,7 +156,7 @@ export const Transfer = ({ action }: { action: string }) => {
           className="w-full bg-white/80 !text-black/70"
           onClick={() => onTransferClick()}
           size={"lg"}
-          disabled={!amount}
+          disabled={!amount || action == "withdraw"}
         >
           {!amount
             ? "Enter Amount"

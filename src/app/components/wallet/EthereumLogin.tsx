@@ -82,7 +82,9 @@ function EthereumLogin() {
             className="group"
             href="/bridge"
           >
-            <span className="group-hover:hidden">{lords?.formatted}</span>
+            <span className="group-hover:hidden">
+              {parseFloat(lords?.formatted || "").toFixed(2)}
+            </span>
             <span className="group-hover:block hidden">Bridge</span>
           </Button>
         )}

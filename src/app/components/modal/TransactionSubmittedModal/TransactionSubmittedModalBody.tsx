@@ -24,7 +24,7 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
           "Completing a Ethereum → StarkNet transfer may take up to several hours depending on the congestion. It may take a while for your wallet balance to update."
         }
         title={"This is an Alpha version"}
-        type={AlertType.WARNING}
+        variant="warning"
       />
     ) : !isTransferCompleted ? (
       <Alert
@@ -37,8 +37,8 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
     ) : null;
 
   return (
-    <div className="flex flex-col align-center mb-6 px-2">
-      <div className="w-1/2">{textMessage}</div>
+    <div className="flex flex-col items-center text-center mb-6 px-2 ">
+      <div className="w-1/2 text-sm  mb-4">{textMessage}</div>
       {messageComponent}
     </div>
   );
