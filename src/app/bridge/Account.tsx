@@ -49,7 +49,14 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
 
   const renderTransfers = () => {
     return transfers.length
-      ? transfers.map((transfer: any, index: number) => <div>test</div>)
+      ? transfers.map((transfer: any, index: number) => (
+          <TransferLog
+            isL1={isL1}
+            key={index}
+            transfer={transfer}
+            onCompleteTransferClick={() => onCompleteTransferClick(transfer)}
+          />
+        ))
       : null;
   };
 

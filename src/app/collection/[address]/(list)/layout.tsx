@@ -44,7 +44,6 @@ export default function RootLayout({
 
       <div className="flex h-full lg:pl-32 -mt-56">
         <div className="flex-grow p-4 sm:p-8">
-          {/* @ts-expect-error Async Server Component */}
           <CollectionSummary address={params.address} />
           <div className="flex gap-4 justify-center">
             {tabs.map((tab) => (

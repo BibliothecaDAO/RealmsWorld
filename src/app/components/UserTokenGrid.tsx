@@ -29,7 +29,6 @@ async function UserTokenGrid({
       </div>
       {dataContinuation && (
         <Suspense fallback=<UserTokenGridSkeleton />>
-          {/** @ts-expect-error Server Component */}
           <UserTokenGrid address={address} continuation={dataContinuation} />
         </Suspense>
       )}
