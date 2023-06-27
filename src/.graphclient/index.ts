@@ -59,6 +59,7 @@ export type Deposit = {
   id: Scalars['ID'];
   depositEvents: Array<DepositEvent>;
   l1Sender: Scalars['Bytes'];
+  createdTimestamp?: Maybe<Scalars['BigInt']>;
 };
 
 
@@ -225,6 +226,14 @@ export type Deposit_filter = {
   l1Sender_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   l1Sender_contains?: InputMaybe<Scalars['Bytes']>;
   l1Sender_not_contains?: InputMaybe<Scalars['Bytes']>;
+  createdTimestamp?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_not?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_gt?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_lt?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_gte?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_lte?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  createdTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<Deposit_filter>>>;
@@ -234,7 +243,8 @@ export type Deposit_filter = {
 export type Deposit_orderBy =
   | 'id'
   | 'depositEvents'
-  | 'l1Sender';
+  | 'l1Sender'
+  | 'createdTimestamp';
 
 /** Defines the order direction, either ascending or descending */
 export type OrderDirection =
@@ -547,6 +557,7 @@ export type Withdrawal = {
   id: Scalars['ID'];
   l1Recipient: Scalars['Bytes'];
   l2Sender: Scalars['Bytes'];
+  createdTimestamp?: Maybe<Scalars['BigInt']>;
   withdrawalEvents: Array<WithdrawalEvent>;
 };
 
@@ -717,6 +728,14 @@ export type Withdrawal_filter = {
   l2Sender_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   l2Sender_contains?: InputMaybe<Scalars['Bytes']>;
   l2Sender_not_contains?: InputMaybe<Scalars['Bytes']>;
+  createdTimestamp?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_not?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_gt?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_lt?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_gte?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_lte?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  createdTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   withdrawalEvents?: InputMaybe<Array<Scalars['String']>>;
   withdrawalEvents_not?: InputMaybe<Array<Scalars['String']>>;
   withdrawalEvents_contains?: InputMaybe<Array<Scalars['String']>>;
@@ -734,6 +753,7 @@ export type Withdrawal_orderBy =
   | 'id'
   | 'l1Recipient'
   | 'l2Sender'
+  | 'createdTimestamp'
   | 'withdrawalEvents';
 
 export type _Block_ = {
@@ -949,6 +969,7 @@ export type DepositResolvers<ContextType = MeshContext, ParentType extends Resol
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   depositEvents?: Resolver<Array<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<DepositdepositEventsArgs, 'skip' | 'first'>>;
   l1Sender?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  createdTimestamp?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1011,6 +1032,7 @@ export type WithdrawalResolvers<ContextType = MeshContext, ParentType extends Re
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   l1Recipient?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   l2Sender?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  createdTimestamp?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
   withdrawalEvents?: Resolver<Array<ResolversTypes['WithdrawalEvent']>, ParentType, ContextType, RequireFields<WithdrawalwithdrawalEventsArgs, 'skip' | 'first'>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -1201,24 +1223,27 @@ export type DepositsQueryVariables = Exact<{
 
 
 export type DepositsQuery = { deposits: Array<(
-    Pick<Deposit, 'id' | 'l1Sender'>
+    Pick<Deposit, 'id' | 'l1Sender' | 'createdTimestamp'>
     & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'l2Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
   )> };
 
-export type WithdrawalsQueryVariables = Exact<{ [key: string]: never; }>;
+export type WithdrawalsQueryVariables = Exact<{
+  where?: InputMaybe<Withdrawal_filter>;
+}>;
 
 
 export type WithdrawalsQuery = { withdrawals: Array<(
-    Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient'>
+    Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
     & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient'>> }
   )> };
 
 
 export const DepositsDocument = gql`
     query Deposits($where: Deposit_filter) {
-  deposits(where: $where) {
+  deposits(where: $where, orderBy: createdTimestamp, orderDirection: desc) {
     id
     l1Sender
+    createdTimestamp
     depositEvents {
       id
       status
@@ -1232,11 +1257,12 @@ export const DepositsDocument = gql`
 }
     ` as unknown as DocumentNode<DepositsQuery, DepositsQueryVariables>;
 export const WithdrawalsDocument = gql`
-    query Withdrawals {
-  withdrawals {
+    query Withdrawals($where: Withdrawal_filter) {
+  withdrawals(where: $where, orderBy: createdTimestamp, orderDirection: desc) {
     id
     l2Sender
     l1Recipient
+    createdTimestamp
     withdrawalEvents {
       id
       status

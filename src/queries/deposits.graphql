@@ -1,13 +1,13 @@
 query Deposits($where: Deposit_filter) {
-  deposits(where: $where) {
+  deposits(where: $where, orderBy: createdTimestamp, orderDirection: desc) {
     id
     l1Sender
+    createdTimestamp
     depositEvents {
       id
       status
       l2Recipient
       amount
-      createdTimestamp
       createdTxHash
       finishedTxHash
       finishedAtDate

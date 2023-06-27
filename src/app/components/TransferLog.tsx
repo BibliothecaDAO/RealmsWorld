@@ -56,8 +56,9 @@ export const TransferLog = ({
   const [sign, setSign] = useState("");
   //const { action, isL1 } = useTransfer();
   const action = isL1 ? 1 : 2;
+  const type = depositEvents ? 1 : 2;
   useEffect(() => {
-    setSign(transfer.type === action ? "-" : "+");
+    setSign(type === action ? "-" : "+");
   }, [action]);
   const d = new Date(parseInt(timestamp));
   console.log(timestamp, d.getFullYear());
