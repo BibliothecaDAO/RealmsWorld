@@ -17,6 +17,7 @@ import { useAccount as useL2Account, useWaitForTransaction, useContractWrite } f
 import { number, uint256 } from 'starknet';
 import { tokens } from '@/constants/tokens';
 import { waitForTransaction } from '@starkware-industries/commons-js-utils';
+import { parseUnits } from 'viem';
 
 export const useTransferToL1 = () => {
     const { initiateWithdraw, withdrawHash } = useBridgeContract();
@@ -96,7 +97,7 @@ export const useCompleteTransferToL1 = () => {
     const { address: l1Account, connector } = useAccount();
     const { handleProgress, handleData, handleError } = useTransfer(CompleteTransferToL1Steps);
     const progressOptions = useTransferProgress();
-    const { refetch } = useTransferLog();
+    const { refetch } = useTransferLog(true);
     const [transfer, setTransfer] = useState({});
 
     const onWithdrawal = (event: any) => {
@@ -116,14 +117,14 @@ export const useCompleteTransferToL1 = () => {
     return useCallback(
         async (transfer: any) => {
             setTransfer(transfer)
-            const { symbol, amount, l2hash } = transfer;
-
+            const { symbol, withdrawalEvents, l2hash } = transfer;
+            console.log(transfer)
             const onTransactionHash = (error: any, transactionHash: string) => {
                 if (!error) {
                     console.log('Tx signed', { transactionHash });
                     handleProgress(
                         progressOptions.withdraw(
-                            amount,
+                            withdrawalEvents[0].amount,
                             symbol,
                             stepOf(TransferStep.WITHDRAW, CompleteTransferToL1Steps)
                         )
@@ -139,10 +140,10 @@ export const useCompleteTransferToL1 = () => {
                         stepOf(TransferStep.CONFIRM_TX, CompleteTransferToL1Steps)
                     )
                 );
-                console.log('Calling withdraw');
+                console.log('Calling withdraw', withdrawalEvents.amount);
                 const { hash } = await withdraw({
                     args: [
-                        amount, l1Account as `0x${string}`]
+                        parseUnits(withdrawalEvents[0].amount, 18), l1Account as `0x${string}`]
                 });
                 onTransactionHash(withdrawError, hash)
                 //onWithdrawal(receipt.events[EventName.L1.LOG_WITHDRAWAL]);

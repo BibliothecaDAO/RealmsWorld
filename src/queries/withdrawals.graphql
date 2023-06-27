@@ -1,13 +1,17 @@
-query Withdrawals {
-  withdrawals {
+query Withdrawals($where: Withdrawal_filter) {
+  withdrawals(where: $where, orderBy: createdTimestamp, orderDirection: desc) {
     id
     l2Sender
     l1Recipient
+    createdTimestamp
     withdrawalEvents {
       id
       status
-      createdTimestamp
       l1Recipient
+      amount
+      createdTxHash
+      finishedTxHash
+      finishedAtDate
     }
   }
 }

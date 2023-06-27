@@ -5,8 +5,7 @@ import { isDeposit } from '@/types/bridge';
 
 import { TransferLogContext } from './transfer-log-context';
 
-export const useTransferLog = () => {
-    const isL1 = true
+export const useTransferLog = (isL1: boolean) => {
     const { transfersQueryL1, transfersQueryL2 } = useContext(TransferLogContext);
     const query = isL1 ? transfersQueryL1 : transfersQueryL2;
     return useMemo(
@@ -15,7 +14,7 @@ export const useTransferLog = () => {
 
             return ({
                 ...query,
-                transfers: flattenPages(query?.data)
+                transfers: isL1 ? flattenPages(query?.data) : flattenWithdrawals(query.data)
             })
         },
         [query]
@@ -69,5 +68,9 @@ export const useTransfers = () => {
 //@ts-ignore
 const flattenPages = data => {
     console.log(data)
-    return data?.pages?.[0]?.deposits /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
+    return [...data?.pages?.[0]?.deposits, ...data?.pages?.[0]?.withdrawals] /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
+};
+const flattenWithdrawals = data => {
+    console.log(data)
+    return data?.pages?.[0]?.withdrawals /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
 };

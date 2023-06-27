@@ -37,6 +37,7 @@ export type Deposit = {
   id: Scalars['ID'];
   depositEvents: Array<DepositEvent>;
   l1Sender: Scalars['Bytes'];
+  createdTimestamp?: Maybe<Scalars['BigInt']>;
 };
 
 
@@ -203,6 +204,14 @@ export type Deposit_filter = {
   l1Sender_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   l1Sender_contains?: InputMaybe<Scalars['Bytes']>;
   l1Sender_not_contains?: InputMaybe<Scalars['Bytes']>;
+  createdTimestamp?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_not?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_gt?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_lt?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_gte?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_lte?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  createdTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<Deposit_filter>>>;
@@ -212,7 +221,8 @@ export type Deposit_filter = {
 export type Deposit_orderBy =
   | 'id'
   | 'depositEvents'
-  | 'l1Sender';
+  | 'l1Sender'
+  | 'createdTimestamp';
 
 /** Defines the order direction, either ascending or descending */
 export type OrderDirection =
@@ -518,13 +528,16 @@ export type Token_orderBy =
 
 export type TransferStatus =
   | 'PENDING'
-  | 'FINISHED';
+  | 'FINISHED'
+  | 'ACCEPTED_ON_L1'
+  | 'ACCEPTED_ON_L2';
 
 export type Withdrawal = {
   /** [bridgeL1Address, ...payload].join('-') */
   id: Scalars['ID'];
   l1Recipient: Scalars['Bytes'];
   l2Sender: Scalars['Bytes'];
+  createdTimestamp?: Maybe<Scalars['BigInt']>;
   withdrawalEvents: Array<WithdrawalEvent>;
 };
 
@@ -695,6 +708,14 @@ export type Withdrawal_filter = {
   l2Sender_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   l2Sender_contains?: InputMaybe<Scalars['Bytes']>;
   l2Sender_not_contains?: InputMaybe<Scalars['Bytes']>;
+  createdTimestamp?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_not?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_gt?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_lt?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_gte?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_lte?: InputMaybe<Scalars['BigInt']>;
+  createdTimestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  createdTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   withdrawalEvents?: InputMaybe<Array<Scalars['String']>>;
   withdrawalEvents_not?: InputMaybe<Array<Scalars['String']>>;
   withdrawalEvents_contains?: InputMaybe<Array<Scalars['String']>>;
@@ -712,6 +733,7 @@ export type Withdrawal_orderBy =
   | 'id'
   | 'l1Recipient'
   | 'l2Sender'
+  | 'createdTimestamp'
   | 'withdrawalEvents';
 
 export type _Block_ = {
