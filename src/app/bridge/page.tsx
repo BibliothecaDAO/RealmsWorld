@@ -23,7 +23,7 @@ export default async function Page({
   return (
     <BridgeModalProvider>
       <div className="mx-auto bg-white/5 w-full rounded-lg container flex-col mt-20 md:w-[500px] p-8">
-        <div className="flex w-full flex text-xl p-1.5 mb-3 justify-center bg-white/10 rounded">
+        <div className="flex w-full text-xl p-1.5 mb-3 justify-center bg-white/10 rounded space-x-2">
           {tabs.map((tab) => (
             <NavLink
               className={cn(

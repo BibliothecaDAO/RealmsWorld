@@ -10,7 +10,7 @@ export const CollectionCard = ({ collection }: Props) => {
   return (
     <Link
       href={`/collection/${collection.primaryContract}`}
-      className="flex p-5 duration-300 border-4 bg-black/50 rounded-xl hover:opacity-80 shadow-white/10 group border-white/10 "
+      className="flex p-5 duration-300 hover:bg-black border hover:opacity-80 group"
     >
       <Image
         src={collection.image}

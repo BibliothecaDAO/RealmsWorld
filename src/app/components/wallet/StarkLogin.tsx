@@ -19,6 +19,8 @@ import {
 import { useState, useEffect } from "react";
 import { cn, formatBigInt } from "@/app/lib/utils";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
+import Starknet from "@/icons/starknet.svg"
+import { RenderExplorers } from "./utils";
 
 function StarkLogin() {
   const { available, connect, connectors, disconnect } = useConnectors();
@@ -65,8 +67,40 @@ function StarkLogin() {
 
   if (status === "connected")
     return (
-      <div className="grid grid-cols-4 align-items-center space-x-3">
-        {address && (
+      <div className=" border rounded p-2 pt-4">
+        <div className="flex mb-3 justify-between">
+          <div className="flex">
+            <Starknet class="w-8 px-1" /><div className="self-center"> {chain?.name}</div>
+          </div>
+          <div>
+            <Button
+              variant="outline"
+              size={"xs"}
+              className=""
+              onClick={() => onDisconnect()}
+            >
+              <LogOut className="self-center w-4" />
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 align-items-center space-x-3">
+          <div className="px-4 pt-4 pb-2 border rounded">
+
+            <div className="text-2xl">
+              {formatBigInt(balances.l2.eth, 3)} ETH
+            </div>
+
+          </div>
+          <div className="px-4 pt-4 pb-2 border rounded   flex justify-between">
+
+            <div className="text-2xl">
+              {balances.l2.lords && balances.l2.lords > 0 ? formatBigInt(balances.l2.lords, 3) : 0} LORDS
+
+            </div>
+            <Button href="/bridge" size={'xs'} variant={'subtle'} className="self-center">Bridge</Button>
+          </div>
+          {/* {address && (
           <>
             <Button
               variant="outline"
@@ -74,20 +108,15 @@ function StarkLogin() {
               className="flex justify-around w-full col-span-2"
               onClick={() => onDisconnect()}
             >
-              {/*{starknetID ? starknetID : shortenHex(address || "", 8)} */}
-              <span
-                className={cn(
-                  "border border-white/50 font-sans ml-3 px-1.5 py-0.5 rounded bg-sky-300/50 text-xs normal-case",
-                  isWrongNetwork && "border-red-500 bg-orange-300/70"
-                )}
-              >
-                {chain?.name}
-              </span>
+              {starknetID ? starknetID : shortenHex(address || "", 8)}
+
+                <Starknet class="w-8 px-1" /> {chain?.name}
+              
               <LogOut className="self-center w-4" />
             </Button>
           </>
-        )}
-        <Button variant="outline" size={"lg"} className="group">
+        )} */}
+          {/* <Button variant="outline" size={"lg"} className="group">
           <span className="group-hover:hidden">
             {formatBigInt(balances.l2.eth, 3)}
           </span>
@@ -101,28 +130,31 @@ function StarkLogin() {
             <span className="group-hover:block hidden ">Buy Coins</span>
           </Button>
         )}
-        <Button onClick={refetch}>Refetch Lrods</Button>
-        {isWrongNetwork && (
-          <Dialog open={isWrongNetwork}>
-            <DialogContent className="w-full">
-              <DialogHeader>
-                <DialogTitle>Wrong Network</DialogTitle>
-              </DialogHeader>
-              <span>
-                The Atlas currently only supports {network}, please change the
-                connected network in your wallet, or:
-              </span>
-              <Button
-                variant={"default"}
-                size={"lg"}
-                className="mt-4"
-                onClick={() => onDisconnect()}
-              >
-                Disconnect
-              </Button>
-            </DialogContent>
-          </Dialog>
-        )}
+        <Button onClick={refetch}>Refetch Lrods</Button> */}
+          {isWrongNetwork && (
+            <Dialog open={isWrongNetwork}>
+              <DialogContent className="w-full">
+                <DialogHeader>
+                  <DialogTitle>Wrong Network</DialogTitle>
+                </DialogHeader>
+                <span>
+                  The Atlas currently only supports {network}, please change the
+                  connected network in your wallet, or:
+                </span>
+                <Button
+                  variant={"default"}
+                  size={"lg"}
+                  className="mt-4"
+                  onClick={() => onDisconnect()}
+                >
+                  Disconnect
+                </Button>
+              </DialogContent>
+            </Dialog>
+          )}
+        </div>
+
+
       </div>
     );
   return (

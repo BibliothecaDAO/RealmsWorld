@@ -55,7 +55,7 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-  "fixed z-50 scale-100 gap-4 bg-white p-6 opacity-100 bg-slate-900",
+  "fixed z-50 scale-100 gap-4 bg-white p-6 opacity-100 bg-black",
   {
     variants: {
       position: {
@@ -202,7 +202,7 @@ const SheetTitle = React.forwardRef<
   <SheetPrimitive.Title
     ref={ref}
     className={cn(
-      "text-lg font-semibold text-slate-900",
+      "text-lg font-semibold ",
       "dark:text-slate-50",
       className
     )}

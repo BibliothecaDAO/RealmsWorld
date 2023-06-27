@@ -5,20 +5,20 @@ import { cn } from "@/app/lib/utils";
 import Link, { LinkProps } from "next/link";
 
 const buttonVariants = cva(
-  "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50  dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 uppercase font-sans-serif",
+  "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50  dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 uppercase font-sans-serif ",
   {
     variants: {
       variant: {
         default:
-          "bg-black/60 text-white hover:bg-black dark:bg-slate-50 dark:text-slate-900 shadow-inner",
+          " text-white hover:bg-black dark:bg-slate-50 dark:text-slate-900 shadow-inner border",
         destructive:
-          "bg-red-500 text-white hover:bg-red-600 dark:hover:bg-red-600",
+          "bg-red-500 text-white hover:bg-red-600 dark:hover:bg-red-600 border",
         outline:
-          "bg-transparent border border-white/30 hover:bg-black dark:border-slate-700 dark:text-slate-100 dark:disabled:hover:bg-transparent",
+          "bg-transparent border border-white/30 hover:bg-black dark:border-gray-700 dark:text-slate-100 dark:disabled:hover:bg-transparent",
         subtle:
-          "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-100",
+          "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-gray-700 dark:text-slate-100 border",
         ghost:
-          "bg-transparent hover:bg-slate-700 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent",
+          "bg-transparent hover:bg-gray-700 dark:text-slate-100 dark:hover:text-slate-100 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent hover:border",
         link: "bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-slate-900 dark:text-slate-100 hover:bg-transparent dark:hover:bg-transparent",
       },
       size: {

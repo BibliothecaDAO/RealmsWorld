@@ -45,10 +45,12 @@ export default function RootLayout({
       <div className="flex h-full lg:pl-32 -mt-56">
         <div className="flex-grow p-4 sm:p-8">
           <CollectionSummary address={params.address} />
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-center py-4 border-b mb-3">
             {tabs.map((tab) => (
               <NavLink
                 key={tab.name}
+                variant={'link'}
+                size={'sm'}
                 exact
                 href={`/collection/${params.address}${
                   tab.link && "/" + tab.link
