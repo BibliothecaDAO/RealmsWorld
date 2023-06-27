@@ -17,10 +17,10 @@ export const TokenCard = (props: TokenCardProps) => {
   const isGrid = layout == "grid";
 
   const grid =
-    "duration-300 transform border-2 rounded-xl border-white/10 hover:-translate-y-1";
+    "duration-300 transform border  border-white/10 hover:-translate-y-1";
 
   const list =
-    "duration-300 transform border-2 rounded-xl border-white/10 hover:-translate-y-1 flex w-full";
+    "duration-300 transform border  border-white/10 hover:-translate-y-1 flex w-full";
 
   const imageSize = isGrid ? 800 : 60;
 
@@ -30,7 +30,7 @@ export const TokenCard = (props: TokenCardProps) => {
         <Image
           src={token.token.image || ""}
           alt={token.token.name}
-          className={`${isGrid ? "mx-auto rounded-t-xl" : "rounded-xl"}`}
+          className={`${isGrid ? "mx-auto " : ""}`}
           width={imageSize}
           height={imageSize}
         />

@@ -48,7 +48,7 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   }, [account]);*/
 
   const renderTransfers = () => {
-    return transfers.length
+    return transfers && transfers.length
       ? transfers.map((transfer: any, index: number) => (
           <TransferLog
             isL1={isL1}

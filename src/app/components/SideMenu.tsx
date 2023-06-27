@@ -1,9 +1,11 @@
 "use client";
 
-import { Backpack, Map, Boxes, Twitter, Github, X } from "lucide-react";
+import { Backpack, Map, Boxes, Twitter, Github, X, Compass } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import BibliothecaDAO from "@/icons/BibliothecaBook.svg";
+
+import Link from "next/link";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -44,13 +46,20 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`${"hidden"} w-screen lg:flex flex-col fixed z-100 h-screen top-0 p-4 bg-black/90 lg:bg-black/30 z-20 lg:hover:w-72 transition-all duration-300 lg:w-24 hover:bg-black/80 group`}
+      className={`${"hidden"} w-screen lg:flex flex-col fixed z-100 h-screen top-0 p-4  border-r z-20 lg:hover:w-72 transition-all duration-300 lg:w-24 hover:bg-black/80 group`}
     >
       <Button className="block lg:hidden" variant={"outline"}>
         <X />
       </Button>
 
       <div className="flex flex-col mt-4 space-y-6">
+       <Link
+          className="flex self-center text-xl font-semibold  sm:text-2xl font-sans-serif mx-auto"
+          href="/"
+        >
+          <Compass className="self-center w-12 h-8" />
+          {/* <span className="hidden sm:block">Atlas </span> */}
+        </Link>
         {menu.map((item, index) => {
           return (
             <Button
@@ -58,7 +67,7 @@ const Sidebar = () => {
               key={index}
               onClick={() => handleClick(item.href)}
             >
-              <span className="mr-auto transition-all duration-450">
+              <span className="hover:mr-auto transition-all duration-450 pl-1">
                 {item.icon}{" "}
               </span>
 
