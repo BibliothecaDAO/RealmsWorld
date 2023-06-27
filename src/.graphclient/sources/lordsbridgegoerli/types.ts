@@ -528,7 +528,9 @@ export type Token_orderBy =
 
 export type TransferStatus =
   | 'PENDING'
-  | 'FINISHED';
+  | 'FINISHED'
+  | 'ACCEPTED_ON_L1'
+  | 'ACCEPTED_ON_L2';
 
 export type Withdrawal = {
   /** [bridgeL1Address, ...payload].join('-') */

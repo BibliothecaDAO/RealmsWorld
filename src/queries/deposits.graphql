@@ -1,5 +1,5 @@
-query Deposits($where: Deposit_filter) {
-  deposits(where: $where, orderBy: createdTimestamp, orderDirection: desc) {
+query Deposits($depositsWhere: Deposit_filter, $withdrawalsWhere: Withdrawal_filter) {
+  deposits(where: $depositsWhere, orderBy: createdTimestamp, orderDirection: desc) {
     id
     l1Sender
     createdTimestamp
@@ -7,6 +7,21 @@ query Deposits($where: Deposit_filter) {
       id
       status
       l2Recipient
+      amount
+      createdTxHash
+      finishedTxHash
+      finishedAtDate
+    }
+  }
+  withdrawals(where: $withdrawalsWhere, orderBy: createdTimestamp, orderDirection: desc) {
+    id
+    l2Sender
+    l1Recipient
+    createdTimestamp
+    withdrawalEvents {
+      id
+      status
+      l1Recipient
       amount
       createdTxHash
       finishedTxHash

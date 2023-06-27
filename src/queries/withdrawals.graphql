@@ -8,6 +8,10 @@ query Withdrawals($where: Withdrawal_filter) {
       id
       status
       l1Recipient
+      amount
+      createdTxHash
+      finishedTxHash
+      finishedAtDate
     }
   }
 }

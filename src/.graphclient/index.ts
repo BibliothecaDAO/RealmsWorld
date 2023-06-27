@@ -550,7 +550,9 @@ export type Token_orderBy =
 
 export type TransferStatus =
   | 'PENDING'
-  | 'FINISHED';
+  | 'FINISHED'
+  | 'ACCEPTED_ON_L1'
+  | 'ACCEPTED_ON_L2';
 
 export type Withdrawal = {
   /** [bridgeL1Address, ...payload].join('-') */
@@ -1218,13 +1220,17 @@ export function getBuiltGraphSDK<TGlobalContext = any, TOperationContext = any>(
   return getSdk<TOperationContext, TGlobalContext>((...args) => sdkRequester$.then(sdkRequester => sdkRequester(...args)));
 }
 export type DepositsQueryVariables = Exact<{
-  where?: InputMaybe<Deposit_filter>;
+  depositsWhere?: InputMaybe<Deposit_filter>;
+  withdrawalsWhere?: InputMaybe<Withdrawal_filter>;
 }>;
 
 
 export type DepositsQuery = { deposits: Array<(
     Pick<Deposit, 'id' | 'l1Sender' | 'createdTimestamp'>
     & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'l2Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
+  )>, withdrawals: Array<(
+    Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
+    & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
   )> };
 
 export type WithdrawalsQueryVariables = Exact<{
@@ -1234,13 +1240,13 @@ export type WithdrawalsQueryVariables = Exact<{
 
 export type WithdrawalsQuery = { withdrawals: Array<(
     Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
-    & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient'>> }
+    & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
   )> };
 
 
 export const DepositsDocument = gql`
-    query Deposits($where: Deposit_filter) {
-  deposits(where: $where, orderBy: createdTimestamp, orderDirection: desc) {
+    query Deposits($depositsWhere: Deposit_filter, $withdrawalsWhere: Withdrawal_filter) {
+  deposits(where: $depositsWhere, orderBy: createdTimestamp, orderDirection: desc) {
     id
     l1Sender
     createdTimestamp
@@ -1248,6 +1254,25 @@ export const DepositsDocument = gql`
       id
       status
       l2Recipient
+      amount
+      createdTxHash
+      finishedTxHash
+      finishedAtDate
+    }
+  }
+  withdrawals(
+    where: $withdrawalsWhere
+    orderBy: createdTimestamp
+    orderDirection: desc
+  ) {
+    id
+    l2Sender
+    l1Recipient
+    createdTimestamp
+    withdrawalEvents {
+      id
+      status
+      l1Recipient
       amount
       createdTxHash
       finishedTxHash
@@ -1267,6 +1292,10 @@ export const WithdrawalsDocument = gql`
       id
       status
       l1Recipient
+      amount
+      createdTxHash
+      finishedTxHash
+      finishedAtDate
     }
   }
 }

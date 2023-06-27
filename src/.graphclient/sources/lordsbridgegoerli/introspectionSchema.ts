@@ -6640,6 +6640,22 @@ const schemaAST = {
             "value": "FINISHED"
           },
           "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "ACCEPTED_ON_L1"
+          },
+          "directives": []
+        },
+        {
+          "kind": "EnumValueDefinition",
+          "name": {
+            "kind": "Name",
+            "value": "ACCEPTED_ON_L2"
+          },
+          "directives": []
         }
       ],
       "directives": []

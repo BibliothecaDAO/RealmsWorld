@@ -18,7 +18,7 @@ import LordsIcon from "@/icons/lords.svg";
 import { cn } from "../lib/utils";
 import { ActionType } from "@/constants/transferSteps";
 import { ExternalLinkIcon } from "lucide-react";
-import { DepositEvent } from "@/.graphclient";
+import { DepositEvent, WithdrawalEvent } from "@/.graphclient";
 import { formatEther } from "viem";
 
 /*interface Transfer {
@@ -42,16 +42,17 @@ export const TransferLog = ({
   isL1: boolean;
   onCompleteTransferClick: () => void;
 }) => {
-  const { l1Recipent, depositEvents } = transfer;
+  const { l1Recipent, depositEvents, withdrawalEvents, createdTimestamp } = transfer;
   const {
     status,
     id,
-    l2Recipient,
+    //l2Recipient,
     amount,
-    createdTxHash: l1hash,
-    finishedTxHash,
-    finishedAtDate: timestamp,
-  }: DepositEvent = depositEvents?.[0];
+    createdTxHash,
+    finishedTxHash: l1hash,
+    finishedAtDate,
+  }: DepositEvent | WithdrawalEvent = depositEvents?.[0] || withdrawalEvents?.[0];
+
   const l2hash = "0xtest";
   const [sign, setSign] = useState("");
   //const { action, isL1 } = useTransfer();
@@ -60,8 +61,6 @@ export const TransferLog = ({
   useEffect(() => {
     setSign(type === action ? "-" : "+");
   }, [action]);
-  const d = new Date(parseInt(timestamp));
-  console.log(timestamp, d.getFullYear());
 
   const typedStatus = status as TransactionStatus;
 
@@ -127,13 +126,13 @@ export const TransferLog = ({
           <div>
             <div className="text-lg font-semibold">Lords</div>
             <div className="text-gray-400">{`${getFullTime(
-              timestamp * 1000
+              createdTimestamp * 1000
             )}`}</div>
           </div>
         </div>
         <div className="flex flex-col items-end justify-around">
           <div className="text-lg font-semibold">
-            {sign} {formatEther(amount)} LORDS
+            {sign} {formatEther(amount || 0)} LORDS
           </div>
           {renderTransferStatus()}
           <div className="flex justify-around items-center my-2">
@@ -150,8 +149,8 @@ const CompleteTransferButton = ({ onClick }: { onClick: any }) => {
   return (
     <Button
       variant={"outline"}
-      className="border-orange text-orange"
-      size={"lg"}
+      className="!dark:border-amber-100 !dark:text-orange !border-orange !text-orange"
+      size={"sm"}
       onClick={onClick}
     >
       Complete Transfer

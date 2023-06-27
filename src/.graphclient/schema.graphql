@@ -576,6 +576,8 @@ enum Token_orderBy {
 enum TransferStatus {
   PENDING
   FINISHED
+  ACCEPTED_ON_L1
+  ACCEPTED_ON_L2
 }
 
 type Withdrawal {

@@ -39,7 +39,7 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   //const { isL1, isL2, fromNetwork } = useTransfer();
   const { address } = useAccount();
   const { address: l2address } = useL2Account();
-  const { transfers /*, fetchNextPage, isLoading*/ } = useTransferLog();
+  const { transfers /*, fetchNextPage, isLoading*/ } = useTransferLog(isL1);
   const completeTransferToL1 = useCompleteTransferToL1();
 
   /*useEffect(() => {

@@ -48,7 +48,8 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
     queryKey: ["Deposits", GET_TRANSFERS_ENDPOINT, accountL1],
     queryFn: async ({ pageParam = "" }) => {
       return await sdk.Deposits({
-        where: { l1Sender: accountL1 },
+        depositsWhere: { l1Sender: accountL1 },
+        withdrawalsWhere: {l1Recipient: accountL1}
       });
     },
     enabled: !!accountL1,
