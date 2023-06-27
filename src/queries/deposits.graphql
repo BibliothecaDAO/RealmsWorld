@@ -7,6 +7,7 @@ query Deposits($where: Deposit_filter) {
       status
       l2Recipient
       amount
+      createdTimestamp
       createdTxHash
       finishedTxHash
       finishedAtDate

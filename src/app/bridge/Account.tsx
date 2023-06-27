@@ -24,6 +24,7 @@ import { useAccount } from "wagmi";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { ExternalLinkIcon } from "lucide-react";
 import { useCompleteTransferToL1 } from "@/composables/useTransferToL1";
+import * as ScrollArea from "@radix-ui/react-scroll-area";
 
 export const Account = ({ isL1 }: { isL1: boolean }) => {
   /*const [
@@ -48,7 +49,7 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   }, [account]);*/
 
   const renderTransfers = () => {
-    return transfers.length
+    return transfers && transfers.length
       ? transfers.map((transfer: any, index: number) => (
           <TransferLog
             isL1={isL1}
@@ -107,7 +108,18 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
       {/*<TransferLogContainer
           transferIndex={findIndexById(transfers, transferId)}
   >*/}
-      {renderTransfers()}
+      <ScrollArea.Root className="ScrollAreaRoot">
+        <ScrollArea.Viewport className="h-96">
+          {renderTransfers()}
+        </ScrollArea.Viewport>
+        <ScrollArea.Scrollbar
+          className="ScrollAreaScrollbar"
+          orientation="vertical"
+        >
+          <ScrollArea.Thumb className="ScrollAreaThumb" />
+        </ScrollArea.Scrollbar>
+        <ScrollArea.Corner />
+      </ScrollArea.Root>
       {/*</TransferLogContainer>
         <LogoutButton onClick={handleLogout} />*/}
     </div>

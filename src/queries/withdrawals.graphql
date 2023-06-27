@@ -6,6 +6,7 @@ query Withdrawals {
     withdrawalEvents {
       id
       status
+      createdTimestamp
       l1Recipient
     }
   }

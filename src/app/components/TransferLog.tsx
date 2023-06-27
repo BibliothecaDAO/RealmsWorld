@@ -6,7 +6,7 @@ import {
   TransactionStatusFriendlyMessage,
   TransactionStatusStep,
 } from "@starkware-industries/commons-js-enums";
-import { getFullTime, toClasses } from "@starkware-industries/commons-js-utils";
+import { getFullTime } from "@starkware-industries/commons-js-utils";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
@@ -19,6 +19,7 @@ import { cn } from "../lib/utils";
 import { ActionType } from "@/constants/transferSteps";
 import { ExternalLinkIcon } from "lucide-react";
 import { DepositEvent } from "@/.graphclient";
+import { formatEther } from "viem";
 
 /*interface Transfer {
   status: TransactionStatus;
@@ -41,7 +42,6 @@ export const TransferLog = ({
   isL1: boolean;
   onCompleteTransferClick: () => void;
 }) => {
-  console.log(transfer);
   const { l1Recipent, depositEvents } = transfer;
   const {
     status,
@@ -59,6 +59,8 @@ export const TransferLog = ({
   useEffect(() => {
     setSign(transfer.type === action ? "-" : "+");
   }, [action]);
+  const d = new Date(parseInt(timestamp));
+  console.log(timestamp, d.getFullYear());
 
   const typedStatus = status as TransactionStatus;
 
@@ -123,12 +125,14 @@ export const TransferLog = ({
           <LordsIcon className="fill-white w-6 h-6 mr-3" />
           <div>
             <div className="text-lg font-semibold">Lords</div>
-            <div className="text-gray-400">{`${getFullTime(timestamp)}`}</div>
+            <div className="text-gray-400">{`${getFullTime(
+              timestamp * 1000
+            )}`}</div>
           </div>
         </div>
         <div className="flex flex-col items-end justify-around">
           <div className="text-lg font-semibold">
-            {sign} {amount} LORDS
+            {sign} {formatEther(amount)} LORDS
           </div>
           {renderTransferStatus()}
           <div className="flex justify-around items-center my-2">
