@@ -42,7 +42,7 @@ export default async function Page({
           alt={token.name}
           width={2000}
           height={2000}
-          className="mx-auto border-4 rounded border-white/10"
+          className="mx-auto border"
         />
         <div className="flex flex-wrap">
           <TokenAttributes token={token} collection={collection} />

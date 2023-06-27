@@ -21,10 +21,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       name: "Details",
       content: (
         <div className="flex flex-wrap">
-          <div className="w-full text-2xl">
+          <div className="w-full text-3xl">
             {game?.longform}
           </div>
-          <div className="w-full">
+          {/* <div className="w-full">
             <div className="grid grid-cols-3 gap-8 my-4">
               {game?.screenshots.map((screenshot, index) => (
                 <Image
@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 />
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       )
     },

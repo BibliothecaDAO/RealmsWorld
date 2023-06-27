@@ -38,7 +38,7 @@ export const games = [
         homepage: '/homepages/realms-adventurers'
     },
     {
-        name: 'Survivors',
+        name: 'Loot Survivors',
         id: 'survivors',
         icon: 'lol.png',
         image: '/screenshots/survivors-1.png',
