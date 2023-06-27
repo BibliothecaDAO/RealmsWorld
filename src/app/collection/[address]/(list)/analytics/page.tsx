@@ -29,7 +29,7 @@ export default async function Page({
       {cards.map((card, index) => (
         <div
           key={index}
-          className="border-2 rounded-xl border-white/10 px-8 py-2"
+          className="border-2 rounded-xl px-8 py-2"
         >
           {card.component}
         </div>

@@ -5,24 +5,15 @@ import {
   useConnect,
   useDisconnect,
   useEnsName,
-  useBalance,
 } from "wagmi";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTrigger,
-} from "@/app/components/ui/dialog";
 import { Button } from "@/app/components/ui/button";
 import { shortenHex } from "@/functions/utils";
 import { LogOut } from "lucide-react";
 import { ConnectKitButton } from "connectkit";
 import { useNetwork } from "wagmi";
-import { tokens } from "@/constants/tokens";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import { formatBigInt } from "@/app/lib/utils";
-
+import EthereumLogo from "@/icons/ethereum.svg";
 function EthereumLogin() {
   const { address, isConnected } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } =
@@ -36,41 +27,75 @@ function EthereumLogin() {
 
   if (isConnected)
     return (
-      <div className="grid grid-cols-4 align-items-center space-x-3">
-        {address && (
-          <Button
-            variant="outline"
-            size={"lg"}
-            className="flex justify-around w-full col-span-2"
-            onClick={() => disconnect()}
-          >
-            {ensAddress ? ensAddress : shortenHex(address || "", 8)}
-            <span className="border border-white/50 font-sans ml-3 px-1.5 py-0.5 rounded bg-sky-300/50 text-xs normal-case">
+      <div className="border p-2 rounded">
+        <div className="flex mb-3 justify-between">
+          <div className="flex">
+            <EthereumLogo class="w-6 px-1" /> <div className="self-center">{chain?.name}</div> 
+          </div>
+          <div>
+            <Button
+              variant="outline"
+              size={"xs"}
+              className=""
+              onClick={() => disconnect()}
+            >
+              <LogOut className="self-center w-4" />
+            </Button>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 align-items-center space-x-3">
+          <div className="px-4 pt-4 pb-2 border rounded flex justify-between">
+
+            <div className="text-2xl">
+              {formatBigInt(balances.l1.eth, 3)} ETH
+            </div>
+            
+
+          </div>
+          <div className="px-4 pt-4 pb-2 border rounded  flex justify-between">
+
+            <div className="text-2xl">
+              {balances.l1.lords && balances.l1.lords > 0 ? formatBigInt(balances.l1.lords, 3) : 0} LORDS
+              
+            </div>
+            <Button href="/bridge" size={'xs'} variant={'subtle'} className="self-center">Bridge</Button>
+          </div>
+          {/* {address && (
+            <Button
+              variant="outline"
+              size={"lg"}
+              className="flex justify-around w-full col-span-2"
+              onClick={() => disconnect()}
+            >
+              {ensAddress ? ensAddress : shortenHex(address || "", 8)}
+
               {chain?.id === 5 ? "Ethereum Goerli" : chain?.name}
-            </span>
-            <LogOut className="self-center w-4" />
-          </Button>
-        )}
-        <Button variant="outline" size={"lg"} className="group">
-          <span className="group-hover:hidden">
-            {formatBigInt(balances?.l1.eth, 3)}
-          </span>
-          <span className="group-hover:block hidden">Buy Lords</span>
-        </Button>
-        {balances?.l1.lords && (
-          <Button
-            variant="outline"
-            size={"lg"}
-            className="group"
-            href="/bridge"
-          >
+
+              <LogOut className="self-center w-4" />
+            </Button>
+          )}
+          <Button variant="outline" size={"lg"} className="group">
             <span className="group-hover:hidden">
-              {formatBigInt(balances?.l1.lords, 3)}
+              {formatBigInt(balances?.l1.eth, 3)}
             </span>
-            <span className="group-hover:block hidden">Bridge</span>
+            <span className="group-hover:block hidden">Buy Lords</span>
           </Button>
-        )}
+          {balances?.l1.lords && (
+            <Button
+              variant="outline"
+              size={"lg"}
+              className="group"
+              href="/bridge"
+            >
+              <span className="group-hover:hidden">
+                {formatBigInt(balances?.l1.lords, 3)}
+              </span>
+              <span className="group-hover:block hidden">Bridge</span>
+            </Button>
+          )} */}
+        </div>
       </div>
+
     );
   return (
     <div className="self-center w-full">

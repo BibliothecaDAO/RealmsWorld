@@ -60,13 +60,7 @@ export const TopNav = () => {
           <SheetContent>
             <SheetTitle>Wallets</SheetTitle>
             <div className="flex-col gap-y-4 flex w-full">
-              {(l1Address || l2Address) && (
-                <div className="grid grid-cols-4 uppercase justify-items-center align-items-center space-x-3">
-                  <div className="col-span-2"></div>
-                  <div>Eth</div>
-                  <div>Lords</div>
-                </div>
-              )}
+
               <EthereumLogin />
               <StarkLogin />
               <Account isL1={true} />
