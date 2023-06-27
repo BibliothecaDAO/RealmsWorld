@@ -47,6 +47,7 @@ export const TopNav = () => {
                       {shortenHex(l1Address)}
                     </>
                   )}
+                  
                   {l2Address && (
                     <>
                       <StarknetLogo className="ml-2 w-5 h-5" />
@@ -58,9 +59,7 @@ export const TopNav = () => {
             </Button>
           </SheetTrigger>
           <SheetContent>
-            <SheetTitle>Wallets</SheetTitle>
-            <div className="flex-col gap-y-4 flex w-full">
-
+            <div className="flex-col gap-y-4 flex w-full mt-8">
               <EthereumLogin />
               <StarkLogin />
               <Account isL1={true} />
