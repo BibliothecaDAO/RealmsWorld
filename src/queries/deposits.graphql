@@ -2,11 +2,11 @@ query Deposits($depositsWhere: Deposit_filter, $withdrawalsWhere: Withdrawal_fil
   deposits(where: $depositsWhere, orderBy: createdTimestamp, orderDirection: desc) {
     id
     l1Sender
+    l2Recipient
     createdTimestamp
     depositEvents {
       id
       status
-      l2Recipient
       amount
       createdTxHash
       finishedTxHash

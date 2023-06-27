@@ -33,6 +33,7 @@ type Deposit {
   id: ID!
   depositEvents(skip: Int = 0, first: Int = 100, orderBy: DepositEvent_orderBy, orderDirection: OrderDirection, where: DepositEvent_filter): [DepositEvent!]!
   l1Sender: Bytes!
+  l2Recipient: Bytes!
   createdTimestamp: BigInt
 }
 
@@ -41,7 +42,6 @@ type DepositEvent {
   id: ID!
   bridgeAddressL1: Bytes!
   bridgeAddressL2: Bytes!
-  l2Recipient: Bytes!
   amount: BigInt!
   status: TransferStatus!
   createdAtBlock: BigInt!
@@ -80,16 +80,6 @@ input DepositEvent_filter {
   bridgeAddressL2_not_in: [Bytes!]
   bridgeAddressL2_contains: Bytes
   bridgeAddressL2_not_contains: Bytes
-  l2Recipient: Bytes
-  l2Recipient_not: Bytes
-  l2Recipient_gt: Bytes
-  l2Recipient_lt: Bytes
-  l2Recipient_gte: Bytes
-  l2Recipient_lte: Bytes
-  l2Recipient_in: [Bytes!]
-  l2Recipient_not_in: [Bytes!]
-  l2Recipient_contains: Bytes
-  l2Recipient_not_contains: Bytes
   amount: BigInt
   amount_not: BigInt
   amount_gt: BigInt
@@ -156,7 +146,6 @@ enum DepositEvent_orderBy {
   id
   bridgeAddressL1
   bridgeAddressL2
-  l2Recipient
   amount
   status
   createdAtBlock
@@ -192,6 +181,16 @@ input Deposit_filter {
   l1Sender_not_in: [Bytes!]
   l1Sender_contains: Bytes
   l1Sender_not_contains: Bytes
+  l2Recipient: Bytes
+  l2Recipient_not: Bytes
+  l2Recipient_gt: Bytes
+  l2Recipient_lt: Bytes
+  l2Recipient_gte: Bytes
+  l2Recipient_lte: Bytes
+  l2Recipient_in: [Bytes!]
+  l2Recipient_not_in: [Bytes!]
+  l2Recipient_contains: Bytes
+  l2Recipient_not_contains: Bytes
   createdTimestamp: BigInt
   createdTimestamp_not: BigInt
   createdTimestamp_gt: BigInt
@@ -210,6 +209,7 @@ enum Deposit_orderBy {
   id
   depositEvents
   l1Sender
+  l2Recipient
   createdTimestamp
 }
 

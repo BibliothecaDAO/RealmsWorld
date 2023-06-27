@@ -59,7 +59,10 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
 
   const transfersQueryL2 = useInfiniteQuery({
     queryKey: ["Withdrawals", GET_TRANSFERS_ENDPOINT, accountL2],
-    queryFn: async () => await sdk.Withdrawals(),
+    queryFn: async () =>  await sdk.Deposits({
+      depositsWhere: { l2Recipient: accountL2 },
+      withdrawalsWhere: {l2Sender: accountL2} // TODO probably need to fetch this from apibara
+    }),
     enabled: !!accountL2,
     getNextPageParam: () => nextL2,
     refetchInterval: GET_TRANSFERS_REFETCH_INTERVAL,

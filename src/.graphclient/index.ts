@@ -59,6 +59,7 @@ export type Deposit = {
   id: Scalars['ID'];
   depositEvents: Array<DepositEvent>;
   l1Sender: Scalars['Bytes'];
+  l2Recipient: Scalars['Bytes'];
   createdTimestamp?: Maybe<Scalars['BigInt']>;
 };
 
@@ -76,7 +77,6 @@ export type DepositEvent = {
   id: Scalars['ID'];
   bridgeAddressL1: Scalars['Bytes'];
   bridgeAddressL2: Scalars['Bytes'];
-  l2Recipient: Scalars['Bytes'];
   amount: Scalars['BigInt'];
   status: TransferStatus;
   createdAtBlock: Scalars['BigInt'];
@@ -115,16 +115,6 @@ export type DepositEvent_filter = {
   bridgeAddressL2_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   bridgeAddressL2_contains?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL2_not_contains?: InputMaybe<Scalars['Bytes']>;
-  l2Recipient?: InputMaybe<Scalars['Bytes']>;
-  l2Recipient_not?: InputMaybe<Scalars['Bytes']>;
-  l2Recipient_gt?: InputMaybe<Scalars['Bytes']>;
-  l2Recipient_lt?: InputMaybe<Scalars['Bytes']>;
-  l2Recipient_gte?: InputMaybe<Scalars['Bytes']>;
-  l2Recipient_lte?: InputMaybe<Scalars['Bytes']>;
-  l2Recipient_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  l2Recipient_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  l2Recipient_contains?: InputMaybe<Scalars['Bytes']>;
-  l2Recipient_not_contains?: InputMaybe<Scalars['Bytes']>;
   amount?: InputMaybe<Scalars['BigInt']>;
   amount_not?: InputMaybe<Scalars['BigInt']>;
   amount_gt?: InputMaybe<Scalars['BigInt']>;
@@ -191,7 +181,6 @@ export type DepositEvent_orderBy =
   | 'id'
   | 'bridgeAddressL1'
   | 'bridgeAddressL2'
-  | 'l2Recipient'
   | 'amount'
   | 'status'
   | 'createdAtBlock'
@@ -226,6 +215,16 @@ export type Deposit_filter = {
   l1Sender_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
   l1Sender_contains?: InputMaybe<Scalars['Bytes']>;
   l1Sender_not_contains?: InputMaybe<Scalars['Bytes']>;
+  l2Recipient?: InputMaybe<Scalars['Bytes']>;
+  l2Recipient_not?: InputMaybe<Scalars['Bytes']>;
+  l2Recipient_gt?: InputMaybe<Scalars['Bytes']>;
+  l2Recipient_lt?: InputMaybe<Scalars['Bytes']>;
+  l2Recipient_gte?: InputMaybe<Scalars['Bytes']>;
+  l2Recipient_lte?: InputMaybe<Scalars['Bytes']>;
+  l2Recipient_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  l2Recipient_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  l2Recipient_contains?: InputMaybe<Scalars['Bytes']>;
+  l2Recipient_not_contains?: InputMaybe<Scalars['Bytes']>;
   createdTimestamp?: InputMaybe<Scalars['BigInt']>;
   createdTimestamp_not?: InputMaybe<Scalars['BigInt']>;
   createdTimestamp_gt?: InputMaybe<Scalars['BigInt']>;
@@ -244,6 +243,7 @@ export type Deposit_orderBy =
   | 'id'
   | 'depositEvents'
   | 'l1Sender'
+  | 'l2Recipient'
   | 'createdTimestamp';
 
 /** Defines the order direction, either ascending or descending */
@@ -971,6 +971,7 @@ export type DepositResolvers<ContextType = MeshContext, ParentType extends Resol
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   depositEvents?: Resolver<Array<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<DepositdepositEventsArgs, 'skip' | 'first'>>;
   l1Sender?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
+  l2Recipient?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   createdTimestamp?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -979,7 +980,6 @@ export type DepositEventResolvers<ContextType = MeshContext, ParentType extends 
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   bridgeAddressL1?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   bridgeAddressL2?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  l2Recipient?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   amount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['TransferStatus'], ParentType, ContextType>;
   createdAtBlock?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -1226,8 +1226,8 @@ export type DepositsQueryVariables = Exact<{
 
 
 export type DepositsQuery = { deposits: Array<(
-    Pick<Deposit, 'id' | 'l1Sender' | 'createdTimestamp'>
-    & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'l2Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
+    Pick<Deposit, 'id' | 'l1Sender' | 'l2Recipient' | 'createdTimestamp'>
+    & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
   )>, withdrawals: Array<(
     Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
     & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
@@ -1249,11 +1249,11 @@ export const DepositsDocument = gql`
   deposits(where: $depositsWhere, orderBy: createdTimestamp, orderDirection: desc) {
     id
     l1Sender
+    l2Recipient
     createdTimestamp
     depositEvents {
       id
       status
-      l2Recipient
       amount
       createdTxHash
       finishedTxHash
