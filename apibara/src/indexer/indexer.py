@@ -12,6 +12,8 @@ from apibara.protocol import StreamAddress
 from apibara.starknet.proto.types_pb2 import FieldElement
 from typing import List
 from indexer.utils import (check_exists_int, encode_int_as_bytes, from_uint256, to_decimal)
+from bson import Decimal128
+
 # Print apibara logs
 root_logger = logging.getLogger("apibara")
 # change to `logging.DEBUG` to print more information
@@ -55,7 +57,7 @@ class LordsBridgeIndexer(StarkNetIndexer):
                 .with_from_address(felt.from_hex(contract))
                 .with_keys([felt.from_int(selector)])
             )
-
+        
         # Lords Bridge contract
         for starknet_id_event in [
             "WithdrawalInitiated",
@@ -72,52 +74,55 @@ class LordsBridgeIndexer(StarkNetIndexer):
 
     async def handle_data(self, info: Info, data: Block):
         # Handle one block of data
-        print('handling data')
         for event_with_tx in data.events:
             tx_hash = felt.to_hex(event_with_tx.transaction.meta.hash)
             event = event_with_tx.event
             event_name = self.event_map[felt.to_int(event.keys[0])]
-
+            receipt = event_with_tx.receipt
             await {
                 "DepositHandled": self.handle_deposit,
                 "WithdrawalInitiated": self.handle_withdraw
-            }[event_name](info, data, tx_hash, event.data)
+            }[event_name](info, data, tx_hash, receipt, event.data)
 
 
     async def handle_invalidate(self, _info: Info, _cursor: Cursor):
         raise ValueError("data must be finalized")
 
-    async def handle_deposit(self, info: Info, block: Block,  tx_hash: str, data):
+    async def handle_deposit(self, info: Info, block: Block,  tx_hash: str, receipt,  data):
         deposit = await info.storage.find_one(
             "deposits", {"hash": tx_hash}
         )
         if deposit is not None:
             return deposit
-        print(f"{type(data[0])}")
+        
+        value = to_decimal(felt.to_int(data[1]), 18)
         deposit_doc = {
             "hash": tx_hash,
-            "recipient": felt.to_hex(data[0]),
-            "amount": felt.to_int(data[1])
+            "l2Recipient": felt.to_hex(data[0]),
+            "amount": Decimal128(value),
+            "timestamp": block.header.timestamp.ToDatetime(),
         }
         await info.storage.insert_one("deposits", deposit_doc)
-        print("- deposit]", deposit_doc["recipient"], "->", deposit_doc["amount"])
+        print("- deposit]", deposit_doc["l2Recipient"], "->", deposit_doc["amount"])
 
 
-    async def handle_withdraw(self, info: Info, block: Block,  tx_hash: str, data):
+    async def handle_withdraw(self, info: Info, block: Block,  tx_hash: str, receipt, data):
         withdraw = await info.storage.find_one(
             "withdraws", {"hash": tx_hash}
         )
         if withdraw is not None:
             return withdraw
-        
+
         withdraw_doc = {
             "hash": tx_hash,
-            "recipient": felt.to_hex(data[0]),
-            "amount": felt.to_int(data[1])
+            "l1Recipient": felt.to_hex(data[0]),
+            "l2Sender": felt.to_hex(receipt.events[0].data[0]),
+            "amount": felt.to_int(data[1]),
+            "timestamp": block.header.timestamp.ToDatetime(),
         }
-        await info.storage.insert_one("withdraws", withdraw_doc)
+        await info.storage.insert_one("withdrawals", withdraw_doc)
 
-        print("- withdraw]", withdraw_doc["recipient"], "->", withdraw_doc["amount"])
+        print("- withdraw]", withdraw_doc["l2Sender"], "->", withdraw_doc["l1Recipient"], withdraw_doc["amount"])
 
 async def run_indexer(server_url=None, mongo_url=None, restart=None, dna_token=None, network=None, bridge=None, start_block=None):
     runner = IndexerRunner(
@@ -141,3 +146,4 @@ async def run_indexer(server_url=None, mongo_url=None, restart=None, dna_token=N
         ctx = {"network": "starknet-mainnet"}
 
     await runner.run(LordsBridgeIndexer(config), ctx=ctx)
+

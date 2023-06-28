@@ -47,7 +47,7 @@ async def start(server_url, mongo_url, restart, bridge, network, start_block):
         restart=restart,
         server_url=server_url,
         mongo_url=mongo_url,
-        dna_token=DNA_TOKEN,
+        dna_token=DNA_TOKEN,  # May need to hardcode token here if Stream removed error
         network=network,
         bridge=bridge,
         start_block=start_block,

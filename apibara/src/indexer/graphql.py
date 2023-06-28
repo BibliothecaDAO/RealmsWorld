@@ -1,7 +1,7 @@
 import asyncio
 from datetime import datetime
 from typing import List, NewType, Optional
-
+from decimal import Decimal
 
 import strawberry
 from aiohttp import web
@@ -48,9 +48,9 @@ U256Value = strawberry.scalar(
 @strawberry.type
 class Deposit:
     id: str
-    recipient: str
-    amount: U256Value
-    #timestamp: datetime
+    l2Recipient: str
+    amount: Decimal
+    timestamp: datetime
     hash: str
 
     @classmethod
@@ -58,21 +58,23 @@ class Deposit:
         return cls(
             id=data["hash"],
             hash=data["hash"],
-            recipient=data["recipient"],
-            amount=data["amount"],
-            #timestamp=data["timestamp"],
+            l2Recipient=data["l2Recipient"],
+            amount=data["amount"].to_decimal(),
+            timestamp=data["timestamp"],
         )
     
 @strawberry.type
 class Withdrawal:
-    recipient: str
+    l1Recipient: str
+    l2Sender: str
     amount: U256Value
     timestamp: datetime
 
     @classmethod
     def from_mongo(cls, data):
         return cls(
-            recipient=data["recipient"],
+            l2Sender=data["l2Sender"],
+            l1Recipient=data["l1Recipient"],
             amount=data["amount"],
             timestamp=data["timestamp"],
         )
@@ -105,11 +107,27 @@ def get_deposit(info: Info, hash: str) -> Deposit:
     deposit = db["deposits"].find_one(query)
     return Deposit.from_mongo(deposit)
 
+def get_withdrawals(
+            info: Info, first: Optional[int] = 100, skip: Optional[int] = 0, orderBy: Optional[str] = None, orderByDirection: Optional[str] = "asc", where: Optional[WhereFilterForTransaction] = None
+) -> List[Withdrawal]:
+    
+    db = info.context["db"]
+    filter = dict()
+
+    if where is not None:
+        if where.id is not None:
+            filter["hash"] = where.id
+
+    query = db["withdrawals"].find(filter).skip(skip).limit(first)
+    #print(f"{vars(query)}")
+    #query = add_order_by_constraint(query, orderBy, orderByDirection)
+    return [Withdrawal.from_mongo(d) for d in query]
 
 @strawberry.type
 class Query:
     deposits: List[Deposit] = strawberry.field(resolver=get_deposits)
     deposit: Optional[Deposit] = strawberry.field(resolver=get_deposit)
+    withdrawals: List[Withdrawal] = strawberry.field(resolver=get_withdrawals)
 
 class IndexerGraphQLView(GraphQLView):
     def __init__(self, db, **kwargs):
