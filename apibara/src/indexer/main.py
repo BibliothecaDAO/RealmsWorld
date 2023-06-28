@@ -42,12 +42,13 @@ async def start(server_url, mongo_url, restart, bridge, network, start_block):
         mongo_url = "mongodb://apibara:apibara@localhost:27017"
 
     print("Starting Apibara indexer...")
+    print(f"{DNA_TOKEN}")
     print(f"   Server url: {server_url}")
     await run_indexer(
         restart=restart,
         server_url=server_url,
         mongo_url=mongo_url,
-        dna_token=DNA_TOKEN,  # May need to hardcode token here if Stream removed error
+        dna_token="dna_FCqLW4vWwpveLSLpp16V",
         network=network,
         bridge=bridge,
         start_block=start_block,

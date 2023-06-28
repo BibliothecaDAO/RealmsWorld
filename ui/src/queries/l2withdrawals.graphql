@@ -1,0 +1,8 @@
+query L2Withdrawals {
+  l2withdrawals {
+    l2Sender
+    l1Recipient
+    amount
+    timestamp
+  }
+}

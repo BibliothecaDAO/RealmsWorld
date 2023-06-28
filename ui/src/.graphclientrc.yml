@@ -3,6 +3,9 @@ sources:
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli
-
+  - name: apibara
+    handler:
+      graphql:
+        endpoint: http://localhost:8080/goerli-graphql
 documents:
   - "./queries/**/*.graphql"

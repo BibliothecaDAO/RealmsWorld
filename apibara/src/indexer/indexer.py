@@ -90,7 +90,7 @@ class LordsBridgeIndexer(StarkNetIndexer):
 
     async def handle_deposit(self, info: Info, block: Block,  tx_hash: str, receipt,  data):
         deposit = await info.storage.find_one(
-            "deposits", {"hash": tx_hash}
+            "l2deposits", {"hash": tx_hash}
         )
         if deposit is not None:
             return deposit
@@ -102,13 +102,13 @@ class LordsBridgeIndexer(StarkNetIndexer):
             "amount": Decimal128(value),
             "timestamp": block.header.timestamp.ToDatetime(),
         }
-        await info.storage.insert_one("deposits", deposit_doc)
+        await info.storage.insert_one("l2deposits", deposit_doc)
         print("- deposit]", deposit_doc["l2Recipient"], "->", deposit_doc["amount"])
 
 
     async def handle_withdraw(self, info: Info, block: Block,  tx_hash: str, receipt, data):
         withdraw = await info.storage.find_one(
-            "withdraws", {"hash": tx_hash}
+            "l2withdrawals", {"hash": tx_hash}
         )
         if withdraw is not None:
             return withdraw
@@ -120,7 +120,7 @@ class LordsBridgeIndexer(StarkNetIndexer):
             "amount": felt.to_int(data[1]),
             "timestamp": block.header.timestamp.ToDatetime(),
         }
-        await info.storage.insert_one("withdrawals", withdraw_doc)
+        await info.storage.insert_one("l2withdrawals", withdraw_doc)
 
         print("- withdraw]", withdraw_doc["l2Sender"], "->", withdraw_doc["l1Recipient"], withdraw_doc["amount"])
 

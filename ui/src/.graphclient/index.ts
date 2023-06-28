@@ -13,15 +13,17 @@ import { fetch as fetchFn } from '@whatwg-node/fetch';
 import { MeshResolvedSource } from '@graphql-mesh/runtime';
 import { MeshTransform, MeshPlugin } from '@graphql-mesh/types';
 import GraphqlHandler from "@graphql-mesh/graphql"
-import BareMerger from "@graphql-mesh/merger-bare";
+import StitchingMerger from "@graphql-mesh/merger-stitching";
 import { printWithCache } from '@graphql-mesh/utils';
 import { createMeshHTTPHandler, MeshHTTPHandler } from '@graphql-mesh/http';
 import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
 import { path as pathModule } from '@graphql-mesh/cross-helpers';
 import { ImportFn } from '@graphql-mesh/types';
+import type { ApibaraTypes } from './sources/apibara/types';
 import type { LordsbridgegoerliTypes } from './sources/lordsbridgegoerli/types';
-import * as importedModule$0 from "./sources/lordsbridgegoerli/introspectionSchema";
+import * as importedModule$0 from "./sources/apibara/introspectionSchema";
+import * as importedModule$1 from "./sources/lordsbridgegoerli/introspectionSchema";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -38,10 +40,272 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Decimal: any;
+  DateTime: any;
+  U256Value: any;
   BigDecimal: any;
   BigInt: any;
   Bytes: any;
   Int8: any;
+};
+
+export type Query = {
+  l2deposits: Array<L2Deposit>;
+  deposit?: Maybe<Deposit>;
+  l2withdrawals: Array<L2Withdrawal>;
+  depositEvent?: Maybe<DepositEvent>;
+  depositEvents: Array<DepositEvent>;
+  deposits: Array<Deposit>;
+  withdrawalEvent?: Maybe<WithdrawalEvent>;
+  withdrawalEvents: Array<WithdrawalEvent>;
+  withdrawal?: Maybe<Withdrawal>;
+  withdrawals: Array<Withdrawal>;
+  token?: Maybe<Token>;
+  tokens: Array<Token>;
+  /** Access to subgraph metadata */
+  _meta?: Maybe<_Meta_>;
+};
+
+
+export type Queryl2depositsArgs = {
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderByDirection?: InputMaybe<Scalars['String']>;
+  where?: InputMaybe<WhereFilterForTransaction>;
+};
+
+
+export type QuerydepositArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type Queryl2withdrawalsArgs = {
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderByDirection?: InputMaybe<Scalars['String']>;
+  where?: InputMaybe<WhereFilterForTransaction>;
+};
+
+
+export type QuerydepositEventArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerydepositEventsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<DepositEvent_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<DepositEvent_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerydepositsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Deposit_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Deposit_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerywithdrawalEventArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerywithdrawalEventsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<WithdrawalEvent_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<WithdrawalEvent_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerywithdrawalArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerywithdrawalsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Withdrawal_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Withdrawal_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytokenArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerytokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Token_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Token_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type Query_metaArgs = {
+  block?: InputMaybe<Block_height>;
+};
+
+export type L2Deposit = {
+  id: Scalars['String'];
+  l2Recipient: Scalars['String'];
+  amount: Scalars['Decimal'];
+  timestamp: Scalars['DateTime'];
+  hash: Scalars['String'];
+};
+
+export type WhereFilterForTransaction = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type L2Withdrawal = {
+  l1Recipient: Scalars['String'];
+  l2Sender: Scalars['String'];
+  amount: Scalars['U256Value'];
+  timestamp: Scalars['DateTime'];
+};
+
+export type Subscription = {
+  depositEvent?: Maybe<DepositEvent>;
+  depositEvents: Array<DepositEvent>;
+  deposit?: Maybe<Deposit>;
+  deposits: Array<Deposit>;
+  withdrawalEvent?: Maybe<WithdrawalEvent>;
+  withdrawalEvents: Array<WithdrawalEvent>;
+  withdrawal?: Maybe<Withdrawal>;
+  withdrawals: Array<Withdrawal>;
+  token?: Maybe<Token>;
+  tokens: Array<Token>;
+  /** Access to subgraph metadata */
+  _meta?: Maybe<_Meta_>;
+};
+
+
+export type SubscriptiondepositEventArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiondepositEventsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<DepositEvent_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<DepositEvent_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiondepositArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiondepositsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Deposit_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Deposit_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionwithdrawalEventArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionwithdrawalEventsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<WithdrawalEvent_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<WithdrawalEvent_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionwithdrawalArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionwithdrawalsArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Withdrawal_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Withdrawal_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontokenArgs = {
+  id: Scalars['ID'];
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptiontokensArgs = {
+  skip?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Token_orderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  where?: InputMaybe<Token_filter>;
+  block?: InputMaybe<Block_height>;
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type Subscription_metaArgs = {
+  block?: InputMaybe<Block_height>;
 };
 
 export type BlockChangedFilter = {
@@ -250,226 +514,6 @@ export type Deposit_orderBy =
 export type OrderDirection =
   | 'asc'
   | 'desc';
-
-export type Query = {
-  depositEvent?: Maybe<DepositEvent>;
-  depositEvents: Array<DepositEvent>;
-  deposit?: Maybe<Deposit>;
-  deposits: Array<Deposit>;
-  withdrawalEvent?: Maybe<WithdrawalEvent>;
-  withdrawalEvents: Array<WithdrawalEvent>;
-  withdrawal?: Maybe<Withdrawal>;
-  withdrawals: Array<Withdrawal>;
-  token?: Maybe<Token>;
-  tokens: Array<Token>;
-  /** Access to subgraph metadata */
-  _meta?: Maybe<_Meta_>;
-};
-
-
-export type QuerydepositEventArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QuerydepositEventsArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<DepositEvent_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<DepositEvent_filter>;
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QuerydepositArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QuerydepositsArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Deposit_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<Deposit_filter>;
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QuerywithdrawalEventArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QuerywithdrawalEventsArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<WithdrawalEvent_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<WithdrawalEvent_filter>;
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QuerywithdrawalArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QuerywithdrawalsArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Withdrawal_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<Withdrawal_filter>;
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QuerytokenArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type QuerytokensArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Token_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<Token_filter>;
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type Query_metaArgs = {
-  block?: InputMaybe<Block_height>;
-};
-
-export type Subscription = {
-  depositEvent?: Maybe<DepositEvent>;
-  depositEvents: Array<DepositEvent>;
-  deposit?: Maybe<Deposit>;
-  deposits: Array<Deposit>;
-  withdrawalEvent?: Maybe<WithdrawalEvent>;
-  withdrawalEvents: Array<WithdrawalEvent>;
-  withdrawal?: Maybe<Withdrawal>;
-  withdrawals: Array<Withdrawal>;
-  token?: Maybe<Token>;
-  tokens: Array<Token>;
-  /** Access to subgraph metadata */
-  _meta?: Maybe<_Meta_>;
-};
-
-
-export type SubscriptiondepositEventArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptiondepositEventsArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<DepositEvent_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<DepositEvent_filter>;
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptiondepositArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptiondepositsArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Deposit_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<Deposit_filter>;
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptionwithdrawalEventArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptionwithdrawalEventsArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<WithdrawalEvent_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<WithdrawalEvent_filter>;
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptionwithdrawalArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptionwithdrawalsArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Withdrawal_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<Withdrawal_filter>;
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptiontokenArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type SubscriptiontokensArgs = {
-  skip?: InputMaybe<Scalars['Int']>;
-  first?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Token_orderBy>;
-  orderDirection?: InputMaybe<OrderDirection>;
-  where?: InputMaybe<Token_filter>;
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type Subscription_metaArgs = {
-  block?: InputMaybe<Block_height>;
-};
 
 export type Token = {
   /** address */
@@ -875,11 +919,21 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
+  Query: ResolverTypeWrapper<{}>;
+  L2Deposit: ResolverTypeWrapper<L2Deposit>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  Decimal: ResolverTypeWrapper<Scalars['Decimal']>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  WhereFilterForTransaction: WhereFilterForTransaction;
+  L2Withdrawal: ResolverTypeWrapper<L2Withdrawal>;
+  U256Value: ResolverTypeWrapper<Scalars['U256Value']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Subscription: ResolverTypeWrapper<{}>;
   BigDecimal: ResolverTypeWrapper<Scalars['BigDecimal']>;
   BigInt: ResolverTypeWrapper<Scalars['BigInt']>;
   BlockChangedFilter: BlockChangedFilter;
   Block_height: Block_height;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Bytes: ResolverTypeWrapper<Scalars['Bytes']>;
   Deposit: ResolverTypeWrapper<Deposit>;
   DepositEvent: ResolverTypeWrapper<DepositEvent>;
@@ -889,12 +943,8 @@ export type ResolversTypes = ResolversObject<{
   Deposit_orderBy: Deposit_orderBy;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   Int8: ResolverTypeWrapper<Scalars['Int8']>;
   OrderDirection: OrderDirection;
-  Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  Subscription: ResolverTypeWrapper<{}>;
   Token: ResolverTypeWrapper<Token>;
   Token_filter: Token_filter;
   Token_orderBy: Token_orderBy;
@@ -912,11 +962,21 @@ export type ResolversTypes = ResolversObject<{
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
+  Query: {};
+  L2Deposit: L2Deposit;
+  String: Scalars['String'];
+  Decimal: Scalars['Decimal'];
+  DateTime: Scalars['DateTime'];
+  Int: Scalars['Int'];
+  WhereFilterForTransaction: WhereFilterForTransaction;
+  L2Withdrawal: L2Withdrawal;
+  U256Value: Scalars['U256Value'];
+  Boolean: Scalars['Boolean'];
+  Subscription: {};
   BigDecimal: Scalars['BigDecimal'];
   BigInt: Scalars['BigInt'];
   BlockChangedFilter: BlockChangedFilter;
   Block_height: Block_height;
-  Boolean: Scalars['Boolean'];
   Bytes: Scalars['Bytes'];
   Deposit: Deposit;
   DepositEvent: DepositEvent;
@@ -924,11 +984,7 @@ export type ResolversParentTypes = ResolversObject<{
   Deposit_filter: Deposit_filter;
   Float: Scalars['Float'];
   ID: Scalars['ID'];
-  Int: Scalars['Int'];
   Int8: Scalars['Int8'];
-  Query: {};
-  String: Scalars['String'];
-  Subscription: {};
   Token: Token;
   Token_filter: Token_filter;
   Withdrawal: Withdrawal;
@@ -954,6 +1010,65 @@ export type derivedFromDirectiveArgs = {
 };
 
 export type derivedFromDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = derivedFromDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type QueryResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  l2deposits?: Resolver<Array<ResolversTypes['L2Deposit']>, ParentType, ContextType, RequireFields<Queryl2depositsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
+  deposit?: Resolver<Maybe<ResolversTypes['Deposit']>, ParentType, ContextType, RequireFields<QuerydepositArgs, 'id' | 'subgraphError'>>;
+  l2withdrawals?: Resolver<Array<ResolversTypes['L2Withdrawal']>, ParentType, ContextType, RequireFields<Queryl2withdrawalsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
+  depositEvent?: Resolver<Maybe<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<QuerydepositEventArgs, 'id' | 'subgraphError'>>;
+  depositEvents?: Resolver<Array<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<QuerydepositEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  deposits?: Resolver<Array<ResolversTypes['Deposit']>, ParentType, ContextType, RequireFields<QuerydepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  withdrawalEvent?: Resolver<Maybe<ResolversTypes['WithdrawalEvent']>, ParentType, ContextType, RequireFields<QuerywithdrawalEventArgs, 'id' | 'subgraphError'>>;
+  withdrawalEvents?: Resolver<Array<ResolversTypes['WithdrawalEvent']>, ParentType, ContextType, RequireFields<QuerywithdrawalEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  withdrawal?: Resolver<Maybe<ResolversTypes['Withdrawal']>, ParentType, ContextType, RequireFields<QuerywithdrawalArgs, 'id' | 'subgraphError'>>;
+  withdrawals?: Resolver<Array<ResolversTypes['Withdrawal']>, ParentType, ContextType, RequireFields<QuerywithdrawalsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  token?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokenArgs, 'id' | 'subgraphError'>>;
+  tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokensArgs, 'skip' | 'first' | 'subgraphError'>>;
+  _meta?: Resolver<Maybe<ResolversTypes['_Meta_']>, ParentType, ContextType, Partial<Query_metaArgs>>;
+}>;
+
+export type L2DepositResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['L2Deposit'] = ResolversParentTypes['L2Deposit']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  l2Recipient?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  amount?: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export interface DecimalScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Decimal'], any> {
+  name: 'Decimal';
+}
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
+
+export type L2WithdrawalResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['L2Withdrawal'] = ResolversParentTypes['L2Withdrawal']> = ResolversObject<{
+  l1Recipient?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  l2Sender?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  amount?: Resolver<ResolversTypes['U256Value'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export interface U256ValueScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['U256Value'], any> {
+  name: 'U256Value';
+}
+
+export type SubscriptionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
+  depositEvent?: SubscriptionResolver<Maybe<ResolversTypes['DepositEvent']>, "depositEvent", ParentType, ContextType, RequireFields<SubscriptiondepositEventArgs, 'id' | 'subgraphError'>>;
+  depositEvents?: SubscriptionResolver<Array<ResolversTypes['DepositEvent']>, "depositEvents", ParentType, ContextType, RequireFields<SubscriptiondepositEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  deposit?: SubscriptionResolver<Maybe<ResolversTypes['Deposit']>, "deposit", ParentType, ContextType, RequireFields<SubscriptiondepositArgs, 'id' | 'subgraphError'>>;
+  deposits?: SubscriptionResolver<Array<ResolversTypes['Deposit']>, "deposits", ParentType, ContextType, RequireFields<SubscriptiondepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  withdrawalEvent?: SubscriptionResolver<Maybe<ResolversTypes['WithdrawalEvent']>, "withdrawalEvent", ParentType, ContextType, RequireFields<SubscriptionwithdrawalEventArgs, 'id' | 'subgraphError'>>;
+  withdrawalEvents?: SubscriptionResolver<Array<ResolversTypes['WithdrawalEvent']>, "withdrawalEvents", ParentType, ContextType, RequireFields<SubscriptionwithdrawalEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  withdrawal?: SubscriptionResolver<Maybe<ResolversTypes['Withdrawal']>, "withdrawal", ParentType, ContextType, RequireFields<SubscriptionwithdrawalArgs, 'id' | 'subgraphError'>>;
+  withdrawals?: SubscriptionResolver<Array<ResolversTypes['Withdrawal']>, "withdrawals", ParentType, ContextType, RequireFields<SubscriptionwithdrawalsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  token?: SubscriptionResolver<Maybe<ResolversTypes['Token']>, "token", ParentType, ContextType, RequireFields<SubscriptiontokenArgs, 'id' | 'subgraphError'>>;
+  tokens?: SubscriptionResolver<Array<ResolversTypes['Token']>, "tokens", ParentType, ContextType, RequireFields<SubscriptiontokensArgs, 'skip' | 'first' | 'subgraphError'>>;
+  _meta?: SubscriptionResolver<Maybe<ResolversTypes['_Meta_']>, "_meta", ParentType, ContextType, Partial<Subscription_metaArgs>>;
+}>;
 
 export interface BigDecimalScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['BigDecimal'], any> {
   name: 'BigDecimal';
@@ -993,34 +1108,6 @@ export type DepositEventResolvers<ContextType = MeshContext, ParentType extends 
 export interface Int8ScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Int8'], any> {
   name: 'Int8';
 }
-
-export type QueryResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  depositEvent?: Resolver<Maybe<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<QuerydepositEventArgs, 'id' | 'subgraphError'>>;
-  depositEvents?: Resolver<Array<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<QuerydepositEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  deposit?: Resolver<Maybe<ResolversTypes['Deposit']>, ParentType, ContextType, RequireFields<QuerydepositArgs, 'id' | 'subgraphError'>>;
-  deposits?: Resolver<Array<ResolversTypes['Deposit']>, ParentType, ContextType, RequireFields<QuerydepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  withdrawalEvent?: Resolver<Maybe<ResolversTypes['WithdrawalEvent']>, ParentType, ContextType, RequireFields<QuerywithdrawalEventArgs, 'id' | 'subgraphError'>>;
-  withdrawalEvents?: Resolver<Array<ResolversTypes['WithdrawalEvent']>, ParentType, ContextType, RequireFields<QuerywithdrawalEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  withdrawal?: Resolver<Maybe<ResolversTypes['Withdrawal']>, ParentType, ContextType, RequireFields<QuerywithdrawalArgs, 'id' | 'subgraphError'>>;
-  withdrawals?: Resolver<Array<ResolversTypes['Withdrawal']>, ParentType, ContextType, RequireFields<QuerywithdrawalsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  token?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokenArgs, 'id' | 'subgraphError'>>;
-  tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  _meta?: Resolver<Maybe<ResolversTypes['_Meta_']>, ParentType, ContextType, Partial<Query_metaArgs>>;
-}>;
-
-export type SubscriptionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
-  depositEvent?: SubscriptionResolver<Maybe<ResolversTypes['DepositEvent']>, "depositEvent", ParentType, ContextType, RequireFields<SubscriptiondepositEventArgs, 'id' | 'subgraphError'>>;
-  depositEvents?: SubscriptionResolver<Array<ResolversTypes['DepositEvent']>, "depositEvents", ParentType, ContextType, RequireFields<SubscriptiondepositEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  deposit?: SubscriptionResolver<Maybe<ResolversTypes['Deposit']>, "deposit", ParentType, ContextType, RequireFields<SubscriptiondepositArgs, 'id' | 'subgraphError'>>;
-  deposits?: SubscriptionResolver<Array<ResolversTypes['Deposit']>, "deposits", ParentType, ContextType, RequireFields<SubscriptiondepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  withdrawalEvent?: SubscriptionResolver<Maybe<ResolversTypes['WithdrawalEvent']>, "withdrawalEvent", ParentType, ContextType, RequireFields<SubscriptionwithdrawalEventArgs, 'id' | 'subgraphError'>>;
-  withdrawalEvents?: SubscriptionResolver<Array<ResolversTypes['WithdrawalEvent']>, "withdrawalEvents", ParentType, ContextType, RequireFields<SubscriptionwithdrawalEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  withdrawal?: SubscriptionResolver<Maybe<ResolversTypes['Withdrawal']>, "withdrawal", ParentType, ContextType, RequireFields<SubscriptionwithdrawalArgs, 'id' | 'subgraphError'>>;
-  withdrawals?: SubscriptionResolver<Array<ResolversTypes['Withdrawal']>, "withdrawals", ParentType, ContextType, RequireFields<SubscriptionwithdrawalsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  token?: SubscriptionResolver<Maybe<ResolversTypes['Token']>, "token", ParentType, ContextType, RequireFields<SubscriptiontokenArgs, 'id' | 'subgraphError'>>;
-  tokens?: SubscriptionResolver<Array<ResolversTypes['Token']>, "tokens", ParentType, ContextType, RequireFields<SubscriptiontokensArgs, 'skip' | 'first' | 'subgraphError'>>;
-  _meta?: SubscriptionResolver<Maybe<ResolversTypes['_Meta_']>, "_meta", ParentType, ContextType, Partial<Subscription_metaArgs>>;
-}>;
 
 export type TokenResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -1069,14 +1156,19 @@ export type _Meta_Resolvers<ContextType = MeshContext, ParentType extends Resolv
 }>;
 
 export type Resolvers<ContextType = MeshContext> = ResolversObject<{
+  Query?: QueryResolvers<ContextType>;
+  L2Deposit?: L2DepositResolvers<ContextType>;
+  Decimal?: GraphQLScalarType;
+  DateTime?: GraphQLScalarType;
+  L2Withdrawal?: L2WithdrawalResolvers<ContextType>;
+  U256Value?: GraphQLScalarType;
+  Subscription?: SubscriptionResolvers<ContextType>;
   BigDecimal?: GraphQLScalarType;
   BigInt?: GraphQLScalarType;
   Bytes?: GraphQLScalarType;
   Deposit?: DepositResolvers<ContextType>;
   DepositEvent?: DepositEventResolvers<ContextType>;
   Int8?: GraphQLScalarType;
-  Query?: QueryResolvers<ContextType>;
-  Subscription?: SubscriptionResolvers<ContextType>;
   Token?: TokenResolvers<ContextType>;
   Withdrawal?: WithdrawalResolvers<ContextType>;
   WithdrawalEvent?: WithdrawalEventResolvers<ContextType>;
@@ -1090,7 +1182,7 @@ export type DirectiveResolvers<ContextType = MeshContext> = ResolversObject<{
   derivedFrom?: derivedFromDirectiveResolver<any, any, ContextType>;
 }>;
 
-export type MeshContext = LordsbridgegoerliTypes.Context & BaseMeshContext;
+export type MeshContext = ApibaraTypes.Context & LordsbridgegoerliTypes.Context & BaseMeshContext;
 
 
 import { fileURLToPath } from '@graphql-mesh/utils';
@@ -1099,8 +1191,11 @@ const baseDir = pathModule.join(pathModule.dirname(fileURLToPath(import.meta.url
 const importFn: ImportFn = <T>(moduleId: string) => {
   const relativeModuleId = (pathModule.isAbsolute(moduleId) ? pathModule.relative(baseDir, moduleId) : moduleId).split('\\').join('/').replace(baseDir + '/', '');
   switch(relativeModuleId) {
-    case ".graphclient/sources/lordsbridgegoerli/introspectionSchema":
+    case ".graphclient/sources/apibara/introspectionSchema":
       return Promise.resolve(importedModule$0) as T;
+    
+    case ".graphclient/sources/lordsbridgegoerli/introspectionSchema":
+      return Promise.resolve(importedModule$1) as T;
     
     default:
       return Promise.reject(new Error(`Cannot find module '${relativeModuleId}'.`));
@@ -1133,6 +1228,7 @@ const sources: MeshResolvedSource[] = [];
 const transforms: MeshTransform[] = [];
 const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
 const lordsbridgegoerliTransforms = [];
+const apibaraTransforms = [];
 const additionalTypeDefs = [] as any[];
 const lordsbridgegoerliHandler = new GraphqlHandler({
               name: "lordsbridgegoerli",
@@ -1144,17 +1240,32 @@ const lordsbridgegoerliHandler = new GraphqlHandler({
               logger: logger.child("lordsbridgegoerli"),
               importFn,
             });
+const apibaraHandler = new GraphqlHandler({
+              name: "apibara",
+              config: {"endpoint":"http://localhost:8080/goerli-graphql"},
+              baseDir,
+              cache,
+              pubsub,
+              store: sourcesStore.child("apibara"),
+              logger: logger.child("apibara"),
+              importFn,
+            });
 sources[0] = {
           name: 'lordsbridgegoerli',
           handler: lordsbridgegoerliHandler,
           transforms: lordsbridgegoerliTransforms
         }
+sources[1] = {
+          name: 'apibara',
+          handler: apibaraHandler,
+          transforms: apibaraTransforms
+        }
 const additionalResolvers = [] as any[]
-const merger = new(BareMerger as any)({
+const merger = new(StitchingMerger as any)({
         cache,
         pubsub,
-        logger: logger.child('bareMerger'),
-        store: rootStore.child('bareMerger')
+        logger: logger.child('stitchingMerger'),
+        store: rootStore.child('stitchingMerger')
       })
 
   return {
@@ -1175,6 +1286,12 @@ const merger = new(BareMerger as any)({
           return printWithCache(DepositsDocument);
         },
         location: 'DepositsDocument.graphql'
+      },{
+        document: L2WithdrawalsDocument,
+        get rawSDL() {
+          return printWithCache(L2WithdrawalsDocument);
+        },
+        location: 'L2WithdrawalsDocument.graphql'
       },{
         document: WithdrawalsDocument,
         get rawSDL() {
@@ -1233,6 +1350,11 @@ export type DepositsQuery = { deposits: Array<(
     & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
   )> };
 
+export type L2WithdrawalsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type L2WithdrawalsQuery = { l2withdrawals: Array<Pick<L2Withdrawal, 'l2Sender' | 'l1Recipient' | 'amount' | 'timestamp'>> };
+
 export type WithdrawalsQueryVariables = Exact<{
   where?: InputMaybe<Withdrawal_filter>;
 }>;
@@ -1281,6 +1403,16 @@ export const DepositsDocument = gql`
   }
 }
     ` as unknown as DocumentNode<DepositsQuery, DepositsQueryVariables>;
+export const L2WithdrawalsDocument = gql`
+    query L2Withdrawals {
+  l2withdrawals {
+    l2Sender
+    l1Recipient
+    amount
+    timestamp
+  }
+}
+    ` as unknown as DocumentNode<L2WithdrawalsQuery, L2WithdrawalsQueryVariables>;
 export const WithdrawalsDocument = gql`
     query Withdrawals($where: Withdrawal_filter) {
   withdrawals(where: $where, orderBy: createdTimestamp, orderDirection: desc) {
@@ -1303,11 +1435,15 @@ export const WithdrawalsDocument = gql`
 
 
 
+
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
     Deposits(variables?: DepositsQueryVariables, options?: C): Promise<DepositsQuery> {
       return requester<DepositsQuery, DepositsQueryVariables>(DepositsDocument, variables, options) as Promise<DepositsQuery>;
+    },
+    L2Withdrawals(variables?: L2WithdrawalsQueryVariables, options?: C): Promise<L2WithdrawalsQuery> {
+      return requester<L2WithdrawalsQuery, L2WithdrawalsQueryVariables>(L2WithdrawalsDocument, variables, options) as Promise<L2WithdrawalsQuery>;
     },
     Withdrawals(variables?: WithdrawalsQueryVariables, options?: C): Promise<WithdrawalsQuery> {
       return requester<WithdrawalsQuery, WithdrawalsQueryVariables>(WithdrawalsDocument, variables, options) as Promise<WithdrawalsQuery>;

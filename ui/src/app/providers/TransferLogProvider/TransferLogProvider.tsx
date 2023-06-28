@@ -9,7 +9,7 @@ import { ReactNode, useCallback, useState } from "react";
 } from "@api";*/
 
 import {
-  GET_PENDING_WITHDRAWALS_ENDPOINT,
+  GET_L2_APIBARA_ENDPOINT,
   GET_TRANSFERS_ENDPOINT,
 } from "@/constants/env";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
@@ -57,12 +57,9 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
     refetchInterval: GET_TRANSFERS_REFETCH_INTERVAL,
   });
 
-  const transfersQueryL2 = useInfiniteQuery({
-    queryKey: ["Withdrawals", GET_TRANSFERS_ENDPOINT, accountL2],
-    queryFn: async () =>  await sdk.Deposits({
-      depositsWhere: { l2Recipient: accountL2 },
-      withdrawalsWhere: {l2Sender: accountL2} // TODO probably need to fetch this from apibara
-    }),
+  const transfersQueryL2 = useQuery({
+    queryKey: ["L2Withdrawals", GET_L2_APIBARA_ENDPOINT, accountL2],
+    queryFn: async () => await sdk.L2Withdrawals(),
     enabled: !!accountL2,
     getNextPageParam: () => nextL2,
     refetchInterval: GET_TRANSFERS_REFETCH_INTERVAL,

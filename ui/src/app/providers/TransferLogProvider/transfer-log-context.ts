@@ -1,11 +1,11 @@
 'use client'
-import { Deposit, DepositsQuery, Withdrawal, WithdrawalsQuery } from '@/.graphclient';
+import { Deposit, DepositsQuery, L2WithdrawalsQuery, Withdrawal, WithdrawalsQuery } from '@/.graphclient';
 import { UseInfiniteQueryResult, UseQueryResult } from '@tanstack/react-query';
 import { createContext } from 'react';
 
 interface TransferLogContextValue {
     transfersQueryL1: UseInfiniteQueryResult<DepositsQuery>,
-    transfersQueryL2: UseInfiniteQueryResult<WithdrawalsQuery>,
+    transfersQueryL2: UseQueryResult<L2WithdrawalsQuery>,
     pendingWithdrawalsQuery: any
 }
 

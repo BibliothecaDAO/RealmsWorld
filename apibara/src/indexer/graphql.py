@@ -5,6 +5,7 @@ from decimal import Decimal
 
 import strawberry
 from aiohttp import web
+import aiohttp_cors
 from pymongo import MongoClient
 from strawberry.aiohttp.views import GraphQLView
 from strawberry.types import Info
@@ -46,7 +47,7 @@ U256Value = strawberry.scalar(
 )
 
 @strawberry.type
-class Deposit:
+class L2Deposit:
     id: str
     l2Recipient: str
     amount: Decimal
@@ -64,7 +65,7 @@ class Deposit:
         )
     
 @strawberry.type
-class Withdrawal:
+class L2Withdrawal:
     l1Recipient: str
     l2Sender: str
     amount: U256Value
@@ -85,7 +86,7 @@ class WhereFilterForTransaction:
 
 def get_deposits(
             info: Info, first: Optional[int] = 100, skip: Optional[int] = 0, orderBy: Optional[str] = None, orderByDirection: Optional[str] = "asc", where: Optional[WhereFilterForTransaction] = None
-) -> List[Deposit]:
+) -> List[L2Deposit]:
     
     db = info.context["db"]
     filter = dict()
@@ -94,22 +95,22 @@ def get_deposits(
         if where.id is not None:
             filter["hash"] = where.id
 
-    query = db["deposits"].find(filter).skip(skip).limit(first)
+    query = db["l2deposits"].find(filter).skip(skip).limit(first)
     print(f"{vars(query)}")
     #query = add_order_by_constraint(query, orderBy, orderByDirection)
-    return [Deposit.from_mongo(d) for d in query]
+    return [L2Deposit.from_mongo(d) for d in query]
 
-def get_deposit(info: Info, hash: str) -> Deposit:
+def get_deposit(info: Info, hash: str) -> L2Deposit:
     db = info.context["db"]
 
     query = {"hash": hash}
 
-    deposit = db["deposits"].find_one(query)
-    return Deposit.from_mongo(deposit)
+    deposit = db["l2deposits"].find_one(query)
+    return L2Deposit.from_mongo(deposit)
 
 def get_withdrawals(
             info: Info, first: Optional[int] = 100, skip: Optional[int] = 0, orderBy: Optional[str] = None, orderByDirection: Optional[str] = "asc", where: Optional[WhereFilterForTransaction] = None
-) -> List[Withdrawal]:
+) -> List[L2Withdrawal]:
     
     db = info.context["db"]
     filter = dict()
@@ -125,9 +126,9 @@ def get_withdrawals(
 
 @strawberry.type
 class Query:
-    deposits: List[Deposit] = strawberry.field(resolver=get_deposits)
-    deposit: Optional[Deposit] = strawberry.field(resolver=get_deposit)
-    withdrawals: List[Withdrawal] = strawberry.field(resolver=get_withdrawals)
+    l2deposits: List[L2Deposit] = strawberry.field(resolver=get_deposits)
+    deposit: Optional[L2Deposit] = strawberry.field(resolver=get_deposit)
+    l2withdrawals: List[L2Withdrawal] = strawberry.field(resolver=get_withdrawals)
 
 class IndexerGraphQLView(GraphQLView):
     def __init__(self, db, **kwargs):
@@ -151,8 +152,43 @@ async def run_graphql_api(mongo_goerli=None, mongo_mainnet=None, port="8080"):
     view_mainnet = IndexerGraphQLView(db_mainnet, schema=schema)
 
     app = web.Application()
-    app.router.add_route("*", "/goerli-graphql", view_goerli)
-    app.router.add_route("*", "/graphql", view_mainnet)
+    cors = aiohttp_cors.setup(app)
+
+    resource_goerli = cors.add(app.router.add_resource("/goerli-graphql"))
+    resource_mainnet = cors.add(app.router.add_resource("/graphql"))
+
+    cors.add(
+        resource_goerli.add_route("POST", view_goerli),
+        {
+            "*": aiohttp_cors.ResourceOptions(
+                expose_headers="*", allow_headers="*", allow_methods="*"
+            ),
+        },
+    )
+    cors.add(
+        resource_goerli.add_route("GET", view_goerli),
+        {
+            "*": aiohttp_cors.ResourceOptions(
+                expose_headers="*", allow_headers="*", allow_methods="*"
+            ),
+        },
+    )
+    cors.add(
+        resource_mainnet.add_route("POST", view_mainnet),
+        {
+            "*": aiohttp_cors.ResourceOptions(
+                expose_headers="*", allow_headers="*", allow_methods="*"
+            ),
+        },
+    )
+    cors.add(
+        resource_mainnet.add_route("GET", view_mainnet),
+        {
+            "*": aiohttp_cors.ResourceOptions(
+                expose_headers="*", allow_headers="*", allow_methods="*"
+            ),
+        },
+    )
 
     runner = web.AppRunner(app)
     await runner.setup()
