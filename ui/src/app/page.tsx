@@ -26,14 +26,14 @@ export default async function Home() {
 
   return (
     <main className="z-0" style={backgroundImageStyle}>
-      <div className="w-full h-screen -mt-24 sm:pl-32">
+      <div className="w-full sm:-mt-24 sm:pl-32">
         <div className="container px-8 mx-auto pt-48">
-          <h1 className="text-6xl font-sans">
+          <h1 className="text-4xl md:text-6xl font-sans">
             The <br /> Realms <br /> Autonomous <br /> World
           </h1>
           <div className="flex my-2">
             <span className="align-center">Powered by Dojo</span>
-            
+
             <DojoDark className="w-10 px-1" /><span className="px-1">on</span>  <Starknet className="w-8 px-1" />
           </div>
 
@@ -51,7 +51,7 @@ export default async function Home() {
           <div className="my-20 ">
 
             <h3 className="mb-8">Featured Collections</h3>
-            <div className="grid w-full grid-cols-2 gap-3">
+            <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-3">
               {collections.map((collection: Collection, index) => {
                 return <CollectionCard collection={collection} key={index} />;
               })}

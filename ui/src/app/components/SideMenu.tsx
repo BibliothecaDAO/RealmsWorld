@@ -6,8 +6,12 @@ import { useRouter } from "next/navigation";
 import BibliothecaDAO from "@/icons/BibliothecaBook.svg";
 import Discord from "@/icons/discord.svg";
 import Link from "next/link";
+import { useUIContext } from "../providers/UIProvider";
 
 const Sidebar = () => {
+
+  const { isSidebarOpen, toggleSidebar } = useUIContext();
+
   const router = useRouter();
   const menu = [
     {
@@ -31,7 +35,7 @@ const Sidebar = () => {
     {
       name: "Discord",
       href: "https://discord.gg/bibliothecadao",
-      icon: <Discord className="fill-current"/>,
+      icon: <Discord className="fill-current w-8" />,
     },
     {
       name: "Twitter",
@@ -51,9 +55,9 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`${"hidden"} w-screen lg:flex flex-col fixed z-100 h-screen top-0 p-4  border-r z-20 lg:hover:w-72 transition-all duration-500 lg:w-24 hover:bg-black/80 group`}
+      className={`${isSidebarOpen ? "bg-black" : 'hidden'} w-screen lg:flex flex-col fixed z-100 h-screen top-0 p-4  border-r z-20 lg:hover:w-72 transition-all duration-500 lg:w-24 hover:bg-black/80 group`}
     >
-      <Button className="block lg:hidden" variant={"outline"}>
+      <Button onClick={toggleSidebar} className="block lg:hidden" variant={"outline"}>
         <X />
       </Button>
 

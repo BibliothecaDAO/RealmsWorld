@@ -14,7 +14,8 @@ import EthereumLogo from "@/icons/ethereum.svg";
 import StarknetLogo from "@/icons/starknet.svg";
 import { Account } from "../bridge/Account";
 import Link from "next/link";
-import { Compass } from "lucide-react";
+import { Compass, Menu } from "lucide-react";
+import { useUIContext } from "../providers/UIProvider";
 
 export const TopNav = () => {
   const { scrollY } = useScroll();
@@ -22,6 +23,8 @@ export const TopNav = () => {
 
   const { address: l1Address, isConnected } = useL1Account();
   const { address: l2Address } = useL2Account();
+
+  const { isSidebarOpen, toggleSidebar } = useUIContext();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 0);
@@ -34,6 +37,8 @@ export const TopNav = () => {
         }`}
     >
       <div className="flex justify-between sm:justify-end ">
+        <Button className={"flex sm:hidden"} onClick={toggleSidebar}><Menu className="w-8" /></Button>
+
         <Link
           className="flex sm:hidden self-center text-xl font-semibold  sm:text-2xl font-sans-serif "
           href="/"

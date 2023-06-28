@@ -33,17 +33,17 @@ export const TokenContent = ({ token, collection }: Props) => {
     : false;
 
   const tabs = [
-    { name: "Info", content: <div>{collection.description}</div> },
+    { name: "Token Info", content: <div className="leading-loose">{collection.description}</div> },
     {
       name: "Games",
       content: (
-        <div>
-          <div className="flex flex-wrap mb-4 sm:space-x-2">
-            {comptatible_games.map((game: Game, index: any) => {
-              return <GameCard key={index} game={game} />;
-            })}
-          </div>
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          {comptatible_games.map((game: Game, index: any) => {
+            return <GameCard key={index} game={game} />;
+          })}
         </div>
+
       ),
     },
     {

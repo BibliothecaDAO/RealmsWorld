@@ -35,8 +35,8 @@ export default async function Page({
   const collection: Collection = collections[0];
 
   return (
-    <div className="ml-16 flex flex-wrap h-full p-4 sm:p-8">
-      <div className="flex-none w-full p-2 rounded-t md:w-1/3 bg-gradient-to-b from-theme-gray-light">
+    <div className="flex flex-wrap h-full p-4 sm:p-8 container mx-auto">
+      <div className="flex-none w-full p-2 rounded-t md:w-1/2">
         <Image
           src={token.image}
           alt={token.name}
@@ -44,11 +44,11 @@ export default async function Page({
           height={2000}
           className="mx-auto border"
         />
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap my-2">
           <TokenAttributes token={token} collection={collection} />
         </div>
       </div>
-      <div className="w-auto p-4 md:p-8 md:w-2/3">
+      <div className="w-auto p-4 md:p-8 md:w-1/2">
         <Link
           className="flex opacity-70 hover:opacity-100"
           href={`/collection/${token.collection.id}`}
