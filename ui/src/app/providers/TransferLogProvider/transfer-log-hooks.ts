@@ -5,7 +5,7 @@ import { isDeposit } from '@/types/bridge';
 
 import { TransferLogContext } from './transfer-log-context';
 
-export const useTransferLog = (isL1: boolean) => {
+export const useTransferLog = (isL1: boolean = true) => {
     const { transfersQueryL1, transfersQueryL2 } = useContext(TransferLogContext);
     const query = isL1 ? transfersQueryL1 : transfersQueryL2;
     return useMemo(

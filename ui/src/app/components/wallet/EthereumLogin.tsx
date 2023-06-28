@@ -14,6 +14,7 @@ import { useNetwork } from "wagmi";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import { formatBigInt } from "@/app/lib/utils";
 import EthereumLogo from "@/icons/ethereum.svg";
+import Lords from "@/icons/lords.svg";
 function EthereumLogin() {
   const { address, isConnected } = useAccount();
   const { connect, connectors, error, isLoading, pendingConnector } =
@@ -30,7 +31,7 @@ function EthereumLogin() {
       <div className="border p-2 rounded">
         <div className="flex mb-3 justify-between">
           <div className="flex">
-            <EthereumLogo className="w-6 px-1" /> <div className="self-center">{chain?.name}</div> 
+            <EthereumLogo className="w-6 px-1" /> <div className="self-center">{chain?.name}</div>
           </div>
           <div>
             <Button
@@ -46,53 +47,20 @@ function EthereumLogin() {
         <div className="grid grid-cols-2 align-items-center space-x-3">
           <div className="px-4 pt-4 pb-2 border rounded flex justify-between">
 
-            <div className="text-2xl">
-              {formatBigInt(balances.l1.eth, 3)} ETH
+            <div className="text-2xl flex">
+              {formatBigInt(balances.l1.eth, 3)} <EthereumLogo className="w-5 px-1" />
             </div>
-            
+
 
           </div>
           <div className="px-4 pt-4 pb-2 border rounded  flex justify-between">
 
-            <div className="text-2xl">
-              {balances.l1.lords && balances.l1.lords > 0 ? formatBigInt(balances.l1.lords, 3) : 0} LORDS
-              
+            <div className="text-2xl flex">
+              {balances.l1.lords && balances.l1.lords > 0 ? formatBigInt(balances.l1.lords, 3) : 0} <Lords className="w-6 fill-current pl-2" />
+
             </div>
             <Button href="/bridge" size={'xs'} variant={'subtle'} className="self-center">Bridge</Button>
           </div>
-          {/* {address && (
-            <Button
-              variant="outline"
-              size={"lg"}
-              className="flex justify-around w-full col-span-2"
-              onClick={() => disconnect()}
-            >
-              {ensAddress ? ensAddress : shortenHex(address || "", 8)}
-
-              {chain?.id === 5 ? "Ethereum Goerli" : chain?.name}
-
-              <LogOut className="self-center w-4" />
-            </Button>
-          )}
-          <Button variant="outline" size={"lg"} className="group">
-            <span className="group-hover:hidden">
-              {formatBigInt(balances?.l1.eth, 3)}
-            </span>
-            <span className="group-hover:block hidden">Buy Lords</span>
-          </Button>
-          {balances?.l1.lords && (
-            <Button
-              variant="outline"
-              size={"lg"}
-              className="group"
-              href="/bridge"
-            >
-              <span className="group-hover:hidden">
-                {formatBigInt(balances?.l1.lords, 3)}
-              </span>
-              <span className="group-hover:block hidden">Bridge</span>
-            </Button>
-          )} */}
         </div>
       </div>
 
