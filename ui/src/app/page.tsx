@@ -12,7 +12,7 @@ export default async function Home() {
   const data = await getCollections([
     {
       contract: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
-    }
+    },
   ]);
 
   const collections: Collection[] = data.collections;
@@ -50,10 +50,9 @@ export default async function Home() {
           </div>
           <hr className="border my-8" />
           <div className="my-20 ">
-
             <h3 className="mb-8">Featured Collections</h3>
             <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-3">
-              {collections.map((collection: Collection, index) => {
+              {collections?.map((collection: Collection, index) => {
                 return <CollectionCard collection={collection} key={index} />;
               })}
             </div>

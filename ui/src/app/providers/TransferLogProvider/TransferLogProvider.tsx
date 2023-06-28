@@ -49,7 +49,7 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
     queryFn: async ({ pageParam = "" }) => {
       return await sdk.Deposits({
         depositsWhere: { l1Sender: accountL1 },
-        withdrawalsWhere: {l1Recipient: accountL1}
+        withdrawalsWhere: { l1Recipient: accountL1 },
       });
     },
     enabled: !!accountL1,
@@ -57,7 +57,7 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
     refetchInterval: GET_TRANSFERS_REFETCH_INTERVAL,
   });
 
-  const transfersQueryL2 = useQuery({
+  const transfersQueryL2 = useInfiniteQuery({
     queryKey: ["L2Withdrawals", GET_L2_APIBARA_ENDPOINT, accountL2],
     queryFn: async () => await sdk.L2Withdrawals(),
     enabled: !!accountL2,

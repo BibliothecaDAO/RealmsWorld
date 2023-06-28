@@ -42,7 +42,8 @@ export const TransferLog = ({
   isL1: boolean;
   onCompleteTransferClick: () => void;
 }) => {
-  const { l1Recipent, depositEvents, withdrawalEvents, createdTimestamp } = transfer;
+  const { l1Recipent, depositEvents, withdrawalEvents, createdTimestamp } =
+    transfer;
   const {
     status,
     id,
@@ -51,7 +52,9 @@ export const TransferLog = ({
     createdTxHash,
     finishedTxHash: l1hash,
     finishedAtDate,
-  }: DepositEvent | WithdrawalEvent = depositEvents?.[0] || withdrawalEvents?.[0];
+  }: DepositEvent | WithdrawalEvent = depositEvents?.[0] ||
+  withdrawalEvents?.[0] ||
+  transfer;
 
   const l2hash = "0xtest";
   const [sign, setSign] = useState("");

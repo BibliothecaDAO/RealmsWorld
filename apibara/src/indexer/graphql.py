@@ -11,6 +11,7 @@ from strawberry.aiohttp.views import GraphQLView
 from strawberry.types import Info
 from indexer.helpers import (add_order_by_constraint)
 
+
 def parse_hex(value):
     if not value.startswith("0x"):
         raise ValueError("invalid Hex value")
@@ -20,6 +21,7 @@ def parse_hex(value):
 def serialize_hex(token_id):
     return "0x" + token_id.hex()
 
+
 def parse_felt(value):
     return value.to_bytes(32, "big")
 
@@ -27,11 +29,14 @@ def parse_felt(value):
 def serialize_felt(value):
     return int.from_bytes(value, "big")
 
+
 def parse_u256(value):
     return value
 
+
 def serialize_u256(value):
     return int(float(value))
+
 
 HexValue = strawberry.scalar(
     NewType("HexValue", bytes),
@@ -45,6 +50,7 @@ FeltValue = strawberry.scalar(
 U256Value = strawberry.scalar(
     NewType("U256Value", bytes), parse_value=parse_u256, serialize=serialize_u256
 )
+
 
 @strawberry.type
 class L2Deposit:
@@ -63,31 +69,44 @@ class L2Deposit:
             amount=data["amount"].to_decimal(),
             timestamp=data["timestamp"],
         )
-    
+
+
 @strawberry.type
 class L2Withdrawal:
+    id: str
     l1Recipient: str
     l2Sender: str
     amount: U256Value
     timestamp: datetime
+    hash: str
 
     @classmethod
     def from_mongo(cls, data):
         return cls(
+            id=data["hash"],
+            hash=data["hash"],
             l2Sender=data["l2Sender"],
             l1Recipient=data["l1Recipient"],
             amount=data["amount"],
             timestamp=data["timestamp"],
         )
 
+
 @strawberry.input
 class WhereFilterForTransaction:
     id: Optional[str] = None
 
+
+@strawberry.input
+class WhereFilterForWithdrawals:
+    id: Optional[str] = None
+    l2Sender: Optional[str] = None
+
+
 def get_deposits(
-            info: Info, first: Optional[int] = 100, skip: Optional[int] = 0, orderBy: Optional[str] = None, orderByDirection: Optional[str] = "asc", where: Optional[WhereFilterForTransaction] = None
+    info: Info, first: Optional[int] = 100, skip: Optional[int] = 0, orderBy: Optional[str] = None, orderByDirection: Optional[str] = "asc", where: Optional[WhereFilterForTransaction] = None
 ) -> List[L2Deposit]:
-    
+
     db = info.context["db"]
     filter = dict()
 
@@ -97,8 +116,9 @@ def get_deposits(
 
     query = db["l2deposits"].find(filter).skip(skip).limit(first)
     print(f"{vars(query)}")
-    #query = add_order_by_constraint(query, orderBy, orderByDirection)
+    # query = add_order_by_constraint(query, orderBy, orderByDirection)
     return [L2Deposit.from_mongo(d) for d in query]
+
 
 def get_deposit(info: Info, hash: str) -> L2Deposit:
     db = info.context["db"]
@@ -108,27 +128,33 @@ def get_deposit(info: Info, hash: str) -> L2Deposit:
     deposit = db["l2deposits"].find_one(query)
     return L2Deposit.from_mongo(deposit)
 
+
 def get_withdrawals(
-            info: Info, first: Optional[int] = 100, skip: Optional[int] = 0, orderBy: Optional[str] = None, orderByDirection: Optional[str] = "asc", where: Optional[WhereFilterForTransaction] = None
+    info: Info, first: Optional[int] = 100, skip: Optional[int] = 0, orderBy: Optional[str] = None, orderByDirection: Optional[str] = "asc", where: Optional[WhereFilterForWithdrawals] = None
 ) -> List[L2Withdrawal]:
-    
+
     db = info.context["db"]
     filter = dict()
 
     if where is not None:
         if where.id is not None:
             filter["hash"] = where.id
+        if where.l2Sender is not None:
+            filter["l2Sender"] = where.l2Sender
 
-    query = db["withdrawals"].find(filter).skip(skip).limit(first)
-    #print(f"{vars(query)}")
-    #query = add_order_by_constraint(query, orderBy, orderByDirection)
-    return [Withdrawal.from_mongo(d) for d in query]
+    query = db["l2withdrawals"].find(filter).skip(skip).limit(first)
+    # print(f"{vars(query)}")
+    # query = add_order_by_constraint(query, orderBy, orderByDirection)
+    return [L2Withdrawal.from_mongo(d) for d in query]
+
 
 @strawberry.type
 class Query:
     l2deposits: List[L2Deposit] = strawberry.field(resolver=get_deposits)
     deposit: Optional[L2Deposit] = strawberry.field(resolver=get_deposit)
-    l2withdrawals: List[L2Withdrawal] = strawberry.field(resolver=get_withdrawals)
+    l2withdrawals: List[L2Withdrawal] = strawberry.field(
+        resolver=get_withdrawals)
+
 
 class IndexerGraphQLView(GraphQLView):
     def __init__(self, db, **kwargs):
@@ -137,6 +163,7 @@ class IndexerGraphQLView(GraphQLView):
 
     async def get_context(self, _request, _response):
         return {"db": self._db}
+
 
 async def run_graphql_api(mongo_goerli=None, mongo_mainnet=None, port="8080"):
     mongo_goerli = MongoClient(mongo_goerli)

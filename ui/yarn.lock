@@ -5293,9 +5293,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reservoir0x/reservoir-kit-ui@npm:^1.1.12":
-  version: 1.1.12
-  resolution: "@reservoir0x/reservoir-kit-ui@npm:1.1.12"
+"@reservoir0x/reservoir-kit-ui@npm:^1.1.13":
+  version: 1.1.13
+  resolution: "@reservoir0x/reservoir-kit-ui@npm:1.1.13"
   dependencies:
     "@fortawesome/fontawesome-svg-core": ^6.1.1
     "@fortawesome/free-solid-svg-icons": ^6.1.1
@@ -5311,7 +5311,7 @@ __metadata:
     "@radix-ui/react-toggle-group": 1.0.4
     "@radix-ui/react-tooltip": 1.0.6
     "@react-hookz/web": ^19.2.0
-    "@reservoir0x/reservoir-sdk": 1.1.11
+    "@reservoir0x/reservoir-sdk": 1.1.12
     "@stitches/react": 1.3.1-1
     dayjs: ^1.11.4
     flatpickr: ^4.6.13
@@ -5323,18 +5323,18 @@ __metadata:
     react-dom: ^18.0
     viem: ~1.0.6
     wagmi: ~1.2.1
-  checksum: 577ecca1132444535d1f05b39a138b9701fc1535c15810d9c8c2ed17005a57243fdd071a8ae02feb44e705578dfe73443af4580c8a460cfa362c1699c77049bf
+  checksum: 3bb0ac88560c0c7f306c1d6bc8c028a9ecec9a2b29ea16acec61287f861dc91daede0cc85947e2321962b07adbec45559ae246b59c21502078098d815739bf00
   languageName: node
   linkType: hard
 
-"@reservoir0x/reservoir-sdk@npm:1.1.11":
-  version: 1.1.11
-  resolution: "@reservoir0x/reservoir-sdk@npm:1.1.11"
+"@reservoir0x/reservoir-sdk@npm:1.1.12":
+  version: 1.1.12
+  resolution: "@reservoir0x/reservoir-sdk@npm:1.1.12"
   dependencies:
     axios: ^0.27.2
   peerDependencies:
     viem: ~1.0.6
-  checksum: 7fbb330bf7569020bc44e2c5a01b924726258b4a16a6a6722c25f7e08ea8d4a1b66cc2266b314f665abef9d209a88ec6e4c9f7f1074a49cd76a835c9a9782785
+  checksum: b92e6ed8853186a4fe3ce9538b3412762d83a3aa3a1269fb320eae509b0ae03bfab2b03ef82a147cc47abb40ba2be4305136da2691297d3dccf15264b3eeb10f
   languageName: node
   linkType: hard
 
@@ -11236,12 +11236,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^0.252.0":
-  version: 0.252.0
-  resolution: "lucide-react@npm:0.252.0"
+"lucide-react@npm:^0.256.0":
+  version: 0.256.0
+  resolution: "lucide-react@npm:0.256.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: 59c5dd33fab643a00e285972aa2bb086c72f93875bfed8837dc8866c27e03cbd3a308c8768f39a1f59aee89e6ef82f59ecefc956cc884f1d39cfae7e9847a64e
+  checksum: f5b2eef5e5900b34b8fa9a48af61086213f302001a244b7d969a195b306718c9c03dba0086616a3e523812e8bc17563ffaa969363178edf3464e16dd38c62b07
   languageName: node
   linkType: hard
 
@@ -14246,7 +14246,7 @@ __metadata:
     "@radix-ui/react-tooltip": ^1.0.6
     "@react-three/drei": ^9.58.4
     "@react-three/fiber": ^8.12.0
-    "@reservoir0x/reservoir-kit-ui": ^1.1.12
+    "@reservoir0x/reservoir-kit-ui": ^1.1.13
     "@starknet-react/core": ^1.0.0-alpha.0
     "@starkware-industries/commons-js-enums": ^1.2.0
     "@starkware-industries/commons-js-utils": ^1.2.2
@@ -14266,7 +14266,7 @@ __metadata:
     framer-motion: ^10.12.17
     get-starknet: 3.0.1
     graphql: ^16.7.1
-    lucide-react: ^0.252.0
+    lucide-react: ^0.256.0
     next: 13.4.7
     postcss: ^8.4.24
     react: 18.2.0
@@ -14281,7 +14281,7 @@ __metadata:
     three: ^0.150.1
     typescript: 5.1.3
     use-deep-compare-effect: ^1.8.1
-    viem: ~1.1.8
+    viem: ~1.2.2
     wagmi: ~1.3.2
   languageName: unknown
   linkType: soft
@@ -14839,9 +14839,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:~1.1.8":
-  version: 1.1.8
-  resolution: "viem@npm:1.1.8"
+"viem@npm:~1.2.2":
+  version: 1.2.2
+  resolution: "viem@npm:1.2.2"
   dependencies:
     "@adraffy/ens-normalize": 1.9.0
     "@noble/curves": 1.0.0
@@ -14854,7 +14854,7 @@ __metadata:
     ws: 8.12.0
   peerDependencies:
     typescript: ">=5.0.4"
-  checksum: 7b20b7718c4f49af2c521eae6ae025683108e31fbdd878a5bfe040c3966af21fa7c7ceeb1d7f25f2cc7643e3d304ac34d09974dac201a189103455e08f5cff03
+  checksum: ca54935de2d83b1fc85a9f96ab18648c6494061589f82f45a3040de3d4226020b17114eed97ed831b74a29b2c624994ff569a33b9fc34654fc3b9a08e4fe9e9b
   languageName: node
   linkType: hard
 

@@ -72,5 +72,5 @@ const flattenPages = data => {
 };
 const flattenWithdrawals = (data: any) => {
     console.log(data)
-    return data?.pages?.[0]?.withdrawals /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
+    return data?.pages?.[0]?.l2withdrawals /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
 };
