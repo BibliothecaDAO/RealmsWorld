@@ -48,7 +48,7 @@ function EthereumLogin() {
           <div className="px-4 pt-4 pb-2 border rounded flex justify-between">
 
             <div className="text-2xl flex">
-              {formatBigInt(balances.l1.eth, 3)} <EthereumLogo className="w-5 px-1" />
+              {balances.l1.eth ? formatBigInt(balances.l1.eth, 3) : 0} <EthereumLogo className="w-5 px-1" />
             </div>
 
 
