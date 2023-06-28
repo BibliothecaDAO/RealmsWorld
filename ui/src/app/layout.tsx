@@ -30,13 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-theme-gray ${inconsolata.variable} ${karla.variable} text-white/80`}
+        className={`bg-theme-gray ${inconsolata.variable} ${karla.variable} text-white/70`}
       >
-        <UIContextProvider>
-          <Provider>
-            <WalletsProvider>
-              <ToastProvider>
-                <TransferLogProvider>
+
+        <Provider>
+          <WalletsProvider>
+            <ToastProvider>
+              <TransferLogProvider>
+                <UIContextProvider>
                   <main className="flex flex-wrap min-h-screen">
                     <Sidebar />
                     <div className="z-10 flex flex-col flex-grow">
@@ -44,12 +45,13 @@ export default function RootLayout({
                       <div className="flex-grow">{children}</div>
                     </div>
                   </main>
-                </TransferLogProvider>
-                <ToastViewport />
-              </ToastProvider>
-            </WalletsProvider>
-          </Provider>
-        </UIContextProvider>
+                </UIContextProvider>
+              </TransferLogProvider>
+              <ToastViewport />
+            </ToastProvider>
+          </WalletsProvider>
+        </Provider>
+
         <Footer />
       </body>
     </html>
