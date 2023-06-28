@@ -62,8 +62,6 @@ export default async function Page({
   //   });
 
   return (
-    <>
-      <UserTokenGrid address={params.address} continuation="" />;
-    </>
+    <UserTokenGrid address={params.address} continuation="" />
   );
 }
