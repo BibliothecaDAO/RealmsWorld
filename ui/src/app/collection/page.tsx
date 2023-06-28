@@ -27,7 +27,7 @@ export default async function Page() {
       <div className="w-full h-screen -mt-24" style={backgroundImageStyle}>
         <div className="container px-8 mx-auto pt-72">
           <h1>Collections</h1>
-          <div className="grid w-full grid-cols-2 gap-3">
+          <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-3">
             {collections.map((collection: Collection, index) => {
               return <CollectionCard collection={collection} key={index} />;
             })}
