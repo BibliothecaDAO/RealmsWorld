@@ -6,6 +6,7 @@ import { getCollections } from "./lib/reservoir/getCollections";
 
 import DojoDark from "@/icons/mark-dark.svg"
 import Starknet from "@/icons/starknet.svg"
+import Link from "next/link";
 
 export default async function Home() {
   const data = await getCollections([
@@ -29,12 +30,12 @@ export default async function Home() {
       <div className="w-full sm:-mt-24 sm:pl-32">
         <div className="container px-8 mx-auto pt-48">
           <h1 className="text-4xl md:text-6xl font-sans">
-            The <br /> Realms <br /> Autonomous <br /> World
+            Realms <br /> Autonomous <br /> World.
           </h1>
           <div className="flex my-2">
-            <span className="align-center">Powered by Dojo</span>
+            <span className="align-center">Powered by </span><Link href={'https://dojoengine.org/'}><DojoDark className="w-10 px-1" /></Link>
 
-            <DojoDark className="w-10 px-1" /><span className="px-1">on</span>  <Starknet className="w-8 px-1" />
+            <span className="px-1">on</span>  <Link href={'https://www.starknet.io/en'}><Starknet className="w-8 px-1" /></Link>
           </div>
 
           <hr className="border" />

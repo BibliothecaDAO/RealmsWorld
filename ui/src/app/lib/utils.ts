@@ -14,6 +14,5 @@ export const isEth = (symbol: string) => {
 export const formatBigInt = (value: bigint, displayDecimals = 18, decimals = 18): string => {
   const remainder = value % (10n ** BigInt(decimals - displayDecimals));
 
-  const formatted = formatUnits(value - remainder, decimals);
-  return formatted;
+  return formatUnits(value - remainder, decimals);;
 };
