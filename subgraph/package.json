@@ -1,0 +1,21 @@
+{
+  "name": "delphi",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build:stable": "TYPE=stable yarn build",
+    "build:goerli": "TYPE=goerli yarn build",
+    "build": "yarn pre-build && graph build",
+    "deploy": "yarn pre-build && yarn graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ${SUBGRAPH_NAME} --access-token ${THEGRAPH_ACCESS_TOKEN}",
+    "pre-build": "yarn prepare-manifest && yarn codegen",
+    "prepare-manifest": "mustache ./config/${TYPE}.json templates/subgraph.template.yaml > subgraph.yaml",
+    "codegen": "rm -rf ./generated && graph codegen && yarn prepare-config",
+    "prepare-config": "mustache ./config/${TYPE}.json templates/config.template.ts > ./generated/config.ts"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.51.1",
+    "@graphprotocol/graph-ts": "^0.31.0"
+  },
+  "devDependencies": {
+    "mustache": "^4.2.0"
+  }
+}

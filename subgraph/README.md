@@ -1,0 +1,1 @@
+# starknet-bridge-subgraph-stable

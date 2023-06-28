@@ -1,0 +1,32 @@
+name: Deploy subgraph
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        type: ['stable', 'goerli']
+
+    env:
+      TYPE: ${{ matrix.type }}
+      SUBGRAPH_NAME: redbeardeth/starknet-bridge-${{ matrix.type }}
+      THEGRAPH_ACCESS_TOKEN: ${{ secrets.THEGRAPH_ACCESS_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build and deploy ${{ matrix.type }}
+        run: yarn deploy
