@@ -1,0 +1,106 @@
+version: "3"
+
+services:
+  
+  mongo-goerli:
+    image: mongo:latest
+    container_name: mongo-goerli
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${GOERLI_DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${GOERLI_DB_PASSWORD}
+    ports:
+    - 27017:27017
+    volumes:
+    - /home/ec2-user/mongo-data/goerli:/data/db
+    networks:
+    - goerli_network
+
+  mongo-mainnet:
+    image: mongo:latest
+    container_name: mongo-mainnet
+    restart: always
+    command: mongod --port 27018
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MAINNET_DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MAINNET_DB_PASSWORD}
+    ports:
+    - 27018:27018
+    volumes:
+    - /home/ec2-user/mongo-data/mainnet:/data/db
+    networks:
+    - mainnet_network
+
+  indexer-goerli:
+    image: starknetdev/loot-survivor-indexer:latest
+    container_name: indexer-goerli
+    restart: always
+    depends_on:
+      - mongo-goerli
+    command:
+    - start
+    - --server-url
+    - "goerli.starknet.a5a.ch"
+    - --mongo-url
+    - "mongodb://${GOERLI_DB_USERNAME}:${GOERLI_DB_PASSWORD}@mongo-goerli:27017"
+    - --network
+    - "goerli"
+    - --start_block
+    - "808000"
+    environment:
+      PYTHONUNBUFFERED: "1"
+      AUTH_TOKEN: ${DNA_TOKEN}
+    links:
+    - mongo-goerli
+    networks:
+    - goerli_network
+
+  indexer-mainnet:
+    image: starknetdev/loot-survivor-indexer:latest
+    container_name: indexer-mainnet
+    restart: always
+    depends_on:
+      - mongo-mainnet
+    command:
+    - start
+    - --mongo-url
+    - "mongodb://${MAINNET_DB_USERNAME}:${MAINNET_DB_PASSWORD}@mongo-mainnet:27018"
+    - --network
+    - "mainnet"
+    - --start_block
+    - "808000"
+    environment:
+      PYTHONUNBUFFERED: "1"
+    networks:
+    - mainnet_network
+
+  graphql:
+    image: starknetdev/loot-survivor-indexer:latest
+    container_name: graphql
+    restart: always
+    command:
+    - graphql
+    - --mongo_goerli
+    - "mongodb://${GOERLI_DB_USERNAME}:${GOERLI_DB_PASSWORD}@mongo-goerli:27017"
+    - --mongo_mainnet
+    - "mongodb://${MAINNET_DB_USERNAME}:${MAINNET_DB_PASSWORD}@mongo-mainnet:27018"
+    - --port
+    - "8080"
+    environment:
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - 8080:8080
+    volumes:
+      - /etc/letsencrypt/live/survivor-indexer.bibliothecadao.xyz/fullchain.pem:/app/fullchain.pem
+      - /etc/letsencrypt/live/survivor-indexer.bibliothecadao.xyz/privkey.pem:/app/privkey.pem
+    networks:
+      - mainnet_network
+      - goerli_network
+
+
+volumes:
+  certs:
+
+networks:
+  mainnet_network:
+  goerli_network:

@@ -1,0 +1,55 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: StarknetMessaging
+    network: {{network}}
+    source:
+      address: "{{modules.starknetMessaging}}"
+      abi: StarknetMessaging
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: StarknetMessaging
+          file: ./abis/StarknetMessaging.json
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
+      eventHandlers:
+        - event: LogMessageToL2(indexed address,indexed uint256,indexed uint256,uint256[],uint256,uint256)
+          handler: handleLogMessageToL2
+          receipt: true
+        - event: ConsumedMessageToL2(indexed address,indexed uint256,indexed uint256,uint256[],uint256)
+          handler: handleConsumedMessageToL2
+        - event: ConsumedMessageToL1(indexed uint256,indexed address,uint256[])
+          handler: handleConsumedMessageToL1
+        - event: LogMessageToL1(indexed uint256,indexed address,uint256[])
+          handler: handleLogMessageToL1
+      file: ./src/mappings/starknetMessages/index.ts
+  # - kind: ethereum/contract
+  #   name: LordsBridge
+  #   network: {{network}}
+  #   source:
+  #     address: "{{modules.tokenBridges.0.bridgeL1}}"
+  #     abi: LordsBridge
+  #     startBlock: {{startBlock}}
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.6
+  #     language: wasm/assemblyscript
+  #     entities: []
+  #     abis:
+  #       - name: LordsBridge
+  #         file: ./abis/LordsBridge.json
+  #       - name: ERC20Detailed
+  #         file: ./abis/ERC20Detailed.json
+  #     eventHandlers:
+  #       - event: LogDeposit(indexed address,uint256,uint256)
+  #         handler: handleLogDeposit
+  #       #- event: LogWithdrawal(indexed address,indexed uint256,indexed uint256)
+  #         #handler: handleLogDeposit
+  #     file: ./src/mappings/lordsBridge/index.ts

@@ -1,0 +1,15 @@
+{
+  "subgraphName": "in19farkt/starknet-bridge-stable",
+  "startBlock": 0,
+  "network": "mainnet",
+  "modules": {
+    "starknetMessaging": "0x0000000000000000000000000000000000000000",
+    "ethBridge": "0x0000000000000000000000000000000000000000",
+    "tokenBridges": [
+      {
+        "token": "0x0000000000000000000000000000000000000000",
+        "bridge": "0x0000000000000000000000000000000000000000"
+      }
+    ]
+  }
+}
