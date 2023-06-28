@@ -19,11 +19,13 @@ export default async function Page() {
 
   return (
     <div className="w-full h-full bg-theme-gray">
-      <div className="w-full -mt-24 h-96" style={backgroundImageStyle} />
+      <div className="w-full -mt-24 h-72 sm:h-96" style={backgroundImageStyle} />
       <div className="sm:pl-32 ">
         <main className="container mx-auto">
           <div className="container px-8 mx-auto">
             <h1>Realms Autonomous World</h1>
+
+            <hr className="my-8 border" />
 
             <div className="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3">
               {games.map((game: Game, index) => (

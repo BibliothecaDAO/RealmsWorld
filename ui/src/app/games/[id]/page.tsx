@@ -3,6 +3,8 @@ import { Button } from "@/app/components/ui/button";
 import { Metadata } from "next";
 import { Tabs } from "@/app/components/Tabs";
 import Image from "next/image";
+import { useState } from "react";
+import { ImageGallery } from "@/app/components/ImageGallery";
 
 export async function generateMetadata(
   { params }: { params: { id: string } }
@@ -20,27 +22,14 @@ export default async function Page({ params }: { params: { id: string } }) {
     {
       name: "Details",
       content: (
-        <div className="flex flex-wrap">
-          <div className="w-full text-2xl">
-            {game?.longform}
-          </div>
-          <div className="w-full">
-            <div className="grid grid-cols-3 gap-8 my-4">
-              {game?.screenshots.map((screenshot, index) => (
-                <Image
-                  key={index}
-                  alt={screenshot.alt}
-                  src={screenshot.src}
-                  width={500}
-                  height={500}
-                  className="w-full rounded sm:1/2"
-                />
-              ))}
-            </div>
-          </div>
+        <div className="text-xl leading-relaxed">
+
+          {game?.longform}
+
         </div>
       )
     },
+
     {
       name: "Tokens",
       content: (
@@ -58,23 +47,29 @@ export default async function Page({ params }: { params: { id: string } }) {
   ]
 
   return (
-    <main className="container h-screen px-4 mx-auto">
-      <div>
-        <div className="flex space-x-2 uppercase">
-          {game?.chains.map((a, i) => (
-            <div key={i}>chain:{a}</div>
-          ))}
-          <div>|</div>
-          <div>status: {game?.status}</div>
-        </div>
-        <h1>{game?.name}</h1>
-        <div>
-          <Button size={'xs'} variant={'outline'} className="mr-2" href={game?.links.whitepaper}>White paper</Button>
-          <Button size={'xs'} variant={'outline'} href={game?.links.website}>Website</Button>
-        </div>
+    <main className="container px-4 mx-auto">
 
-        <Tabs tabs={tabs} />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 my-4">
+        <ImageGallery images={game?.screenshots} />
+        <div>
+          <div className="flex space-x-2 uppercase">
+            {game?.chains.map((a, i) => (
+              <div key={i}>chain: {a}</div>
+            ))}
+            <div>|</div>
+            <div>status: {game?.status}</div>
+          </div>
+          <h1>{game?.name}</h1>
+          <div>
+            <Button size={'xs'} variant={'outline'} className="mr-2" href={game?.links.whitepaper}>White paper</Button>
+            <Button size={'xs'} variant={'outline'} href={game?.links.website}>Website</Button>
+          </div>
+
+          <Tabs tabs={tabs} />
+        </div>
       </div>
+
     </main>
   );
 }

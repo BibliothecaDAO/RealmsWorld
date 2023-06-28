@@ -30,7 +30,7 @@ function EthereumLogin() {
       <div className="border p-2 rounded">
         <div className="flex mb-3 justify-between">
           <div className="flex">
-            <EthereumLogo class="w-6 px-1" /> <div className="self-center">{chain?.name}</div> 
+            <EthereumLogo className="w-6 px-1" /> <div className="self-center">{chain?.name}</div> 
           </div>
           <div>
             <Button

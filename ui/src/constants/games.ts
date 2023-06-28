@@ -5,7 +5,7 @@ export const games = [
         name: 'Realms: Eternum',
         id: 'realms-adventurers',
         icon: 'lol.png',
-        image: '/backgrounds/eternum.png',
+        image: '/backgrounds/dummy_background.png',
         color: '#f5f5f5',
         status: 'alpha',
         chains: ['Starknet'],
@@ -27,28 +27,32 @@ export const games = [
         ],
         screenshots: [
             {
-                src: '/screenshots/eternum-1.png',
+                src: '/screenshots/eternum.png',
                 alt: 'Realms: Eternum',
             },
             {
-                src: '/screenshots/eternum-2.png',
+                src: '/screenshots/eternum.png',
+                alt: 'Realms: Eternum',
+            },
+            {
+                src: '/screenshots/eternum.png',
                 alt: 'Realms: Eternum',
             }
         ],
         homepage: '/homepages/realms-adventurers'
     },
     {
-        name: 'Survivors',
+        name: 'Loot Survivors',
         id: 'survivors',
         icon: 'lol.png',
-        image: '/screenshots/survivors-1.png',
+        image: '/backgrounds/dragon.png',
         color: '#f5f5f5',
         status: 'alpha',
         chains: ['Starknet'],
         description: 'Play to Die',
-        longform: "Survivors is the first game that uses the Play to Die mechanic. It is a game of onchain survival where you fight to stay alive. The game is governed by a set of rules that are enforced by the game's smart contracts. The game will run forever",
+        longform: "Survivors is the first game that uses the Play to Die mechanic. It is a game of onchain survival where you fight to stay alive. The game is governed by a set of rules that are enforced by the game's smart contracts.",
         links: {
-            website: 'https://realmseternum.com/',
+            website: 'https://loot-survivor.vercel.app/',
             discord: 'https://discord.gg/uQnjZhZPfu',
             twitter: 'https://twitter.com/LootRealms',
             whitepaper: 'https://scroll.bibliothecadao.xyz/',

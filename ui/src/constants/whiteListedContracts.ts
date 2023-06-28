@@ -33,18 +33,18 @@ export const allWhiteListed = [
     {
         contract: realms.mainnet,
     },
-    {
-        contract: loot.mainnet,
-    },
-    {
-        contract: gas.mainnet,
-    },
-    {
-        contract: crypts.mainnet,
-    },
-    {
-        contract: banners.mainnet,
-    },
+    // {
+    //     contract: loot.mainnet,
+    // },
+    // {
+    //     contract: gas.mainnet,
+    // },
+    // {
+    //     contract: crypts.mainnet,
+    // },
+    // {
+    //     contract: banners.mainnet,
+    // },
 ]
 
 export const customContractNames: { [index: string]: string } = {

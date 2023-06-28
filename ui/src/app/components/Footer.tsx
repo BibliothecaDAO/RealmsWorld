@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export const Footer = () => {
   const defaultImage = "/backgrounds/footer.webp";
 
@@ -10,11 +12,33 @@ export const Footer = () => {
     backgroundRepeat: "no-repeat",
   };
 
+  const footerLinks = [
+    {
+      name: "Bibliotheca DAO",
+      href: "https://bibliothecadao.xyz/",
+    },
+    {
+      name: "Discord",
+      href: "https://discord.gg/bibliothecadao",
+    },
+  ]
+
   return (
     <div className="w-full h-[500px]  mt-40 " style={backgroundImageStyle}>
-      <div className="container sm:px-32 pt-10 mx-auto ">
-        <h1>Atlas</h1>
-        <h5>Home to the Realms Autonomous World</h5>
+      <div className="container px-10 sm:px-32 pt-10 mx-auto ">
+        <div className="w-full">
+          <h1>Atlas</h1>
+        </div>
+        <div>
+          <ul>
+            {footerLinks.map((item, index) =>
+              <li className="my-2 text-xl py-2" key={index}>
+                <Link href={item.href}>{item.name}</Link>
+              </li>
+            )}
+          </ul>
+        </div>
+
       </div>
     </div>
   );

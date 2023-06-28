@@ -27,22 +27,22 @@ export default async function CollectionSummary({ address }: any) {
 
   const statistics = [
     {
-      icon: <Twitter />,
+
       value: collection?.floorSale["1day"],
       title: "Top Offer",
     },
     {
-      icon: <Twitter />,
+
       value: formatEther(collection.floorAsk.price.amount.raw),
       title: "Floor",
     },
-    { icon: <Globe />, value: collection.onSaleCount, title: "Listed" },
+    { value: collection.onSaleCount, title: "Listed" },
     {
-      icon: <Globe />,
+
       value: collection.volume.allTime.toFixed(2),
       title: "Total Volume",
     },
-    { icon: <Globe />, value: collection.tokenCount, title: "Count" },
+    { value: collection.tokenCount, title: "Count" },
   ];
 
   const contract_details = [
@@ -66,7 +66,7 @@ export default async function CollectionSummary({ address }: any) {
           alt={collection.name}
           width={200}
           height={200}
-          className="mx-auto border-4 rounded shadow-2xl border-white/10"
+          className="mx-auto border"
         />
         <div className="flex justify-center mx-auto my-4 space-x-2">
           {links.map((social, index) => {
@@ -92,7 +92,7 @@ export default async function CollectionSummary({ address }: any) {
           })}
         </div>
         <h1>{collection.name}</h1>
-        <div className="flex flex-wrap mb-4 sm:space-x-2">
+        {/* <div className="flex flex-wrap mb-4 sm:space-x-2">
           {comptatible_games.map((game: any, index: any) => {
             return (
               <Button
@@ -104,15 +104,15 @@ export default async function CollectionSummary({ address }: any) {
               </Button>
             );
           })}
-        </div>
-        <div className="flex flex-wrap justify-between lg:space-x-2">
+        </div> */}
+        <div className="flex flex-wrap justify-start lg:space-x-2">
           {statistics.map((statistic, index) => {
             return (
               <div
                 key={index}
-                className="px-2 py-2 rounded lg:px-6 bg-black/40"
+                className="px-4 py-2 lg:px-5 bg-black/40  border-black"
               >
-                <div className="text-xs font-sans-serif">{statistic.title}</div>
+                <div className="text-xs font-sans-serif mb-1 text-white/40">{statistic.title}</div>
                 <div className="text-sm lg:text-xl">{statistic.value}</div>
               </div>
             );

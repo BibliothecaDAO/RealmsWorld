@@ -13,6 +13,9 @@ import { shortenHex } from "@/functions/utils";
 import EthereumLogo from "@/icons/ethereum.svg";
 import StarknetLogo from "@/icons/starknet.svg";
 import { Account } from "../bridge/Account";
+import Link from "next/link";
+import { Compass, Menu } from "lucide-react";
+import { useUIContext } from "../providers/UIProvider";
 
 export const TopNav = () => {
   const { scrollY } = useScroll();
@@ -21,6 +24,8 @@ export const TopNav = () => {
   const { address: l1Address, isConnected } = useL1Account();
   const { address: l2Address } = useL2Account();
 
+  const { isSidebarOpen, toggleSidebar } = useUIContext();
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 0);
   });
@@ -28,12 +33,18 @@ export const TopNav = () => {
   return (
     <div
       id="topnav"
-      className={`fixed w-full p-3 pl-4 sm:pl-8 lg:pl-32 z-[100] ${
-        isScrolled ? "backdrop-blur-sm" : ""
-      }`}
+      className={`fixed w-full p-3 pl-4 sm:pl-8 lg:pl-32 z-[100] ${isScrolled ? "backdrop-blur-sm" : ""
+        }`}
     >
-      <div className="flex justify-end ">
+      <div className="flex justify-between sm:justify-end ">
+        <Button className={"flex sm:hidden"} onClick={toggleSidebar}><Menu className="w-8" /></Button>
 
+        <Link
+          className="flex sm:hidden self-center text-xl font-semibold  sm:text-2xl font-sans-serif "
+          href="/"
+        >
+          <Compass className="self-center w-12 h-8 pl-3 transition-all duration-500" />
+        </Link>
         <Sheet>
           <SheetTrigger asChild>
             <Button className="dark:bg-opacity-60">
@@ -47,7 +58,7 @@ export const TopNav = () => {
                       {shortenHex(l1Address)}
                     </>
                   )}
-                  
+
                   {l2Address && (
                     <>
                       <StarknetLogo className="ml-2 w-5 h-5" />
