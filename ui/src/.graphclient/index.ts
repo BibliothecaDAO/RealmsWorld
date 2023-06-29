@@ -1004,7 +1004,7 @@ export type ResolversParentTypes = ResolversObject<{
   _Meta_: _Meta_;
 }>;
 
-export type entityDirectiveArgs = { };
+export type entityDirectiveArgs = {};
 
 export type entityDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = entityDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
@@ -1201,13 +1201,13 @@ const baseDir = pathModule.join(pathModule.dirname(fileURLToPath(import.meta.url
 
 const importFn: ImportFn = <T>(moduleId: string) => {
   const relativeModuleId = (pathModule.isAbsolute(moduleId) ? pathModule.relative(baseDir, moduleId) : moduleId).split('\\').join('/').replace(baseDir + '/', '');
-  switch(relativeModuleId) {
+  switch (relativeModuleId) {
     case ".graphclient/sources/apibara/introspectionSchema":
       return Promise.resolve(importedModule$0) as T;
-    
+
     case ".graphclient/sources/lordsbridgegoerli/introspectionSchema":
       return Promise.resolve(importedModule$1) as T;
-    
+
     default:
       return Promise.reject(new Error(`Cannot find module '${relativeModuleId}'.`));
   }
@@ -1224,60 +1224,60 @@ const rootStore = new MeshStore('.graphclient', new FsStoreStorageAdapter({
 
 export const rawServeConfig: YamlConfig.Config['serve'] = undefined as any
 export async function getMeshOptions(): Promise<GetMeshOptions> {
-const pubsub = new PubSub();
-const sourcesStore = rootStore.child('sources');
-const logger = new DefaultLogger("GraphClient");
-const cache = new (MeshCache as any)({
-      ...({} as any),
-      importFn,
-      store: rootStore.child('cache'),
-      pubsub,
-      logger,
-    } as any)
+  const pubsub = new PubSub();
+  const sourcesStore = rootStore.child('sources');
+  const logger = new DefaultLogger("GraphClient");
+  const cache = new (MeshCache as any)({
+    ...({} as any),
+    importFn,
+    store: rootStore.child('cache'),
+    pubsub,
+    logger,
+  } as any)
 
-const sources: MeshResolvedSource[] = [];
-const transforms: MeshTransform[] = [];
-const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
-const lordsbridgegoerliTransforms = [];
-const apibaraTransforms = [];
-const additionalTypeDefs = [] as any[];
-const lordsbridgegoerliHandler = new GraphqlHandler({
-              name: "lordsbridgegoerli",
-              config: {"endpoint":"https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli"},
-              baseDir,
-              cache,
-              pubsub,
-              store: sourcesStore.child("lordsbridgegoerli"),
-              logger: logger.child("lordsbridgegoerli"),
-              importFn,
-            });
-const apibaraHandler = new GraphqlHandler({
-              name: "apibara",
-              config: {"endpoint":"http://localhost:8080/goerli-graphql"},
-              baseDir,
-              cache,
-              pubsub,
-              store: sourcesStore.child("apibara"),
-              logger: logger.child("apibara"),
-              importFn,
-            });
-sources[0] = {
-          name: 'lordsbridgegoerli',
-          handler: lordsbridgegoerliHandler,
-          transforms: lordsbridgegoerliTransforms
-        }
-sources[1] = {
-          name: 'apibara',
-          handler: apibaraHandler,
-          transforms: apibaraTransforms
-        }
-const additionalResolvers = [] as any[]
-const merger = new(StitchingMerger as any)({
-        cache,
-        pubsub,
-        logger: logger.child('stitchingMerger'),
-        store: rootStore.child('stitchingMerger')
-      })
+  const sources: MeshResolvedSource[] = [];
+  const transforms: MeshTransform[] = [];
+  const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
+  const lordsbridgegoerliTransforms = [];
+  const apibaraTransforms = [];
+  const additionalTypeDefs = [] as any[];
+  const lordsbridgegoerliHandler = new GraphqlHandler({
+    name: "lordsbridgegoerli",
+    config: { "endpoint": "https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli" },
+    baseDir,
+    cache,
+    pubsub,
+    store: sourcesStore.child("lordsbridgegoerli"),
+    logger: logger.child("lordsbridgegoerli"),
+    importFn,
+  });
+  const apibaraHandler = new GraphqlHandler({
+    name: "apibara",
+    config: { "endpoint": "https://p01--graphql-1--xkl8lp5qw8r7.code.run/graphql" },
+    baseDir,
+    cache,
+    pubsub,
+    store: sourcesStore.child("apibara"),
+    logger: logger.child("apibara"),
+    importFn,
+  });
+  sources[0] = {
+    name: 'lordsbridgegoerli',
+    handler: lordsbridgegoerliHandler,
+    transforms: lordsbridgegoerliTransforms
+  }
+  sources[1] = {
+    name: 'apibara',
+    handler: apibaraHandler,
+    transforms: apibaraTransforms
+  }
+  const additionalResolvers = [] as any[]
+  const merger = new (StitchingMerger as any)({
+    cache,
+    pubsub,
+    logger: logger.child('stitchingMerger'),
+    store: rootStore.child('stitchingMerger')
+  })
 
   return {
     sources,
@@ -1291,26 +1291,26 @@ const merger = new(StitchingMerger as any)({
     additionalEnvelopPlugins,
     get documents() {
       return [
-      {
-        document: DepositsDocument,
-        get rawSDL() {
-          return printWithCache(DepositsDocument);
-        },
-        location: 'DepositsDocument.graphql'
-      },{
-        document: L2WithdrawalsDocument,
-        get rawSDL() {
-          return printWithCache(L2WithdrawalsDocument);
-        },
-        location: 'L2WithdrawalsDocument.graphql'
-      },{
-        document: WithdrawalsDocument,
-        get rawSDL() {
-          return printWithCache(WithdrawalsDocument);
-        },
-        location: 'WithdrawalsDocument.graphql'
-      }
-    ];
+        {
+          document: DepositsDocument,
+          get rawSDL() {
+            return printWithCache(DepositsDocument);
+          },
+          location: 'DepositsDocument.graphql'
+        }, {
+          document: L2WithdrawalsDocument,
+          get rawSDL() {
+            return printWithCache(L2WithdrawalsDocument);
+          },
+          location: 'L2WithdrawalsDocument.graphql'
+        }, {
+          document: WithdrawalsDocument,
+          get rawSDL() {
+            return printWithCache(WithdrawalsDocument);
+          },
+          location: 'WithdrawalsDocument.graphql'
+        }
+      ];
     },
     fetchFn,
   };
@@ -1353,13 +1353,15 @@ export type DepositsQueryVariables = Exact<{
 }>;
 
 
-export type DepositsQuery = { deposits: Array<(
+export type DepositsQuery = {
+  deposits: Array<(
     Pick<Deposit, 'id' | 'l1Sender' | 'l2Recipient' | 'createdTimestamp'>
     & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
   )>, withdrawals: Array<(
     Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
     & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
-  )> };
+  )>
+};
 
 export type L2WithdrawalsQueryVariables = Exact<{
   where?: InputMaybe<WhereFilterForWithdrawals>;
@@ -1377,10 +1379,12 @@ export type WithdrawalsQueryVariables = Exact<{
 }>;
 
 
-export type WithdrawalsQuery = { withdrawals: Array<(
+export type WithdrawalsQuery = {
+  withdrawals: Array<(
     Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
     & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
-  )> };
+  )>
+};
 
 
 export const DepositsDocument = gql`

@@ -6,6 +6,6 @@ sources:
   - name: apibara
     handler:
       graphql:
-        endpoint: http://localhost:8080/goerli-graphql
+        endpoint: https://p01--graphql-1--xkl8lp5qw8r7.code.run/graphql
 documents:
   - "./queries/**/*.graphql"
