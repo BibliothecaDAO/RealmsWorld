@@ -1363,10 +1363,14 @@ export type DepositsQuery = { deposits: Array<(
 
 export type L2WithdrawalsQueryVariables = Exact<{
   where?: InputMaybe<WhereFilterForWithdrawals>;
+  depositsWhere?: InputMaybe<Deposit_filter>;
 }>;
 
 
-export type L2WithdrawalsQuery = { l2withdrawals: Array<Pick<L2Withdrawal, 'l2Sender' | 'l1Recipient' | 'amount' | 'timestamp'>> };
+export type L2WithdrawalsQuery = { l2withdrawals: Array<Pick<L2Withdrawal, 'l2Sender' | 'l1Recipient' | 'amount' | 'timestamp'>>, deposits: Array<(
+    Pick<Deposit, 'id' | 'l1Sender' | 'l2Recipient' | 'createdTimestamp'>
+    & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
+  )> };
 
 export type WithdrawalsQueryVariables = Exact<{
   where?: InputMaybe<Withdrawal_filter>;
@@ -1417,12 +1421,26 @@ export const DepositsDocument = gql`
 }
     ` as unknown as DocumentNode<DepositsQuery, DepositsQueryVariables>;
 export const L2WithdrawalsDocument = gql`
-    query L2Withdrawals($where: WhereFilterForWithdrawals) {
+    query L2Withdrawals($where: WhereFilterForWithdrawals, $depositsWhere: Deposit_filter) {
   l2withdrawals(where: $where) {
     l2Sender
     l1Recipient
     amount
     timestamp
+  }
+  deposits(where: $depositsWhere, orderBy: createdTimestamp, orderDirection: desc) {
+    id
+    l1Sender
+    l2Recipient
+    createdTimestamp
+    depositEvents {
+      id
+      status
+      amount
+      createdTxHash
+      finishedTxHash
+      finishedAtDate
+    }
   }
 }
     ` as unknown as DocumentNode<L2WithdrawalsQuery, L2WithdrawalsQueryVariables>;

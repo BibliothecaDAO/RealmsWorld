@@ -1,8 +1,29 @@
-query L2Withdrawals($where: WhereFilterForWithdrawals) {
+query L2Withdrawals(
+  $where: WhereFilterForWithdrawals
+  $depositsWhere: Deposit_filter
+) {
   l2withdrawals(where: $where) {
     l2Sender
     l1Recipient
     amount
     timestamp
+  }
+  deposits(
+    where: $depositsWhere
+    orderBy: createdTimestamp
+    orderDirection: desc
+  ) {
+    id
+    l1Sender
+    l2Recipient
+    createdTimestamp
+    depositEvents {
+      id
+      status
+      amount
+      createdTxHash
+      finishedTxHash
+      finishedAtDate
+    }
   }
 }

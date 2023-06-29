@@ -63,6 +63,7 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
     queryFn: async () =>
       await sdk.L2Withdrawals({
         where: { l2Sender: padAddress(accountL2 ?? "") },
+        depositsWhere: { l2Recipient: padAddress(accountL2 ?? "") },
       }),
     enabled: !!accountL2,
     getNextPageParam: () => nextL2,
