@@ -66,9 +66,9 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   return (
     <div className="py-3">
       <h5 className="flex justify-between">
-        {evaluate("{{network}} Account", { network: isL1 ? "L1" : "L2" })} {renderExplorers()}
+        {isL1 ? "Mainnet" : "Starknet"}  {evaluate("", { network: isL1 ? "L1" : "L2" })} {renderExplorers()}
       </h5>
-      {renderExplorers()}
+
       <ScrollArea.Root className="ScrollAreaRoot">
         <ScrollArea.Viewport className="h-96">
           {renderTransfers()}

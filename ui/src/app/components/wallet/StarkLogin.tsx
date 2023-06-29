@@ -71,7 +71,7 @@ function StarkLogin() {
       <div className=" border rounded p-2 pt-4">
         <div className="flex mb-3 justify-between">
           <div className="flex">
-            <Starknet class="w-8 px-1" /><div className="self-center"> {chain?.name}</div>
+            <Starknet className="w-8 px-1" /><div className="self-center"> {chain?.name}</div>
           </div>
           <div>
             <Button
@@ -166,7 +166,7 @@ function StarkLogin() {
           size={"lg"}
           variant={"outline"}
         >
-          Connect Starknet Wallet
+          <Starknet className="w-8 px-1" /> Connect Starknet Wallet
         </Button>
       </DialogTrigger>
       <DialogContent className="w-full">

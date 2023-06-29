@@ -82,8 +82,8 @@ function EthereumLogin() {
                     ensName ?? truncatedAddress
                   ) : (
                     <>
-                      <span className="normal-case">
-                        Connect Ethereum Wallet
+                      <span className="normal-case flex">
+                        <EthereumLogo className="w-6 px-1" />  <span className="self-center pl-2">Connect Ethereum Wallet</span>
                       </span>
                       {isConnecting && (
                         <div className="right-0 absolute mr-8">
