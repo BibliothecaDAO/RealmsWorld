@@ -1,5 +1,5 @@
-query L2Withdrawals {
-  l2withdrawals {
+query L2Withdrawals($where: WhereFilterForWithdrawals) {
+  l2withdrawals(where: $where) {
     l2Sender
     l1Recipient
     amount

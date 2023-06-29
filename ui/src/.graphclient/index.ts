@@ -88,7 +88,7 @@ export type Queryl2withdrawalsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Scalars['String']>;
   orderByDirection?: InputMaybe<Scalars['String']>;
-  where?: InputMaybe<WhereFilterForTransaction>;
+  where?: InputMaybe<WhereFilterForWithdrawals>;
 };
 
 
@@ -192,10 +192,17 @@ export type WhereFilterForTransaction = {
 };
 
 export type L2Withdrawal = {
+  id: Scalars['String'];
   l1Recipient: Scalars['String'];
   l2Sender: Scalars['String'];
   amount: Scalars['U256Value'];
   timestamp: Scalars['DateTime'];
+  hash: Scalars['String'];
+};
+
+export type WhereFilterForWithdrawals = {
+  id?: InputMaybe<Scalars['String']>;
+  l2Sender?: InputMaybe<Scalars['String']>;
 };
 
 export type Subscription = {
@@ -928,6 +935,7 @@ export type ResolversTypes = ResolversObject<{
   WhereFilterForTransaction: WhereFilterForTransaction;
   L2Withdrawal: ResolverTypeWrapper<L2Withdrawal>;
   U256Value: ResolverTypeWrapper<Scalars['U256Value']>;
+  WhereFilterForWithdrawals: WhereFilterForWithdrawals;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Subscription: ResolverTypeWrapper<{}>;
   BigDecimal: ResolverTypeWrapper<Scalars['BigDecimal']>;
@@ -971,6 +979,7 @@ export type ResolversParentTypes = ResolversObject<{
   WhereFilterForTransaction: WhereFilterForTransaction;
   L2Withdrawal: L2Withdrawal;
   U256Value: Scalars['U256Value'];
+  WhereFilterForWithdrawals: WhereFilterForWithdrawals;
   Boolean: Scalars['Boolean'];
   Subscription: {};
   BigDecimal: Scalars['BigDecimal'];
@@ -1045,10 +1054,12 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type L2WithdrawalResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['L2Withdrawal'] = ResolversParentTypes['L2Withdrawal']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   l1Recipient?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   l2Sender?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   amount?: Resolver<ResolversTypes['U256Value'], ParentType, ContextType>;
   timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1350,7 +1361,9 @@ export type DepositsQuery = { deposits: Array<(
     & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
   )> };
 
-export type L2WithdrawalsQueryVariables = Exact<{ [key: string]: never; }>;
+export type L2WithdrawalsQueryVariables = Exact<{
+  where?: InputMaybe<WhereFilterForWithdrawals>;
+}>;
 
 
 export type L2WithdrawalsQuery = { l2withdrawals: Array<Pick<L2Withdrawal, 'l2Sender' | 'l1Recipient' | 'amount' | 'timestamp'>> };
@@ -1404,8 +1417,8 @@ export const DepositsDocument = gql`
 }
     ` as unknown as DocumentNode<DepositsQuery, DepositsQueryVariables>;
 export const L2WithdrawalsDocument = gql`
-    query L2Withdrawals {
-  l2withdrawals {
+    query L2Withdrawals($where: WhereFilterForWithdrawals) {
+  l2withdrawals(where: $where) {
     l2Sender
     l1Recipient
     amount

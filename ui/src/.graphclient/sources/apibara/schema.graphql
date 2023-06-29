@@ -5,7 +5,7 @@ schema {
 type Query {
   l2deposits(first: Int = 100, skip: Int = 0, orderBy: String = null, orderByDirection: String = "asc", where: WhereFilterForTransaction = null): [L2Deposit!]!
   deposit(hash: String!): L2Deposit
-  l2withdrawals(first: Int = 100, skip: Int = 0, orderBy: String = null, orderByDirection: String = "asc", where: WhereFilterForTransaction = null): [L2Withdrawal!]!
+  l2withdrawals(first: Int = 100, skip: Int = 0, orderBy: String = null, orderByDirection: String = "asc", where: WhereFilterForWithdrawals = null): [L2Withdrawal!]!
 }
 
 type L2Deposit {
@@ -27,10 +27,17 @@ input WhereFilterForTransaction {
 }
 
 type L2Withdrawal {
+  id: String!
   l1Recipient: String!
   l2Sender: String!
   amount: U256Value!
   timestamp: DateTime!
+  hash: String!
 }
 
 scalar U256Value
+
+input WhereFilterForWithdrawals {
+  id: String = null
+  l2Sender: String = null
+}
