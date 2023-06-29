@@ -27,26 +27,10 @@ import { useCompleteTransferToL1 } from "@/composables/useTransferToL1";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 
 export const Account = ({ isL1 }: { isL1: boolean }) => {
-  /*const [
-    trackTxLinkClick,
-    trackAccountLinkClick,
-    trackViewTransfersLog,
-    trackCompleteTransferClick,
-    trackAddressCopied
-  ] = useAccountTracking();*/
-  //const { showSourceMenu } = useMenu();
-  // const { account, resetWallet } = useWallets();
-  //const { isL1, isL2, fromNetwork } = useTransfer();
   const { address } = useAccount();
   const { address: l2address } = useL2Account();
   const { transfers /*, fetchNextPage, isLoading*/ } = useTransferLog(isL1);
   const completeTransferToL1 = useCompleteTransferToL1();
-
-  /*useEffect(() => {
-    if (!account) {
-      //showSourceMenu();
-    }
-  }, [account]);*/
 
   const renderTransfers = () => {
     return transfers && transfers.length
@@ -63,12 +47,6 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
 
   const onCompleteTransferClick = (transfer: any) => {
     completeTransferToL1(transfer);
-  };
-
-  const handleLogout = () => {
-    //console.log(`logout ${fromNetwork} wallet`);
-    //showSourceMenu();
-    //resetWallet();
   };
 
   const renderExplorers = () => {
@@ -105,9 +83,6 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
       </h3>
       {/*<AccountAddress address={isL2 ? addAddressPadding(account) : account} />*/}
       {renderExplorers()}
-      {/*<TransferLogContainer
-          transferIndex={findIndexById(transfers, transferId)}
-  >*/}
       <ScrollArea.Root className="ScrollAreaRoot">
         <ScrollArea.Viewport className="h-96">
           {renderTransfers()}
@@ -120,8 +95,6 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
         </ScrollArea.Scrollbar>
         <ScrollArea.Corner />
       </ScrollArea.Root>
-      {/*</TransferLogContainer>
-        <LogoutButton onClick={handleLogout} />*/}
     </div>
   );
 };
