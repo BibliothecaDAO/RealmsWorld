@@ -1,22 +1,15 @@
 'use client'
-import { ChainType, EventName, TransactionStatus } from '@starkware-industries/commons-js-enums';
-//import {waitForTransaction} from '@starkware-industries/commons-js-utils';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { useCallback, useEffect, useState } from 'react';
 import {
     TransferStep, TransferToL1Steps, TransferError, ActionType, CompleteTransferToL1Steps, stepOf
 } from '@/constants/transferSteps';
-
-//import {useSelectedToken} from '@/app/providers/TransferProvider';
 import { useTransferLog } from '@/app/providers/TransferLogProvider';
 import { useBridgeContract } from '@/composables/useBridgeContract';
 import { useTransfer } from './useTransfer';
 import { useTransferProgress } from './useTransferProgress';
 import { useAccount } from 'wagmi';
 import { useAccount as useL2Account, useWaitForTransaction, useContractWrite } from '@starknet-react/core'
-import { number, uint256 } from 'starknet';
-import { tokens } from '@/constants/tokens';
-import { waitForTransaction } from '@starkware-industries/commons-js-utils';
 import { parseUnits } from 'viem';
 
 export const useTransferToL1 = () => {
@@ -45,15 +38,20 @@ export const useTransferToL1 = () => {
         async (amount: any) => {
 
             try {
+
                 console.log('TransferToL1 called');
+
                 handleProgress(
                     progressOptions.waitForConfirm(
                         connector?.id() || '',
                         stepOf(TransferStep.CONFIRM_TX, TransferToL1Steps)
                     )
                 );
+
                 console.log('Calling initiate withdraw');
-                await initiateWithdraw()
+
+                await initiateWithdraw(amount)
+
                 if (withdrawHash?.transaction_hash) {
                     const transferData = {
                         type: ActionType.TRANSFER_TO_L1,

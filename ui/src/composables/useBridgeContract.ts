@@ -1,27 +1,20 @@
 'use client'
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from '@/abi/L1/StarknetBridgeLords'
-
-import { useAccount as useL1Account, useContractWrite as useL1ContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
-import { } from 'wagmi'
+import { useAccount as useL1Account, useContractWrite as useL1ContractWrite, useWaitForTransaction } from 'wagmi';
 import { tokens, ChainType } from '@/constants/tokens';
 import { useContractWrite as useL2ContractWrite } from '@starknet-react/core';
-import { cairo, uint256 } from 'starknet';
+import { parseEther } from 'viem';
 
 export const useBridgeContract = () => {
-    const [amount, setAmount] = useState("");
+
     const { address: addressL1 } = useL1Account();
+
     const network =
         process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
+
     const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]]
     const l2BridgeAddress = tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[network]]
-
-    /* const { config: depostConfig } = usePrepareContractWrite({
-         address: l1BridgeAddress as `0x${string}`,
-         abi: L1_BRIDGE_ABI,
-         functionName: "deposit",
-         enabled: Boolean(addressL1),
-     });*/
 
     const { writeAsync: deposit, data: depositData, error: depositError } = useL1ContractWrite({
         address: l1BridgeAddress as `0x${string}`,
@@ -41,20 +34,21 @@ export const useBridgeContract = () => {
         hash: depositData?.hash,
     })
 
-    const calls = useMemo(() => {
-        return {
+    const [calls, setCalls] = useState<any>(null)
+
+    const { write, data: withdrawHash } = useL2ContractWrite({ calls })
+
+    const initiateWithdraw = (amount: string) => {
+        setCalls({
             contractAddress: l2BridgeAddress,
             entrypoint: 'initiate_withdrawal',
-            calldata: [addressL1 || 0, amount, 0] // Fix with proper u256 (low,high) types
-        }
-    }, [addressL1, amount, l2BridgeAddress])
-
-    const { write: initiateWithdraw, data: withdrawHash } = useL2ContractWrite({ calls })
+            calldata: [addressL1 || 0, parseEther(amount).toString(), 0]
+        })
+        write()
+    }
 
     return {
-        amount,
         calls,
-        setAmount,
         deposit,
         depositData,
         depositIsSuccess,
