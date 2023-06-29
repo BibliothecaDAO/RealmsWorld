@@ -17,6 +17,7 @@ import { TransferLogContext } from "./transfer-log-context";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { useAccount as useL1Account } from "wagmi";
 import { WithdrawalsQuery, getBuiltGraphSDK } from "@/.graphclient";
+import { padAddress } from "@/app/lib/utils";
 
 const GET_PENDING_WITHDRAWALS_REFETCH_INTERVAL = 1000 * 30;
 const GET_TRANSFERS_REFETCH_INTERVAL = 1000 * 60 * 3;
@@ -61,7 +62,7 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
     queryKey: ["L2Withdrawals", GET_L2_APIBARA_ENDPOINT, accountL2],
     queryFn: async () =>
       await sdk.L2Withdrawals({
-        where: { l2Sender: accountL2 },
+        where: { l2Sender: padAddress(accountL2 ?? "") },
       }),
     enabled: !!accountL2,
     getNextPageParam: () => nextL2,
