@@ -1,15 +1,11 @@
 "use client";
 import { useAccount } from "@starknet-react/core";
-
 import { Button } from "../components/ui/button";
 import { useAccount as useL1Account } from "wagmi";
 import { ConnectKitButton } from "connectkit";
 import StarkLogin from "@/app/components/wallet/StarkLogin";
-import { useBridgeContract } from "@/composables/useBridgeContract";
 import { useState } from "react";
 import { Input } from "@/app/components/ui/input";
-import { useTokenContractAPI } from "@/composables/useTokenContract";
-import { tokens, ChainType } from "@/constants/tokens";
 import { TokenBalance } from "./TokenBalance";
 import EthereumLogo from "@/icons/ethereum.svg";
 import StarknetLogo from "@/icons/starknet.svg";
@@ -27,8 +23,8 @@ const network =
 export const Transfer = ({ action }: { action: string }) => {
   const { address: l1Account } = useL1Account();
   const { address: l2Account } = useAccount();
-  const [toastOpen, setToastOpen] = useState(false);
-  const { amount, setAmount, calls } = useBridgeContract();
+  // const [toastOpen, setToastOpen] = useState(false);
+  const [amount, setAmount] = useState("0");
   const { balances } = useWalletsProviderContext();
 
   const transferToL1 = useTransferToL1();
