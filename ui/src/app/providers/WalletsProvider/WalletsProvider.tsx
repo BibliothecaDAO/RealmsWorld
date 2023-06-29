@@ -113,12 +113,6 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   });
 
   useEffect(() => {
-    //TODO account change not triggered by starknet-react
-    // if (l1Account || l2Account) {
-    //   fetchTokensBalance(tokens);
-    // } else {
-    //   resetTokens();
-    // }
     if (l2Account) {
       console.log("refectching l2 lords " + l2Account);
       refetch();
@@ -131,45 +125,6 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
       setAccountHash("");
     }
   }, [l1Account, l2Account]);
-
-  /*const updateTokenBalance = (symbol: any) => {
-    console.log(
-      symbol ? `Update ${symbol} token balance` : "Update all tokens balances"
-    );
-    const filteredTokens = tokens.filter(
-      (t: { symbol: any }) => !symbol || t.symbol === symbol
-    );
-    fetchTokensBalance(filteredTokens);
-  };
-
-  const fetchTokensBalance = async (tokens: any[]) => {
-    console.log("Updating tokens balance", tokens, l1Account, l2Account);
-    tokens.forEach(async (token: any) => {
-      if (!token.isLoading) {
-        updateToken(token.index, { isLoading: true });
-
-        const balance = token.isL1
-          ? await getL1TokenBalance(token.symbol)
-          : isEth(token.symbol)
-          ? ethBalance?.balance
-          : lordsBalance;
-        console.log(balance);
-        if (!balance) {
-          console.error(
-            `Failed to fetch token ${token.symbol} balance: failed, retry again`
-          );
-          return updateToken(token.index, { balance: null, isLoading: false });
-        }
-
-        console.log(
-          `${token.symbol} (${
-            token.isL1 ? "L1" : "L2"
-          }) token balance is ${balance}`
-        );
-        return updateToken(token.index, { balance, isLoading: false });
-      }
-    });
-  };*/
 
   const updateToken = (
     index: any,

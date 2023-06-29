@@ -47,7 +47,7 @@ export type Queryl2withdrawalsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Scalars['String']>;
   orderByDirection?: InputMaybe<Scalars['String']>;
-  where?: InputMaybe<WhereFilterForTransaction>;
+  where?: InputMaybe<WhereFilterForWithdrawals>;
 };
 
 export type L2Deposit = {
@@ -63,10 +63,17 @@ export type WhereFilterForTransaction = {
 };
 
 export type L2Withdrawal = {
+  id: Scalars['String'];
   l1Recipient: Scalars['String'];
   l2Sender: Scalars['String'];
   amount: Scalars['U256Value'];
   timestamp: Scalars['DateTime'];
+  hash: Scalars['String'];
+};
+
+export type WhereFilterForWithdrawals = {
+  id?: InputMaybe<Scalars['String']>;
+  l2Sender?: InputMaybe<Scalars['String']>;
 };
 
   export type QuerySdk = {

@@ -5,7 +5,7 @@ import { createContext } from 'react';
 
 interface TransferLogContextValue {
     transfersQueryL1: UseInfiniteQueryResult<DepositsQuery>,
-    transfersQueryL2: UseQueryResult<L2WithdrawalsQuery>,
+    transfersQueryL2: UseInfiniteQueryResult<L2WithdrawalsQuery>,
     pendingWithdrawalsQuery: any
 }
 

@@ -23,7 +23,6 @@ import { useWalletsProviderContext } from "../providers/WalletsProvider";
 
 const network =
   process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
-const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]];
 
 export const Transfer = ({ action }: { action: string }) => {
   const { address: l1Account } = useL1Account();
@@ -161,7 +160,6 @@ export const Transfer = ({ action }: { action: string }) => {
               : "Transfer to L1"}
         </Button>
       )}
-      {/*<ProgressModal open={showProgressModal} />*/}
     </div>
   );
 };

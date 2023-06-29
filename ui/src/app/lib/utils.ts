@@ -16,3 +16,18 @@ export const formatBigInt = (value: bigint, displayDecimals = 18, decimals = 18)
 
   return formatUnits(value - remainder, decimals);;
 };
+
+export function padAddress(address: string) {
+  if (address !== "") {
+    const length = address.length;
+    const neededLength = 66 - length;
+    let zeros = "";
+    for (var i = 0; i < neededLength; i++) {
+      zeros += "0";
+    }
+    const newHex = address.substring(0, 2) + zeros + address.substring(2);
+    return newHex;
+  } else {
+    return "";
+  }
+}
