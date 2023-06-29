@@ -1253,7 +1253,7 @@ export async function getMeshOptions(): Promise<GetMeshOptions> {
   });
   const apibaraHandler = new GraphqlHandler({
     name: "apibara",
-    config: { "endpoint": "https://p01--graphql-1--xkl8lp5qw8r7.code.run/graphql" },
+    config: { "endpoint": "https://p01--graphql-1--xkl8lp5qw8r7.code.run/goerli-graphql" },
     baseDir,
     cache,
     pubsub,

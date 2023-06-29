@@ -23,4 +23,4 @@ export const LOCAL_STORAGE_TRANSFERS_LOG_KEY = process.env.NEXT_PUBLIC_LOCAL_STO
 export const LOCAL_STORAGE_ACCEPT_TERMS_KEY = process.env.NEXT_PUBLIC_LOCAL_STORAGE_ACCEPT_TERMS;
 export const GET_PENDING_WITHDRAWALS_ENDPOINT = "https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli"
 export const GET_TRANSFERS_ENDPOINT = "https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli"
-export const GET_L2_APIBARA_ENDPOINT = "https://p01--graphql-1--xkl8lp5qw8r7.code.run/graphql"
+export const GET_L2_APIBARA_ENDPOINT = "https://p01--graphql-1--xkl8lp5qw8r7.code.run/goerli-graphql"
