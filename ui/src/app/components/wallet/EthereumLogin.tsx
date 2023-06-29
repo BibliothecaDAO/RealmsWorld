@@ -21,7 +21,7 @@ function EthereumLogin() {
     useConnect();
   const { disconnect } = useDisconnect();
   const { chain } = useNetwork();
-  const { balances, refetch } = useWalletsProviderContext();
+  const { balances } = useWalletsProviderContext();
   const { data: ensAddress, isError } = useEnsName({
     address: address,
   });

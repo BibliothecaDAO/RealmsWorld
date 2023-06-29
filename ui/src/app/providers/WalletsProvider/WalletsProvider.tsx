@@ -7,6 +7,7 @@ import React, {
   ReactNode,
   useEffect,
   useReducer,
+  useMemo,
 } from "react";
 import { hash, uint256 } from "starknet";
 import { useBalance, useAccount as useL1Account } from "wagmi";
@@ -90,7 +91,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     watch: true,
   });
 
-  useEffect(() => {
+  useMemo(() => {
     l2LordsRefetch();
     l2EthRefetch();
   }, [l2LordsBalance, l2EthBalance, l2LordsIsLoading, l2EthIsLoading]);
