@@ -51,13 +51,13 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   const renderTransfers = () => {
     return transfers && transfers.length
       ? transfers.map((transfer: any, index: number) => (
-          <TransferLog
-            isL1={isL1}
-            key={index}
-            transfer={transfer}
-            onCompleteTransferClick={() => onCompleteTransferClick(transfer)}
-          />
-        ))
+        <TransferLog
+          isL1={isL1}
+          key={index}
+          transfer={transfer}
+          onCompleteTransferClick={() => onCompleteTransferClick(transfer)}
+        />
+      ))
       : null;
   };
 
@@ -84,7 +84,7 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
       <div className="mr-2">
         {explorers.map(({ text, url }) => (
           <Button
-            className="mr-2 justify-between normal-case"
+            className="justify-between normal-case"
             key={text}
             size={"xs"}
             variant={"outline"}
@@ -99,12 +99,12 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   };
 
   return (
-    <div className="p-3">
-      <h3 className="text-lg">
-        {evaluate("{{network}} Account", { network: isL1 ? "L1" : "L2" })}
-      </h3>
+    <div className="py-3">
+      <h5 className="flex justify-between">
+        {evaluate("{{network}} Account", { network: isL1 ? "L1" : "L2" })} {renderExplorers()}
+      </h5>
       {/*<AccountAddress address={isL2 ? addAddressPadding(account) : account} />*/}
-      {renderExplorers()}
+
       {/*<TransferLogContainer
           transferIndex={findIndexById(transfers, transferId)}
   >*/}

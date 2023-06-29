@@ -82,7 +82,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     abi: L2_C1ERC20,
     functionName: "balance_of",
     args: [l2Account as String],
-    watch: false,
+    watch: true,
   });
 
   const { data: l2EthBalance } = useContractRead({
@@ -90,7 +90,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     abi: L2_ERC20,
     functionName: "balanceOf",
     args: [l2Account],
-    watch: false,
+    watch: true,
   });
 
   const l1ERC20Contract = {
@@ -204,7 +204,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
         //@ts-ignore
         eth: l2EthBalance?.balance
           ? //@ts-ignore
-            uint256.uint256ToBN(l2EthBalance?.balance)
+          uint256.uint256ToBN(l2EthBalance?.balance)
           : 0n,
         lords: l2LordsBalance,
       },

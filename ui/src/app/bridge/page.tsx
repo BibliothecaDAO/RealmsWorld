@@ -22,8 +22,10 @@ export default async function Page({
 
   return (
     <BridgeModalProvider>
-      <div className="mx-auto bg-white/5 w-full rounded-lg container flex-col mt-20 md:w-[500px] p-8">
-        <div className="flex w-full text-xl p-1.5 mb-3 justify-center bg-white/10 rounded space-x-2">
+      <h2 className="mx-auto mb-6 text-center">The Lords Bridge</h2>
+      <div className="mx-auto bg-white/5 w-full rounded-lg container flex-col md:w-[500px] p-2 border border-white/5">
+
+        <div className="flex w-full text-xl mb-2 justify-center  rounded space-x-2">
           {tabs.map((tab) => (
             <NavLink
               className={cn(

@@ -63,10 +63,10 @@ const Sidebar = () => {
 
       <div className="flex flex-col mt-4 space-y-6">
         <Link
-          className="flex self-center text-xl font-semibold  sm:text-2xl font-sans-serif mx-auto"
+          className="flex  text-xl font-semibold  sm:text-2xl font-sans-serif mx-auto"
           href="/"
         >
-          <Compass className="self-center w-12 h-8 pl-3 transition-all duration-500" />
+          <Compass className="self-center w-14 h-8 pl-4 transition-all duration-500 stroke-white" />
           <span className="visible pl-3 transition-all duration-500 opacity-100 sm:invisible group-hover:visible sm:opacity-0 group-hover:opacity-100 group-hover:flex ">
             Atlas
           </span>

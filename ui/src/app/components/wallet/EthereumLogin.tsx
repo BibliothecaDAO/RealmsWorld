@@ -48,7 +48,7 @@ function EthereumLogin() {
           <div className="px-4 pt-4 pb-2 border rounded flex justify-between">
 
             <div className="text-2xl flex">
-              {balances.l1.eth ? formatBigInt(balances.l1.eth, 3) : 0} <EthereumLogo className="w-5 px-1" />
+              <EthereumLogo className="w-5 px-1" />{balances.l1.eth ? formatBigInt(balances.l1.eth, 3) : 0}
             </div>
 
 
@@ -56,7 +56,7 @@ function EthereumLogin() {
           <div className="px-4 pt-4 pb-2 border rounded  flex justify-between">
 
             <div className="text-2xl flex">
-              {balances.l1.lords && balances.l1.lords > 0 ? formatBigInt(balances.l1.lords, 3) : 0} <Lords className="w-6 fill-current pl-2" />
+              <Lords className="w-6 fill-current pr-2" />{balances.l1.lords && balances.l1.lords > 0 ? formatBigInt(balances.l1.lords, 3) : 0}
 
             </div>
             <Button href="/bridge" size={'xs'} variant={'subtle'} className="self-center">Bridge</Button>

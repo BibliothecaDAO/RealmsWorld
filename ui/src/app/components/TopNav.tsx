@@ -69,7 +69,7 @@ export const TopNav = () => {
               )}
             </Button>
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent position={'right'} size={'lg'}>
             <div className="flex-col gap-y-4 flex w-full mt-8">
               <EthereumLogin />
               <StarkLogin />

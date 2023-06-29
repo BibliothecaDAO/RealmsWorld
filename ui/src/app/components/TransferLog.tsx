@@ -71,8 +71,8 @@ export const TransferLog = ({
       >
         {!isOnChain(typedStatus)
           ? TransactionStatusFriendlyMessage[
-              typedStatus || TransactionStatus.NOT_RECEIVED
-            ]
+          typedStatus || TransactionStatus.NOT_RECEIVED
+          ]
           : ""}
       </div>
     );
@@ -83,7 +83,7 @@ export const TransferLog = ({
       <CompleteTransferButton onClick={onCompleteTransferClick} />
     ) : (
       <Button
-        className="mr-2 justify-between normal-case"
+        className=" justify-between normal-case"
         size={"xs"}
         variant={"outline"}
         disabled={!l1hash}
@@ -99,14 +99,14 @@ export const TransferLog = ({
   const renderL2TxButton = () => {
     return (
       <Button
-        className="mr-2 justify-between normal-case"
+        className=" justify-between normal-case"
         size={"xs"}
         variant={"outline"}
         disabled={
           !l2hash ||
           !status ||
           TransactionStatusStep[typedStatus] <
-            TransactionStatusStep[TransactionStatus.RECEIVED]
+          TransactionStatusStep[TransactionStatus.RECEIVED]
         }
         rel="noopener noreferrer"
         external
@@ -119,29 +119,27 @@ export const TransferLog = ({
   };
 
   return (
-    <>
-      <div className="flex justify-between py-4 px-2 relative">
-        <div className="flex">
-          <LordsIcon className="fill-white w-6 h-6 mr-3" />
-          <div>
-            <div className="text-lg font-semibold">Lords</div>
-            <div className="text-gray-400">{`${getFullTime(
-              createdTimestamp * 1000
-            )}`}</div>
-          </div>
-        </div>
-        <div className="flex flex-col items-end justify-around">
-          <div className="text-lg font-semibold">
-            {sign} {formatEther(amount || 0)} LORDS
-          </div>
-          {renderTransferStatus()}
-          <div className="flex justify-around items-center my-2">
-            {renderL1TxButton()}
-            {renderL2TxButton()}
-          </div>
+
+    <div className="flex justify-between p-4 relative border rounded my-1">
+      <div className="flex self-center">
+        <LordsIcon className="fill-white w-8 h-8 mr-3 self-center" />
+        <div>
+          <div className="text-gray-400 text-xs ">{`${getFullTime(
+            createdTimestamp * 1000
+          )}`}</div>
+          <div className="text-xl font-semibold">{sign} {formatEther(amount || 0)} LORDS</div>
+
         </div>
       </div>
-    </>
+      <div className="flex flex-col items-end justify-around">
+        {renderTransferStatus()}
+        <div className="flex items-center my-1 space-x-2">
+          {renderL1TxButton()}
+          {renderL2TxButton()}
+        </div>
+      </div>
+    </div>
+
   );
 };
 
