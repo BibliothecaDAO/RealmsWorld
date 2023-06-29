@@ -51,21 +51,21 @@ export const TopNav = () => {
               {!l1Address && !l2Address ? (
                 "Connect"
               ) : (
-                <div className="flex gap-x-2">
+                <span className="flex gap-x-2">
                   {l1Address && isConnected && (
-                    <>
-                      <EthereumLogo className="w-5 h-5 -mr-1" />
+                    <span className="flex">
+                      <EthereumLogo className="w-5 h-5 mx-2" />
                       {shortenHex(l1Address)}
-                    </>
+                    </span>
                   )}
 
                   {l2Address && (
-                    <>
-                      <StarknetLogo className="ml-2 w-5 h-5" />
+                    <span className="flex">
+                      <StarknetLogo className="mx-2 w-5 h-5" />
                       {shortenHex(l2Address)}
-                    </>
+                    </span>
                   )}
-                </div>
+                </span>
               )}
             </Button>
           </SheetTrigger>

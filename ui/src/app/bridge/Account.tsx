@@ -1,22 +1,9 @@
 import {
   evaluate,
-  findIndexById,
 } from "@starkware-industries/commons-js-utils";
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
-import { addAddressPadding } from "starknet";
-
-/*import {
-  useAccountTracking,
-  useAccountTranslation,
-  useCompleteTransferToL1,
-  useEnvs
-} from '../../../hooks';*/
-
-//import { useTransfer } from "../../../providers/TransferProvider";
+import React from "react";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
-//import { useWallets } from "../../../providers/WalletsProvider";
-
 import { TransferLog } from "@/app/components/TransferLog";
 import { Button } from "../components/ui/button";
 import { ETHERSCAN_ACCOUNT_URL, STARKSCAN_ACCOUNT_URL } from "@/constants/env";

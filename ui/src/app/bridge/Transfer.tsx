@@ -29,7 +29,7 @@ export const Transfer = ({ action }: { action: string }) => {
   const { address: l2Account } = useAccount();
   const [toastOpen, setToastOpen] = useState(false);
   const { amount, setAmount, calls } = useBridgeContract();
-  const { balances, refetch } = useWalletsProviderContext();
+  const { balances } = useWalletsProviderContext();
 
   const transferToL1 = useTransferToL1();
   const transferToL2 = useTransferToL2();
@@ -108,7 +108,6 @@ export const Transfer = ({ action }: { action: string }) => {
         />
         <div className="absolute right-0 top-0 pt-4 pr-4 flex">
           <LordsIcon className="fill-white w-6 h-6 mr-3" />
-          LORDS
         </div>
       </div>
     );
@@ -147,7 +146,7 @@ export const Transfer = ({ action }: { action: string }) => {
       {!l2Account && <StarkLogin />}
       {l1Account && l2Account && (
         <Button
-          className="w-full bg-white/80 !text-black/70 mt-2"
+          className="w-full mt-2"
           onClick={() => onTransferClick()}
           size={"lg"}
           disabled={!amount}

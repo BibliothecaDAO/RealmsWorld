@@ -26,7 +26,7 @@ import EthereumLogo from "@/icons/ethereum.svg";
 function StarkLogin() {
   const { available, connect, connectors, disconnect } = useConnectors();
   const { account, address, status } = useAccount();
-  const { balances, refetch } = useWalletsProviderContext();
+  const { balances } = useWalletsProviderContext();
 
   /* const { data, isLoading, isError } = useStarkName({
     address: address || "",
