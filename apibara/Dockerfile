@@ -11,4 +11,4 @@ RUN python3 -m pip install pycryptodome
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-dev
 
-ENTRYPOINT [ "indexer" ]
+ENTRYPOINT [ "python3", "./main.py", "start" ]
