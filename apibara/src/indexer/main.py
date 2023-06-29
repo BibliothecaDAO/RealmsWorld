@@ -10,7 +10,8 @@ from indexer.indexer import run_indexer
 from indexer.graphql import run_graphql_api
 from apibara.protocol import StreamAddress
 
-DNA_TOKEN = os.environ.get("DNA_TOKEN")
+# DNA_TOKEN = os.environ.get("DNA_TOKEN")
+
 
 def async_command(f):
     @wraps(f)
@@ -32,7 +33,6 @@ def cli():
 @click.option("--network", default=None, help="Network id.")
 @click.option("--bridge", is_flag=None, help="Starknet Bridge contract address.")
 @click.option("--start_block", is_flag=None, help="Indexer starting block.")
-
 @async_command
 async def start(server_url, mongo_url, restart, bridge, network, start_block):
     """Start the Apibara indexer."""
@@ -42,7 +42,6 @@ async def start(server_url, mongo_url, restart, bridge, network, start_block):
         mongo_url = "mongodb://apibara:apibara@localhost:27017"
 
     print("Starting Apibara indexer...")
-    print(f"{DNA_TOKEN}")
     print(f"   Server url: {server_url}")
     await run_indexer(
         restart=restart,
@@ -68,7 +67,6 @@ async def graphql(mongo_goerli, mongo_mainnet, port):
         mongo_goerli = "mongodb://apibara:apibara@localhost:27017"
     if mongo_mainnet is None:
         mongo_mainnet = "mongodb://apibara:apibara@localhost:27018"
-
 
     await run_graphql_api(
         mongo_goerli=mongo_goerli, mongo_mainnet=mongo_mainnet, port=port
