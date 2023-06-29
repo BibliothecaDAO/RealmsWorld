@@ -67,20 +67,6 @@ To ensure efficient data fetching and caching, all external fetches should use A
 
 Any component that can be rendered on the server should be rendered on the server to optimize the user experience. Page layouts are the most obvious examples of server-rendered components. Within these layouts, server components can be used to add interactivity. This abstraction ensures that page loads are as fast as possible for the end user.
 
-### Running the Development Server
-
-To run the development server, use one of the following commands:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-The server will start, and you can access Atlas through your browser.
-
 ### Contributing
 
 We welcome contributions from the community to help improve Atlas. If you are interested in contributing, please follow these steps:
