@@ -219,7 +219,7 @@ async def run_graphql_api(mongo_goerli=None, mongo_mainnet=None, port="8080"):
 
     runner = web.AppRunner(app)
     await runner.setup()
-    site = web.TCPSite(runner, "localhost", int(port))
+    site = web.TCPSite(runner, "0.0.0.0", int(port))
     await site.start()
 
     print(f"GraphQL server started on port {port}")
