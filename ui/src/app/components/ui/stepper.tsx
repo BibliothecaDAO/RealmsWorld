@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { blue, lightBlue } from "@mui/material/colors";
+import { blue, lightBlue, blueGrey } from "@mui/material/colors";
 
 export interface StepperProps {
   children: React.ReactNode;
@@ -18,10 +18,10 @@ export const StepperTheme: React.FC<StepperProps> = ({
         styleOverrides: {
           root: {
             ".MuiSvgIcon-root": {
-              color: lightBlue,
+              color: blueGrey,
               fontSize: "32px",
               "&.Mui-completed, &.Mui-active": {
-                color: blue,
+                color: blueGrey,
               },
             },
           },
@@ -33,7 +33,7 @@ export const StepperTheme: React.FC<StepperProps> = ({
             top: "15px",
           },
           line: {
-            borderColor: lightBlue[500],
+            borderColor: blueGrey[500],
             width: "80%",
             margin: "auto",
           },

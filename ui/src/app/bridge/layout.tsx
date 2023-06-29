@@ -10,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { id: string };
 }) {
-  const defaultImage = "/backgrounds/dummy_background.png";
+  const defaultImage = "/backgrounds/bridge.png";
   const imageUrl = params.id ? `/backgrounds/${params.id}.png` : defaultImage;
 
   const backgroundImageStyle = {
@@ -24,7 +24,7 @@ export default function RootLayout({
     <div className="w-full h-full bg-theme-gray">
       <div className="w-full -mt-24 h-96" style={backgroundImageStyle} />
       <motion.div
-        initial={{ opacity: 0.5 }}
+        initial={{ opacity: 0.1 }}
         animate={{ opacity: 1 }}
         className="sm:pl-32 "
       >

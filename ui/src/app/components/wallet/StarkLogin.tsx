@@ -26,7 +26,7 @@ import EthereumLogo from "@/icons/ethereum.svg";
 function StarkLogin() {
   const { available, connect, connectors, disconnect } = useConnectors();
   const { account, address, status } = useAccount();
-  const { balances, refetch } = useWalletsProviderContext();
+  const { balances } = useWalletsProviderContext();
 
   /* const { data, isLoading, isError } = useStarkName({
     address: address || "",
@@ -89,14 +89,14 @@ function StarkLogin() {
           <div className="px-4 pt-4 pb-2 border rounded">
 
             <div className="text-2xl flex">
-              {formatBigInt(balances.l2.eth, 3)} <EthereumLogo className="w-5 px-1" />
+              <EthereumLogo className="w-5 px-1" />{formatBigInt(balances.l2.eth, 3)}
             </div>
 
           </div>
           <div className="px-4 pt-4 pb-2 border rounded   flex justify-between">
 
             <div className="text-2xl flex">
-              {balances.l2.lords && balances.l2.lords > 0 ? formatBigInt(balances.l2.lords, 3) : 0} <Lords className="w-6 fill-current pl-2" />
+              <Lords className="w-6 fill-current pr-2" />{balances.l2.lords && balances.l2.lords > 0 ? formatBigInt(balances.l2.lords, 3) : 0}
 
             </div>
             <Button href="/bridge" size={'xs'} variant={'subtle'} className="self-center">Bridge</Button>
