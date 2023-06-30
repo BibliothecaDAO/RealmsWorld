@@ -1,5 +1,5 @@
 {
-  "subgraphName": "in19farkt/starknet-bridge-stable",
+  "subgraphName": "redbeardeth/starknet-bridge-mainnet",
   "startBlock": 0,
   "network": "mainnet",
   "modules": {
