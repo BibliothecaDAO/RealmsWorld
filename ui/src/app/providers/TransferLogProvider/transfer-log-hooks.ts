@@ -1,8 +1,6 @@
 'use client'
 import { useContext, useMemo } from 'react';
-
 import { isDeposit } from '@/types/bridge';
-
 import { TransferLogContext } from './transfer-log-context';
 
 export const useTransferLog = (isL1: boolean = true) => {
@@ -10,8 +8,6 @@ export const useTransferLog = (isL1: boolean = true) => {
     const query = isL1 ? transfersQueryL1 : transfersQueryL2;
     return useMemo(
         () => {
-            console.log(query)
-
             return ({
                 ...query,
                 transfers: isL1 ? flattenPages(query?.data) : flattenWithdrawals(query.data)
@@ -67,10 +63,8 @@ export const useTransfers = () => {
 };
 //@ts-ignore
 const flattenPages = data => {
-    console.log(data)
     return data ? [...data?.pages?.[0]?.deposits, ...data?.pages?.[0]?.withdrawals] : [] /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
 };
 const flattenWithdrawals = (data: any) => {
-    console.log(data)
     return data ? [...data?.pages?.[0]?.l2withdrawals, ...data?.pages?.[0]?.deposits] : [] /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
 };
