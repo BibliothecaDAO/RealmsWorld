@@ -11,7 +11,6 @@ import { useAccount } from "wagmi";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { ExternalLinkIcon } from "lucide-react";
 import { useCompleteTransferToL1 } from "@/composables/useTransferToL1";
-import * as ScrollArea from "@radix-ui/react-scroll-area";
 
 export const Account = ({ isL1 }: { isL1: boolean }) => {
   const { address } = useAccount();
@@ -64,23 +63,13 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   };
 
   return (
-    <div className="py-3">
+    <div>
       <h5 className="flex justify-between">
         {isL1 ? "Mainnet" : "Starknet"}  {evaluate("", { network: isL1 ? "L1" : "L2" })} {renderExplorers()}
       </h5>
-
-      <ScrollArea.Root className="ScrollAreaRoot">
-        <ScrollArea.Viewport className="h-96">
-          {renderTransfers()}
-        </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar
-          className="ScrollAreaScrollbar"
-          orientation="vertical"
-        >
-          <ScrollArea.Thumb className="ScrollAreaThumb" />
-        </ScrollArea.Scrollbar>
-        <ScrollArea.Corner />
-      </ScrollArea.Root>
+      <div className="overflow-y-scroll max-h-[700px] h-full p-2 border">
+        {renderTransfers()}
+      </div>
     </div>
   );
 };

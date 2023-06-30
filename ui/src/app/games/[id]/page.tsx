@@ -2,8 +2,6 @@ import { games } from "@/constants/games";
 import { Button } from "@/app/components/ui/button";
 import { Metadata } from "next";
 import { Tabs } from "@/app/components/Tabs";
-import Image from "next/image";
-import { useState } from "react";
 import { ImageGallery } from "@/app/components/ImageGallery";
 
 export async function generateMetadata(

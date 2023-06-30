@@ -1,12 +1,10 @@
 "use client";
-
-
 import EthereumLogin from "./wallet/EthereumLogin";
 import StarkLogin from "./wallet/StarkLogin";
 import { Button } from "./ui/button";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { useAccount as useL1Account } from "wagmi";
 import { shortenHex } from "@/functions/utils";
@@ -16,6 +14,7 @@ import { Account } from "../bridge/Account";
 import Link from "next/link";
 import { Compass, Menu } from "lucide-react";
 import { useUIContext } from "../providers/UIProvider";
+import { Tabs } from "@/app/components/Tabs";
 
 export const TopNav = () => {
   const { scrollY } = useScroll();
@@ -24,11 +23,23 @@ export const TopNav = () => {
   const { address: l1Address, isConnected } = useL1Account();
   const { address: l2Address } = useL2Account();
 
-  const { isSidebarOpen, toggleSidebar } = useUIContext();
+  const { toggleSidebar } = useUIContext();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 0);
   });
+
+  const tabs = [
+    {
+      name: "Mainnet",
+      content: <Account isL1={true} />
+    },
+
+    {
+      name: "Starknet",
+      content: <Account isL1={false} />
+    },
+  ]
 
   return (
     <div
@@ -37,7 +48,9 @@ export const TopNav = () => {
         }`}
     >
       <div className="flex justify-between sm:justify-end ">
-        <Button className={"flex sm:hidden"} onClick={toggleSidebar}><Menu className="w-8" /></Button>
+        <Button className={"flex sm:hidden"} onClick={toggleSidebar}>
+          <Menu className="w-8" />
+        </Button>
 
         <Link
           className="flex sm:hidden self-center text-xl font-semibold  sm:text-2xl font-sans-serif "
@@ -70,11 +83,10 @@ export const TopNav = () => {
             </Button>
           </SheetTrigger>
           <SheetContent position={'right'} size={'lg'}>
-            <div className="flex-col gap-y-4 flex w-full mt-8">
+            <div className="flex-col gap-y-4 flex w-full mt-8 h-auto">
               <EthereumLogin />
               <StarkLogin />
-              <Account isL1={true} />
-              <Account isL1={false} />
+              <Tabs tabs={tabs} />
             </div>
           </SheetContent>
         </Sheet>

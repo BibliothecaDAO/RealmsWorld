@@ -1,10 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-
-import { XOctagon } from "lucide-react";
-
 import { ActionType } from "@/constants/transferSteps";
-import { Alert, AlertType } from "../../ui/alert";
+import { Alert } from "../../ui/alert";
 
 const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
   const { type, l2hash, l1hash } = transfer;
@@ -14,8 +11,8 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
     type === ActionType.TRANSFER_TO_L2
       ? "Your transaction has been successfully sent to StarkNet!"
       : isTransferCompleted
-      ? "Your transfer is completed on Ethereum!"
-      : "Your transaction is now being processing on StarkNet.";
+        ? "Your transfer is completed on Ethereum!"
+        : "Your transaction is now being processing on StarkNet.";
 
   const messageComponent =
     type === ActionType.TRANSFER_TO_L2 ? (
@@ -38,7 +35,7 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
 
   return (
     <div className="flex flex-col items-center text-center mb-6 px-2 ">
-      <div className="w-1/2 text-sm  mb-4">{textMessage}</div>
+      <div className="w-2/3 text-sm  mb-4">{textMessage}</div>
       {messageComponent}
     </div>
   );
