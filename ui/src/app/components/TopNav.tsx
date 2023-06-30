@@ -1,9 +1,10 @@
 "use client";
+
 import EthereumLogin from "./wallet/EthereumLogin";
 import StarkLogin from "./wallet/StarkLogin";
 import { Button } from "./ui/button";
 import { useMotionValueEvent, useScroll } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { useAccount as useL1Account } from "wagmi";
@@ -19,9 +20,17 @@ import { Tabs } from "@/app/components/Tabs";
 export const TopNav = () => {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const [isDefinitelyConnected, setIsDefinitelyConnected] = useState(false);
   const { address: l1Address, isConnected } = useL1Account();
-  const { address: l2Address } = useL2Account();
+  const { address: l2Address, status } = useL2Account();
+
+  useEffect(() => {
+    if (isConnected) {
+      setIsDefinitelyConnected(true);
+    } else {
+      setIsDefinitelyConnected(false);
+    }
+  }, [l1Address]);
 
   const { toggleSidebar } = useUIContext();
 
@@ -60,27 +69,28 @@ export const TopNav = () => {
         </Link>
         <Sheet>
           <SheetTrigger asChild>
-            <Button className="dark:bg-opacity-60">
-              {!l1Address && !l2Address ? (
-                "Connect"
-              ) : (
-                <span className="flex gap-x-2">
-                  {l1Address && isConnected && (
-                    <span className="flex">
-                      <EthereumLogo className="w-5 h-5 mx-2" />
-                      {shortenHex(l1Address)}
-                    </span>
-                  )}
 
-                  {l2Address && (
-                    <span className="flex">
-                      <StarknetLogo className="mx-2 w-5 h-5" />
-                      {shortenHex(l2Address)}
-                    </span>
-                  )}
-                </span>
+            <Button variant={'outline'} className="flex gap-x-2">
+
+
+              {l1Address && isDefinitelyConnected && (
+                <>
+                  <EthereumLogo className="mx-2 w-5 h-5" />
+                  {shortenHex(l1Address)}
+                </>
               )}
+
+              {l2Address && status == 'connected' && (
+                <>
+                  <StarknetLogo className="mx-2 w-5 h-5" />
+                  {shortenHex(l2Address)}
+                </>
+              )}
+
+
             </Button>
+
+
           </SheetTrigger>
           <SheetContent position={'right'} size={'lg'}>
             <div className="flex-col gap-y-4 flex w-full mt-8 h-auto">

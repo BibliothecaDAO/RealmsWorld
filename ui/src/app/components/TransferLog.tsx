@@ -81,7 +81,7 @@ export const TransferLog = ({
         size={"xs"}
         variant={"outline"}
         disabled={!l1hash}
-        external
+
         href={STARKSCAN_ETH_TX_URL(l1hash)}
       >
         <span>{`${NetworkType.L1} Tx`}</span>
@@ -103,7 +103,7 @@ export const TransferLog = ({
           TransactionStatusStep[TransactionStatus.RECEIVED]
         }
         rel="noopener noreferrer"
-        external
+
         href={STARKSCAN_TX_URL(l2hash)}
       >
         <span>{`${NetworkType.L2} Tx`}</span>

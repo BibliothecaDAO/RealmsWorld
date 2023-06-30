@@ -75,7 +75,7 @@ export const metadata = {
     siteId: "1467726470533754880",
     creator: "@bibliothecadao",
     creatorId: "1467726470533754880",
-    images: ["https://nextjs.org/og.png"],
+    images: ["/backgrounds/map.png"],
   },
   openGraph: {
     title: title,
@@ -84,15 +84,15 @@ export const metadata = {
     siteName: "Atlas",
     images: [
       {
-        url: "/map.png",
+        url: "/backgrounds/map.png",
         width: 800,
         height: 600,
       },
       {
-        url: "/map.png",
+        url: "/backgrounds/map.png",
         width: 1800,
         height: 1600,
-        alt: "My custom alt",
+        alt: "Realms Autonomous World",
       },
     ],
     locale: "en-US",
