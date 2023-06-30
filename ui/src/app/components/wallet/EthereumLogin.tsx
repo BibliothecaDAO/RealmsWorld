@@ -28,10 +28,10 @@ function EthereumLogin() {
 
   if (isConnected)
     return (
-      <div className="border p-2 rounded">
+      <div className="border p-2 rounded border-white/20">
         <div className="flex mb-3 justify-between">
-          <div className="flex">
-            <EthereumLogo className="w-6 px-1" /> <div className="self-center">{chain?.name}</div>
+          <div className="flex text-xl">
+            <EthereumLogo className="w-3 mx-2" /> <div className="self-center">{chain?.name}</div>
           </div>
           <div>
             <Button
@@ -45,15 +45,15 @@ function EthereumLogin() {
           </div>
         </div>
         <div className="grid grid-cols-2 align-items-center space-x-3">
-          <div className="px-4 pt-4 pb-2 border rounded flex justify-between">
+          <div className="px-4 pt-4 pb-2 border rounded flex justify-between border-white/20">
 
             <div className="text-2xl flex">
-              <EthereumLogo className="w-5 px-1" />{balances.l1.eth ? formatBigInt(balances.l1.eth, 3) : 0}
+              <EthereumLogo className="w-4 mr-2" />{balances.l1.eth ? formatBigInt(balances.l1.eth, 3) : 0}
             </div>
 
 
           </div>
-          <div className="px-4 pt-4 pb-2 border rounded  flex justify-between">
+          <div className="px-4 pt-4 pb-2 border rounded  flex justify-between border-white/20">
 
             <div className="text-2xl flex">
               <Lords className="w-6 fill-current pr-2" />{balances.l1.lords && balances.l1.lords > 0 ? formatBigInt(balances.l1.lords, 3) : 0}
