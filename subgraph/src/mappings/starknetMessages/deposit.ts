@@ -33,9 +33,9 @@ export function handleLogMessageToL2(event: LogMessageToL2): void {
 
   const depositEvent = createDepositEvent(event);
 
-  
 
-  const depositLog = event.receipt!.logs.findIndex((log) =>{ return log.address == l1BridgesAddresses[0] && log.topics[0].toHexString() == L1BRIDGE_DEPOSIT_SIG})
+
+  const depositLog = event.receipt!.logs.findIndex((log) => { return log.address == l1BridgesAddresses[0] && log.topics[0].toHexString() == L1BRIDGE_DEPOSIT_SIG })
   log.debug("deposit log topic is {}", [event.receipt!.logs[depositLog].topics[1].toHexString()])
   const deposit = loadOrCreateDeposit(
     makeIdFromPayload(bridgeL1Address, event.params.payload),
@@ -74,5 +74,7 @@ export function handleConsumedMessageToL2(event: ConsumedMessageToL2): void {
   depositEvent.finishedAtBlock = event.block.number;
   depositEvent.finishedAtDate = event.block.timestamp;
   depositEvent.finishedTxHash = event.transaction.hash;
+  depositEvent.payload = event.params.payload;
+  depositEvent.nonce = event.params.nonce;
   depositEvent.save();
-  }
+}

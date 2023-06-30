@@ -9,6 +9,8 @@ type DepositEvent @entity {
   bridgeAddressL2: Bytes!
   amount: BigInt!
   status: TransferStatus!
+  payload: [BigInt!]
+  nonce: BigInt
   createdAtBlock: BigInt!
   createdTxHash: Bytes!
   finishedAtBlock: BigInt

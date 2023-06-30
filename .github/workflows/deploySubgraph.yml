@@ -4,14 +4,20 @@ on:
   push:
     branches:
       - master
+    paths:
+      - "subgraph/**"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./subgraph
+
     strategy:
       matrix:
-        type: ['stable', 'goerli']
+        type: ["mainnet", "goerli"]
 
     env:
       TYPE: ${{ matrix.type }}

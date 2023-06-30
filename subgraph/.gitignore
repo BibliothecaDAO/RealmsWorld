@@ -3,3 +3,4 @@ generated
 build
 subgraph.yaml
 .env
+.yarn
