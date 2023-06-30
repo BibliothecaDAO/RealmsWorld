@@ -19,8 +19,6 @@ export const STARKSCAN_TX_URL = (tx: any) => evaluate(`${STARKSCAN_URL}/tx/{{tx}
 export const STARKSCAN_ETH_TX_URL = (tx: any) => evaluate(`${STARKSCAN_URL}/eth-tx/{{tx}}`, { tx });
 export const STARKSCAN_ACCOUNT_URL = (contract: any) =>
     evaluate(`${STARKSCAN_URL}/contract/{{contract}}`, { contract });
-export const LOCAL_STORAGE_TRANSFERS_LOG_KEY = process.env.NEXT_PUBLIC_LOCAL_STORAGE_TRANSFERS_LOG_KEY;
 export const LOCAL_STORAGE_ACCEPT_TERMS_KEY = process.env.NEXT_PUBLIC_LOCAL_STORAGE_ACCEPT_TERMS;
-export const GET_PENDING_WITHDRAWALS_ENDPOINT = "https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli"
-export const GET_TRANSFERS_ENDPOINT = "https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli"
-export const GET_L2_APIBARA_ENDPOINT = "https://p01--graphql-1--xkl8lp5qw8r7.code.run/goerli-graphql"
+export const GET_TRANSFERS_ENDPOINT = process.env.NEXT_PUBLIC_BRIDGE_SUBGRAPH_URL
+export const GET_L2_APIBARA_ENDPOINT = process.env.NEXT_PUBLIC_APIBARA_URL
