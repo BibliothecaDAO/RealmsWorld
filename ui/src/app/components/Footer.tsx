@@ -6,7 +6,7 @@ export const Footer = () => {
   const defaultImage = "/backgrounds/footer.webp";
 
   const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.1), rgba(32, 32, 32, 1)), url(${defaultImage})`,
+    backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.1), rgba(5, 5, 5, 1)), url(${defaultImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",

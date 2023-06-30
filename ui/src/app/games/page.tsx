@@ -11,7 +11,7 @@ export const metadata = {
 
 export default async function Page() {
   const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(32, 32, 32, 1)), url(/backgrounds/dummy_background.png), url(/backgrounds/dummy_background.png)`,
+    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(5,5,5, 1)), url(/backgrounds/dummy_background.png), url(/backgrounds/dummy_background.png)`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
