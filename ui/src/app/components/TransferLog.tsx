@@ -9,29 +9,15 @@ import {
 import { getFullTime } from "@starkware-industries/commons-js-utils";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-
-//import { useColors, useEnvs, useTransferLogTranslation } from "../../../hooks";
-//import { useTransfer } from "@/app/providers/TransferProvider";
+import { PlusSquareIcon, MinusSquareIcon } from "lucide-react";
 import { STARKSCAN_TX_URL, STARKSCAN_ETH_TX_URL } from "@/constants/env";
 import { Button } from "./ui/button";
 import LordsIcon from "@/icons/lords.svg";
 import { cn } from "../lib/utils";
-import { ActionType } from "@/constants/transferSteps";
 import { ExternalLinkIcon } from "lucide-react";
 import { DepositEvent, WithdrawalEvent } from "@/.graphclient";
 import { formatEther } from "viem";
 
-/*interface Transfer {
-  status: TransactionStatus;
-  symbol: string;
-  timestamp: number;
-  name: string;
-  depositEvents
-  amount: string;
-  l1hash: string;
-  l2hash: string;
-  type: number;
-}*/
 
 export const TransferLog = ({
   transfer,
@@ -42,8 +28,11 @@ export const TransferLog = ({
   isL1: boolean;
   onCompleteTransferClick: () => void;
 }) => {
+  const [sign, setSign] = useState("");
+
   const { l1Recipent, depositEvents, withdrawalEvents, createdTimestamp } =
     transfer;
+
   const {
     status,
     id,
@@ -54,16 +43,16 @@ export const TransferLog = ({
     finishedAtDate,
   }: DepositEvent | WithdrawalEvent = depositEvents?.[0] ||
   withdrawalEvents?.[0] ||
-  transfer;
+    transfer;
 
   const l2hash = "0xtest";
-  const [sign, setSign] = useState("");
-  //const { action, isL1 } = useTransfer();
-  const action = isL1 ? 1 : 2;
-  const type = depositEvents ? 1 : 2;
+
+
   useEffect(() => {
+    const action = isL1 ? 1 : 2;
+    const type = depositEvents ? 1 : 2;
     setSign(type === action ? "-" : "+");
-  }, [action]);
+  }, [isL1, depositEvents]);
 
   const typedStatus = status as TransactionStatus;
 
@@ -81,8 +70,10 @@ export const TransferLog = ({
     );
   };
 
+  const needsActions = !l1hash && isL1 && isOnChain(typedStatus)
+
   const renderL1TxButton = () => {
-    return !l1hash && isL1 && isOnChain(typedStatus) ? (
+    return needsActions ? (
       <CompleteTransferButton onClick={onCompleteTransferClick} />
     ) : (
       <Button
@@ -127,10 +118,10 @@ export const TransferLog = ({
       <div className="flex self-center">
         <LordsIcon className="fill-white w-8 h-8 mr-3 self-center" />
         <div>
-          <div className="text-gray-400 text-xs ">{`${getFullTime(
+          <div className="text-gray-400 text-xs font-semibold ">{`${getFullTime(
             createdTimestamp * 1000
           )}`}</div>
-          <div className="text-xl font-semibold">{sign} {formatEther(amount || 0)} LORDS</div>
+          <div className="text-xl font-semibold flex">{sign == '-' ? <MinusSquareIcon className="mr-1 self-center" /> : <PlusSquareIcon className="mr-1 self-center" />} {formatEther(amount || 0)} </div>
 
         </div>
       </div>
@@ -138,7 +129,7 @@ export const TransferLog = ({
         {renderTransferStatus()}
         <div className="flex items-center my-1 space-x-2">
           {renderL1TxButton()}
-          {renderL2TxButton()}
+          {/* {renderL2TxButton()} */}
         </div>
       </div>
     </div>
@@ -150,8 +141,8 @@ const CompleteTransferButton = ({ onClick }: { onClick: any }) => {
   return (
     <Button
       variant={"outline"}
-      className="!dark:border-amber-100 !dark:text-orange !border-orange !text-orange"
-      size={"sm"}
+
+      size={"xs"}
       onClick={onClick}
     >
       Complete Transfer

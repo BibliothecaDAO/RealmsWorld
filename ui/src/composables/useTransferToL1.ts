@@ -141,7 +141,7 @@ export const useCompleteTransferToL1 = () => {
                 console.log('Calling withdraw', withdrawalEvents.amount);
                 const { hash } = await withdraw({
                     args: [
-                        parseUnits(withdrawalEvents[0].amount, 18), l1Account as `0x${string}`]
+                        withdrawalEvents[0].amount, l1Account as `0x${string}`]
                 });
                 onTransactionHash(withdrawError, hash)
                 //onWithdrawal(receipt.events[EventName.L1.LOG_WITHDRAWAL]);

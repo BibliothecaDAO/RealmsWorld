@@ -1,7 +1,6 @@
 import { openInNewTab, evaluate } from "@starkware-industries/commons-js-utils";
 import PropTypes from "prop-types";
 import React from "react";
-
 import EtherscanLogo from "@/icons/etherscan.svg";
 import StarkScanLogo from "@/icons/starkscan.svg";
 import VoyagerLogo from "@/icons/voyager.svg";
@@ -10,16 +9,8 @@ import {
   VOYAGER_TX_URL,
   STARKSCAN_TX_URL,
   STARKSCAN_ETH_TX_URL,
-  ETHERSCAN_URL,
 } from "@/constants/env";
-/*import {
-  useColors,
-  useConstants,
-  useEnvs,
-  useTransactionSubmittedModalTranslation
-} from '@/composables/';*/
 
-//import {Circle} from '../../Circle/Circle';
 import { Button } from "../../ui/button";
 import { ActionType } from "@/constants/transferSteps";
 
@@ -80,7 +71,6 @@ const TransactionSubmittedModalButton = ({
       onClick={() => onClick(explorer.url)}
       {...buttonProps}
     >
-      <span className="mr-2">{explorer.logo}</span>
       {evaluate("View on {{explorer}}", { explorer: explorer.name })}
     </Button>
   ));
