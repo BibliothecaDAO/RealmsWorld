@@ -24,6 +24,8 @@ query L2Withdrawals(
       createdTxHash
       finishedTxHash
       finishedAtDate
+      payload
+      nonce
     }
   }
 }

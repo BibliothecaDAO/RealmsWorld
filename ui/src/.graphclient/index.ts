@@ -20,10 +20,10 @@ import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
 import { path as pathModule } from '@graphql-mesh/cross-helpers';
 import { ImportFn } from '@graphql-mesh/types';
-import type { ApibaraTypes } from './sources/apibara/types';
 import type { LordsbridgegoerliTypes } from './sources/lordsbridgegoerli/types';
-import * as importedModule$0 from "./sources/apibara/introspectionSchema";
-import * as importedModule$1 from "./sources/lordsbridgegoerli/introspectionSchema";
+import type { ApibaraTypes } from './sources/apibara/types';
+import * as importedModule$0 from "./sources/lordsbridgegoerli/introspectionSchema";
+import * as importedModule$1 from "./sources/apibara/introspectionSchema";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -40,21 +40,19 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  Decimal: any;
-  DateTime: any;
-  U256Value: any;
   BigDecimal: any;
   BigInt: any;
   Bytes: any;
   Int8: any;
+  Decimal: any;
+  DateTime: any;
+  U256Value: any;
 };
 
 export type Query = {
-  l2deposits: Array<L2Deposit>;
-  deposit?: Maybe<Deposit>;
-  l2withdrawals: Array<L2Withdrawal>;
   depositEvent?: Maybe<DepositEvent>;
   depositEvents: Array<DepositEvent>;
+  deposit?: Maybe<L2Deposit>;
   deposits: Array<Deposit>;
   withdrawalEvent?: Maybe<WithdrawalEvent>;
   withdrawalEvents: Array<WithdrawalEvent>;
@@ -64,31 +62,8 @@ export type Query = {
   tokens: Array<Token>;
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
-};
-
-
-export type Queryl2depositsArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Scalars['String']>;
-  orderByDirection?: InputMaybe<Scalars['String']>;
-  where?: InputMaybe<WhereFilterForTransaction>;
-};
-
-
-export type QuerydepositArgs = {
-  id: Scalars['ID'];
-  block?: InputMaybe<Block_height>;
-  subgraphError?: _SubgraphErrorPolicy_;
-};
-
-
-export type Queryl2withdrawalsArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Scalars['String']>;
-  orderByDirection?: InputMaybe<Scalars['String']>;
-  where?: InputMaybe<WhereFilterForWithdrawals>;
+  l2deposits: Array<L2Deposit>;
+  l2withdrawals: Array<L2Withdrawal>;
 };
 
 
@@ -107,6 +82,11 @@ export type QuerydepositEventsArgs = {
   where?: InputMaybe<DepositEvent_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QuerydepositArgs = {
+  hash: Scalars['String'];
 };
 
 
@@ -179,30 +159,22 @@ export type Query_metaArgs = {
   block?: InputMaybe<Block_height>;
 };
 
-export type L2Deposit = {
-  id: Scalars['String'];
-  l2Recipient: Scalars['String'];
-  amount: Scalars['Decimal'];
-  timestamp: Scalars['DateTime'];
-  hash: Scalars['String'];
+
+export type Queryl2depositsArgs = {
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderByDirection?: InputMaybe<Scalars['String']>;
+  where?: InputMaybe<WhereFilterForTransaction>;
 };
 
-export type WhereFilterForTransaction = {
-  id?: InputMaybe<Scalars['String']>;
-};
 
-export type L2Withdrawal = {
-  id: Scalars['String'];
-  l1Recipient: Scalars['String'];
-  l2Sender: Scalars['String'];
-  amount: Scalars['U256Value'];
-  timestamp: Scalars['DateTime'];
-  hash: Scalars['String'];
-};
-
-export type WhereFilterForWithdrawals = {
-  id?: InputMaybe<Scalars['String']>;
-  l2Sender?: InputMaybe<Scalars['String']>;
+export type Queryl2withdrawalsArgs = {
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Scalars['String']>;
+  orderByDirection?: InputMaybe<Scalars['String']>;
+  where?: InputMaybe<WhereFilterForWithdrawals>;
 };
 
 export type Subscription = {
@@ -350,6 +322,8 @@ export type DepositEvent = {
   bridgeAddressL2: Scalars['Bytes'];
   amount: Scalars['BigInt'];
   status: TransferStatus;
+  payload?: Maybe<Array<Scalars['BigInt']>>;
+  nonce?: Maybe<Scalars['BigInt']>;
   createdAtBlock: Scalars['BigInt'];
   createdTxHash: Scalars['Bytes'];
   finishedAtBlock?: Maybe<Scalars['BigInt']>;
@@ -398,6 +372,20 @@ export type DepositEvent_filter = {
   status_not?: InputMaybe<TransferStatus>;
   status_in?: InputMaybe<Array<TransferStatus>>;
   status_not_in?: InputMaybe<Array<TransferStatus>>;
+  payload?: InputMaybe<Array<Scalars['BigInt']>>;
+  payload_not?: InputMaybe<Array<Scalars['BigInt']>>;
+  payload_contains?: InputMaybe<Array<Scalars['BigInt']>>;
+  payload_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
+  payload_not_contains?: InputMaybe<Array<Scalars['BigInt']>>;
+  payload_not_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
+  nonce?: InputMaybe<Scalars['BigInt']>;
+  nonce_not?: InputMaybe<Scalars['BigInt']>;
+  nonce_gt?: InputMaybe<Scalars['BigInt']>;
+  nonce_lt?: InputMaybe<Scalars['BigInt']>;
+  nonce_gte?: InputMaybe<Scalars['BigInt']>;
+  nonce_lte?: InputMaybe<Scalars['BigInt']>;
+  nonce_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  nonce_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   createdAtBlock?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_not?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_gt?: InputMaybe<Scalars['BigInt']>;
@@ -454,6 +442,8 @@ export type DepositEvent_orderBy =
   | 'bridgeAddressL2'
   | 'amount'
   | 'status'
+  | 'payload'
+  | 'nonce'
   | 'createdAtBlock'
   | 'createdTxHash'
   | 'finishedAtBlock'
@@ -840,6 +830,32 @@ export type _SubgraphErrorPolicy_ =
   /** If the subgraph has indexing errors, data will be omitted. The default. */
   | 'deny';
 
+export type L2Deposit = {
+  id: Scalars['String'];
+  l2Recipient: Scalars['String'];
+  amount: Scalars['Decimal'];
+  timestamp: Scalars['DateTime'];
+  hash: Scalars['String'];
+};
+
+export type WhereFilterForTransaction = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type L2Withdrawal = {
+  id: Scalars['String'];
+  l1Recipient: Scalars['String'];
+  l2Sender: Scalars['String'];
+  amount: Scalars['U256Value'];
+  timestamp: Scalars['DateTime'];
+  hash: Scalars['String'];
+};
+
+export type WhereFilterForWithdrawals = {
+  id?: InputMaybe<Scalars['String']>;
+  l2Sender?: InputMaybe<Scalars['String']>;
+};
+
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
 
@@ -927,21 +943,12 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
-  L2Deposit: ResolverTypeWrapper<L2Deposit>;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  Decimal: ResolverTypeWrapper<Scalars['Decimal']>;
-  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
-  WhereFilterForTransaction: WhereFilterForTransaction;
-  L2Withdrawal: ResolverTypeWrapper<L2Withdrawal>;
-  U256Value: ResolverTypeWrapper<Scalars['U256Value']>;
-  WhereFilterForWithdrawals: WhereFilterForWithdrawals;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Subscription: ResolverTypeWrapper<{}>;
   BigDecimal: ResolverTypeWrapper<Scalars['BigDecimal']>;
   BigInt: ResolverTypeWrapper<Scalars['BigInt']>;
   BlockChangedFilter: BlockChangedFilter;
   Block_height: Block_height;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Bytes: ResolverTypeWrapper<Scalars['Bytes']>;
   Deposit: ResolverTypeWrapper<Deposit>;
   DepositEvent: ResolverTypeWrapper<DepositEvent>;
@@ -951,8 +958,10 @@ export type ResolversTypes = ResolversObject<{
   Deposit_orderBy: Deposit_orderBy;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Int8: ResolverTypeWrapper<Scalars['Int8']>;
   OrderDirection: OrderDirection;
+  String: ResolverTypeWrapper<Scalars['String']>;
   Token: ResolverTypeWrapper<Token>;
   Token_filter: Token_filter;
   Token_orderBy: Token_orderBy;
@@ -966,26 +975,24 @@ export type ResolversTypes = ResolversObject<{
   _Block_: ResolverTypeWrapper<_Block_>;
   _Meta_: ResolverTypeWrapper<_Meta_>;
   _SubgraphErrorPolicy_: _SubgraphErrorPolicy_;
+  L2Deposit: ResolverTypeWrapper<L2Deposit>;
+  Decimal: ResolverTypeWrapper<Scalars['Decimal']>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  WhereFilterForTransaction: WhereFilterForTransaction;
+  L2Withdrawal: ResolverTypeWrapper<L2Withdrawal>;
+  U256Value: ResolverTypeWrapper<Scalars['U256Value']>;
+  WhereFilterForWithdrawals: WhereFilterForWithdrawals;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Query: {};
-  L2Deposit: L2Deposit;
-  String: Scalars['String'];
-  Decimal: Scalars['Decimal'];
-  DateTime: Scalars['DateTime'];
-  Int: Scalars['Int'];
-  WhereFilterForTransaction: WhereFilterForTransaction;
-  L2Withdrawal: L2Withdrawal;
-  U256Value: Scalars['U256Value'];
-  WhereFilterForWithdrawals: WhereFilterForWithdrawals;
-  Boolean: Scalars['Boolean'];
   Subscription: {};
   BigDecimal: Scalars['BigDecimal'];
   BigInt: Scalars['BigInt'];
   BlockChangedFilter: BlockChangedFilter;
   Block_height: Block_height;
+  Boolean: Scalars['Boolean'];
   Bytes: Scalars['Bytes'];
   Deposit: Deposit;
   DepositEvent: DepositEvent;
@@ -993,7 +1000,9 @@ export type ResolversParentTypes = ResolversObject<{
   Deposit_filter: Deposit_filter;
   Float: Scalars['Float'];
   ID: Scalars['ID'];
+  Int: Scalars['Int'];
   Int8: Scalars['Int8'];
+  String: Scalars['String'];
   Token: Token;
   Token_filter: Token_filter;
   Withdrawal: Withdrawal;
@@ -1002,9 +1011,16 @@ export type ResolversParentTypes = ResolversObject<{
   Withdrawal_filter: Withdrawal_filter;
   _Block_: _Block_;
   _Meta_: _Meta_;
+  L2Deposit: L2Deposit;
+  Decimal: Scalars['Decimal'];
+  DateTime: Scalars['DateTime'];
+  WhereFilterForTransaction: WhereFilterForTransaction;
+  L2Withdrawal: L2Withdrawal;
+  U256Value: Scalars['U256Value'];
+  WhereFilterForWithdrawals: WhereFilterForWithdrawals;
 }>;
 
-export type entityDirectiveArgs = {};
+export type entityDirectiveArgs = { };
 
 export type entityDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = entityDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
@@ -1021,11 +1037,9 @@ export type derivedFromDirectiveArgs = {
 export type derivedFromDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = derivedFromDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type QueryResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  l2deposits?: Resolver<Array<ResolversTypes['L2Deposit']>, ParentType, ContextType, RequireFields<Queryl2depositsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
-  deposit?: Resolver<Maybe<ResolversTypes['Deposit']>, ParentType, ContextType, RequireFields<QuerydepositArgs, 'id' | 'subgraphError'>>;
-  l2withdrawals?: Resolver<Array<ResolversTypes['L2Withdrawal']>, ParentType, ContextType, RequireFields<Queryl2withdrawalsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
   depositEvent?: Resolver<Maybe<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<QuerydepositEventArgs, 'id' | 'subgraphError'>>;
   depositEvents?: Resolver<Array<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<QuerydepositEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  deposit?: Resolver<Maybe<ResolversTypes['L2Deposit']>, ParentType, ContextType, RequireFields<QuerydepositArgs, 'hash'>>;
   deposits?: Resolver<Array<ResolversTypes['Deposit']>, ParentType, ContextType, RequireFields<QuerydepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
   withdrawalEvent?: Resolver<Maybe<ResolversTypes['WithdrawalEvent']>, ParentType, ContextType, RequireFields<QuerywithdrawalEventArgs, 'id' | 'subgraphError'>>;
   withdrawalEvents?: Resolver<Array<ResolversTypes['WithdrawalEvent']>, ParentType, ContextType, RequireFields<QuerywithdrawalEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
@@ -1034,38 +1048,9 @@ export type QueryResolvers<ContextType = MeshContext, ParentType extends Resolve
   token?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokenArgs, 'id' | 'subgraphError'>>;
   tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokensArgs, 'skip' | 'first' | 'subgraphError'>>;
   _meta?: Resolver<Maybe<ResolversTypes['_Meta_']>, ParentType, ContextType, Partial<Query_metaArgs>>;
+  l2deposits?: Resolver<Array<ResolversTypes['L2Deposit']>, ParentType, ContextType, RequireFields<Queryl2depositsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
+  l2withdrawals?: Resolver<Array<ResolversTypes['L2Withdrawal']>, ParentType, ContextType, RequireFields<Queryl2withdrawalsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
 }>;
-
-export type L2DepositResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['L2Deposit'] = ResolversParentTypes['L2Deposit']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  l2Recipient?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  amount?: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
-  timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export interface DecimalScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Decimal'], any> {
-  name: 'Decimal';
-}
-
-export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
-  name: 'DateTime';
-}
-
-export type L2WithdrawalResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['L2Withdrawal'] = ResolversParentTypes['L2Withdrawal']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  l1Recipient?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  l2Sender?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  amount?: Resolver<ResolversTypes['U256Value'], ParentType, ContextType>;
-  timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export interface U256ValueScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['U256Value'], any> {
-  name: 'U256Value';
-}
 
 export type SubscriptionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
   depositEvent?: SubscriptionResolver<Maybe<ResolversTypes['DepositEvent']>, "depositEvent", ParentType, ContextType, RequireFields<SubscriptiondepositEventArgs, 'id' | 'subgraphError'>>;
@@ -1108,6 +1093,8 @@ export type DepositEventResolvers<ContextType = MeshContext, ParentType extends 
   bridgeAddressL2?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   amount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['TransferStatus'], ParentType, ContextType>;
+  payload?: Resolver<Maybe<Array<ResolversTypes['BigInt']>>, ParentType, ContextType>;
+  nonce?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
   createdAtBlock?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   createdTxHash?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   finishedAtBlock?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
@@ -1166,13 +1153,39 @@ export type _Meta_Resolvers<ContextType = MeshContext, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type L2DepositResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['L2Deposit'] = ResolversParentTypes['L2Deposit']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  l2Recipient?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  amount?: Resolver<ResolversTypes['Decimal'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export interface DecimalScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Decimal'], any> {
+  name: 'Decimal';
+}
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
+
+export type L2WithdrawalResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['L2Withdrawal'] = ResolversParentTypes['L2Withdrawal']> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  l1Recipient?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  l2Sender?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  amount?: Resolver<ResolversTypes['U256Value'], ParentType, ContextType>;
+  timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  hash?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export interface U256ValueScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['U256Value'], any> {
+  name: 'U256Value';
+}
+
 export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
-  L2Deposit?: L2DepositResolvers<ContextType>;
-  Decimal?: GraphQLScalarType;
-  DateTime?: GraphQLScalarType;
-  L2Withdrawal?: L2WithdrawalResolvers<ContextType>;
-  U256Value?: GraphQLScalarType;
   Subscription?: SubscriptionResolvers<ContextType>;
   BigDecimal?: GraphQLScalarType;
   BigInt?: GraphQLScalarType;
@@ -1185,6 +1198,11 @@ export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   WithdrawalEvent?: WithdrawalEventResolvers<ContextType>;
   _Block_?: _Block_Resolvers<ContextType>;
   _Meta_?: _Meta_Resolvers<ContextType>;
+  L2Deposit?: L2DepositResolvers<ContextType>;
+  Decimal?: GraphQLScalarType;
+  DateTime?: GraphQLScalarType;
+  L2Withdrawal?: L2WithdrawalResolvers<ContextType>;
+  U256Value?: GraphQLScalarType;
 }>;
 
 export type DirectiveResolvers<ContextType = MeshContext> = ResolversObject<{
@@ -1193,7 +1211,7 @@ export type DirectiveResolvers<ContextType = MeshContext> = ResolversObject<{
   derivedFrom?: derivedFromDirectiveResolver<any, any, ContextType>;
 }>;
 
-export type MeshContext = ApibaraTypes.Context & LordsbridgegoerliTypes.Context & BaseMeshContext;
+export type MeshContext = LordsbridgegoerliTypes.Context & ApibaraTypes.Context & BaseMeshContext;
 
 
 import { fileURLToPath } from '@graphql-mesh/utils';
@@ -1201,13 +1219,13 @@ const baseDir = pathModule.join(pathModule.dirname(fileURLToPath(import.meta.url
 
 const importFn: ImportFn = <T>(moduleId: string) => {
   const relativeModuleId = (pathModule.isAbsolute(moduleId) ? pathModule.relative(baseDir, moduleId) : moduleId).split('\\').join('/').replace(baseDir + '/', '');
-  switch (relativeModuleId) {
-    case ".graphclient/sources/apibara/introspectionSchema":
-      return Promise.resolve(importedModule$0) as T;
-
+  switch(relativeModuleId) {
     case ".graphclient/sources/lordsbridgegoerli/introspectionSchema":
+      return Promise.resolve(importedModule$0) as T;
+    
+    case ".graphclient/sources/apibara/introspectionSchema":
       return Promise.resolve(importedModule$1) as T;
-
+    
     default:
       return Promise.reject(new Error(`Cannot find module '${relativeModuleId}'.`));
   }
@@ -1224,60 +1242,60 @@ const rootStore = new MeshStore('.graphclient', new FsStoreStorageAdapter({
 
 export const rawServeConfig: YamlConfig.Config['serve'] = undefined as any
 export async function getMeshOptions(): Promise<GetMeshOptions> {
-  const pubsub = new PubSub();
-  const sourcesStore = rootStore.child('sources');
-  const logger = new DefaultLogger("GraphClient");
-  const cache = new (MeshCache as any)({
-    ...({} as any),
-    importFn,
-    store: rootStore.child('cache'),
-    pubsub,
-    logger,
-  } as any)
+const pubsub = new PubSub();
+const sourcesStore = rootStore.child('sources');
+const logger = new DefaultLogger("GraphClient");
+const cache = new (MeshCache as any)({
+      ...({} as any),
+      importFn,
+      store: rootStore.child('cache'),
+      pubsub,
+      logger,
+    } as any)
 
-  const sources: MeshResolvedSource[] = [];
-  const transforms: MeshTransform[] = [];
-  const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
-  const lordsbridgegoerliTransforms = [];
-  const apibaraTransforms = [];
-  const additionalTypeDefs = [] as any[];
-  const lordsbridgegoerliHandler = new GraphqlHandler({
-    name: "lordsbridgegoerli",
-    config: { "endpoint": "https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli" },
-    baseDir,
-    cache,
-    pubsub,
-    store: sourcesStore.child("lordsbridgegoerli"),
-    logger: logger.child("lordsbridgegoerli"),
-    importFn,
-  });
-  const apibaraHandler = new GraphqlHandler({
-    name: "apibara",
-    config: { "endpoint": "https://p01--graphql-1--xkl8lp5qw8r7.code.run/goerli-graphql" },
-    baseDir,
-    cache,
-    pubsub,
-    store: sourcesStore.child("apibara"),
-    logger: logger.child("apibara"),
-    importFn,
-  });
-  sources[0] = {
-    name: 'lordsbridgegoerli',
-    handler: lordsbridgegoerliHandler,
-    transforms: lordsbridgegoerliTransforms
-  }
-  sources[1] = {
-    name: 'apibara',
-    handler: apibaraHandler,
-    transforms: apibaraTransforms
-  }
-  const additionalResolvers = [] as any[]
-  const merger = new (StitchingMerger as any)({
-    cache,
-    pubsub,
-    logger: logger.child('stitchingMerger'),
-    store: rootStore.child('stitchingMerger')
-  })
+const sources: MeshResolvedSource[] = [];
+const transforms: MeshTransform[] = [];
+const additionalEnvelopPlugins: MeshPlugin<any>[] = [];
+const lordsbridgegoerliTransforms = [];
+const apibaraTransforms = [];
+const additionalTypeDefs = [] as any[];
+const lordsbridgegoerliHandler = new GraphqlHandler({
+              name: "lordsbridgegoerli",
+              config: {"endpoint":"https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli"},
+              baseDir,
+              cache,
+              pubsub,
+              store: sourcesStore.child("lordsbridgegoerli"),
+              logger: logger.child("lordsbridgegoerli"),
+              importFn,
+            });
+const apibaraHandler = new GraphqlHandler({
+              name: "apibara",
+              config: {"endpoint":"https://p01--graphql-1--xkl8lp5qw8r7.code.run/goerli-graphql"},
+              baseDir,
+              cache,
+              pubsub,
+              store: sourcesStore.child("apibara"),
+              logger: logger.child("apibara"),
+              importFn,
+            });
+sources[0] = {
+          name: 'lordsbridgegoerli',
+          handler: lordsbridgegoerliHandler,
+          transforms: lordsbridgegoerliTransforms
+        }
+sources[1] = {
+          name: 'apibara',
+          handler: apibaraHandler,
+          transforms: apibaraTransforms
+        }
+const additionalResolvers = [] as any[]
+const merger = new(StitchingMerger as any)({
+        cache,
+        pubsub,
+        logger: logger.child('stitchingMerger'),
+        store: rootStore.child('stitchingMerger')
+      })
 
   return {
     sources,
@@ -1291,26 +1309,26 @@ export async function getMeshOptions(): Promise<GetMeshOptions> {
     additionalEnvelopPlugins,
     get documents() {
       return [
-        {
-          document: DepositsDocument,
-          get rawSDL() {
-            return printWithCache(DepositsDocument);
-          },
-          location: 'DepositsDocument.graphql'
-        }, {
-          document: L2WithdrawalsDocument,
-          get rawSDL() {
-            return printWithCache(L2WithdrawalsDocument);
-          },
-          location: 'L2WithdrawalsDocument.graphql'
-        }, {
-          document: WithdrawalsDocument,
-          get rawSDL() {
-            return printWithCache(WithdrawalsDocument);
-          },
-          location: 'WithdrawalsDocument.graphql'
-        }
-      ];
+      {
+        document: DepositsDocument,
+        get rawSDL() {
+          return printWithCache(DepositsDocument);
+        },
+        location: 'DepositsDocument.graphql'
+      },{
+        document: L2WithdrawalsDocument,
+        get rawSDL() {
+          return printWithCache(L2WithdrawalsDocument);
+        },
+        location: 'L2WithdrawalsDocument.graphql'
+      },{
+        document: WithdrawalsDocument,
+        get rawSDL() {
+          return printWithCache(WithdrawalsDocument);
+        },
+        location: 'WithdrawalsDocument.graphql'
+      }
+    ];
     },
     fetchFn,
   };
@@ -1353,15 +1371,13 @@ export type DepositsQueryVariables = Exact<{
 }>;
 
 
-export type DepositsQuery = {
-  deposits: Array<(
+export type DepositsQuery = { deposits: Array<(
     Pick<Deposit, 'id' | 'l1Sender' | 'l2Recipient' | 'createdTimestamp'>
-    & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
+    & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate' | 'payload' | 'nonce'>> }
   )>, withdrawals: Array<(
     Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
     & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
-  )>
-};
+  )> };
 
 export type L2WithdrawalsQueryVariables = Exact<{
   where?: InputMaybe<WhereFilterForWithdrawals>;
@@ -1371,7 +1387,7 @@ export type L2WithdrawalsQueryVariables = Exact<{
 
 export type L2WithdrawalsQuery = { l2withdrawals: Array<Pick<L2Withdrawal, 'l2Sender' | 'l1Recipient' | 'amount' | 'timestamp'>>, deposits: Array<(
     Pick<Deposit, 'id' | 'l1Sender' | 'l2Recipient' | 'createdTimestamp'>
-    & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
+    & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate' | 'payload' | 'nonce'>> }
   )> };
 
 export type WithdrawalsQueryVariables = Exact<{
@@ -1379,12 +1395,10 @@ export type WithdrawalsQueryVariables = Exact<{
 }>;
 
 
-export type WithdrawalsQuery = {
-  withdrawals: Array<(
+export type WithdrawalsQuery = { withdrawals: Array<(
     Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
     & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
-  )>
-};
+  )> };
 
 
 export const DepositsDocument = gql`
@@ -1401,6 +1415,8 @@ export const DepositsDocument = gql`
       createdTxHash
       finishedTxHash
       finishedAtDate
+      payload
+      nonce
     }
   }
   withdrawals(
@@ -1444,6 +1460,8 @@ export const L2WithdrawalsDocument = gql`
       createdTxHash
       finishedTxHash
       finishedAtDate
+      payload
+      nonce
     }
   }
 }

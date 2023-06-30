@@ -57,6 +57,8 @@ export type DepositEvent = {
   bridgeAddressL2: Scalars['Bytes'];
   amount: Scalars['BigInt'];
   status: TransferStatus;
+  payload?: Maybe<Array<Scalars['BigInt']>>;
+  nonce?: Maybe<Scalars['BigInt']>;
   createdAtBlock: Scalars['BigInt'];
   createdTxHash: Scalars['Bytes'];
   finishedAtBlock?: Maybe<Scalars['BigInt']>;
@@ -105,6 +107,20 @@ export type DepositEvent_filter = {
   status_not?: InputMaybe<TransferStatus>;
   status_in?: InputMaybe<Array<TransferStatus>>;
   status_not_in?: InputMaybe<Array<TransferStatus>>;
+  payload?: InputMaybe<Array<Scalars['BigInt']>>;
+  payload_not?: InputMaybe<Array<Scalars['BigInt']>>;
+  payload_contains?: InputMaybe<Array<Scalars['BigInt']>>;
+  payload_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
+  payload_not_contains?: InputMaybe<Array<Scalars['BigInt']>>;
+  payload_not_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
+  nonce?: InputMaybe<Scalars['BigInt']>;
+  nonce_not?: InputMaybe<Scalars['BigInt']>;
+  nonce_gt?: InputMaybe<Scalars['BigInt']>;
+  nonce_lt?: InputMaybe<Scalars['BigInt']>;
+  nonce_gte?: InputMaybe<Scalars['BigInt']>;
+  nonce_lte?: InputMaybe<Scalars['BigInt']>;
+  nonce_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  nonce_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   createdAtBlock?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_not?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_gt?: InputMaybe<Scalars['BigInt']>;
@@ -161,6 +177,8 @@ export type DepositEvent_orderBy =
   | 'bridgeAddressL2'
   | 'amount'
   | 'status'
+  | 'payload'
+  | 'nonce'
   | 'createdAtBlock'
   | 'createdTxHash'
   | 'finishedAtBlock'

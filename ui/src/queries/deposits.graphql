@@ -1,5 +1,12 @@
-query Deposits($depositsWhere: Deposit_filter, $withdrawalsWhere: Withdrawal_filter) {
-  deposits(where: $depositsWhere, orderBy: createdTimestamp, orderDirection: desc) {
+query Deposits(
+  $depositsWhere: Deposit_filter
+  $withdrawalsWhere: Withdrawal_filter
+) {
+  deposits(
+    where: $depositsWhere
+    orderBy: createdTimestamp
+    orderDirection: desc
+  ) {
     id
     l1Sender
     l2Recipient
@@ -11,9 +18,15 @@ query Deposits($depositsWhere: Deposit_filter, $withdrawalsWhere: Withdrawal_fil
       createdTxHash
       finishedTxHash
       finishedAtDate
+      payload
+      nonce
     }
   }
-  withdrawals(where: $withdrawalsWhere, orderBy: createdTimestamp, orderDirection: desc) {
+  withdrawals(
+    where: $withdrawalsWhere
+    orderBy: createdTimestamp
+    orderDirection: desc
+  ) {
     id
     l2Sender
     l1Recipient

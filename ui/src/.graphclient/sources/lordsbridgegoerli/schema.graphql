@@ -44,6 +44,8 @@ type DepositEvent {
   bridgeAddressL2: Bytes!
   amount: BigInt!
   status: TransferStatus!
+  payload: [BigInt!]
+  nonce: BigInt
   createdAtBlock: BigInt!
   createdTxHash: Bytes!
   finishedAtBlock: BigInt
@@ -92,6 +94,20 @@ input DepositEvent_filter {
   status_not: TransferStatus
   status_in: [TransferStatus!]
   status_not_in: [TransferStatus!]
+  payload: [BigInt!]
+  payload_not: [BigInt!]
+  payload_contains: [BigInt!]
+  payload_contains_nocase: [BigInt!]
+  payload_not_contains: [BigInt!]
+  payload_not_contains_nocase: [BigInt!]
+  nonce: BigInt
+  nonce_not: BigInt
+  nonce_gt: BigInt
+  nonce_lt: BigInt
+  nonce_gte: BigInt
+  nonce_lte: BigInt
+  nonce_in: [BigInt!]
+  nonce_not_in: [BigInt!]
   createdAtBlock: BigInt
   createdAtBlock_not: BigInt
   createdAtBlock_gt: BigInt
@@ -148,6 +164,8 @@ enum DepositEvent_orderBy {
   bridgeAddressL2
   amount
   status
+  payload
+  nonce
   createdAtBlock
   createdTxHash
   finishedAtBlock
