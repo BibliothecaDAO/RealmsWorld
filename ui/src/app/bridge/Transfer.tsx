@@ -43,8 +43,8 @@ export const Transfer = ({ action }: { action: string }) => {
       <>
         <div className="relative flex items-center justify-between">
           <div className="flex-col">
-            <span className="px-2 text-xs tracking-wide text-black/60 font-bold uppercase rounded bg-white/40">
-              From
+            <span className="px-2 text-xs tracking-wide text-white/50 font-bold uppercase rounded bg-white/40 border border-white/20">
+              {action != "withdraw" ? 'from' : 'to'}
             </span>
             <div className="flex text-lg my-1 ">
               <div className="mr-2 bg-white rounded-full h-[32px] w-[32px] self-center">
@@ -68,8 +68,8 @@ export const Transfer = ({ action }: { action: string }) => {
       <>
         <div className="relative flex items-center justify-between">
           <div className="flex-col">
-            <span className="px-2 text-xs tracking-wide text-black/60 font-bold uppercase rounded bg-white/40">
-              To
+            <span className="px-2 text-xs tracking-wide text-white/50 font-bold uppercase rounded bg-white/40 border border-white/20">
+              {action == "withdraw" ? 'from' : 'to'}
             </span>
             <div className="flex text-lg my-1">
               <div className="mr-2 bg-white rounded-full h-[32px] w-[32px] self-center">
@@ -109,7 +109,7 @@ export const Transfer = ({ action }: { action: string }) => {
     );
   };
   return (
-    <div>
+    <div className="relative">
       <div className="mb-2 bg-white/10 rounded p-4 relative border border-white/5">
         {action == "withdraw" ? renderL2Network() : renderL1Network()}
         {renderTokenInput()}
@@ -117,6 +117,7 @@ export const Transfer = ({ action }: { action: string }) => {
       </div>
 
       <Link
+        className="w-full"
         href={`/bridge?action=${action == "deposit" ? "withdraw" : "deposit"}`}
       >
         <div className="w-8 h-8 border absolute left-1/2 -mt-5 -ml-4 rounded-2xl stroke-black hover:bg-white/90 flex bg-white z-10 border-white/5">

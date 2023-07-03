@@ -124,8 +124,8 @@ function StarkLogin() {
         </Button>
       </DialogTrigger>
       <DialogContent className="w-full">
-        <DialogHeader>Connect Starknet Wallet</DialogHeader>
-        <div className="self-center flex-col">
+        <DialogHeader> <h6>Connect Starknet Wallet</h6> </DialogHeader>
+        <div className="self-center flex space-y-2 flex-col">
           {connectors.map((connector) => {
             if (connector.available()) {
               return (
@@ -136,7 +136,7 @@ function StarkLogin() {
                   key={connector.id()}
                   onClick={() => connect(connector)}
                 >
-                  Connect {connector.id()}
+                  <img className="w-6 mr-3" src={connector.icon()} alt="" /> Connect {connector.id()}
                 </Button>
               );
             }
