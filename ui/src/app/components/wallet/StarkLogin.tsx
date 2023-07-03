@@ -53,7 +53,7 @@ function StarkLogin() {
 
   if (status === "connected")
     return (
-      <div className=" border rounded p-2 pt-4">
+      <div className=" border rounded p-2 pt-4 border-white/20">
         <div className="flex mb-3 justify-between">
           <div className="flex">
             <Starknet className="w-8 px-1" /><div className="self-center"> {chain?.name}</div>
@@ -71,14 +71,14 @@ function StarkLogin() {
         </div>
 
         <div className="grid grid-cols-2 align-items-center space-x-3">
-          <div className="px-4 pt-4 pb-2 border rounded">
+          <div className="px-4 pt-4 pb-2 border rounded border-white/20">
 
             <div className="text-2xl flex">
-              <EthereumLogo className="w-5 px-1" />{formatBigInt(balances.l2.eth, 3)}
+              <EthereumLogo className="w-4 mr-2" />{formatBigInt(balances.l2.eth, 3)}
             </div>
 
           </div>
-          <div className="px-4 pt-4 pb-2 border rounded   flex justify-between">
+          <div className="px-4 pt-4 pb-2 border rounded   flex justify-between border-white/20">
 
             <div className="text-2xl flex">
               <Lords className="w-6 fill-current pr-2" />{balances.l2.lords && balances.l2.lords > 0 ? formatBigInt(balances.l2.lords, 3) : 0}
@@ -86,37 +86,6 @@ function StarkLogin() {
             </div>
             <Button href="/bridge" size={'xs'} variant={'subtle'} className="self-center">Bridge</Button>
           </div>
-          {/* {address && (
-          <>
-            <Button
-              variant="outline"
-              size={"lg"}
-              className="flex justify-around w-full col-span-2"
-              onClick={() => onDisconnect()}
-            >
-              {starknetID ? starknetID : shortenHex(address || "", 8)}
-
-                <Starknet class="w-8 px-1" /> {chain?.name}
-              
-              <LogOut className="self-center w-4" />
-            </Button>
-          </>
-        )} */}
-          {/* <Button variant="outline" size={"lg"} className="group">
-          <span className="group-hover:hidden">
-            {formatBigInt(balances.l2.eth, 3)}
-          </span>
-          <span className="group-hover:block hidden">Buy Lords</span>
-        </Button>
-        {balances.l2.lords && (
-          <Button variant="outline" size={"lg"} className="group">
-            <span className="group-hover:hidden">
-              {formatBigInt(balances.l2.lords, 3)}
-            </span>
-            <span className="group-hover:block hidden ">Buy Coins</span>
-          </Button>
-        )}
-        <Button onClick={refetch}>Refetch Lrods</Button> */}
           {isWrongNetwork && (
             <Dialog open={isWrongNetwork}>
               <DialogContent className="w-full">

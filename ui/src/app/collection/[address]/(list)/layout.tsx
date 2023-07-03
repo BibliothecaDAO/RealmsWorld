@@ -17,7 +17,7 @@ export default function RootLayout({
     : defaultImage;
 
   const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(32, 32, 32, 1)), url(${imageUrl}), url(${defaultImage})`,
+    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(5,5,5, 1)), url(${imageUrl}), url(${defaultImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
@@ -52,9 +52,8 @@ export default function RootLayout({
                 variant={'link'}
                 size={'sm'}
                 exact
-                href={`/collection/${params.address}${
-                  tab.link && "/" + tab.link
-                }`}
+                href={`/collection/${params.address}${tab.link && "/" + tab.link
+                  }`}
               >
                 {tab.name}
               </NavLink>

@@ -64,10 +64,10 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
 
   return (
     <div>
-      <h5 className="flex justify-between">
+      <h5 className="flex justify-between ">
         {isL1 ? "Mainnet" : "Starknet"}  {evaluate("", { network: isL1 ? "L1" : "L2" })} {renderExplorers()}
       </h5>
-      <div className="overflow-y-scroll max-h-[700px] h-full p-2 border">
+      <div className="overflow-y-scroll max-h-[700px] h-full p-2 border border-white/20 rounded">
         {renderTransfers()}
       </div>
     </div>
