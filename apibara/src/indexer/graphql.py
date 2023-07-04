@@ -95,6 +95,7 @@ class L2Withdrawal:
 @strawberry.input
 class WhereFilterForTransaction:
     id: Optional[str] = None
+    l2Recipient: Optional[str] = None
 
 
 @strawberry.input
@@ -113,6 +114,8 @@ def get_deposits(
     if where is not None:
         if where.id is not None:
             filter["hash"] = where.id
+        if where.l2Recipient is not None:
+            filter["l2Recipient"] = where.l2Recipient
 
     query = db["l2deposits"].find(filter).skip(skip).limit(first)
     print(f"{vars(query)}")
