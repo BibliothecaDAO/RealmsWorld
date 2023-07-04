@@ -4,7 +4,7 @@
   "network": "mainnet",
   "modules": {
     "starknetMessaging": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-    "ethBridge": "0x0000000000000000000000000000000000000000",
+    "ethBridge": "0x0000000000000000000000000000000000001245",
     "tokenBridges": [
       {
         "token": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
