@@ -3,9 +3,8 @@
 import { ReservoirKitProvider, darkTheme } from "@reservoir0x/reservoir-kit-ui";
 import { WagmiConfig, createConfig, configureChains } from "wagmi";
 import { mainnet, goerli } from "wagmi/chains";
-import { StarknetConfig } from "@starknet-react/core";
+import { InjectedConnector, StarknetConfig } from "@starknet-react/core";
 import { publicProvider } from "wagmi/providers/public";
-import { InjectedConnector } from "./StarknetProvider/InjectedConnector";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
