@@ -7,7 +7,7 @@
     "ethBridge": "0x0000000000000000000000000000000000000000",
     "tokenBridges": [
       {
-        "token": "0x5104846dc1c3c7697b856dc69e350ae4dcc47e24",
+        "token": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
         "bridge": "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9"
       }
     ]
