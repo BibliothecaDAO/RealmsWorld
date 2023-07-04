@@ -2,10 +2,10 @@ sources:
   - name: lordsbridgegoerli
     handler:
       graphql:
-        endpoint: "{env.NEXT_PUBLIC_BRIDGE_SUBGRAPH_URL}"
+        endpoint: "${BRIDGE_SUBGRAPH_URL}"
   - name: apibara
     handler:
       graphql:
-        endpoint: "{env.NEXT_PUBLIC_APIBARA_URL}"
+        endpoint: "${APIBARA_URL}"
 documents:
   - "./queries/**/*.graphql"

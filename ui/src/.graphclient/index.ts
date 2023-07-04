@@ -1263,7 +1263,7 @@ const apibaraTransforms = [];
 const additionalTypeDefs = [] as any[];
 const lordsbridgegoerliHandler = new GraphqlHandler({
               name: "lordsbridgegoerli",
-              config: {"endpoint":"{env.NEXT_PUBLIC_BRIDGE_SUBGRAPH_URL}"},
+              config: {"endpoint":"https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli"},
               baseDir,
               cache,
               pubsub,
@@ -1273,7 +1273,7 @@ const lordsbridgegoerliHandler = new GraphqlHandler({
             });
 const apibaraHandler = new GraphqlHandler({
               name: "apibara",
-              config: {"endpoint":"{env.NEXT_PUBLIC_APIBARA_URL}"},
+              config: {"endpoint":"https://resonant-badge-production.up.railway.app/goerli-graphql"},
               baseDir,
               cache,
               pubsub,
