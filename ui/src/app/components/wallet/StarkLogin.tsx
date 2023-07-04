@@ -8,47 +8,34 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { Button } from "@/app/components/ui/button";
-import { shortenHex } from "@/functions/utils";
 import { LogOut } from "lucide-react";
 import {
   useConnectors,
   useAccount,
-  useStarkName,
   useNetwork,
 } from "@starknet-react/core";
 import { useState, useEffect } from "react";
-import { cn, formatBigInt } from "@/app/lib/utils";
+import { formatBigInt } from "@/app/lib/utils";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import Starknet from "@/icons/starknet.svg"
-import { RenderExplorers } from "./utils";
 import Lords from "@/icons/lords.svg";
 import EthereumLogo from "@/icons/ethereum.svg";
 function StarkLogin() {
-  const { available, connect, connectors, disconnect } = useConnectors();
-  const { account, address, status } = useAccount();
+  const { connect, connectors, disconnect } = useConnectors();
+  const { address, status } = useAccount();
   const { balances } = useWalletsProviderContext();
-
-  /* const { data, isLoading, isError } = useStarkName({
-    address: address || "",
-  });
-  const [starknetID, setStarknetID] = useState("");
-  useEffect(() => {
-    if (data) {
-      setStarknetID(data);
-    }
-  }, [data]);*/
   const { chain } = useNetwork();
   const [isWrongNetwork, setIsWrongNetwork] = useState(false);
+
   const network =
     process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "goerli" : "mainnet";
+
   const NETWORK_ID = {
     mainnet: "0x534e5f4d41494e",
     goerli: "0x534e5f474f45524c49",
   };
 
   useEffect(() => {
-    //if (!isConnected) return;
-
     if (
       (chain?.id === NETWORK_ID.goerli && network === "mainnet") ||
       (chain?.id === NETWORK_ID.mainnet && network === "goerli")
@@ -57,13 +44,11 @@ function StarkLogin() {
     } else {
       setIsWrongNetwork(false);
     }
-  }, [chain, network, address /*, isConnected*/]);
+  }, [chain, network, address]);
 
   const onDisconnect = () => {
     disconnect();
-    //setIsConnected(false);
     setIsWrongNetwork(false);
-    //setHasWallet(false);
   };
 
   if (status === "connected")
@@ -139,8 +124,8 @@ function StarkLogin() {
         </Button>
       </DialogTrigger>
       <DialogContent className="w-full">
-        <DialogHeader>Connect Starknet Wallet</DialogHeader>
-        <div className="self-center flex-col">
+        <DialogHeader> <h6>Connect Starknet Wallet</h6> </DialogHeader>
+        <div className="self-center flex space-y-2 flex-col">
           {connectors.map((connector) => {
             if (connector.available()) {
               return (
@@ -151,7 +136,7 @@ function StarkLogin() {
                   key={connector.id()}
                   onClick={() => connect(connector)}
                 >
-                  Connect {connector.id()}
+                  <img className="w-6 mr-3" src={connector.icon()} alt="" /> Connect {connector.id()}
                 </Button>
               );
             }

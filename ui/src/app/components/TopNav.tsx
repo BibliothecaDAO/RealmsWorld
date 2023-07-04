@@ -69,27 +69,24 @@ export const TopNav = () => {
         </Link>
         <Sheet>
           <SheetTrigger asChild>
-
-            <Button variant={'outline'} className="flex gap-x-2">
-
-
-              {l1Address && isDefinitelyConnected && (
-                <>
-                  <EthereumLogo className="mx-2 w-5 h-5" />
-                  {shortenHex(l1Address)}
-                </>
-              )}
-
-              {l2Address && status == 'connected' && (
-                <>
-                  <StarknetLogo className="mx-2 w-5 h-5" />
-                  {shortenHex(l2Address)}
-                </>
-              )}
-
-
-            </Button>
-
+            <div className="flex space-x-2">
+              <Button variant={'outline'} className="flex gap-x-2">
+                {l1Address && isDefinitelyConnected ? (
+                  <>
+                    <EthereumLogo className="mx-2 w-5 h-5" />
+                    {shortenHex(l1Address)}
+                  </>
+                ) : <span className="flex"><EthereumLogo className="mx-2 w-5 h-5" />Connect</span>}
+              </Button>
+              <Button variant={'outline'} className="flex gap-x-2">
+                {l2Address && status == 'connected' ? (
+                  <>
+                    <StarknetLogo className="mx-2 w-5 h-5" />
+                    {shortenHex(l2Address)}
+                  </>
+                ) : <span className="flex"><StarknetLogo className="mx-2 w-5 h-5" />Connect</span>}
+              </Button>
+            </div>
 
           </SheetTrigger>
           <SheetContent position={'right'} size={'lg'}>
