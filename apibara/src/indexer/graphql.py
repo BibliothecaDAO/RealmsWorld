@@ -76,7 +76,7 @@ class L2Withdrawal:
     id: str
     l1Recipient: str
     l2Sender: str
-    amount: U256Value
+    amount: Decimal
     timestamp: datetime
     hash: str
 
@@ -87,7 +87,7 @@ class L2Withdrawal:
             hash=data["hash"],
             l2Sender=data["l2Sender"],
             l1Recipient=data["l1Recipient"],
-            amount=data["amount"],
+            amount=data["amount"].to_decimal(),
             timestamp=data["timestamp"],
         )
 
