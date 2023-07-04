@@ -13,6 +13,19 @@ directive @subgraphId(id: String!) on OBJECT
 directive @derivedFrom(field: String!) on FIELD_DEFINITION
 
 type Query {
+  l2deposits(first: Int = 100, skip: Int = 0, orderBy: String = null, orderByDirection: String = "asc", where: WhereFilterForTransaction = null): [L2Deposit!]!
+  deposit(
+    id: ID!
+    """
+    The block at which the query should be executed. Can either be a `{ hash: Bytes }` value containing a block hash, a `{ number: Int }` containing the block number, or a `{ number_gte: Int }` containing the minimum block number. In the case of `number_gte`, the query will be executed on the latest block only if the subgraph has progressed to or past the minimum block number. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+    """
+    Set to `allow` to receive data even if the subgraph has skipped over errors while syncing.
+    """
+    subgraphError: _SubgraphErrorPolicy_! = deny
+  ): Deposit
+  l2withdrawals(first: Int = 100, skip: Int = 0, orderBy: String = null, orderByDirection: String = "asc", where: WhereFilterForWithdrawals = null): [L2Withdrawal!]!
   depositEvent(
     id: ID!
     """
@@ -39,7 +52,6 @@ type Query {
     """
     subgraphError: _SubgraphErrorPolicy_! = deny
   ): [DepositEvent!]!
-  deposit(hash: String!): L2Deposit
   deposits(
     skip: Int = 0
     first: Int = 100
@@ -135,8 +147,40 @@ type Query {
   ): [Token!]!
   """Access to subgraph metadata"""
   _meta(block: Block_height): _Meta_
-  l2deposits(first: Int = 100, skip: Int = 0, orderBy: String = null, orderByDirection: String = "asc", where: WhereFilterForTransaction = null): [L2Deposit!]!
-  l2withdrawals(first: Int = 100, skip: Int = 0, orderBy: String = null, orderByDirection: String = "asc", where: WhereFilterForWithdrawals = null): [L2Withdrawal!]!
+}
+
+type L2Deposit {
+  id: String!
+  l2Recipient: String!
+  amount: Decimal!
+  timestamp: DateTime!
+  hash: String!
+}
+
+"""Decimal (fixed-point)"""
+scalar Decimal
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
+input WhereFilterForTransaction {
+  id: String = null
+}
+
+type L2Withdrawal {
+  id: String!
+  l1Recipient: String!
+  l2Sender: String!
+  amount: U256Value!
+  timestamp: DateTime!
+  hash: String!
+}
+
+scalar U256Value
+
+input WhereFilterForWithdrawals {
+  id: String = null
+  l2Sender: String = null
 }
 
 type Subscription {
@@ -819,38 +863,4 @@ enum _SubgraphErrorPolicy_ {
   If the subgraph has indexing errors, data will be omitted. The default.
   """
   deny
-}
-
-type L2Deposit {
-  id: String!
-  l2Recipient: String!
-  amount: Decimal!
-  timestamp: DateTime!
-  hash: String!
-}
-
-"""Decimal (fixed-point)"""
-scalar Decimal
-
-"""Date with time (isoformat)"""
-scalar DateTime
-
-input WhereFilterForTransaction {
-  id: String = null
-}
-
-type L2Withdrawal {
-  id: String!
-  l1Recipient: String!
-  l2Sender: String!
-  amount: U256Value!
-  timestamp: DateTime!
-  hash: String!
-}
-
-scalar U256Value
-
-input WhereFilterForWithdrawals {
-  id: String = null
-  l2Sender: String = null
 }

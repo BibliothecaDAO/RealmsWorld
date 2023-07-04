@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "build-client": "graphclient build --dir src",
+    "build-client": "NEXT_PUBLIC_BRIDGE_SUBGRAPH_URL=https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli NEXT_PUBLIC_APIBARA_URL=https://resonant-badge-production.up.railway.app/goerli-graphql graphclient build --dir src",
+    "build": "yarn build-client && next build",
     "start": "next start",
     "lint": "next lint",
     "generate": "graphql-codegen --config config.yml"
@@ -62,6 +62,7 @@
     "class-variance-authority": "^0.6.1",
     "cmdk": "^0.2.0",
     "connectkit": "^1.4.0",
+    "cross-env": "^7.0.3",
     "framer-motion": "^10.12.17",
     "get-starknet": "3.0.1",
     "graphql": "^16.7.1",

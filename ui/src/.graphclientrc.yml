@@ -2,10 +2,10 @@ sources:
   - name: lordsbridgegoerli
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli
+        endpoint: "{env.NEXT_PUBLIC_BRIDGE_SUBGRAPH_URL}"
   - name: apibara
     handler:
       graphql:
-        endpoint: https://p01--graphql-1--xkl8lp5qw8r7.code.run/goerli-graphql
+        endpoint: "{env.NEXT_PUBLIC_APIBARA_URL}"
 documents:
   - "./queries/**/*.graphql"
