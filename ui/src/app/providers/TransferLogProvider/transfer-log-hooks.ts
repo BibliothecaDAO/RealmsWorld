@@ -63,7 +63,7 @@ export const useTransfers = () => {
 };
 //@ts-ignore
 const flattenPages = data => {
-    return data ? [...data?.pages?.[0]?.deposits, ...data?.pages?.[0]?.withdrawals] : [] /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
+    return data ? [...data?.pages?.[0]?.withdrawals, ...data?.pages?.[0]?.deposits] : [] /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
 };
 const flattenWithdrawals = (data: any) => {
     return data ? [...data?.pages?.[0]?.l2withdrawals, ...data?.pages?.[0]?.deposits] : [] /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
