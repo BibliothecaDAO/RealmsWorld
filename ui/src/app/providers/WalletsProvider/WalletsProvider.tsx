@@ -63,13 +63,13 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   const network =
     process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
 
-  const stubAccount = l2Account ? l2Account : '0x0';
+  const stubAccount = l2Account ? l2Account : "0x0";
 
   const {
     data: l2LordsBalance,
     isLoading: l2LordsIsLoading,
     error: l2LordsError,
-    refetch: l2LordsRefetch
+    refetch: l2LordsRefetch,
   } = useContractRead({
     address: tokensConst.L2["LORDS"].tokenAddress[ChainType.L2[network]],
     abi: L2_C1ERC20,
@@ -82,7 +82,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     data: l2EthBalance,
     isLoading: l2EthIsLoading,
     error: l2EthError,
-    refetch: l2EthRefetch
+    refetch: l2EthRefetch,
   } = useContractRead({
     address: tokensConst.L2["ETH"].tokenAddress[ChainType.L2[network]],
     abi: L2_ERC20,
@@ -103,12 +103,12 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     abi: L1_ERC20_ABI,
   };
 
-  const {
-    data: l1LordsBalance
-  } = useBalance({
+  const { data: l1LordsBalance } = useBalance({
     ...l1ERC20Contract,
     address: l1Account as `0x${string}`,
-    token: "0x7543919933eef56f754daf6835fa97f6dfd785d8",
+    token: tokensConst.L1["LORDS"].tokenAddress[
+      ChainType.L1[network]
+    ] as `0x${string}`,
   });
 
   const { data: l1EthBalance } = useBalance({
@@ -137,7 +137,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
         //@ts-ignore
         eth: l2EthBalance?.balance
           ? //@ts-ignore
-          uint256.uint256ToBN(l2EthBalance?.balance)
+            uint256.uint256ToBN(l2EthBalance?.balance)
           : 0n,
         lords: l2LordsBalance ? l2LordsBalance : 0n,
       },
