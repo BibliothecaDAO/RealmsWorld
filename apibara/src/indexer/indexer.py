@@ -111,11 +111,12 @@ class LordsBridgeIndexer(StarkNetIndexer):
         if withdraw is not None:
             return withdraw
 
+        value = to_decimal(felt.to_int(data[1]), 18)
         withdraw_doc = {
             "hash": tx_hash,
             "l1Recipient": felt.to_hex(data[0]),
             "l2Sender": felt.to_hex(receipt.events[0].data[0]),
-            "amount": Decimal128(data[1]),
+            "amount": Decimal128(value),
             "timestamp": block.header.timestamp.ToDatetime(),
         }
         await info.storage.insert_one("l2withdrawals", withdraw_doc)

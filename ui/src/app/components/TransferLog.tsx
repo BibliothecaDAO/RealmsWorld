@@ -14,7 +14,11 @@ import {
 } from "@starkware-industries/commons-js-utils";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { PlusCircleIcon, MinusCircleIcon, ExternalLinkIcon } from "lucide-react";
+import {
+  PlusCircleIcon,
+  MinusCircleIcon,
+  ExternalLinkIcon,
+} from "lucide-react";
 import { STARKSCAN_TX_URL, STARKSCAN_ETH_TX_URL } from "@/constants/env";
 import { Button } from "./ui/button";
 import LordsIcon from "@/icons/lords.svg";
@@ -49,7 +53,7 @@ export const TransferLog = ({
     finishedAtDate,
   }: DepositEvent | WithdrawalEvent = depositEvents?.[0] ||
   withdrawalEvents?.[0] ||
-    transfer;
+  transfer;
 
   const network =
     process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
@@ -57,14 +61,14 @@ export const TransferLog = ({
   const getl2hash = async () => {
     const hash = depositEvents?.[0].payload
       ? await getTransactionHash(
-        TransactionHashPrefix.L1_HANDLER,
-        tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]],
-        tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[network]],
-        "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
-        depositEvents?.[0].payload,
-        ("SN_" + network) as ChainTypeL2,
-        depositEvents?.[0].nonce
-      )
+          TransactionHashPrefix.L1_HANDLER,
+          tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]],
+          tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[network]],
+          "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
+          depositEvents?.[0].payload,
+          ("SN_" + network) as ChainTypeL2,
+          depositEvents?.[0].nonce
+        )
       : "";
     setL2hash(hash);
   };
@@ -88,8 +92,8 @@ export const TransferLog = ({
       >
         {!isOnChain(typedStatus)
           ? TransactionStatusFriendlyMessage[
-          typedStatus || TransactionStatus.NOT_RECEIVED
-          ]
+              typedStatus || TransactionStatus.NOT_RECEIVED
+            ]
           : ""}
       </div>
     );
@@ -124,7 +128,7 @@ export const TransferLog = ({
           !depositEvents?.[0].payload ||
           !status ||
           TransactionStatusStep[typedStatus] <
-          TransactionStatusStep[TransactionStatus.RECEIVED]
+            TransactionStatusStep[TransactionStatus.RECEIVED]
         }
         rel="noopener noreferrer"
         href={STARKSCAN_TX_URL(l2hash)}
@@ -144,12 +148,11 @@ export const TransferLog = ({
           <PlusCircleIcon className="mr-1 self-center fill-green-300 stroke-green-900" />
         )}{" "}
         <div className="ml-3">
-          <div className="text-gray-600 text-xs font-semibold mb-2">{`${transfer.timestamp || getFullTime(createdTimestamp * 1000)
-            }`}</div>
+          <div className="text-gray-600 text-xs font-semibold mb-2">{`${
+            transfer.timestamp || getFullTime(createdTimestamp * 1000)
+          }`}</div>
           <div className="text-2xl font-semibold flex">
-
-
-            {formatEther(amount || 0)}{" "}
+            {transfer.amount ? amount : formatEther(amount || 0)}
             <LordsIcon className="fill-white w-5 h-5 ml-3 self-center" />
           </div>
         </div>

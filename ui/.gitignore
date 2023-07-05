@@ -13,6 +13,7 @@
 !.yarn/sdks
 !.yarn/versions# testing
 /coverage
+*/.graphclient
 
 # next.js
 /.next/

@@ -13,10 +13,11 @@
 !.yarn/sdks
 !.yarn/versions# testing
 /coverage
-
 # next.js
 /.next/
 /out/
+*/.graphclient
+*/.graphclient/*
 
 # production
 /build
@@ -41,3 +42,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+ui/src/.graphclient/
