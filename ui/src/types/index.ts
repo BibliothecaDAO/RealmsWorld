@@ -232,7 +232,7 @@ interface Link {
   website: string;
   discord: string;
   twitter: string;
-  whitepaper: string;
+  whitepaper?: string;
 }
 
 interface CompatibleToken {
