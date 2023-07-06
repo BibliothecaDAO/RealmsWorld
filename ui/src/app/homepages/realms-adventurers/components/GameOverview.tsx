@@ -23,7 +23,7 @@ const GameOverview: React.FC<OverviewProps> = ({ game }) => {
                 <p className="mb-4 text-3xl">{game?.description}</p>
                 <div>
                     <h5>Links</h5>
-                    <Button className="mr-2" href={game?.links.whitepaper}>White paper</Button>
+                    {game?.links.whitepaper && <Button className="mr-2" href={game?.links.whitepaper}>White paper</Button>}
                     <Button href={game?.links.website}>Website</Button>
                 </div>
 
@@ -37,19 +37,6 @@ const GameOverview: React.FC<OverviewProps> = ({ game }) => {
                         ))}
                     </div>
                 </div>
-
-                {/* <div className="flex my-4">
-          {game?.screenshots.map((screenshot, index) => (
-            <Image
-              key={index}
-              alt={screenshot.alt}
-              src={screenshot.src}
-              width={500}
-              height={500}
-              className="w-full rounded sm:1/2"
-            />
-          ))}
-        </div> */}
             </div>
         </main>
     );

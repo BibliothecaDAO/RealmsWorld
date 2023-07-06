@@ -21,7 +21,7 @@ export default async function CollectionSummary({ address }: any) {
       icon: <Discord className="w-[28px] h-[28px] fill-white" />,
       value: collection.discordUrl,
     },
-    { icon: <Twitter />, value: collection.twitterUsername },
+    { icon: <Twitter />, value: 'https://twitter.com/' + collection.twitterUsername },
     { icon: <Globe />, value: collection.externalUrl },
   ];
 

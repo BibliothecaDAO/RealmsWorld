@@ -12,7 +12,7 @@ export const games = [
         description: 'Conquer the Realms',
         longform: "Eternum is a strategy game that is built on StarkNet. It is a game of management and conquest, where players must build and defend their Realm to thrive. The game is governed by a set of rules that are enforced by the game's smart contracts.",
         links: {
-            website: 'https://realmseternum.com/',
+            website: 'https://eternum.realms.world/',
             discord: 'https://discord.gg/uQnjZhZPfu',
             twitter: 'https://twitter.com/LootRealms',
             whitepaper: 'https://scroll.bibliothecadao.xyz/',
@@ -29,14 +29,6 @@ export const games = [
             {
                 src: '/screenshots/eternum.png',
                 alt: 'Realms: Eternum',
-            },
-            {
-                src: '/screenshots/eternum.png',
-                alt: 'Realms: Eternum',
-            },
-            {
-                src: '/screenshots/eternum.png',
-                alt: 'Realms: Eternum',
             }
         ],
         homepage: '/homepages/realms-adventurers'
@@ -50,25 +42,28 @@ export const games = [
         status: 'alpha',
         chains: ['Starknet'],
         description: 'Play to Die',
-        longform: "Survivors is the first game that uses the Play to Die mechanic. It is a game of onchain survival where you fight to stay alive. The game is governed by a set of rules that are enforced by the game's smart contracts.",
+        longform: "Survivors is the first game that uses the Play to Die mechanic. It is a game of onchain survival where you fight to stay alive.",
         links: {
-            website: 'https://loot-survivor.vercel.app/',
+            website: 'https://survivor.realms.world/',
             discord: 'https://discord.gg/uQnjZhZPfu',
-            twitter: 'https://twitter.com/LootRealms',
-            whitepaper: 'https://scroll.bibliothecadao.xyz/',
+            twitter: 'https://twitter.com/LootRealms'
         },
         compatibleTokens: [],
         screenshots: [
             {
-                src: '/screenshots/survivors-1.png',
+                src: '/screenshots/LS.png',
                 alt: 'Survivors',
             },
             {
-                src: '/screenshots/survivors-2.png',
+                src: '/screenshots/LS3.png',
                 alt: 'Survivors',
             },
             {
-                src: '/screenshots/survivors-3.png',
+                src: '/screenshots/LS7.png',
+                alt: 'Survivors',
+            },
+            {
+                src: '/screenshots/LS8.png',
                 alt: 'Survivors',
             }
         ],
