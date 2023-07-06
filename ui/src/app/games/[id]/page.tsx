@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
           <h1>{game?.name}</h1>
           <div>
-            <Button size={'xs'} variant={'outline'} className="mr-2" href={game?.links.whitepaper}>White paper</Button>
+            {game?.links.whitepaper && <Button size={'xs'} variant={'outline'} className="mr-2" href={game?.links.whitepaper}>White paper</Button>}
             <Button size={'xs'} variant={'outline'} href={game?.links.website}>Website</Button>
           </div>
 
