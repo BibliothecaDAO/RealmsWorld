@@ -21,31 +21,6 @@ function StarkLogin() {
   const { address, status } = useAccount();
   const { balances } = useWalletsProviderContext();
   const { chain } = useNetwork();
-  const [isWrongNetwork, setIsWrongNetwork] = useState(false);
-
-  const network =
-    process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "goerli" : "mainnet";
-
-  const NETWORK_ID = {
-    mainnet: "0x534e5f4d41494e",
-    goerli: "0x534e5f474f45524c49",
-  };
-
-  useEffect(() => {
-    if (
-      (chain?.id === NETWORK_ID.goerli && network === "mainnet") ||
-      (chain?.id === NETWORK_ID.mainnet && network === "goerli")
-    ) {
-      setIsWrongNetwork(true);
-    } else {
-      setIsWrongNetwork(false);
-    }
-  }, [chain, network, address]);
-
-  const onDisconnect = () => {
-    disconnect();
-    setIsWrongNetwork(false);
-  };
 
   if (status === "connected")
     return (
@@ -60,7 +35,7 @@ function StarkLogin() {
               variant="outline"
               size={"xs"}
               className=""
-              onClick={() => onDisconnect()}
+              onClick={() => disconnect()}
             >
               <LogOut className="self-center w-4" />
             </Button>
@@ -90,27 +65,6 @@ function StarkLogin() {
               Bridge
             </Button>
           </div>
-          {isWrongNetwork && (
-            <Dialog open={isWrongNetwork}>
-              <DialogContent className="w-full">
-                <DialogHeader>
-                  <DialogTitle>Wrong Network</DialogTitle>
-                </DialogHeader>
-                <span>
-                  The Atlas currently only supports {network}, please change the
-                  connected network in your wallet, or:
-                </span>
-                <Button
-                  variant={"default"}
-                  size={"lg"}
-                  className="mt-4"
-                  onClick={() => onDisconnect()}
-                >
-                  Disconnect
-                </Button>
-              </DialogContent>
-            </Dialog>
-          )}
         </div>
       </div>
     );
@@ -127,8 +81,7 @@ function StarkLogin() {
       </DialogTrigger>
       <DialogContent className="w-full">
         <DialogHeader>
-          {" "}
-          <h6>Connect Starknet Wallet</h6>{" "}
+          <h6>Connect Starknet Wallet</h6>
         </DialogHeader>
         <div className="self-center flex space-y-2 flex-col">
           {connectors.map((connector) => {

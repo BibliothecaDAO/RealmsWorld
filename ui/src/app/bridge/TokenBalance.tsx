@@ -1,3 +1,4 @@
+"use client";
 import { formatEther } from "viem";
 import { formatBigInt } from "../lib/utils";
 

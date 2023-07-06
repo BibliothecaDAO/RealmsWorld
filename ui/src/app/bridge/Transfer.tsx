@@ -44,7 +44,7 @@ export const Transfer = ({ action }: { action: string }) => {
         <div className="relative flex items-center justify-between">
           <div className="flex-col">
             <span className="px-2 text-xs tracking-wide text-white/50 font-bold uppercase rounded bg-white/40 border border-white/20">
-              {action != "withdraw" ? 'from' : 'to'}
+              {action != "withdraw" ? "from" : "to"}
             </span>
             <div className="flex text-lg my-1 ">
               <div className="mr-2 bg-white rounded-full h-[32px] w-[32px] self-center">
@@ -69,7 +69,7 @@ export const Transfer = ({ action }: { action: string }) => {
         <div className="relative flex items-center justify-between">
           <div className="flex-col">
             <span className="px-2 text-xs tracking-wide text-white/50 font-bold uppercase rounded bg-white/40 border border-white/20">
-              {action == "withdraw" ? 'from' : 'to'}
+              {action == "withdraw" ? "from" : "to"}
             </span>
             <div className="flex text-lg my-1">
               <div className="mr-2 bg-white rounded-full h-[32px] w-[32px] self-center">
@@ -121,7 +121,11 @@ export const Transfer = ({ action }: { action: string }) => {
         href={`/bridge?action=${action == "deposit" ? "withdraw" : "deposit"}`}
       >
         <div className="w-8 h-8 border absolute left-1/2 -mt-5 -ml-4 rounded-2xl stroke-black hover:bg-white/90 flex bg-white z-10 border-white/5">
-          <ArrowUpDown className={`${action == "deposit" ? "rotate-180" : ""} w-4 h-4 m-auto stroke-inherit self-center duration-300 transform`} />
+          <ArrowUpDown
+            className={`${
+              action == "deposit" ? "rotate-180" : ""
+            } w-4 h-4 m-auto stroke-inherit self-center duration-300 transform`}
+          />
         </div>
       </Link>
 
@@ -146,14 +150,14 @@ export const Transfer = ({ action }: { action: string }) => {
           className="w-full mt-2"
           onClick={() => onTransferClick()}
           size={"lg"}
-          disabled={!amount}
-          variant={'default'}
+          disabled={amount == "0"}
+          variant={"default"}
         >
           {!amount
             ? "Please Enter Amount"
             : action == "deposit"
-              ? "Transfer to L2"
-              : "Transfer to L1"}
+            ? "Transfer to L2"
+            : "Transfer to L1"}
         </Button>
       )}
     </div>
