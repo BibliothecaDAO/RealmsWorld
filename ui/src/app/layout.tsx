@@ -58,7 +58,7 @@ export default function RootLayout({
   );
 }
 
-const title = "Atlas - Home to the Adventurers";
+const title = "Realms - Home to the Adventurers";
 const description =
   "Created for Adventurers by Bibliotheca DAO - your window into the onchain world of Realms and the Lootverse.";
 
@@ -66,7 +66,7 @@ export const metadata = {
   title: title,
   description: description,
   icons: {
-    icon: "/vercel.svg",
+    icon: "/BibliothecaBook.svg",
   },
   twitter: {
     card: "summary_large_image",
