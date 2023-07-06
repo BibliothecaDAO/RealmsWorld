@@ -43,7 +43,7 @@ export const useTransferToL1 = () => {
 
                 handleProgress(
                     progressOptions.waitForConfirm(
-                        connector?.id() || '',
+                        connector?.id || '',
                         stepOf(TransferStep.CONFIRM_TX, TransferToL1Steps)
                     )
                 );

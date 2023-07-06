@@ -76,7 +76,7 @@ class L2Withdrawal:
     id: str
     l1Recipient: str
     l2Sender: str
-    amount: U256Value
+    amount: Decimal
     timestamp: datetime
     hash: str
 
@@ -87,7 +87,7 @@ class L2Withdrawal:
             hash=data["hash"],
             l2Sender=data["l2Sender"],
             l1Recipient=data["l1Recipient"],
-            amount=data["amount"],
+            amount=data["amount"].to_decimal(),
             timestamp=data["timestamp"],
         )
 
@@ -95,6 +95,7 @@ class L2Withdrawal:
 @strawberry.input
 class WhereFilterForTransaction:
     id: Optional[str] = None
+    l2Recipient: Optional[str] = None
 
 
 @strawberry.input
@@ -113,6 +114,8 @@ def get_deposits(
     if where is not None:
         if where.id is not None:
             filter["hash"] = where.id
+        if where.l2Recipient is not None:
+            filter["l2Recipient"] = where.l2Recipient
 
     query = db["l2deposits"].find(filter).skip(skip).limit(first)
     print(f"{vars(query)}")
