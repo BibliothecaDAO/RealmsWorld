@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build-client": "BRIDGE_SUBGRAPH_URL=https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli APIBARA_URL=https://resonant-badge-production.up.railway.app/goerli-graphql graphclient build --dir src",
+    "build-client": "build-client": "BRIDGE_SUBGRAPH_URL=https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-mainnet APIBARA_URL=https://resonant-badge-production.up.railway.app/graphql graphclient build --dir src",
     "build": "yarn build-client && next build",
     "start": "next start",
     "lint": "next lint",
