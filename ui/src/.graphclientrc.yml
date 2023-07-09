@@ -2,10 +2,10 @@ sources:
   - name: lordsbridgegoerli
     handler:
       graphql:
-        endpoint: "${BRIDGE_SUBGRAPH_URL}"
+        endpoint: https://api.thegraph.com/subgraphs/name/{context.subgraphName:redbeardeth/starknet-bridge-mainnet}
   - name: apibara
     handler:
       graphql:
-        endpoint: "${APIBARA_URL}"
+        endpoint: https://resonant-badge-production.up.railway.app/{context.apibaraHandle:graphql}
 documents:
   - "./queries/**/*.graphql"

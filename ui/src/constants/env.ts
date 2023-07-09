@@ -20,5 +20,5 @@ export const STARKSCAN_ETH_TX_URL = (tx: any) => evaluate(`${STARKSCAN_URL}/eth-
 export const STARKSCAN_ACCOUNT_URL = (contract: any) =>
     evaluate(`${STARKSCAN_URL}/contract/{{contract}}`, { contract });
 export const LOCAL_STORAGE_ACCEPT_TERMS_KEY = process.env.NEXT_PUBLIC_LOCAL_STORAGE_ACCEPT_TERMS;
-export const GET_TRANSFERS_ENDPOINT = process.env.NEXT_PUBLIC_BRIDGE_SUBGRAPH_URL
-export const GET_L2_APIBARA_ENDPOINT = process.env.NEXT_PUBLIC_APIBARA_URL
+export const GET_TRANSFERS_ENDPOINT = process.env.NEXT_PUBLIC_SUBGRAPH_NAME
+export const GET_L2_APIBARA_ENDPOINT = process.env.NEXT_PUBLIC_APIBARA_HANDLE

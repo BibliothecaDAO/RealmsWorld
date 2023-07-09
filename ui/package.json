@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build-client": "BRIDGE_SUBGRAPH_URL=https://api.thegraph.com/subgraphs/name/redbeardeth/starknet-bridge-goerli APIBARA_URL=https://resonant-badge-production.up.railway.app/goerli-graphql graphclient build --dir src",
+    "build-client": "graphclient build --dir src",
     "build": "yarn build-client && next build",
     "start": "next start",
     "lint": "next lint",
@@ -48,8 +48,8 @@
     "@radix-ui/react-tooltip": "^1.0.6",
     "@react-three/drei": "^9.58.4",
     "@react-three/fiber": "^8.12.0",
-    "@reservoir0x/reservoir-kit-ui": "^1.2.1",
-    "@starknet-react/core": "^1.0.2",
+    "@reservoir0x/reservoir-kit-ui": "^1.2.2",
+    "@starknet-react/core": "^1.0.3",
     "@starkware-industries/commons-js-enums": "^1.2.0",
     "@starkware-industries/commons-js-utils": "^1.2.2",
     "@tanstack/react-query": "^4.29.19",
@@ -63,8 +63,8 @@
     "cmdk": "^0.2.0",
     "connectkit": "^1.4.0",
     "cross-env": "^7.0.3",
-    "framer-motion": "^10.12.17",
-    "get-starknet": "3.0.1",
+    "framer-motion": "^10.12.18",
+    "get-starknet-core": "3.1.0",
     "graphql": "^16.7.1",
     "lucide-react": "^0.256.0",
     "next": "13.4.8",
@@ -81,8 +81,8 @@
     "three": "^0.150.1",
     "typescript": "5.1.3",
     "use-deep-compare-effect": "^1.8.1",
-    "viem": "~1.2.9",
-    "wagmi": "~1.3.7"
+    "viem": "~1.2.11",
+    "wagmi": "~1.3.8"
   },
   "devDependencies": {
     "@graphprotocol/client-cli": "^3.0.0",

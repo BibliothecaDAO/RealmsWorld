@@ -31,8 +31,10 @@ interface TransferLogProviderProps {
 export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
   children,
 }) => {
-  const sdk = getBuiltGraphSDK();
-
+  const sdk = getBuiltGraphSDK({
+    subgraphName: process.env.NEXT_PUBLIC_SUBGRAPH_NAME,
+    apibaraHandle: process.env.NEXT_PUBLIC_APIBARA_HANDLE,
+  });
   const { address: accountL1 } = useL1Account();
   const { address: accountL2 } = useL2Account();
   const [nextL1, setNextL1] = useState("");
