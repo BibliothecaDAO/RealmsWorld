@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { Button } from "@/app/components/ui/button";
-import { LogOut } from "lucide-react";
+import { LogOut, Mail } from "lucide-react";
 import { useConnectors, useAccount, useNetwork } from "@starknet-react/core";
 import { useState, useEffect } from "react";
 import { formatBigInt } from "@/app/lib/utils";
@@ -16,6 +16,7 @@ import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import Starknet from "@/icons/starknet.svg";
 import Lords from "@/icons/lords.svg";
 import EthereumLogo from "@/icons/ethereum.svg";
+
 export const StarkLogin = () => {
   const { connect, connectors, disconnect } = useConnectors();
   const { address, status } = useAccount();
@@ -94,8 +95,15 @@ export const StarkLogin = () => {
                   key={connector.id}
                   onClick={() => connect(connector)}
                 >
-                  <img className="w-6 mr-3" src={connector.icon} alt="" />{" "}
-                  Connect {connector.id}
+                  {connector.icon ? (
+                    <img className="w-6 mr-3" src={connector.icon} alt="" />
+                  ) : (
+                    <Mail className="mr-3 " />
+                  )}
+                  Connect{" "}
+                  {typeof connector.id == "string"
+                    ? connector.id
+                    : "With Email"}
                 </Button>
               );
             }
