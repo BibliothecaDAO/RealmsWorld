@@ -93,7 +93,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   });
 
   useEffect(() => {
-    if (stubAccount) {
+    if (stubAccount && !l2LordsBalance) {
       l2LordsRefetch();
     }
   }, [l2LordsBalance]);

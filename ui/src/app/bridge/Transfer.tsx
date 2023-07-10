@@ -25,7 +25,7 @@ export const Transfer = ({ action }: { action: string }) => {
   const { address: l2Account } = useAccount();
   // const [toastOpen, setToastOpen] = useState(false);
   const [amount, setAmount] = useState("0");
-  const { balances } = useWalletsProviderContext();
+  const { balances, l2loading } = useWalletsProviderContext();
 
   const transferToL1 = useTransferToL1();
   const transferToL2 = useTransferToL2();
@@ -84,6 +84,7 @@ export const Transfer = ({ action }: { action: string }) => {
           <TokenBalance
             balance={balances.l2?.lords || BigInt(0)}
             symbol="Lords"
+            isLoading={l2loading}
           />
         </div>
       </>
