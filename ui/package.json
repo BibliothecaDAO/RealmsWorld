@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
+    "@argent/starknet-react-webwallet-connector": "^6.4.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@habx/apollo-multi-endpoint-link": "^2.9.0",

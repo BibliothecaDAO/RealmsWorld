@@ -9,6 +9,8 @@ import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { Provider as StarkProvider } from "starknet";
+import { WebWalletConnector } from "@argent/starknet-react-webwallet-connector";
+
 enum StarknetChainId {
   SN_MAIN = "0x534e5f4d41494e",
   SN_GOERLI = "0x534e5f474f45524c49",
@@ -17,6 +19,9 @@ enum StarknetChainId {
 const starkConnectors = [
   new InjectedConnector({ options: { id: "braavos" } }),
   new InjectedConnector({ options: { id: "argentX" } }),
+  new WebWalletConnector({
+    url: "https://web.argent.xyz",
+  }),
 ];
 
 const theme = darkTheme({
