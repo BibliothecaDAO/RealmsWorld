@@ -16,7 +16,7 @@ import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import Starknet from "@/icons/starknet.svg";
 import Lords from "@/icons/lords.svg";
 import EthereumLogo from "@/icons/ethereum.svg";
-function StarkLogin() {
+export const StarkLogin = () => {
   const { connect, connectors, disconnect } = useConnectors();
   const { address, status } = useAccount();
   const { balances } = useWalletsProviderContext();
@@ -104,6 +104,6 @@ function StarkLogin() {
       </DialogContent>
     </Dialog>
   );
-}
+};
 
 export default StarkLogin;
