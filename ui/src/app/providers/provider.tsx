@@ -63,6 +63,7 @@ export function Provider({ children }: any) {
         defaultProvider={
           process.env.NEXT_PUBLIC_IS_TESTNET ? testnetProvider : mainnetProvider
         }
+        //@ts-ignore
         connectors={starkConnectors}
         queryClient={queryClient}
       >
