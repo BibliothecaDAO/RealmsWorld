@@ -1,0 +1,38 @@
+query UsersRealms(
+  $address: String!
+  $addressId: ID!
+  # $resources: [Int]
+  # $orders: [String]
+  $first: Int
+  $skip: Int # $orderBy: String # $orderDirection: String
+) {
+  realms(
+    first: $first
+    skip: $skip
+    where: { currentOwner_contains: $address }
+  ) {
+    id
+    name
+  }
+  bridgedRealms: realms(
+    first: $first
+    skip: $skip
+    where: { bridgedOwner: $address }
+  ) {
+    id
+    name
+  }
+  bridgedV2Realms: realms(
+    first: $first
+    skip: $skip
+    where: { bridgedV2Owner: $address }
+  ) {
+    id
+    name
+  }
+  wallet(id: $addressId) {
+    realmsHeld
+    bridgedRealmsHeld
+    bridgedV2RealmsHeld
+  }
+}
