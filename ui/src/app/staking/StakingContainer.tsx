@@ -117,7 +117,11 @@ export const StakingContainer = () => {
                   {realmsData?.wallet?.bridgedRealmsHeld}
                 </span>
                 <span className="mb-4">Realms Staked</span>
-                <StakingModal unstake realms={realmsData?.bridgedRealms} />
+                <StakingModal
+                  unstake
+                  type="galleon"
+                  realms={realmsData?.bridgedRealms}
+                />
               </>
             ) : (
               "Loading"
@@ -165,7 +169,11 @@ export const StakingContainer = () => {
                   {realmsData?.wallet?.bridgedV2RealmsHeld}
                 </span>
                 <span className="mb-4">Staked Realms:</span>
-                <StakingModal unstake realms={realmsData?.bridgedV2Realms} />
+                <StakingModal
+                  unstake
+                  type="carrack"
+                  realms={realmsData?.bridgedV2Realms}
+                />
               </>
             ) : (
               "Loading"
@@ -287,7 +295,7 @@ const StakingModal = ({
             <span className="capitalize">{shipType ?? "Ship"}</span>
           </h6>
         </DialogHeader>
-        {shipType ? (
+        {shipType && realms ? (
           <>
             <div className="self-center flex flex-col">
               <RealmsTable

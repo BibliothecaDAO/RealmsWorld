@@ -34,13 +34,10 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 type Order = "asc" | "desc";
 
-function getComparator<Key extends keyof any>(
+function getComparator<Key extends keyof Pick<Realm, "id" | "name">>(
   order: Order,
   orderBy: Key
-): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
-) => number {
+): (a: Pick<Realm, "id" | "name">, b: Pick<Realm, "id" | "name">) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
@@ -95,7 +92,7 @@ interface EnhancedTableProps {
   ) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
-  orderBy: string;
+  orderBy: keyof Pick<Realm, "id" | "name">;
   rowCount: number;
 }
 
@@ -118,7 +115,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     <TableHead>
       <TableRow>
         <TableCell
-          sx={{ backgroundColor: "transparent", color: "white" }}
+          sx={{ backgroundColor: "black", color: "white" }}
           padding="checkbox"
         >
           <Checkbox
@@ -136,7 +133,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           <TableCell
             key={headCell.id}
             sx={{
-              backgroundColor: "transparent",
+              backgroundColor: "black",
               color: "white !important",
               textTransform: "uppercase",
               fontWeight: "800",
@@ -149,7 +146,10 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
-              sx={{ color: "white !important" }}
+              sx={{
+                color: "white !important",
+                ".MuiTableSortLabel-icon": { color: "white !important" },
+              }}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -221,19 +221,18 @@ export default function RealmsTable({
   selectedRealms,
   onSelectRealms,
 }: {
-  realms?: Pick<Realm, "id" | "name">[];
+  realms: Pick<Realm, "id" | "name">[];
   selectedRealms: readonly string[];
   onSelectRealms: (realms: readonly string[]) => void;
 }) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] =
     React.useState<keyof Pick<Realm, "id" | "name">>("id");
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(20);
 
-  const rows = realms || [];
+  const rows: Pick<Realm, "id" | "name">[] = realms;
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
@@ -296,10 +295,9 @@ export default function RealmsTable({
 
   const visibleRows = React.useMemo(
     () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
+      rows
+        .sort(getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
     [order, orderBy, page, rowsPerPage]
   );
 
