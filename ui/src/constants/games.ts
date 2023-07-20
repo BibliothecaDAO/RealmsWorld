@@ -20,7 +20,7 @@ export const games = [
         compatibleTokens: [
             {
                 name: 'Realms',
-                contract: realms.mainnet,
+                contract: realms.MAIN,
                 icon: 'realms.png',
                 image: '/backgrounds/warRoom.png',
             }

@@ -95,7 +95,7 @@ export const StarkLogin = () => {
                   key={connector.id}
                   onClick={() => connect(connector)}
                 >
-                  {connector.icon ? (
+                  {typeof connector.icon == "string" ? (
                     <img className="w-6 mr-3" src={connector.icon} alt="" />
                   ) : (
                     <Mail className="mr-3 " />

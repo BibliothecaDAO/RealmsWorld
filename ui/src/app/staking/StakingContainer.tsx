@@ -5,6 +5,9 @@ import { useAccount, useContractRead, useContractWrite } from "wagmi";
 import { stakingAddresses } from "@/constants/staking";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
+import { ERC721 } from "@/abi/L1/ERC721";
+import { realms } from "@/constants/whiteListedContracts";
+
 import { formatEther } from "viem";
 import { Button } from "../components/ui/button";
 import {
@@ -29,7 +32,7 @@ const network =
   process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
 const galleonAddress = stakingAddresses[network].v1Galleon;
 const carrackAddress = stakingAddresses[network].v2Carrack;
-
+const realmsAddress = realms[network];
 export const StakingContainer = () => {
   const { address: addressL1 } = useAccount();
   const sdk = getBuiltGraphSDK({
@@ -137,7 +140,12 @@ export const StakingContainer = () => {
                 <span>Lords Available</span>
                 <span className="mb-4 text-sm">Epoch 1-10</span>
 
-                <Button size={"lg"} className="self-center" variant={"outline"}>
+                <Button
+                  disabled={lordsAvailableData == 0n}
+                  size={"lg"}
+                  className="self-center"
+                  variant={"outline"}
+                >
                   Claim
                 </Button>
               </>
@@ -189,7 +197,12 @@ export const StakingContainer = () => {
                 <span>Lords Available</span>
                 <span className="mb-4 text-sm">Epoch 35+</span>
 
-                <Button size={"lg"} className="self-center" variant={"outline"}>
+                <Button
+                  size={"lg"}
+                  disabled={carrackLordsAvailableData?.[0] == 0n}
+                  className="self-center"
+                  variant={"outline"}
+                >
                   Claim
                 </Button>
               </>
@@ -223,6 +236,7 @@ const StakingModal = ({
 }) => {
   const [shipType, setShipType] = useState<"galleon" | "carrack">();
   const [selectedRealms, setSelectedRealms] = useState<readonly string[]>([]);
+  const { address } = useAccount();
 
   const {
     writeAsync: boardGalleon,
@@ -252,6 +266,30 @@ const StakingModal = ({
     abi: CarrackStaking,
     functionName: "exitShip",
   });
+  const { writeAsync: approveGalleon } = useContractWrite({
+    address: realmsAddress as `0x${string}`,
+    abi: ERC721,
+    functionName: "setApprovalForAll",
+    args: [galleonAddress as `0x${string}`, true],
+  });
+  const { writeAsync: approveCarrack } = useContractWrite({
+    address: realmsAddress as `0x${string}`,
+    abi: ERC721,
+    functionName: "setApprovalForAll",
+    args: [carrackAddress as `0x${string}`, true],
+  });
+  const { data: isCarrackApprovedData } = useContractRead({
+    address: realmsAddress as `0x${string}`,
+    abi: ERC721,
+    functionName: "isApprovedForAll",
+    args: [address as `0x${string}`, carrackAddress as `0x${string}`],
+  });
+  const { data: isGalleonApprovedData } = useContractRead({
+    address: realmsAddress as `0x${string}`,
+    abi: ERC721,
+    functionName: "isApprovedForAll",
+    args: [address as `0x${string}`, galleonAddress as `0x${string}`],
+  });
   const onButtonClick = async () => {
     if (!unstake) {
       if (shipType == "galleon") {
@@ -261,14 +299,19 @@ const StakingModal = ({
       }
     } else {
       if (shipType == "galleon") {
+        if (!isGalleonApprovedData) {
+          await approveGalleon();
+        }
         await exitGalleon({ args: [selectedRealms.map(BigInt)] });
       } else {
+        if (!isCarrackApprovedData) {
+          await approveCarrack();
+        }
         await exitCarrack({ args: [selectedRealms.map(BigInt)] });
       }
     }
   };
   const onSelectRealms = (realms: any) => {
-    console.log(realms);
     setSelectedRealms(realms);
   };
   useEffect(() => {
