@@ -65,7 +65,7 @@ export function Provider({ children }: any) {
         }
         //@ts-ignore
         connectors={starkConnectors}
-        queryClient={queryClient}
+        // queryClient={queryClient}
       >
         <ReservoirKitProvider
           options={{

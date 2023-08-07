@@ -31,7 +31,7 @@ export const banners = {
 
 export const allWhiteListed = [
     {
-        contract: realms.mainnet,
+        contract: realms.MAIN,
     },
     // {
     //     contract: loot.mainnet,
