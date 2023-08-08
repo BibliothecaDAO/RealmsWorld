@@ -33,11 +33,11 @@ const network =
 const galleonAddress = stakingAddresses[network].v1Galleon;
 const carrackAddress = stakingAddresses[network].v2Carrack;
 const realmsAddress = realms[network];
+console.log(process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME);
 export const StakingContainer = () => {
   const { address: addressL1 } = useAccount();
   const sdk = getBuiltGraphSDK({
-    subgraphName: process.env.NEXT_PUBLIC_SUBGRAPH_NAME,
-    apibaraHandle: process.env.NEXT_PUBLIC_APIBARA_HANDLE,
+    realmsSubgraph: process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
   });
   const address = addressL1 ? addressL1.toLowerCase() : "0x";
 
@@ -45,6 +45,7 @@ export const StakingContainer = () => {
     queryKey: ["UsersRealms" + address],
     queryFn: () => sdk.UsersRealms({ address, addressId: address }),
     enabled: !!address,
+    refetchInterval: 10000,
   });
   const { data: totalStakedRealmsData } = useQuery({
     queryKey: ["StakedRealmsTotal"],
@@ -266,12 +267,13 @@ const StakingModal = ({
     abi: CarrackStaking,
     functionName: "exitShip",
   });
-  const { writeAsync: approveGalleon } = useContractWrite({
-    address: realmsAddress as `0x${string}`,
-    abi: ERC721,
-    functionName: "setApprovalForAll",
-    args: [galleonAddress as `0x${string}`, true],
-  });
+  const { writeAsync: approveGalleon, isLoading: isGalleonApproveLoading } =
+    useContractWrite({
+      address: realmsAddress as `0x${string}`,
+      abi: ERC721,
+      functionName: "setApprovalForAll",
+      args: [galleonAddress as `0x${string}`, true],
+    });
   const { writeAsync: approveCarrack } = useContractWrite({
     address: realmsAddress as `0x${string}`,
     abi: ERC721,
@@ -293,20 +295,20 @@ const StakingModal = ({
   const onButtonClick = async () => {
     if (!unstake) {
       if (shipType == "galleon") {
-        await boardGalleon({ args: [selectedRealms.map(BigInt)] });
-      } else {
-        await boardCarrack({ args: [selectedRealms.map(BigInt)] });
-      }
-    } else {
-      if (shipType == "galleon") {
         if (!isGalleonApprovedData) {
           await approveGalleon();
         }
-        await exitGalleon({ args: [selectedRealms.map(BigInt)] });
+        await boardGalleon({ args: [selectedRealms.map(BigInt)] });
       } else {
         if (!isCarrackApprovedData) {
           await approveCarrack();
         }
+        await boardCarrack({ args: [selectedRealms.map(BigInt)] });
+      }
+    } else {
+      if (shipType == "galleon") {
+        await exitGalleon({ args: [selectedRealms.map(BigInt)] });
+      } else {
         await exitCarrack({ args: [selectedRealms.map(BigInt)] });
       }
     }
@@ -347,7 +349,11 @@ const StakingModal = ({
                 onSelectRealms={onSelectRealms}
               />
             </div>
-            <Button onClick={onButtonClick} size={"lg"}>
+            <Button
+              onClick={onButtonClick}
+              disabled={isGalleonApproveLoading}
+              size={"lg"}
+            >
               {unstake ? "Unstake" : "Stake"} Realms
             </Button>
           </>

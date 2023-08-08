@@ -10,6 +10,6 @@ sources:
   - name: l1Realms
     handler:
       graphql:
-        endpoint: https://api.thegraph.com/subgraphs/name/{context.realms-subgraph:bibliothecaforadventurers/realms}
+        endpoint: https://api.thegraph.com/subgraphs/name/{context.realmsSubgraph:bibliothecaforadventurers/realms}
 documents:
   - "./queries/**/*.graphql"

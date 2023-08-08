@@ -1,6 +1,6 @@
 export const realms = {
     MAIN: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
-    GOERLI: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
+    GOERLI: "0x3dc98f83a0f3ad77d44a68c6d15e08378de3df25",
     starknet: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
 }
 
