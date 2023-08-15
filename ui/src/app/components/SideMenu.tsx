@@ -11,6 +11,7 @@ import {
   Zap,
   DoorOpen,
   Coins,
+  Sword,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
@@ -44,6 +45,11 @@ const Sidebar = () => {
       name: "Staking",
       href: "/staking",
       icon: <Coins />,
+    },
+    {
+      name: "Adventurer",
+      href: "/adventurer",
+      icon: <Sword />,
     },
   ];
 
