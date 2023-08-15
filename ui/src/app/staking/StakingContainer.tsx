@@ -1,10 +1,18 @@
 "use client";
 import { getBuiltGraphSDK, Realm, UsersRealmsQuery } from "@/.graphclient";
 import { useQuery } from "@tanstack/react-query";
-import { useAccount, useContractRead, useContractWrite } from "wagmi";
+import {
+  useAccount,
+  useContractRead,
+  useContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 import { stakingAddresses } from "@/constants/staking";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
+import { ERC721 } from "@/abi/L1/ERC721";
+import { realms } from "@/constants/whiteListedContracts";
+
 import { formatEther } from "viem";
 import { Button } from "../components/ui/button";
 import {
@@ -24,24 +32,27 @@ import {
 import { Info } from "lucide-react";
 import { Alert } from "../components/ui/alert";
 import { useEffect, useState } from "react";
+import EthereumLogin from "../components/wallet/EthereumLogin";
+import Link from "next/link";
 
 const network =
   process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
 const galleonAddress = stakingAddresses[network].v1Galleon;
 const carrackAddress = stakingAddresses[network].v2Carrack;
+const realmsAddress = realms[network];
 
 export const StakingContainer = () => {
   const { address: addressL1 } = useAccount();
   const sdk = getBuiltGraphSDK({
-    subgraphName: process.env.NEXT_PUBLIC_SUBGRAPH_NAME,
-    apibaraHandle: process.env.NEXT_PUBLIC_APIBARA_HANDLE,
+    realmsSubgraph: process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
   });
   const address = addressL1 ? addressL1.toLowerCase() : "0x";
 
-  const { data: realmsData } = useQuery({
+  const { data: realmsData, isLoading: realmsDataIsLoading } = useQuery({
     queryKey: ["UsersRealms" + address],
     queryFn: () => sdk.UsersRealms({ address, addressId: address }),
     enabled: !!address,
+    refetchInterval: 10000,
   });
   const { data: totalStakedRealmsData } = useQuery({
     queryKey: ["StakedRealmsTotal"],
@@ -58,7 +69,7 @@ export const StakingContainer = () => {
   const {
     data: lordsAvailableData,
     isError,
-    isLoading,
+    isLoading: isGalleonLordsLoading,
   } = useContractRead({
     address: stakingAddresses[network].v1Galleon as `0x${string}`,
     abi: GalleonStaking,
@@ -66,28 +77,39 @@ export const StakingContainer = () => {
     args: [address as `0x${string}`],
   });
 
-  const { data: carrackLordsAvailableData } = useContractRead({
-    address: stakingAddresses[network].v2Carrack as `0x${string}`,
-    abi: CarrackStaking,
-    functionName: "lordsAvailable",
-    args: [address as `0x${string}`],
-  });
+  const { data: carrackLordsAvailableData, isLoading: isCarrackLordsLoading } =
+    useContractRead({
+      address: stakingAddresses[network].v2Carrack as `0x${string}`,
+      abi: CarrackStaking,
+      functionName: "lordsAvailable",
+      args: [address as `0x${string}`],
+    });
+
+  if (!addressL1) {
+    return (
+      <div className="max-w-xl m-auto mt-24">
+        <h1>Realms Staking</h1>
+        <h3 className="mb-12">Login to your Ethereum Wallet</h3>
+        <EthereumLogin />
+      </div>
+    );
+  }
   return (
     <div className="sm:max-w-3xl mx-auto mt-24">
       <div className="grid grid-cols-2 gap-6 text-center">
         <div className="flex flex-col col-span-2 ">
           <h3>Your Realms</h3>
           <div className="border rounded pt-6 pb-8 flex flex-col">
-            {realmsData?.wallet?.realmsHeld ? (
+            {realmsDataIsLoading ? (
+              "Loading"
+            ) : (
               <>
                 <span className="text-2xl">
-                  {realmsData?.wallet?.realmsHeld}
+                  {realmsData?.wallet?.realmsHeld || 0}
                 </span>
                 <span className="mb-4">Realms Available</span>
                 <StakingModal realms={realmsData?.realms} />
               </>
-            ) : (
-              "Loading"
             )}
           </div>
         </div>
@@ -111,10 +133,12 @@ export const StakingContainer = () => {
             </TooltipContent>
           </Tooltip>
           <div className="border rounded pt-6 pb-8 flex flex-col">
-            {realmsData?.wallet?.bridgedRealmsHeld ? (
+            {realmsDataIsLoading ? (
+              "Loading"
+            ) : (
               <>
                 <span className="text-2xl">
-                  {realmsData?.wallet?.bridgedRealmsHeld}
+                  {realmsData?.wallet?.bridgedRealmsHeld || 0}
                 </span>
                 <span className="mb-4">Realms Staked</span>
                 <StakingModal
@@ -123,21 +147,41 @@ export const StakingContainer = () => {
                   realms={realmsData?.bridgedRealms}
                 />
               </>
-            ) : (
-              "Loading"
             )}
           </div>
           <div className="border rounded pt-6 pb-8 flex flex-col mt-6">
-            {!isLoading && typeof lordsAvailableData == "bigint" ? (
+            {!isGalleonLordsLoading && typeof lordsAvailableData == "bigint" ? (
               <>
                 <span className="text-2xl flex justify-center">
                   <Lords className="w-8 h-8 fill-current mr-2" />
                   {formatEther(lordsAvailableData)}
                 </span>
                 <span>Lords Available</span>
-                <span className="mb-4 text-sm">Epoch 1-10</span>
+                <Tooltip>
+                  <TooltipTrigger className="flex justify-center">
+                    <span className="mb-4 text-sm">Epoch 1-10</span>
 
-                <Button size={"lg"} className="self-center" variant={"outline"}>
+                    <Info className="w-5 h-5 mt-2 ml-2" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <div className="text-lg pb-2">
+                      Weeks 10-35 can be redeemed at{" "}
+                      <Link
+                        target="_blank"
+                        href={"https://bibliothecadao.xyz/claim"}
+                      >
+                        <span className="font-bold">Claim Site</span>
+                      </Link>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Button
+                  disabled={lordsAvailableData == 0n}
+                  size={"lg"}
+                  className="self-center"
+                  variant={"outline"}
+                >
                   Claim
                 </Button>
               </>
@@ -163,10 +207,12 @@ export const StakingContainer = () => {
             </TooltipContent>
           </Tooltip>
           <div className="border rounded pt-6 pb-8 flex flex-col">
-            {realmsData?.wallet?.bridgedV2RealmsHeld ? (
+            {realmsDataIsLoading ? (
+              "Loading"
+            ) : (
               <>
                 <span className="text-2xl">
-                  {realmsData?.wallet?.bridgedV2RealmsHeld}
+                  {realmsData?.wallet?.bridgedV2RealmsHeld || 0}
                 </span>
                 <span className="mb-4">Staked Realms:</span>
                 <StakingModal
@@ -175,26 +221,32 @@ export const StakingContainer = () => {
                   realms={realmsData?.bridgedV2Realms}
                 />
               </>
-            ) : (
-              "Loading"
             )}
           </div>
           <div className="border rounded pt-6 pb-8 flex flex-col mt-6">
-            {!isLoading && typeof carrackLordsAvailableData?.[0] == "bigint" ? (
+            {isCarrackLordsLoading ? (
+              "Loading"
+            ) : (
               <>
                 <span className="text-2xl flex justify-center">
                   <Lords className="w-8 h-8 fill-current mr-2" />
-                  {formatEther(carrackLordsAvailableData?.[0])}
+                  {formatEther(carrackLordsAvailableData?.[0] || 0n)}
                 </span>
                 <span>Lords Available</span>
                 <span className="mb-4 text-sm">Epoch 35+</span>
 
-                <Button size={"lg"} className="self-center" variant={"outline"}>
+                <Button
+                  size={"lg"}
+                  disabled={
+                    !carrackLordsAvailableData?.[0] ||
+                    carrackLordsAvailableData?.[0] == 0n
+                  }
+                  className="self-center"
+                  variant={"outline"}
+                >
                   Claim
                 </Button>
               </>
-            ) : (
-              "Loading"
             )}
           </div>
         </div>
@@ -202,7 +254,7 @@ export const StakingContainer = () => {
         <div className="flex flex-col">
           <h3>Data</h3>
           <div className="border rounded pt-6 pb-8">
-            <p>Current Epoch:</p>
+            {/*<p>Current Epoch:</p>*/}
             <p>Total Realms Staked: {totalStakedRealms}</p>
           </div>
         </div>
@@ -223,6 +275,7 @@ const StakingModal = ({
 }) => {
   const [shipType, setShipType] = useState<"galleon" | "carrack">();
   const [selectedRealms, setSelectedRealms] = useState<readonly string[]>([]);
+  const { address } = useAccount();
 
   const {
     writeAsync: boardGalleon,
@@ -252,23 +305,73 @@ const StakingModal = ({
     abi: CarrackStaking,
     functionName: "exitShip",
   });
-  const onButtonClick = async () => {
-    if (!unstake) {
-      if (shipType == "galleon") {
-        await boardGalleon({ args: [selectedRealms.map(BigInt)] });
-      } else {
-        await boardCarrack({ args: [selectedRealms.map(BigInt)] });
-      }
-    } else {
-      if (shipType == "galleon") {
-        await exitGalleon({ args: [selectedRealms.map(BigInt)] });
-      } else {
-        await exitCarrack({ args: [selectedRealms.map(BigInt)] });
-      }
+  const {
+    writeAsync: approveGalleon,
+    isLoading: isGalleonApproveLoading,
+    data: approveGalleonData,
+  } = useContractWrite({
+    address: realmsAddress as `0x${string}`,
+    abi: ERC721,
+    functionName: "setApprovalForAll",
+    args: [galleonAddress as `0x${string}`, true],
+  });
+  const { writeAsync: approveCarrack, data: approveCarrackData } =
+    useContractWrite({
+      address: realmsAddress as `0x${string}`,
+      abi: ERC721,
+      functionName: "setApprovalForAll",
+      args: [carrackAddress as `0x${string}`, true],
+    });
+  const { data: isCarrackApprovedData, refetch: refetchCarrackApprovedData } =
+    useContractRead({
+      address: realmsAddress as `0x${string}`,
+      abi: ERC721,
+      functionName: "isApprovedForAll",
+      args: [address as `0x${string}`, carrackAddress as `0x${string}`],
+    });
+  const { data: isGalleonApprovedData, refetch: refetchGalleonApprovedData } =
+    useContractRead({
+      address: realmsAddress as `0x${string}`,
+      abi: ERC721,
+      functionName: "isApprovedForAll",
+      args: [address as `0x${string}`, galleonAddress as `0x${string}`],
+    });
+
+  const { data: approvedTransactionData, isSuccess } = useWaitForTransaction({
+    hash: approveCarrackData?.hash || approveGalleonData?.hash,
+  });
+
+  useEffect(() => {
+    refetchCarrackApprovedData(), refetchGalleonApprovedData();
+  }, [isSuccess]);
+
+  const isApproved =
+    shipType === "galleon" ? isGalleonApprovedData : isCarrackApprovedData;
+
+  const onApproveClick = async () => {
+    const approvalFunction =
+      shipType === "galleon" ? approveGalleon : approveCarrack;
+
+    if (!isApproved) {
+      await approvalFunction();
     }
   };
+  const { data, isError, isLoading } = useWaitForTransaction({
+    hash: "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
+  });
+  const onButtonClick = async () => {
+    if (!unstake) {
+      const boardingFunction =
+        shipType === "galleon" ? boardGalleon : boardCarrack;
+      await boardingFunction({ args: [selectedRealms.map(BigInt)] });
+    } else {
+      const exitFunction = shipType === "galleon" ? exitGalleon : exitCarrack;
+      await exitFunction({ args: [selectedRealms.map(BigInt)] });
+    }
+    setSelectedRealms([]);
+  };
+
   const onSelectRealms = (realms: any) => {
-    console.log(realms);
     setSelectedRealms(realms);
   };
   useEffect(() => {
@@ -304,9 +407,19 @@ const StakingModal = ({
                 onSelectRealms={onSelectRealms}
               />
             </div>
-            <Button onClick={onButtonClick} size={"lg"}>
-              {unstake ? "Unstake" : "Stake"} Realms
-            </Button>
+            {!unstake && !isApproved ? (
+              <Button onClick={onApproveClick} size={"lg"}>
+                Approve Realm Staking Contract
+              </Button>
+            ) : (
+              <Button
+                onClick={onButtonClick}
+                disabled={isGalleonApproveLoading}
+                size={"lg"}
+              >
+                {unstake ? "Unstake" : "Stake"} Realms
+              </Button>
+            )}
           </>
         ) : (
           <div className="self-center flex flex-col">
