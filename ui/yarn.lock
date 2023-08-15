@@ -3521,81 +3521,81 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/env@npm:13.4.15"
-  checksum: 3e2e6600b784b44b0c3795000856b35601b3504f3cd2736ebaa8d442718eea3bf564a2e05003dd5b871f8b1fc7360696df1c7023d3b7ab42087b167f57424504
+"@next/env@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/env@npm:13.4.16"
+  checksum: 2fc506a0c2e4b0596297fc488b9f589cd0d7757b87a1876e77dd83f52b1240aa8932cbd81fb88e1dc9eacec7489d9d2d7dcb063e3b2bcd8099136d6700bcc2f8
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/eslint-plugin-next@npm:13.4.15"
+"@next/eslint-plugin-next@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/eslint-plugin-next@npm:13.4.16"
   dependencies:
     glob: 7.1.7
-  checksum: 5acc368f7344505251c6ee28f028eddebdef84bcb857dfa43fa6fd415cfb86405d1f27dd6bbe6ecb3b57a65ed692d16d3c368c47b2a3c6bfb0747636af20333f
+  checksum: a1c36bec66b1553b7fb4c32037fecaa0e25496edccb4fed7fc1b118116b5bd81e83804875d7bab310d03e68b06e636f385de6d8d32ed1d30fb19b07865da03f3
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-arm64@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/swc-darwin-arm64@npm:13.4.15"
+"@next/swc-darwin-arm64@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/swc-darwin-arm64@npm:13.4.16"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-darwin-x64@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/swc-darwin-x64@npm:13.4.15"
+"@next/swc-darwin-x64@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/swc-darwin-x64@npm:13.4.16"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-gnu@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/swc-linux-arm64-gnu@npm:13.4.15"
+"@next/swc-linux-arm64-gnu@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/swc-linux-arm64-gnu@npm:13.4.16"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-arm64-musl@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/swc-linux-arm64-musl@npm:13.4.15"
+"@next/swc-linux-arm64-musl@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/swc-linux-arm64-musl@npm:13.4.16"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-gnu@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/swc-linux-x64-gnu@npm:13.4.15"
+"@next/swc-linux-x64-gnu@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/swc-linux-x64-gnu@npm:13.4.16"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@next/swc-linux-x64-musl@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/swc-linux-x64-musl@npm:13.4.15"
+"@next/swc-linux-x64-musl@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/swc-linux-x64-musl@npm:13.4.16"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@next/swc-win32-arm64-msvc@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/swc-win32-arm64-msvc@npm:13.4.15"
+"@next/swc-win32-arm64-msvc@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/swc-win32-arm64-msvc@npm:13.4.16"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@next/swc-win32-ia32-msvc@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/swc-win32-ia32-msvc@npm:13.4.15"
+"@next/swc-win32-ia32-msvc@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/swc-win32-ia32-msvc@npm:13.4.16"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@next/swc-win32-x64-msvc@npm:13.4.15":
-  version: 13.4.15
-  resolution: "@next/swc-win32-x64-msvc@npm:13.4.15"
+"@next/swc-win32-x64-msvc@npm:13.4.16":
+  version: 13.4.16
+  resolution: "@next/swc-win32-x64-msvc@npm:13.4.16"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -5773,12 +5773,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/babel-plugin-transform-react-native-svg@npm:8.0.0":
-  version: 8.0.0
-  resolution: "@svgr/babel-plugin-transform-react-native-svg@npm:8.0.0"
+"@svgr/babel-plugin-transform-react-native-svg@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@svgr/babel-plugin-transform-react-native-svg@npm:8.1.0"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 14e3f8ef27bb3215aa8914ea44831eb43decde4a131e4302480f23d6e75aa8c4ea9e1f8888d479b7a8ac63b828e590c03df6d72a6964676612c015f4a967fc74
+  checksum: 85b434a57572f53bd2b9f0606f253e1fcf57b4a8c554ec3f2d43ed17f50d8cae200cb3aaf1ec9d626e1456e8b135dce530ae047eb0bed6d4bf98a752d6640459
   languageName: node
   linkType: hard
 
@@ -5791,9 +5791,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/babel-preset@npm:8.0.0":
-  version: 8.0.0
-  resolution: "@svgr/babel-preset@npm:8.0.0"
+"@svgr/babel-preset@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@svgr/babel-preset@npm:8.1.0"
   dependencies:
     "@svgr/babel-plugin-add-jsx-attribute": 8.0.0
     "@svgr/babel-plugin-remove-jsx-attribute": 8.0.0
@@ -5801,24 +5801,24 @@ __metadata:
     "@svgr/babel-plugin-replace-jsx-attribute-value": 8.0.0
     "@svgr/babel-plugin-svg-dynamic-title": 8.0.0
     "@svgr/babel-plugin-svg-em-dimensions": 8.0.0
-    "@svgr/babel-plugin-transform-react-native-svg": 8.0.0
+    "@svgr/babel-plugin-transform-react-native-svg": 8.1.0
     "@svgr/babel-plugin-transform-svg-component": 8.0.0
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: c8a4497f3fe8338831be275e9e9534b265d22c8ecd75eec0ed82cff8d287506d38fc1963ac3b1a3a27abe0582bcba73f7a76798d23cce586e840bf65a87ba990
+  checksum: 3a67930f080b8891e1e8e2595716b879c944d253112bae763dce59807ba23454d162216c8d66a0a0e3d4f38a649ecd6c387e545d1e1261dd69a68e9a3392ee08
   languageName: node
   linkType: hard
 
-"@svgr/core@npm:8.0.0":
-  version: 8.0.0
-  resolution: "@svgr/core@npm:8.0.0"
+"@svgr/core@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@svgr/core@npm:8.1.0"
   dependencies:
     "@babel/core": ^7.21.3
-    "@svgr/babel-preset": 8.0.0
+    "@svgr/babel-preset": 8.1.0
     camelcase: ^6.2.0
     cosmiconfig: ^8.1.3
     snake-case: ^3.0.4
-  checksum: ce83ecbab185db72d16dbd9650f5a66c6e2705627722e593b0eaf23bfafe49cf8bb55f216016a11b8a546822c7387887d218aab8697f7b31e3d1a97d94fa0593
+  checksum: da4a12865c7dc59829d58df8bd232d6c85b7115fda40da0d2f844a1a51886e2e945560596ecfc0345d37837ac457de86a931e8b8d8550e729e0c688c02250d8a
   languageName: node
   linkType: hard
 
@@ -5832,46 +5832,46 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@svgr/plugin-jsx@npm:8.0.1":
-  version: 8.0.1
-  resolution: "@svgr/plugin-jsx@npm:8.0.1"
+"@svgr/plugin-jsx@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@svgr/plugin-jsx@npm:8.1.0"
   dependencies:
     "@babel/core": ^7.21.3
-    "@svgr/babel-preset": 8.0.0
+    "@svgr/babel-preset": 8.1.0
     "@svgr/hast-util-to-babel-ast": 8.0.0
     svg-parser: ^2.0.4
   peerDependencies:
     "@svgr/core": "*"
-  checksum: c6a0fc3e757e79837cd88f41f18b35594f8c4efe1b87e673514fa7add0912388b7dc79fa2738d629c2f945395ea568fa901c9c5ca5fce827a004c03867c1c482
+  checksum: 0418a9780753d3544912ee2dad5d2cf8d12e1ba74df8053651b3886aeda54d5f0f7d2dece0af5e0d838332c4f139a57f0dabaa3ca1afa4d1a765efce6a7656f2
   languageName: node
   linkType: hard
 
-"@svgr/plugin-svgo@npm:8.0.1":
-  version: 8.0.1
-  resolution: "@svgr/plugin-svgo@npm:8.0.1"
+"@svgr/plugin-svgo@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@svgr/plugin-svgo@npm:8.1.0"
   dependencies:
     cosmiconfig: ^8.1.3
     deepmerge: ^4.3.1
     svgo: ^3.0.2
   peerDependencies:
     "@svgr/core": "*"
-  checksum: c5008c5dd8467f8f8b3a173462773fc37f2a8fa53989934ea802fc7a9db2147f6fee68736610a117751f2ab94773373e807d21e74db5f93b98040f1479845ec6
+  checksum: 59d9d214cebaacca9ca71a561f463d8b7e5a68ca9443e4792a42d903acd52259b1790c0680bc6afecc3f00a255a6cbd7ea278a9f625bac443620ea58a590c2d0
   languageName: node
   linkType: hard
 
-"@svgr/webpack@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "@svgr/webpack@npm:8.0.1"
+"@svgr/webpack@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "@svgr/webpack@npm:8.1.0"
   dependencies:
     "@babel/core": ^7.21.3
     "@babel/plugin-transform-react-constant-elements": ^7.21.3
     "@babel/preset-env": ^7.20.2
     "@babel/preset-react": ^7.18.6
     "@babel/preset-typescript": ^7.21.0
-    "@svgr/core": 8.0.0
-    "@svgr/plugin-jsx": 8.0.1
-    "@svgr/plugin-svgo": 8.0.1
-  checksum: e5e28be53ecf049056ea959040edabfc2d2e717e9ec7f4a549fa262cd1e2d9c6479836ea2eb1586196b9fee74855a0087dbb88257e872fe6b31157c5c0a52dcc
+    "@svgr/core": 8.1.0
+    "@svgr/plugin-jsx": 8.1.0
+    "@svgr/plugin-svgo": 8.1.0
+  checksum: c6eec5b0cf2fb2ecd3a7a362d272eda35330b17c76802a3481f499b5d07ff8f87b31d2571043bff399b051a1767b1e2e499dbf186104d1c06d76f9f1535fac01
   languageName: node
   linkType: hard
 
@@ -8932,11 +8932,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:13.4.15":
-  version: 13.4.15
-  resolution: "eslint-config-next@npm:13.4.15"
+"eslint-config-next@npm:13.4.16":
+  version: 13.4.16
+  resolution: "eslint-config-next@npm:13.4.16"
   dependencies:
-    "@next/eslint-plugin-next": 13.4.15
+    "@next/eslint-plugin-next": 13.4.16
     "@rushstack/eslint-patch": ^1.1.3
     "@typescript-eslint/parser": ^5.4.2 || ^6.0.0
     eslint-import-resolver-node: ^0.3.6
@@ -8951,7 +8951,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: ab5c080d1a734b79670980dc5bc63b4c5127f13f5e192744ae961bf6c589080b7a57f40eea061e79fb3a6c611498708288f9368955c3d411cd6ad1fd912b00bc
+  checksum: c4b6849c4b46fcb4e0fef23f91b767e05fcb24e8afd9d6df538512d8e94b933a1bf62810fcef82e458809e297b220f08df3d57192741b63afacd51284d9a30cb
   languageName: node
   linkType: hard
 
@@ -9620,9 +9620,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^10.15.1":
-  version: 10.15.1
-  resolution: "framer-motion@npm:10.15.1"
+"framer-motion@npm:^10.15.2":
+  version: 10.15.2
+  resolution: "framer-motion@npm:10.15.2"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     tslib: ^2.4.0
@@ -9637,7 +9637,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: b8b08561d13452be63e44f12541ff1e2c620f016522bbfb65b80b4cca27e83a85e032aebbcc38c57667ffac90ec0f63a25e73c83730e50b8ca85b85134776be0
+  checksum: 57dc428f11d140eddc4a6d2fd68489ae5613af21407d92afee0bd626ef284488a8d84decb68f07ea790882137c1587f6177bd322a25477cfbbda07d0949cb8fe
   languageName: node
   linkType: hard
 
@@ -11798,20 +11798,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:13.4.15":
-  version: 13.4.15
-  resolution: "next@npm:13.4.15"
+"next@npm:13.4.16":
+  version: 13.4.16
+  resolution: "next@npm:13.4.16"
   dependencies:
-    "@next/env": 13.4.15
-    "@next/swc-darwin-arm64": 13.4.15
-    "@next/swc-darwin-x64": 13.4.15
-    "@next/swc-linux-arm64-gnu": 13.4.15
-    "@next/swc-linux-arm64-musl": 13.4.15
-    "@next/swc-linux-x64-gnu": 13.4.15
-    "@next/swc-linux-x64-musl": 13.4.15
-    "@next/swc-win32-arm64-msvc": 13.4.15
-    "@next/swc-win32-ia32-msvc": 13.4.15
-    "@next/swc-win32-x64-msvc": 13.4.15
+    "@next/env": 13.4.16
+    "@next/swc-darwin-arm64": 13.4.16
+    "@next/swc-darwin-x64": 13.4.16
+    "@next/swc-linux-arm64-gnu": 13.4.16
+    "@next/swc-linux-arm64-musl": 13.4.16
+    "@next/swc-linux-x64-gnu": 13.4.16
+    "@next/swc-linux-x64-musl": 13.4.16
+    "@next/swc-win32-arm64-msvc": 13.4.16
+    "@next/swc-win32-ia32-msvc": 13.4.16
+    "@next/swc-win32-x64-msvc": 13.4.16
     "@swc/helpers": 0.5.1
     busboy: 1.6.0
     caniuse-lite: ^1.0.30001406
@@ -11850,7 +11850,7 @@ __metadata:
       optional: true
   bin:
     next: dist/bin/next
-  checksum: ca96ef7f2e16de7595fb6297b966b2c0cb01258442604ad26ede6d01698e0c3c1dbb8c29590e8704c7d335bd8fff9e34cb8088afc112eaff84cb6280dd12f127
+  checksum: b9e346061969531401a1b3a81819adad0018fd33e52954032cc96a3d703821ee1c39a5807dcd73fab8df197424b409d51f837910df225341c1f83735614a811f
   languageName: node
   linkType: hard
 
@@ -12596,7 +12596,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.23, postcss@npm:^8.4.24":
+"postcss@npm:^8.4.23":
   version: 8.4.24
   resolution: "postcss@npm:8.4.24"
   dependencies:
@@ -12604,6 +12604,17 @@ __metadata:
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
   checksum: 814e2126dacfea313588eda09cc99a9b4c26ec55c059188aa7a916d20d26d483483106dc5ff9e560731b59f45c5bb91b945dfadc670aed875cc90ddbbf4e787d
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.4.28":
+  version: 8.4.28
+  resolution: "postcss@npm:8.4.28"
+  dependencies:
+    nanoid: ^3.3.6
+    picocolors: ^1.0.0
+    source-map-js: ^1.0.2
+  checksum: f605c24a36f7e400bad379735fbfc893ccb8d293ad6d419bb824db77cdcb69f43d614ef35f9f7091f32ca588d130ec60dbcf53b366e6bf88a8a64bbeb3c05f6d
   languageName: node
   linkType: hard
 
@@ -14420,7 +14431,7 @@ __metadata:
     "@starknet-react/core": ^1.0.4
     "@starkware-industries/commons-js-enums": ^1.2.0
     "@starkware-industries/commons-js-utils": ^1.2.2
-    "@svgr/webpack": ^8.0.1
+    "@svgr/webpack": ^8.1.0
     "@tanstack/react-query": ^4.32.6
     "@types/node": 18.16.18
     "@types/react": 18.2.18
@@ -14433,13 +14444,13 @@ __metadata:
     connectkit: ^1.5.1
     cross-env: ^7.0.3
     eslint: 8.47.0
-    eslint-config-next: 13.4.15
-    framer-motion: ^10.15.1
+    eslint-config-next: 13.4.16
+    framer-motion: ^10.15.2
     get-starknet-core: 3.2.0
     graphql: ^16.7.1
     lucide-react: ^0.268.0
-    next: 13.4.15
-    postcss: ^8.4.24
+    next: 13.4.16
+    postcss: ^8.4.28
     react: 18.3.0-canary-1a001dac6-20230812
     react-chartjs-2: ^5.2.0
     react-dom: 18.2.0

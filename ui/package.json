@@ -64,12 +64,12 @@
     "cmdk": "^0.2.0",
     "connectkit": "^1.5.1",
     "cross-env": "^7.0.3",
-    "framer-motion": "^10.15.1",
+    "framer-motion": "^10.15.2",
     "get-starknet-core": "3.2.0",
     "graphql": "^16.7.1",
     "lucide-react": "^0.268.0",
-    "next": "13.4.15",
-    "postcss": "^8.4.24",
+    "next": "13.4.16",
+    "postcss": "^8.4.28",
     "react": "18.3.0-canary-1a001dac6-20230812",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
@@ -87,8 +87,8 @@
   },
   "devDependencies": {
     "@graphprotocol/client-cli": "^3.0.0",
-    "@svgr/webpack": "^8.0.1",
+    "@svgr/webpack": "^8.1.0",
     "eslint": "8.47.0",
-    "eslint-config-next": "13.4.15"
+    "eslint-config-next": "13.4.16"
   }
 }
