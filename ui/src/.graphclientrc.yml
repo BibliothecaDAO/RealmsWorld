@@ -1,11 +1,15 @@
 sources:
-  - name: lordsbridgegoerli
+  - name: lordsbridge
     handler:
       graphql:
-        endpoint: "${BRIDGE_SUBGRAPH_URL}"
+        endpoint: https://api.thegraph.com/subgraphs/name/{context.subgraphName:redbeardeth/starknet-bridge-mainnet}
   - name: apibara
     handler:
       graphql:
-        endpoint: "${APIBARA_URL}"
+        endpoint: https://resonant-badge-production.up.railway.app/{context.apibaraHandle:graphql}
+  - name: l1Realms
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/{context.realmsSubgraph:bibliothecaforadventurers/realms}
 documents:
   - "./queries/**/*.graphql"

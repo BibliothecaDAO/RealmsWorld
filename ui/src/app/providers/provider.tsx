@@ -8,10 +8,20 @@ import { publicProvider } from "wagmi/providers/public";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
+import { Provider as StarkProvider } from "starknet";
+import { WebWalletConnector } from "@argent/starknet-react-webwallet-connector";
 
+enum StarknetChainId {
+  SN_MAIN = "0x534e5f4d41494e",
+  SN_GOERLI = "0x534e5f474f45524c49",
+  SN_GOERLI2 = "0x534e5f474f45524c4932",
+}
 const starkConnectors = [
   new InjectedConnector({ options: { id: "braavos" } }),
   new InjectedConnector({ options: { id: "argentX" } }),
+  new WebWalletConnector({
+    url: "https://web.argent.xyz",
+  }),
 ];
 
 const theme = darkTheme({
@@ -25,16 +35,38 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [...(process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? [goerli] : [mainnet])],
   [publicProvider()]
 );
-
+const testnetProvider = new StarkProvider({
+  sequencer: {
+    baseUrl: "https://alpha4.starknet.io",
+    feederGatewayUrl: "https://alpha4.starknet.io/feeder_gateway",
+    chainId: StarknetChainId.SN_GOERLI,
+    gatewayUrl: "https://alpha4.starknet.io/gateway",
+  },
+});
+const mainnetProvider = new StarkProvider({
+  sequencer: {
+    baseUrl: "https://alpha-mainnet.starknet.io",
+    feederGatewayUrl: "https://alpha-mainnet.starknet.io/feeder_gateway",
+    chainId: StarknetChainId.SN_MAIN,
+    gatewayUrl: "https://alpha-mainnet.starknet.io/gateway",
+  },
+});
 const projectId = "YOUR_PROJECT_ID";
 
 export function Provider({ children }: any) {
   const [queryClient] = useState(() => new QueryClient());
 
-  //TODO update wagmi config for testnet env NEXT_PUBLIC_IS_TESTNET once v1 ecosystem is ready
   return (
     <QueryClientProvider client={queryClient}>
-      <StarknetConfig autoConnect connectors={starkConnectors}>
+      <StarknetConfig
+        autoConnect
+        defaultProvider={
+          process.env.NEXT_PUBLIC_IS_TESTNET ? testnetProvider : mainnetProvider
+        }
+        //@ts-ignore
+        connectors={starkConnectors}
+        // queryClient={queryClient}
+      >
         <ReservoirKitProvider
           options={{
             chains: [

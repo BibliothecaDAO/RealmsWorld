@@ -1,6 +1,4 @@
-import {
-  evaluate,
-} from "@starkware-industries/commons-js-utils";
+import { evaluate } from "@starkware-industries/commons-js-utils";
 import PropTypes from "prop-types";
 import React from "react";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
@@ -21,13 +19,13 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   const renderTransfers = () => {
     return transfers && transfers.length
       ? transfers.map((transfer: any, index: number) => (
-        <TransferLog
-          isL1={isL1}
-          key={index}
-          transfer={transfer}
-          onCompleteTransferClick={() => onCompleteTransferClick(transfer)}
-        />
-      ))
+          <TransferLog
+            isL1={isL1}
+            key={index}
+            transfer={transfer}
+            onCompleteTransferClick={() => onCompleteTransferClick(transfer)}
+          />
+        ))
       : null;
   };
 
@@ -65,7 +63,8 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   return (
     <div>
       <h5 className="flex justify-between ">
-        {isL1 ? "Mainnet" : "Starknet"}  {evaluate("", { network: isL1 ? "L1" : "L2" })} {renderExplorers()}
+        {isL1 ? "Mainnet" : "Starknet"}
+        {evaluate("", { network: isL1 ? "L1" : "L2" })} {renderExplorers()}
       </h5>
       <div className="overflow-y-scroll max-h-[700px] h-full p-2 border border-white/20 rounded">
         {renderTransfers()}
