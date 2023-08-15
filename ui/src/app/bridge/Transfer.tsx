@@ -112,7 +112,7 @@ export const Transfer = ({ action }: { action: string }) => {
     );
   };
   return (
-    <BridgeModalProvider>
+    <>
       <div className="relative">
         <div className="mb-2 bg-white/10 rounded p-4 relative border border-white/5">
           {action == "withdraw" ? renderL2Network() : renderL1Network()}
@@ -168,6 +168,6 @@ export const Transfer = ({ action }: { action: string }) => {
         )}
       </div>
       <BridgeModalWrapper />
-    </BridgeModalProvider>
+    </>
   );
 };
