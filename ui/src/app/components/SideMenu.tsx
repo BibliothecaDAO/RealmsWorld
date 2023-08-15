@@ -91,9 +91,9 @@ const Sidebar = () => {
           <Image
             src={"/rw-logo.png"}
             alt={"Realms World"}
-            width={60}
-            height={20}
-            className="group-hover:scale-150 transition-all duration-500"
+            width={87}
+            height={43}
+            className="group-hover:scale-125 transition-all duration-500"
           />
           {/*<Compass className="self-center w-14 h-8 pl-4 transition-all duration-500 stroke-white" />
           <span className="visible pl-3 transition-all duration-500 opacity-100 sm:invisible group-hover:visible sm:opacity-0 group-hover:opacity-100 group-hover:flex ">
