@@ -47,35 +47,10 @@ export const useTokenContractAPI = (symbol: 'LORDS' | 'ETH', spender?: boolean |
         args: [l1Account as `0x${string}`, (spender == true ? l1Token.bridgeAddress[ChainType.L1[network]] : spender) as `0x${string}`],
         enabled: !!(l1Account && spender),
     })
-
-    const { data: balanceOfL1, isError, isLoading } = useBalance({
-        ...l1ERC20Contract,
-        address: l1Account as `0x${string}`,
-        token: '0x7543919933eef56f754daf6835fa97f6dfd785d8'
-    })
-    const { data: balanceOfEth } = useBalance({
-        address: l1Account as `0x${string}`,
-    })
-    const {
-        data: balanceOfL2,
-        isLoading: lordsLoading,
-        error,
-        refetch: refetchLords,
-    } = useL2ContractRead({
-        address: l2Token.tokenAddress[ChainType.L2[network]],
-        abi: L2_ERC20,
-        functionName: isEth(symbol) ? 'balanceOf' : "balance_of",
-        args: [l2Account],
-        watch: false,
-    });
-
     return {
         approve,
         approveWriteLoading,
         approveHash,
         allowance,
-        balanceOfL1,
-        balanceOfL2: balanceOfL2?.toString(),
-        balanceOfEth
     };
 };

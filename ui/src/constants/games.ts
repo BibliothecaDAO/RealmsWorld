@@ -20,7 +20,7 @@ export const games = [
         compatibleTokens: [
             {
                 name: 'Realms',
-                contract: realms.mainnet,
+                contract: realms.MAIN,
                 icon: 'realms.png',
                 image: '/backgrounds/warRoom.png',
             }
@@ -44,7 +44,7 @@ export const games = [
         description: 'Play to Die',
         longform: "Survivors is the first game that uses the Play to Die mechanic. It is a game of onchain survival where you fight to stay alive.",
         links: {
-            website: 'https://survivor.realms.world/',
+            website: 'https://beta-survivor.realms.world/',
             discord: 'https://discord.gg/uQnjZhZPfu',
             twitter: 'https://twitter.com/LootRealms'
         },

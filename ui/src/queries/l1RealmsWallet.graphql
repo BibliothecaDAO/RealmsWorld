@@ -1,0 +1,12 @@
+query WalletsRealms(
+  $addresses: [Bytes!]
+  # $resources: [Int]
+  # $orders: [String]
+  $first: Int
+) {
+  wallets(where: { address_in: $addresses }) {
+    realmsHeld
+    bridgedRealmsHeld
+    bridgedV2RealmsHeld
+  }
+}

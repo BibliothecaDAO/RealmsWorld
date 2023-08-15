@@ -64,7 +64,6 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
 
   const stubAccount = l2Account ? [l2Account] : undefined;
-
   const {
     data: l2LordsBalance,
     isLoading: l2LordsIsLoading,
@@ -92,11 +91,9 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     watch: true,
   });
 
-  useEffect(() => {
-    if (stubAccount && !l2LordsBalance) {
-      l2LordsRefetch();
-    }
-  }, [l2LordsBalance]);
+  useMemo(() => {
+    l2LordsRefetch();
+  }, [l2LordsBalance, l2EthBalance, l2LordsIsLoading, l2EthIsLoading]);
 
   const l1ERC20Contract = {
     address: tokensConst.L1["LORDS"].tokenAddress[

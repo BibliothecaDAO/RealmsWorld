@@ -9,7 +9,8 @@ import {
   X,
   Compass,
   Zap,
-  PersonStanding,
+  DoorOpen,
+  Coins,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
@@ -17,6 +18,7 @@ import BibliothecaDAO from "@/icons/BibliothecaBook.svg";
 import Discord from "@/icons/discord.svg";
 import Link from "next/link";
 import { useUIContext } from "../providers/UIProvider";
+import Image from "next/image";
 
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useUIContext();
@@ -36,12 +38,12 @@ const Sidebar = () => {
     {
       name: "Bridge",
       href: "/bridge",
-      icon: <Zap />,
+      icon: <DoorOpen />,
     },
     {
-      name: "Adventurer",
-      href: "/adventurer",
-      icon: <PersonStanding />,
+      name: "Staking",
+      href: "/staking",
+      icon: <Coins />,
     },
   ];
 
@@ -83,13 +85,20 @@ const Sidebar = () => {
 
       <div className="flex flex-col mt-4 space-y-6">
         <Link
-          className="flex  text-xl font-semibold  sm:text-2xl font-sans-serif mx-auto"
+          className="flex  text-xl font-semibold sm:text-2xl font-sans-serif mx-auto"
           href="/"
         >
-          <Compass className="self-center w-14 h-8 pl-4 transition-all duration-500 stroke-white" />
+          <Image
+            src={"/rw-logo.png"}
+            alt={"Realms World"}
+            width={87}
+            height={43}
+            className="group-hover:scale-125 transition-all duration-500"
+          />
+          {/*<Compass className="self-center w-14 h-8 pl-4 transition-all duration-500 stroke-white" />
           <span className="visible pl-3 transition-all duration-500 opacity-100 sm:invisible group-hover:visible sm:opacity-0 group-hover:opacity-100 group-hover:flex ">
             Atlas
-          </span>
+    </span>*/}
         </Link>
         {menu.map((item, index) => {
           return (
