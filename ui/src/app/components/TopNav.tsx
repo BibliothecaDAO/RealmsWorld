@@ -17,7 +17,7 @@ import EthereumLogo from "@/icons/ethereum.svg";
 import StarknetLogo from "@/icons/starknet.svg";
 import { Account } from "../bridge/Account";
 import Link from "next/link";
-import { Compass, Menu } from "lucide-react";
+import { /*Compass,*/ Menu } from "lucide-react";
 import { useUIContext } from "../providers/UIProvider";
 import { Tabs } from "@/app/components/Tabs";
 import {
@@ -101,12 +101,12 @@ export const TopNav = () => {
           <Menu className="w-8" />
         </Button>
 
-        <Link
+        {/* <Link
           className="flex sm:hidden self-center text-xl font-semibold  sm:text-2xl font-sans-serif "
           href="/"
         >
           <Compass className="self-center w-12 h-8 pl-3 transition-all duration-500" />
-        </Link>
+    </Link>*/}
         <Sheet>
           <SheetTrigger asChild>
             <div className="flex space-x-2">
