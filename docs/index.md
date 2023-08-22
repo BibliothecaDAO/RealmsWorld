@@ -1,6 +1,7 @@
 ---
 title: Home
 layout: home
+nav_order: 1
 ---
 
 <a href="https://twitter.com/lootrealms">
@@ -13,7 +14,7 @@ layout: home
 [![discord](https://img.shields.io/badge/join-bibliothecadao-black?logo=discord&logoColor=white)](https://discord.gg/bibliothecadao)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-![background](/docs/assets/images/bg.png)
+![background](/assets/images/bg.png)
 
 # Realms.World
 
@@ -24,18 +25,23 @@ Realms.World is the information and activity hub for entrance to the Realms Auto
 #### Table of Contents
 
 - Getting Started
+- Development Guidelines
+  - Overview
+  - API Routes
+  - Server Components
+- Running the Development Server
 - Contributing
 - License
 
-### Getting Started
+### Structure Overview
 
-- [`ui`](https://bibliothecadao.github.io/frontend) - The next.js Frontend
-- [`subgraph`](https://bibliothecadao.github.io/subgraph) - The L1 Starknet Messaging Indexer for Bridge Transactions
-- [`apibara`](https://bibliothecadao.github.io/starknet-indexer) = The L2 indexer for Bridge Transactions
+There are 3 components to Realms.World:
 
-### Documentation
+- [`ui`](/frontend) - The next.js Frontend
+- [`subgraph`](/subgraph) - The L1 Starknet Messaging Indexer for Bridge Transactions
+- [`apibara`](/starknet-indexer) = The L2 indexer for Bridge Transactions
 
-Available at [Realms.World Docs](https://bibliothecadao.github.io/RealmsWorld/)
+Instructions to start the Apibara indexer are at [README](/starknet-indexer)
 
 ### Contributing
 
