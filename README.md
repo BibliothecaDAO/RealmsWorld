@@ -1,8 +1,3 @@
----
-title: Home
-layout: home
----
-
 <a href="https://twitter.com/lootrealms">
 <img src="https://img.shields.io/twitter/follow/lootrealms?style=social"/>
 </a>
@@ -35,7 +30,7 @@ Realms.World is the information and activity hub for entrance to the Realms Auto
 
 ### Documentation
 
-Available at [Realms.World Docs](https://bibliothecadao.github.io/RealmsWorld/)
+Available at [Realms.World Docs](https://docs.realms.world)
 
 ### Contributing
 

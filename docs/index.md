@@ -37,9 +37,9 @@ Realms.World is the information and activity hub for entrance to the Realms Auto
 
 There are 3 components to Realms.World:
 
-- [`ui`](/frontend) - The next.js Frontend
-- [`subgraph`](/subgraph) - The L1 Starknet Messaging Indexer for Bridge Transactions
-- [`apibara`](/starknet-indexer) = The L2 indexer for Bridge Transactions
+- [`ui`](/frontend.html) - The next.js Frontend
+- [`subgraph`](/subgraph.html) - The L1 Starknet Messaging Indexer for Bridge Transactions
+- [`apibara`](/starknet-indexer.html) = The L2 indexer for Bridge Transactions
 
 Instructions to start the Apibara indexer are at [README](/starknet-indexer)
 
