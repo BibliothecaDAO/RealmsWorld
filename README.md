@@ -34,7 +34,7 @@ Available at [Realms.World Docs](https://docs.realms.world)
 
 ### Contributing
 
-We welcome contributions from the community to help improve Atlas. If you are interested in contributing, please follow these steps:
+We welcome contributions from the community to help improve Realms.World. If you are interested in contributing, please follow these steps:
 
 1. Fork the repository.
 2. Create a new branch for your changes.
@@ -45,4 +45,4 @@ We will review your contribution and provide feedback. Once your changes have be
 
 ### License
 
-Atlas is an open-source project released under the MIT License. This license allows you to freely use, modify, and distribute the code, as long as you include the original copyright and permission notice in any copy of the software or substantial portions of it.
+Realms.World is an open-source project released under the MIT License. This license allows you to freely use, modify, and distribute the code, as long as you include the original copyright and permission notice in any copy of the software or substantial portions of it.

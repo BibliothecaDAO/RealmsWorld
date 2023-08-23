@@ -21,24 +21,23 @@ export const Footer = () => {
       name: "Discord",
       href: "https://discord.gg/bibliothecadao",
     },
-  ]
+  ];
 
   return (
     <div className="w-full h-[500px]  mt-40 " style={backgroundImageStyle}>
       <div className="container px-10 sm:px-32 pt-10 mx-auto ">
         <div className="w-full">
-          <h1>Atlas</h1>
+          <h1>Realms.World</h1>
         </div>
         <div>
           <ul>
-            {footerLinks.map((item, index) =>
+            {footerLinks.map((item, index) => (
               <li className="my-2 text-xl py-2" key={index}>
                 <Link href={item.href}>{item.name}</Link>
               </li>
-            )}
+            ))}
           </ul>
         </div>
-
       </div>
     </div>
   );

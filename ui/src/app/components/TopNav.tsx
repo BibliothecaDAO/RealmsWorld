@@ -154,7 +154,7 @@ export const TopNav = () => {
                 <DialogTitle>Wrong Network</DialogTitle>
               </DialogHeader>
               <span>
-                The Atlas currently only supports{" "}
+                Realms.World currently supports{" "}
                 <span className="capitalize">{network}</span>, please change the
                 connected network in your Starknet wallet, or:
               </span>

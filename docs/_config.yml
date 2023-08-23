@@ -3,6 +3,6 @@ description: Documentation for the Realms.World website, the portal to the Realm
 theme: just-the-docs
 logo: "/assets/images/logo.png"
 url: https://docs.realms.world
-
+color_scheme: dark
 aux_links: # remove if you don't want this link to appear on your pages
-  Template Repository: https://github.com/BibliothecaDAO/RealmsWorld
+  Github Repo: https://github.com/BibliothecaDAO/RealmsWorld

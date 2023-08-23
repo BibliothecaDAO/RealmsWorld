@@ -19,4 +19,3 @@ To alter the mapped data make the required changes and submit a Pull Request req
 | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | Mainnet | [https://thegraph.com/hosted-service/subgraph/redbeardeth/starknet-bridge-mainnet](https://thegraph.com/hosted-service/subgraph/redbeardeth/starknet-bridge-mainnet) | yarn build:mainnet |
 | Goerli  | [https://thegraph.com/hosted-service/subgraph/redbeardeth/starknet-bridge-goerli](https://thegraph.com/hosted-service/subgraph/redbeardeth/starknet-bridge-goerli)   | yarn build:goerli  |
-|         |                                                                                                                                                                      |                    |

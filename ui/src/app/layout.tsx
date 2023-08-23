@@ -32,7 +32,6 @@ export default function RootLayout({
       <body
         className={`bg-theme-gray ${inconsolata.variable} ${karla.variable} text-white/70`}
       >
-
         <Provider>
           <WalletsProvider>
             <ToastProvider>
@@ -80,7 +79,7 @@ export const metadata = {
   openGraph: {
     title: title,
     description: description,
-    url: "https://atlas.bibliothecadao.xyz",
+    url: "https://realms.world",
     siteName: "Atlas",
     images: [
       {

@@ -20,40 +20,29 @@ nav_order: 1
 
 ## The portal to the Realms Autonomous World
 
-Realms.World is the information and activity hub for entrance to the Realms Autonomous World. It includes a comprehensive and interactive marketplace dedicated to the Loot and Realms ecosystem (both on Ethereum and Starknet), ecosystem functionality such as bridging, staking, and NFT minting, and information about the various games of the World. The client is built on Next.js 13, utilizing server and client components to achieve high performance and scalability.
+## Overview
 
-#### Table of Contents
+[Realms.World](https://realms.world) serves as the central hub for accessing the Realms Autonomous World. This platform offers a comprehensive marketplace dedicated to the Loot and Realms ecosystem on both Ethereum and Starknet. It encompasses essential ecosystem functionalities like bridging, staking, and NFT minting. Additionally, you'll find valuable insights about the various games within the World. Built on Next.js 13, Realms.World leverages server and client components for optimal performance and scalability.
 
-- Getting Started
-- Development Guidelines
-  - Overview
-  - API Routes
-  - Server Components
-- Running the Development Server
-- Contributing
-- License
+## Packages
 
-### Structure Overview
+The Realms.World platform consists of three key packages:
 
-There are 3 components to Realms.World:
+- [`ui`](/frontend): The Next.js Frontend
+- [`subgraph`](/subgraph): The L1 Starknet Messaging Indexer for Bridge Transactions
+- [`apibara`](/starknet-indexer): The L2 indexer for Bridge Transactions
 
-- [`ui`](/frontend.html) - The next.js Frontend
-- [`subgraph`](/subgraph.html) - The L1 Starknet Messaging Indexer for Bridge Transactions
-- [`apibara`](/starknet-indexer.html) = The L2 indexer for Bridge Transactions
+## Contributing
 
-Instructions to start the Apibara indexer are at [README](/starknet-indexer)
-
-### Contributing
-
-We welcome contributions from the community to help improve Atlas. If you are interested in contributing, please follow these steps:
+We value contributions from the community to enhance the Atlas experience. To get involved, follow these steps:
 
 1. Fork the repository.
 2. Create a new branch for your changes.
-3. Make your changes and commit them to your branch.
-4. Submit a pull request with a detailed description of your changes.
+3. Implement your changes and commit them to your branch.
+4. Submit a pull request that includes a detailed description of your modifications.
 
-We will review your contribution and provide feedback. Once your changes have been approved, they will be merged into the main branch.
+Our team will review your contribution and offer feedback. Once approved, your changes will be merged into the main branch.
 
-### License
+## License
 
-Atlas is an open-source project released under the MIT License. This license allows you to freely use, modify, and distribute the code, as long as you include the original copyright and permission notice in any copy of the software or substantial portions of it.
+Realms.World is an open-source project released under the MIT License. This license grants you the freedom to use, modify, and distribute the code, provided you retain the original copyright and permission notice in all copies or substantial portions of the software.
