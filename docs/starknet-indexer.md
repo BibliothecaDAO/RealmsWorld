@@ -5,7 +5,7 @@ layout: default
 
 # Starknet Bridge Indexer with Apibara
 
-This repository uses [Apibara](https://github.com/apibara/apibara) to index the Starknet Lords Bridge L2 Withdrawal Initiated data. You only need to run this indexer locally if you want to make changes to the schema - otherwise point your client to our deployed instance at:
+This repository uses [Apibara](https://github.com/apibara/apibara){:target="\_blank" rel="noopener"} to index the Starknet Lords Bridge L2 Withdrawal Initiated data. You only need to run this indexer locally if you want to make changes to the schema - otherwise point your client to our deployed instance at:
 
 | Network | Subgraph URL                                                                                                                       |
 | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |

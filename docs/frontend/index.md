@@ -11,7 +11,7 @@ has_children: true
 
 ### Overview
 
-[Realms.World](https://realms.world) is built using Next.js 13, which allows for a seamless integration of server and client components. The application aims to maximize performance and scalability by leveraging Vercel's cache and local cache.
+[Realms.World](https://realms.world){:target="\_blank" rel="noopener"} is built using Next.js 13, which allows for a seamless integration of server and client components. The application aims to maximize performance and scalability by leveraging Vercel's cache and local cache.
 
 ### Server Components
 

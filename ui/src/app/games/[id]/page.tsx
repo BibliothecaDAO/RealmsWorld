@@ -1,15 +1,22 @@
 import { games } from "@/constants/games";
 import { Button } from "@/app/components/ui/button";
 import { Metadata } from "next";
-import { Tabs } from "@/app/components/Tabs";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/app/components/ui/tabs";
 import { ImageGallery } from "@/app/components/ImageGallery";
 
-export async function generateMetadata(
-  { params }: { params: { id: string } }
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
   return {
     title: `Atlas - Homepage for: ${params.id}`,
-    description: `${params.id} - Created for Adventurers by Bibliotheca DAO`
+    description: `${params.id} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
@@ -19,13 +26,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const tabs = [
     {
       name: "Details",
-      content: (
-        <div className="text-xl leading-relaxed">
-
-          {game?.longform}
-
-        </div>
-      )
+      content: <div className="text-xl leading-relaxed">{game?.longform}</div>,
     },
 
     {
@@ -40,14 +41,12 @@ export default async function Page({ params }: { params: { id: string } }) {
             ))}
           </div>
         </div>
-      )
+      ),
     },
-  ]
+  ];
 
   return (
     <main className="container px-4 mx-auto">
-
-
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 my-4">
         <ImageGallery images={game?.screenshots} />
         <div>
@@ -60,14 +59,38 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
           <h1>{game?.name}</h1>
           <div>
-            {game?.links.whitepaper && <Button size={'xs'} variant={'outline'} className="mr-2" href={game?.links.whitepaper}>White paper</Button>}
-            <Button size={'xs'} variant={'outline'} href={game?.links.website}>Website</Button>
+            {game?.links.whitepaper && (
+              <Button
+                size={"xs"}
+                variant={"outline"}
+                className="mr-2"
+                href={game?.links.whitepaper}
+              >
+                White paper
+              </Button>
+            )}
+            <Button size={"xs"} variant={"outline"} href={game?.links.website}>
+              Website
+            </Button>
           </div>
 
-          <Tabs tabs={tabs} />
+          <Tabs defaultValue={tabs[0].name}>
+            <TabsList>
+              {tabs.map((tab, index) => (
+                <TabsTrigger value={tab.name} key={index}>
+                  {tab.name}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+
+            {tabs.map((tab, index) => (
+              <TabsContent value={tab.name} key={index}>
+                {tab.content}
+              </TabsContent>
+            ))}
+          </Tabs>
         </div>
       </div>
-
     </main>
   );
 }

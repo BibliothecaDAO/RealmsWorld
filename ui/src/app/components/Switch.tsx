@@ -1,32 +1,35 @@
 import { useState } from "react";
-import { Switch as HeadlessUiSwitch } from "@headlessui/react";
+import { Switch as RadixSwitch } from "@radix-ui/react-switch";
 
 interface Props {
-  onChange: (value: string) => void;
+  onChange: (value: boolean) => void;
 }
 
 export const Switch = ({ onChange }: Props) => {
   const [enabled, setEnabled] = useState(false);
 
-  const handleChange = (event: any) => {
-    setEnabled(event.target.value);
-    onChange(event.target.value);
+  const handleChange = (value: boolean) => {
+    setEnabled(value);
+    onChange(value);
   };
 
   return (
-    <HeadlessUiSwitch
-      checked={enabled}
-      onChange={() => handleChange({ target: { value: !enabled } })}
-      className={`${
+    <label
+      className={`relative inline-flex h-6 w-11 items-center rounded-full ${
         enabled ? "bg-blue-600" : "bg-gray-800"
-      } relative inline-flex h-6 w-11 items-center rounded-full`}
+      }`}
     >
       <span className="sr-only">Enable notifications</span>
-      <span
-        className={`${
-          enabled ? "translate-x-6" : "translate-x-1"
-        } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+      <RadixSwitch
+        checked={enabled}
+        onCheckedChange={handleChange}
+        className="hidden"
       />
-    </HeadlessUiSwitch>
+      <span
+        className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
+          enabled ? "translate-x-6" : "translate-x-1"
+        }`}
+      />
+    </label>
   );
 };

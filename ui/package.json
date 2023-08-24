@@ -16,7 +16,6 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@habx/apollo-multi-endpoint-link": "^2.9.0",
-    "@headlessui/react": "^1.7.16",
     "@mui/material": "^5.14.5",
     "@mui/styles": "^5.14.5",
     "@radix-ui/react-accessible-icon": "^1.0.3",

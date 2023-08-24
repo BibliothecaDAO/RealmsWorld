@@ -6,7 +6,6 @@ import UserTokenGrid from "@/app/components/UserTokenGrid";
 import { customContractNames } from "@/constants/whiteListedContracts";
 import { Suspense } from "react";
 import { Metadata } from "next";
-import { Tabs } from "@/app/components/Tabs";
 import { getUser } from "@/app/lib/reservoir/getUser";
 import { getUsersActivity } from "@/app/lib/reservoir/getUsersActivity";
 import { ActivityCard } from "@/app/components/ActivityCard";

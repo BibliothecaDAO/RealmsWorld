@@ -11,8 +11,8 @@ nav_order: 1
 <img src="https://img.shields.io/twitter/follow/BibliothecaDAO?style=social"/>
 </a>
 
-[![discord](https://img.shields.io/badge/join-bibliothecadao-black?logo=discord&logoColor=white)](https://discord.gg/bibliothecadao)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![discord](https://img.shields.io/badge/join-bibliothecadao-black?logo=discord&logoColor=white)](https://discord.gg/bibliothecadao){:target="\_blank" rel="noopener"}
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT){:target="\_blank" rel="noopener"}
 
 ![background](/assets/images/bg.png)
 
@@ -22,7 +22,7 @@ nav_order: 1
 
 ## Overview
 
-[Realms.World](https://realms.world) serves as the central hub for accessing the Realms Autonomous World. This platform offers a comprehensive marketplace dedicated to the Loot and Realms ecosystem on both Ethereum and Starknet. It encompasses essential ecosystem functionalities like bridging, staking, and NFT minting. Additionally, you'll find valuable insights about the various games within the World. Built on Next.js 13, Realms.World leverages server and client components for optimal performance and scalability.
+[Realms.World](https://realms.world){:target="\_blank" rel="noopener"} serves as the central hub for accessing the Realms Autonomous World. This platform offers a comprehensive marketplace dedicated to the Loot and Realms ecosystem on both Ethereum and Starknet. It encompasses essential ecosystem functionalities like bridging, staking, and NFT minting. Additionally, you'll find valuable insights about the various games within the World. Built on Next.js 13, Realms.World leverages server and client components for optimal performance and scalability.
 
 ## Packages
 
@@ -34,7 +34,7 @@ The Realms.World platform consists of three key packages:
 
 ## Contributing
 
-We value contributions from the community to enhance the Atlas experience. To get involved, follow these steps:
+We greatly value contributions from the community to enhance the Realms.World experience. To get involved, follow these steps:
 
 1. Fork the repository.
 2. Create a new branch for your changes.

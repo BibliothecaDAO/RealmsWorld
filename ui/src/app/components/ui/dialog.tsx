@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
 import { cn } from "@/app/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Dialog = DialogPrimitive.Root;
 

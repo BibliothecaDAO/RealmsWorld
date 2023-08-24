@@ -3,7 +3,6 @@ import Image from "next/image";
 import UserTokenGrid from "@/app/components/UserTokenGrid";
 import { Suspense } from "react";
 import { Metadata } from "next";
-import { Tabs } from "@/app/components/Tabs";
 import { getUser } from "@/app/lib/reservoir/getUser";
 import { getUsersActivity } from "@/app/lib/reservoir/getUsersActivity";
 import UserTokenGridSkeleton from "@/app/components/UserTokenGridSkeleton";
@@ -61,7 +60,5 @@ export default async function Page({
   //     return aIndex - bIndex;
   //   });
 
-  return (
-    <UserTokenGrid address={params.address} continuation="" />
-  );
+  return <UserTokenGrid address={params.address} continuation="" />;
 }

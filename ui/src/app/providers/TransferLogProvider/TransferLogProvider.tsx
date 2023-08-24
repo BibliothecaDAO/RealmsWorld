@@ -12,11 +12,11 @@ import {
   GET_L2_APIBARA_ENDPOINT,
   GET_TRANSFERS_ENDPOINT,
 } from "@/constants/env";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { TransferLogContext } from "./transfer-log-context";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { useAccount as useL1Account } from "wagmi";
-import { WithdrawalsQuery, getBuiltGraphSDK } from "@/.graphclient";
+import { getBuiltGraphSDK } from "@/.graphclient";
 import { padAddress } from "@/app/lib/utils";
 
 const GET_PENDING_WITHDRAWALS_REFETCH_INTERVAL = 1000 * 30;

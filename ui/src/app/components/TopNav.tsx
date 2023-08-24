@@ -19,7 +19,12 @@ import { Account } from "../bridge/Account";
 import Link from "next/link";
 import { /*Compass,*/ Menu } from "lucide-react";
 import { useUIContext } from "../providers/UIProvider";
-import { Tabs } from "@/app/components/Tabs";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/app/components/ui/tabs";
 import {
   Dialog,
   DialogContent,
@@ -142,7 +147,22 @@ export const TopNav = () => {
             <div className="flex-col gap-y-4 flex w-full mt-8 h-auto">
               <EthereumLogin />
               <StarkLogin />
-              <Tabs tabs={tabs} />
+
+              <Tabs defaultValue={tabs[0].name}>
+                <TabsList className="justify-center">
+                  {tabs.map((tab, index) => (
+                    <TabsTrigger value={tab.name} key={index}>
+                      {tab.name}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+
+                {tabs.map((tab, index) => (
+                  <TabsContent value={tab.name} key={index}>
+                    {tab.content}
+                  </TabsContent>
+                ))}
+              </Tabs>
             </div>
           </SheetContent>
         </Sheet>

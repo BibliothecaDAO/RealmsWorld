@@ -83,7 +83,7 @@ export function Provider({ children }: any) {
           <WagmiConfig
             config={createConfig(
               getDefaultConfig({
-                appName: "RAW: Atlas",
+                appName: "Realms.World",
                 alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_API,
                 chains,
                 walletConnectProjectId:
