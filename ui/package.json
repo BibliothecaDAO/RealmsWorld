@@ -63,6 +63,8 @@
     "cmdk": "^0.2.0",
     "connectkit": "^1.5.1",
     "cross-env": "^7.0.3",
+    "embla-carousel-autoplay": "^8.0.0-rc12",
+    "embla-carousel-react": "^8.0.0-rc12",
     "framer-motion": "^10.16.1",
     "get-starknet-core": "3.2.0",
     "graphql": "^16.7.1",
