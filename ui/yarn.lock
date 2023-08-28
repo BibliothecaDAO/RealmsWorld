@@ -5334,9 +5334,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reservoir0x/reservoir-kit-ui@npm:^1.6.1":
-  version: 1.6.1
-  resolution: "@reservoir0x/reservoir-kit-ui@npm:1.6.1"
+"@reservoir0x/reservoir-kit-ui@npm:^1.6.2":
+  version: 1.6.2
+  resolution: "@reservoir0x/reservoir-kit-ui@npm:1.6.2"
   dependencies:
     "@fortawesome/fontawesome-svg-core": ^6.1.1
     "@fortawesome/free-solid-svg-icons": ^6.1.1
@@ -5351,7 +5351,7 @@ __metadata:
     "@radix-ui/react-toggle-group": 1.0.4
     "@radix-ui/react-tooltip": 1.0.6
     "@react-hookz/web": ^19.2.0
-    "@reservoir0x/reservoir-sdk": 1.2.1
+    "@reservoir0x/reservoir-sdk": 1.2.2
     "@stitches/react": 1.3.1-1
     dayjs: ^1.11.4
     flatpickr: ^4.6.13
@@ -5363,18 +5363,18 @@ __metadata:
     react-dom: ^18.0
     viem: ~1.0.6
     wagmi: ~1.2.1
-  checksum: 480716c63523b5a674854125cd7afe8e8e9c980995c5e81b5ae84cf95cb3dd1cb313c18b9dc0e6a5f874bdb41f0d23c123215676ccd6c111481a1927670fb9cf
+  checksum: e5d949341be7f81552fe2a6d09522ea1fed12a3bb91cc08d5976464e21f7a82763233917f5d5d0dc940b0e88d71aaf9149d2698888f23b32a11ca9c9af1f1eb9
   languageName: node
   linkType: hard
 
-"@reservoir0x/reservoir-sdk@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@reservoir0x/reservoir-sdk@npm:1.2.1"
+"@reservoir0x/reservoir-sdk@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@reservoir0x/reservoir-sdk@npm:1.2.2"
   dependencies:
     axios: ^0.27.2
   peerDependencies:
     viem: ~1.0.6
-  checksum: 16c4d03ed19e5b8a79f554ab3534dddd6f7b84ce0597b48c1e8cecc0b3b0581a16026a5dc6a90093b23b76c1938f4932d32842a83f1c9aa7231f39572ceb8deb
+  checksum: 26c99d3798ae99231e71acc432272e390dfda66767bf1c0fb96ca655872c7cf087041d45ac7f397fbba3b93a831f82801271439e3181cb024a64338ac1e619a0
   languageName: node
   linkType: hard
 
@@ -7329,12 +7329,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^10.4.14":
-  version: 10.4.14
-  resolution: "autoprefixer@npm:10.4.14"
+"autoprefixer@npm:^10.4.15":
+  version: 10.4.15
+  resolution: "autoprefixer@npm:10.4.15"
   dependencies:
-    browserslist: ^4.21.5
-    caniuse-lite: ^1.0.30001464
+    browserslist: ^4.21.10
+    caniuse-lite: ^1.0.30001520
     fraction.js: ^4.2.0
     normalize-range: ^0.1.2
     picocolors: ^1.0.0
@@ -7343,7 +7343,7 @@ __metadata:
     postcss: ^8.1.0
   bin:
     autoprefixer: bin/autoprefixer
-  checksum: e9f18e664a4e4a54a8f4ec5f6b49ed228ec45afaa76efcae361c93721795dc5ab644f36d2fdfc0dea446b02a8067b9372f91542ea431994399e972781ed46d95
+  checksum: d490b14fb098c043e109fc13cd23628f146af99a493d35b9df3a26f8ec0b4dd8937c5601cdbaeb465b98ea31d3ea05aa7184711d4d93dfb52358d073dcb67032
   languageName: node
   linkType: hard
 
@@ -7654,6 +7654,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"browserslist@npm:^4.21.10":
+  version: 4.21.10
+  resolution: "browserslist@npm:4.21.10"
+  dependencies:
+    caniuse-lite: ^1.0.30001517
+    electron-to-chromium: ^1.4.477
+    node-releases: ^2.0.13
+    update-browserslist-db: ^1.0.11
+  bin:
+    browserslist: cli.js
+  checksum: 1e27c0f111a35d1dd0e8fc2c61781b0daefabc2c9471b0b10537ce54843014bceb2a1ce4571af1a82b2bf1e6e6e05d38865916689a158f03bc2c7a4ec2577db8
+  languageName: node
+  linkType: hard
+
 "browserslist@npm:^4.21.3, browserslist@npm:^4.21.5":
   version: 4.21.9
   resolution: "browserslist@npm:4.21.9"
@@ -7818,10 +7832,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001406, caniuse-lite@npm:^1.0.30001464, caniuse-lite@npm:^1.0.30001503":
+"caniuse-lite@npm:^1.0.30001406, caniuse-lite@npm:^1.0.30001503":
   version: 1.0.30001508
   resolution: "caniuse-lite@npm:1.0.30001508"
   checksum: 0a083ed92194d87e608fc35cac65830a27900249729eb8a68e270f866f2c4f83396c2e54eb47b0ef71360682174dd74e2e68eac0b8d407d125611c7bc12488eb
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001517, caniuse-lite@npm:^1.0.30001520":
+  version: 1.0.30001524
+  resolution: "caniuse-lite@npm:1.0.30001524"
+  checksum: 35d662a62f5e6be3c2d2141f1f30b3428ec72c5756cbd9fc723e33606846f28a515fd30f1e8b56e506c63fe0755f6eb7e3548dc6eefd53c5591b1a3bd28fee98
   languageName: node
   linkType: hard
 
@@ -8773,6 +8794,13 @@ __metadata:
   version: 1.4.442
   resolution: "electron-to-chromium@npm:1.4.442"
   checksum: 2905d01dc9b888ec2b3687801d130e868e951052d856727843e1ed22377e7887d472fd67854392c3944ea329865581a634e1e32e9c077dac63e1542fbc9847d2
+  languageName: node
+  linkType: hard
+
+"electron-to-chromium@npm:^1.4.477":
+  version: 1.4.503
+  resolution: "electron-to-chromium@npm:1.4.503"
+  checksum: 77198f5d4365931fb6f18670f1cc2bc6833516dfe935e69209da45ba06fd9e3bb02678216ab8c1cf7b047655559b7d591d922d9a781a1f91c7f5a32d5f51f778
   languageName: node
   linkType: hard
 
@@ -12008,6 +12036,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-releases@npm:^2.0.13":
+  version: 2.0.13
+  resolution: "node-releases@npm:2.0.13"
+  checksum: 17ec8f315dba62710cae71a8dad3cd0288ba943d2ece43504b3b1aa8625bf138637798ab470b1d9035b0545996f63000a8a926e0f6d35d0996424f8b6d36dda3
+  languageName: node
+  linkType: hard
+
 "nopt@npm:^6.0.0":
   version: 6.0.0
   resolution: "nopt@npm:6.0.0"
@@ -14513,7 +14548,7 @@ __metadata:
     "@radix-ui/react-tooltip": ^1.0.6
     "@react-three/drei": ^9.58.4
     "@react-three/fiber": ^8.12.0
-    "@reservoir0x/reservoir-kit-ui": ^1.6.1
+    "@reservoir0x/reservoir-kit-ui": ^1.6.2
     "@starknet-react/core": ^1.0.4
     "@starkware-industries/commons-js-enums": ^1.2.0
     "@starkware-industries/commons-js-utils": ^1.2.2
@@ -14523,7 +14558,7 @@ __metadata:
     "@types/react": 18.2.18
     "@types/react-dom": 18.2.7
     "@types/three": ^0.149.0
-    autoprefixer: ^10.4.14
+    autoprefixer: ^10.4.15
     chart.js: ^4.3.0
     class-variance-authority: ^0.7.0
     cmdk: ^0.2.0
@@ -14549,7 +14584,7 @@ __metadata:
     three: ^0.150.1
     typescript: 5.1.6
     use-deep-compare-effect: ^1.8.1
-    viem: ~1.6.7
+    viem: ~1.7.0
     wagmi: ~1.3.10
   languageName: unknown
   linkType: soft
@@ -15142,9 +15177,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:~1.6.7":
-  version: 1.6.7
-  resolution: "viem@npm:1.6.7"
+"viem@npm:~1.7.0":
+  version: 1.7.0
+  resolution: "viem@npm:1.7.0"
   dependencies:
     "@adraffy/ens-normalize": 1.9.0
     "@noble/curves": 1.1.0
@@ -15161,7 +15196,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: d923f46c2e0e66ef542162d68a5faed5719c12fd30de22c4a4701cbd81093346166ff18b5d4fe6dabef08e20393c3f507f9fbc18af5798f4125888b21bbfc6e4
+  checksum: d56d6317be7e07204c601eca3e90661122767ef883dc1f4aa615bc725c2bd65eb99ebbfb2180459147f327a38293f9c70bd8bdf7be64c4b9222b9d40fcb7fc69
   languageName: node
   linkType: hard
 
