@@ -4,6 +4,7 @@ import * as React from "react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { VariantProps, cva } from "class-variance-authority";
 import { X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { cn } from "@/app/lib/utils";
 
@@ -25,7 +26,7 @@ const portalVariants = cva("fixed inset-0 z-50 flex", {
 
 interface SheetPortalProps
   extends SheetPrimitive.DialogPortalProps,
-  VariantProps<typeof portalVariants> { }
+    VariantProps<typeof portalVariants> {}
 
 const SheetPortal = ({
   position,
@@ -33,9 +34,11 @@ const SheetPortal = ({
   children,
   ...props
 }: SheetPortalProps) => (
-  <SheetPrimitive.Portal className={cn(className)} {...props}>
-    <div className={portalVariants({ position })}>{children}</div>
-  </SheetPrimitive.Portal>
+  <AnimatePresence>
+    <SheetPrimitive.Portal className={cn(className)} {...props}>
+      <div className={portalVariants({ position })}>{children}</div>
+    </SheetPrimitive.Portal>
+  </AnimatePresence>
 );
 SheetPortal.displayName = SheetPrimitive.Portal.displayName;
 
@@ -44,13 +47,21 @@ const SheetOverlay = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
 >(({ className, children, ...props }, ref) => (
   <SheetPrimitive.Overlay
-    className={cn(
+    /*className={cn(
       "fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-all duration-100 data-[state=closed]:animate-out data-[state=open]:fade-in data-[state=closed]:fade-out",
       className
-    )}
+    )}*/
     {...props}
     ref={ref}
-  />
+  >
+    <motion.div
+      className="fixed inset-0 z-50 cursor-pointer bg-black/50 backdrop-blur-[10px]"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+    ></motion.div>
+  </SheetPrimitive.Overlay>
 ));
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
@@ -144,7 +155,7 @@ const sheetVariants = cva(
 
 export interface DialogContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-  VariantProps<typeof sheetVariants> { }
+    VariantProps<typeof sheetVariants> {}
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
@@ -152,17 +163,21 @@ const SheetContent = React.forwardRef<
 >(({ position, size, className, children, ...props }, ref) => (
   <SheetPortal position={position}>
     <SheetOverlay />
-    <SheetPrimitive.Content
-      ref={ref}
+    <motion.div
+      initial={{ x: "100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "100%" }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
       className={cn(sheetVariants({ position, size }), className)}
-      {...props}
     >
-      {children}
-      <SheetPrimitive.Close className="absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800">
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </SheetPrimitive.Close>
-    </SheetPrimitive.Content>
+      <SheetPrimitive.Content ref={ref} {...props}>
+        {children}
+        <SheetPrimitive.Close className="absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800">
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </SheetPrimitive.Close>
+      </SheetPrimitive.Content>
+    </motion.div>
   </SheetPortal>
 ));
 SheetContent.displayName = SheetPrimitive.Content.displayName;
@@ -201,11 +216,7 @@ const SheetTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn(
-      "text-lg font-semibold ",
-      "dark:text-slate-50",
-      className
-    )}
+    className={cn("text-lg font-semibold ", "dark:text-slate-50", className)}
     {...props}
   />
 ));

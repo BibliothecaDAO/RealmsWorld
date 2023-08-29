@@ -135,7 +135,7 @@ export const Transfer = ({ action }: { action: string }) => {
           </div>
         </Link>
 
-        <div className="flex flex-col  bg-white/10 rounded p-4 relative border border-white/5">
+        <div className="flex flex-col  bg-white/10 rounded p-4 mb-4 relative border border-white/5">
           {action == "withdraw" ? renderL1Network() : renderL2Network()}
         </div>
 
@@ -143,7 +143,7 @@ export const Transfer = ({ action }: { action: string }) => {
           <ConnectKitButton.Custom>
             {({ isConnected, show, address }) => {
               return (
-                <Button className="w-full" onClick={show}>
+                <Button className="w-full mb-2" onClick={show}>
                   {isConnected ? address : "Connect L1 Wallet"}
                 </Button>
               );

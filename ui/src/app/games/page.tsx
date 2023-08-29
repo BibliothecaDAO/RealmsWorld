@@ -4,7 +4,7 @@ import { games } from "@/constants";
 import { motion } from "framer-motion";
 
 export const metadata = {
-  title: "Atlas - Games of the Realms",
+  title: "Games of the Realms",
   description:
     "Various games in the onchain world of Realms - Created for adventurers by Bibliotheca DAO",
 };
@@ -19,7 +19,10 @@ export default async function Page() {
 
   return (
     <div className="w-full h-full bg-theme-gray">
-      <div className="w-full -mt-24 h-72 sm:h-96" style={backgroundImageStyle} />
+      <div
+        className="w-full -mt-24 h-72 sm:h-96"
+        style={backgroundImageStyle}
+      />
       <div className="sm:pl-32 ">
         <main className="container mx-auto">
           <div className="container px-8 mx-auto">

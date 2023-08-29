@@ -4,7 +4,7 @@ import { CollectionCard } from "@/app/components/CollectionCard";
 import { getCollections } from "../lib/reservoir/getCollections";
 
 export const metadata = {
-  title: "Atlas - Collections of the Lootverse",
+  title: "Lootverse Collections",
   description:
     "Various collections of the Lootverse - Created for adventurers by Bibliotheca DAO",
 };

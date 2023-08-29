@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as React from "react";
 import { VariantProps, cva } from "class-variance-authority";
@@ -39,7 +39,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-  VariantProps<typeof buttonVariants> {
+    VariantProps<typeof buttonVariants> {
   children: React.ReactNode;
   href?: string;
   external?: boolean;

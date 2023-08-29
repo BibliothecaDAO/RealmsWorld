@@ -19,7 +19,7 @@ export async function generateMetadata({
   const collection: Collection = collectionData.collections[0];
 
   return {
-    title: `Atlas - Collection: ${collection.name}`,
+    title: `Collection: ${collection.name}`,
     description: `Collection Details and Marketplace for ${collection.name} - Created for adventurers by Bibliotheca DAO`,
   };
 }

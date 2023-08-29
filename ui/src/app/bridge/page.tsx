@@ -2,6 +2,12 @@ import { cn } from "../lib/utils";
 import { BridgeModalProvider } from "../providers/BridgeModalProvider";
 import { Transfer } from "./Transfer";
 import { NavLink } from "@/app/components/ui/nav-link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Lords Bridge",
+  description: "...",
+};
 
 export default async function Page({
   searchParams: { action = "deposit" },

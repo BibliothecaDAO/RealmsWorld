@@ -11,9 +11,8 @@ import { cn } from "@/app/lib/utils";
 import { Button } from "@/app/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 export interface StoredFile {
-  id: string;
-  name: string;
-  url: string;
+  alt: string;
+  src: string;
 }
 
 interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,6 +20,7 @@ interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   options?: EmblaOptionsType;
   showPreview?: boolean;
   autoPlay?: boolean;
+  cover?: boolean;
 }
 
 export function Carousel({
@@ -29,6 +29,7 @@ export function Carousel({
   options,
   showPreview,
   autoPlay,
+  cover,
   ...props
 }: CarouselProps) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -82,7 +83,7 @@ export function Carousel({
   if (images.length === 0) {
     return (
       <div
-        aria-label="Product Placeholder"
+        aria-label="Placeholder"
         role="img"
         aria-roledescription="placeholder"
         className="flex aspect-square h-full w-full flex-1 items-center justify-center bg-secondary"
@@ -111,11 +112,11 @@ export function Carousel({
                 role="group"
                 key={index}
                 aria-roledescription="slide"
-                src={image.url}
-                alt={image.name}
+                src={image.src}
+                alt={image.alt}
                 fill
                 sizes="100vw"
-                className="object-cover"
+                className={cover ? "object-cover" : "object-contain"}
                 priority={index === 0}
               />
             </div>
@@ -148,8 +149,8 @@ export function Carousel({
             >
               <div className="absolute inset-0 z-10 bg-zinc-950/20 group-hover:bg-zinc-950/40" />
               <Image
-                src={image.url}
-                alt={image.name}
+                src={image.src}
+                alt={image.alt}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 fill
               />

@@ -2001,10 +2001,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:^8.47.0":
-  version: 8.47.0
-  resolution: "@eslint/js@npm:8.47.0"
-  checksum: 0ef57fe27b6d4c305b33f3b2d2fee1ab397a619006f1d6f4ce5ee4746b8f03d11a4e098805a7d78601ca534cf72917d37f0ac19896c992a32e26299ecb9f9de1
+"@eslint/js@npm:8.48.0":
+  version: 8.48.0
+  resolution: "@eslint/js@npm:8.48.0"
+  checksum: b2755f9c0ee810c886eba3c50dcacb184ba5a5cd1cbc01988ee506ad7340653cae0bd55f1d95c64b56dfc6d25c2caa7825335ffd2c50165bae9996fe0f396851
   languageName: node
   linkType: hard
 
@@ -3197,10 +3197,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mediapipe/tasks-vision@npm:0.10.2-rc2":
-  version: 0.10.2-rc2
-  resolution: "@mediapipe/tasks-vision@npm:0.10.2-rc2"
-  checksum: 4e49606ec72d71777e7917ea783454cab9ca5b0fa4e9422ee79b524c2b98b410ade143f0469b965a7558309f7bc0c4d24717e67b76157432db96ae1e2ad4fb7b
+"@mediapipe/tasks-vision@npm:0.10.2":
+  version: 0.10.2
+  resolution: "@mediapipe/tasks-vision@npm:0.10.2"
+  checksum: 0e5ac77f9b8b218303c95043dce2c377ed0fa8c623c6263604390e66004c6c986a6717d9abdebee02eb0382a0051e2659665d754129f1aac30c1ad6804639dce
   languageName: node
   linkType: hard
 
@@ -5255,12 +5255,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-three/drei@npm:^9.58.4":
-  version: 9.77.5
-  resolution: "@react-three/drei@npm:9.77.5"
+"@react-three/drei@npm:^9.80.9":
+  version: 9.80.9
+  resolution: "@react-three/drei@npm:9.80.9"
   dependencies:
     "@babel/runtime": ^7.11.2
-    "@mediapipe/tasks-vision": 0.10.2-rc2
+    "@mediapipe/tasks-vision": 0.10.2
     "@react-spring/three": ~9.6.1
     "@use-gesture/react": ^10.2.24
     camera-controls: ^2.4.2
@@ -5273,6 +5273,7 @@ __metadata:
     meshline: ^3.1.6
     react-composer: ^5.0.3
     react-merge-refs: ^1.1.0
+    stats-gl: ^1.0.4
     stats.js: ^0.17.0
     suspend-react: ^0.1.3
     three-mesh-bvh: ^0.6.0
@@ -5288,13 +5289,13 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: bafb750d0ac130060318c7e50d4beb73df7b13d9c894da5b1153dc59cbb54fca88295c5ecadc8fb03fcda4ae59b53f4aa91aa5abf2b4f544bfcdbcf870bef6bf
+  checksum: 00b0bfd7a84c7dc454fc9f75b6861eda4dbe43a79e6245bcfbed6b820a196aac07c881586d62fbf12a896a5cf0ac7ab0ec0bbb3bbec44c27caceee8ffc77581e
   languageName: node
   linkType: hard
 
-"@react-three/fiber@npm:^8.12.0":
-  version: 8.13.4
-  resolution: "@react-three/fiber@npm:8.13.4"
+"@react-three/fiber@npm:^8.13.7":
+  version: 8.13.7
+  resolution: "@react-three/fiber@npm:8.13.7"
   dependencies:
     "@babel/runtime": ^7.17.8
     "@types/react-reconciler": ^0.26.7
@@ -5323,7 +5324,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 9e1c9b2db4a9a522c6a79021e6767ae22e82056fea3b93db22b09b5f339ec9dfa8f2e84e31baa2113e91c07d2084533bb6bd555b3f486aff565fe253ab428c71
+  checksum: 129dee751f60bd7114fdcdc718af22eca22fbc8de80c2f0c2aa0c8016dbe1515cf056c03a69183ef60ed3e7d954343f7ac6102b797211fa8d30079dbde743417
   languageName: node
   linkType: hard
 
@@ -5334,9 +5335,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reservoir0x/reservoir-kit-ui@npm:^1.6.2":
-  version: 1.6.2
-  resolution: "@reservoir0x/reservoir-kit-ui@npm:1.6.2"
+"@reservoir0x/reservoir-kit-ui@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@reservoir0x/reservoir-kit-ui@npm:1.7.0"
   dependencies:
     "@fortawesome/fontawesome-svg-core": ^6.1.1
     "@fortawesome/free-solid-svg-icons": ^6.1.1
@@ -5351,30 +5352,30 @@ __metadata:
     "@radix-ui/react-toggle-group": 1.0.4
     "@radix-ui/react-tooltip": 1.0.6
     "@react-hookz/web": ^19.2.0
-    "@reservoir0x/reservoir-sdk": 1.2.2
+    "@reservoir0x/reservoir-sdk": 1.3.0
     "@stitches/react": 1.3.1-1
     dayjs: ^1.11.4
     flatpickr: ^4.6.13
     framer-motion: ^6.4.2
     react-flatpickr: ^3.10.13
     swr: 2.0.1
+    wagmi: ^1.3.10
   peerDependencies:
     react: ^18.0
     react-dom: ^18.0
-    viem: ~1.0.6
-    wagmi: ~1.2.1
-  checksum: e5d949341be7f81552fe2a6d09522ea1fed12a3bb91cc08d5976464e21f7a82763233917f5d5d0dc940b0e88d71aaf9149d2698888f23b32a11ca9c9af1f1eb9
+    viem: ~1.6.4
+  checksum: f5b68f65cc4d24d895b99c8f6637d0625d25dff762d317760db4d0c68e89c3c690df78541f2dcbec32f4adfa514e2b92e8d9ec905e4076ad43b76907184e379c
   languageName: node
   linkType: hard
 
-"@reservoir0x/reservoir-sdk@npm:1.2.2":
-  version: 1.2.2
-  resolution: "@reservoir0x/reservoir-sdk@npm:1.2.2"
+"@reservoir0x/reservoir-sdk@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@reservoir0x/reservoir-sdk@npm:1.3.0"
   dependencies:
     axios: ^0.27.2
   peerDependencies:
-    viem: ~1.0.6
-  checksum: 26c99d3798ae99231e71acc432272e390dfda66767bf1c0fb96ca655872c7cf087041d45ac7f397fbba3b93a831f82801271439e3181cb024a64338ac1e619a0
+    viem: ~1.6.4
+  checksum: d54190f12f39a40a76d580d4e07cfe50b216260fedc164b16f626299dd3449c3c5a2104176c88608f2eb48a38dff78f1ad50025a0ce8aff0b5e9545b628a3219
   languageName: node
   linkType: hard
 
@@ -6037,6 +6038,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tweenjs/tween.js@npm:~18.6.4":
+  version: 18.6.4
+  resolution: "@tweenjs/tween.js@npm:18.6.4"
+  checksum: 47208db3f6c32cde80284a852d0fca016284f90c4798eb4ebb2ebfc2e379504007bf0c031c2c33044df8a0878fd1942ebc4e0b7f5b8bcccf812b532ea1ee73eb
+  languageName: node
+  linkType: hard
+
 "@types/connect@npm:^3.4.33":
   version: 3.4.35
   resolution: "@types/connect@npm:3.4.35"
@@ -6090,10 +6098,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.16.18":
-  version: 18.16.18
-  resolution: "@types/node@npm:18.16.18"
-  checksum: d32d8a0a04cd3f5ecb361bcb42f3a07623881ac90d680e06bf626defb3c663a94860d11690babe607cfe67265eceeb8a59ba5fe40c0e49f5a1b01e0088640469
+"@types/node@npm:18.17.12":
+  version: 18.17.12
+  resolution: "@types/node@npm:18.17.12"
+  checksum: 79f8bcca3067a3c529f30e172df8d14f25ab9e4cd6a05ed897a924ab1dec774e8ea172ef5c4a67ffec433d423a0c81778f17db22606d574bc83871b60aab298e
   languageName: node
   linkType: hard
 
@@ -6181,14 +6189,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:18.2.18":
-  version: 18.2.18
-  resolution: "@types/react@npm:18.2.18"
+"@types/react@npm:18.2.21":
+  version: 18.2.21
+  resolution: "@types/react@npm:18.2.21"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 2e0d75de2b618e76780019e52478b1bec2b015a9187aea30f84518c0c3ddc639055bdfea50864aece937bad0cb0544d0100b80d30f5461e72fbc1c3c0be8b140
+  checksum: ffed203bfe7aad772b8286f7953305c9181ac3a8f27d3f5400fbbc2a8e27ca8e5bbff818ee014f39ca0d19d2b3bb154e5bdbec7e232c6f80b59069375aa78349
   languageName: node
   linkType: hard
 
@@ -6199,12 +6207,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/three@npm:^0.149.0":
-  version: 0.149.0
-  resolution: "@types/three@npm:0.149.0"
+"@types/stats.js@npm:*":
+  version: 0.17.0
+  resolution: "@types/stats.js@npm:0.17.0"
+  checksum: ac8dc5e622fa3b7cc37b9e21663193a2f171a4f5896285e4dfc04f2874acbb75edc958f077bffbd85b0ae358daa5bf4ecbc71210386a4300bff05d09435e35f9
+  languageName: node
+  linkType: hard
+
+"@types/three@npm:^0.155.1":
+  version: 0.155.1
+  resolution: "@types/three@npm:0.155.1"
   dependencies:
+    "@tweenjs/tween.js": ~18.6.4
+    "@types/stats.js": "*"
     "@types/webxr": "*"
-  checksum: 5def82bd5d4fb0eb6046e747eecced06d68fbf1747ab8f3e7657872e42e58ce7a92218d7c5e4ca26204257927638ad14da5d1cce7310aca15eb8a9bd484ea191
+    fflate: ~0.6.9
+    lil-gui: ~0.17.0
+    meshoptimizer: ~0.18.1
+  checksum: dbe682fed53b59776d09140eec755677aedb49df6a16333a507f87a4ade2cbd4ea0fa46984e28425f3c3026d5eb9a8568e75a1a362fb4f1889427e4c6df4b640
   languageName: node
   linkType: hard
 
@@ -8184,9 +8204,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"connectkit@npm:^1.5.1":
-  version: 1.5.1
-  resolution: "connectkit@npm:1.5.1"
+"connectkit@npm:^1.5.2":
+  version: 1.5.2
+  resolution: "connectkit@npm:1.5.2"
   dependencies:
     buffer: ^6.0.3
     detect-browser: ^5.3.0
@@ -8201,7 +8221,7 @@ __metadata:
     react-dom: 17.x || 18.x
     viem: ^1.0.0
     wagmi: ^1.1.1
-  checksum: 9e1fc52199bb1b82e8196c1c79f0ac1545eeacd6750e80e443cae3dbb88fc0895fb54e6634339854a4a50e5202de9e7322522bcb813ee58182c07dd336f410cc
+  checksum: 370958d05b1cd88df90a25912efc574cd02aecd660e0c1c5dbf4c1858a0fa4012b293b2146eab9ed2ff86429e2a6285da5dfcb842e6e7ff3899082b428ef5acb
   languageName: node
   linkType: hard
 
@@ -9204,14 +9224,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:8.47.0":
-  version: 8.47.0
-  resolution: "eslint@npm:8.47.0"
+"eslint@npm:8.48.0":
+  version: 8.48.0
+  resolution: "eslint@npm:8.48.0"
   dependencies:
     "@eslint-community/eslint-utils": ^4.2.0
     "@eslint-community/regexpp": ^4.6.1
     "@eslint/eslintrc": ^2.1.2
-    "@eslint/js": ^8.47.0
+    "@eslint/js": 8.48.0
     "@humanwhocodes/config-array": ^0.11.10
     "@humanwhocodes/module-importer": ^1.0.1
     "@nodelib/fs.walk": ^1.2.8
@@ -9247,7 +9267,7 @@ __metadata:
     text-table: ^0.2.0
   bin:
     eslint: bin/eslint.js
-  checksum: 1988617f703eadc5c7540468d54dc8e5171cf2bb9483f6172799cd1ff54a9a5e4470f003784e8cef92687eaa14de37172732787040e67817581a20bcb9c15970
+  checksum: f20b359a4f8123fec5c033577368cc020d42978b1b45303974acd8da7a27063168ee3fe297ab5b35327162f6a93154063e3ce6577102f70f9809aff793db9bd0
   languageName: node
   linkType: hard
 
@@ -9574,7 +9594,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fflate@npm:^0.6.9":
+"fflate@npm:^0.6.9, fflate@npm:~0.6.9":
   version: 0.6.10
   resolution: "fflate@npm:0.6.10"
   checksum: 96384bc4090987fe565c0de8204e3830f538144ec950576fea50aee1b42adbe9fc3ed5e7905dfa7979faaa20979def330dbebce548f3dcafc3e118cc9838526d
@@ -10187,10 +10207,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:^16.7.1":
-  version: 16.7.1
-  resolution: "graphql@npm:16.7.1"
-  checksum: c924d8428daf0e96a5ea43e9bc3cd1b6802899907d284478ac8f705c8fd233a0a51eef915f7569fb5de8acb2e85b802ccc6c85c2b157ad805c1e9adba5a299bd
+"graphql@npm:^16.8.0":
+  version: 16.8.0
+  resolution: "graphql@npm:16.8.0"
+  checksum: d853d4085b0c911a7e2a926c3b0d379934ec61cd4329e70cdf281763102f024fd80a97db7a505b8b04fed9050cb4875f8f518150ea854557a500a0b41dcd7f4e
   languageName: node
   linkType: hard
 
@@ -11317,6 +11337,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lil-gui@npm:~0.17.0":
+  version: 0.17.0
+  resolution: "lil-gui@npm:0.17.0"
+  checksum: a6f33e90748ea98477f1f7af6d6cbdc4a1b38ce9da86d674d73f7b0bbdc7f3e947d81edee04c32f33fb28c69a108ba04c24270a8398064ffcc56ffeabc0a916e
+  languageName: node
+  linkType: hard
+
 "lilconfig@npm:^2.0.5, lilconfig@npm:^2.1.0":
   version: 2.1.0
   resolution: "lilconfig@npm:2.1.0"
@@ -11534,12 +11561,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^0.268.0":
-  version: 0.268.0
-  resolution: "lucide-react@npm:0.268.0"
+"lucide-react@npm:^0.270.0":
+  version: 0.270.0
+  resolution: "lucide-react@npm:0.270.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: cb40a30bb9e0156f81cc2960a4708b948330304e40efeae7043d0414679cd6ae6dfe37c7eb99d56e673863e5862aa408d89669048afaba1b6dd3677e59d0bd96
+  checksum: ef937de35ee51399772fae9902bdd14dc5b5b2f5fd5e93e185263ddae601230aaf77f672e0102bc06d2536eaff4453ec4983f616db50873ac2f599970a3135b8
   languageName: node
   linkType: hard
 
@@ -11636,6 +11663,13 @@ __metadata:
   peerDependencies:
     three: ">=0.137"
   checksum: 72b79908315650a57b5c97b846191ab73d1ee1551211154283a951eac7b08f9129adb6ce1b84d887b30b47617a52ff0878f9695037491c4d8350712c6655489a
+  languageName: node
+  linkType: hard
+
+"meshoptimizer@npm:~0.18.1":
+  version: 0.18.1
+  resolution: "meshoptimizer@npm:0.18.1"
+  checksum: 101dbed8abd4cf167cdb7a0bc13db90dd0743332c689e43b18cc5254d238f0766750752432401fa63dc7e9e32399ef68daacf48f0d89db1484042c1761c7362d
   languageName: node
   linkType: hard
 
@@ -13932,6 +13966,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stats-gl@npm:^1.0.4":
+  version: 1.0.5
+  resolution: "stats-gl@npm:1.0.5"
+  checksum: b36c4ebc84a9c79f7ea629116765ea527b4c5e6ff68894fd1ab79c93eba63e02db126aa78030fc2a35fe11d6b0e37228a6e35f8fc572713ddcbcece0e665b9d9
+  languageName: node
+  linkType: hard
+
 "stats.js@npm:^0.17.0":
   version: 0.17.0
   resolution: "stats.js@npm:0.17.0"
@@ -14469,10 +14510,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"three@npm:^0.150.1":
-  version: 0.150.1
-  resolution: "three@npm:0.150.1"
-  checksum: b12a92a681a30e62640d90bdf074d039c05d8294ad40f437e7e1807ce0e698ad6728878a1e72dad22bf05d7a359843ecea8739d05f2f13143bc3a4ecdfdbdd7b
+"three@npm:^0.155.0":
+  version: 0.155.0
+  resolution: "three@npm:0.155.0"
+  checksum: 55de8af716686be2159b2ff407501ce2e6418b7d16a8dc57f3dcf9f08c4a6bedf0623fa8ddb67c1ae6f679d7ca53cfa0c64bab6b0577d6c467618389d5561211
   languageName: node
   linkType: hard
 
@@ -14583,32 +14624,32 @@ __metadata:
     "@radix-ui/react-toggle": ^1.0.3
     "@radix-ui/react-toggle-group": ^1.0.4
     "@radix-ui/react-tooltip": ^1.0.6
-    "@react-three/drei": ^9.58.4
-    "@react-three/fiber": ^8.12.0
-    "@reservoir0x/reservoir-kit-ui": ^1.6.2
+    "@react-three/drei": ^9.80.9
+    "@react-three/fiber": ^8.13.7
+    "@reservoir0x/reservoir-kit-ui": ^1.7.0
     "@starknet-react/core": ^1.0.4
     "@starkware-industries/commons-js-enums": ^1.2.0
     "@starkware-industries/commons-js-utils": ^1.2.2
     "@svgr/webpack": ^8.1.0
     "@tanstack/react-query": ^4.33.0
-    "@types/node": 18.16.18
-    "@types/react": 18.2.18
+    "@types/node": 18.17.12
+    "@types/react": 18.2.21
     "@types/react-dom": 18.2.7
-    "@types/three": ^0.149.0
+    "@types/three": ^0.155.1
     autoprefixer: ^10.4.15
     chart.js: ^4.3.0
     class-variance-authority: ^0.7.0
     cmdk: ^0.2.0
-    connectkit: ^1.5.1
+    connectkit: ^1.5.2
     cross-env: ^7.0.3
     embla-carousel-autoplay: ^8.0.0-rc12
     embla-carousel-react: ^8.0.0-rc12
-    eslint: 8.47.0
+    eslint: 8.48.0
     eslint-config-next: 13.4.19
     framer-motion: ^10.16.1
     get-starknet-core: 3.2.0
-    graphql: ^16.7.1
-    lucide-react: ^0.268.0
+    graphql: ^16.8.0
+    lucide-react: ^0.270.0
     next: 13.4.19
     postcss: ^8.4.28
     react: 18.3.0-canary-1a001dac6-20230812
@@ -14620,10 +14661,10 @@ __metadata:
     starknet: ^5.19.3
     tailwind-merge: ^1.14.0
     tailwindcss: ^3.3.3
-    three: ^0.150.1
+    three: ^0.155.0
     typescript: 5.1.6
     use-deep-compare-effect: ^1.8.1
-    viem: ~1.7.0
+    viem: ~1.8.1
     wagmi: ~1.3.10
   languageName: unknown
   linkType: soft
@@ -15216,9 +15257,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:~1.7.0":
-  version: 1.7.0
-  resolution: "viem@npm:1.7.0"
+"viem@npm:~1.8.1":
+  version: 1.8.1
+  resolution: "viem@npm:1.8.1"
   dependencies:
     "@adraffy/ens-normalize": 1.9.0
     "@noble/curves": 1.1.0
@@ -15235,11 +15276,11 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: d56d6317be7e07204c601eca3e90661122767ef883dc1f4aa615bc725c2bd65eb99ebbfb2180459147f327a38293f9c70bd8bdf7be64c4b9222b9d40fcb7fc69
+  checksum: ab8515cc54f07ad1ba2dc0906f0614e3c4be4c7fda3e13f22475eaf50c9a68cfce424d65738507e210fdfa1db52ec587242544504360fdf5b4b146d2e1534c16
   languageName: node
   linkType: hard
 
-"wagmi@npm:~1.3.10":
+"wagmi@npm:^1.3.10, wagmi@npm:~1.3.10":
   version: 1.3.10
   resolution: "wagmi@npm:1.3.10"
   dependencies:

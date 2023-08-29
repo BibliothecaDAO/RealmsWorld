@@ -4,9 +4,10 @@ import { GameCard } from "./components/GameCard";
 import { CollectionCard } from "./components/CollectionCard";
 import { getCollections } from "./lib/reservoir/getCollections";
 
-import DojoDark from "@/icons/mark-dark.svg"
-import Starknet from "@/icons/starknet.svg"
+import DojoDark from "@/icons/mark-dark.svg";
+import Starknet from "@/icons/starknet.svg";
 import Link from "next/link";
+import { Carousel } from "./components/ui/carousel";
 
 export default async function Home() {
   const data = await getCollections([
@@ -26,16 +27,33 @@ export default async function Home() {
   };
 
   return (
-    <main className="z-0" style={backgroundImageStyle}>
-      <div className="w-full sm:-mt-24 sm:pl-32">
-        <div className="container px-8 mx-auto pt-48">
+    <main className="z-0" /*style={backgroundImageStyle}*/>
+      {/*<Carousel
+        className="h-screen w-screen top-0 left-0 absolute"
+        images={[
+          { alt: "First", src: "/backgrounds/bridge.png" },
+          { alt: "First", src: defaultImage },
+        ]}
+        cover
+        options={{
+          loop: true,
+        }}
+        autoPlay
+      />*/}
+      <div className="w-full pt-24 sm:pl-32">
+        <div className="container px-8 mx-auto relative z-30">
           <h1 className="text-4xl md:text-6xl font-sans">
             Realms <br /> Autonomous <br /> World.
           </h1>
           <div className="flex my-2">
-            <span className="align-center">Powered by </span><Link href={'https://dojoengine.org/'}><DojoDark className="w-10 px-1" /></Link>
-
-            <span className="px-1">on</span>  <Link href={'https://www.starknet.io/en'}><Starknet className="w-8 px-1" /></Link>
+            <span className="align-center">Powered by </span>
+            <Link href={"https://dojoengine.org/"}>
+              <DojoDark className="w-10 px-1" />
+            </Link>
+            <span className="px-1">on</span>{" "}
+            <Link href={"https://www.starknet.io/en"}>
+              <Starknet className="w-8 px-1" />
+            </Link>
           </div>
 
           <hr className="border" />

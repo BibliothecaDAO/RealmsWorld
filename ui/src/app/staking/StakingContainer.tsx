@@ -51,14 +51,14 @@ export const StakingContainer = () => {
   const { data: realmsData, isLoading: realmsDataIsLoading } = useQuery({
     queryKey: ["UsersRealms" + address],
     queryFn: () => sdk.UsersRealms({ address, addressId: address }),
-    enabled: !!address,
+    enabled: !!addressL1,
     refetchInterval: 10000,
   });
   const { data: totalStakedRealmsData } = useQuery({
     queryKey: ["StakedRealmsTotal"],
     queryFn: () =>
       sdk.WalletsRealms({ addresses: [galleonAddress, carrackAddress] }),
-    enabled: !!address,
+    enabled: !!addressL1,
   });
   const totalStakedRealms = totalStakedRealmsData?.wallets.reduce(
     (total, wallet) => {

@@ -57,19 +57,22 @@ export default function RootLayout({
   );
 }
 
-const title = "Realms - Home to the Adventurers";
+const title = "Home to the Adventurers";
 const description =
   "Created for Adventurers by Bibliotheca DAO - your window into the onchain world of Realms and the Lootverse.";
 
 export const metadata = {
-  title: title,
+  title: {
+    template: "%s | Realms.World",
+    default: "Realms.World | Home to the Adventurers",
+  },
   description: description,
   icons: {
-    icon: "/BibliothecaBook.svg",
+    icon: "/rw-logo.svg",
   },
   twitter: {
     card: "summary_large_image",
-    title: title,
+    title: "Realms.World |" + title,
     description: description,
     siteId: "1467726470533754880",
     creator: "@bibliothecadao",
@@ -77,10 +80,10 @@ export const metadata = {
     images: ["/backgrounds/map.png"],
   },
   openGraph: {
-    title: title,
+    title: "Realms.World |" + title,
     description: description,
     url: "https://realms.world",
-    siteName: "Atlas",
+    siteName: "Realms World",
     images: [
       {
         url: "/backgrounds/map.png",
