@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
 import { sortDirection, sortOptions } from "@/constants";
-import { useQuery } from "@/composables/useQuery";
+import { useQuery } from "@/hooks/useQuery";
 import { useUIContext } from "@/app/providers/UIProvider";
 
 export const TradeFilters = () => {

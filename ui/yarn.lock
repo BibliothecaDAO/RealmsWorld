@@ -3606,6 +3606,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/curves@npm:~1.2.0":
+  version: 1.2.0
+  resolution: "@noble/curves@npm:1.2.0"
+  dependencies:
+    "@noble/hashes": 1.3.2
+  checksum: bb798d7a66d8e43789e93bc3c2ddff91a1e19fdb79a99b86cd98f1e5eff0ee2024a2672902c2576ef3577b6f282f3b5c778bebd55761ddbb30e36bf275e83dd0
+  languageName: node
+  linkType: hard
+
 "@noble/hashes@npm:1.3.0":
   version: 1.3.0
   resolution: "@noble/hashes@npm:1.3.0"
@@ -3617,6 +3626,13 @@ __metadata:
   version: 1.3.1
   resolution: "@noble/hashes@npm:1.3.1"
   checksum: 7fdefc0f7a0c1ec27acc6ff88841793e3f93ec4ce6b8a6a12bfc0dd70ae6b7c4c82fe305fdfeda1735d5ad4a9eebe761e6693b3d355689c559e91242f4bc95b1
+  languageName: node
+  linkType: hard
+
+"@noble/hashes@npm:1.3.2, @noble/hashes@npm:~1.3.2":
+  version: 1.3.2
+  resolution: "@noble/hashes@npm:1.3.2"
+  checksum: fe23536b436539d13f90e4b9be843cc63b1b17666a07634a2b1259dded6f490be3d050249e6af98076ea8f2ea0d56f578773c2197f2aa0eeaa5fba5bc18ba474
   languageName: node
   linkType: hard
 
@@ -5482,6 +5498,16 @@ __metadata:
     "@noble/hashes": ~1.3.0
     "@scure/base": ~1.1.0
   checksum: 980d761f53e63de04a9e4db840eb13bfb1bd1b664ecb04a71824c12c190f4972fd84146f3ed89b2a8e4c6bd2c17c15f8b592b7ac029e903323b0f9e2dae6916b
+  languageName: node
+  linkType: hard
+
+"@scure/starknet@npm:~0.3.0":
+  version: 0.3.0
+  resolution: "@scure/starknet@npm:0.3.0"
+  dependencies:
+    "@noble/curves": ~1.2.0
+    "@noble/hashes": ~1.3.2
+  checksum: 2f291a7aef9298f362a6b01e3b9dd0d414c53fc34fd71b6f15555307e236117cbce598351c6f77fc14dd7f06737c0b20871c030519fbaaa834411b319741f595
   languageName: node
   linkType: hard
 
@@ -11673,16 +11699,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micro-starknet@npm:~0.2.1":
-  version: 0.2.3
-  resolution: "micro-starknet@npm:0.2.3"
-  dependencies:
-    "@noble/curves": ~1.0.0
-    "@noble/hashes": ~1.3.0
-  checksum: f1ae152348d1ca0bd0b4d09cb7901aee5cb1e815dcbfb6c3a623d107c169fad00808e154e7ca8abf2b16639a83044bc602c66fc3e0eb0de89a5c81815ff9b2ef
-  languageName: node
-  linkType: hard
-
 "micromatch@npm:^4.0.4, micromatch@npm:^4.0.5":
   version: 4.0.5
   resolution: "micromatch@npm:4.0.5"
@@ -13951,18 +13967,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"starknet@npm:^5.19.3":
-  version: 5.19.3
-  resolution: "starknet@npm:5.19.3"
+"starknet@npm:^5.19.5":
+  version: 5.19.5
+  resolution: "starknet@npm:5.19.5"
   dependencies:
-    "@noble/curves": ~1.0.0
+    "@noble/curves": ~1.2.0
+    "@scure/starknet": ~0.3.0
     abi-wan-kanabi: ^1.0.3
     isomorphic-fetch: ^3.0.0
     lossless-json: ^2.0.8
-    micro-starknet: ~0.2.1
     pako: ^2.0.4
     url-join: ^4.0.1
-  checksum: 1a0e4b6c4d726a0a5df047c8564208c2c36da14d88aadc849bfb146e1688cb663e38935d10fae268caf90077b59d30bd5a7b7c86c070465d26fc59ed8ca93566
+  checksum: 4b43407838a7d65efc1c63f51f1dbdd0f3ea55dc855f1ee0407a9a52103ead9386106f4ce3318913ad595b39f629a1c97427134505daf7c844d5aa9ea3677203
   languageName: node
   linkType: hard
 
@@ -14658,13 +14674,13 @@ __metadata:
     react-form-stepper: ^2.0.3
     server-only: ^0.0.1
     sharp: ^0.32.1
-    starknet: ^5.19.3
+    starknet: ^5.19.5
     tailwind-merge: ^1.14.0
     tailwindcss: ^3.3.3
     three: ^0.155.0
     typescript: 5.1.6
     use-deep-compare-effect: ^1.8.1
-    viem: ~1.8.1
+    viem: ~1.9.0
     wagmi: ~1.3.10
   languageName: unknown
   linkType: soft
@@ -15257,9 +15273,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:~1.8.1":
-  version: 1.8.1
-  resolution: "viem@npm:1.8.1"
+"viem@npm:~1.9.0":
+  version: 1.9.0
+  resolution: "viem@npm:1.9.0"
   dependencies:
     "@adraffy/ens-normalize": 1.9.0
     "@noble/curves": 1.1.0
@@ -15267,7 +15283,6 @@ __metadata:
     "@scure/bip32": 1.3.0
     "@scure/bip39": 1.2.0
     "@types/ws": ^8.5.4
-    "@wagmi/chains": 1.7.0
     abitype: 0.9.3
     isomorphic-ws: 5.0.0
     ws: 8.12.0
@@ -15276,7 +15291,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: ab8515cc54f07ad1ba2dc0906f0614e3c4be4c7fda3e13f22475eaf50c9a68cfce424d65738507e210fdfa1db52ec587242544504360fdf5b4b146d2e1534c16
+  checksum: 9c211d9426951dc6f1ef091fcc514877e392b362ce30673afbd1a7fb0f3362a9ff4e50763df2f6b70e547cde3882198da67b45880630568d8fc8719189ebcc0a
   languageName: node
   linkType: hard
 

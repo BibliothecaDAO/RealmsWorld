@@ -8,7 +8,7 @@ import {
   AccordionTrigger,
 } from "@/app/components/ui/accordion";
 import { Button } from "./ui/button";
-import { useQuery } from "@/composables/useQuery";
+import { useQuery } from "@/hooks/useQuery";
 
 export const AttributesDropdown = ({ address, attributes }: any) => {
   const {

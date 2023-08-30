@@ -8,7 +8,7 @@ import { ETHERSCAN_ACCOUNT_URL, STARKSCAN_ACCOUNT_URL } from "@/constants/env";
 import { useAccount } from "wagmi";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { ExternalLinkIcon } from "lucide-react";
-import { useCompleteTransferToL1 } from "@/composables/useTransferToL1";
+import { useCompleteTransferToL1 } from "@/hooks/useTransferToL1";
 
 export const Account = ({ isL1 }: { isL1: boolean }) => {
   const { address } = useAccount();

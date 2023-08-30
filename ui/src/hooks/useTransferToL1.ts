@@ -5,7 +5,7 @@ import {
     TransferStep, TransferToL1Steps, TransferError, ActionType, CompleteTransferToL1Steps, stepOf
 } from '@/constants/transferSteps';
 import { useTransferLog } from '@/app/providers/TransferLogProvider';
-import { useBridgeContract } from '@/composables/useBridgeContract';
+import { useBridgeContract } from '@/hooks/useBridgeContract';
 import { useTransfer } from './useTransfer';
 import { useTransferProgress } from './useTransferProgress';
 import { useAccount } from 'wagmi';

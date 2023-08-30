@@ -1,7 +1,7 @@
 "use client";
 import { X } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
-import { useQuery } from "@/composables/useQuery";
+import { useQuery } from "@/hooks/useQuery";
 
 export const AttributeTags = () => {
   const { handleAttributeClick, getQueriesFromUrl } = useQuery();
