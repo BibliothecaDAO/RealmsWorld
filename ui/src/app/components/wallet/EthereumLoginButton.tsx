@@ -25,14 +25,19 @@ export const EthereumLoginButton = ({
   return (
     <ConnectKitButton.Custom>
       {({ show, isConnected, isConnecting, truncatedAddress, ensName }) => (
-        <Button className="px-3" variant="outline" size="lg" onClick={show}>
+        <Button
+          className="px-3"
+          variant="outline"
+          size="lg"
+          onClick={() => (isConnected ? toggleAccount() : show?.())}
+        >
           <span className="normal-case font-sans flex items-center">
             <EthereumLogo className="w-8 mr-2 -ml-1" />
             {isConnected ? (
               ensName ?? truncatedAddress
             ) : (
               <>
-                <span>Connect Ethereum Wallet</span>
+                <span>Connect Ethereum</span>
                 {isConnecting ||
                   (isLoading && (
                     <div className="right-0 absolute mr-8">

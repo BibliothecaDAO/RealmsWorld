@@ -1,9 +1,11 @@
 import { shortenHex } from "@/functions/utils";
 import { Button } from "@/app/components/ui/button";
 
-import { SheetTrigger, SheetContent, Sheet } from "../ui/sheet";
+import { SheetContent, Sheet } from "../ui/sheet";
 import EthereumLogin from "./EthereumLogin";
 import { EthereumLoginButton } from "./EthereumLoginButton";
+import { StarknetLoginButton } from "./StarknetLoginButton";
+
 import StarkLogin from "./StarkLogin";
 import {
   Tabs,
@@ -26,10 +28,10 @@ import {
 import { useEffect, useState } from "react";
 
 import { useConnect, useAccount as useL1Account } from "wagmi";
-import EthereumLogo from "@/icons/ethereum.svg";
-import StarknetLogo from "@/icons/starknet.svg";
+
 import { Account } from "@/app/bridge/Account";
 import { useUIContext } from "@/app/providers/UIProvider";
+import { StarknetLoginModal } from "./StarknetLoginModal";
 
 const tabs = [
   {
@@ -83,6 +85,8 @@ export const WalletSheet = () => {
       } else {
         setIsWrongNetwork(false);
       }
+    } else {
+      setIsWrongNetwork(false);
     }
   }, [chain?.id, l2Address, isL2Connected]);
 
@@ -92,19 +96,8 @@ export const WalletSheet = () => {
     <>
       <div className="flex space-x-2">
         <EthereumLoginButton openAccount />
-        <Button variant={"outline"} className="flex gap-x-2">
-          {l2Address && isConnected ? (
-            <>
-              <StarknetLogo className="mx-2 w-5 h-5" />
-              {shortenHex(l2Address)}
-            </>
-          ) : (
-            <span className="flex">
-              <StarknetLogo className="mx-2 w-5 h-5" />
-              Connect
-            </span>
-          )}
-        </Button>
+        <StarknetLoginButton />
+        <StarknetLoginModal />
       </div>
       <Sheet open={isAccountOpen} onOpenChange={toggleAccount}>
         <SheetContent position={"right"} size={"lg"}>

@@ -12,6 +12,8 @@ interface UIContextValue {
   toggleGrid: () => void;
   isAccountOpen: boolean;
   toggleAccount: () => void;
+  isStarknetLoginOpen: boolean;
+  toggleStarknetLogin: () => void;
 }
 
 // Create the UI context
@@ -37,25 +39,27 @@ export const UIContextProvider: React.FC<UIContextProviderProps> = ({
   // State for sidebar
   const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [isAccountOpen, setAccountOpen] = useState<boolean>(false);
+  const [isStarknetLoginOpen, setStarknetLoginOpen] = useState<boolean>(false);
+
   const [isFilterOpen, setFilterOpen] = useState<boolean>(false);
   const [isGrid, setGrid] = useState<boolean>(true);
 
-  // Function to toggle sidebar state
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
 
-  // Function to toggle sidebar state
   const toggleAccount = () => {
     setAccountOpen(!isAccountOpen);
   };
 
-  // Function to toggle filter state
+  const toggleStarknetLogin = () => {
+    setStarknetLoginOpen(!isStarknetLoginOpen);
+  };
+
   const toggleFilter = () => {
     setFilterOpen(!isFilterOpen);
   };
 
-  // Function to toggle grid state
   const toggleGrid = () => {
     setGrid(!isGrid);
   };
@@ -65,6 +69,8 @@ export const UIContextProvider: React.FC<UIContextProviderProps> = ({
     toggleSidebar,
     isAccountOpen,
     toggleAccount,
+    isStarknetLoginOpen,
+    toggleStarknetLogin,
     isFilterOpen,
     toggleFilter,
     isGrid,
