@@ -16,8 +16,8 @@ import { useTransferToL1 } from "@/hooks/useTransferToL1";
 import LordsIcon from "@/icons/lords.svg";
 import { Toast, ToastDescription, ToastTitle } from "../components/ui/toast";
 import { useWalletsProviderContext } from "../providers/WalletsProvider";
-import { BridgeModalProvider } from "../providers/BridgeModalProvider";
-import { BridgeModalWrapper } from "./BridgeModalWrapper";
+import { StarknetLoginButton } from "@/app/components/wallet/StarknetLoginButton";
+import { EthereumLoginButton } from "@/app/components/wallet/EthereumLoginButton";
 
 const network =
   process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
@@ -40,56 +40,52 @@ export const Transfer = ({ action }: { action: string }) => {
     }
   };
 
-  const renderL1Network = () => {
+  const renderNetwork = (
+    networkName: string,
+    networkLogo: JSX.Element,
+    isWithdraw: boolean
+  ) => {
     return (
       <>
         <div className="relative flex items-center justify-between">
           <div className="flex-col">
             <span className="px-2 text-xs tracking-wide text-white/50 font-bold uppercase rounded bg-white/40 border border-white/20">
-              {action != "withdraw" ? "from" : "to"}
+              {isWithdraw ? "from" : "to"}
             </span>
             <div className="flex text-lg my-1 ">
               <div className="mr-2 bg-white rounded-full h-[32px] w-[32px] self-center">
-                <div className="w-4 h-4 m-auto mt-0.5">
-                  <EthereumLogo />
-                </div>
+                {networkLogo}
               </div>
-              <h5 className="self-center">Ethereum</h5>
+              <h5 className="self-center">{networkName}</h5>
             </div>
           </div>
           <TokenBalance
-            balance={balances.l1?.lords || BigInt(0)}
+            balance={
+              isWithdraw
+                ? balances.l2?.lords || BigInt(0)
+                : balances.l1?.lords || BigInt(0)
+            }
             symbol="Lords"
+            isLoading={isWithdraw ? l2loading : false}
           />
         </div>
       </>
     );
   };
-  const renderL2Network = () => {
-    return (
-      <>
-        <div className="relative flex items-center justify-between">
-          <div className="flex-col">
-            <span className="px-2 text-xs tracking-wide text-white/50 font-bold uppercase rounded bg-white/40 border border-white/20">
-              {action == "withdraw" ? "from" : "to"}
-            </span>
-            <div className="flex text-lg my-1">
-              <div className="mr-2 bg-white rounded-full h-[32px] w-[32px] self-center">
-                <div className="w-6 h-6 m-auto mt-1">
-                  <StarknetLogo />
-                </div>
-              </div>
-              <h5 className="self-center">Starknet</h5>
-            </div>
-          </div>
 
-          <TokenBalance
-            balance={balances.l2?.lords || BigInt(0)}
-            symbol="Lords"
-            isLoading={l2loading}
-          />
-        </div>
-      </>
+  const renderL1Network = () => {
+    return renderNetwork(
+      "Ethereum",
+      <EthereumLogo className="w-6 h-6 m-auto mt-1" />,
+      action != "withdraw"
+    );
+  };
+
+  const renderL2Network = () => {
+    return renderNetwork(
+      "Starknet",
+      <StarknetLogo className="w-6 h-6 m-auto mt-1" />,
+      action == "withdraw"
     );
   };
   const renderTokenInput = () => {
@@ -139,18 +135,8 @@ export const Transfer = ({ action }: { action: string }) => {
           {action == "withdraw" ? renderL1Network() : renderL2Network()}
         </div>
 
-        {!l1Account && (
-          <ConnectKitButton.Custom>
-            {({ isConnected, show, address }) => {
-              return (
-                <Button className="w-full mb-2" onClick={show}>
-                  {isConnected ? address : "Connect L1 Wallet"}
-                </Button>
-              );
-            }}
-          </ConnectKitButton.Custom>
-        )}
-        {!l2Account && <StarkLogin />}
+        {!l1Account && <EthereumLoginButton />}
+        {!l2Account && <StarknetLoginButton />}
         {l1Account && l2Account && (
           <Button
             className="w-full mt-2"
@@ -167,7 +153,6 @@ export const Transfer = ({ action }: { action: string }) => {
           </Button>
         )}
       </div>
-      <BridgeModalWrapper />
     </>
   );
 };

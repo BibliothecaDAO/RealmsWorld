@@ -6,7 +6,6 @@ import { shortenHex } from "@/functions/utils";
 import {
   useConnectors,
   useAccount as useL2Account,
-  useNetwork,
 } from "@starknet-react/core";
 
 export const StarknetLoginButton = ({

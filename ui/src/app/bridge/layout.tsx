@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { ModalWrapper } from "./ModalWrapper";
 
 export default function RootLayout({
   children,
@@ -30,6 +31,7 @@ export default function RootLayout({
       >
         {children}
       </motion.div>
+      <ModalWrapper />
     </div>
   );
 }

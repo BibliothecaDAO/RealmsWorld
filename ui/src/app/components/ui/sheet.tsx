@@ -34,11 +34,9 @@ const SheetPortal = ({
   children,
   ...props
 }: SheetPortalProps) => (
-  <AnimatePresence>
-    <SheetPrimitive.Portal className={cn(className)} {...props}>
-      <div className={portalVariants({ position })}>{children}</div>
-    </SheetPrimitive.Portal>
-  </AnimatePresence>
+  <SheetPrimitive.Portal className={cn(className)} {...props}>
+    <div className={portalVariants({ position })}>{children}</div>
+  </SheetPrimitive.Portal>
 );
 SheetPortal.displayName = SheetPrimitive.Portal.displayName;
 
@@ -161,24 +159,28 @@ const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   DialogContentProps
 >(({ position, size, className, children, ...props }, ref) => (
-  <SheetPortal position={position}>
-    <SheetOverlay />
-    <motion.div
-      initial={{ x: "100%" }}
-      animate={{ x: 0 }}
-      exit={{ x: "100%" }}
-      transition={{ duration: 0.4, ease: "easeInOut" }}
-      className={cn(sheetVariants({ position, size }), className)}
-    >
-      <SheetPrimitive.Content ref={ref} {...props}>
-        {children}
-        <SheetPrimitive.Close className="absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </SheetPrimitive.Close>
-      </SheetPrimitive.Content>
-    </motion.div>
-  </SheetPortal>
+  <AnimatePresence>
+    <SheetPortal position={position}>
+      <SheetOverlay />
+      <AnimatePresence>
+        <motion.div
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className={cn(sheetVariants({ position, size }), className)}
+        >
+          <SheetPrimitive.Content ref={ref} {...props}>
+            {children}
+            <SheetPrimitive.Close className="absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900 dark:data-[state=open]:bg-slate-800">
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </SheetPrimitive.Close>
+          </SheetPrimitive.Content>
+        </motion.div>
+      </AnimatePresence>
+    </SheetPortal>
+  </AnimatePresence>
 ));
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 

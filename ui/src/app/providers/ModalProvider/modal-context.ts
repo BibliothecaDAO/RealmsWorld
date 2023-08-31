@@ -2,9 +2,9 @@
 
 import { createContext } from 'react';
 
-import { initialState } from './bridge-modal-reducer';
+import { initialState } from './modal-reducer';
 
-interface BridgeModalContextValue {
+interface ModalContextValue {
     showModal: (payload: any) => void;
     hideModal: () => void;
     show: boolean;
@@ -26,7 +26,7 @@ interface BridgeModalContextValue {
     exitable: boolean
 }
 
-export const BridgeModalContext = createContext<BridgeModalContextValue>({
+export const ModalContext = createContext<ModalContextValue>({
     ...initialState,
     showModal: (payload: any) => ({ payload }),
     hideModal: () => { }

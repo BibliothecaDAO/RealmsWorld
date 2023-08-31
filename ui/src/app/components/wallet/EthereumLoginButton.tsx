@@ -32,7 +32,7 @@ export const EthereumLoginButton = ({
           onClick={() => (isConnected ? toggleAccount() : show?.())}
         >
           <span className="normal-case font-sans flex items-center">
-            <EthereumLogo className="w-8 mr-2 -ml-1" />
+            <EthereumLogo className="w-6 mr-2 -ml-1" />
             {isConnected ? (
               ensName ?? truncatedAddress
             ) : (

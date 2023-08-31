@@ -12,7 +12,7 @@ export const ModalType = {
 };
 
 //import {useL2Wallet} from '../WalletsProvider';
-import { BridgeModalContext } from './bridge-modal-context';
+import { ModalContext } from './modal-context';
 import { XOctagon } from 'lucide-react';
 
 const TRANSACTION_MODAL_STYLE = {
@@ -44,14 +44,14 @@ const MODAL_HEADER_WITH_ICON_STYLE = {
   }
 };
 
-export const useBridgeModal = () => {
+export const useModal = () => {
   return {
-    ...useContext(BridgeModalContext)
+    ...useContext(ModalContext)
   };
 };
 
 export const useHideModal = () => {
-  const { hideModal } = useContext(BridgeModalContext);
+  const { hideModal } = useContext(ModalContext);
 
   return useCallback(() => {
     hideModal();
@@ -59,7 +59,7 @@ export const useHideModal = () => {
 };
 
 export const useProgressModal = (steps = []) => {
-  const { showModal } = useContext(BridgeModalContext);
+  const { showModal } = useContext(ModalContext);
   const { containerStyle } = TRANSACTION_MODAL_STYLE;
 
   return useCallback(
@@ -101,7 +101,7 @@ export const useProgressModal = (steps = []) => {
 };
 
 export const useTransactionSubmittedModal = (steps: any) => {
-  const { showModal } = useContext(BridgeModalContext);
+  const { showModal } = useContext(ModalContext);
   const { containerStyle, buttonProps } = TRANSACTION_MODAL_STYLE;
 
   return useCallback(
@@ -152,7 +152,7 @@ export const useTransactionSubmittedModal = (steps: any) => {
 };
 
 export const useErrorModal = () => {
-  const { showModal } = useContext(BridgeModalContext);
+  const { showModal } = useContext(ModalContext);
   const { buttonProps, containerStyle } = MODAL_HEADER_WITH_ICON_STYLE;
 
   return useCallback(

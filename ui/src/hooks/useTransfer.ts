@@ -3,7 +3,7 @@ import {
     useHideModal,
     useProgressModal,
     useTransactionSubmittedModal
-} from '../app/providers/BridgeModalProvider';
+} from '../app/providers/ModalProvider';
 /*import {useTokens} from '../providers/TokensProvider';
 import {useAmount} from '../providers/TransferProvider';*/
 

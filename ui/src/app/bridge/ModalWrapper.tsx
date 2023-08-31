@@ -7,24 +7,24 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../components/ui/dialog";
-import { useBridgeModal, useHideModal } from "../providers/BridgeModalProvider";
+import { useModal, useHideModal } from "../providers/ModalProvider";
 import Loading from "../loading";
 
 export type Component = {
   component: LazyExoticComponent<ComponentType<any>>;
   props: any;
 };
-export const BridgeModalWrapper = () => {
-  const { show, withHeader, header, body, footer } = useBridgeModal();
+export const ModalWrapper = () => {
+  const { show, withHeader, header, body, footer } = useModal();
 
   const hideModal = useHideModal();
 
   const getComponents = (components: string[]) => {
     return components
       ? components.map((c: any) => ({
-        component: lazy(() => import(`../components/${c.path}`)),
-        props: c.props,
-      }))
+          component: lazy(() => import(`../components/${c.path}`)),
+          props: c.props,
+        }))
       : [];
   };
 

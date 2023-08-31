@@ -5351,9 +5351,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reservoir0x/reservoir-kit-ui@npm:^1.7.0":
-  version: 1.7.0
-  resolution: "@reservoir0x/reservoir-kit-ui@npm:1.7.0"
+"@reservoir0x/reservoir-kit-ui@npm:^1.8.0":
+  version: 1.8.0
+  resolution: "@reservoir0x/reservoir-kit-ui@npm:1.8.0"
   dependencies:
     "@fortawesome/fontawesome-svg-core": ^6.1.1
     "@fortawesome/free-solid-svg-icons": ^6.1.1
@@ -5368,7 +5368,7 @@ __metadata:
     "@radix-ui/react-toggle-group": 1.0.4
     "@radix-ui/react-tooltip": 1.0.6
     "@react-hookz/web": ^19.2.0
-    "@reservoir0x/reservoir-sdk": 1.3.0
+    "@reservoir0x/reservoir-sdk": 1.4.0
     "@stitches/react": 1.3.1-1
     dayjs: ^1.11.4
     flatpickr: ^4.6.13
@@ -5380,18 +5380,18 @@ __metadata:
     react: ^18.0
     react-dom: ^18.0
     viem: ~1.6.4
-  checksum: f5b68f65cc4d24d895b99c8f6637d0625d25dff762d317760db4d0c68e89c3c690df78541f2dcbec32f4adfa514e2b92e8d9ec905e4076ad43b76907184e379c
+  checksum: 242e07c0a7d4d1523cf8ffdb40158f8b53fb841d620301d4753ce3792d76041b89a1f8ecddfac9d5775619bcc8cef467274a6ebbacd42e007243a4bb2d7a8748
   languageName: node
   linkType: hard
 
-"@reservoir0x/reservoir-sdk@npm:1.3.0":
-  version: 1.3.0
-  resolution: "@reservoir0x/reservoir-sdk@npm:1.3.0"
+"@reservoir0x/reservoir-sdk@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@reservoir0x/reservoir-sdk@npm:1.4.0"
   dependencies:
     axios: ^0.27.2
   peerDependencies:
     viem: ~1.6.4
-  checksum: d54190f12f39a40a76d580d4e07cfe50b216260fedc164b16f626299dd3449c3c5a2104176c88608f2eb48a38dff78f1ad50025a0ce8aff0b5e9545b628a3219
+  checksum: 29b46e7070accfbbfff96a4e8028bdf56dee9c8dccf768d31a5182e67bf9a900b9f74558d1026f56053fe0661eee0ed0d323c18cbd0f0a231803ad937b9a7a6a
   languageName: node
   linkType: hard
 
@@ -9764,9 +9764,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^10.16.1":
-  version: 10.16.1
-  resolution: "framer-motion@npm:10.16.1"
+"framer-motion@npm:^10.16.2":
+  version: 10.16.2
+  resolution: "framer-motion@npm:10.16.2"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     tslib: ^2.4.0
@@ -9781,7 +9781,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: cce24975992020dbbdf426058a2a067ead262f7f264d28d2ed7570cb59e0f175267d7a05d0a1c1335c7bee486bc9dcf1f3940f474e4ba6fc47bb19eebb9f79d2
+  checksum: 341de9ed9ad26e67306d6467a17f5260ce0e8a034f936f2af22f03a7fe4087de487a8aebcbc396ab591de7fe181926d0cd6a79ec1dca6172e85f7fdf5103484f
   languageName: node
   linkType: hard
 
@@ -14642,7 +14642,7 @@ __metadata:
     "@radix-ui/react-tooltip": ^1.0.6
     "@react-three/drei": ^9.80.9
     "@react-three/fiber": ^8.13.7
-    "@reservoir0x/reservoir-kit-ui": ^1.7.0
+    "@reservoir0x/reservoir-kit-ui": ^1.8.0
     "@starknet-react/core": ^1.0.4
     "@starkware-industries/commons-js-enums": ^1.2.0
     "@starkware-industries/commons-js-utils": ^1.2.2
@@ -14662,7 +14662,7 @@ __metadata:
     embla-carousel-react: ^8.0.0-rc12
     eslint: 8.48.0
     eslint-config-next: 13.4.19
-    framer-motion: ^10.16.1
+    framer-motion: ^10.16.2
     get-starknet-core: 3.2.0
     graphql: ^16.8.0
     lucide-react: ^0.270.0
@@ -14680,7 +14680,7 @@ __metadata:
     three: ^0.155.0
     typescript: 5.1.6
     use-deep-compare-effect: ^1.8.1
-    viem: ~1.9.0
+    viem: ~1.9.2
     wagmi: ~1.3.10
   languageName: unknown
   linkType: soft
@@ -15273,9 +15273,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"viem@npm:~1.9.0":
-  version: 1.9.0
-  resolution: "viem@npm:1.9.0"
+"viem@npm:~1.9.2":
+  version: 1.9.2
+  resolution: "viem@npm:1.9.2"
   dependencies:
     "@adraffy/ens-normalize": 1.9.0
     "@noble/curves": 1.1.0
@@ -15291,7 +15291,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 9c211d9426951dc6f1ef091fcc514877e392b362ce30673afbd1a7fb0f3362a9ff4e50763df2f6b70e547cde3882198da67b45880630568d8fc8719189ebcc0a
+  checksum: 2b5d134f51843a306ef52d5a84f0141547e7c84c22621057ed4a3080944c1a9eba28cbbe3c94b3378d2e02e4b1250e0d2b89576f0193404c23cf024c42e63396
   languageName: node
   linkType: hard
 

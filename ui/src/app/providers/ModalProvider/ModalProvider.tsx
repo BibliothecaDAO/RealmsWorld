@@ -1,16 +1,14 @@
 "use client";
 
 import React, { ReactNode, useReducer } from "react";
-import { actions, initialState, reducer } from "./bridge-modal-reducer";
-import { BridgeModalContext } from "./bridge-modal-context";
+import { actions, initialState, reducer } from "./modal-reducer";
+import { ModalContext } from "./modal-context";
 
-interface BridgeModalProviderProps {
+interface ModalProviderProps {
   children: ReactNode;
 }
 
-export const BridgeModalProvider: React.FC<BridgeModalProviderProps> = ({
-  children,
-}) => {
+export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const showModal = (payload: any) => {
@@ -34,8 +32,6 @@ export const BridgeModalProvider: React.FC<BridgeModalProviderProps> = ({
   };
 
   return (
-    <BridgeModalContext.Provider value={value}>
-      {children}
-    </BridgeModalContext.Provider>
+    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
   );
 };
