@@ -13,6 +13,10 @@ export const convertToJSON = (params: any) => {
   return result;
 };
 
+export const isStarknetAddress = (address: string) => {
+  return address.length == 66;
+};
+
 export function hexToNumber(hexString: string, minValue = 1, maxValue = 10) {
   const hash = crypto.createHash("sha256");
   hash.update(hexString);

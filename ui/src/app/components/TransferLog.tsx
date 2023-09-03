@@ -19,7 +19,11 @@ import {
   MinusCircleIcon,
   ExternalLinkIcon,
 } from "lucide-react";
-import { STARKSCAN_TX_URL, STARKSCAN_ETH_TX_URL } from "@/constants/env";
+import {
+  STARKSCAN_TX_URL,
+  STARKSCAN_ETH_TX_URL,
+  NETWORK_NAME,
+} from "@/constants/env";
 import { Button } from "./ui/button";
 import LordsIcon from "@/icons/lords.svg";
 import { cn } from "../lib/utils";
@@ -55,18 +59,15 @@ export const TransferLog = ({
   withdrawalEvents?.[0] ||
   transfer;
 
-  const network =
-    process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
-
   const getl2hash = async () => {
     const hash = depositEvents?.[0].payload
       ? await getTransactionHash(
           TransactionHashPrefix.L1_HANDLER,
-          tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]],
-          tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[network]],
+          tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]],
+          tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]],
           "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
           depositEvents?.[0].payload,
-          ("SN_" + network) as ChainTypeL2,
+          ("SN_" + NETWORK_NAME) as ChainTypeL2,
           depositEvents?.[0].nonce
         )
       : "";

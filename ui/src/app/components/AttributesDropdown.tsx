@@ -25,7 +25,7 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
       <Button className="sm:hidden" variant={"default"}>
         Close
       </Button>{" "}
-      {attributes.attributes.map((attribute: any, index: number) => {
+      {attributes.attributes?.map((attribute: any, index: number) => {
         return (
           <Accordion key={index} type="single" collapsible>
             <AccordionItem value="item-1">

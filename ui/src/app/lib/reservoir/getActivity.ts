@@ -2,7 +2,7 @@ import { formatQueryString } from "@/functions/utils";
 
 export const getActivity = async ({ collection, query }: { collection: string, query: any }) => {
     try {
-        const res = await fetch(`https://api.reservoir.tools/collections/activity/v5?collection=${collection}&${formatQueryString(query.types, 'types')}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_RESERVOIR_API}/collections/activity/v5?collection=${collection}&${formatQueryString(query.types, 'types')}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-api-key': process.env.RESERVOIR_API_KEY || '',

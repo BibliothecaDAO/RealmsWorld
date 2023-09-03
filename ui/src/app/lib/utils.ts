@@ -1,7 +1,9 @@
 import { ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { tokens } from '@/constants/tokens';
+import { ChainType, tokens } from '@/constants/tokens';
 import { formatUnits } from 'viem'
+import { erc721Tokens } from "@/constants/erc721Tokens";
+import { NETWORK_NAME } from "@/constants/env";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -29,5 +31,12 @@ export function padAddress(address: string) {
     return newHex;
   } else {
     return "";
+  }
+}
+
+export function getTokenContractAddresses(name: keyof typeof erc721Tokens) {
+  return {
+    L1: erc721Tokens[name].contractAddresses.L1?.[ChainType.L1[NETWORK_NAME]],
+    L2: erc721Tokens[name].contractAddresses.L2?.[ChainType.L1[NETWORK_NAME]]
   }
 }

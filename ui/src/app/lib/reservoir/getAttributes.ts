@@ -2,7 +2,7 @@
 export const getAttributes = async ({ collection }: { collection: string }) => {
 
     try {
-        const res = await fetch(`https://api.reservoir.tools/collections/${collection}/attributes/all/v3`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_RESERVOIR_API}/collections/${collection}/attributes/all/v3`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-api-key': process.env.RESERVOIR_API_KEY || '',

@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
 
 
   try {
-    const res = await fetch(`https://api.reservoir.tools/collections/v5?${queryParams}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_RESERVOIR_API}/collections/v5?${queryParams}`, {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': process.env.RESERVOIR_API_KEY || '',

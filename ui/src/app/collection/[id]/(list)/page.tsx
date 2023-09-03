@@ -8,6 +8,10 @@ import { AttributeTags } from "@/app/collection/AttributeTags";
 import { getCollections } from "@/app/lib/reservoir/getCollections";
 import { getToken } from "@/app/lib/reservoir/getToken";
 import { getAttributes } from "@/app/lib/reservoir/getAttributes";
+import { isStarknetAddress } from "@/functions/utils";
+import { erc721Tokens } from "@/constants";
+import { getTokenContractAddresses } from "@/app/lib/utils";
+
 //import { SweepButton } from "@/app/components/SweepModal";
 
 export async function generateMetadata({
@@ -16,11 +20,11 @@ export async function generateMetadata({
   params: { address: string };
 }): Promise<Metadata> {
   const collectionData = await getCollections([{ contract: params.address }]);
-  const collection: Collection = collectionData.collections[0];
+  const collection: Collection = collectionData.collections?.[0];
 
   return {
-    title: `Collection: ${collection.name}`,
-    description: `Collection Details and Marketplace for ${collection.name} - Created for adventurers by Bibliotheca DAO`,
+    title: `Collection: ${collection?.name}`,
+    description: `Collection Details and Marketplace for ${collection?.name} - Created for adventurers by Bibliotheca DAO`,
   };
 }
 
@@ -28,20 +32,29 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: { address: string };
+  params: { id: string };
   searchParams?: {
     page?: string;
   };
 }) {
+  const token = erc721Tokens[params.id as keyof typeof erc721Tokens];
+  const tokenAddresses = getTokenContractAddresses(
+    params.id as keyof typeof erc721Tokens
+  );
   const tokensData = getToken({
-    collection: params.address,
+    collection: tokenAddresses.L1,
     query: searchParams,
   });
 
   const attributesData = getAttributes({
-    collection: params.address,
+    collection: tokenAddresses.L1,
   });
   const [tokens, attributes] = await Promise.all([tokensData, attributesData]);
+
+  if (!tokens) {
+    return <div>Collection Not Found</div>;
+  }
+
   return (
     <div>
       <div className="flex justify-between w-full mb-3">
@@ -49,11 +62,14 @@ export default async function Page({
       </div>
 
       <div className="flex w-full">
-        <AttributesDropdown address={params.address} attributes={attributes} />
+        <AttributesDropdown
+          address={tokenAddresses.L1}
+          attributes={attributes}
+        />
         {/*<SweepButton id={params.address} />*/}
         <div className="w-full">
           <AttributeTags />
-          <TokenTable address={params.address} tokens={tokens.tokens} />
+          <TokenTable address={tokenAddresses.L1} tokens={tokens.tokens} />
         </div>
       </div>
     </div>

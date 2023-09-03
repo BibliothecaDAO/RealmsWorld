@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 export const getTokenActivity = async ({ token }: { token: any }) => {
     try {
-        const res = await fetch(`https://api.reservoir.tools/tokens/${token}/activity/v4`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_RESERVOIR_API}/tokens/${token}/activity/v4`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-api-key': process.env.RESERVOIR_API_KEY || '',

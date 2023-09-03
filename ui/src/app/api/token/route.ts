@@ -51,7 +51,7 @@ export async function POST(request: any) {
   }
 
   try {
-    const res = await fetch(`https://api.reservoir.tools/tokens/v5?${queryString}&${check()}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_RESERVOIR_API}/tokens/v5?${queryString}&${check()}`, {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': process.env.RESERVOIR_API_KEY || '',

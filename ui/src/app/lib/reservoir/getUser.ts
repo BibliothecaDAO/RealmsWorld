@@ -5,7 +5,7 @@ export const getUser = async ({ address, continuation }: { address: string, cont
     try {
         const queryString = continuation ? `&continuation=${continuation}` : "";
 
-        const url = `https://api.reservoir.tools/users/${address}/tokens/v7?collectionsSetId=${reservoirLootCollectionSetId}&${queryString}&limit=24`
+        const url = `${process.env.NEXT_PUBLIC_RESERVOIR_API}/users/${address}/tokens/v7?collectionsSetId=${reservoirLootCollectionSetId}&${queryString}&limit=24`
         console.log(url)
         const res = await fetch(url, {
             headers: {

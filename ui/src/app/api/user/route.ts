@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
   try {
     const queryString = query.continuation ? `&continuation=${query.continuation}` : "";
 
-    const url = `https://api.reservoir.tools/users/${query.address}/tokens/v7?collectionsSetId=${reservoirLootCollectionSetId}&${queryString}&limit=24`;
+    const url = `${process.env.NEXT_PUBLIC_RESERVOIR_API}/users/${query.address}/tokens/v7?collectionsSetId=${reservoirLootCollectionSetId}&${queryString}&limit=24`;
 
     const res = await fetch(url, {
       headers: {

@@ -27,7 +27,7 @@ function EthereumLogin() {
       <div className="border p-2 rounded border-white/20">
         <div className="flex mb-3 justify-between">
           <div className="flex text-xl">
-            <EthereumLogo className="w-7 mx-2" />{" "}
+            <EthereumLogo className="w-5 mx-2" />{" "}
             <div className="self-center">{chain?.name}</div>
           </div>
           <div>

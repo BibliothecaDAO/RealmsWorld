@@ -9,8 +9,14 @@ import { getCollections } from "@/app/lib/reservoir/getCollections";
 import Link from "next/link";
 
 export default async function CollectionSummary({ address }: any) {
-  const collectionData = await getCollections([{ contract: address }]);
-  const collection = collectionData?.collections[0];
+  const { collections } = await getCollections([{ contract: address }]);
+
+  const collection = collections?.[0];
+  console.log(collection);
+
+  if (!collection) {
+    return <div>Collection Not Found</div>;
+  }
 
   const links = [
     {
@@ -21,24 +27,26 @@ export default async function CollectionSummary({ address }: any) {
       icon: <Discord className="w-[28px] h-[28px] fill-white" />,
       value: collection.discordUrl,
     },
-    { icon: <Twitter />, value: 'https://twitter.com/' + collection.twitterUsername },
+    {
+      icon: <Twitter />,
+      value: "https://twitter.com/" + collection.twitterUsername,
+    },
     { icon: <Globe />, value: collection.externalUrl },
   ];
 
   const statistics = [
     {
-
       value: collection?.floorSale["1day"],
       title: "Top Offer",
     },
     {
-
-      value: formatEther(collection.floorAsk.price.amount.raw),
+      value:
+        collection.floorAsk.price?.amount.raw &&
+        formatEther(collection.floorAsk.price?.amount.raw),
       title: "Floor",
     },
     { value: collection.onSaleCount, title: "Listed" },
     {
-
       value: collection.volume.allTime.toFixed(2),
       title: "Total Volume",
     },
@@ -61,13 +69,15 @@ export default async function CollectionSummary({ address }: any) {
   return (
     <div className="-mt-16 sm:mt-0 sm:flex">
       <div className="self-center flex-none sm:pr-10">
-        <Image
-          src={collection.image}
-          alt={collection.name}
-          width={200}
-          height={200}
-          className="mx-auto border"
-        />
+        {collection.image && (
+          <Image
+            src={collection.image}
+            alt={collection.name}
+            width={200}
+            height={200}
+            className="mx-auto border"
+          />
+        )}
         <div className="flex justify-center mx-auto my-4 space-x-2">
           {links.map((social, index) => {
             if (social.value)
@@ -112,7 +122,9 @@ export default async function CollectionSummary({ address }: any) {
                 key={index}
                 className="px-4 py-2 lg:px-5 bg-black/40  border-black"
               >
-                <div className="text-xs font-sans-serif mb-1 text-white/40">{statistic.title}</div>
+                <div className="text-xs font-sans-serif mb-1 text-white/40">
+                  {statistic.title}
+                </div>
                 <div className="text-sm lg:text-xl">{statistic.value}</div>
               </div>
             );

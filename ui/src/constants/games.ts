@@ -1,4 +1,4 @@
-import { realms } from "./whiteListedContracts";
+import { whiteListedContracts } from "./erc721Tokens";
 
 export const games = [
     {
@@ -20,7 +20,7 @@ export const games = [
         compatibleTokens: [
             {
                 name: 'Realms',
-                contract: realms.MAIN,
+                //contract: whiteListedContracts.realms.MAIN,
                 icon: 'realms.png',
                 image: '/backgrounds/warRoom.png',
             }
