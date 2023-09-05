@@ -2,36 +2,15 @@
 
 This repository uses [Apibara](https://github.com/apibara/apibara) to index web3 data.
 
-## Getting Started
 
-Create a new virtual environment for this project. While this step is not required, it is _highly recommended_ to avoid conflicts between different installed packages.
+Run the Express Server
+deno run --allow-all src/server.ts
 
-    python3 -m venv venv
+Run the Inngest
+npx inngest-cli@latest dev -u http://localhost:8000/api/inngest
 
-Then activate the virtual environment.
-
-    source venv/bin/activate
-
-Then install `poetry` and use it to install the package dependencies.
-
-    python3 -m pip install poetry
-    poetry install
-
-Start MongoDB using the provided `docker-compose` file:
-
-    docker-compose up
-
-Notice that you can use any managed MongoDB like MongoDB Atlas.
-
-Then start the indexer by running the `indexer start` command. The `indexer` command runs the cli application defined in `src/indexer/main.py`. This is a standard Click application.
-
-indexer start --network goerli --start_block 819244 --bridge 0x042331a29c53f6084f08964cbd83b94c1a141e6d14009052d55b03793b21d5b3
-
-Notice that by default the indexer will start indexing from where it left off in the previous run. If you want restart, use the `--restart` flag.
-
-    indexer start --restart
-
-Notice that will also delete the database with the indexer's data.
+Run the Indexer
+apibara run src/indexer/<indexer>.ts -A <dna-token>
 
 ## Customizing the template
 

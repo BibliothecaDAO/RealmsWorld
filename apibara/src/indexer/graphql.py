@@ -10,24 +10,29 @@ from pymongo import MongoClient
 from strawberry.aiohttp.views import GraphQLView
 from strawberry.types import Info
 from indexer.helpers import (add_order_by_constraint)
+import base64
 
 
 def parse_hex(value):
+    bytesValue = value.to_bytes(32, "big")
     if not value.startswith("0x"):
         raise ValueError("invalid Hex value")
-    return bytes.fromhex(value.replace("0x", ""))
+    return bytes.fromhex(bytesValue.replace("0x", ""))
 
 
-def serialize_hex(token_id):
-    return "0x" + token_id.hex()
+def serialize_hex(value):
+    bytes = base64.b64decode(value)
+    return "0x" + bytes.hex()
 
 
 def parse_felt(value):
-    return value.to_bytes(32, "big")
+    bytes = value.to_bytes(32, "big")
+    return base64.b64encode(bytes).decode("utf-8")
 
 
 def serialize_felt(value):
-    return int.from_bytes(value, "big")
+    bytes = base64.b64decode(value)
+    return int.from_bytes(bytes, "big")
 
 
 def parse_u256(value):
@@ -92,6 +97,31 @@ class L2Withdrawal:
         )
 
 
+@strawberry.type
+class Beast:
+    id: str
+    name: Optional[str] = None
+    image: Optional[str] = None
+    level: Optional[str] = None
+    tier: Optional[str] = None
+    prefix: Optional[str] = None
+    suffix: Optional[str] = None
+    owner: str
+
+    @classmethod
+    def from_mongo(cls, data):
+        return cls(
+            id=data["tokenId"],
+            name=data.get("name"),
+            image=data.get("image"),
+            level=data.get("level"),
+            tier=data.get("tier"),
+            prefix=data.get("prefix"),
+            suffix=data.get("suffix"),
+            owner=data["owner"],
+        )
+
+
 @strawberry.input
 class WhereFilterForTransaction:
     id: Optional[str] = None
@@ -102,6 +132,12 @@ class WhereFilterForTransaction:
 class WhereFilterForWithdrawals:
     id: Optional[str] = None
     l2Sender: Optional[str] = None
+
+
+@strawberry.input
+class WhereFilterForBeasts:
+    id: Optional[str] = None
+    owner: Optional[str] = None
 
 
 def get_deposits(
@@ -151,12 +187,32 @@ def get_withdrawals(
     return [L2Withdrawal.from_mongo(d) for d in query]
 
 
+def get_beasts(
+    info: Info, first: Optional[int] = 100, skip: Optional[int] = 0, orderBy: Optional[str] = None, orderByDirection: Optional[str] = "asc", where: Optional[WhereFilterForBeasts] = None
+) -> List[Beast]:
+
+    db = info.context["db"]
+    filter = dict()
+
+    if where is not None:
+        if where.id is not None:
+            filter["tokenId"] = where.id
+        if where.owner is not None:
+            filter["owner"] = where.owner
+
+    query = db["beasts"].find(filter).skip(skip).limit(first)
+    # print(f"{vars(query)}")
+    # query = add_order_by_constraint(query, orderBy, orderByDirection)
+    return [Beast.from_mongo(d) for d in query]
+
+
 @strawberry.type
 class Query:
     l2deposits: List[L2Deposit] = strawberry.field(resolver=get_deposits)
     deposit: Optional[L2Deposit] = strawberry.field(resolver=get_deposit)
     l2withdrawals: List[L2Withdrawal] = strawberry.field(
         resolver=get_withdrawals)
+    beasts: List[Beast] = strawberry.field(resolver=get_beasts)
 
 
 class IndexerGraphQLView(GraphQLView):
@@ -171,8 +227,8 @@ class IndexerGraphQLView(GraphQLView):
 async def run_graphql_api(mongo_goerli=None, mongo_mainnet=None, port="8080"):
     mongo_goerli = MongoClient(mongo_goerli)
     mongo_mainnet = MongoClient(mongo_mainnet)
-    db_name_goerli = "lords-bridge-indexer-goerli".replace("-", "_")
-    db_name_mainnet = "lords-bridge-indexer-mainnet".replace("-", "_")
+    db_name_goerli = "mongo-goerli".replace("-", "_")
+    db_name_mainnet = "mongo-mainnet".replace("-", "_")
 
     db_goerli = mongo_goerli[db_name_goerli]
     db_mainnet = mongo_mainnet[db_name_mainnet]

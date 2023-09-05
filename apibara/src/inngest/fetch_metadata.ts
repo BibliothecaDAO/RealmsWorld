@@ -1,5 +1,3 @@
-import { parse } from "https://esm.sh/v132/protobufjs@7.2.5/index.js";
-import { parseArray, parseFelt252 } from "../utils/parser.ts";
 import { db, inngest } from "./client.ts";
 import { shortString } from "https://esm.sh/starknet";
 

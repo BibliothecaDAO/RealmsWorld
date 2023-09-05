@@ -40,7 +40,7 @@ class LordsBridgeIndexer(StarkNetIndexer):
         self.config = config
 
     def indexer_id(self) -> str:
-        return f"lords-bridge-indexer-{self.config.network}"
+        return f"mongo-{self.config.network}"
 
     def initial_configuration(self) -> Filter:
         filter = Filter().with_header(weak=True)
@@ -130,15 +130,15 @@ class LordsBridgeIndexer(StarkNetIndexer):
         print("- withdraw]", withdraw_doc["l2Sender"], "->",
               withdraw_doc["l1Recipient"], withdraw_doc["amount"])
 
-    async def handle_beasts_transfer(self, info: Info, block: Block, tx_hash: str, receipt, data):
-        print("-handle beast transfer")
-        try:
-            transfer = decode_transfer_event(data)
-            print(transfer)
-            if transfer is None:
-                return
-        except:
-            return
+    # async def handle_beasts_transfer(self, info: Info, block: Block, tx_hash: str, receipt, data):
+    #     print("-handle beast transfer")
+    #     try:
+    #         transfer = decode_transfer_event(data)
+    #         print(transfer)
+    #         if transfer is None:
+    #             return
+    #     except:
+    #         return
 
         # contract = self._contract_storage.get(self.config.BEASTS_CONTRACT)
         # if contract is None:
@@ -160,71 +160,71 @@ class LordsBridgeIndexer(StarkNetIndexer):
 
         # Now we know we have an ERC-721.
         # Invalidate old token information
-        token = await info.storage.find_one_and_update(
-            "beasts",
-            {
-                "contract_address": self.config.BEASTS_CONTRACT,
-                "token_id": transfer.token_id,
-                "_chain.valid_to": None,
-            },
-            {"$set": {"_chain.valid_to": block.header.block_number}},
-            # return_document=pymongo.ReturnDocument.BEFORE,
-        )
+        # token = await info.storage.find_one_and_update(
+        #     "beasts",
+        #     {
+        #         "contract_address": self.config.BEASTS_CONTRACT,
+        #         "token_id": transfer.token_id,
+        #         "_chain.valid_to": None,
+        #     },
+        #     {"$set": {"_chain.valid_to": block.header.block_number}},
+        #     # return_document=pymongo.ReturnDocument.BEFORE,
+        # )
 
-        if token is None:
-            # insert metadata that will be fetched by the metadata
-            # fetchers
-            await info.storage.insert_one(
-                "beast_metadata",
-                {
-                    "contract_address": self.config.BEASTS_CONTRACT,
-                    "token_id": transfer.token_id,
-                    "status": "missing",
-                    "_chain.valid_to": None,
-                }
-            )
+        # if token is None:
+        #     # insert metadata that will be fetched by the metadata
+        #     # fetchers
+        #     await info.storage.insert_one(
+        #         "beast_metadata",
+        #         {
+        #             "contract_address": self.config.BEASTS_CONTRACT,
+        #             "token_id": transfer.token_id,
+        #             "status": "missing",
+        #             "_chain.valid_to": None,
+        #         }
+        #     )
 
-            before_owners = []
-        else:
-            before_owners = token["owners"]
+        #     before_owners = []
+        # else:
+        #     before_owners = token["owners"]
 
-        from_as_bytes = transfer.from_address
-        to_as_bytes = transfer.to_address
+        # from_as_bytes = transfer.from_address
+        # to_as_bytes = transfer.to_address
 
-        after_owners = [
-            addr
-            for addr in before_owners
-            if addr != transfer.from_address
-            and addr != transfer.to_address
-        ] + [to_as_bytes]
+        # after_owners = [
+        #     addr
+        #     for addr in before_owners
+        #     if addr != transfer.from_address
+        #     and addr != transfer.to_address
+        # ] + [to_as_bytes]
 
-        print(after_owners)
+        # print(after_owners)
 
-        # Store updated token information
-        await info.storage.insert_one(
-            "beasts",
-            {
-                "contract_address": self.config.BEASTS_CONTRACT,
-                "token_id": transfer.token_id,
-                "updated_at": block.header.timestamp.ToDatetime(),
-                "owners": after_owners,
-                "_chain": {"valid_from": block.header.block_number, "valid_to": None},
-            }
-        )
+        # # Store updated token information
+        # await info.storage.insert_one(
+        #     "beasts",
+        #     {
+        #         "contract_address": self.config.BEASTS_CONTRACT,
+        #         "token_id": transfer.token_id,
+        #         "updated_at": block.header.timestamp.ToDatetime(),
+        #         "owners": after_owners,
+        #         "_chain": {"valid_from": block.header.block_number, "valid_to": None},
+        #     }
+        # )
 
-        await info.storage.insert_one(
-            "beast_transfers",
-            {
-                "contract_address": self.config.BEASTS_CONTRACT,
-                "token_id": transfer.token_id,
-                "from": from_as_bytes,
-                "to": to_as_bytes,
-                "created_at": block.header.timestamp.ToDatetime(),
-                "_chain": {"valid_from": block.header.block_number, "valid_to": None},
-            }
-        )
+        # await info.storage.insert_one(
+        #     "beast_transfers",
+        #     {
+        #         "contract_address": self.config.BEASTS_CONTRACT,
+        #         "token_id": transfer.token_id,
+        #         "from": from_as_bytes,
+        #         "to": to_as_bytes,
+        #         "created_at": block.header.timestamp.ToDatetime(),
+        #         "_chain": {"valid_from": block.header.block_number, "valid_to": None},
+        #     }
+        # )
 
-        print("- beast transfer")
+        # print("- beast transfer")
 
 
 async def run_indexer(server_url=None, mongo_url=None, restart=None, dna_token=None, network=None, bridge=None, beasts721=None, start_block=None):
