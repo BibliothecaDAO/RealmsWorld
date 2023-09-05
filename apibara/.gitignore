@@ -3,3 +3,4 @@ _docker
 .env
 venv
 mongo-data
+.yarn

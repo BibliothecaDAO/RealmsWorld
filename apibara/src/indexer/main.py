@@ -32,9 +32,10 @@ def cli():
 @click.option("--restart", is_flag=True, help="Restart indexing from the beginning.")
 @click.option("--network", default=None, help="Network id.")
 @click.option("--bridge", is_flag=None, help="Starknet Bridge contract address.")
+@click.option("--beasts721", is_flag=None, help="Beasts ERC721 contract address.")
 @click.option("--start_block", is_flag=None, help="Indexer starting block.")
 @async_command
-async def start(server_url, mongo_url, restart, bridge, network, start_block):
+async def start(server_url, mongo_url, restart, bridge, beasts721, network, start_block):
     """Start the Apibara indexer."""
     if server_url is None:
         server_url = StreamAddress.StarkNet.Goerli
@@ -50,6 +51,7 @@ async def start(server_url, mongo_url, restart, bridge, network, start_block):
         dna_token="dna_FCqLW4vWwpveLSLpp16V",
         network=network,
         bridge=bridge,
+        beasts721=beasts721,
         start_block=start_block,
     )
 
