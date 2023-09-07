@@ -6,7 +6,7 @@ sources:
   - name: apibara
     handler:
       graphql:
-        endpoint: https://resonant-badge-production.up.railway.app/{context.apibaraHandle:graphql}
+        endpoint: http://localhost:8080/{context.apibaraHandle:goerli-graphql}
   - name: l1Realms
     handler:
       graphql:

@@ -18,9 +18,10 @@ export const erc721Tokens = {
     beasts: {
         name: '',
         contractAddresses: {
+            L1:{},
             L2: {
                 [ChainType.L2.MAIN]: "0x052d6edb54b24942d359b2b9d476d92b288b3a518322aa006f8eddd566df3de1",
-                [ChainType.L2.MAIN]: "0x06fe9215a0f193431f30043e612d921b62331946529ebf5f258949a4b34aa799",
+                [ChainType.L2.GOERLI]: "0x06fe9215a0f193431f30043e612d921b62331946529ebf5f258949a4b34aa799",
             }
         }
     }

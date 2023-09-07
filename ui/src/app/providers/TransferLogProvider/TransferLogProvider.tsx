@@ -42,8 +42,10 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
 
   const pendingWithdrawalsQuery = useInfiniteQuery({
     queryKey: ["PendingWithdrawals", accountL1],
-    queryFn: async () => {},
+    queryFn: () => {return },
     enabled: !!accountL1,
+    initialPageParam: '0',
+    getNextPageParam: () => nextL1,
     refetchInterval: GET_PENDING_WITHDRAWALS_REFETCH_INTERVAL,
   });
 
@@ -56,6 +58,7 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
       });
     },
     enabled: !!accountL1,
+    initialPageParam: '0',
     getNextPageParam: () => nextL1,
     refetchInterval: GET_TRANSFERS_REFETCH_INTERVAL,
   });
@@ -68,6 +71,7 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
         depositsWhere: { l2Recipient: padAddress(accountL2 ?? "") },
       }),
     enabled: !!accountL2,
+    initialPageParam: '0',
     getNextPageParam: () => nextL2,
     refetchInterval: GET_TRANSFERS_REFETCH_INTERVAL,
   });

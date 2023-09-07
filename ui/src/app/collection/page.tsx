@@ -1,4 +1,4 @@
-import { allWhiteListed } from "@/constants";
+import { erc721Tokens } from "@/constants";
 import { Collection } from "@/types";
 import { CollectionCard } from "@/app/components/CollectionCard";
 import { getCollections } from "../lib/reservoir/getCollections";
@@ -10,9 +10,9 @@ export const metadata = {
 };
 
 export default async function Page() {
-  const data = await getCollections(allWhiteListed);
+  const l1Collections = await getCollections(allWhiteListed);
 
-  const collections: Collection[] = data.collections;
+  const collections: Collection[] = l1Collections.collections;
   const defaultImage = "/backgrounds/map.png";
 
   const backgroundImageStyle = {

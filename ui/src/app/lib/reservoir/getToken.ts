@@ -48,8 +48,7 @@ export const getToken = async ({ collection, query }: { collection?: string, que
         return new URLSearchParams(params);
     }
     try {
-        console.log(`${process.env.NEXT_PUBLIC_RESERVOIR_API}/tokens/v5`)
-        const res = await fetch(`${process.env.NEXT_PUBLIC_RESERVOIR_API}/tokens/v5?${queryString}&${check()}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_RESERVOIR_API}/tokens/v6?${queryString}&${check()}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-api-key': process.env.RESERVOIR_API_KEY || '',

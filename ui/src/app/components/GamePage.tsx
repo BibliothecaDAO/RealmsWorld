@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/app/components/ui/button";
 import { Game } from "@/types";
+import { getTokenContractAddress } from "../lib/utils";
 
 interface GamePageProps {
     game: Game;
@@ -29,7 +30,7 @@ const GamePage: React.FC<GamePageProps> = ({ game }) => {
                     <h5>Tokens</h5>
                     <div className="flex">
                         {game.compatibleTokens.map((token, index) => (
-                            <Button href={`/collection/${token.contract}`} key={index}>
+                            <Button href={`/collection/${getTokenContractAddress(token.name)}`} key={index}>
                                 {token.name}
                             </Button>
                         ))}

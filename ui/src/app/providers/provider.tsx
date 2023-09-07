@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { Provider as StarkProvider } from "starknet";
 import { WebWalletConnector } from "@argent/starknet-react-webwallet-connector";
+import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 
 enum StarknetChainId {
   SN_MAIN = "0x534e5f4d41494e",
@@ -58,27 +59,17 @@ export function Provider({ children }: any) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <StarknetConfig
-        autoConnect
-        defaultProvider={
-          process.env.NEXT_PUBLIC_IS_TESTNET ? testnetProvider : mainnetProvider
-        }
-        //@ts-ignore
-        connectors={starkConnectors}
-        // queryClient={queryClient}
-      >
-        <ReservoirKitProvider
-          options={{
-            chains: [
-              {
-                id: 1,
-                baseApiUrl: "https://api.reservoir.tools",
-                active: true,
-                apiKey: process.env.RESERVOIR_API_KEY,
-              },
-            ],
-          }}
-          theme={theme}
+      <ReactQueryStreamedHydration>
+        <StarknetConfig
+          //autoConnect
+          defaultProvider={
+            process.env.NEXT_PUBLIC_IS_TESTNET
+              ? testnetProvider
+              : mainnetProvider
+          }
+          //@ts-ignore
+          connectors={starkConnectors}
+          // queryClient={queryClient}
         >
           <WagmiConfig
             config={createConfig(
@@ -91,10 +82,32 @@ export function Provider({ children }: any) {
               })
             )}
           >
-            <ConnectKitProvider theme="midnight">{children}</ConnectKitProvider>
+            <ReservoirKitProvider
+              options={{
+                chains: [
+                  {
+                    id: 1,
+                    baseApiUrl: "https://api.reservoir.tools",
+                    active: true,
+                    apiKey: process.env.RESERVOIR_API_KEY,
+                  },
+                  {
+                    id: 5,
+                    baseApiUrl: "https://api-goerli.reservoir.tools",
+                    active: true,
+                    apiKey: process.env.RESERVOIR_API_KEY,
+                  },
+                ],
+              }}
+              theme={theme}
+            >
+              <ConnectKitProvider theme="midnight">
+                {children}
+              </ConnectKitProvider>
+            </ReservoirKitProvider>
           </WagmiConfig>
-        </ReservoirKitProvider>
-      </StarknetConfig>
+        </StarknetConfig>
+      </ReactQueryStreamedHydration>
     </QueryClientProvider>
   );
 }

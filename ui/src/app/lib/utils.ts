@@ -36,7 +36,7 @@ export function padAddress(address: string) {
 
 export function getTokenContractAddresses(name: keyof typeof erc721Tokens) {
   return {
-    L1: erc721Tokens[name].contractAddresses.L1?.[ChainType.L1[NETWORK_NAME]],
-    L2: erc721Tokens[name].contractAddresses.L2?.[ChainType.L1[NETWORK_NAME]]
+    L1: erc721Tokens[name]?.contractAddresses.L1?.[ChainType.L1[NETWORK_NAME]],
+    L2: erc721Tokens[name]?.contractAddresses.L2?.[ChainType.L2[NETWORK_NAME]]
   }
 }

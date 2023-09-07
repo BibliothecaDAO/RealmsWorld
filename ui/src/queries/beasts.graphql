@@ -1,0 +1,12 @@
+query Beasts($where: WhereFilterForBeasts) {
+  beasts(where: $where) {
+    id
+    name
+    image
+    level
+    tier
+    prefix
+    suffix
+    owner
+  }
+}
