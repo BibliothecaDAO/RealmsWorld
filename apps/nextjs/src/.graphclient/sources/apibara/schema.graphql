@@ -1,0 +1,59 @@
+schema {
+  query: Query
+}
+
+type Query {
+  l2deposits(first: Int = 100, skip: Int = 0, orderBy: String = null, orderByDirection: String = "asc", where: WhereFilterForTransaction = null): [L2Deposit!]!
+  deposit(hash: String!): L2Deposit
+  l2withdrawals(first: Int = 100, skip: Int = 0, orderBy: String = null, orderByDirection: String = "asc", where: WhereFilterForWithdrawals = null): [L2Withdrawal!]!
+  beasts(first: Int = 100, skip: Int = 0, orderBy: String = null, orderByDirection: String = "asc", where: WhereFilterForBeasts = null): [Beast!]!
+}
+
+type L2Deposit {
+  id: String!
+  l2Recipient: String!
+  amount: Decimal!
+  timestamp: DateTime!
+  hash: String!
+}
+
+"""Decimal (fixed-point)"""
+scalar Decimal
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
+input WhereFilterForTransaction {
+  id: String = null
+  l2Recipient: String = null
+}
+
+type L2Withdrawal {
+  id: String!
+  l1Recipient: String!
+  l2Sender: String!
+  amount: Decimal!
+  timestamp: DateTime!
+  hash: String!
+}
+
+input WhereFilterForWithdrawals {
+  id: String = null
+  l2Sender: String = null
+}
+
+type Beast {
+  id: String!
+  name: String
+  image: String
+  level: String
+  tier: String
+  prefix: String
+  suffix: String
+  owner: String!
+}
+
+input WhereFilterForBeasts {
+  id: String = null
+  owner: String = null
+}
