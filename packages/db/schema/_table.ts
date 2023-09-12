@@ -6,4 +6,4 @@ import { pgTableCreator } from "drizzle-orm/pg-core";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const pgSqlTable = pgTableCreator((name) => `t3turbo_${name}`);
+export const pgSqlTable = pgTableCreator((name) => `rw_${name}`);

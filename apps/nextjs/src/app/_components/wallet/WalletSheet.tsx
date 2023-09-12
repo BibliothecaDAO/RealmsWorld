@@ -14,6 +14,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/app/_components/ui/tabs";
+import { Account } from "@/app/bridge/Account";
 //import { Account } from "@/app/bridge/Account";
 import { useUIContext } from "@/app/providers/UIProvider";
 import {
@@ -89,7 +90,17 @@ export const WalletSheet = () => {
   }, [chain?.id, l2Address, isL2Connected]);
 
   const { isAccountOpen, toggleAccount } = useUIContext();
+  const tabs = [
+    {
+      name: "Mainnet",
+      content: <Account isL1={true} />,
+    },
 
+    {
+      name: "Starknet",
+      content: <Account isL1={false} />,
+    },
+  ];
   return (
     <>
       <div className="flex space-x-2">
@@ -103,7 +114,7 @@ export const WalletSheet = () => {
             <EthereumLogin />
             <StarkLogin />
 
-            {/*<Tabs defaultValue={tabs[0].name}>
+            <Tabs defaultValue={tabs[0].name}>
               <TabsList className="justify-center">
                 {tabs.map((tab, index) => (
                   <TabsTrigger value={tab.name} key={index}>
@@ -117,7 +128,7 @@ export const WalletSheet = () => {
                   {tab.content}
                 </TabsContent>
               ))}
-            </Tabs>*/}
+            </Tabs>
           </div>
         </SheetContent>
       </Sheet>

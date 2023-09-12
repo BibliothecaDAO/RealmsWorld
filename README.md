@@ -24,13 +24,18 @@ Realms.World is the information and activity hub for entrance to the Realms Auto
 
 ### Getting Started
 
-- [`ui`](https://bibliothecadao.github.io/frontend) - The next.js Frontend
-- [`subgraph`](https://bibliothecadao.github.io/subgraph) - The L1 Starknet Messaging Indexer for Bridge Transactions
-- [`apibara`](https://bibliothecadao.github.io/starknet-indexer) = The L2 indexer for Bridge Transactions
+- [`apps/nextjs`](https://bibliothecadao.github.io/frontend) - The next.js Frontend
+- [`packages/subgraph`](https://bibliothecadao.github.io/subgraph) - The L1 Starknet Messaging Indexer for Bridge Transactions
+- [`packages/apibara`](https://bibliothecadao.github.io/starknet-indexer) = The L2 indexer for Bridge Transactions
 
 ### Documentation
 
 Available at [Realms.World Docs](https://docs.realms.world)
+
+### Inngest (fetching starknet nft metadata for indexer)
+
+Run the Inngest
+npx inngest-cli@latest dev -u http://localhost:3000/api/inngest
 
 ### Contributing
 

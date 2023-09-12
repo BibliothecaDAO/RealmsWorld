@@ -3,12 +3,13 @@ import Link from "next/link";
 import type { Beast } from "@/.graphclient";
 import { Button } from "@/app/_components/ui/button";
 import { TokenMarketData } from "@/types";
+import type { RouterOutputs } from "@/utils/api";
 import { shortenHex } from "@/utils/utils";
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 import { formatEther } from "viem";
 
 interface TokenCardProps {
-  token: Beast;
+  token: RouterOutputs["beasts"]["all"][number];
   layout?: "grid" | "list";
 }
 
@@ -27,10 +28,10 @@ export const BeastCard = (props: TokenCardProps) => {
 
   return (
     <div className={layout === "grid" ? grid : list}>
-      <Link href={`/collection/beasts/${token.id}`}>
+      <Link href={`/collection/beasts/${token.token_id}`}>
         <Image
           src={token.image || ""}
-          alt={token.name || `beats-${token.id}`}
+          alt={token.name || `beats-${token.token_id}`}
           className={`${isGrid ? "mx-auto " : ""}`}
           width={imageSize}
           height={imageSize}
@@ -39,7 +40,7 @@ export const BeastCard = (props: TokenCardProps) => {
       {isGrid ? (
         <div className={`w-full px-3 pb-2 pt-4`}>
           <div className="flex w-full justify-between text-sm">
-            <span className="font-semibold">#{token.id} </span>
+            <span className="font-semibold">#{token.token_id} </span>
             {/*token.market.floorAsk.source.icon && (
               <Image
                 src={token.market.floorAsk.source.icon}
@@ -51,7 +52,7 @@ export const BeastCard = (props: TokenCardProps) => {
             )*/}
           </div>
           <h6>{token.name}</h6>
-          <h6>{shortenHex(token.owner, 8)}</h6>
+          <h6>{token.owner && shortenHex(token.owner, 8)}</h6>
 
           <div className="my-3 h-6 text-sm">
             {/*token.market.floorAsk.price &&
@@ -62,7 +63,7 @@ export const BeastCard = (props: TokenCardProps) => {
 
           <div className="flex justify-between space-x-2">
             <Button
-              href={`/collection/beasts/${token.id}`}
+              href={`/collection/beasts/${token.token_id}`}
               variant={"ghost"}
               size={"xs"}
               className="w-full"
@@ -75,7 +76,7 @@ export const BeastCard = (props: TokenCardProps) => {
         <div className={`flex w-full justify-between px-3`}>
           <div className="flex w-full">
             <div className="self-center">
-              <div className="text-sm">#{token.id} </div>
+              <div className="text-sm">#{token.token_id} </div>
               <div className="self-center">{token.name}</div>
             </div>
 
@@ -102,7 +103,7 @@ export const BeastCard = (props: TokenCardProps) => {
 
           <div className="flex justify-between space-x-2 self-center">
             <Button
-              href={`/collection/beasts/${token.id}`}
+              href={`/collection/beasts/${token.token_id}`}
               variant={"outline"}
               className="w-full"
             >

@@ -68,6 +68,7 @@
     "embla-carousel-autoplay": "8.0.0-rc12",
     "embla-carousel-react": "8.0.0-rc12",
     "framer-motion": "^10.16.4",
+    "inngest": "^2.6.0",
     "lucide-react": "^0.274.0",
     "next": "^13.4.19",
     "react": "18.2.0",

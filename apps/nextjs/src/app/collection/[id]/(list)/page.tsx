@@ -95,7 +95,19 @@ export default async function Page({
             </div>
           </>
         )}
-        {tokenAddresses.L2 && <BeastsTable />}
+        {tokenAddresses.L2 && (
+          <Suspense
+            fallback={
+              <div className="flex w-full flex-col gap-4">
+                <PostCardSkeleton />
+                <PostCardSkeleton />
+                <PostCardSkeleton />
+              </div>
+            }
+          >
+            <BeastsTable />
+          </Suspense>
+        )}
       </div>
     </div>
   );

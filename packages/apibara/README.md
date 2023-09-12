@@ -2,15 +2,10 @@
 
 This repository uses [Apibara](https://github.com/apibara/apibara) to index web3 data.
 
-
-Run the Express Server
-deno run --allow-all src/server.ts
-
-Run the Inngest
-npx inngest-cli@latest dev -u http://localhost:8000/api/inngest
-
 Run the Indexer
 apibara run src/indexer/<indexer>.ts -A <dna-token>
+
+To run the NFT metadata indexer you will need to be running the nextjs app hosting the API handler
 
 ## Customizing the template
 

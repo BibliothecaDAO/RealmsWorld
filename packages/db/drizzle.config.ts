@@ -13,8 +13,8 @@ export default {
   schema: "./schema",
   driver: "pg",
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL + '?ssl=true',
+    connectionString: process.env.DATABASE_URL + "?ssl=true",
     ssl: true,
   },
-  tablesFilter: ["t3turbo_*"],
+  tablesFilter: ["rw_*"],
 } satisfies Config;
