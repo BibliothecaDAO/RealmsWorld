@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@realms-world/db": "^0.1.0",
+    "@realms-world/db": "workspace:*",
     "@auth/core": "^0.13.0",
     "@auth/drizzle-adapter": "^0.3.2",
     "@t3-oss/env-nextjs": "^0.6.1",
@@ -23,9 +23,9 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@realms-world/eslint-config": "^0.2.0",
-    "@realms-world/prettier-config": "^0.1.0",
-    "@realms-world/tsconfig": "^0.1.0",
+    "@realms-world/eslint-config": "workspace:*",
+    "@realms-world/prettier-config": "workspace:*",
+    "@realms-world/tsconfig": "workspace:*",
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"

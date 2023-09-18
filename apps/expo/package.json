@@ -37,11 +37,11 @@
     "superjson": "1.13.1"
   },
   "devDependencies": {
-    "@realms-world/api": "^0.1.0",
-    "@realms-world/eslint-config": "^0.2.0",
-    "@realms-world/prettier-config": "^0.1.0",
-    "@realms-world/tailwind-config": "^0.1.0",
-    "@realms-world/tsconfig": "^0.1.0",
+    "@realms-world/api": "workspace:*",
+    "@realms-world/eslint-config": "workspace:*",
+    "@realms-world/prettier-config": "workspace:*",
+    "@realms-world/tailwind-config": "workspace:*",
+    "@realms-world/tsconfig": "workspace:*",
     "@babel/core": "^7.22.15",
     "@babel/preset-env": "^7.22.15",
     "@babel/runtime": "^7.22.15",
