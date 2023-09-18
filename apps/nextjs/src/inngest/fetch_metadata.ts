@@ -28,7 +28,7 @@ export const fetchMetadata = inngest.createFunction(
           params: [
             {
               contract_address:
-                "0x06fe9215a0f193431f30043e612d921b62331946529ebf5f258949a4b34aa799",
+                "0x0712825f3ce0bedfdbcb31b2de044ad209163265a10cf11c64573741a4b588d2",
               entry_point_selector:
                 "0x12a7823b0c6bee58f8c694888f32f862c6584caa8afa0242de046d298ba684d", // Transfer
               calldata: ["0x" + event.data.tokenId.toString(), "0x0"],
@@ -49,15 +49,23 @@ export const fetchMetadata = inngest.createFunction(
 
     const value: any = [];
     for (let i = 2; i < metadata.result.length; i++) {
-      const result = shortString.decodeShortString(metadata.result[i]);
+      let result = shortString.decodeShortString(metadata.result[i]);
       value.push(result);
     }
-    const json = value.join("").replace('"0%200"%20', ""); // //.replace('""', '"\'').replace('"%20', '\' ') // tokenID 96+ still not indexing
-    const { image, attributes } = JSON.parse(json);
 
+    const jsonString = value.join("");
+    const regex = new RegExp("\\u0015", "g");
+    const modifiedJsonString = jsonString
+      .replace(
+        /"name":"(.*?)"\,/g,
+        (match, name) => `"name":"${name.replaceAll('"', '\\"')}",`,
+      )
+      .replace(regex, "");
+
+    const parsedJson = JSON.parse(modifiedJsonString);
     const flattenedAttributes: { [key: string]: string } = {};
 
-    for (const attribute of attributes) {
+    for (const attribute of parsedJson.attributes) {
       flattenedAttributes[attribute.trait_type] = attribute.value;
     }
 
@@ -66,12 +74,16 @@ export const fetchMetadata = inngest.createFunction(
   PGUSER='RedBeardEth'
   PGPASSWORD='1mbJAUqlo5NS'
   ENDPOINT_ID='ep-frosty-sea-90384545'*/
-    console.log(flattenedAttributes);
 
     const dbRes = await step.run("Insert Beast Metadata to Mongo", async () => {
       const query = await client(
-        "update rw_beasts set image = $1, metadata = $2 where token_id = $3",
-        [image, flattenedAttributes, event.data.tokenId],
+        "update rw_beasts set image = $1, metadata = $2, name=$3 where token_id = $4",
+        [
+          parsedJson.image,
+          flattenedAttributes,
+          parsedJson.name,
+          event.data.tokenId,
+        ],
       );
 
       /*const beasts = db.collection("beasts");

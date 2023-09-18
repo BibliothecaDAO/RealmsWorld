@@ -1,31 +1,32 @@
-import { ChainType } from "./tokens"
-
+import { ChainType } from "./tokens";
 
 export const erc721Tokens = {
-    realms: {
-        name: 'Realms (for Adventurers)',
-        contractAddresses: {
-            L1: {
-                [ChainType.L1.MAIN]: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
-                [ChainType.L1.GOERLI]: "0x3dc98f83a0f3ad77d44a68c6d15e08378de3df25",
-            },
-            L2: {
-                [ChainType.L2.MAIN]: "",
-                [ChainType.L2.GOERLI]: "",
-            }
-        }
+  realms: {
+    name: "Realms (for Adventurers)",
+    contractAddresses: {
+      L1: {
+        [ChainType.L1.MAIN]: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
+        [ChainType.L1.GOERLI]: "0x3dc98f83a0f3ad77d44a68c6d15e08378de3df25",
+      },
+      L2: {
+        [ChainType.L2.MAIN]: "",
+        [ChainType.L2.GOERLI]: "",
+      },
     },
-    beasts: {
-        name: '',
-        contractAddresses: {
-            L1:{},
-            L2: {
-                [ChainType.L2.MAIN]: "0x052d6edb54b24942d359b2b9d476d92b288b3a518322aa006f8eddd566df3de1",
-                [ChainType.L2.GOERLI]: "0x06fe9215a0f193431f30043e612d921b62331946529ebf5f258949a4b34aa799",
-            }
-        }
-    }
-}
+  },
+  beasts: {
+    name: "",
+    contractAddresses: {
+      L1: {},
+      L2: {
+        [ChainType.L2.MAIN]:
+          "0x052d6edb54b24942d359b2b9d476d92b288b3a518322aa006f8eddd566df3de1",
+        [ChainType.L2.GOERLI]:
+          "0x0712825f3ce0bedfdbcb31b2de044ad209163265a10cf11c64573741a4b588d2",
+      },
+    },
+  },
+};
 /*export const loot = {
     mainnet: "0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7",
     testnet: "0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7",
@@ -73,10 +74,11 @@ export const banners = {
 ]
 */
 export const customContractNames: { [index: string]: string } = {
-    "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d": "Realms",
-    "0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7": "Loot",
-    "0x86f7692569914b5060ef39aab99e62ec96a6ed45": "Crypts",
-    "0x527a4206ac04c2017295cf32f1fc2f9e034a7c40": "Banners"
-}
+  "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d": "Realms",
+  "0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7": "Loot",
+  "0x86f7692569914b5060ef39aab99e62ec96a6ed45": "Crypts",
+  "0x527a4206ac04c2017295cf32f1fc2f9e034a7c40": "Banners",
+};
 
-export const reservoirLootCollectionSetId = '1afb3695e2ce4bfa976acca874c213c4f582434830a4c2791cd8b3def5edb2b9'
+export const reservoirLootCollectionSetId =
+  "1afb3695e2ce4bfa976acca874c213c4f582434830a4c2791cd8b3def5edb2b9";
