@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import type { DepositEvent, WithdrawalEvent } from "@/.graphclient";
 import { Button } from "@/app/_components/ui/button";
@@ -7,7 +9,7 @@ import {
   STARKSCAN_TX_URL,
 } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
-import LordsIcon from "@/icons/lords.svg";
+import LordsIcon from "@/icons/lords.svgr";
 import { cn } from "@/utils/utils";
 import { useNetwork } from "@starknet-react/core";
 import type { ChainTypeL2 } from "@starkware-industries/commons-js-enums";
@@ -44,8 +46,7 @@ export const TransferLog = ({
   const [sign, setSign] = useState("");
   const { chain } = useNetwork();
   const [l2hash, setL2hash] = useState("");
-  const { l1Recipent, depositEvents, withdrawalEvents, createdTimestamp } =
-    transfer;
+  const { depositEvents, withdrawalEvents, createdTimestamp } = transfer;
 
   const {
     status,
@@ -70,7 +71,7 @@ export const TransferLog = ({
           ("SN_" + NETWORK_NAME) as ChainTypeL2,
           depositEvents?.[0].nonce,
         )
-      : "";
+      : transfer.hash;
     setL2hash(hash);
   };
 
@@ -82,7 +83,7 @@ export const TransferLog = ({
 
   useEffect(() => {
     getl2hash();
-  }, [depositEvents?.[0].payload]);
+  }, [depositEvents?.[0].payload, transfer]);
 
   const typedStatus = status as TransactionStatus;
 
@@ -125,12 +126,7 @@ export const TransferLog = ({
         className=" justify-between normal-case"
         size={"xs"}
         variant={"outline"}
-        disabled={
-          !depositEvents?.[0].payload ||
-          !status ||
-          TransactionStatusStep[typedStatus] <
-            TransactionStatusStep[TransactionStatus.RECEIVED]
-        }
+        disabled={!l2hash}
         rel="noopener noreferrer"
         href={STARKSCAN_TX_URL(l2hash)}
       >

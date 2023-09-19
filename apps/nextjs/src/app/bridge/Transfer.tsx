@@ -73,7 +73,7 @@ export const Transfer = ({ action }: { action: string }) => {
     return renderNetwork(
       "Ethereum",
       <EthereumLogo className="m-auto mt-1 h-6 w-6" />,
-      action != "withdraw",
+      false,
     );
   };
 
@@ -81,7 +81,7 @@ export const Transfer = ({ action }: { action: string }) => {
     return renderNetwork(
       "Starknet",
       <StarknetLogo className="m-auto mt-1 h-6 w-6" />,
-      action == "withdraw",
+      true,
     );
   };
   const renderTokenInput = () => {

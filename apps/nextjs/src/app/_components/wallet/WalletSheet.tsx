@@ -1,5 +1,5 @@
 //import { shortenHex } from "@/utils/utils";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Button } from "@/app/_components/ui/button";
 import {
   Dialog,
@@ -93,12 +93,20 @@ export const WalletSheet = () => {
   const tabs = [
     {
       name: "Mainnet",
-      content: <Account isL1={true} />,
+      content: (
+        <Suspense>
+          <Account isL1={true} />
+        </Suspense>
+      ),
     },
 
     {
       name: "Starknet",
-      content: <Account isL1={false} />,
+      content: (
+        <Suspense>
+          <Account isL1={false} />
+        </Suspense>
+      ),
     },
   ];
   return (

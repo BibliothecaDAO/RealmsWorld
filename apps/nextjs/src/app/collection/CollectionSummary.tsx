@@ -12,7 +12,6 @@ export default async function CollectionSummary({ address }: any) {
   const { collections } = await getCollections([{ contract: address }]);
 
   const collection = collections?.[0];
-  console.log(collection);
 
   if (!collection) {
     return <div>Collection Not Found</div>;

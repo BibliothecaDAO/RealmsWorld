@@ -4,6 +4,8 @@ import { TransferLog } from "@/app/bridge/TransferLog";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
 import { ETHERSCAN_ACCOUNT_URL, STARKSCAN_ACCOUNT_URL } from "@/constants/env";
 import { useCompleteTransferToL1 } from "@/hooks/useTransferToL1";
+import { api } from "@/utils/api";
+import { padAddress } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { evaluate } from "@starkware-industries/commons-js-utils";
 import { ExternalLinkIcon } from "lucide-react";
@@ -15,6 +17,12 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   const { address: l2address } = useL2Account();
   const { transfers /*, fetchNextPage, isLoading*/ } = useTransferLog(isL1);
   const completeTransferToL1 = useCompleteTransferToL1();
+  const [bridge] = api.bridge.all.useSuspenseQuery({
+    l1Account: padAddress(address ?? ""),
+    l2Account: padAddress(l2address ?? ""),
+  });
+  console.log(bridge);
+  console.log(transfers);
 
   const renderTransfers = () => {
     return transfers?.length

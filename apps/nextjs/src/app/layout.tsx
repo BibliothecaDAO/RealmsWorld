@@ -11,6 +11,7 @@ import { headers } from "next/headers";
 import { Footer } from "./_components/Footer";
 import { TopNav } from "./_components/TopNav";
 import { TRPCReactProvider } from "./providers";
+import { TransferLogProvider } from "./providers/TransferLogProvider";
 import { UIContextProvider } from "./providers/UIProvider";
 import { WalletsProvider } from "./providers/WalletsProvider";
 
@@ -37,13 +38,15 @@ export default function Layout(props: { children: React.ReactNode }) {
           <UIContextProvider>
             <Provider>
               <WalletsProvider>
-                <main className="flex min-h-screen flex-wrap">
-                  <Sidebar />
-                  <div className="z-10 flex flex-grow flex-col">
-                    <TopNav />
-                    <div className="flex-grow">{props.children}</div>
-                  </div>
-                </main>
+                <TransferLogProvider>
+                  <main className="flex min-h-screen flex-wrap">
+                    <Sidebar />
+                    <div className="z-10 flex flex-grow flex-col">
+                      <TopNav />
+                      <div className="flex-grow">{props.children}</div>
+                    </div>
+                  </main>
+                </TransferLogProvider>
                 <Footer />
               </WalletsProvider>
             </Provider>

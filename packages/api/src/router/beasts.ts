@@ -13,25 +13,10 @@ export const beastsRouter = createTRPCRouter({
   }),
 
   byId: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.beasts.findFirst({
         where: eq(schema.beasts.token_id, input.id),
       });
     }),
-
-  /*create: protectedProcedure
-    .input(
-      z.object({
-        token_id: z.string().min(1),
-        content: z.string().min(1),
-      }),
-    )
-    .mutation(({ ctx, input }) => {
-      return ctx.db.insert(schema.beasts).values(input);
-    }),
-
-  delete: protectedProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.db.delete(schema.beasts).where(eq(schema.beasts.token_id, input));
-  }),*/
 });

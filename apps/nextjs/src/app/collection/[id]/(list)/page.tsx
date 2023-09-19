@@ -22,9 +22,14 @@ export const runtime = "edge";
 export async function generateMetadata({
   params,
 }: {
-  params: { address: string };
+  params: { id: string };
 }): Promise<Metadata> {
-  const collectionData = await getCollections([{ contract: params.address }]);
+  const tokenAddresses = getTokenContractAddresses(
+    params.id as keyof typeof erc721Tokens,
+  );
+  const collectionData = await getCollections([
+    { contract: tokenAddresses.L1 },
+  ]);
   const collection: Collection = collectionData.collections?.[0];
 
   return {
@@ -57,6 +62,7 @@ export default async function Page({
     collection: tokenAddresses.L1,
   });
   const [tokens, attributes] = await Promise.all([tokensData, attributesData]);
+  console.log(tokens);
 
   if (!tokens) {
     return <div>Collection Not Found</div>;

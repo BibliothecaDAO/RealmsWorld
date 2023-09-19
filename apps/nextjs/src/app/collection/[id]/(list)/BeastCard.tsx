@@ -31,7 +31,7 @@ export const BeastCard = (props: TokenCardProps) => {
       <Link href={`/collection/beasts/${token.token_id}`}>
         <Image
           src={token.image || ""}
-          alt={token.name || `beats-${token.token_id}`}
+          alt={token.name || `beasts-${token.token_id}`}
           className={`${isGrid ? "mx-auto " : ""}`}
           width={imageSize}
           height={imageSize}
@@ -51,8 +51,11 @@ export const BeastCard = (props: TokenCardProps) => {
               />
             )*/}
           </div>
-          <h6>{token.name}</h6>
+          <h6> {decodeURIComponent(token.name || "")}</h6>
           <h6>{token.owner && shortenHex(token.owner, 8)}</h6>
+          <p>Type: {token.metadata?.type}</p>
+          <p>Tier: {token.metadata?.tier}</p>
+          <p>Level: {token.metadata?.level}</p>
 
           <div className="my-3 h-6 text-sm">
             {/*token.market.floorAsk.price &&
@@ -77,7 +80,9 @@ export const BeastCard = (props: TokenCardProps) => {
           <div className="flex w-full">
             <div className="self-center">
               <div className="text-sm">#{token.token_id} </div>
-              <div className="self-center">{token.name}</div>
+              <div className="self-center">
+                {decodeURIComponent(token.name || "")}
+              </div>
             </div>
 
             {/*<h6 className="self-center ml-auto">

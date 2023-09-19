@@ -6,8 +6,9 @@ import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 
 import * as auth from "./schema/auth";
 import * as beasts from "./schema/beasts";
+import * as bridge from "./schema/bridge";
 
-export const schema = { ...auth, ...beasts };
+export const schema = { ...auth, ...beasts, ...bridge };
 
 export { pgSqlTable as tableCreator } from "./schema/_table";
 

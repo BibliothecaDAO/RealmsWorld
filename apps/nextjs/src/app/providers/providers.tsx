@@ -12,6 +12,8 @@ import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { goerli, mainnet } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
+import { TransferLogProvider } from "./TransferLogProvider";
+
 enum StarknetChainId {
   SN_MAIN = "0x534e5f4d41494e",
   SN_GOERLI = "0x534e5f474f45524c49",
@@ -82,29 +84,31 @@ export function Provider({ children }: any) {
               }),
             )}
           >
-            <ReservoirKitProvider
-              options={{
-                chains: [
-                  {
-                    id: 1,
-                    baseApiUrl: "https://api.reservoir.tools",
-                    active: true,
-                    apiKey: process.env.RESERVOIR_API_KEY,
-                  },
-                  {
-                    id: 5,
-                    baseApiUrl: "https://api-goerli.reservoir.tools",
-                    active: true,
-                    apiKey: process.env.RESERVOIR_API_KEY,
-                  },
-                ],
-              }}
-              theme={theme}
-            >
-              <ConnectKitProvider theme="midnight">
-                {children}
-              </ConnectKitProvider>
-            </ReservoirKitProvider>
+            <TransferLogProvider>
+              <ReservoirKitProvider
+                options={{
+                  chains: [
+                    {
+                      id: 1,
+                      baseApiUrl: "https://api.reservoir.tools",
+                      active: true,
+                      apiKey: process.env.RESERVOIR_API_KEY,
+                    },
+                    {
+                      id: 5,
+                      baseApiUrl: "https://api-goerli.reservoir.tools",
+                      active: true,
+                      apiKey: process.env.RESERVOIR_API_KEY,
+                    },
+                  ],
+                }}
+                theme={theme}
+              >
+                <ConnectKitProvider theme="midnight">
+                  {children}
+                </ConnectKitProvider>
+              </ReservoirKitProvider>
+            </TransferLogProvider>
           </WagmiConfig>
         </StarknetConfig>
       </ReactQueryStreamedHydration>

@@ -18,9 +18,9 @@
     "postgres": "^3.3.5"
   },
   "devDependencies": {
-    "@realms-world/eslint-config": "^0.2.0",
-    "@realms-world/prettier-config": "^0.1.0",
-    "@realms-world/tsconfig": "^0.1.0",
+    "@realms-world/eslint-config": "workspace:*",
+    "@realms-world/prettier-config": "workspace:*",
+    "@realms-world/tsconfig": "workspace:*",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.48.0",
