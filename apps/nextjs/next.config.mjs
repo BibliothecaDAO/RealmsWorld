@@ -40,7 +40,7 @@ const config = {
   },
   experimental: {
     turbo: {
-      loaders: {
+      rules: {
         "*.svgr": ["@svgr/webpack"],
       },
     },

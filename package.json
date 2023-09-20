@@ -26,10 +26,13 @@
   "dependencies": {
     "@realms-world/prettier-config": "workspace:*",
     "@manypkg/cli": "^0.21.0",
-    "@turbo/gen": "^1.10.13",
+    "@turbo/gen": "^1.10.14",
     "prettier": "^3.0.3",
     "turbo": "^1.10.14",
     "typescript": "^5.2.2"
   },
-  "prettier": "@realms-world/prettier-config"
+  "prettier": "@realms-world/prettier-config",
+  "devDependencies": {
+    "npm-check-updates": "^16.14.4"
+  }
 }
