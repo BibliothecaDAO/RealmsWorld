@@ -24,8 +24,8 @@ export function OPTIONS() {
   return response;
 }
 
-const handler = auth(async (req) => {
-  const response = await fetchRequestHandler({
+const handler = auth(async (req): Promise<Response> => {
+  const response: Response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
     req,

@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { PostCardSkeleton } from "@/app/_components/posts";
 import { AttributesDropdown } from "@/app/collection/AttributesDropdown";
 import { AttributeTags } from "@/app/collection/AttributeTags";
+import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
 import { TokenTable } from "@/app/collection/TokenTable";
 import { TradeFilters } from "@/app/collection/TradeFilters";
 import { erc721Tokens } from "@/constants";
@@ -11,9 +11,8 @@ import { ChainType } from "@/constants/tokens";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
-import { getTokenContractAddresses } from "@/lib/utils";
 import type { Collection } from "@/types";
-import { isStarknetAddress } from "@/utils/utils";
+import { getTokenContractAddresses, isStarknetAddress } from "@/utils/utils";
 
 import { BeastsTable } from "./BeastTable";
 
@@ -87,9 +86,9 @@ export default async function Page({
               <Suspense
                 fallback={
                   <div className="flex w-full flex-col gap-4">
-                    <PostCardSkeleton />
-                    <PostCardSkeleton />
-                    <PostCardSkeleton />
+                    <TokenCardSkeleton />
+                    <TokenCardSkeleton />
+                    <TokenCardSkeleton />
                   </div>
                 }
               >
@@ -102,17 +101,19 @@ export default async function Page({
           </>
         )}
         {tokenAddresses.L2 && (
-          <Suspense
-            fallback={
-              <div className="flex w-full flex-col gap-4">
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-                <PostCardSkeleton />
-              </div>
-            }
-          >
-            <BeastsTable />
-          </Suspense>
+          <div className="w-full">
+            <Suspense
+              fallback={
+                <div className="flex w-full flex-col gap-4">
+                  <TokenCardSkeleton />
+                  <TokenCardSkeleton />
+                  <TokenCardSkeleton />
+                </div>
+              }
+            >
+              <BeastsTable />
+            </Suspense>
+          </div>
         )}
       </div>
     </div>

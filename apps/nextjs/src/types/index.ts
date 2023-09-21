@@ -237,7 +237,7 @@ interface Link {
 
 interface CompatibleToken {
   name: string;
-  contract: string;
+  //contract: string;
   icon: string;
   image: string;
 }

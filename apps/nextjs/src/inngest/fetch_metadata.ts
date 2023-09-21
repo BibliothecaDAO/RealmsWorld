@@ -58,7 +58,7 @@ export const fetchMetadata = inngest.createFunction(
     const modifiedJsonString = jsonString
       .replace(
         /"name":"(.*?)"\,/g,
-        (match, name) => `"name":"${name.replaceAll('"', '\\"')}",`,
+        (match: any, name: any) => `"name":"${name.replaceAll('"', '\\"')}",`,
       )
       .replace(regex, "");
 

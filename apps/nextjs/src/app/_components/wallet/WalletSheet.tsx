@@ -122,7 +122,7 @@ export const WalletSheet = () => {
             <EthereumLogin />
             <StarkLogin />
 
-            <Tabs defaultValue={tabs[0].name}>
+            <Tabs defaultValue={tabs[0]?.name}>
               <TabsList className="justify-center">
                 {tabs.map((tab, index) => (
                   <TabsTrigger value={tab.name} key={index}>

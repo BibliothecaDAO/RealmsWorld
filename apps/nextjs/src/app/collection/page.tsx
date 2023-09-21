@@ -1,6 +1,7 @@
 import { CollectionCard } from "@/app/_components/CollectionCard";
 import { erc721Tokens } from "@/constants";
 import type { Collection } from "@/types";
+import { getTokenContractAddresses } from "@/utils/utils";
 
 import { getCollections } from "../../lib/reservoir/getCollections";
 
@@ -11,8 +12,10 @@ export const metadata = {
 };
 
 export default async function Page() {
-  //const l1Collections = await getCollections();
-  const l1Collections = {};
+  const l1Collections = await getCollections(
+    getTokenContractAddresses("realms").L1,
+  );
+  // TODO refine collection display logic (with l2 collections included)
   const collections: Collection[] = l1Collections?.collections;
   const defaultImage = "/backgrounds/map.png";
 

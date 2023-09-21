@@ -17,7 +17,7 @@ export default async function Page() {
     addresses: [galleonAddress, carrackAddress],
   });
   const totalStakedRealms = totalStakedRealmsData?.wallets?.reduce(
-    (total, wallet) => {
+    (total: number, wallet: any) => {
       return total + parseInt(wallet.realmsHeld, 10);
     },
     0,

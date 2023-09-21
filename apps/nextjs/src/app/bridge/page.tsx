@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { NavLink } from "@/app/_components/ui/nav-link";
 
-import { cn } from "../../lib/utils";
+import { cn } from "../../utils/utils";
 import { Transfer } from "./Transfer";
 
 export const metadata: Metadata = {

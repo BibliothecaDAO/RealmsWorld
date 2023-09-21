@@ -62,10 +62,10 @@ export const TransferLog = ({
 
   const getl2hash = async () => {
     const hash = depositEvents?.[0].payload
-      ? await getTransactionHash(
+      ? getTransactionHash(
           TransactionHashPrefix.L1_HANDLER,
-          tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]],
-          tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]],
+          tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]] ?? "",
+          tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]] ?? "",
           "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
           depositEvents?.[0].payload,
           ("SN_" + NETWORK_NAME) as ChainTypeL2,

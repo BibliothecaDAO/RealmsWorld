@@ -74,7 +74,7 @@ function isIterable(input) {
   return typeof input[Symbol.iterator] === "function";
 }
 
-const flattenPages = (data) => {
+const flattenPages = (data: any) => {
   console.log(data);
   return data?.pages.length
     ? [
@@ -83,6 +83,6 @@ const flattenPages = (data) => {
       ]
     : []; /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
 };
-const flattenWithdrawals = (data) =>
-  data?.pages?.reduce((prev, curr) => [...prev, ...curr], []) ||
+const flattenWithdrawals = (data: any) =>
+  data?.pages?.reduce((prev: any, curr: any) => [...prev, ...curr], []) ||
   []; /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/

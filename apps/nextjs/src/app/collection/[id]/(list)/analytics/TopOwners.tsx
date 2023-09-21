@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Progress } from "@/app/_components/ui/progress";
-import Table from "@/app/homepages/realms-adventurers/components/Table";
+//import { Progress } from "@/app/_components/ui/progress";
+//import Table from "@/app/homepages/realms-adventurers/components/Table";
 import { shortenHex } from "@/utils/utils";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
-import { useOwnerListings } from "@reservoir0x/reservoir-kit-ui";
+
+//import { useOwnerListings } from "@reservoir0x/reservoir-kit-ui";
 
 export const TopOwners = ({
   owners,

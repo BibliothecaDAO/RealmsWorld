@@ -2,24 +2,25 @@
 
 import React, {
   createContext,
-  useState,
-  useContext,
   ReactNode,
+  useContext,
   useEffect,
-  useReducer,
   useMemo,
+  useReducer,
+  useState,
 } from "react";
-import { hash, uint256 } from "starknet";
-import { useBalance, useAccount as useL1Account } from "wagmi";
-import {
-  useAccount as useL2Account,
-  useContractRead,
-} from "@starknet-react/core";
-import { initialState, reducer } from "./wallets-reducer";
-import { ChainType, tokens as tokensConst } from "@/constants/tokens";
+import { ERC20 as L1_ERC20_ABI } from "@/abi/L1/ERC20";
 import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
 import L2_ERC20 from "@/abi/L2/ERC20.json";
-import { ERC20 as L1_ERC20_ABI } from "@/abi/L1/ERC20";
+import { ChainType, tokens as tokensConst } from "@/constants/tokens";
+import {
+  useContractRead,
+  useAccount as useL2Account,
+} from "@starknet-react/core";
+import { hash, uint256 } from "starknet";
+import { useBalance, useAccount as useL1Account } from "wagmi";
+
+import { initialState, reducer } from "./wallets-reducer";
 
 interface WalletsProviderContextValue {
   accountHash: string;
@@ -36,7 +37,7 @@ export const useWalletsProviderContext = (): WalletsProviderContextValue => {
   const context = useContext(WalletsProviderContext);
   if (!context) {
     throw new Error(
-      "useWalletsProviderContext must be used within a WalletsProvider"
+      "useWalletsProviderContext must be used within a WalletsProvider",
     );
   }
   return context;
@@ -71,7 +72,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     refetch: l2LordsRefetch,
     isFetched,
   } = useContractRead({
-    address: tokensConst.L2["LORDS"].tokenAddress[ChainType.L2[network]],
+    address: tokensConst.L2["LORDS"].tokenAddress[ChainType.L2[network]]!,
     abi: L2_C1ERC20,
     functionName: "balance_of",
     args: stubAccount,
@@ -84,7 +85,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     error: l2EthError,
     refetch: l2EthRefetch,
   } = useContractRead({
-    address: tokensConst.L2["ETH"].tokenAddress[ChainType.L2[network]],
+    address: tokensConst.L2["ETH"].tokenAddress[ChainType.L2[network]]!,
     abi: L2_ERC20,
     functionName: "balanceOf",
     args: stubAccount,

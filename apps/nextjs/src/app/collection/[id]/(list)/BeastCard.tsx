@@ -9,7 +9,7 @@ import { shortenHex } from "@/utils/utils";
 import { formatEther } from "viem";
 
 interface TokenCardProps {
-  token: RouterOutputs["beasts"]["all"][number];
+  token: RouterOutputs["beasts"]["all"]["items"][number];
   layout?: "grid" | "list";
 }
 
@@ -29,13 +29,15 @@ export const BeastCard = (props: TokenCardProps) => {
   return (
     <div className={layout === "grid" ? grid : list}>
       <Link href={`/collection/beasts/${token.token_id}`}>
-        <Image
-          src={token.image || ""}
-          alt={token.name || `beasts-${token.token_id}`}
-          className={`${isGrid ? "mx-auto " : ""}`}
-          width={imageSize}
-          height={imageSize}
-        />
+        {token.image && (
+          <Image
+            src={token.image || ""}
+            alt={token.name || `beasts-${token.token_id}`}
+            className={`${isGrid ? "mx-auto " : ""}`}
+            width={imageSize}
+            height={imageSize}
+          />
+        )}
       </Link>
       {isGrid ? (
         <div className={`w-full px-3 pb-2 pt-4`}>

@@ -1,7 +1,8 @@
 "use client";
 
 import { Progress } from "@/app/_components/ui/progress";
-import PieChart from "@/app/homepages/realms-adventurers/components/PieChart";
+
+//import PieChart from "@/homepages/realms-adventurers/components/PieChart";
 
 export const OwnerDistribution = ({
   ownersDistribution,
@@ -35,27 +36,28 @@ export const OwnerDistribution = ({
         <span className="mb-2 text-sm">{totalOwners}</span>
       </div>
 
-      {ownerCountsByTokenRange.map((amount, index) => {
-        const ownerPercentage = (amount / totalOwners) * 100;
-        const range = tokenRanges[index];
-        const { min, max } = range;
+      {ownerCountsByTokenRange.length &&
+        ownerCountsByTokenRange.map((amount, index) => {
+          const ownerPercentage = (amount / totalOwners) * 100;
+          const range = tokenRanges[index];
+          const { min, max } = range!;
 
-        const rangeLabel =
-          index > 0 && index + 1 !== tokenRanges.length
-            ? `${min}-${max}`
-            : `${min}+`;
+          const rangeLabel =
+            index > 0 && index + 1 !== tokenRanges.length
+              ? `${min}-${max}`
+              : `${min}+`;
 
-        const pluralSuffix = index > 0 ? "s" : "";
+          const pluralSuffix = index > 0 ? "s" : "";
 
-        return (
-          <div className="mb-3" key={max}>
-            <p className="pb-1">
-              {rangeLabel} item{pluralSuffix}: {ownerPercentage.toFixed(1)}%
-            </p>
-            <Progress value={ownerPercentage} />
-          </div>
-        );
-      })}
+          return (
+            <div className="mb-3" key={max}>
+              <p className="pb-1">
+                {rangeLabel} item{pluralSuffix}: {ownerPercentage.toFixed(1)}%
+              </p>
+              <Progress value={ownerPercentage} />
+            </div>
+          );
+        })}
     </div>
   );
 };

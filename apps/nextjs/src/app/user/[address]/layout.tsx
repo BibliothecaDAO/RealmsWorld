@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { NavLink } from "@/app/_components/ui/nav-link";
-import { hexToNumber, shortenHex } from "@/utils/utils";
+import { /*hexToNumber,*/ shortenHex } from "@/utils/utils";
 import { motion } from "framer-motion";
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   };
-  const id = hexToNumber(params.address, 1, 10);
+  //const id = hexToNumber(params.address, 1, 10);
   const tabs = [
     {
       name: "Mainnet",
@@ -48,13 +48,13 @@ export default function RootLayout({
         <div className="-mt-64 flex h-full p-8">
           <div className="from-theme-gray-light hidden w-1/3 flex-none rounded-t-2xl bg-gradient-to-b p-4 sm:block">
             <h5>{shortenHex(params.address)}</h5>
-            <Image
+            {/*<Image
               src={`/users/${id}.png`}
               alt="An example image"
               width={2000}
               height={2000}
               className="mx-auto rounded"
-            />
+  />*/}
           </div>
           <div className="flex-shrink p-4 p-8 sm:w-2/3">
             <div className="mb-4 flex flex w-full space-x-4 border-b border-white/20 py-3 text-xl">

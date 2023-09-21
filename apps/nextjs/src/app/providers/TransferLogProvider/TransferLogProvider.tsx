@@ -73,16 +73,16 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
     refetchInterval: GET_TRANSFERS_REFETCH_INTERVAL,
   });
 
-  const transfersQueryL2 = api.bridge.all.useInfiniteQuery(
+  const transfersQueryL2 = api.bridge.all.useQuery(
     {
       l1Account: padAddress(accountL1 ?? ""),
       l2Account: padAddress(accountL2 ?? ""),
-      limit: 10,
+      //limit: 10,
     },
-    {
+    /*{
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       // initialCursor: 1, // <-- optional you can pass an initialCursor
-    },
+    },*/
   );
 
   const cloneLogsWithIds = useCallback(

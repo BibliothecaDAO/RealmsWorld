@@ -35,11 +35,12 @@ export default async function Page({ params }: { params: { id: string } }) {
       content: (
         <div>
           <div className="flex">
-            {game?.compatibleTokens?.map((token, index) => (
+            {/* TODO linking games and tokens
+            game?.compatibleTokens?.map((token, index) => (
               <Button href={`/collection/${token.contract}`} key={index}>
                 {token.name}
               </Button>
-            ))}
+            ))*/}
           </div>
         </div>
       ),
@@ -86,7 +87,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 </Button>
               </div>
 
-              <Tabs defaultValue={tabs[0].name}>
+              <Tabs defaultValue={tabs[0]?.name}>
                 <TabsList>
                   {tabs.map((tab, index) => (
                     <TabsTrigger value={tab.name} key={index}>

@@ -16,7 +16,11 @@ export const AttributeTags = () => {
               variant={"outline"}
               size={"xs"}
               key={index}
-              onClick={() => handleAttributeClick(query.key, query.value)}
+              onClick={() =>
+                query.key &&
+                query.value &&
+                handleAttributeClick(query.key, query.value)
+              }
             >
               {query.key}: <span> {query.value} </span>
               <X className="ml-3 w-3" />

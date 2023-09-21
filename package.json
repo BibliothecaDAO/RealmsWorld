@@ -1,5 +1,5 @@
 {
-  "name": "@realms-world",
+  "name": "@realms-world/monorepo",
   "private": true,
   "engines": {
     "node": ">=v18.17.1"
@@ -24,15 +24,13 @@
     "typecheck": "turbo typecheck"
   },
   "dependencies": {
-    "@realms-world/prettier-config": "workspace:*",
     "@manypkg/cli": "^0.21.0",
+    "@realms-world/prettier-config": "workspace:*",
     "@turbo/gen": "^1.10.14",
+    "npm-check-updates": "^16.14.4",
     "prettier": "^3.0.3",
     "turbo": "^1.10.14",
     "typescript": "^5.2.2"
   },
-  "prettier": "@realms-world/prettier-config",
-  "devDependencies": {
-    "npm-check-updates": "^16.14.4"
-  }
+  "prettier": "@realms-world/prettier-config"
 }

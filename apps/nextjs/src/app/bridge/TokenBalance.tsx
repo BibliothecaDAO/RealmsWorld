@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 
-import { formatBigInt } from "../../lib/utils";
+import { formatBigInt } from "../../utils/utils";
 
 export const TokenBalance = ({
   balance,

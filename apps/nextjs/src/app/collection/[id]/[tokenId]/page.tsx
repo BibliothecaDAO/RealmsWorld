@@ -3,9 +3,8 @@ import Link from "next/link";
 import type { erc721Tokens } from "@/constants";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
-import { getTokenContractAddresses } from "@/lib/utils";
 import type { Collection, Market, Token } from "@/types";
-import { shortenHex } from "@/utils/utils";
+import { getTokenContractAddresses, shortenHex } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
 import { formatEther } from "viem";
 

@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { asc, eq, or, schema } from "@realms-world/db";
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const bridgeRouter = createTRPCRouter({
   all: publicProcedure

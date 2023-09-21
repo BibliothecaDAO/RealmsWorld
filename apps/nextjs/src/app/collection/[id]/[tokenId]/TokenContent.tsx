@@ -65,7 +65,7 @@ export const TokenContent = ({ token, collection }: Props) => {
     <div className="my-8 flex-grow">
       <BuyButton address={token.contract} id={token.tokenId} />
       {owner && <ListingModal address={token.contract} id={token.tokenId} />}
-      <Tabs defaultValue={tabs[0].name}>
+      <Tabs defaultValue={tabs[0]?.name}>
         <TabsList>
           {tabs.map((tab, index) => (
             <TabsTrigger
