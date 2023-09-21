@@ -8,7 +8,7 @@ import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
 
 function PostCard(props: {
-  beast: RouterOutputs["beasts"]["all"][number];
+  beast: RouterOutputs["beasts"]["all"]["items"][number];
   onDelete: () => void;
 }) {
   return (
@@ -94,7 +94,7 @@ function CreatePost() {
 const Index = () => {
   const utils = api.useContext();
 
-  const postQuery = api.beasts.all.useQuery();
+  const postQuery = api.beasts.all.useQuery({ limit: 5 });
 
   /*const deletePostMutation = api.post.delete.useMutation({
     onSettled: () => utils.post.all.invalidate(),
@@ -122,7 +122,7 @@ const Index = () => {
         </View>
 
         <FlashList
-          data={postQuery.data}
+          data={postQuery.data?.items}
           estimatedItemSize={20}
           ItemSeparatorComponent={() => <View className="h-2" />}
           renderItem={(p) => (
