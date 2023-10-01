@@ -37,6 +37,5 @@ jobs:
       - name: Build, lint and type-check
         run: bun turbo build --filter=!lords-bridge-subgraph lint format typecheck
 
-      # TODO: Find a suitable replacement for manypkg / wait for Bun support
-      # - name: Check workspaces
-      #   run: bun manypkg check
+      - name: Check workspaces
+        run: bunx sherif@0.2.0
