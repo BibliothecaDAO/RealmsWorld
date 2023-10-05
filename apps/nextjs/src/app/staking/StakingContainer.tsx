@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Realm } from "@/.graphclient";
 //import { getBuiltGraphSDK, UsersRealmsQuery } from "@/.graphclient";
 import { ERC721 } from "@/abi/L1/ERC721";
+import { paymentPoolAbi } from "@/abi/L1/PaymentPool";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
 import { Alert } from "@/app/_components/ui/alert";
@@ -19,6 +20,7 @@ import {
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/app/_components/ui/tooltip";
 import EthereumLogin from "@/app/_components/wallet/EthereumLogin";
@@ -26,7 +28,7 @@ import { stakingAddresses } from "@/constants/staking";
 import Lords from "@/icons/lords.svgr";
 import { getTokenContractAddresses } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
-import { Info } from "lucide-react";
+import { Info, Loader2 } from "lucide-react";
 import { formatEther } from "viem";
 import {
   useAccount,
@@ -45,20 +47,20 @@ const realmsAddress = getTokenContractAddresses("realms").L1;
 
 export const StakingContainer = () => {
   const { address: addressL1 } = useAccount();
-  const [realms, setRealms] = useState();
+  const [hexProof, setHexProof] = useState();
   /*const sdk = getBuiltGraphSDK({
     realmsSubgraph: process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
   });*/
   const address = addressL1 ? addressL1.toLowerCase() : "0x";
 
-  /*useEffect(() => {
-  fetch('/api/subgraph/getRealms', addressL1)
-    .then((res) => res.json())
-    .then((data) => {
-      setRealms(data)
-      setLoading(false)
-    })
-}, [])*/
+  useEffect(() => {
+    fetch(`/api/staking/${addressL1}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setHexProof(data);
+      });
+  }, [addressL1]);
+
   const { data: realmsData, isLoading: realmsDataIsLoading } = useQuery({
     queryKey: ["UsersRealms" + address],
     queryFn: async () =>
@@ -85,6 +87,15 @@ export const StakingContainer = () => {
     functionName: "lordsAvailable",
     args: [address as `0x${string}`],
   });
+  const {
+    data: galleonClaimData,
+    isLoading: isGalleonClaimLoading,
+    write: claimGalleonLords,
+  } = useContractWrite({
+    address: stakingAddresses[network].v1Galleon as `0x${string}`,
+    abi: GalleonStaking,
+    functionName: "claimLords",
+  });
 
   const { data: carrackLordsAvailableData, isLoading: isCarrackLordsLoading } =
     useContractRead({
@@ -94,17 +105,57 @@ export const StakingContainer = () => {
       args: [address as `0x${string}`],
     });
 
+  const {
+    data: carrackClaimData,
+    isLoading: isCarrackClaimLoading,
+    write: claimCarrackLords,
+  } = useContractWrite({
+    address: stakingAddresses[network].v2Carrack as `0x${string}`,
+    abi: CarrackStaking,
+    functionName: "claimLords",
+  });
+
+  /*const {
+    data: poolClaimData,
+    isLoading: isPoolClaimLoading,
+    write: claimPoolLords,
+  } = useContractWrite({
+    address: stakingAddresses[network].paymentPool as `0x${string}`,
+    abi: paymentPoolAbi,
+    functionName: "withdraw",
+    args: [
+      BigNumber.from(Web3Utils.toWei(debouncedClaimAmount)),
+      hexProof as any,
+    ],
+  });
+
+  const { refetch } = useContractRead({
+    address: contractAddress as `0x${string}`,
+    abi: paymentPoolAbi,
+    functionName: "withdrawals",
+    args: address && [address],
+    onSuccess(data) {
+      console.log(data);
+      setWithdrawnAmount(ethers.utils.formatEther(data));
+      const claimable =
+        totalClaimable - parseFloat(ethers.utils.formatEther(data || 0));
+      setCurrentClaimable(claimable);
+      setClaimAmount(claimable.toString());
+    },
+    enabled: !!address,
+  });*/
+
   if (!addressL1) {
     return (
       <div className="col-span-2 mx-auto mt-24 flex flex-col text-center">
-        <h1>Realms Staking</h1>
+        <h1>Realms (NFT) Staking for $LORDS rewards</h1>
         <h3 className="mb-12">Login to your Ethereum Wallet</h3>
         <EthereumLogin />
       </div>
     );
   }
   return (
-    <>
+    <div className="grid grid-cols-2 gap-6 text-center">
       <div className="col-span-2 flex flex-col ">
         <h3>Your Realms</h3>
         <div className="flex flex-col rounded border pb-8 pt-6">
@@ -122,23 +173,25 @@ export const StakingContainer = () => {
         </div>
       </div>
       <div className="flex flex-col">
-        <Tooltip>
-          <TooltipTrigger className="flex justify-center">
-            <h3>Galleon</h3>
-            <Info className="ml-2 mt-2 h-5 w-5" />
-          </TooltipTrigger>
-          <TooltipContent>
-            <div className="pb-2 text-lg">
-              Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack).
-            </div>
-            <Alert
-              message={
-                "Lords earnt after epoch 35 are locked until the DAO approves the migration to Starknet."
-              }
-              variant="warning"
-            />
-          </TooltipContent>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="flex justify-center">
+              <h3>Galleon</h3>
+              <Info className="ml-2 mt-2 h-5 w-5" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <div className="pb-2 text-lg">
+                Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack).
+              </div>
+              <Alert
+                message={
+                  "Lords earnt after epoch 35 are locked until the DAO approves the migration to Starknet."
+                }
+                variant="warning"
+              />
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <div className="flex flex-col rounded border pb-8 pt-6">
           {realmsDataIsLoading ? (
             "Loading"
@@ -164,32 +217,42 @@ export const StakingContainer = () => {
                 {formatEther(lordsAvailableData)}
               </span>
               <span>Lords Available</span>
-              <Tooltip>
-                <TooltipTrigger className="flex justify-center">
-                  <span className="mb-4 text-sm">Epoch 1-10</span>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger className="flex justify-center">
+                    <span className="mb-4 text-sm">Epoch 1-10</span>
 
-                  <Info className="ml-2 mt-2 h-5 w-5" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <div className="pb-2 text-lg">
-                    Weeks 10-35 can be redeemed at{" "}
-                    <Link
-                      target="_blank"
-                      href={"https://bibliothecadao.xyz/claim"}
-                    >
-                      <span className="font-bold">Claim Site</span>
-                    </Link>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
+                    <Info className="ml-2 mt-2 h-5 w-5" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <div className="pb-2 text-lg">
+                      Weeks 10-35 can be redeemed at{" "}
+                      <Link
+                        target="_blank"
+                        href={"https://bibliothecadao.xyz/claim"}
+                      >
+                        <span className="font-bold">Claim Site</span>
+                      </Link>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
 
               <Button
-                disabled={lordsAvailableData == 0n}
+                disabled={lordsAvailableData == 0n || isGalleonClaimLoading}
                 size={"lg"}
                 className="self-center"
                 variant={"outline"}
+                onClick={() => claimGalleonLords()}
               >
-                Claim
+                {isGalleonClaimLoading ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Claiming
+                  </>
+                ) : (
+                  "Claim"
+                )}
               </Button>
             </>
           ) : (
@@ -198,20 +261,23 @@ export const StakingContainer = () => {
         </div>
       </div>
       <div className="flex flex-col">
-        <Tooltip>
-          <TooltipTrigger className="flex justify-center">
-            <h3>Carrack</h3>
-            <Info className="ml-2 mt-2 h-5 w-5" />
-          </TooltipTrigger>
-          <TooltipContent>
-            <div className="pb-2 text-lg">
-              Rewards: 43.75x $LORDS per epoch.
-            </div>
-            <div className="pb-2 text-lg">
-              Claim: After each epoch (Realm must be staked for full epoch).
-            </div>
-          </TooltipContent>
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="flex justify-center">
+              <h3>Carrack</h3>
+              <Info className="ml-2 mt-2 h-5 w-5" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <div className="pb-2 text-lg">
+                Rewards: 43.75x $LORDS per epoch.
+              </div>
+              <div className="pb-2 text-lg">
+                Claim: After each epoch (Realm must be staked for full epoch).
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         <div className="flex flex-col rounded border pb-8 pt-6">
           {realmsDataIsLoading ? (
             "Loading"
@@ -249,6 +315,7 @@ export const StakingContainer = () => {
                 }
                 className="self-center"
                 variant={"outline"}
+                onClick={() => claimCarrackLords()}
               >
                 Claim
               </Button>
@@ -256,7 +323,7 @@ export const StakingContainer = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

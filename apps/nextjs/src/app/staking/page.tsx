@@ -7,7 +7,7 @@ import { getWalletRealmsHeld } from "@/lib/subgraph/getWalletRealmsHeld";
 import { StakingContainer } from "./StakingContainer";
 
 export const metadata: Metadata = {
-  title: "Realm Staking",
+  title: "Realm NFT Staking for $LORDS rewards",
 };
 const galleonAddress = stakingAddresses[NETWORK_NAME].v1Galleon;
 const carrackAddress = stakingAddresses[NETWORK_NAME].v2Carrack;
@@ -24,9 +24,7 @@ export default async function Page() {
   );
   return (
     <div className="mx-auto mt-24 sm:max-w-3xl">
-      <div className="grid grid-cols-2 gap-6 text-center">
-        <StakingContainer />
-      </div>
+      <StakingContainer />
       <div className="mt-12 flex flex-col text-center">
         <h3>Data</h3>
         <div className="rounded border pb-8 pt-6 ">
