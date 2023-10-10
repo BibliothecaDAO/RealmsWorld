@@ -14,8 +14,8 @@
   "dependencies": {
     "@realms-world/auth": "workspace:*",
     "@realms-world/db": "workspace:*",
-    "@trpc/client": "^10.38.5",
-    "@trpc/server": "^10.38.5",
+    "@trpc/client": "^10.40.0",
+    "@trpc/server": "^10.40.0",
     "superjson": "1.13.3",
     "zod": "^3.22.2"
   },

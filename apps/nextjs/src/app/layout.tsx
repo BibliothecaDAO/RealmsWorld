@@ -32,7 +32,7 @@ export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
-        className={`bg-theme-gray ${inconsolata.variable} ${karla.variable} text-white/70`}
+        className={`bg-dark-green ${inconsolata.variable} ${karla.variable} text-bright-yellow`}
       >
         <TRPCReactProvider headers={headers()}>
           <UIContextProvider>

@@ -18,7 +18,6 @@ import { api } from "@/utils/api";
 import { padAddress } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import PropTypes from "prop-types";
 import { useAccount as useL1Account } from "wagmi";
 
 import { TransferLogContext } from "./transfer-log-context";
