@@ -25,19 +25,15 @@ export async function GET(request: NextRequest, { params }: { params: any }) {
         params.address.toLowerCase(),
         10,
       );
-      //console.log(paymentTree);
 
-      /*const res = await fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": process.env.RESERVOIR_API_KEY || "",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+      const claimAm = Web3Utils.fromWei(claim.amount);
 
-    const data: any = await res.json();*/
+      console.log(claimAm);
 
-      return NextResponse.json({ proof, amount: claim?.amount });
+      return NextResponse.json({
+        proof,
+        amount: Web3Utils.toWei(claimAm),
+      });
     } else {
       return NextResponse.json({ message: "Claim not found for account" });
     }
