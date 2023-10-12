@@ -48,6 +48,9 @@ const realmsAddress = getTokenContractAddresses("realms").L1;
 export const StakingContainer = () => {
   const { address: addressL1 } = useAccount();
   const [hexProof, setHexProof] = useState();
+  const [poolTotal, setPoolTotal] = useState<bigint>(0n);
+  const [withdrawnAmount, setWithdrawnAmount] = useState<bigint>();
+  const [poolClaimAmount, setPoolClaimAmount] = useState<bigint>();
   /*const sdk = getBuiltGraphSDK({
     realmsSubgraph: process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
   });*/
@@ -57,7 +60,8 @@ export const StakingContainer = () => {
     fetch(`/api/staking/${addressL1}`)
       .then((res) => res.json())
       .then((data) => {
-        setHexProof(data);
+        setHexProof(data.proof);
+        setPoolTotal(BigInt(data.amount));
       });
   }, [addressL1]);
 
@@ -115,7 +119,7 @@ export const StakingContainer = () => {
     functionName: "claimLords",
   });
 
-  /*const {
+  const {
     data: poolClaimData,
     isLoading: isPoolClaimLoading,
     write: claimPoolLords,
@@ -123,27 +127,24 @@ export const StakingContainer = () => {
     address: stakingAddresses[network].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "withdraw",
-    args: [
-      BigNumber.from(Web3Utils.toWei(debouncedClaimAmount)),
-      hexProof as any,
-    ],
+    args: [poolClaimAmount ?? 0n, hexProof as any],
   });
 
-  const { refetch } = useContractRead({
-    address: contractAddress as `0x${string}`,
+  const { refetch, isLoading: poolWithdrawalsLoading } = useContractRead({
+    address: stakingAddresses[network].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "withdrawals",
-    args: address && [address],
+    args: [address as `0x${string}`],
     onSuccess(data) {
-      console.log(data);
-      setWithdrawnAmount(ethers.utils.formatEther(data));
-      const claimable =
-        totalClaimable - parseFloat(ethers.utils.formatEther(data || 0));
-      setCurrentClaimable(claimable);
-      setClaimAmount(claimable.toString());
+      console.log(typeof data);
+      console.log(typeof poolTotal);
+
+      setWithdrawnAmount(data);
+      const claimable = poolTotal - data;
+      setPoolClaimAmount(claimable);
     },
-    enabled: !!address,
-  });*/
+    enabled: !!address && !!poolTotal,
+  });
 
   if (!addressL1) {
     return (
@@ -210,37 +211,18 @@ export const StakingContainer = () => {
           )}
         </div>
         <div className="mt-6 flex flex-col rounded border pb-8 pt-6">
+          <span className="pb-4 text-lg">Lords Available</span>
+
           {!isGalleonLordsLoading && typeof lordsAvailableData == "bigint" ? (
-            <>
-              <span className="flex justify-center text-2xl">
-                <Lords className="mr-2 h-8 w-8 fill-current" />
+            <div className="flex items-center justify-center">
+              <span className="mr-6 text-sm">Epoch 1-10:</span>
+              <span className="mr-3 flex">
+                <Lords className="mr-2 h-5 w-5 fill-current" />
                 {formatEther(lordsAvailableData)}
               </span>
-              <span>Lords Available</span>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger className="flex justify-center">
-                    <span className="mb-4 text-sm">Epoch 1-10</span>
-
-                    <Info className="ml-2 mt-2 h-5 w-5" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <div className="pb-2 text-lg">
-                      Weeks 10-35 can be redeemed at{" "}
-                      <Link
-                        target="_blank"
-                        href={"https://bibliothecadao.xyz/claim"}
-                      >
-                        <span className="font-bold">Claim Site</span>
-                      </Link>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
               <Button
                 disabled={lordsAvailableData == 0n || isGalleonClaimLoading}
-                size={"lg"}
+                size={"sm"}
                 className="self-center"
                 variant={"outline"}
                 onClick={() => claimGalleonLords()}
@@ -254,10 +236,41 @@ export const StakingContainer = () => {
                   "Claim"
                 )}
               </Button>
-            </>
+            </div>
           ) : (
             "Loading"
           )}
+          {!poolWithdrawalsLoading ? (
+            <div className="mt-3 flex items-center justify-center">
+              <span className="mr-6 text-sm">Epoch 11-35:</span>
+              <span className="mr-3 flex">
+                <Lords className="mr-2 h-5 w-5 fill-current" />
+                {formatEther(poolClaimAmount ?? 0n)} /{" "}
+                {formatEther(poolTotal ?? 0n)}
+              </span>
+              <Button
+                disabled={lordsAvailableData == 0n || isGalleonClaimLoading}
+                size={"sm"}
+                className="self-center"
+                variant={"outline"}
+                onClick={() => claimGalleonLords()}
+              >
+                {isGalleonClaimLoading ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Claiming
+                  </>
+                ) : (
+                  "Claim"
+                )}
+              </Button>
+            </div>
+          ) : (
+            "Loading"
+          )}
+          <span className="mt-3 text-sm">
+            Epoch 35+: <span className="ml-3">Future claim on Starknet</span>
+          </span>
         </div>
       </div>
       <div className="flex flex-col">
@@ -296,6 +309,8 @@ export const StakingContainer = () => {
           )}
         </div>
         <div className="mt-6 flex flex-col rounded border pb-8 pt-6">
+          <span className="pb-4 text-lg">Lords Available</span>
+
           {isCarrackLordsLoading ? (
             "Loading"
           ) : (
@@ -304,7 +319,6 @@ export const StakingContainer = () => {
                 <Lords className="mr-2 h-8 w-8 fill-current" />
                 {formatEther(carrackLordsAvailableData?.[0] || 0n)}
               </span>
-              <span>Lords Available</span>
               <span className="mb-4 text-sm">Epoch 35+</span>
 
               <Button
