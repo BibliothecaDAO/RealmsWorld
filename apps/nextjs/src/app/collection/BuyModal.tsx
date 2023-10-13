@@ -17,6 +17,7 @@ export const BuyButton = ({ address, id, size = "sm" }: any) => {
       onPurchaseError={(error, data) =>
         console.log("Transaction Error", error, data)
       }
+      onConnectWallet={() => console.log("add wallet connector")}
       onClose={(data, stepData, currentStep) => console.log("Modal Closed")}
     />
   );

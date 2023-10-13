@@ -1,5 +1,4 @@
 import { CollectionCard } from "@/app/_components/CollectionCard";
-import { erc721Tokens } from "@/constants";
 import type { Collection } from "@/types";
 import { getTokenContractAddresses } from "@/utils/utils";
 

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/app/_components/ui/button";
 import { games } from "@/constants";
 import Discord from "@/icons/discord.svgr";
 import { getCollections } from "@/lib/reservoir/getCollections";

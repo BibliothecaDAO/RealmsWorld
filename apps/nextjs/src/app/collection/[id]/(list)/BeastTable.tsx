@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { tokens } from "@/constants/tokens";
-import { Token, TokenMarketData } from "@/types";
 import { api } from "@/utils/api";
-import { useQuery } from "@tanstack/react-query";
 import { useInView } from "framer-motion";
 
 import { BeastCard } from "./BeastCard";
@@ -28,7 +25,6 @@ export const BeastsTable = ({}: {}) => {
       },
     );
   const isInView = useInView(ref, { once: false });
-  console.log(beasts);
 
   useEffect(() => {
     console.log("Element is in view: ", isInView);

@@ -17,10 +17,10 @@ export default async function Page({
     params.id as keyof typeof erc721Tokens,
   );
   const { ownersDistribution } = await getOwnersDistribution({
-    collection: tokenAddresses.L1,
+    collection: tokenAddresses.L1 ?? params.id,
   });
   const { owners } = await getOwners({
-    collection: tokenAddresses.L1,
+    collection: tokenAddresses.L1 ?? params.id,
   });
 
   const cards = [

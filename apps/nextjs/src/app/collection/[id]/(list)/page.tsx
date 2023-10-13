@@ -6,8 +6,6 @@ import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
 import { TokenTable } from "@/app/collection/TokenTable";
 import { TradeFilters } from "@/app/collection/TradeFilters";
 import { erc721Tokens } from "@/constants";
-import { NETWORK_NAME } from "@/constants/env";
-import { ChainType } from "@/constants/tokens";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
@@ -46,7 +44,7 @@ export default async function Page({
     page?: string;
   };
 }) {
-  const token = erc721Tokens[params.id as keyof typeof erc721Tokens];
+  //const token = erc721Tokens[params.id as keyof typeof erc721Tokens];
 
   const tokenAddresses = getTokenContractAddresses(
     params.id as keyof typeof erc721Tokens,
