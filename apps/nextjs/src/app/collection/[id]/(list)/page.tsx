@@ -27,7 +27,7 @@ export async function generateMetadata({
     params.id as keyof typeof erc721Tokens,
   );
   const collectionData = await getCollections([
-    { contract: tokenAddresses.L1 },
+    { contract: tokenAddresses.L1 ?? params.id },
   ]);
   const collection: Collection = collectionData.collections?.[0];
 
@@ -58,10 +58,9 @@ export default async function Page({
   });
 
   const attributesData = getAttributes({
-    collection: tokenAddresses.L1,
+    collection: tokenAddresses.L1 ?? params.id,
   });
   const [tokens, attributes] = await Promise.all([tokensData, attributesData]);
-  console.log(tokens);
 
   if (!tokens) {
     return <div>Collection Not Found</div>;

@@ -1,7 +1,7 @@
 export const ChainType = {
   L1: {
-    MAIN: 1,
-    GOERLI: 5,
+    MAIN: "1",
+    GOERLI: "5",
   },
   L2: {
     MAIN: "0x534e5f4d41494e",

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/app/_components/ui/button";
 import type { TokenMarketData } from "@/types";
+import { findTokenName } from "@/utils/utils";
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 import { formatEther } from "viem";
 
@@ -27,7 +28,11 @@ export const TokenCard = (props: TokenCardProps) => {
 
   return (
     <div className={layout === "grid" ? grid : list}>
-      <Link href={`/collection/${token.token.contract}/${token.token.tokenId}`}>
+      <Link
+        href={`/collection/${findTokenName(token.token.contract)}/${
+          token.token.tokenId
+        }`}
+      >
         <Image
           src={token.token.image || ""}
           alt={token.token.name}
@@ -40,7 +45,7 @@ export const TokenCard = (props: TokenCardProps) => {
         <div className={`w-full px-3 pb-2 pt-4`}>
           <div className="flex w-full justify-between text-sm">
             <span className="font-semibold">#{token.token.tokenId} </span>
-            {token.market.floorAsk.source.icon && (
+            {token.market.floorAsk.source?.icon && (
               <Image
                 src={token.market.floorAsk.source.icon}
                 alt="An example image"
@@ -108,7 +113,9 @@ export const TokenCard = (props: TokenCardProps) => {
 
           <div className="flex justify-between space-x-2 self-center">
             <Button
-              href={`/collection/${token.token.contract}/${token.token.tokenId}`}
+              href={`/collection/${findTokenName(token.token.contract)}/${
+                token.token.tokenId
+              }`}
               variant={"outline"}
               className="w-full"
             >

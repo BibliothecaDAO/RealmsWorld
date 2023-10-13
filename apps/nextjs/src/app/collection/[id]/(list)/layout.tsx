@@ -20,7 +20,7 @@ export default function RootLayout({
   const imageUrl = params.id ? `/backgrounds/${params.id}.png` : defaultImage;
 
   const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(5,5,5, 1)), url(${imageUrl}), url(${defaultImage})`,
+    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${imageUrl}), url(${defaultImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
@@ -40,7 +40,7 @@ export default function RootLayout({
     },
   ];
   return (
-    <div className="bg-theme-gray h-full w-full">
+    <div className="bg-dark-green h-full w-full">
       <div
         // initial={{ opacity: 0.2 }}
         // animate={{ opacity: 1 }}

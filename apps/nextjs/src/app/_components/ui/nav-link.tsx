@@ -34,11 +34,14 @@ export const NavLink = ({
   const pathname = usePathname();
   const isActive = exact ? pathname === href : pathname.startsWith(href);
 
-  variant = isActive ? "default" : "ghost";
+  variant = "ghost";
 
   return (
     <Link
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(
+        buttonVariants({ variant, size, className }),
+        isActive && "!text-flamingo",
+      )}
       href={href}
     >
       {children}

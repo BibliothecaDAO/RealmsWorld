@@ -84,31 +84,32 @@ export function Provider({ children }: any) {
               }),
             )}
           >
-            <TransferLogProvider>
-              <ReservoirKitProvider
-                options={{
-                  chains: [
-                    {
-                      id: 1,
-                      baseApiUrl: "https://api.reservoir.tools",
-                      active: true,
-                      apiKey: process.env.RESERVOIR_API_KEY,
-                    },
-                    {
-                      id: 5,
-                      baseApiUrl: "https://api-goerli.reservoir.tools",
-                      active: true,
-                      apiKey: process.env.RESERVOIR_API_KEY,
-                    },
-                  ],
-                }}
-                theme={theme}
-              >
-                <ConnectKitProvider theme="midnight">
+            <ConnectKitProvider theme="midnight">
+              <TransferLogProvider>
+                <ReservoirKitProvider
+                  options={{
+                    apiKey: process.env.RESERVOIR_API_KEY,
+                    chains: [
+                      {
+                        id: 1,
+                        name: "mainnet",
+                        baseApiUrl: "https://api.reservoir.tools",
+                        active: true,
+                      },
+                      {
+                        id: 5,
+                        name: "goerli",
+                        baseApiUrl: "https://api-goerli.reservoir.tools",
+                        active: true,
+                      },
+                    ],
+                  }}
+                  theme={theme}
+                >
                   {children}
-                </ConnectKitProvider>
-              </ReservoirKitProvider>
-            </TransferLogProvider>
+                </ReservoirKitProvider>
+              </TransferLogProvider>
+            </ConnectKitProvider>
           </WagmiConfig>
         </StarknetConfig>
       </ReactQueryStreamedHydration>

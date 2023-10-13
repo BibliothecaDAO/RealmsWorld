@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Karla, Space_Grotesk } from "next/font/google";
+import { Bai_Jamjuree, Inter, Karla } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
 
 import { Provider } from "./providers/providers";
@@ -15,9 +15,10 @@ import { TransferLogProvider } from "./providers/TransferLogProvider";
 import { UIContextProvider } from "./providers/UIProvider";
 import { WalletsProvider } from "./providers/WalletsProvider";
 
-const inconsolata = Space_Grotesk({
+const baiJamjuree = Bai_Jamjuree({
   subsets: ["latin"],
-  variable: "--font-inconsolata",
+  variable: "--font-bai-jamjuree",
+  weight: ["500", "700"],
   display: "swap",
 });
 
@@ -32,7 +33,7 @@ export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
-        className={`bg-dark-green ${inconsolata.variable} ${karla.variable} text-bright-yellow`}
+        className={`bg-dark-green ${baiJamjuree.variable} ${karla.variable} text-bright-yellow`}
       >
         <TRPCReactProvider headers={headers()}>
           <UIContextProvider>

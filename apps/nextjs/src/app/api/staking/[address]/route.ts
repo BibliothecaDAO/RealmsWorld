@@ -25,10 +25,7 @@ export async function GET(request: NextRequest, { params }: { params: any }) {
         params.address.toLowerCase(),
         10,
       );
-
       const claimAm = Web3Utils.fromWei(claim.amount);
-
-      console.log(claimAm);
 
       return NextResponse.json({
         proof,

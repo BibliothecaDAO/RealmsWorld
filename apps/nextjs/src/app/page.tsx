@@ -21,7 +21,7 @@ export default async function Home() {
   const defaultImage = "/backgrounds/map.png";
 
   const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(5, 5, 5, 1)), url(${defaultImage}), url(${defaultImage})`,
+    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${defaultImage}), url(${defaultImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
@@ -56,7 +56,7 @@ export default async function Home() {
               <Starknet className="w-8 px-1" />
             </Link>
           </div>
-          <AuthShowcase />
+          {/*<AuthShowcase />*/}
 
           <hr className="border" />
 

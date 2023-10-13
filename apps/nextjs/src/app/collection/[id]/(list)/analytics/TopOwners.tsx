@@ -30,7 +30,7 @@ export const TopOwners = ({
       </div>
       <ScrollArea.Root className="ScrollAreaRoot">
         <ScrollArea.Viewport className="h-96">
-          {owners.map((owner) => (
+          {owners?.map((owner) => (
             <div key={owner.address} className="grid grid-cols-5 py-1">
               <div className="col-span-2">
                 <Link href={`/user/${owner.address}`}>

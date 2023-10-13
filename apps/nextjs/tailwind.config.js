@@ -10,9 +10,10 @@ module.exports = {
         "theme-gray-light": "#343531",
         "bright-yellow": "#FBE1BB",
         "dark-green": "#2A2B24",
+        flamingo: "#FF93BA",
       },
       fontFamily: {
-        sans: ["var(--font-inconsolata)", ...fontFamily.sans],
+        sans: ["var(--font-bai-jamjuree)", ...fontFamily.sans],
         "sans-serif": ["var(--font-karla)", ...fontFamily.serif],
       },
     },
