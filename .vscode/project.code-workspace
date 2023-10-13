@@ -1,0 +1,21 @@
+{
+    "folders": [
+      {
+        "name": "ROOT",
+        "path": "../"
+      },
+      {
+        "name": "apibara",
+        "path": "../apibara"
+      },
+      {
+        "name": "ui",
+        "path": "../ui"
+      },
+      {
+        "name": "subgraph",
+        "path": "../subgraph"
+      },
+    ],
+    "settings": {}
+  }

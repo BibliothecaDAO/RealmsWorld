@@ -1,0 +1,38 @@
+{
+  "name": "@realms-world/db",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "push": "drizzle-kit push:pg",
+    "studio": "drizzle-kit studio",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.6.0",
+    "drizzle-orm": "^0.28.6",
+    "postgres": "^3.3.5"
+  },
+  "devDependencies": {
+    "@realms-world/eslint-config": "workspace:*",
+    "@realms-world/prettier-config": "workspace:*",
+    "@realms-world/tsconfig": "workspace:*",
+    "dotenv-cli": "^7.3.0",
+    "drizzle-kit": "^0.19.13",
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@realms-world/eslint-config/base"
+    ]
+  },
+  "prettier": "@realms-world/prettier-config"
+}

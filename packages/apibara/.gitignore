@@ -1,0 +1,6 @@
+__pycache__
+_docker
+.env
+venv
+mongo-data
+.yarn
