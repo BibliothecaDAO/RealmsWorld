@@ -14,7 +14,7 @@ import { getTokenContractAddresses, isStarknetAddress } from "@/utils/utils";
 
 import { BeastsTable } from "./BeastTable";
 
-export const runtime = "edge";
+//export const runtime = "edge";
 
 export async function generateMetadata({
   params,
