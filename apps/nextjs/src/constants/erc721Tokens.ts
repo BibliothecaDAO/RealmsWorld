@@ -1,6 +1,21 @@
 import { ChainType } from "./tokens";
 
-export const erc721Tokens = {
+type ContractAddresses = {
+  [chainType in keyof typeof ChainType]: {
+    [chainName: string]: string;
+  };
+};
+
+type Token = {
+  name: string;
+  contractAddresses: ContractAddresses;
+};
+
+export type ERC721Tokens = {
+  realms: Token;
+  beasts: Token;
+};
+export const erc721Tokens: ERC721Tokens = {
   realms: {
     name: "Realms (for Adventurers)",
     contractAddresses: {
@@ -8,10 +23,7 @@ export const erc721Tokens = {
         [ChainType.L1.MAIN]: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
         [ChainType.L1.GOERLI]: "0x3dc98f83a0f3ad77d44a68c6d15e08378de3df25",
       },
-      L2: {
-        [ChainType.L2.MAIN]: "",
-        [ChainType.L2.GOERLI]: "",
-      },
+      L2: {},
     },
   },
   beasts: {

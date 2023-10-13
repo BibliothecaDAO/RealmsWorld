@@ -1,5 +1,7 @@
+import { erc721Tokens } from "@/constants";
 import { getOwnersDistribution } from "@/lib/reservoir/getOwnerDistribution";
 import { getOwners } from "@/lib/reservoir/getOwners";
+import { getTokenContractAddresses } from "@/utils/utils";
 
 import { OwnerDistribution } from "./OwnerDistribution";
 import { TopOwners } from "./TopOwners";
@@ -8,14 +10,17 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: { address: string };
+  params: { id: string };
   searchParams: any;
 }) {
+  const tokenAddresses = getTokenContractAddresses(
+    params.id as keyof typeof erc721Tokens,
+  );
   const { ownersDistribution } = await getOwnersDistribution({
-    collection: params.address,
+    collection: tokenAddresses.L1,
   });
   const { owners } = await getOwners({
-    collection: params.address,
+    collection: tokenAddresses.L1,
   });
 
   const cards = [

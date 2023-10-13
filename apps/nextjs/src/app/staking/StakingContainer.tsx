@@ -136,9 +136,6 @@ export const StakingContainer = () => {
     functionName: "withdrawals",
     args: [address as `0x${string}`],
     onSuccess(data) {
-      console.log(typeof data);
-      console.log(typeof poolTotal);
-
       setWithdrawnAmount(data);
       const claimable = poolTotal - data;
       setPoolClaimAmount(claimable);
@@ -249,13 +246,13 @@ export const StakingContainer = () => {
                 {formatEther(poolTotal ?? 0n)}
               </span>
               <Button
-                disabled={lordsAvailableData == 0n || isGalleonClaimLoading}
+                disabled={poolClaimAmount == 0n || isPoolClaimLoading}
                 size={"sm"}
                 className="self-center"
                 variant={"outline"}
-                onClick={() => claimGalleonLords()}
+                onClick={() => claimPoolLords()}
               >
-                {isGalleonClaimLoading ? (
+                {isPoolClaimLoading ? (
                   <>
                     <Loader2 className="h-5 w-5 animate-spin" />
                     Claiming

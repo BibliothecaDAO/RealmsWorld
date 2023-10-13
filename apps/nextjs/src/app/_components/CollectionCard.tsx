@@ -9,7 +9,7 @@ interface Props {
 export const CollectionCard = ({ collection }: Props) => {
   return (
     <Link
-      href={`/collection/${collection.primaryContract}`}
+      href={`/collection/${/*collection.primaryContract*/ "realms"}`} //TODO make dynamic depending on collection url (currently not passed from reservoir collections query)
       className="group flex border p-5 duration-300 hover:bg-black hover:opacity-80"
     >
       {collection.image && (

@@ -20,7 +20,7 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
 
   return (
     <div
-      className={` ${"hidden"} bg-theme-gray fixed left-0 top-0 z-[100] h-screen w-screen overflow-scroll overscroll-y-none p-3 sm:relative sm:block sm:w-24 sm:flex-none sm:overflow-y-hidden sm:overscroll-none lg:w-72`}
+      className={` ${"hidden"} fixed left-0 top-0 z-[100] h-screen w-screen overflow-auto overscroll-y-none p-3 sm:relative sm:block sm:w-24 sm:flex-none sm:overflow-y-hidden sm:overscroll-none lg:w-72`}
     >
       <Button className="sm:hidden" variant={"default"}>
         Close

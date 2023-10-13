@@ -1,5 +1,5 @@
 import { NETWORK_NAME } from "@/constants/env";
-import { erc721Tokens } from "@/constants/erc721Tokens";
+import { ERC721Tokens, erc721Tokens } from "@/constants/erc721Tokens";
 import { ChainType, tokens } from "@/constants/tokens";
 import type { ClassValue } from "clsx";
 import { clsx } from "clsx";
@@ -46,6 +46,25 @@ export function getTokenContractAddresses(name: keyof typeof erc721Tokens) {
     L2: erc721Tokens[name]?.contractAddresses.L2?.[ChainType.L2[NETWORK_NAME]],
   };
 }
+
+export function findTokenName(contractAddress: string): string | null {
+  for (const tokenName in erc721Tokens) {
+    const contractAddresses =
+      erc721Tokens[tokenName as keyof ERC721Tokens].contractAddresses;
+
+    for (const chainType in contractAddresses) {
+      const addresses = contractAddresses[chainType as keyof typeof ChainType];
+
+      for (const chainName in addresses) {
+        if (addresses[chainName] === contractAddress) {
+          return tokenName;
+        }
+      }
+    }
+  }
+  return contractAddress; // Return null if the contract address is not found in the object for the specified network type
+}
+
 export function shortenHex(hexString: string, numDigits = 6) {
   if (hexString.length <= numDigits) {
     return hexString;

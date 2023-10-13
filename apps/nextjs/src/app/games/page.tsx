@@ -11,14 +11,14 @@ export const metadata = {
 
 export default async function Page() {
   const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(5,5,5, 1)), url(/backgrounds/dummy_background.png), url(/backgrounds/dummy_background.png)`,
+    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(/backgrounds/dummy_background.png), url(/backgrounds/dummy_background.png)`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   };
 
   return (
-    <div className="bg-theme-gray h-full w-full">
+    <div className="bg-dark-green h-full w-full">
       <div
         className="-mt-24 h-72 w-full sm:h-96"
         style={backgroundImageStyle}

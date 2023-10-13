@@ -1,5 +1,7 @@
+import { erc721Tokens } from "@/constants";
 import { getActivity } from "@/lib/reservoir/getActivity";
 import type { Activity } from "@/types";
+import { getTokenContractAddresses } from "@/utils/utils";
 
 import { CollectionActivity } from "../../../CollectionActivity";
 import { ActivityCard } from "./ActivityCard";
@@ -8,7 +10,7 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: { address: string };
+  params: { id: string };
   searchParams: any;
 }) {
   const types =
@@ -18,8 +20,11 @@ export default async function Page({
           return { types: q };
         });
 
+  const tokenAddresses = getTokenContractAddresses(
+    params.id as keyof typeof erc721Tokens,
+  );
   const { activities } = await getActivity({
-    collection: params.address,
+    collection: tokenAddresses.L1,
     query: { types: types },
   });
 
