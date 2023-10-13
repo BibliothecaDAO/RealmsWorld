@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { NETWORK_NAME } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
-import { getRealms } from "@/lib/subgraph/getRealms";
 import { getWalletRealmsHeld } from "@/lib/subgraph/getWalletRealmsHeld";
 
 import { StakingContainer } from "./StakingContainer";
