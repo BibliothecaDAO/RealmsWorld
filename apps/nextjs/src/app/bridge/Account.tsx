@@ -74,7 +74,7 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
         {isL1 ? "Mainnet" : "Starknet"}
         {evaluate("", { network: isL1 ? "L1" : "L2" })} {renderExplorers()}
       </h5>
-      <div className="h-full max-h-[700px] overflow-y-scroll rounded border border-white/20 p-2">
+      <div className=" h-full max-h-[700px] overflow-y-scroll rounded border p-2">
         {renderTransfers()}
       </div>
     </div>

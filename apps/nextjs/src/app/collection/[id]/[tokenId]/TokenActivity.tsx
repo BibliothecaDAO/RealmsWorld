@@ -30,7 +30,7 @@ export const TokenActivity = ({ token }: Props) => {
   }, [token]);
 
   return (
-    <div className="my-4 grid h-96 grid-cols-1 overflow-y-scroll rounded border border-white/20">
+    <div className=" my-4 grid h-96 grid-cols-1 overflow-y-scroll rounded border">
       {tokenActivity &&
         tokenActivity.map((activity: Activity, index: number) => {
           return <ActivityCard key={index} activity={activity} />;
@@ -40,7 +40,7 @@ export const TokenActivity = ({ token }: Props) => {
           {new Array(6).fill(0).map((index) => (
             <div
               key={index}
-              className="flex h-20 w-full animate-pulse flex-wrap border-b border-white/30 bg-gray-600 p-2"
+              className=" flex h-20 w-full animate-pulse flex-wrap border-b bg-gray-600 p-2"
             ></div>
           ))}
         </>

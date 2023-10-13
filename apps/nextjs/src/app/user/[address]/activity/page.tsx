@@ -25,7 +25,7 @@ export default async function Page({
   });
 
   return (
-    <div className="my-4 grid h-full grid-cols-1 overflow-y-auto rounded border border-white/20">
+    <div className=" my-4 grid h-full grid-cols-1 overflow-y-auto rounded border">
       {activities &&
         activities.map((activity: Activity, index: number) => {
           return <ActivityCard key={index} activity={activity} />;

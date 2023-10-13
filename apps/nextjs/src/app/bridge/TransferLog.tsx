@@ -137,7 +137,7 @@ export const TransferLog = ({
   };
 
   return (
-    <div className="relative my-1 flex justify-between rounded border border-white/20 p-4">
+    <div className=" relative my-1 flex justify-between rounded border p-4">
       <div className="flex self-center">
         {sign == "-" ? (
           <MinusCircleIcon className="mr-1 self-center fill-red-300 stroke-red-900" />

@@ -68,11 +68,7 @@ export const TokenContent = ({ token, collection }: Props) => {
       <Tabs defaultValue={tabs[0]?.name}>
         <TabsList>
           {tabs.map((tab, index) => (
-            <TabsTrigger
-              className="text-md font-sans text-lg normal-case data-[state=active]:bg-transparent data-[state=active]:text-slate-200 data-[state=inactive]:opacity-50 data-[state=inactive]:hover:opacity-75"
-              value={tab.name}
-              key={index}
-            >
+            <TabsTrigger value={tab.name} key={index}>
               {tab.name}
             </TabsTrigger>
           ))}

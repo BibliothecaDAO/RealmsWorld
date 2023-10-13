@@ -84,6 +84,7 @@ const Sidebar = () => {
         <Link
           className="font-sans-serif  mx-auto flex text-xl font-semibold sm:text-2xl"
           href="/"
+          onClick={toggleSidebar}
         >
           <RWLogo className="h-[36px] w-[72px] fill-white transition-all duration-500 group-hover:scale-150" />
           {/*<Compass className="self-center w-14 h-8 pl-4 transition-all duration-500 stroke-white" />
@@ -96,7 +97,10 @@ const Sidebar = () => {
             <Button
               className="duration-450 group flex justify-start transition-all"
               key={index}
-              onClick={() => handleClick(item.href)}
+              onClick={() => {
+                handleClick(item.href);
+                toggleSidebar();
+              }}
             >
               <span className=" duration-450 pl-1 transition-all">
                 {item.icon}{" "}

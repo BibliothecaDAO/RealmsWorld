@@ -45,11 +45,11 @@ export const Transfer = ({ action }: { action: string }) => {
       <>
         <div className="relative flex items-center justify-between">
           <div className="flex-col">
-            <span className="rounded border border-white/20 bg-white/40 px-2 text-xs font-bold uppercase tracking-wide text-white/50">
+            <span className="border-bright-yellow/40 bg-medium-dark-green text-bright-yellow/60 rounded border px-2 text-xs font-bold uppercase tracking-wide">
               {isWithdraw ? "from" : "to"}
             </span>
             <div className="my-1 flex text-lg ">
-              <div className="mr-2 h-[32px] w-[32px] self-center rounded-full bg-white">
+              <div className="bg-bright-yellow/60 mr-2 h-[32px] w-[32px] self-center rounded-full">
                 {networkLogo}
               </div>
               <h5 className="self-center">{networkName}</h5>
@@ -118,7 +118,7 @@ export const Transfer = ({ action }: { action: string }) => {
             action == "deposit" ? "withdraw" : "deposit"
           }`}
         >
-          <div className="absolute left-1/2 z-10 -ml-4 -mt-5 flex h-8 w-8 rounded-2xl border border-white/5 bg-white stroke-black hover:bg-white/90">
+          <div className="bg-bright-yellow/60 absolute left-1/2 z-10 -ml-4 -mt-5 flex h-8 w-8 rounded-2xl border border-white/5 stroke-black hover:bg-white/90">
             <ArrowUpDown
               className={`${
                 action == "deposit" ? "rotate-180" : ""

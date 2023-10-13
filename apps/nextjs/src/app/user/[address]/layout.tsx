@@ -56,8 +56,8 @@ export default function RootLayout({
               className="mx-auto rounded"
   />*/}
           </div>
-          <div className="flex-shrink p-4 p-8 sm:w-2/3">
-            <div className="mb-4 flex flex w-full space-x-4 border-b border-white/20 py-3 text-xl">
+          <div className="flex-shrink p-8 sm:w-2/3">
+            <div className=" mb-4 flex w-full space-x-4 border-b py-3 text-xl">
               {tabs.map((tab) => (
                 <NavLink
                   key={tab.name}

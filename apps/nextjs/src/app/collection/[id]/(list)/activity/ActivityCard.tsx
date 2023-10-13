@@ -39,7 +39,7 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
   };
 
   return (
-    <div className="flex w-full flex-wrap border-b border-white/30 p-2">
+    <div className=" flex w-full flex-wrap border-b p-2">
       <div className="flex w-full flex-wrap justify-start sm:w-5/12">
         <div className="mr-6 w-full flex-none self-center rounded px-4 py-1 font-semibold opacity-60 sm:w-32">
           {!activity.token.tokenName ? "collection offer" : activity.type}

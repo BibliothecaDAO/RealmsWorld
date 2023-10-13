@@ -16,12 +16,9 @@ export default async function Page({
 }: {
   params: { id: string; tokenId: string };
 }) {
-  console.log(params);
   const tokenAddresses = getTokenContractAddresses(
     params.id as keyof typeof erc721Tokens,
   );
-  console.log(tokenAddresses);
-  //if (tokenAddresses.L1) {
   const token_params = tokenAddresses.L1 + ":" + params.tokenId;
 
   const tokensData = getToken({
@@ -31,20 +28,21 @@ export default async function Page({
       includeQuantity: true,
     },
   });
-  const collectionData = getCollections([{ contract: tokenAddresses.L1 }]);
+  const collectionData = getCollections([
+    { contract: tokenAddresses.L1 ?? params.id },
+  ]);
 
   const [{ tokens }, { collections }] = await Promise.all([
     tokensData,
     collectionData,
   ]);
-  console.log(tokens);
   const token: Token = tokens?.[0]?.token;
   const market: Market = tokens?.[0]?.market;
   const collection: Collection = collections?.[0];
 
   //}
   return (
-    <div className="container mx-auto flex h-full flex-wrap p-4 sm:p-8">
+    <div className="container mx-auto flex h-full flex-wrap p-4 pt-16 sm:p-8">
       {token && (
         <>
           <div className="w-full flex-none rounded-t p-2 md:w-1/2">
@@ -62,7 +60,7 @@ export default async function Page({
           <div className="w-auto p-4 md:w-1/2 md:p-8">
             <Link
               className="flex opacity-70 hover:opacity-100"
-              href={`/collection/${token.collection.id}`}
+              href={`/collection/${params.id}`}
             >
               <ArrowLeft className="mr-2 w-4 self-center" />{" "}
               {token.collection.name}

@@ -31,7 +31,7 @@ function EthereumLogin() {
 
   if (isConnected)
     return (
-      <div className="rounded border border-white/20 p-2">
+      <div className=" rounded border p-2">
         <div className="mb-3 flex justify-between">
           <div className="flex text-xl">
             <EthereumLogo className="mx-2 w-5" />{" "}
@@ -49,13 +49,13 @@ function EthereumLogin() {
           </div>
         </div>
         <div className="align-items-center grid grid-cols-2 space-x-3">
-          <div className="flex justify-between rounded border border-white/20 px-4 pb-2 pt-4">
+          <div className=" flex justify-between rounded border px-4 pb-2 pt-4">
             <div className="flex text-2xl">
               <EthereumLogo className="mr-2 w-4" />
               {balances.l1.eth ? formatBigInt(balances.l1.eth, 3) : 0}
             </div>
           </div>
-          <div className="flex justify-between rounded border border-white/20  px-4 pb-2 pt-4">
+          <div className=" flex justify-between rounded border  px-4 pb-2 pt-4">
             <div className="flex text-2xl">
               <Lords className="w-6 fill-current pr-2" />
               {balances.l1.lords && balances.l1.lords > 0

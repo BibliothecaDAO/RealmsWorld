@@ -153,7 +153,7 @@ export const StakingContainer = () => {
     );
   }
   return (
-    <div className="grid grid-cols-2 gap-6 text-center">
+    <div className="text-center">
       <div className="col-span-2 flex flex-col ">
         <h3>Your Realms</h3>
         <div className="flex flex-col rounded border pb-8 pt-6">
@@ -170,27 +170,17 @@ export const StakingContainer = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-col">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger className="flex justify-center">
-              <h3>Galleon</h3>
-              <Info className="ml-2 mt-2 h-5 w-5" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <div className="pb-2 text-lg">
-                Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack).
-              </div>
-              <Alert
-                message={
-                  "Lords earnt after epoch 35 are locked until the DAO approves the migration to Starknet."
-                }
-                variant="warning"
-              />
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <div className="flex flex-col rounded border pb-8 pt-6">
+
+      <h3 className="mt-10">Galleon</h3>
+      <div className="pb-2 text-lg">
+        <p>Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack)</p>
+        <p>
+          Redemption: Lords are locked until DAO approves the migration to
+          Starknet
+        </p>
+      </div>
+      <div className="grid grid-cols-2 gap-4 sm:gap-6">
+        <div className="flex flex-col justify-center rounded border pb-8 pt-6">
           {realmsDataIsLoading ? (
             "Loading"
           ) : (
@@ -207,7 +197,7 @@ export const StakingContainer = () => {
             </>
           )}
         </div>
-        <div className="mt-6 flex flex-col rounded border pb-8 pt-6">
+        <div className="flex flex-col rounded border pb-8 pt-6">
           <span className="pb-4 text-lg">Lords Available</span>
 
           {!isGalleonLordsLoading && typeof lordsAvailableData == "bigint" ? (
@@ -238,7 +228,7 @@ export const StakingContainer = () => {
             "Loading"
           )}
           {!poolWithdrawalsLoading ? (
-            <div className="mt-3 flex items-center justify-center">
+            <div className="mt-2 flex items-center justify-center">
               <span className="mr-6 text-sm">Epoch 11-35:</span>
               <span className="mr-3 flex">
                 <Lords className="mr-2 h-5 w-5 fill-current" />
@@ -270,68 +260,62 @@ export const StakingContainer = () => {
           </span>
         </div>
       </div>
-      <div className="flex flex-col">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger className="flex justify-center">
-              <h3>Carrack</h3>
-              <Info className="ml-2 mt-2 h-5 w-5" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <div className="pb-2 text-lg">
-                Rewards: 43.75x $LORDS per epoch.
-              </div>
-              <div className="pb-2 text-lg">
-                Claim: After each epoch (Realm must be staked for full epoch).
-              </div>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
 
-        <div className="flex flex-col rounded border pb-8 pt-6">
-          {realmsDataIsLoading ? (
-            "Loading"
-          ) : (
-            <>
-              <span className="text-2xl">
-                {realmsData?.wallet?.bridgedV2RealmsHeld || 0}
-              </span>
-              <span className="mb-4">Staked Realms:</span>
-              <StakingModal
-                unstake
-                type="carrack"
-                realms={realmsData?.bridgedV2Realms}
-              />
-            </>
-          )}
+      <div className="mt-10 flex flex-col">
+        <h3>Carrack</h3>
+        <div className="pb-2 text-lg">
+          <p>Rewards: 43.75x $LORDS per epoch.</p>
+          <p>
+            Claim: After each epoch (Realm must be staked for full epoch [1
+            week]).
+          </p>
         </div>
-        <div className="mt-6 flex flex-col rounded border pb-8 pt-6">
-          <span className="pb-4 text-lg">Lords Available</span>
+        <div className="grid grid-cols-2 gap-4 sm:gap-6">
+          <div className="flex flex-col justify-center rounded border pb-8 pt-6">
+            {realmsDataIsLoading ? (
+              "Loading"
+            ) : (
+              <>
+                <span className="text-2xl">
+                  {realmsData?.wallet?.bridgedV2RealmsHeld || 0}
+                </span>
+                <span className="mb-4">Staked Realms:</span>
+                <StakingModal
+                  unstake
+                  type="carrack"
+                  realms={realmsData?.bridgedV2Realms}
+                />
+              </>
+            )}
+          </div>
+          <div className="flex flex-col rounded border pb-8 pt-6">
+            <span className="pb-4 text-lg">Lords Available</span>
 
-          {isCarrackLordsLoading ? (
-            "Loading"
-          ) : (
-            <>
-              <span className="flex justify-center text-2xl">
-                <Lords className="mr-2 h-8 w-8 fill-current" />
-                {formatEther(carrackLordsAvailableData?.[0] || 0n)}
-              </span>
-              <span className="mb-4 text-sm">Epoch 35+</span>
+            {isCarrackLordsLoading ? (
+              "Loading"
+            ) : (
+              <>
+                <span className="flex justify-center text-2xl">
+                  <Lords className="mr-2 h-8 w-8 fill-current" />
+                  {formatEther(carrackLordsAvailableData?.[0] || 0n)}
+                </span>
+                <span className="mb-4 text-sm">Epoch 35+</span>
 
-              <Button
-                size={"lg"}
-                disabled={
-                  !carrackLordsAvailableData?.[0] ||
-                  carrackLordsAvailableData?.[0] == 0n
-                }
-                className="self-center"
-                variant={"outline"}
-                onClick={() => claimCarrackLords()}
-              >
-                Claim
-              </Button>
-            </>
-          )}
+                <Button
+                  size={"lg"}
+                  disabled={
+                    !carrackLordsAvailableData?.[0] ||
+                    carrackLordsAvailableData?.[0] == 0n
+                  }
+                  className="self-center"
+                  variant={"outline"}
+                  onClick={() => claimCarrackLords()}
+                >
+                  Claim
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>
