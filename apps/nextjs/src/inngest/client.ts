@@ -14,7 +14,7 @@ type Events = {
   };
 };
 export const inngest = new Inngest({
-  name: "Beasts ERC721",
+  id: "BeastsERC721",
   eventKey: "local",
   schemas: new EventSchemas().fromRecord<Events>(),
 });

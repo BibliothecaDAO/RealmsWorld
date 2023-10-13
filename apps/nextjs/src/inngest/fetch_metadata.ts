@@ -6,7 +6,7 @@ import { inngest } from "./client";
 import client from "./db";
 
 export const fetchMetadata = inngest.createFunction(
-  { name: "fetchMetadata" },
+  { name: "fetchMetadata", id: "fetchMeta" },
   { event: "nft/mint" },
   async ({ event, step }) => {
     // ⚡ Use `step.run` to asynchronously run a that may fail. Inngest will
@@ -43,7 +43,7 @@ export const fetchMetadata = inngest.createFunction(
 
     if (metadata.error) {
       console.log(metadata.error);
-      await step.sleep("10s");
+      await step.sleep("fetch sleep", "10s");
       throw new Error("Failed to fetch item from Infura API");
     }
 
