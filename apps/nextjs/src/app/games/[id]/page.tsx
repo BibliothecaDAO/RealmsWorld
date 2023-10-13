@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-//import { ImageGallery } from "@/app/_components/ImageGallery";
 import { Button } from "@/app/_components/ui/button";
 import { Carousel } from "@/app/_components/ui/carousel";
 import {

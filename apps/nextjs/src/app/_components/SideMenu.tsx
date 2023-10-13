@@ -82,15 +82,11 @@ const Sidebar = () => {
 
       <div className="my-4 flex flex-col space-y-6">
         <Link
-          className="font-sans-serif  mx-auto flex text-xl font-semibold sm:text-2xl"
+          className="font-sans-serif mx-auto mb-3 flex text-xl font-semibold sm:text-2xl"
           href="/"
           onClick={toggleSidebar}
         >
           <RWLogo className="h-[36px] w-[72px] fill-white transition-all duration-500 group-hover:scale-150" />
-          {/*<Compass className="self-center w-14 h-8 pl-4 transition-all duration-500 stroke-white" />
-          <span className="visible pl-3 transition-all duration-500 opacity-100 sm:invisible group-hover:visible sm:opacity-0 group-hover:opacity-100 group-hover:flex ">
-            Atlas
-    </span>*/}
         </Link>
         {menu.map((item, index) => {
           return (

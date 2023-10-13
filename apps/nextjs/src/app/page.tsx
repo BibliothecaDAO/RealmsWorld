@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CollectionCard } from "@/app/_components/CollectionCard";
-import { GameCard } from "@/app/_components/GameCard";
 import { Carousel } from "@/app/_components/ui/carousel";
+import { GameCard } from "@/app/games/GameCard";
 import { games } from "@/constants";
 import DojoDark from "@/icons/mark-dark.svgr";
 import Starknet from "@/icons/starknet.svgr";

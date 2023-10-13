@@ -10,11 +10,11 @@ import {
 import { useUIContext } from "@/app/providers/UIProvider";
 import { sortDirection, sortOptions } from "@/constants";
 import { useQuery } from "@/hooks/useQuery";
-import { Filter, Grid, X } from "lucide-react";
+import { Filter, Grid, List } from "lucide-react";
 
 export const TradeFilters = () => {
   const { handleAttributeClick, getQueriesFromUrl } = useQuery();
-  const { isFilterOpen, toggleFilter, toggleGrid } = useUIContext();
+  const { isGrid, toggleFilter, toggleGrid } = useUIContext();
   return (
     <div className="ml-auto flex space-x-2">
       <Button
@@ -31,7 +31,11 @@ export const TradeFilters = () => {
         size={"xs"}
         variant={"default"}
       >
-        <Grid className="w-4 self-center" />
+        {!isGrid ? (
+          <Grid className="w-4 self-center" />
+        ) : (
+          <List className="w-4 self-center" />
+        )}
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

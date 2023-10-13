@@ -10,27 +10,25 @@ import { BuyButton } from "./BuyModal";
 
 interface TokenCardProps {
   token: TokenMarketData;
+  collectionName: string;
   layout?: "grid" | "list";
 }
 
 export const TokenCard = (props: TokenCardProps) => {
-  const { token, layout } = props;
+  const { token, layout, collectionName } = props;
 
   const isGrid = layout == "grid";
 
   const grid = "duration-300 transform border hover:-translate-y-1";
 
-  const list = "duration-300 transform border hover:-translate-y-1 flex w-full";
+  const list =
+    "duration-300 transform border-t hover:-translate-y-1 flex w-full";
 
   const imageSize = isGrid ? 800 : 60;
 
   return (
     <div className={layout === "grid" ? grid : list}>
-      <Link
-        href={`/collection/${findTokenName(token.token.contract)}/${
-          token.token.tokenId
-        }`}
-      >
+      <Link href={`/collection/${collectionName}/${token.token.tokenId}`}>
         <Image
           src={token.token.image || ""}
           alt={token.token.name}
@@ -64,7 +62,7 @@ export const TokenCard = (props: TokenCardProps) => {
 
           <div className="flex justify-between space-x-2">
             <Button
-              href={`/collection/${token.token.contract}/${token.token.tokenId}`}
+              href={`/collection/${collectionName}/${token.token.tokenId}`}
               variant={"ghost"}
               size={"xs"}
               className="w-full"
@@ -111,7 +109,7 @@ export const TokenCard = (props: TokenCardProps) => {
 
           <div className="flex justify-between space-x-2 self-center">
             <Button
-              href={`/collection/${findTokenName(token.token.contract)}/${
+              href={`/collection/${collectionName ?? token.token.contract}/${
                 token.token.tokenId
               }`}
               variant={"outline"}

@@ -1,7 +1,6 @@
-import { GameCard } from "@/app/_components/GameCard";
+import { GameCard } from "@/app/games/GameCard";
 import { games } from "@/constants";
 import type { Game } from "@/types";
-import { motion } from "framer-motion";
 
 export const metadata = {
   title: "Games of the Realms",

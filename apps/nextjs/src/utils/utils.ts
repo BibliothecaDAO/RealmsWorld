@@ -47,7 +47,7 @@ export function getTokenContractAddresses(name: keyof typeof erc721Tokens) {
   };
 }
 
-export function findTokenName(contractAddress: string): string | null {
+export function findTokenName(contractAddress: string): string {
   for (const tokenName in erc721Tokens) {
     const contractAddresses =
       erc721Tokens[tokenName as keyof ERC721Tokens].contractAddresses;

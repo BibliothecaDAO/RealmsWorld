@@ -1,9 +1,5 @@
 "use client";
 
-import { Fragment } from "react";
-import Link from "next/link";
-import { GameCard } from "@/app/_components/GameCard";
-import { Button } from "@/app/_components/ui/button";
 import {
   Tabs,
   TabsContent,
@@ -12,11 +8,10 @@ import {
 } from "@/app/_components/ui/tabs";
 import { BuyButton } from "@/app/collection/BuyModal";
 import { ListingModal } from "@/app/collection/ListingModal";
+import { GameCard } from "@/app/games/GameCard";
 import { games } from "@/constants";
 import type { Collection, Game, Token } from "@/types";
 import { getGamesByContract } from "@/utils/getters";
-import { Globe, Twitter } from "lucide-react";
-import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 
 import { TokenActivity } from "./TokenActivity";
@@ -80,30 +75,6 @@ export const TokenContent = ({ token, collection }: Props) => {
           </TabsContent>
         ))}
       </Tabs>
-      {/*<Tab.Group>
-        <Tab.List
-          className={
-            "w-full flex text-xl justify-start py-3 border-b border-white/20 mb-4 space-x-4"
-          }
-        >
-          {tabs.map((tab, index) => (
-            <Tab key={index} as={Fragment}>
-              {({ selected }) => (
-                <button
-                  className={selected ? " " : "opacity-50 hover:opacity-100"}
-                >
-                  {tab.name}
-                </button>
-              )}
-            </Tab>
-          ))}
-        </Tab.List>
-        <Tab.Panels>
-          {tabs.map((tab, index) => (
-            <Tab.Panel key={index}>{tab.content}</Tab.Panel>
-          ))}
-        </Tab.Panels>
-          </Tab.Group>*/}
     </div>
   );
 };
