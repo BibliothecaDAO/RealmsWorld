@@ -24,7 +24,7 @@ export default async function Page({
     params.id as keyof typeof erc721Tokens,
   );
   const { activities } = await getActivity({
-    collection: tokenAddresses.L1,
+    collection: tokenAddresses.L1 ?? params.id,
     query: { types: types },
   });
 

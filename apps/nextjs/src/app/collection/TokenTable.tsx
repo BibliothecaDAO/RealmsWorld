@@ -2,7 +2,6 @@
 
 import { TokenCard } from "@/app/collection/TokenCard";
 import type { TokenMarketData } from "@/types";
-import { Token } from "@/types";
 
 //import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
 

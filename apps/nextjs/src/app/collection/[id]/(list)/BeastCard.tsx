@@ -1,12 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { Beast } from "@/.graphclient";
 import { Button } from "@/app/_components/ui/button";
-import { TokenMarketData } from "@/types";
 import type { RouterOutputs } from "@/utils/api";
 import { shortenHex } from "@/utils/utils";
+
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
-import { formatEther } from "viem";
 
 interface TokenCardProps {
   token: RouterOutputs["beasts"]["all"]["items"][number];
