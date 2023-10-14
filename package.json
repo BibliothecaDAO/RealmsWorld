@@ -34,6 +34,5 @@
   },
   "overrides": {
     "@tanstack/react-query": "4.35.7"
-  },
-  "prettier": "@realms-world/prettier-config"
+  }
 }
