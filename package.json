@@ -32,5 +32,8 @@
     "turbo": "^1.10.15",
     "typescript": "^5.2.2"
   },
+  "overrides": {
+    "@tanstack/react-query": "4.35.7"
+  },
   "prettier": "@realms-world/prettier-config"
 }

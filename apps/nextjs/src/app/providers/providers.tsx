@@ -1,11 +1,7 @@
 "use client";
-
-import { useState } from "react";
 import { WebWalletConnector } from "@argent/starknet-react-webwallet-connector";
 import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import { InjectedConnector, StarknetConfig } from "@starknet-react/core";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { Provider as StarkProvider } from "starknet";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
@@ -57,62 +53,54 @@ const mainnetProvider = new StarkProvider({
 const projectId = "YOUR_PROJECT_ID";
 
 export function Provider({ children }: any) {
-  const [queryClient] = useState(() => new QueryClient());
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryStreamedHydration>
-        <StarknetConfig
-          //autoConnect
-          defaultProvider={
-            process.env.NEXT_PUBLIC_IS_TESTNET
-              ? testnetProvider
-              : mainnetProvider
-          }
-          //@ts-ignore
-          connectors={starkConnectors}
-          // queryClient={queryClient}
-        >
-          <WagmiConfig
-            config={createConfig(
-              getDefaultConfig({
-                appName: "Realms.World",
-                alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_API,
-                chains,
-                walletConnectProjectId:
-                  process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-              }),
-            )}
-          >
-            <ConnectKitProvider theme="midnight">
-              <TransferLogProvider>
-                <ReservoirKitProvider
-                  options={{
-                    apiKey: process.env.RESERVOIR_API_KEY,
-                    chains: [
-                      {
-                        id: 1,
-                        name: "mainnet",
-                        baseApiUrl: "https://api.reservoir.tools",
-                        active: true,
-                      },
-                      {
-                        id: 5,
-                        name: "goerli",
-                        baseApiUrl: "https://api-goerli.reservoir.tools",
-                        active: true,
-                      },
-                    ],
-                  }}
-                  theme={theme}
-                >
-                  {children}
-                </ReservoirKitProvider>
-              </TransferLogProvider>
-            </ConnectKitProvider>
-          </WagmiConfig>
-        </StarknetConfig>
-      </ReactQueryStreamedHydration>
-    </QueryClientProvider>
+    <StarknetConfig
+      //autoConnect
+      defaultProvider={
+        process.env.NEXT_PUBLIC_IS_TESTNET ? testnetProvider : mainnetProvider
+      }
+      //@ts-ignore
+      connectors={starkConnectors}
+      // queryClient={queryClient}
+    >
+      <WagmiConfig
+        config={createConfig(
+          getDefaultConfig({
+            appName: "Realms.World",
+            alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_API,
+            chains,
+            walletConnectProjectId:
+              process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+          }),
+        )}
+      >
+        <ConnectKitProvider theme="midnight">
+          <TransferLogProvider>
+            <ReservoirKitProvider
+              options={{
+                apiKey: process.env.RESERVOIR_API_KEY,
+                chains: [
+                  {
+                    id: 1,
+                    name: "mainnet",
+                    baseApiUrl: "https://api.reservoir.tools",
+                    active: true,
+                  },
+                  {
+                    id: 5,
+                    name: "goerli",
+                    baseApiUrl: "https://api-goerli.reservoir.tools",
+                    active: true,
+                  },
+                ],
+              }}
+              theme={theme}
+            >
+              {children}
+            </ReservoirKitProvider>
+          </TransferLogProvider>
+        </ConnectKitProvider>
+      </WagmiConfig>
+    </StarknetConfig>
   );
 }

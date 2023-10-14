@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bai_Jamjuree, Inter, Karla } from "next/font/google";
+import { Bai_Jamjuree, Karla } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
 
 import { Provider } from "./providers/providers";
@@ -10,8 +10,7 @@ import { headers } from "next/headers";
 
 import { Footer } from "./_components/Footer";
 import { TopNav } from "./_components/TopNav";
-import { TRPCReactProvider } from "./providers";
-import { TransferLogProvider } from "./providers/TransferLogProvider";
+import { TRPCReactProvider } from "./providers/TRPCProvider";
 import { UIContextProvider } from "./providers/UIProvider";
 import { WalletsProvider } from "./providers/WalletsProvider";
 
