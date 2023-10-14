@@ -1,8 +1,8 @@
 import { bufferToHex, zeros } from "ethereumjs-util";
-import _ from "lodash/lodash.js";
+import _ from "lodash";
 import Web3Utils from "web3-utils";
 
-import MerkleTree from "./merkle-tree.js";
+import MerkleTree from "./merkle-tree";
 
 /*
  * `paymentList` is an array of objects that have a property `payee` to hold the

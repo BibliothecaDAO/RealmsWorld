@@ -35,6 +35,7 @@ export async function GET(request: NextRequest, { params }: { params: any }) {
       return NextResponse.json({ message: "Claim not found for account" });
     }
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ message: "Internal server error" });
   }
 }

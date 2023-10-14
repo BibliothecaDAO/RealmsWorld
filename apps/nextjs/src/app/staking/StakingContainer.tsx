@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import type { Realm } from "@/.graphclient";
-//import { getBuiltGraphSDK, UsersRealmsQuery } from "@/.graphclient";
 import { ERC721 } from "@/abi/L1/ERC721";
 import { paymentPoolAbi } from "@/abi/L1/PaymentPool";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
@@ -14,21 +12,15 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/app/_components/ui/tooltip";
+
 import EthereumLogin from "@/app/_components/wallet/EthereumLogin";
 import { stakingAddresses } from "@/constants/staking";
 import Lords from "@/icons/lords.svgr";
 import { getTokenContractAddresses } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
-import { Info, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { formatEther } from "viem";
 import {
   useAccount,
