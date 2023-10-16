@@ -21,7 +21,7 @@ import Lords from "@/icons/lords.svgr";
 import { getTokenContractAddresses } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import { formatEther } from "viem";
+import { formatEther, parseEther } from "viem";
 import {
   useAccount,
   useContractRead,
@@ -41,7 +41,6 @@ export const StakingContainer = () => {
   const { address: addressL1 } = useAccount();
   const [hexProof, setHexProof] = useState();
   const [poolTotal, setPoolTotal] = useState<bigint>(0n);
-  const [withdrawnAmount, setWithdrawnAmount] = useState<bigint>();
   const [poolClaimAmount, setPoolClaimAmount] = useState<bigint>();
   /*const sdk = getBuiltGraphSDK({
     realmsSubgraph: process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
@@ -53,7 +52,7 @@ export const StakingContainer = () => {
       .then((res) => res.json())
       .then((data) => {
         setHexProof(data.proof);
-        setPoolTotal(BigInt(data.amount));
+        setPoolTotal(parseEther(data.amount.toString()));
       });
   }, [addressL1]);
 
@@ -119,7 +118,7 @@ export const StakingContainer = () => {
     address: stakingAddresses[network].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "withdraw",
-    args: [poolClaimAmount ?? 0n, hexProof as any],
+    args: [parseEther(poolClaimAmount?.toString() ?? "0"), hexProof as any],
   });
 
   const { refetch, isLoading: poolWithdrawalsLoading } = useContractRead({
@@ -128,7 +127,7 @@ export const StakingContainer = () => {
     functionName: "withdrawals",
     args: [address as `0x${string}`],
     onSuccess(data) {
-      setWithdrawnAmount(data);
+      console.log(parseFloat(formatEther(data)));
       const claimable = poolTotal - data;
       setPoolClaimAmount(claimable);
     },
@@ -224,8 +223,8 @@ export const StakingContainer = () => {
               <span className="mr-6 text-sm">Epoch 11-35:</span>
               <span className="mr-3 flex">
                 <Lords className="mr-2 h-5 w-5 fill-current" />
-                {formatEther(poolClaimAmount ?? 0n)} /{" "}
-                {formatEther(poolTotal ?? 0n)}
+                {formatEther(poolClaimAmount ?? 0n).toLocaleString()} /{" "}
+                {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
               </span>
               <Button
                 disabled={poolClaimAmount == 0n || isPoolClaimLoading}

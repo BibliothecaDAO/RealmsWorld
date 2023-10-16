@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@manypkg/cli": "^0.21.0",
+    "@realms-world/prettier-config": "workspace:*",
     "@turbo/gen": "^1.10.15",
     "npm-check-updates": "^16.14.6",
     "prettier": "^3.0.3",
@@ -33,5 +34,6 @@
   },
   "overrides": {
     "@tanstack/react-query": "4.35.7"
-  }
+  },
+  "prettier": "@realms-world/prettier-config"
 }

@@ -1,13 +1,13 @@
 import React from "react";
 import { Button, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, Stack } from "expo-router";
+import { /*Link,*/ Stack } from "expo-router";
 import { FlashList } from "@shopify/flash-list";
 
 import { api } from "~/utils/api";
-import type { RouterOutputs } from "~/utils/api";
+//import type { RouterOutputs } from "~/utils/api";
 
-function PostCard(props: {
+/*function PostCard(props: {
   beast: RouterOutputs["beasts"]["all"]["items"][number];
   onDelete: () => void;
 }) {
@@ -35,9 +35,9 @@ function PostCard(props: {
     </View>
   );
 }
-
+*/
 function CreatePost() {
-  const utils = api.useContext();
+  // const utils = api.useContext();
 
   const [title, setTitle] = React.useState("");
   const [content, setContent] = React.useState("");
@@ -101,7 +101,7 @@ const Index = () => {
   });*/
 
   return (
-    <SafeAreaView className="bg-[#1F104A]">
+    <SafeAreaView>
       {/* Changes page title visible on the header */}
       <Stack.Screen options={{ title: "Home Page" }} />
       <View className="h-full w-full p-4">
@@ -125,7 +125,7 @@ const Index = () => {
           data={postQuery.data?.items}
           estimatedItemSize={20}
           ItemSeparatorComponent={() => <View className="h-2" />}
-          renderItem={(p) => (
+          renderItem={() => (
             /*
             <PostCard
               beast={p.item}

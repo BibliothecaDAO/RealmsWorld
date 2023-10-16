@@ -2,7 +2,6 @@
 //import { drizzle } from "drizzle-orm/planetscale-serverless";
 import { neon, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
-import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 
 import * as auth from "./schema/auth";
 import * as beasts from "./schema/beasts";
@@ -15,7 +14,7 @@ export { pgSqlTable as tableCreator } from "./schema/_table";
 export * from "drizzle-orm";
 
 if (!process.env.VERCEL_ENV) {
-  neonConfig.wsProxy = (host) => `127.0.0.1/v1`;
+  neonConfig.wsProxy = (/*host*/) => `127.0.0.1/v1`;
   neonConfig.useSecureWebSocket = false;
   neonConfig.pipelineTLS = false;
   neonConfig.pipelineConnect = false;

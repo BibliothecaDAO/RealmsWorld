@@ -7,6 +7,6 @@ export const stakingAddresses = {
   GOERLI: {
     v1Galleon: "0x698f9333664e385f38ddb45f153e67d9fecf402d",
     v2Carrack: "0xcdFe3d7eBFA793675426F150E928CD395469cA53",
-    paymentPool: "0x07AEfe2068A42838f10B27aDEFc78ff0b76D2706",
+    paymentPool: "0x5c559827bdb58e39c468b0d9cbf941381f54046a",
   },
 };

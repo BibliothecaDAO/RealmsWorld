@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import Web3Utils from "web3-utils";
 
 import UserClaim from "../claim.json";
@@ -25,11 +26,11 @@ export async function GET(request: NextRequest, { params }: { params: any }) {
         params.address.toLowerCase(),
         10,
       );
-      const claimAm = Web3Utils.fromWei(claim.amount);
+      const claimAm = claim.amount;
 
       return NextResponse.json({
         proof,
-        amount: Web3Utils.toWei(claimAm),
+        amount: claimAm,
       });
     } else {
       return NextResponse.json({ message: "Claim not found for account" });
