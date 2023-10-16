@@ -1,5 +1,6 @@
 import { NETWORK_NAME } from "@/constants/env";
-import { ERC721Tokens, erc721Tokens } from "@/constants/erc721Tokens";
+import type { ERC721Tokens } from "@/constants/erc721Tokens";
+import { erc721Tokens } from "@/constants/erc721Tokens";
 import { ChainType, tokens } from "@/constants/tokens";
 import type { ClassValue } from "clsx";
 import { clsx } from "clsx";

@@ -1,21 +1,16 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import Web3Utils from "web3-utils";
 
 import UserClaim from "../claim.json";
 import CumulativePaymentTree from "../cumulative-payment-tree";
 
-export async function GET(request: NextRequest, { params }: { params: any }) {
+export function GET(
+  request: NextRequest,
+  { params }: { params: { address: string } },
+) {
   //const query: any = await request.json();
 
   try {
-    /*const formatClaim = UserClaim.map((a: any) => {
-      const toEth = Web3Utils.toWei(a.amount.toString()).toString();
-      return {
-        payee: a.payee,
-        amount: Web3Utils.toBN(toEth),
-      };
-    });*/
     const claim = UserClaim.find(
       (claim) => claim.payee == params.address.toLowerCase(),
     );
