@@ -61,7 +61,12 @@ export const StakingContainer = () => {
     queryFn: async () =>
       await fetch(`/api/subgraph/getRealms?address=${address}`, {
         method: "POST",
-      }).then((res) => res.json()),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          return res.data;
+        }),
     enabled: !!addressL1,
     refetchInterval: 10000,
   }); /*

@@ -1,12 +1,8 @@
 import React from "react";
 import { cn } from "@/utils/utils";
-import { cva, VariantProps } from "class-variance-authority";
-import {
-  AlertTriangleIcon,
-  CheckCircleIcon,
-  InfoIcon,
-  XOctagon,
-} from "lucide-react";
+import type { VariantProps } from "class-variance-authority";
+import { cva } from "class-variance-authority";
+import { AlertTriangleIcon, CheckCircleIcon, InfoIcon } from "lucide-react";
 import PropTypes from "prop-types";
 
 export const AlertType = {

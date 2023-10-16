@@ -9,7 +9,7 @@ interface Props {
 const NumberSelect = ({ onChange, min, max }: Props) => {
   const [value, setValue] = useState("");
 
-  const handleNumber1Change = (event: any) => {
+  const handleNumber1Change = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     onChange(event.target.value);
   };
@@ -23,7 +23,7 @@ const NumberSelect = ({ onChange, min, max }: Props) => {
       max={max}
       onChange={handleNumber1Change}
       placeholder="Enter a number"
-      className="block w-full p-2 mt-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-100 bg-black/60"
+      className="mt-1 block w-full rounded-md bg-black/60 p-2 focus:outline-none focus:ring-2 focus:ring-blue-100"
     />
   );
 };

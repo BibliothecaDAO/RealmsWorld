@@ -3,7 +3,6 @@
 import { Button } from "./ui/button";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
-import Link from "next/link";
 import { Menu } from "lucide-react";
 import { useUIContext } from "../providers/UIProvider";
 import { WalletSheet } from "./wallet/WalletSheet";
@@ -21,7 +20,7 @@ export const TopNav = () => {
   return (
     <div
       id="topnav"
-      className={`fixed w-full p-3 pl-4 sm:pl-8 lg:pl-32 z-[100] ${
+      className={`fixed z-[100] w-full p-3 pl-4 sm:pl-8 lg:pl-32 ${
         isScrolled ? "backdrop-blur-sm" : ""
       }`}
     >
@@ -30,12 +29,6 @@ export const TopNav = () => {
           <Menu className="w-8" />
         </Button>
         <WalletSheet />
-        {/* <Link
-          className="flex sm:hidden self-center text-xl font-semibold  sm:text-2xl font-sans-serif "
-          href="/"
-        >
-          <Compass className="self-center w-12 h-8 pl-3 transition-all duration-500" />
-    </Link>*/}
       </div>
     </div>
   );

@@ -261,3 +261,8 @@ export interface Game {
   screenshots: ScreenShot[];
   homepage?: string;
 }
+
+export interface Realm {
+  id: string;
+  name: string;
+}

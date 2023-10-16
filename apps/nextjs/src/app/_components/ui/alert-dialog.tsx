@@ -13,8 +13,13 @@ const AlertDialogPortal = ({
   children,
   ...props
 }: AlertDialogPrimitive.AlertDialogPortalProps) => (
-  <AlertDialogPrimitive.Portal className={cn(className)} {...props}>
-    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
+  <AlertDialogPrimitive.Portal {...props}>
+    <div
+      className={cn(
+        className +
+          "fixed inset-0 z-50 flex items-end justify-center sm:items-center",
+      )}
+    >
       {children}
     </div>
   </AlertDialogPrimitive.Portal>

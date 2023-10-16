@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { formatQueryString } from "@/utils/utils";
 
 export async function POST(request: NextRequest) {
@@ -23,8 +24,7 @@ export async function POST(request: NextRequest) {
         },
       },
     );
-    const data: any = await res.json();
-    return NextResponse.json(data);
+    return res.json();
   } catch (error) {
     console.log(error);
     return NextResponse.json({ message: "Internal server error" });

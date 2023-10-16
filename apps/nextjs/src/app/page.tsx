@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CollectionCard } from "@/app/_components/CollectionCard";
-import { Carousel } from "@/app/_components/ui/carousel";
+//import { Carousel } from "@/app/_components/ui/carousel";
 import { GameCard } from "@/app/games/GameCard";
 import { games } from "@/constants";
 import DojoDark from "@/icons/mark-dark.svgr";
@@ -8,7 +8,7 @@ import Starknet from "@/icons/starknet.svgr";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import type { Collection, Game } from "@/types";
 
-import { AuthShowcase } from "./_components/auth-showcase";
+//import { AuthShowcase } from "./_components/auth-showcase";
 
 export default async function Home() {
   const data = await getCollections([
@@ -18,14 +18,14 @@ export default async function Home() {
   ]);
 
   const collections: Collection[] = data.collections;
-  const defaultImage = "/backgrounds/map.png";
+  /*const defaultImage = "/backgrounds/map.png";
 
   const backgroundImageStyle = {
     backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${defaultImage}), url(${defaultImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-  };
+  };*/
 
   return (
     <main className="z-0" /*style={backgroundImageStyle}*/>
