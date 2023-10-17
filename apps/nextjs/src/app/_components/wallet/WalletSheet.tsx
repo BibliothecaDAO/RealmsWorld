@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/app/_components/ui/dialog";
 import {
   Tabs,
@@ -17,14 +16,17 @@ import {
 import { Account } from "@/app/bridge/Account";
 //import { Account } from "@/app/bridge/Account";
 import { useUIContext } from "@/app/providers/UIProvider";
+import { CollapsibleContent } from "@radix-ui/react-collapsible";
 import {
   useConnectors,
   useAccount as useL2Account,
   useNetwork,
 } from "@starknet-react/core";
+import { ArrowDown, ArrowUp } from "lucide-react";
 import { useConnect, useAccount as useL1Account } from "wagmi";
 
-import { AuthShowcase } from "../auth-showcase";
+import { Collapsible, CollapsibleTrigger } from "../ui/collapsible";
+//import { AuthShowcase } from "../auth-showcase";
 import { Sheet, SheetContent } from "../ui/sheet";
 import EthereumLogin from "./EthereumLogin";
 import { EthereumLoginButton } from "./EthereumLoginButton";
@@ -44,22 +46,10 @@ import { StarknetLoginModal } from "./StarknetLoginModal";
   },
 ];*/
 export const WalletSheet = () => {
-  const [isDefinitelyConnected, setIsDefinitelyConnected] = useState(false);
-  const { address: l1Address, isConnected } = useL1Account();
   const { address: l2Address, isConnected: isL2Connected } = useL2Account();
-  const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect();
   const { chain } = useNetwork();
   const { disconnect } = useConnectors();
   const [isWrongNetwork, setIsWrongNetwork] = useState(false);
-
-  useEffect(() => {
-    if (isConnected) {
-      setIsDefinitelyConnected(true);
-    } else {
-      setIsDefinitelyConnected(false);
-    }
-  }, [l1Address]);
 
   const onDisconnect = () => {
     setIsWrongNetwork(false);
@@ -90,6 +80,8 @@ export const WalletSheet = () => {
   }, [chain?.id, l2Address, isL2Connected]);
 
   const { isAccountOpen, toggleAccount } = useUIContext();
+  const [open, setOpen] = useState(false);
+
   const tabs = [
     {
       name: "Mainnet",
@@ -121,22 +113,36 @@ export const WalletSheet = () => {
           <div className="mt-8 flex h-auto w-full flex-col gap-y-4">
             <EthereumLogin />
             <StarkLogin />
+            <Collapsible
+              className="CollapsibleRoot"
+              open={open}
+              onOpenChange={setOpen}
+            >
+              <CollapsibleTrigger asChild>
+                <button className="hover:bg-medium-dark-green flex w-full justify-between rounded-t border-b px-4 py-3">
+                  <span className="text-xl">Bridge Transactions</span>
 
-            <Tabs defaultValue={tabs[0]?.name}>
-              <TabsList className="justify-center">
-                {tabs.map((tab, index) => (
-                  <TabsTrigger value={tab.name} key={index}>
-                    {tab.name}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+                  {open ? <ArrowDown /> : <ArrowUp />}
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <Tabs defaultValue={tabs[0]?.name}>
+                  <TabsList className="justify-center pb-2">
+                    {tabs.map((tab, index) => (
+                      <TabsTrigger value={tab.name} key={index}>
+                        {tab.name}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
 
-              {tabs.map((tab, index) => (
-                <TabsContent value={tab.name} key={index}>
-                  {tab.content}
-                </TabsContent>
-              ))}
-            </Tabs>
+                  {tabs.map((tab, index) => (
+                    <TabsContent value={tab.name} key={index}>
+                      {tab.content}
+                    </TabsContent>
+                  ))}
+                </Tabs>
+              </CollapsibleContent>
+            </Collapsible>
           </div>
         </SheetContent>
       </Sheet>

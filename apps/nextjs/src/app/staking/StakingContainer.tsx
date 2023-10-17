@@ -14,7 +14,6 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
-
 import EthereumLogin from "@/app/_components/wallet/EthereumLogin";
 import { stakingAddresses } from "@/constants/staking";
 import Lords from "@/icons/lords.svgr";
@@ -64,7 +63,6 @@ export const StakingContainer = () => {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           return res.data;
         }),
     enabled: !!addressL1,

@@ -9,7 +9,11 @@ export const BuyButton = ({ address, id, size = "sm" }: any) => {
   return (
     <BuyModal
       trigger={
-        <Button size={size} variant={"default"}>
+        <Button
+          className="text-dark-green w-full"
+          size={size}
+          variant={"default"}
+        >
           Buy
         </Button>
       }

@@ -69,8 +69,8 @@ const Sidebar = () => {
   return (
     <div
       className={`${
-        isSidebarOpen ? "bg-black" : "hidden"
-      } z-100 group fixed top-0 z-20 h-screen w-screen flex-col  border-r p-4 transition-all duration-500 hover:bg-black/80 lg:flex lg:w-24 lg:hover:w-72`}
+        isSidebarOpen ? "bg-dark-green" : "hidden"
+      } z-100 hover:bg-dark-green/80 group fixed top-0 z-20 h-screen w-screen  flex-col border-r p-4 transition-all duration-500 lg:flex lg:w-24 lg:hover:w-72`}
     >
       <Button
         onClick={toggleSidebar}

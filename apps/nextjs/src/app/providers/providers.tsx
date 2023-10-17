@@ -1,4 +1,5 @@
 "use client";
+
 import { WebWalletConnector } from "@argent/starknet-react-webwallet-connector";
 import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import { InjectedConnector, StarknetConfig } from "@starknet-react/core";
@@ -30,7 +31,7 @@ const theme = darkTheme({
   primaryHoverColor: "#252ea5",
 });
 
-const { chains, publicClient, webSocketPublicClient } = configureChains(
+const { chains } = configureChains(
   [...(process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? [goerli] : [mainnet])],
   [publicProvider()],
 );
@@ -50,7 +51,6 @@ const mainnetProvider = new StarkProvider({
     gatewayUrl: "https://alpha-mainnet.starknet.io/gateway",
   },
 });
-const projectId = "YOUR_PROJECT_ID";
 
 export function Provider({ children }: any) {
   return (
@@ -59,9 +59,7 @@ export function Provider({ children }: any) {
       defaultProvider={
         process.env.NEXT_PUBLIC_IS_TESTNET ? testnetProvider : mainnetProvider
       }
-      //@ts-ignore
-      connectors={starkConnectors}
-      // queryClient={queryClient}
+      connectors={starkConnectors as any}
     >
       <WagmiConfig
         config={createConfig(

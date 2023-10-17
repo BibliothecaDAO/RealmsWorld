@@ -33,11 +33,12 @@ export default async function Page({
           {tabs.map((tab) => (
             <NavLink
               className={cn(
-                "w-full",
+                "w-full text-base",
                 action === tab.link
-                  ? "bg-white/50 !text-white hover:!bg-white/50"
-                  : "!text-white/50",
+                  ? "bg-medium-dark-green !text-bright-yellow hover:!bg-white/50"
+                  : "!text-bright-yellow/40",
               )}
+              size={"lg"}
               key={tab.name}
               exact
               href={`/bridge?action=${tab.link}`}

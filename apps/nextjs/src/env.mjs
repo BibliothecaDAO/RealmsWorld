@@ -14,6 +14,7 @@ export const env = createEnv({
    * built with invalid env vars.
    */
   server: {
+    NODE_ENV: z.enum(["development", "test", "production"]),
     DATABASE_URL: z.string().url(),
   },
   /**
@@ -27,6 +28,7 @@ export const env = createEnv({
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    */
   runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
     VERCEL_URL: process.env.VERCEL_URL,
     PORT: process.env.PORT,
     DATABASE_URL: process.env.DATABASE_URL,

@@ -57,7 +57,7 @@ export const TokenCard = (props: TokenCardProps) => {
             {token.market.floorAsk.price &&
               formatEther(
                 BigInt(token.market.floorAsk.price.amount.raw),
-              ).toLocaleLowerCase() + "ETH"}
+              ).toLocaleLowerCase() + " ETH"}
           </div>
 
           <div className="flex justify-between space-x-2">

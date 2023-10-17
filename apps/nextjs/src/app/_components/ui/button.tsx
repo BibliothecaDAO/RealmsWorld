@@ -1,22 +1,22 @@
 "use client";
 
 import * as React from "react";
-import Link, { LinkProps } from "next/link";
+import Link from "next/link";
 import { cn } from "@/utils/utils";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50  dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 uppercase font-sans-serif border border-transparent ",
+  "active:scale-95 inline-flex items-center justify-center rounded-md font-medium transition-colors  disabled:opacity-50  dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-bright-yellow/60 dark:data-[state=open]:bg-medium-dark-green uppercase font-sans-serif border border-transparent ",
   {
     variants: {
       variant: {
         default:
-          "text-bright-yellow hover:bg-black dark:bg-bright-yellow dark:text-slate-900 shadow-inner border",
+          "text-medium-dark-green hover:bg-medium-dark-green bg-bright-yellow hover:text-bright-yellow shadow-inner border",
         destructive:
           "bg-red-500 text-white hover:bg-red-600 dark:hover:bg-red-600 border",
         outline:
-          "bg-transparent border  hover:bg-black dark:border-gray-700 dark:text-slate-100 dark:disabled:hover:bg-transparent",
+          "bg-transparent border  hover:bg-bright-yellow/50 dark:border-gray-700 dark:text-slate-100 dark:disabled:hover:bg-transparent",
         subtle:
           "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-gray-700 dark:text-slate-100 border",
         ghost:
@@ -26,7 +26,7 @@ const buttonVariants = cva(
       size: {
         default: "h-10 py-2 px-4",
         xs: "h-6 px-3 rounded-md text-xs",
-        sm: "h-9 px-3 rounded-md",
+        sm: "h-9 px-3 rounded-md text-sm",
         lg: "h-11 px-8 rounded-md",
       },
     },

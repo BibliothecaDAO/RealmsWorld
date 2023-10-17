@@ -15,18 +15,18 @@
     "@realms-world/db": "workspace:*",
     "@auth/core": "^0.16.1",
     "@auth/drizzle-adapter": "^0.3.3",
-    "@t3-oss/env-nextjs": "^0.7.0",
-    "next": "^13.5.4",
+    "@t3-oss/env-nextjs": "^0.7.1",
+    "next": "^13.5.5",
     "next-auth": "0.0.0-manual.b53ca00b",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "zod": "^3.22.2"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "workspace:*",
     "@realms-world/prettier-config": "workspace:*",
     "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^8.50.0",
+    "eslint": "^8.51.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },

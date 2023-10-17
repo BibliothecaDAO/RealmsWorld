@@ -16,14 +16,14 @@
     "@realms-world/db": "workspace:*",
     "@trpc/client": "^10.40.0",
     "@trpc/server": "^10.40.0",
-    "superjson": "1.13.3",
-    "zod": "^3.22.2"
+    "superjson": "2.0.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "workspace:*",
     "@realms-world/prettier-config": "workspace:*",
     "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^8.50.0",
+    "eslint": "^8.51.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },

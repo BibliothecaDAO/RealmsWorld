@@ -10,7 +10,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils/utils";
-import { VariantProps } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
 
 import { buttonVariants } from "./button";
 
@@ -35,7 +35,7 @@ export const NavLink = ({
   const isActive = exact ? pathname === href : pathname.startsWith(href);
 
   variant = "ghost";
-
+  console.log(size);
   return (
     <Link
       className={cn(

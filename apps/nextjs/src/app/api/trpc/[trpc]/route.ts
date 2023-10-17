@@ -1,3 +1,4 @@
+import { env } from "@/env.mjs";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@realms-world/api";
@@ -30,9 +31,14 @@ const handler = auth(async (req): Promise<Response> => {
     router: appRouter,
     req,
     createContext: () => createTRPCContext({ auth: req.auth, req }),
-    onError({ error, path }) {
-      console.error(`>>> tRPC Error on '${path}'`, error);
-    },
+    onError:
+      env.NODE_ENV === "development"
+        ? ({ path, error }) => {
+            console.error(
+              `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`,
+            );
+          }
+        : undefined,
   });
 
   setCorsHeaders(response);
