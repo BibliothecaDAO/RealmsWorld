@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { NETWORK_NAME } from "@/constants/env";
+import { stakingAddresses } from "@/constants/staking";
 //import { Progress } from "@/app/_components/ui/progress";
 //import Table from "@/app/homepages/realms-adventurers/components/Table";
 import { shortenHex } from "@/utils/utils";
@@ -34,7 +36,12 @@ export const TopOwners = ({
             <div key={owner.address} className="grid grid-cols-5 py-1">
               <div className="col-span-2">
                 <Link href={`/user/${owner.address}`}>
-                  {shortenHex(owner.address, 8)}
+                  {owner.address === stakingAddresses[NETWORK_NAME].v1Galleon
+                    ? "Galleon Staking"
+                    : owner.address ===
+                      stakingAddresses[NETWORK_NAME].v2Carrack.toLowerCase()
+                    ? "Carrack Staking"
+                    : shortenHex(owner.address, 8)}
                 </Link>
               </div>
               <div>{owner.ownership.tokenCount}</div>

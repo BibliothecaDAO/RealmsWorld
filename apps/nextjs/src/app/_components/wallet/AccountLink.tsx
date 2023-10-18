@@ -10,7 +10,7 @@ export const AccountLink = ({ isL1 }: { isL1: boolean }) => {
   const { address: l2address } = useL2Account();
 
   const explorersL1 = [
-    { text: "Account", url: ETHERSCAN_ACCOUNT_URL(address) },
+    { text: "Etherscan", url: ETHERSCAN_ACCOUNT_URL(address) },
   ];
   const explorersL2 = [
     { text: "Account", url: STARKSCAN_ACCOUNT_URL(l2address) },
@@ -28,7 +28,7 @@ export const AccountLink = ({ isL1 }: { isL1: boolean }) => {
           href={url}
           external
         >
-          <span>{text} </span>
+          <span className="hidden sm:block">{text} </span>
           <ExternalLinkIcon className="ml-2 h-3 w-3" />
         </Button>
       ))}
