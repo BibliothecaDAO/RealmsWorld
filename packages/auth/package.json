@@ -14,7 +14,7 @@
   "dependencies": {
     "@realms-world/db": "workspace:*",
     "@auth/core": "^0.16.1",
-    "@auth/drizzle-adapter": "^0.3.3",
+    "@auth/drizzle-adapter": "^0.3.4",
     "@t3-oss/env-nextjs": "^0.7.1",
     "next": "^13.5.5",
     "next-auth": "0.0.0-manual.b53ca00b",
