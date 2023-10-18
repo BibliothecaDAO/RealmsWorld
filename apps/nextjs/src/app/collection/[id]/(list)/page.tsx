@@ -5,7 +5,7 @@ import { AttributeTags } from "@/app/collection/AttributeTags";
 import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
 import { TokenTable } from "@/app/collection/TokenTable";
 import { TradeFilters } from "@/app/collection/TradeFilters";
-import { erc721Tokens } from "@/constants";
+import type { erc721Tokens } from "@/constants";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
@@ -13,6 +13,7 @@ import type { Collection } from "@/types";
 import { getTokenContractAddresses, isStarknetAddress } from "@/utils/utils";
 
 import { BeastsTable } from "./BeastTable";
+import { GoldenToken } from "./GoldenToken";
 
 //export const runtime = "edge";
 
@@ -45,6 +46,9 @@ export default async function Page({
   };
 }) {
   //const token = erc721Tokens[params.id as keyof typeof erc721Tokens];
+  const isGoldenToken =
+    params.id == getTokenContractAddresses("goldenToken").L2 ||
+    params.id == "goldenToken";
 
   const tokenAddresses = getTokenContractAddresses(
     params.id as keyof typeof erc721Tokens,
@@ -62,6 +66,10 @@ export default async function Page({
 
   if (!tokens) {
     return <div>Collection Not Found</div>;
+  }
+
+  if (isGoldenToken) {
+    return <GoldenToken />;
   }
 
   return (
