@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/app/_components/ui/button";
 import type { RouterOutputs } from "@/utils/api";
-import { shortenHex } from "@/utils/utils";
+import { findTokenName, shortenHex } from "@/utils/utils";
 
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 
@@ -25,7 +25,11 @@ export const L2ERC721Card = (props: TokenCardProps) => {
 
   return (
     <div className={layout === "grid" ? grid : list}>
-      <Link href={`/collection/beasts/${token.token_id}`}>
+      <Link
+        href={`/collection/${findTokenName(token.contract_address ?? "")}/${
+          token.token_id
+        }`}
+      >
         {token.image && (
           <Image
             src={token.image || ""}
