@@ -7,7 +7,7 @@ export default function Loading() {
 
 export const LoadingSkeleton = () => {
   return (
-    <div className="container mx-auto flex h-full flex-wrap p-4 sm:p-8">
+    <div className="container mx-auto flex h-[592px] flex-wrap p-4 sm:p-8">
       <div className="from-theme-gray-light w-full flex-none rounded-t bg-gradient-to-b p-2 md:w-1/2">
         <div className=" mx-auto h-auto w-full rounded border-4 pb-[100%]" />
         <div className="flex flex-wrap">

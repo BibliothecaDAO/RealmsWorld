@@ -27,9 +27,14 @@ export default async function Page({
   );
   const token_params = tokenAddresses.L1 + ":" + params.tokenId;
 
-  let token: Token | null;
-  let collection: Collection | null;
-  let market: Market | null;
+  if (tokenAddresses.L2) {
+    return (
+      <Suspense fallback={<LoadingSkeleton />}>
+        <L2Token contractAddress={tokenAddresses.L2} tokenId={params.tokenId} />
+      </Suspense>
+    );
+  }
+
   const tokensData = getToken({
     query: {
       tokens: token_params,
@@ -45,13 +50,13 @@ export default async function Page({
     tokensData,
     collectionData,
   ]);
-  token = tokens?.[0]?.token;
-  market = tokens?.[0]?.market;
-  collection = collections?.[0];
+  const token: Token | null = tokens?.[0]?.token;
+  const market: Market | null = tokens?.[0]?.market;
+  const collection: Collection | null = collections?.[0];
 
   //}
   return (
-    <div className="container mx-auto flex h-full flex-wrap p-4 pt-16 sm:p-8">
+    <>
       {token && (
         <TokenInformation
           token={token}
@@ -68,14 +73,6 @@ export default async function Page({
           </div>
         </TokenInformation>
       )}
-      {tokenAddresses.L2 && (
-        <Suspense fallback={<LoadingSkeleton />}>
-          <L2Token
-            contractAddress={tokenAddresses.L2}
-            tokenId={params.tokenId}
-          />
-        </Suspense>
-      )}
-    </div>
+    </>
   );
 }

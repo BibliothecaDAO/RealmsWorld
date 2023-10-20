@@ -41,21 +41,17 @@ export const L2ERC721Table = ({
     <>
       <div className={isGrid ? grid : list}>
         {erc721Tokens
-          ? erc721Tokens?.pages?.map((page, index) => {
-              return (
-                <>
-                  {page.items.map((token, index) => {
-                    return (
-                      <L2ERC721Card
-                        key={index}
-                        token={token}
-                        layout={isGrid ? "grid" : "list"}
-                      />
-                    );
-                  })}
-                </>
-              );
-            })
+          ? erc721Tokens?.pages?.map((page, index) =>
+              page.items.map((token, index) => {
+                return (
+                  <L2ERC721Card
+                    key={index}
+                    token={token}
+                    layout={isGrid ? "grid" : "list"}
+                  />
+                );
+              }),
+            )
           : "No Assets Found"}
       </div>
       {!isLoading && hasNextPage && (

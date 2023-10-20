@@ -26,7 +26,7 @@ export const erc721Tokens: ERC721Tokens = {
     },
   },
   beasts: {
-    name: "",
+    name: "Beasts",
     contractAddresses: {
       L1: {},
       L2: {

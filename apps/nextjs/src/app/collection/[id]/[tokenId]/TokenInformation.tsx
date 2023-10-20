@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { erc721Tokens } from "@/constants/erc721Tokens";
 import type { Collection, Token } from "@/types";
 import { shortenHex } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
@@ -29,6 +30,21 @@ export const TokenInformation = ({
             className="mx-auto border"
           />
         )}
+        {collectionId == "beasts" && (
+          <Image
+            src={
+              "https://loot-survivor.vercel.app/monsters/" +
+              decodeURIComponent(token.name)
+                .toLowerCase()
+                .replace('"0 0" ', "") +
+              ".png"
+            }
+            alt={token.name ?? "token"}
+            width={2000}
+            height={2000}
+            className="mx-auto mt-6 border"
+          />
+        )}
         <div className="my-2 flex flex-wrap">
           {collection && (
             <TokenAttributes token={token} collection={collection} />
@@ -41,17 +57,26 @@ export const TokenInformation = ({
           href={`/collection/${collectionId}`}
         >
           <ArrowLeft className="mr-2 w-4 self-center" />{" "}
-          {"collection" in token && token.collection.name}
+          {"collection" in token
+            ? token.collection.name
+            : erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
         </Link>
 
         <h1>
-          {token.name}
-          <span>#{token.tokenId}</span>
+          {decodeURIComponent(token.name)}
+          <span> #{token.tokenId ?? token.token_id}</span>
         </h1>
         {token.owner && (
           <div className="flex space-x-4">
             <div>owner </div>
             <Link href={`/user/${token.owner}`}>{shortenHex(token.owner)}</Link>
+          </div>
+        )}
+        {collectionId == "beasts" && token.metadata?.type && (
+          <div className="mt-4">
+            <p>Type: {token.metadata?.type}</p>
+            <p>Tier: {token.metadata?.tier}</p>
+            <p>Level: {token.metadata?.level}</p>
           </div>
         )}
         {children}

@@ -31,13 +31,13 @@ export interface Token {
 
 export interface Attributes {
   key: string;
-  kind: string;
+  kind?: string;
   value: string;
-  tokenCount: number;
-  onSaleCount: number;
-  floorAskPrice: number;
-  topBidValue: number | null;
-  createdAt: string;
+  tokenCount?: number;
+  onSaleCount?: number;
+  floorAskPrice?: number;
+  topBidValue?: number | null;
+  createdAt?: string;
 }
 
 export interface Market {

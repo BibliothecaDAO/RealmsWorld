@@ -73,7 +73,9 @@ export const L2ERC721Card = (props: TokenCardProps) => {
 
           <div className="flex justify-between space-x-2">
             <Button
-              href={`/collection/beasts/${token.token_id}`}
+              href={`/collection/${findTokenName(
+                token.contract_address ?? "",
+              )}/${token.token_id}`}
               variant={"ghost"}
               size={"xs"}
               className="w-full"

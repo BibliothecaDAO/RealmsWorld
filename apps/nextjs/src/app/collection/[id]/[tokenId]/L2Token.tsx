@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { api } from "@/utils/api";
+import { findTokenName } from "@/utils/utils";
 
 import { LoadingSkeleton } from "./loading";
 import { TokenInformation } from "./TokenInformation";
@@ -24,7 +24,11 @@ export const L2Token = ({
   return (
     <>
       {erc721Tokens ? (
-        <TokenInformation token={erc721Tokens} collection={null} />
+        <TokenInformation
+          token={erc721Tokens}
+          collectionId={findTokenName(contractAddress)}
+          collection={null}
+        />
       ) : (
         "No Token Found"
       )}

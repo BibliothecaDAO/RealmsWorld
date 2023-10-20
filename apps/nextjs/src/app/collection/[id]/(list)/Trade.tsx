@@ -22,9 +22,27 @@ export async function Trade({
 }) {
   const tokenAddresses = getTokenContractAddresses(contractId);
 
+  if (tokenAddresses.L2) {
+    return (
+      <div className="w-full">
+        <Suspense
+          fallback={
+            <div className="grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <TokenCardSkeleton key={index} />
+              ))}
+            </div>
+          }
+        >
+          <L2ERC721Table contractAddress={tokenAddresses.L2} />
+        </Suspense>
+      </div>
+    );
+  }
+
   const tokensData = getToken({
     collection: tokenAddresses.L1,
-    query: searchParams,
+    query: searchParams ?? {},
   });
 
   const attributesData = getAttributes({
@@ -67,21 +85,6 @@ export async function Trade({
               </Suspense>
             </div>
           </>
-        )}
-        {tokenAddresses.L2 && (
-          <div className="w-full">
-            <Suspense
-              fallback={
-                <div className="grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                  {Array.from({ length: 8 }).map((_, index) => (
-                    <TokenCardSkeleton key={index} />
-                  ))}
-                </div>
-              }
-            >
-              <L2ERC721Table contractAddress={tokenAddresses.L2} />
-            </Suspense>
-          </div>
         )}
       </div>
     </>
