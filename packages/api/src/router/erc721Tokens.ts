@@ -40,10 +40,10 @@ export const erc721TokensRouter = createTRPCRouter({
     }),
 
   byId: publicProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.erc721Tokens.findFirst({
-        where: eq(schema.erc721Tokens.token_id, input.id),
+        where: eq(schema.erc721Tokens.id, input.id),
       });
     }),
 });

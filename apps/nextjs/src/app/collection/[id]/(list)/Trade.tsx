@@ -72,10 +72,10 @@ export async function Trade({
           <div className="w-full">
             <Suspense
               fallback={
-                <div className="flex w-full flex-col gap-4">
-                  <TokenCardSkeleton />
-                  <TokenCardSkeleton />
-                  <TokenCardSkeleton />
+                <div className="grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                  {Array.from({ length: 8 }).map((_, index) => (
+                    <TokenCardSkeleton key={index} />
+                  ))}
                 </div>
               }
             >
