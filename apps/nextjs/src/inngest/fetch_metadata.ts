@@ -79,7 +79,6 @@ export const fetchMetadata = inngest.createFunction(
 
     const parsedJson = JSON.parse(modifiedJsonString);
 
-    console.log(parsedJson);
     const flattenedAttributes: Record<string, string> = {};
 
     if (parsedJson.attributes) {

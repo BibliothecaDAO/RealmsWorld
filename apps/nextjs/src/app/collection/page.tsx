@@ -26,7 +26,7 @@ export default async function Page() {
           link: "beasts",
           image: defaultImage,
         },
-        { name: "Golen Token", link: "goldenToken", image: defaultImage },
+        { name: "Golden Token", link: "goldenToken", image: defaultImage },
       ]
     : []; // TODO fix l2 collection list logic for mainnet
 
