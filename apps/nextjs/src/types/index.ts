@@ -79,9 +79,41 @@ export interface UserTokenData {
   token: Token;
   ownership: TokenOwnership;
 }
-
+export interface L2Collection {
+  name: string;
+  link: string;
+  floorAsk?: {
+    id: string;
+    sourceDomain: string;
+    price: {
+      currency: {
+        contract: string;
+        name: string;
+        symbol: string;
+        decimals: number;
+      };
+      amount: {
+        raw: string;
+        decimal: number;
+        usd: number;
+        native: number;
+      };
+    };
+    maker: string;
+    validFrom: number;
+    validUntil: number;
+    token: {
+      contract: string;
+      tokenId: string;
+      name: string;
+      image: string;
+    };
+  };
+  image: string;
+}
 export interface Collection {
   id: string;
+  link?: string;
   slug: string;
   createdAt: string;
   name: string;
@@ -114,7 +146,7 @@ export interface Collection {
   lastBuy: {
     value: null;
   };
-  floorAsk: {
+  floorAsk?: {
     id: string;
     sourceDomain: string;
     price: {

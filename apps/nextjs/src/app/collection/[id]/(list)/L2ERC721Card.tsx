@@ -11,7 +11,7 @@ interface TokenCardProps {
   layout?: "grid" | "list";
 }
 
-export const BeastCard = (props: TokenCardProps) => {
+export const L2ERC721Card = (props: TokenCardProps) => {
   const { token, layout } = props;
 
   const isGrid = layout == "grid";
@@ -52,9 +52,13 @@ export const BeastCard = (props: TokenCardProps) => {
           </div>
           <h6> {decodeURIComponent(token.name || "")}</h6>
           <h6>{token.owner && shortenHex(token.owner, 8)}</h6>
-          <p>Type: {token.metadata?.type}</p>
-          <p>Tier: {token.metadata?.tier}</p>
-          <p>Level: {token.metadata?.level}</p>
+          {token.metadata?.type && (
+            <>
+              <p>Type: {token.metadata?.type}</p>
+              <p>Tier: {token.metadata?.tier}</p>
+              <p>Level: {token.metadata?.level}</p>
+            </>
+          )}
 
           <div className="my-3 h-6 text-sm">
             {/*token.market.floorAsk.price &&

@@ -1,20 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import type { Metadata } from "next";
 import { Button } from "@/app/_components/ui/button";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
-import type { erc721Tokens } from "@/constants";
 import { NETWORK_NAME, STARKSCAN_TX_URL } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
-import { getTokenContractAddresses, isStarknetAddress } from "@/utils/utils";
+import { getTokenContractAddresses } from "@/utils/utils";
 import {
   useAccount,
   useContractWrite,
   useWaitForTransaction,
 } from "@starknet-react/core";
 import { ExternalLinkIcon, Loader2 } from "lucide-react";
-import { number, uint256 } from "starknet";
+import { uint256 } from "starknet";
 
 //export const runtime = "edge";
 
@@ -98,7 +96,7 @@ export default function Mint({ contractId }: { contractId: string }) {
       </div>
       {submittedData && (
         <div className="mt-12 w-full rounded-xl border p-6">
-          <h1>
+          <h1 className="flex">
             You have minted Golden Token #
             {(submittedData as any)?.events[1] ? (
               uint256
@@ -108,7 +106,7 @@ export default function Mint({ contractId }: { contractId: string }) {
                 })
                 .toString()
             ) : (
-              <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+              <Loader2 className="ml-2 h-8 w-8 animate-spin" />
             )}
           </h1>
           <Button

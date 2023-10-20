@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { api } from "@/utils/api";
 import { useInView } from "framer-motion";
 
-import { BeastCard } from "./BeastCard";
+import { L2ERC721Card } from "./L2ERC721Card";
 
 //import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
 
@@ -46,7 +46,7 @@ export const L2ERC721Table = ({
                 <>
                   {page.items.map((token, index) => {
                     return (
-                      <BeastCard
+                      <L2ERC721Card
                         key={index}
                         token={token}
                         layout={isGrid ? "grid" : "list"}
