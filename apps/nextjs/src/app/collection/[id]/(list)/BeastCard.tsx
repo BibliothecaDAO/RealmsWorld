@@ -7,7 +7,7 @@ import { shortenHex } from "@/utils/utils";
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 
 interface TokenCardProps {
-  token: RouterOutputs["beasts"]["all"]["items"][number];
+  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   layout?: "grid" | "list";
 }
 

@@ -28,10 +28,11 @@ export default function RootLayout({
   const tokenAddresses = getTokenContractAddresses(
     params.id as keyof typeof erc721Tokens,
   );
+  const isMintable = params.id == "goldenToken";
   const tabs = [
     {
       name: "Trade",
-      link: "",
+      link: isMintable ? "trade" : "",
     },
     { name: "Analytics", link: "analytics" },
     {
@@ -39,6 +40,12 @@ export default function RootLayout({
       link: "activity",
     },
   ];
+  if (isMintable) {
+    tabs.unshift({
+      name: "Mint",
+      link: "",
+    });
+  }
   return (
     <div className="bg-dark-green h-full w-full">
       <div

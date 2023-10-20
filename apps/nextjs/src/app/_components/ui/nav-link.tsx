@@ -35,7 +35,6 @@ export const NavLink = ({
   const isActive = exact ? pathname === href : pathname.startsWith(href);
 
   variant = "ghost";
-  console.log(size);
   return (
     <Link
       className={cn(

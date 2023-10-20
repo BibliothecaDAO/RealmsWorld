@@ -4,10 +4,10 @@ import { neon, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 
 import * as auth from "./schema/auth";
-import * as beasts from "./schema/beasts";
 import * as bridge from "./schema/bridge";
+import * as erc721Tokens from "./schema/erc721_tokens";
 
-export const schema = { ...auth, ...beasts, ...bridge };
+export const schema = { ...auth, ...erc721Tokens, ...bridge };
 
 export { pgSqlTable as tableCreator } from "./schema/_table";
 

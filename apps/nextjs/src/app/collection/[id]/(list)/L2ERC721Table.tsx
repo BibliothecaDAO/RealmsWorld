@@ -8,16 +8,20 @@ import { BeastCard } from "./BeastCard";
 
 //import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
 
-export const BeastsTable = ({}: {}) => {
+export const L2ERC721Table = ({
+  contractAddress,
+}: {
+  contractAddress: string;
+}) => {
   const isGrid = true;
   const grid =
     "grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
   const list = "grid grid-cols-1 w-full";
   const ref = useRef(null);
 
-  const [beasts, { fetchNextPage, isLoading, hasNextPage }] =
-    api.beasts.all.useSuspenseInfiniteQuery(
-      { limit: 10 },
+  const [erc721Tokens, { fetchNextPage, isLoading, hasNextPage }] =
+    api.erc721Tokens.all.useSuspenseInfiniteQuery(
+      { limit: 10, contractAddress },
       {
         getNextPageParam(lastPage) {
           return lastPage.nextCursor;
@@ -36,8 +40,8 @@ export const BeastsTable = ({}: {}) => {
   return (
     <>
       <div className={isGrid ? grid : list}>
-        {beasts
-          ? beasts?.pages?.map((page, index) => {
+        {erc721Tokens
+          ? erc721Tokens?.pages?.map((page, index) => {
               return (
                 <>
                   {page.items.map((token, index) => {

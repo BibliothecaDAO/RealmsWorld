@@ -6,22 +6,19 @@ import type {
   EventWithTransaction,
   Starknet,
 } from "https://esm.sh/@apibara/indexer/starknet";
-import { hash, uint256 } from "https://esm.sh/starknet";
+import { uint256 } from "https://esm.sh/starknet";
+
+import { erc721ContractEvents } from "./utils.ts";
 
 export const config: Config<Starknet, Webhook> = {
   streamUrl: Deno.env.get("STREAM_URL"),
-  startingBlock: Number(Deno.env.get("BEASTS_STARTING_BLOCK")),
+  startingBlock: Number(Deno.env.get("ERC721_STARTING_BLOCK")),
   network: "starknet",
   filter: {
     header: {
       weak: true,
     },
-    events: [
-      {
-        fromAddress: Deno.env.get("BEASTS_CONTRACT") as `0x${string}`,
-        keys: [hash.getSelectorFromName("Transfer") as `0x${string}`],
-      },
-    ],
+    events: erc721ContractEvents,
   },
   sinkType: "webhook",
   sinkOptions: {
@@ -31,7 +28,7 @@ export const config: Config<Starknet, Webhook> = {
 };
 
 export default function transform({ header, events }: Block) {
-  return events.flatMap((event) => transferToTask(header!, event));
+  return events?.flatMap((event) => transferToTask(header!, event));
 }
 
 function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
@@ -46,7 +43,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
     {
       name: "nft/mint",
       data: {
-        address: event.fromAddress,
+        contract_address: event.fromAddress,
         tokenId,
       },
     },

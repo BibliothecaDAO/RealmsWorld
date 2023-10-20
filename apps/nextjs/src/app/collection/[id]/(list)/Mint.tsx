@@ -38,20 +38,13 @@ import { number, uint256 } from "starknet";
 }*/
 const MINT_COST = 131088770000000000;
 
-export default function Page({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams?: {
-    page?: string;
-  };
-}) {
+export default function Mint({ contractId }: { contractId: string }) {
   const { account } = useAccount();
 
   //const token = erc721Tokens[params.id as keyof typeof erc721Tokens];
   const tokenAddress = getTokenContractAddresses("goldenToken").L2;
-  const isGoldenToken = params.id == tokenAddress || params.id == "goldenToken";
+  const isGoldenToken =
+    contractId == tokenAddress || contractId == "goldenToken";
 
   /*const tokenAddresses = getTokenContractAddresses(
     params.id as keyof typeof erc721Tokens,
@@ -84,72 +77,6 @@ export default function Page({
     isLoading: isTxLoading,
     error,
   } = useWaitForTransaction({ hash: mintData?.transaction_hash, watch: true });
-
-  const data = {
-    events: [
-      {
-        from_address:
-          "0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
-        keys: [
-          "0x134692b230b9e1ffa39098904722134159652b09c5bc41d88d6698779d228ff",
-        ],
-        data: [
-          "0x37c6b561b367a85b68668e8663041b9e2f4199c346fbda97dc0c2167f7a6016",
-          "0x3af06d4c23f8516e7e75625afb04ca76a18908ed8725534848ca8d11502eb35",
-          "0x1d1b88ab1e49400",
-          "0x0",
-        ],
-      },
-      {
-        from_address:
-          "0x3af06d4c23f8516e7e75625afb04ca76a18908ed8725534848ca8d11502eb35",
-        keys: [
-          "0x99cd8bde557814842a3121e8ddfd433a539b8c9f14bf31ebf108d12e6196e9",
-        ],
-        data: [
-          "0x0",
-          "0x37c6b561b367a85b68668e8663041b9e2f4199c346fbda97dc0c2167f7a6016",
-          "0xb",
-          "0x0",
-        ],
-      },
-      {
-        from_address:
-          "0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
-        keys: [
-          "0x99cd8bde557814842a3121e8ddfd433a539b8c9f14bf31ebf108d12e6196e9",
-        ],
-        data: [
-          "0x37c6b561b367a85b68668e8663041b9e2f4199c346fbda97dc0c2167f7a6016",
-          "0x20b96923a9e60f63a1829d440a03cf680768cadbc8fe737f71380258817d85b",
-          "0xe680992c00",
-          "0x0",
-        ],
-      },
-      {
-        from_address:
-          "0x37c6b561b367a85b68668e8663041b9e2f4199c346fbda97dc0c2167f7a6016",
-        keys: [
-          "0x1dcde06aabdbca2f80aa51392b345d7549d7757aa855f7e37f5d335ac8243b1",
-          "0x3ce5a3ccddd3dad7ec10f3354fa813cbf66c28df5634dfd1922584baf155680",
-        ],
-        data: ["0x2", "0x1", "0x1", "0x0"],
-      },
-      {
-        from_address:
-          "0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
-        keys: [
-          "0x99cd8bde557814842a3121e8ddfd433a539b8c9f14bf31ebf108d12e6196e9",
-        ],
-        data: [
-          "0x37c6b561b367a85b68668e8663041b9e2f4199c346fbda97dc0c2167f7a6016",
-          "0x1176a1bd84444c89232ec27754698e5d2e7e1a7f1539f12027f28b23ec9f3d8",
-          "0x7edd14c3e7e",
-          "0x0",
-        ],
-      },
-    ],
-  };
 
   const isLoading = isTxSubmitting || (mintData && isTxLoading);
   return (

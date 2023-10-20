@@ -73,7 +73,6 @@ export function Carousel({
 
   React.useEffect(() => {
     if (!emblaApi) return;
-    console.log(emblaApi.canScrollNext());
     onSelect(emblaApi);
     emblaApi.on("reInit", onSelect);
     emblaApi.on("select", onSelect);
