@@ -1,8 +1,6 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-type QueryParam = {
-  [key: string]: string;
-};
+type QueryParam = Record<string, string>;
 
 export const useQuery = () => {
   const searchParams = useSearchParams();
@@ -18,24 +16,32 @@ export const useQuery = () => {
 
     return queryParams;
   }
-
-  const handleAttributeClick = (key: string, value: string) => {
-    // @ts-ignore
+  const handleAttributeClick = (
+    key: string,
+    value: string,
+    multi?: boolean,
+  ) => {
     const params = new URLSearchParams(searchParams);
 
-    if (params.has(key) || params.get(key) === "") {
-      // If the attribute with the same value exists, delete it.
-      params.delete(key);
+    if (multi) {
+      if (params.getAll(key).includes(value) || params.get(key) == value) {
+        params.delete(key, value);
+      } else {
+        params.append(key, value);
+      }
     } else {
-      // Otherwise, set the attribute to the new value.
-      params.set(key, value);
+      params.get(key) == value ? params.delete(key) : params.set(key, value);
     }
 
     router.replace(`${pathname}?${params}`);
   };
 
   const isAttributeInQuery = (key: string, value: string): boolean => {
-    return searchParams.has(key) && searchParams.get(key) === value;
+    return (
+      searchParams.has(key) &&
+      (searchParams.get(key) === value ||
+        searchParams.getAll(key).includes(value))
+    );
   };
 
   const isKeyInQuery = (key: string): boolean => {

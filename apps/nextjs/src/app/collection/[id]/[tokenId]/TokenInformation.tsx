@@ -13,7 +13,7 @@ export const TokenInformation = ({
   collection,
   collectionId,
 }: {
-  token: Token;
+  token: Pick<Token, "image" | "name" | "tokenId" | "owner" | "attributes">;
   collection: Collection | null;
   collectionId: string;
   children: React.ReactNode;
@@ -25,8 +25,8 @@ export const TokenInformation = ({
           <Image
             src={token.image}
             alt={token.name ?? "token"}
-            width={2000}
-            height={2000}
+            width={1000}
+            height={1000}
             className="mx-auto border"
           />
         )}
@@ -40,9 +40,9 @@ export const TokenInformation = ({
               ".png"
             }
             alt={token.name ?? "token"}
-            width={2000}
-            height={2000}
-            className="mx-auto mt-6 border"
+            width={1000}
+            height={1000}
+            className="mx-auto mt-6 border bg-black"
           />
         )}
         <div className="my-2 flex flex-wrap">
@@ -57,9 +57,7 @@ export const TokenInformation = ({
           href={`/collection/${collectionId}`}
         >
           <ArrowLeft className="mr-2 w-4 self-center" />{" "}
-          {"collection" in token
-            ? token.collection.name
-            : erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
+          {erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
         </Link>
 
         <h1>

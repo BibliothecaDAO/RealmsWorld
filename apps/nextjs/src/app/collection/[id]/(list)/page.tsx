@@ -49,7 +49,10 @@ export default async function Page({
       {isGoldenToken ? (
         <Mint contractId={params.id} />
       ) : (
-        <Trade contractId={params.id as keyof typeof erc721Tokens} />
+        <Trade
+          contractId={params.id as keyof typeof erc721Tokens}
+          searchParams={searchParams}
+        />
       )}
     </div>
   );

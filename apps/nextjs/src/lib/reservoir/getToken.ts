@@ -1,7 +1,7 @@
 function buildQueryString(queryObject: any) {
   const queryParams = Object.entries(queryObject)
     .map(([key, value]: any) => {
-      if (typeof value === "object") {
+      if (typeof value === "object" && !Array.isArray(value.Resource)) {
         return Object.entries(value)
           .map(
             ([subKey, subValue]: any) =>
@@ -10,13 +10,21 @@ function buildQueryString(queryObject: any) {
               )}]=${encodeURIComponent(subValue)}`,
           )
           .join("&");
+      } else if (Array.isArray(value.Resource)) {
+        // If the value is an array, join its elements with '&'
+        return value.Resource.map(
+          (subValue: string | number | boolean) =>
+            `${encodeURIComponent(key)}[${encodeURIComponent(
+              "Resource",
+            )}]=${encodeURIComponent(subValue)}`,
+        ).join("&");
       }
       return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
     })
     .join("&")
     .replace(/%2B/g, "+");
 
-  return `${queryParams}`;
+  return queryParams;
 }
 
 function cleanQuery(query: any) {
@@ -64,11 +72,11 @@ export const getToken = async ({
     return new URLSearchParams(params);
   };
   try {
-    console.log(
+    /*console.log(
       `${
         process.env.NEXT_PUBLIC_RESERVOIR_API
       }/tokens/v6?${queryString}&${check()}`,
-    );
+    );*/
     const res = await fetch(
       `${
         process.env.NEXT_PUBLIC_RESERVOIR_API
