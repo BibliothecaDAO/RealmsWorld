@@ -27,11 +27,18 @@ const karla = Karla({
   weight: "800",
   display: "swap",
 });
+const backgroundImageStyle = {
+  backgroundImage: `url(/backgrounds/map.svg)`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body
+        style={backgroundImageStyle}
         className={`bg-dark-green ${baiJamjuree.variable} ${karla.variable} text-bright-yellow`}
       >
         <TRPCReactProvider headers={headers()}>

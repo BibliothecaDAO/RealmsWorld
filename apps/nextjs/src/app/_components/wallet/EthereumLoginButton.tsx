@@ -1,15 +1,19 @@
 import React from "react";
 import { useUIContext } from "@/app/providers/UIProvider";
 import EthereumLogo from "@/icons/ethereum.svgr";
+import type { VariantProps } from "class-variance-authority";
 import { ConnectKitButton, useModal } from "connectkit";
 import { useConnect } from "wagmi";
 
+import type { buttonVariants } from "../ui/button";
 import { Button } from "../ui/button";
 
 export const EthereumLoginButton = ({
   openAccount = false,
+  variant,
 }: {
   openAccount?: boolean;
+  variant?: VariantProps<typeof buttonVariants>["variant"];
 }) => {
   const { connectors, isLoading } = useConnect();
   const modal = useModal({
@@ -28,7 +32,7 @@ export const EthereumLoginButton = ({
       {({ show, isConnected, isConnecting, truncatedAddress, ensName }) => (
         <Button
           className="px-3"
-          variant="outline"
+          variant={variant ?? "outline"}
           size="lg"
           onClick={() => (isConnected ? toggleAccount() : show?.())}
         >

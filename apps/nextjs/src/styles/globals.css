@@ -125,3 +125,11 @@ body::-webkit-scrollbar-thumb,
 .tab-button.inactive:hover {
   @apply bg-gray-400;
 }
+.mask-transparent::before {
+  @apply absolute bottom-0 left-0 right-0 top-0 z-0;
+  mask-image: linear-gradient(to bottom, white 200px, transparent);
+  content: "";
+}
+.mask-transparent {
+  position: relative;
+}

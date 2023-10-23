@@ -2,7 +2,6 @@ export const games = [
   {
     name: "Realms: Eternum",
     id: "realms-adventurers",
-    icon: "lol.png",
     image: "/backgrounds/dummy_background.png",
     color: "#f5f5f5",
     status: "alpha",
@@ -33,9 +32,8 @@ export const games = [
     homepage: "/homepages/realms-adventurers",
   },
   {
-    name: "Loot Survivors",
-    id: "survivors",
-    icon: "lol.png",
+    name: "Loot Survivor",
+    id: "loot-survivor",
     image: "/backgrounds/dragon.png",
     color: "#f5f5f5",
     status: "alpha",

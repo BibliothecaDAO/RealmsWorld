@@ -1,16 +1,14 @@
-"use client";
-
 import Link from "next/link";
 
 export const Footer = () => {
-  const defaultImage = "/backgrounds/footer.webp";
+  /*const defaultImage = "/backgrounds/footer.webp";
 
   const backgroundImageStyle = {
     backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${defaultImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-  };
+  };*/
 
   const footerLinks = [
     {
@@ -24,7 +22,7 @@ export const Footer = () => {
   ];
 
   return (
-    <div className="mt-40 h-[500px]  w-full " style={backgroundImageStyle}>
+    <div className="mt-40 h-[500px]  w-full " /*style={backgroundImageStyle}*/>
       <div className="container mx-auto px-10 pt-10 sm:px-32 ">
         <div className="w-full">
           <h1>Realms.World</h1>
