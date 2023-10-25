@@ -34,7 +34,7 @@ export const TokenInformation = ({
           <Image
             src={
               "https://loot-survivor.vercel.app/monsters/" +
-              decodeURIComponent(token.name)
+              decodeURIComponent(token.metadata.name)
                 .toLowerCase()
                 .replace('"0 0" ', "") +
               ".png"
@@ -71,7 +71,7 @@ export const TokenInformation = ({
           </div>
         )}
         {collectionId == "beasts" && token.metadata?.type && (
-          <div className="mt-4">
+          <div className="bg-dark-green mt-4 rounded border px-4 py-2">
             <p>Type: {token.metadata?.type}</p>
             <p>Tier: {token.metadata?.tier}</p>
             <p>Level: {token.metadata?.level}</p>

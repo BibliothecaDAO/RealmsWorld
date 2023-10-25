@@ -29,7 +29,7 @@ export default async function Home() {
   };*/
 
   return (
-    <div className="mx-auto mt-24 sm:max-w-3xl">
+    <div className="container mx-auto mt-24">
       <h1 className="font-sans text-4xl md:text-6xl">
         <RWLogo className="h-32" />
       </h1>
