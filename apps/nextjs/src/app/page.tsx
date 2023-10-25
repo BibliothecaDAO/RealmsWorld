@@ -29,11 +29,11 @@ export default async function Home() {
   };*/
 
   return (
-    <div className="container mx-auto mt-24">
+    <div className="container mx-auto mt-12">
       <h1 className="font-sans text-4xl md:text-6xl">
         <RWLogo className="h-32" />
       </h1>
-      <div className="bg-dark-green my-2 flex w-fit py-1 text-xl">
+      <div className="bg-dark-green my-2 flex w-fit p-1 text-xl">
         <span className="align-center">Powered by </span>
         <Link href={"https://dojoengine.org/"}>
           <DojoDark className="mx-2 w-12" />

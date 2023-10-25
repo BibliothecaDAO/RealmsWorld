@@ -79,7 +79,7 @@ export default function Mint({ contractId }: { contractId: string }) {
   const isLoading = isTxSubmitting || (mintData && isTxLoading);
   return (
     <div className="mx-auto mt-36 md:w-[750px]">
-      <div className="w-full rounded-xl border p-6">
+      <div className="bg-dark-green w-full rounded-xl border p-6">
         <h1>Golden Token Mint</h1>
         <p className="mb-4">
           Purchase a golden token for your eternal access (1 death/day) to Loot
