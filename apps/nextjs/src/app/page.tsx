@@ -50,7 +50,7 @@ export default async function Home() {
 
       <div className="my-10 ">
         <h3 className="mb-8">Games</h3>
-        <Carousel
+        {/*<Carousel
           className="bg-dark-green left-0 top-0 h-[600px] w-4/5"
           images={games.map((game: Game, index) => ({
             alt: game.name,
@@ -61,10 +61,12 @@ export default async function Home() {
             loop: true,
           }}
           autoPlay
-        />
-        {/*games.map((game: Game, index) => (
-                <GameCard key={index} game={game} />
-              ))*/}
+        />*/}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {games.map((game: Game, index) => (
+            <GameCard key={index} game={game} />
+          ))}
+        </div>
       </div>
       <hr className="my-8 border" />
       <div className="my-20 ">
