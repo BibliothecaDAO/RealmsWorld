@@ -86,11 +86,6 @@ export const fetchMetadata = inngest.createFunction(
         flattenedAttributes[attribute.trait_type] = attribute.value;
       }
     }
-    /* PGHOST='ep-frosty-sea-90384545.us-east-2.aws.neon.tech'
-  PGDATABASE='neondb'
-  PGUSER='RedBeardEth'
-  PGPASSWORD='1mbJAUqlo5NS'
-  ENDPOINT_ID='ep-frosty-sea-90384545'*/
 
     const dbRes = await step.run("Insert Beast Metadata to Mongo", async () => {
       const query = await client(
@@ -102,16 +97,6 @@ export const fetchMetadata = inngest.createFunction(
           event.data.contract_address + ":" + event.data.tokenId,
         ],
       );
-
-      /*const beasts = db.collection("beasts");
-            const insertId = await beasts.updateOne(
-                { tokenId: event.data.tokenId.toString() },
-                {
-                    $set: {
-                        image,
-                        ...flattenedAttributes
-                    }
-                });*/
 
       return query;
     });

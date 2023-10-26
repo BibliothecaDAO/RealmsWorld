@@ -22,11 +22,7 @@ if (!process.env.VERCEL_ENV) {
 
 neonConfig.fetchConnectionCache = true;
 
-const sql = neon(
-  process.env.DATABASE_URL! ??
-    "postgres://RedBeardEth:1mbJAUqlo5NS@ep-frosty-sea-90384545.us-east-2.aws.neon.tech/neondb" +
-      "?ssl=require",
-);
+const sql = neon(process.env.DATABASE_URL!);
 //const queryClient = postgres('postgres://postgres:postgres@localhost:5432');
 
 export const db = drizzle(sql, { schema });
