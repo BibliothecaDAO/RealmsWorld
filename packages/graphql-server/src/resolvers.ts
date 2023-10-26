@@ -12,15 +12,15 @@ type Resolvers = InferResolvers<
 
 export const resolvers: Resolvers = {
   Query: {
-    getERC721Tokens: (_, { limit, cursor, contractAddress }, ctx) => {
+    getERC721Tokens: (_, { limit, cursor, contract_address }, ctx) => {
       return db.query.erc721Tokens.findMany({
         limit: limit + 1,
         where: and(
           cursor
             ? gt(schema.erc721Tokens.token_id, cursor)
             : gt(schema.erc721Tokens.token_id, 0),
-          contractAddress
-            ? eq(schema.erc721Tokens.contract_address, contractAddress)
+          contract_address
+            ? eq(schema.erc721Tokens.contract_address, contract_address)
             : exists(schema.erc721Tokens.contract_address),
         ),
         orderBy: asc(schema.erc721Tokens.token_id),
