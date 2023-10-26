@@ -1,9 +1,19 @@
-import { shortString } from "starknet";
+import { NextResponse } from "next/server";
+import { hash, shortString, uint256 } from "starknet";
 
+import { getTokenContractAddresses } from "../utils/utils";
 //import { Client } from "https://esm.sh/ts-postgres";
 
 import { inngest } from "./client";
 import client from "./db";
+
+function eventKey(name: string) {
+  const h = BigInt(hash.getSelectorFromName(name));
+  return `0x${h.toString(16).padStart(64, "0")}`;
+}
+
+export const tokenURI = eventKey("tokenURI");
+export const token_uri = eventKey("token_uri");
 
 export const fetchMetadata = inngest.createFunction(
   { name: "fetchMetadata", id: "fetchMeta" },
@@ -17,6 +27,9 @@ export const fetchMetadata = inngest.createFunction(
     });
 
     const metadata = await step.run("Fetch metadata", async () => {
+      const tokenId = uint256.bnToUint256(
+        BigInt(event.data.tokenId.toString()),
+      );
       const response = await fetch(metadataUrl, {
         method: "POST",
         headers: {
@@ -27,11 +40,13 @@ export const fetchMetadata = inngest.createFunction(
           method: "starknet_call",
           params: [
             {
-              contract_address:
-                "0x0712825f3ce0bedfdbcb31b2de044ad209163265a10cf11c64573741a4b588d2",
+              contract_address: event.data.contract_address,
               entry_point_selector:
-                "0x12a7823b0c6bee58f8c694888f32f862c6584caa8afa0242de046d298ba684d", // Transfer
-              calldata: ["0x" + event.data.tokenId.toString(), "0x0"],
+                event.data.contract_address ==
+                getTokenContractAddresses("beasts").L2
+                  ? tokenURI
+                  : token_uri, // Token URI
+              calldata: [tokenId.low, tokenId.high],
             },
             "pending",
           ],
@@ -49,7 +64,7 @@ export const fetchMetadata = inngest.createFunction(
 
     const value: any = [];
     for (let i = 2; i < metadata.result.length; i++) {
-      let result = shortString.decodeShortString(metadata.result[i]);
+      const result = shortString.decodeShortString(metadata.result[i]);
       value.push(result);
     }
 
@@ -63,45 +78,32 @@ export const fetchMetadata = inngest.createFunction(
       .replace(regex, "");
 
     const parsedJson = JSON.parse(modifiedJsonString);
-    const flattenedAttributes: { [key: string]: string } = {};
 
-    for (const attribute of parsedJson.attributes) {
-      flattenedAttributes[attribute.trait_type] = attribute.value;
+    const flattenedAttributes: Record<string, string> = {};
+
+    if (parsedJson.attributes) {
+      for (const attribute of parsedJson.attributes) {
+        flattenedAttributes[attribute.trait_type] = attribute.value;
+      }
     }
-
-    /* PGHOST='ep-frosty-sea-90384545.us-east-2.aws.neon.tech'
-  PGDATABASE='neondb'
-  PGUSER='RedBeardEth'
-  PGPASSWORD='1mbJAUqlo5NS'
-  ENDPOINT_ID='ep-frosty-sea-90384545'*/
 
     const dbRes = await step.run("Insert Beast Metadata to Mongo", async () => {
       const query = await client(
-        "update rw_beasts set image = $1, metadata = $2, name=$3 where token_id = $4",
+        "update rw_erc721_tokens set image = $1, metadata = $2, name=$3 where id = $4",
         [
           parsedJson.image,
           flattenedAttributes,
           parsedJson.name,
-          event.data.tokenId,
+          event.data.contract_address + ":" + event.data.tokenId,
         ],
       );
 
-      /*const beasts = db.collection("beasts");
-            const insertId = await beasts.updateOne(
-                { tokenId: event.data.tokenId.toString() },
-                {
-                    $set: {
-                        image,
-                        ...flattenedAttributes
-                    }
-                });*/
-
       return query;
     });
-    return {
+    return NextResponse.json({
       event,
       body: flattenedAttributes,
       res: dbRes,
-    };
+    });
   },
 );

@@ -48,6 +48,7 @@ const config = {
   images: {
     dangerouslyAllowSVG: true,
     domains: [
+      "loot-survivor.vercel.app",
       "i.seadn.io",
       "api.reservoir.tools",
       "raw.githubusercontent.com",

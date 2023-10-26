@@ -1,11 +1,11 @@
 import { authRouter } from "./router/auth";
-import { beastsRouter } from "./router/beasts";
 import { bridgeRouter } from "./router/bridge";
+import { erc721TokensRouter } from "./router/erc721Tokens";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,
-  beasts: beastsRouter,
+  erc721Tokens: erc721TokensRouter,
   bridge: bridgeRouter,
 });
 

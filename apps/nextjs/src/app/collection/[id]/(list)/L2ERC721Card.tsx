@@ -2,30 +2,35 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/app/_components/ui/button";
 import type { RouterOutputs } from "@/utils/api";
-import { shortenHex } from "@/utils/utils";
+import { findTokenName, shortenHex } from "@/utils/utils";
 
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 
 interface TokenCardProps {
-  token: RouterOutputs["beasts"]["all"]["items"][number];
+  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   layout?: "grid" | "list";
 }
 
-export const BeastCard = (props: TokenCardProps) => {
+export const L2ERC721Card = (props: TokenCardProps) => {
   const { token, layout } = props;
 
   const isGrid = layout == "grid";
 
-  const grid = "duration-300 transform border   hover:-translate-y-1";
+  const grid =
+    "bg-dark-green duration-300 transform border   hover:-translate-y-1";
 
   const list =
-    "duration-300 transform border   hover:-translate-y-1 flex w-full";
+    "duration-300 transform border bg-dark-green  hover:-translate-y-1 flex w-full";
 
   const imageSize = isGrid ? 800 : 60;
 
   return (
     <div className={layout === "grid" ? grid : list}>
-      <Link href={`/collection/beasts/${token.token_id}`}>
+      <Link
+        href={`/collection/${findTokenName(token.contract_address ?? "")}/${
+          token.token_id
+        }`}
+      >
         {token.image && (
           <Image
             src={token.image || ""}
@@ -52,9 +57,13 @@ export const BeastCard = (props: TokenCardProps) => {
           </div>
           <h6> {decodeURIComponent(token.name || "")}</h6>
           <h6>{token.owner && shortenHex(token.owner, 8)}</h6>
-          <p>Type: {token.metadata?.type}</p>
-          <p>Tier: {token.metadata?.tier}</p>
-          <p>Level: {token.metadata?.level}</p>
+          {token.metadata?.type && (
+            <>
+              <p>Type: {token.metadata?.type}</p>
+              <p>Tier: {token.metadata?.tier}</p>
+              <p>Level: {token.metadata?.level}</p>
+            </>
+          )}
 
           <div className="my-3 h-6 text-sm">
             {/*token.market.floorAsk.price &&
@@ -65,7 +74,9 @@ export const BeastCard = (props: TokenCardProps) => {
 
           <div className="flex justify-between space-x-2">
             <Button
-              href={`/collection/beasts/${token.token_id}`}
+              href={`/collection/${findTokenName(
+                token.contract_address ?? "",
+              )}/${token.token_id}`}
               variant={"ghost"}
               size={"xs"}
               className="w-full"

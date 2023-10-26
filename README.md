@@ -5,7 +5,7 @@
 <img src="https://img.shields.io/twitter/follow/BibliothecaDAO?style=social"/>
 </a>
 
-[![discord](https://img.shields.io/badge/join-bibliothecadao-black?logo=discord&logoColor=white)](https://discord.gg/bibliothecadao)
+[![discord](https://img.shields.io/badge/join-bibliothecadao-black?logo=discord&logoColor=white)](https://discord.gg/realmsworld)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ![background](/docs/assets/images/bg.png)

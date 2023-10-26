@@ -19,7 +19,11 @@ export const AttributeTags = () => {
               onClick={() =>
                 query.key &&
                 query.value &&
-                handleAttributeClick(query.key, query.value)
+                handleAttributeClick(
+                  query.key,
+                  query.value,
+                  query.key == "Resource",
+                )
               }
             >
               {query.key}: <span> {query.value} </span>

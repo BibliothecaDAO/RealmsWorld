@@ -1,20 +1,19 @@
 import { ChainType } from "./tokens";
 
 type ContractAddresses = {
-  [chainType in keyof typeof ChainType]: {
-    [chainName: string]: string;
-  };
+  [chainType in keyof typeof ChainType]: Record<string, string>;
 };
 
-type Token = {
+interface Token {
   name: string;
   contractAddresses: ContractAddresses;
-};
+}
 
-export type ERC721Tokens = {
+export interface ERC721Tokens {
   realms: Token;
   beasts: Token;
-};
+  goldenToken: Token;
+}
 export const erc721Tokens: ERC721Tokens = {
   realms: {
     name: "Realms (for Adventurers)",
@@ -27,14 +26,25 @@ export const erc721Tokens: ERC721Tokens = {
     },
   },
   beasts: {
-    name: "",
+    name: "Beasts",
     contractAddresses: {
       L1: {},
       L2: {
         [ChainType.L2.MAIN]:
           "0x052d6edb54b24942d359b2b9d476d92b288b3a518322aa006f8eddd566df3de1",
         [ChainType.L2.GOERLI]:
-          "0x0712825f3ce0bedfdbcb31b2de044ad209163265a10cf11c64573741a4b588d2",
+          "0x05ffc59bb38e18a1ddc09e4c92963642ee7b66b6fc32dc76aa6c33a3b4197f82",
+      },
+    },
+  },
+  goldenToken: {
+    name: "LS Golden Token",
+    contractAddresses: {
+      L1: {},
+      L2: {
+        [ChainType.L2.MAIN]: "",
+        [ChainType.L2.GOERLI]:
+          "0x04a71260d6e29274b760195acdc5379592bd78383713ddce5d2c635d237edf55",
       },
     },
   },
@@ -85,7 +95,7 @@ export const banners = {
     // },
 ]
 */
-export const customContractNames: { [index: string]: string } = {
+export const customContractNames: Record<string, string> = {
   "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d": "Realms",
   "0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7": "Loot",
   "0x86f7692569914b5060ef39aab99e62ec96a6ed45": "Crypts",

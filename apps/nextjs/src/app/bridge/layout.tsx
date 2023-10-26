@@ -7,24 +7,12 @@ import { ModalWrapper } from "./ModalWrapper";
 
 export default function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { id: string };
 }) {
-  const defaultImage = "/backgrounds/bridge.png";
-  const imageUrl = params.id ? `/backgrounds/${params.id}.png` : defaultImage;
-
-  const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${imageUrl}), url(${defaultImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };
-
   return (
-    <div className="bg-dark-green h-full w-full">
-      <div className="-mt-24 h-96 w-full" style={backgroundImageStyle} />
+    <div className="h-full w-full">
+      <div className="mask-transparent h-96 w-full before:bg-[url(/backgrounds/bridge.png)] before:bg-cover before:bg-center before:bg-no-repeat" />
       <motion.div
         initial={{ opacity: 0.1 }}
         animate={{ opacity: 1 }}

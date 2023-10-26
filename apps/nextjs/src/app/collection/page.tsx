@@ -1,6 +1,7 @@
 import { CollectionCard } from "@/app/_components/CollectionCard";
-import type { Collection } from "@/types";
+import type { Collection, L2Collection } from "@/types";
 import { getTokenContractAddresses } from "@/utils/utils";
+import { string } from "zod";
 
 import { getCollections } from "../../lib/reservoir/getCollections";
 
@@ -12,11 +13,22 @@ export const metadata = {
 
 export default async function Page() {
   const l1Collections = await getCollections([
-    { contract: getTokenContractAddresses("realms").L1 as string },
+    { contract: getTokenContractAddresses("realms").L1! },
   ]);
   // TODO refine collection display logic (with l2 collections included)
   const collections: Collection[] = l1Collections?.collections;
   const defaultImage = "/backgrounds/map.png";
+  const l2Collections: L2Collection[] | null =
+    process.env.NEXT_PUBLIC_IS_TESTNET == "true"
+      ? [
+          {
+            name: "Beasts",
+            link: "beasts",
+            image: defaultImage,
+          },
+          { name: "Golden Token", link: "goldenToken", image: defaultImage },
+        ]
+      : []; // TODO fix l2 collection list logic for mainnet
 
   const backgroundImageStyle = {
     backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${defaultImage}), url(${defaultImage})`,
@@ -26,17 +38,21 @@ export default async function Page() {
   };
 
   return (
-    <main>
-      <div className="-mt-24 h-screen w-full" style={backgroundImageStyle}>
-        <div className="container mx-auto px-8 pt-72">
+    <>
+      <div className="mask-transparent h-96 w-full before:bg-[url(/backgrounds/map.png)] before:bg-cover before:bg-center before:bg-no-repeat" />
+      <div className="-mt-24 h-screen w-full">
+        <div className="container mx-auto px-8 ">
           <h1>Collections</h1>
           <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
-            {collections?.map((collection: Collection, index) => {
+            {collections.map((collection: Collection, index) => {
+              return <CollectionCard collection={collection} key={index} />;
+            })}
+            {l2Collections?.map((collection: L2Collection, index) => {
               return <CollectionCard collection={collection} key={index} />;
             })}
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 }

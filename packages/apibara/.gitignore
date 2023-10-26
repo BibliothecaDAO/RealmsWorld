@@ -4,3 +4,4 @@ _docker
 venv
 mongo-data
 .yarn
+.apibara

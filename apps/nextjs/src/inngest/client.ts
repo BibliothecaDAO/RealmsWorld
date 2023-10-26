@@ -5,16 +5,16 @@ import { EventSchemas, Inngest } from "inngest";
 // Connecting to a Local Database
 //export const sql = postgres('postgres://postgres:postgres@postgres:5432/postgres')
 
-type Events = {
+interface Events {
   "nft/mint": {
     data: {
-      address: string;
+      contract_address: string;
       tokenId: string;
     };
   };
-};
+}
 export const inngest = new Inngest({
-  id: "BeastsERC721",
+  id: "ERC721",
   eventKey: "local",
   schemas: new EventSchemas().fromRecord<Events>(),
 });

@@ -28,6 +28,7 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 
+import { EthereumLoginButton } from "../_components/wallet/EthereumLoginButton";
 import RealmsTable from "./RealmsTable";
 
 const network =
@@ -142,7 +143,7 @@ export const StakingContainer = () => {
       <div className="col-span-2 mx-auto mt-24 flex flex-col text-center">
         <h1>Realms (NFT) Staking for $LORDS rewards</h1>
         <h3 className="mb-12">Login to your Ethereum Wallet</h3>
-        <EthereumLogin />
+        <EthereumLoginButton variant={"default"} />
       </div>
     );
   }
@@ -150,7 +151,7 @@ export const StakingContainer = () => {
     <div className="text-center">
       <div className="col-span-2 flex flex-col ">
         <h3>Your Realms</h3>
-        <div className="flex flex-col rounded border pb-8 pt-6">
+        <div className="bg-dark-green flex flex-col rounded border pb-8 pt-6">
           {realmsDataIsLoading ? (
             "Loading"
           ) : (
@@ -166,15 +167,18 @@ export const StakingContainer = () => {
       </div>
 
       <h3 className="mt-10">Galleon</h3>
-      <div className="pb-2 text-lg">
-        <p>Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack)</p>
-        <p>
+      <div className="flex-col pb-2 text-lg">
+        <span className="bg-dark-green px-2 py-1">
+          Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack)
+        </span>
+        <br />
+        <span className="bg-dark-green px-2 py-1">
           Redemption: Lords are locked until DAO approves the migration to
           Starknet
-        </p>
+        </span>
       </div>
       <div className="grid grid-cols-2 gap-4 sm:gap-6">
-        <div className="flex flex-col justify-center rounded border pb-8 pt-6">
+        <div className="bg-dark-green flex flex-col justify-center rounded border pb-8 pt-6">
           {realmsDataIsLoading ? (
             "Loading"
           ) : (
@@ -191,7 +195,7 @@ export const StakingContainer = () => {
             </>
           )}
         </div>
-        <div className="flex flex-col rounded border pb-8 pt-6">
+        <div className="bg-dark-green flex flex-col rounded border pb-8 pt-6">
           <span className="pb-4 text-lg">Lords Available</span>
 
           {!isGalleonLordsLoading && typeof lordsAvailableData == "bigint" ? (
@@ -230,7 +234,11 @@ export const StakingContainer = () => {
                 {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
               </span>
               <Button
-                disabled={poolClaimAmount == 0n || isPoolClaimLoading}
+                disabled={
+                  !poolClaimAmount ||
+                  poolClaimAmount == 0n ||
+                  isPoolClaimLoading
+                }
                 size={"sm"}
                 className="self-center"
                 variant={"outline"}
@@ -258,14 +266,17 @@ export const StakingContainer = () => {
       <div className="mt-10 flex flex-col">
         <h3>Carrack</h3>
         <div className="pb-2 text-lg">
-          <p>Rewards: 43.75x $LORDS per epoch.</p>
-          <p>
+          <span className="bg-dark-green px-2 py-1">
+            Rewards: 43.75x $LORDS per epoch.
+          </span>
+          <br />
+          <span className="bg-dark-green px-2 py-1">
             Claim: After each epoch (Realm must be staked for full epoch [1
             week]).
-          </p>
+          </span>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
-          <div className="flex flex-col justify-center rounded border pb-8 pt-6">
+          <div className="bg-dark-green flex flex-col justify-center rounded border pb-8 pt-6">
             {realmsDataIsLoading ? (
               "Loading"
             ) : (
@@ -282,7 +293,7 @@ export const StakingContainer = () => {
               </>
             )}
           </div>
-          <div className="flex flex-col rounded border pb-8 pt-6">
+          <div className="bg-dark-green flex flex-col rounded border pb-8 pt-6">
             <span className="pb-4 text-lg">Lords Available</span>
 
             {isCarrackLordsLoading ? (

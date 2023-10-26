@@ -4,20 +4,24 @@ import { useEffect, useRef } from "react";
 import { api } from "@/utils/api";
 import { useInView } from "framer-motion";
 
-import { BeastCard } from "./BeastCard";
+import { L2ERC721Card } from "./L2ERC721Card";
 
 //import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
 
-export const BeastsTable = ({}: {}) => {
+export const L2ERC721Table = ({
+  contractAddress,
+}: {
+  contractAddress: string;
+}) => {
   const isGrid = true;
   const grid =
     "grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
   const list = "grid grid-cols-1 w-full";
   const ref = useRef(null);
 
-  const [beasts, { fetchNextPage, isLoading, hasNextPage }] =
-    api.beasts.all.useSuspenseInfiniteQuery(
-      { limit: 10 },
+  const [erc721Tokens, { fetchNextPage, isLoading, hasNextPage }] =
+    api.erc721Tokens.all.useSuspenseInfiniteQuery(
+      { limit: 10, contractAddress },
       {
         getNextPageParam(lastPage) {
           return lastPage.nextCursor;
@@ -36,22 +40,18 @@ export const BeastsTable = ({}: {}) => {
   return (
     <>
       <div className={isGrid ? grid : list}>
-        {beasts
-          ? beasts?.pages?.map((page, index) => {
-              return (
-                <>
-                  {page.items.map((token, index) => {
-                    return (
-                      <BeastCard
-                        key={index}
-                        token={token}
-                        layout={isGrid ? "grid" : "list"}
-                      />
-                    );
-                  })}
-                </>
-              );
-            })
+        {erc721Tokens
+          ? erc721Tokens?.pages?.map((page, index) =>
+              page.items.map((token, index) => {
+                return (
+                  <L2ERC721Card
+                    key={index}
+                    token={token}
+                    layout={isGrid ? "grid" : "list"}
+                  />
+                );
+              }),
+            )
           : "No Assets Found"}
       </div>
       {!isLoading && hasNextPage && (

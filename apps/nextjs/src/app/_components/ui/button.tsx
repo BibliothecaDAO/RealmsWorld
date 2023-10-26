@@ -7,7 +7,7 @@ import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "active:scale-95 inline-flex items-center justify-center rounded-md font-medium transition-colors  disabled:opacity-50  dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-bright-yellow/60 dark:data-[state=open]:bg-medium-dark-green uppercase font-sans-serif border border-transparent ",
+  "active:scale-95 inline-flex items-center justify-center rounded-md transition-colors  disabled:opacity-50  dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-bright-yellow/60 dark:data-[state=open]:bg-medium-dark-green uppercase border border-transparent ",
   {
     variants: {
       variant: {
@@ -16,7 +16,7 @@ const buttonVariants = cva(
         destructive:
           "bg-red-500 text-white hover:bg-red-600 dark:hover:bg-red-600 border",
         outline:
-          "bg-transparent border  hover:bg-bright-yellow/50 dark:border-gray-700 dark:text-slate-100 dark:disabled:hover:bg-transparent",
+          "bg-transparent border hover:bg-bright-yellow/50 border-medium-dark-green",
         subtle:
           "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-gray-700 dark:text-slate-100 border",
         ghost:

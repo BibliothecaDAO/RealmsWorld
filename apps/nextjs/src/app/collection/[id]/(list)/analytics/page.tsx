@@ -1,4 +1,4 @@
-import { erc721Tokens } from "@/constants";
+import type { erc721Tokens } from "@/constants";
 import { getOwnersDistribution } from "@/lib/reservoir/getOwnerDistribution";
 import { getOwners } from "@/lib/reservoir/getOwners";
 import { getTokenContractAddresses } from "@/utils/utils";
@@ -6,13 +6,7 @@ import { getTokenContractAddresses } from "@/utils/utils";
 import { OwnerDistribution } from "./OwnerDistribution";
 import { TopOwners } from "./TopOwners";
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams: any;
-}) {
+export default async function Page({ params }: { params: { id: string } }) {
   const tokenAddresses = getTokenContractAddresses(
     params.id as keyof typeof erc721Tokens,
   );

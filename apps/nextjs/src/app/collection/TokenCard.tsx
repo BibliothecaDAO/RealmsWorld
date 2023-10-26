@@ -19,10 +19,11 @@ export const TokenCard = (props: TokenCardProps) => {
 
   const isGrid = layout == "grid";
 
-  const grid = "duration-300 transform border hover:-translate-y-1";
+  const grid =
+    "bg-dark-green duration-300 transform border hover:-translate-y-1";
 
   const list =
-    "duration-300 transform border-t hover:-translate-y-1 flex w-full";
+    "bg-dark-green duration-300 transform border-t hover:-translate-y-1 flex w-full";
 
   const imageSize = isGrid ? 800 : 60;
 

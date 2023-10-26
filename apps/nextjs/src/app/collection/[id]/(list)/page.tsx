@@ -1,18 +1,13 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
-import { AttributesDropdown } from "@/app/collection/AttributesDropdown";
-import { AttributeTags } from "@/app/collection/AttributeTags";
-import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
-import { TokenTable } from "@/app/collection/TokenTable";
-import { TradeFilters } from "@/app/collection/TradeFilters";
-import { erc721Tokens } from "@/constants";
+import type { erc721Tokens } from "@/constants";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
 import type { Collection } from "@/types";
 import { getTokenContractAddresses, isStarknetAddress } from "@/utils/utils";
 
-import { BeastsTable } from "./BeastTable";
+import Mint from "./Mint";
+import { Trade } from "./Trade";
 
 //export const runtime = "edge";
 
@@ -45,74 +40,20 @@ export default async function Page({
   };
 }) {
   //const token = erc721Tokens[params.id as keyof typeof erc721Tokens];
-
-  const tokenAddresses = getTokenContractAddresses(
-    params.id as keyof typeof erc721Tokens,
-  );
-
-  const tokensData = getToken({
-    collection: tokenAddresses.L1,
-    query: searchParams,
-  });
-
-  const attributesData = getAttributes({
-    collection: tokenAddresses.L1 ?? params.id,
-  });
-  const [tokens, attributes] = await Promise.all([tokensData, attributesData]);
-
-  if (!tokens) {
-    return <div>Collection Not Found</div>;
-  }
+  const isGoldenToken =
+    params.id == getTokenContractAddresses("goldenToken").L2 ||
+    params.id == "goldenToken";
 
   return (
     <div>
-      <div className="mb-3 flex w-full justify-between">
-        <TradeFilters />
-      </div>
-
-      <div className="flex w-full">
-        {tokenAddresses.L1 && (
-          <>
-            <AttributesDropdown
-              address={tokenAddresses.L1}
-              attributes={attributes}
-            />
-            {/*<SweepButton id={params.address} />*/}
-            <div className="w-full">
-              <AttributeTags />
-              <Suspense
-                fallback={
-                  <div className="flex w-full flex-col gap-4">
-                    <TokenCardSkeleton />
-                    <TokenCardSkeleton />
-                    <TokenCardSkeleton />
-                  </div>
-                }
-              >
-                <TokenTable
-                  address={tokenAddresses.L1}
-                  tokens={tokens.tokens}
-                />
-              </Suspense>
-            </div>
-          </>
-        )}
-        {tokenAddresses.L2 && (
-          <div className="w-full">
-            <Suspense
-              fallback={
-                <div className="flex w-full flex-col gap-4">
-                  <TokenCardSkeleton />
-                  <TokenCardSkeleton />
-                  <TokenCardSkeleton />
-                </div>
-              }
-            >
-              <BeastsTable />
-            </Suspense>
-          </div>
-        )}
-      </div>
+      {isGoldenToken ? (
+        <Mint contractId={params.id} />
+      ) : (
+        <Trade
+          contractId={params.id as keyof typeof erc721Tokens}
+          searchParams={searchParams}
+        />
+      )}
     </div>
   );
 }

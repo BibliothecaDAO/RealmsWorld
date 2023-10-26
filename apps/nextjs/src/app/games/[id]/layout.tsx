@@ -11,18 +11,24 @@ export default function RootLayout({
   params: { id: string };
 }) {
   const defaultImage = "/backgrounds/dummy_background.png";
-  const imageUrl = params.id ? `/backgrounds/${params.id}.png` : defaultImage;
-
-  const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${imageUrl}), url(${defaultImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };
-
+  const imageUrl =
+    "url(" +
+    (params.id ? `/games/${params.id}/background.webp` : defaultImage) +
+    ")";
+  console.log(params);
   return (
-    <div className="bg-dark-green h-full w-full">
-      <div className="-mt-24 h-96 w-full" style={backgroundImageStyle} />
+    <div
+      className="h-full w-full"
+      style={
+        {
+          "--image-url": imageUrl,
+        } as React.CSSProperties
+      }
+    >
+      <div
+        className="mask-transparent h-96 w-full before:bg-[url:var(--image-url)] before:bg-cover before:bg-center before:bg-no-repeat"
+        //style={backgroundImageStyle}
+      />
       <motion.div
         initial={{ opacity: 0.5 }}
         animate={{ opacity: 1 }}
