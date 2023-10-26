@@ -17,7 +17,7 @@ export const Footer = () => {
     },
     {
       name: "Discord",
-      href: "https://discord.gg/bibliothecadao",
+      href: "https://discord.gg/realmsworld",
     },
   ];
 

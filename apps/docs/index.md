@@ -11,7 +11,7 @@ nav_order: 1
 <img src="https://img.shields.io/twitter/follow/BibliothecaDAO?style=social"/>
 </a>
 
-[![discord](https://img.shields.io/badge/join-bibliothecadao-black?logo=discord&logoColor=white)](https://discord.gg/bibliothecadao){:target="\_blank" rel="noopener"}
+[![discord](https://img.shields.io/badge/join-bibliothecadao-black?logo=discord&logoColor=white)](https://discord.gg/realmsworld){:target="\_blank" rel="noopener"}
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT){:target="\_blank" rel="noopener"}
 
 ![background](/assets/images/bg.png)

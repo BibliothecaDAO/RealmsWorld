@@ -82,7 +82,7 @@ export const metadata: Metadata = {
     siteId: "1467726470533754880",
     creator: "@bibliothecadao",
     creatorId: "1467726470533754880",
-    images: ["/backgrounds/map.png"],
+    images: ["/backgrounds/banner.png"],
   },
   openGraph: {
     title: "Realms.World |" + title,
@@ -91,12 +91,12 @@ export const metadata: Metadata = {
     siteName: "Realms World",
     images: [
       {
-        url: "/backgrounds/map.png",
+        url: "/backgrounds/banner.png",
         width: 800,
         height: 600,
       },
       {
-        url: "/backgrounds/map.png",
+        url: "/backgrounds/banner.png",
         width: 1800,
         height: 1600,
         alt: "Realms Autonomous World",
