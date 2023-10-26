@@ -1,4 +1,4 @@
-import { erc721Tokens } from "@/constants";
+import type { erc721Tokens } from "@/constants";
 import { getActivity } from "@/lib/reservoir/getActivity";
 import type { Activity } from "@/types";
 import { getTokenContractAddresses } from "@/utils/utils";

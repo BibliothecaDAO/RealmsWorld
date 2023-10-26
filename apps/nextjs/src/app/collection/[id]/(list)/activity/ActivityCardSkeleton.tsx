@@ -1,6 +1,6 @@
 export const ActivityCardSkeleton = () => {
   return (
-    <div className=" block flex w-full animate-pulse border-b p-2 lg:flex-wrap">
+    <div className="flex w-full animate-pulse border-b p-2 lg:flex-wrap">
       <div className="block w-full justify-start sm:w-5/12 lg:flex lg:flex-wrap">
         <div className="mr-6 w-full flex-none self-center rounded px-4 py-1 opacity-60 sm:w-32"></div>
         <div
