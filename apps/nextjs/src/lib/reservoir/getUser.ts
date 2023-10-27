@@ -1,3 +1,4 @@
+import { RESERVOIR_API_URL } from "@/constants/env";
 import { reservoirLootCollectionSetId } from "@/constants/erc721Tokens";
 
 export const getUser = async ({
@@ -10,7 +11,7 @@ export const getUser = async ({
   try {
     const queryString = continuation ? `&continuation=${continuation}` : "";
 
-    const url = `${process.env.NEXT_PUBLIC_RESERVOIR_API}/users/${address}/tokens/v7?collectionsSetId=${reservoirLootCollectionSetId}&${queryString}&limit=24`;
+    const url = `${RESERVOIR_API_URL}/users/${address}/tokens/v7?collectionsSetId=${reservoirLootCollectionSetId}&${queryString}&limit=24`;
     const res = await fetch(url, {
       headers: {
         "Content-Type": "application/json",

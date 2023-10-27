@@ -1,10 +1,5 @@
 import { EventSchemas, Inngest } from "inngest";
 
-//import postgres from "https://esm.sh/postgres";
-
-// Connecting to a Local Database
-//export const sql = postgres('postgres://postgres:postgres@postgres:5432/postgres')
-
 interface Events {
   "nft/mint": {
     data: {

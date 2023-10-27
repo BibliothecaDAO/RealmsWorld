@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { hash, shortString, uint256 } from "starknet";
 
+import { sql } from "@realms-world/db";
+
 import { getTokenContractAddresses } from "../utils/utils";
 //import { Client } from "https://esm.sh/ts-postgres";
 
 import { inngest } from "./client";
-import client from "./db";
 
 function eventKey(name: string) {
   const h = BigInt(hash.getSelectorFromName(name));
@@ -19,10 +20,8 @@ export const fetchMetadata = inngest.createFunction(
   { name: "fetchMetadata", id: "fetchMeta" },
   { event: "nft/mint" },
   async ({ event, step }) => {
-    // ⚡ Use `step.run` to asynchronously run a that may fail. Inngest will
-    // automatically retry it if it fails.
     const metadataUrl = await step.run("Fetch token URL", () => {
-      // Here we could fetch the metadata URL from the node using an RPC call.
+      // TODO add variable for mainnet (maybe Alchemy?).
       return `https://starknet-goerli.infura.io/v3/badbe99a05ad427a9ddbbed9e002caf6`;
     });
 
@@ -88,7 +87,7 @@ export const fetchMetadata = inngest.createFunction(
     }
 
     const dbRes = await step.run("Insert Beast Metadata to Mongo", async () => {
-      const query = await client(
+      const query = await sql(
         "update rw_erc721_tokens set image = $1, metadata = $2, name=$3 where id = $4",
         [
           parsedJson.image,

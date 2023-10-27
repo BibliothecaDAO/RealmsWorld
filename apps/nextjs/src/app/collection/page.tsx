@@ -15,6 +15,7 @@ export default async function Page() {
   const l1Collections = await getCollections([
     { contract: getTokenContractAddresses("realms").L1! },
   ]);
+  console.log(getTokenContractAddresses("realms").L1);
   // TODO refine collection display logic (with l2 collections included)
   const collections: Collection[] = l1Collections?.collections;
   const defaultImage = "/backgrounds/map.png";
@@ -30,13 +31,6 @@ export default async function Page() {
         ]
       : []; // TODO fix l2 collection list logic for mainnet
 
-  const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${defaultImage}), url(${defaultImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };
-
   return (
     <>
       <div className="mask-transparent h-96 w-full before:bg-[url(/backgrounds/map.png)] before:bg-cover before:bg-center before:bg-no-repeat" />
@@ -44,7 +38,7 @@ export default async function Page() {
         <div className="container mx-auto px-8 ">
           <h1>Collections</h1>
           <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
-            {collections.map((collection: Collection, index) => {
+            {collections?.map((collection: Collection, index) => {
               return <CollectionCard collection={collection} key={index} />;
             })}
             {l2Collections?.map((collection: L2Collection, index) => {

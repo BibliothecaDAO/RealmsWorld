@@ -70,7 +70,11 @@ export const TokenContent = ({ token, collection }: Props) => {
         </TabsList>
 
         {tabs.map((tab, index) => (
-          <TabsContent value={tab.name} key={index}>
+          <TabsContent
+            value={tab.name}
+            key={index}
+            className="bg-dark-green rounded border px-5 py-2"
+          >
             {tab.content}
           </TabsContent>
         ))}
