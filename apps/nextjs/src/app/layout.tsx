@@ -45,7 +45,7 @@ export default function Layout(props: { children: React.ReactNode }) {
           <UIContextProvider>
             <Provider>
               <WalletsProvider>
-                <main className="flex min-h-screen flex-wrap">
+                <main className="flex flex-wrap">
                   <Sidebar />
                   <div className="z-10 flex flex-grow flex-col">
                     <TopNav />

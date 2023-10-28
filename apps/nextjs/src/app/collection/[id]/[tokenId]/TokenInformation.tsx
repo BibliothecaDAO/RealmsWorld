@@ -24,17 +24,17 @@ export const TokenInformation = ({
   const isBeasts = collectionId == "beasts";
   return (
     <>
-      <div className="w-full flex-none rounded-t p-2 md:w-1/2">
+      <div className="flex w-full flex-none rounded-t md:w-1/2 lg:mt-12">
         {token.image && (
           <Image
             src={token.image}
             alt={token.name ?? "token"}
             width={1000}
             height={1000}
-            className={`mx-auto border ${isBeasts && "max-w-[300px]"}`}
+            className={`mx-auto border ${isBeasts && "my-auto max-w-[350px]"}`}
           />
         )}
-        {isBeasts && (
+        {/*isBeasts && (
           <Image
             src={
               "https://loot-survivor.vercel.app/monsters/" +
@@ -48,7 +48,7 @@ export const TokenInformation = ({
             height={1000}
             className="mx-auto mt-6  border bg-black"
           />
-        )}
+          )*/}
         {collection && (
           <div className="my-2 grid grid-cols-2 gap-2">
             {token.attributes.map((attribute: Attributes, index) => (
@@ -74,16 +74,17 @@ export const TokenInformation = ({
           {erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
         </Link>
 
-        <h1>
-          {decodeURIComponent(token.name)}
-          <span> #{token.tokenId ?? token.token_id}</span>
-        </h1>
+        <h1>{decodeURIComponent(token.name)}</h1>
+        <div className="flex space-x-4 text-lg">
+          <span>ID:</span> <span>#{token.tokenId ?? token.token_id}</span>
+        </div>
         {token.owner && (
-          <div className="flex space-x-4">
-            <div>owner </div>
+          <div className="flex space-x-4 text-lg">
+            <div>Owner </div>
             <Link href={`/user/${token.owner}`}>{shortenHex(token.owner)}</Link>
           </div>
         )}
+
         {/*collectionId == "beasts" && token.metadata?.type && (
                     <div className="my-2 flex flex-wrap">
                       {token.metadata.map((attribute: Attributes, index) => (

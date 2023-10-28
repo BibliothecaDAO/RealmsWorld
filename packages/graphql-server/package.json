@@ -28,8 +28,8 @@
     "@realms-world/eslint-config": "workspace:*",
     "@realms-world/prettier-config": "workspace:*",
     "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^8.47.0",
-    "typescript": "^5.1.6"
+    "eslint": "^8.52.0",
+    "typescript": "^5.2.2"
   },
   "eslintConfig": {
     "extends": [
