@@ -15,7 +15,6 @@ export default async function Page() {
   const l1Collections = await getCollections([
     { contract: getTokenContractAddresses("realms").L1! },
   ]);
-  console.log(getTokenContractAddresses("realms").L1);
   // TODO refine collection display logic (with l2 collections included)
   const collections: Collection[] = l1Collections?.collections;
   const defaultImage = "/backgrounds/map.png";
