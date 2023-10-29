@@ -33,6 +33,7 @@
     "typescript": "^5.2.2"
   },
   "overrides": {
+    "@tanstack/react-query": "4.35.7",
     "@auth/core": "0.18.0"
   },
   "prettier": "@realms-world/prettier-config"
