@@ -1,6 +1,6 @@
 import React from "react";
 import { useUIContext } from "@/app/providers/UIProvider";
-import StarknetLogo from "@/icons/starknet.svgr";
+import StarknetLogo from "@/icons/starknet.svg";
 import { shortenHex } from "@/utils/utils";
 import {
   useConnectors,

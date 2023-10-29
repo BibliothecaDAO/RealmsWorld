@@ -1,6 +1,6 @@
 import React from "react";
 import { useUIContext } from "@/app/providers/UIProvider";
-import EthereumLogo from "@/icons/ethereum.svgr";
+import EthereumLogo from "@/icons/ethereum.svg";
 import type { VariantProps } from "class-variance-authority";
 import { ConnectKitButton, useModal } from "connectkit";
 import { useConnect } from "wagmi";

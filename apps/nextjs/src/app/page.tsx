@@ -3,9 +3,9 @@ import { CollectionCard } from "@/app/_components/CollectionCard";
 import { Carousel } from "@/app/_components/ui/carousel";
 import { GameCard } from "@/app/games/GameCard";
 import { games } from "@/constants";
-import DojoDark from "@/icons/mark-dark.svgr";
-import RWLogo from "@/icons/rw-logo.svgr";
-import Starknet from "@/icons/starknet.svgr";
+import DojoDark from "@/icons/mark-dark.svg";
+import RWLogo from "@/icons/rw-logo.svg";
+import Starknet from "@/icons/starknet.svg";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import type { Collection, Game } from "@/types";
 

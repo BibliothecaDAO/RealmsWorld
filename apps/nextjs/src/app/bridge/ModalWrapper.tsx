@@ -24,7 +24,7 @@ export const ModalWrapper = () => {
   const getComponents = (components: string[]) => {
     return components
       ? components.map((c: any) => ({
-          component: lazy(() => import(`../_components/${c.path}`)),
+          component: lazy(() => import(`../_components/modal/${c.path}`)),
           props: c.props,
         }))
       : [];

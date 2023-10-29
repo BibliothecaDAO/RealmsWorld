@@ -30,7 +30,7 @@ const config = {
     };
 
     config.module.rules.push({
-      test: /\.svgr$/i,
+      test: /\.svg$/i,
       //issuer: /\.[jt]sx?$/,
       use: ["@svgr/webpack"],
     });
@@ -41,9 +41,13 @@ const config = {
   experimental: {
     turbo: {
       rules: {
-        "*.svgr": ["@svgr/webpack"],
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
+        },
       },
     },
+    webpackBuildWorker: true,
   },
   images: {
     dangerouslyAllowSVG: true,

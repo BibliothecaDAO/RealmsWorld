@@ -1,7 +1,7 @@
 import React from "react";
 import type { FunctionComponent } from "react";
-import ArgentIcon from "@/icons/argent.svgr";
-import BraavosIcon from "@/icons/braavos.svgr";
+import ArgentIcon from "@/icons/argent.svg";
+import BraavosIcon from "@/icons/braavos.svg";
 import { Mail } from "lucide-react";
 
 interface WalletIconsProps {

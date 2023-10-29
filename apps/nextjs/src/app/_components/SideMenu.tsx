@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Discord from "@/icons/discord.svgr";
-import RWLogo from "@/icons/rw-logo.svgr";
+import Discord from "@/icons/discord.svg";
+import RWLogo from "@/icons/rw-logo.svg";
 import {
   Backpack,
   Coins,

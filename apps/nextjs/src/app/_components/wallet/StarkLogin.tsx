@@ -8,9 +8,9 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
-import EthereumLogo from "@/icons/ethereum.svgr";
-import Lords from "@/icons/lords.svgr";
-import Starknet from "@/icons/starknet.svgr";
+import EthereumLogo from "@/icons/ethereum.svg";
+import Lords from "@/icons/lords.svg";
+import Starknet from "@/icons/starknet.svg";
 import { formatBigInt } from "@/utils/utils";
 import { useAccount, useConnectors, useNetwork } from "@starknet-react/core";
 import { LogOut, Mail } from "lucide-react";
