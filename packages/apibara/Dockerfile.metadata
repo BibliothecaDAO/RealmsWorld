@@ -1,4 +1,4 @@
-FROM quay.io/apibara/sink-postgres:0.4
+FROM quay.io/apibara/sink-webook:0.3
 
 ARG NETWORK_NAME
 ENV ENVFILE=${NETWORK_NAME}.env
