@@ -22,8 +22,10 @@ export const config: Config<Starknet, Webhook> = {
   },
   sinkType: "webhook",
   sinkOptions: {
-    targetUrl: "http://localhost:8288/e/local",
+    targetUrl:
+      "https://inn.gs/e/AAsyCjec-tEzHLvJ8m9f8t9_N2tnPNcpls5YA_CHKUD1hll64X9cw1Le4UbY2qp5IVyiPsNHMiG57V7-3701CQ",
     raw: true,
+    header: ["x-inngest-env: LS-updates"],
   },
 };
 

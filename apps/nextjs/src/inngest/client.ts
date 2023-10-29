@@ -10,6 +10,6 @@ interface Events {
 }
 export const inngest = new Inngest({
   id: "ERC721",
-  eventKey: "local",
+  eventKey: process.env.INNGEST_EVENT_KEY ?? "local",
   schemas: new EventSchemas().fromRecord<Events>(),
 });
