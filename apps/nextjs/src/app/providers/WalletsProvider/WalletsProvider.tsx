@@ -73,16 +73,16 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   const network =
     process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
 
-  const stubAccount = l2Account ? [l2Account] : undefined;
   const {
     data: l2LordsBalance,
     isLoading: l2LordsIsLoading,
-    refetch: l2LordsRefetch,
+    //refetch: l2LordsRefetch,
   } = useContractRead({
     address: tokensConst.L2.LORDS.tokenAddress[ChainType.L2[network]]!,
     abi: L2_C1ERC20,
     functionName: "balance_of",
-    args: stubAccount,
+    enabled: !!l2Account,
+    args: [l2Account],
     watch: true,
   });
 
@@ -90,13 +90,10 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     address: tokensConst.L2.ETH.tokenAddress[ChainType.L2[network]]!,
     abi: L2_ERC20,
     functionName: "balanceOf",
-    args: stubAccount,
+    enabled: !!l2Account,
+    args: [l2Account],
     watch: true,
   });
-
-  useMemo(() => {
-    l2LordsRefetch();
-  }, [l2LordsBalance, l2EthBalance, l2LordsIsLoading, l2EthIsLoading]);
 
   const l1ERC20Contract = {
     address: tokensConst.L1.LORDS.tokenAddress[

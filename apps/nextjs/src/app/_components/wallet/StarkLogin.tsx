@@ -1,24 +1,18 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-} from "@/app/_components/ui/dialog";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import EthereumLogo from "@/icons/ethereum.svg";
 import Lords from "@/icons/lords.svg";
 import Starknet from "@/icons/starknet.svg";
 import { formatBigInt } from "@/utils/utils";
-import { useAccount, useConnectors, useNetwork } from "@starknet-react/core";
+import { useAccount, useDisconnect, useNetwork } from "@starknet-react/core";
 import { LogOut, Mail } from "lucide-react";
 
 import { StarknetLoginButton } from "./StarknetLoginButton";
 
 export const StarkLogin = () => {
-  const { disconnect } = useConnectors();
+  const { disconnect } = useDisconnect();
   const { status } = useAccount();
   const { balances } = useWalletsProviderContext();
   const { chain } = useNetwork();
