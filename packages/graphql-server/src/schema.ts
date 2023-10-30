@@ -18,10 +18,10 @@ export const queryType = g.type("Query", {
     .ref(ERC721TokensGQL)
     .list()
     .args({
-      contract_address: g.string(),
-      limit: g.int(),
-      cursor: g.int(),
-      owner: g.string(),
+      contract_address: g.string().optional(),
+      limit: g.int().default(20),
+      cursor: g.int().default(0),
+      owner: g.string().optional(),
     })
     .description("Gets an a list of ERC721 Tokens"),
 });
