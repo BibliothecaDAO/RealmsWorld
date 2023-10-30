@@ -16,7 +16,12 @@ export const resolvers: Resolvers = {
     getERC721Tokens: (_, { limit, cursor, contract_address, owner }, ctx) => {
       const where: SQL[] = [];
       if (contract_address) {
-        where.push(eq(schema.erc721Tokens.contract_address, contract_address));
+        where.push(
+          eq(
+            schema.erc721Tokens.contract_address,
+            contract_address.toLowerCase(),
+          ),
+        );
       }
       if (owner) {
         where.push(eq(schema.erc721Tokens.owner, owner));

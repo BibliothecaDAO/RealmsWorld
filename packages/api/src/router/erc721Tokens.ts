@@ -20,7 +20,12 @@ export const erc721TokensRouter = createTRPCRouter({
       const { cursor, contractAddress, owner } = input;
       const where: SQL[] = [];
       if (contractAddress) {
-        where.push(eq(schema.erc721Tokens.contract_address, contractAddress));
+        where.push(
+          eq(
+            schema.erc721Tokens.contract_address,
+            contractAddress.toLowerCase(),
+          ),
+        );
       }
       if (owner) {
         where.push(eq(schema.erc721Tokens.owner, owner));
