@@ -44,16 +44,14 @@ export default async function Page({
     params.id == getTokenContractAddresses("goldenToken").L2 ||
     params.id == "goldenToken";
 
+  if (isGoldenToken) {
+    return <Mint contractId={params.id} />;
+  }
+
   return (
-    <div>
-      {isGoldenToken ? (
-        <Mint contractId={params.id} />
-      ) : (
-        <Trade
-          contractId={params.id as keyof typeof erc721Tokens}
-          searchParams={searchParams}
-        />
-      )}
-    </div>
+    <Trade
+      contractId={params.id as keyof typeof erc721Tokens}
+      searchParams={searchParams}
+    />
   );
 }
