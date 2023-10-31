@@ -15,7 +15,9 @@ export const StarknetLoginButton = ({
   const { isAccountOpen, toggleAccount, toggleStarknetLogin } = useUIContext();
 
   const onConnectClick = () => {
-    return isConnected ? toggleAccount() : toggleStarknetLogin();
+    return !isConnected
+      ? toggleStarknetLogin()
+      : openAccount && toggleAccount();
   };
 
   return (

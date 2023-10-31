@@ -106,7 +106,7 @@ export const WalletSheet = () => {
     <>
       <div className="flex space-x-2">
         <EthereumLoginButton openAccount />
-        <StarknetLoginButton />
+        <StarknetLoginButton openAccount />
         <StarknetLoginModal />
       </div>
       <Sheet open={isAccountOpen} onOpenChange={toggleAccount}>

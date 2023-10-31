@@ -31,7 +31,7 @@ export const erc721Tokens: ERC721Tokens = {
       L1: {},
       L2: {
         [ChainType.L2.MAIN]:
-          "0x052d6edb54b24942d359b2b9d476d92b288b3a518322aa006f8eddd566df3de1",
+          "0x063a16e123229edb3652ecd4b2bf5ff65fe27b367c10c3db367d2c3d7f782a02",
         [ChainType.L2.GOERLI]:
           "0x071f603af70d1570600de027af3edae09a5869b7b6d38e27315a77d9db79f45e",
       },
@@ -42,7 +42,8 @@ export const erc721Tokens: ERC721Tokens = {
     contractAddresses: {
       L1: {},
       L2: {
-        [ChainType.L2.MAIN]: "",
+        [ChainType.L2.MAIN]:
+          "0x04f5e296c805126637552cf3930e857f380e7c078e8f00696de4fc8545356b1d",
         [ChainType.L2.GOERLI]:
           "0x003583470a8943479f8609192da4427cac45bdf66a58c84043c7ab2fc722c0c0",
       },

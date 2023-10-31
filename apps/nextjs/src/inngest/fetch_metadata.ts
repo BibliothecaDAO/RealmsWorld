@@ -20,38 +20,42 @@ export const fetchMetadata = inngest.createFunction(
   { name: "fetchMetadata", id: "fetchMeta" },
   { event: "nft/mint" },
   async ({ event, step }) => {
-    const metadataUrl = await step.run("Fetch token URL", () => {
-      // TODO add variable for mainnet (maybe Alchemy?).
-      return `https://starknet-goerli.infura.io/v3/badbe99a05ad427a9ddbbed9e002caf6`;
-    });
-
     const metadata = await step.run("Fetch metadata", async () => {
       const tokenId = uint256.bnToUint256(
         BigInt(event.data.tokenId.toString()),
       );
-      const response = await fetch(metadataUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+
+      const fetchUrl =
+        process.env.NEXT_PUBLIC_IS_TESTNET == "true"
+          ? "https://starknet-goerli.infura.io"
+          : "https://starknet-mainnet.infura.io";
+
+      const response = await fetch(
+        fetchUrl + "/v3/badbe99a05ad427a9ddbbed9e002caf6",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            method: "starknet_call",
+            params: [
+              {
+                contract_address: event.data.contract_address,
+                entry_point_selector:
+                  event.data.contract_address ==
+                  getTokenContractAddresses("beasts").L2
+                    ? tokenURI
+                    : token_uri, // Token URI
+                calldata: [tokenId.low, tokenId.high],
+              },
+              "pending",
+            ],
+            id: 0,
+          }),
         },
-        body: JSON.stringify({
-          jsonrpc: "2.0",
-          method: "starknet_call",
-          params: [
-            {
-              contract_address: event.data.contract_address,
-              entry_point_selector:
-                event.data.contract_address ==
-                getTokenContractAddresses("beasts").L2
-                  ? tokenURI
-                  : token_uri, // Token URI
-              calldata: [tokenId.low, tokenId.high],
-            },
-            "pending",
-          ],
-          id: 0,
-        }),
-      });
+      );
       return await response.json();
     });
 
@@ -104,19 +108,13 @@ export const fetchMetadata = inngest.createFunction(
           )
           .returning({ updatedId: schema.erc721Tokens.id });
 
-        /*const query = await sql(
-        "insert or update rw_erc721_tokens set image = $1, metadata = $2, name=$3 where id = $4",
-        [
-          parsedJson.image,
-          flattenedAttributes,
-          parsedJson.name,
-          event.data.contract_address + ":" + event.data.tokenId,
-        ],
-      );*/
-
         return query[0]?.updatedId;
       },
     );
+    if (!dbRes) {
+      await step.sleep("fetch sleep", "30s");
+      throw new Error("Failed to update item in Postgres");
+    }
     return NextResponse.json({
       event,
       body: dbRes,

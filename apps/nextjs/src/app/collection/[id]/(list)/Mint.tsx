@@ -15,10 +15,12 @@ import {
 } from "@starknet-react/core";
 import { ExternalLinkIcon, Loader2 } from "lucide-react";
 import { uint256 } from "starknet";
+import { formatEther } from "viem";
 
 // MAINNET TODO: UPDATE PRICE
 
-const MINT_COST = 99000;
+const MINT_COST =
+  process.env.NEXT_PUBLIC_IS_TESTNET == "true" ? 99000 : 90000000000000000;
 
 export default function Mint({ contractId }: { contractId: string }) {
   const { account } = useAccount();
@@ -55,7 +57,6 @@ export default function Mint({ contractId }: { contractId: string }) {
       ...calls,
     ],
   });
-
   const {
     data: submittedData,
     isLoading: isTxLoading,
@@ -85,12 +86,19 @@ export default function Mint({ contractId }: { contractId: string }) {
                 className="mr-4 !h-[44px] w-14"
                 type="number"
                 value={mintQty}
+                min={1}
                 onChange={(e) => setMintQty(parseInt(e.target.value))}
               />
-              <Button disabled={isLoading} size={"lg"} onClick={() => write()}>
+              <Button
+                className="mr-4"
+                disabled={isLoading}
+                size={"lg"}
+                onClick={() => write()}
+              >
                 {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
                 Mint{isLoading && "ing"}
               </Button>
+              {formatEther(BigInt(MINT_COST * mintQty))} Eth
             </div>
           ) : (
             <StarknetLoginButton />
