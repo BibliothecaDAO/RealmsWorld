@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { hash, shortString, uint256 } from "starknet";
 
-import { db, schema } from "@realms-world/db";
+import { db, eq, schema } from "@realms-world/db";
 
 import { getTokenContractAddresses } from "../utils/utils";
 //import { Client } from "https://esm.sh/ts-postgres";
@@ -90,21 +90,18 @@ export const fetchMetadata = inngest.createFunction(
       "Insert Beast Metadata to Postgres",
       async () => {
         const query = await db
-          .insert(schema.erc721Tokens)
-          .values({
-            id: event.data.contract_address + ":" + event.data.tokenId,
+          .update(schema.erc721Tokens)
+          .set({
             image: parsedJson.image,
             name: parsedJson.name,
             metadata: { attributes: parsedJson.attributes },
           })
-          .onConflictDoUpdate({
-            target: schema.erc721Tokens.id,
-            set: {
-              image: parsedJson.image,
-              name: parsedJson.name,
-              metadata: { attributes: parsedJson.attributes },
-            },
-          });
+          .where(
+            eq(
+              schema.erc721Tokens.id,
+              event.data.contract_address + ":" + event.data.tokenId,
+            ),
+          );
 
         /*const query = await sql(
         "insert or update rw_erc721_tokens set image = $1, metadata = $2, name=$3 where id = $4",
