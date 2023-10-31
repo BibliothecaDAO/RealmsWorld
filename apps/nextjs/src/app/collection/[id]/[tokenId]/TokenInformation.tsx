@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { erc721Tokens } from "@/constants/erc721Tokens";
-import type { Collection, Token } from "@/types";
+import type { Attributes, Collection, Token } from "@/types";
 import { shortenHex } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
 
-import { TokenAttributes } from "./TokenAttributes";
+import { TokenAttribute } from "./TokenAttribute";
 
 export const TokenInformation = ({
   token,
@@ -13,24 +13,28 @@ export const TokenInformation = ({
   collection,
   collectionId,
 }: {
-  token: Pick<Token, "image" | "name" | "tokenId" | "owner" | "attributes">;
+  token: Pick<
+    Token,
+    "image" | "name" | "tokenId" | "owner" | "attributes" | "contract"
+  >;
   collection: Collection | null;
   collectionId: string;
   children: React.ReactNode;
 }) => {
+  const isBeasts = collectionId == "beasts";
   return (
     <>
-      <div className="w-full flex-none rounded-t p-2 md:w-1/2">
+      <div className="flex w-full flex-none rounded-t md:w-1/2 lg:mt-12">
         {token.image && (
           <Image
             src={token.image}
             alt={token.name ?? "token"}
             width={1000}
             height={1000}
-            className="mx-auto border"
+            className={`mx-auto border ${isBeasts && "my-auto max-w-[350px]"}`}
           />
         )}
-        {collectionId == "beasts" && (
+        {/*isBeasts && (
           <Image
             src={
               "https://loot-survivor.vercel.app/monsters/" +
@@ -42,14 +46,24 @@ export const TokenInformation = ({
             alt={token.name ?? "token"}
             width={1000}
             height={1000}
-            className="mx-auto mt-6 border bg-black"
+            className="mx-auto mt-6  border bg-black"
           />
+          )*/}
+        {collection && (
+          <div className="my-2 grid grid-cols-2 gap-2">
+            {token.attributes.map((attribute: Attributes, index) => (
+              <TokenAttribute
+                key={index}
+                attributeTokenCount={attribute.tokenCount}
+                collectionTokenCount={parseInt(collection.tokenCount)}
+                contractId={token.contract}
+                floorAskPrice={attribute.floorAskPrice}
+                title={attribute.key}
+                value={attribute.value}
+              />
+            ))}
+          </div>
         )}
-        <div className="my-2 flex flex-wrap">
-          {collection && (
-            <TokenAttributes token={token} collection={collection} />
-          )}
-        </div>
       </div>
       <div className="w-auto p-4 md:w-1/2 md:p-8">
         <Link
@@ -60,21 +74,65 @@ export const TokenInformation = ({
           {erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
         </Link>
 
-        <h1>
-          {decodeURIComponent(token.name)}
-          <span> #{token.tokenId ?? token.token_id}</span>
-        </h1>
+        <h1>{decodeURIComponent(token.name)}</h1>
+        <div className="flex space-x-4 text-lg">
+          <span>ID:</span> <span>#{token.tokenId ?? token.token_id}</span>
+        </div>
         {token.owner && (
-          <div className="flex space-x-4">
-            <div>owner </div>
+          <div className="flex space-x-4 text-lg">
+            <div>Owner </div>
             <Link href={`/user/${token.owner}`}>{shortenHex(token.owner)}</Link>
           </div>
         )}
-        {collectionId == "beasts" && token.metadata?.type && (
-          <div className="bg-dark-green mt-4 rounded border px-4 py-2">
-            <p>Type: {token.metadata?.type}</p>
-            <p>Tier: {token.metadata?.tier}</p>
-            <p>Level: {token.metadata?.level}</p>
+
+        {/*collectionId == "beasts" && token.metadata?.type && (
+                    <div className="my-2 flex flex-wrap">
+                      {token.metadata.map((attribute: Attributes, index) => (
+                        <TokenAttribute
+                          key={index}
+                          attributeTokenCount={attribute.tokenCount}
+                          collectionTokenCount={parseInt(collection.tokenCount)}
+                          contractId={token.contract}
+                          floorAskPrice={attribute.floorAskPrice}
+                          title={attribute.key}
+                          value={attribute.value}
+                        />
+                      ))}
+                    </div>
+                      )*/}
+        {collectionId == "beasts" && token.metadata?.attributes?.length && (
+          <div className="bg-dark-green mt-4 rounded border">
+            <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
+              <h5>Type:</h5>
+              <span className="text-xl">
+                {
+                  token.metadata?.attributes.find(
+                    (trait) => trait.trait_type === "type",
+                  )?.value
+                }
+              </span>
+            </div>
+            <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
+              <h5>Tier: </h5>
+              <span className="text-xl">
+                {
+                  token.metadata?.attributes.find(
+                    (trait) => trait.trait_type === "tier",
+                  )?.value
+                }
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
+              <h5>Level: </h5>
+              <span className="text-xl">
+                {
+                  token.metadata?.attributes.find(
+                    (trait) => trait.trait_type === "level",
+                  )?.value
+                }
+              </span>
+            </div>
           </div>
         )}
         {children}

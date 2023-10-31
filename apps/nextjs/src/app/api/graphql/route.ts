@@ -6,6 +6,10 @@ const { handleRequest } = createYoga({
   schema,
   graphqlEndpoint: "/api/graphql",
   fetchAPI: { Request, Response },
+  cors: {
+    credentials: true,
+    origin: "*",
+  },
 });
 
 export { handleRequest as GET, handleRequest as POST };

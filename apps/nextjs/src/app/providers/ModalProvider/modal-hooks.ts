@@ -1,52 +1,49 @@
 "use client";
 
-//import {NetworkType, WalletStatus} from '@starkware-industries/commons-js-enums';
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext } from "react";
+import { XOctagon } from "lucide-react";
 
+import { ModalContext } from "./modal-context";
 
 export const ModalType = {
-  INFO: 'info',
-  SUCCESS: 'success',
-  WARNING: 'warning',
-  ERROR: 'error'
+  INFO: "info",
+  SUCCESS: "success",
+  WARNING: "warning",
+  ERROR: "error",
 };
-
-//import {useL2Wallet} from '../WalletsProvider';
-import { ModalContext } from './modal-context';
-import { XOctagon } from 'lucide-react';
 
 const TRANSACTION_MODAL_STYLE = {
   containerStyle: {
-    width: '495px',
-    padding: '32px'
+    width: "495px",
+    padding: "32px",
   },
   buttonProps: {
-    height: '48px',
+    height: "48px",
     style: {
-      fontSize: '12px',
-      fontWeight: '600',
-      lineHeight: '18px',
-      margin: '8px 8px'
-    }
-  }
+      fontSize: "12px",
+      fontWeight: "600",
+      lineHeight: "18px",
+      margin: "8px 8px",
+    },
+  },
 };
 
 const MODAL_HEADER_WITH_ICON_STYLE = {
   containerStyle: {
-    width: '466px',
-    padding: '24px'
+    width: "466px",
+    padding: "24px",
   },
   buttonProps: {
-    height: '52px',
+    height: "52px",
     style: {
-      margin: '0'
-    }
-  }
+      margin: "0",
+    },
+  },
 };
 
 export const useModal = () => {
   return {
-    ...useContext(ModalContext)
+    ...useContext(ModalContext),
   };
 };
 
@@ -68,35 +65,35 @@ export const useProgressModal = (steps = []) => {
         header: {
           components: steps.length > 0 && [
             {
-              path: 'ui/stepper',
+              path: "stepper",
               props: {
                 steps,
-                activeStep
-              }
+                activeStep,
+              },
             },
             {
-              path: 'modal/ProgressModal/ProgressModalHeader',
+              path: "ProgressModal/ProgressModalHeader",
               props: {
-                title
-              }
-            }
-          ]
+                title,
+              },
+            },
+          ],
         },
         body: {
           components: [
             {
-              path: 'modal/ProgressModal/ProgressModalBody',
+              path: "ProgressModal/ProgressModalBody",
               props: {
-                message
-              }
-            }
-          ]
+                message,
+              },
+            },
+          ],
         },
         type,
-        containerStyle
+        containerStyle,
       });
     },
-    [showModal]
+    [showModal],
   );
 };
 
@@ -110,44 +107,44 @@ export const useTransactionSubmittedModal = (steps: any) => {
         header: {
           components: [
             {
-              path: 'ui/stepper',
+              path: "stepper",
               props: {
                 steps,
-                activeStep: steps.length
-              }
+                activeStep: steps.length,
+              },
             },
             {
-              path: 'modal/TransactionSubmittedModal/TransactionSubmittedModalHeader'
-            }
-          ]
+              path: "TransactionSubmittedModal/TransactionSubmittedModalHeader",
+            },
+          ],
         },
         body: {
           components: [
             {
-              path: 'modal/TransactionSubmittedModal/TransactionSubmittedModalBody',
+              path: "TransactionSubmittedModal/TransactionSubmittedModalBody",
               props: {
-                transfer
-              }
-            }
-          ]
+                transfer,
+              },
+            },
+          ],
         },
         footer: {
           withButtons: true,
           components: [
             {
-              path: 'modal/TransactionSubmittedModal/TransactionSubmittedModalButton',
+              path: "TransactionSubmittedModal/TransactionSubmittedModalButton",
               props: {
                 transfer,
-                buttonProps
-              }
-            }
+                buttonProps,
+              },
+            },
           ],
-          buttonProps
+          buttonProps,
         },
-        containerStyle
+        containerStyle,
       });
     },
-    [showModal]
+    [showModal],
   );
 };
 
@@ -161,143 +158,32 @@ export const useErrorModal = () => {
         header: {
           components: [
             {
-              path: 'modal/ModalHeaderWithIcon',
+              path: "ModalHeaderWithIcon",
               props: {
                 title,
-                icon: XOctagon
-              }
-            }
-          ]
+                icon: XOctagon,
+              },
+            },
+          ],
         },
         body: {
           components: [
             {
-              path: 'modal/ErrorModal',
+              path: "ErrorModal",
               props: {
-                text
-              }
-            }
-          ]
+                text,
+              },
+            },
+          ],
         },
         footer: {
           withButtons: true,
-          buttonProps
+          buttonProps,
         },
         containerStyle,
-        type: ModalType.ERROR
+        type: ModalType.ERROR,
       });
     },
-    [showModal]
+    [showModal],
   );
 };
-
-/*export const useOnboardingModal = () => {
-  const {showModal} = useContext(ModalContext);
-  const {titleTxt} = useOnboardingModalTranslation();
-  const {buttonProps, containerStyle} = MODAL_HEADER_WITH_ICON_STYLE;
-
-  return useCallback(() => {
-    showModal({
-      header: {
-        components: [
-          {
-            path: 'UI/Modal/ModalHeaderWithIcon/ModalHeaderWithIcon',
-            props: {
-              icon: AlertCircle,
-              title: titleTxt
-            }
-          }
-        ]
-      },
-      body: {
-        components: [
-          {
-            path: 'UI/Modal/OnboardingModal/OnboardingModal'
-          }
-        ]
-      },
-      footer: {
-        withButtons: true,
-        buttonProps
-      },
-      containerStyle
-    });
-  }, [showModal]);
-};
-
-export const useLoginModal = () => {
-  const {showModal, show} = useContext(ModalContext);
-  const prevShow = usePrevious(show);
-  const {status, resetWallet} = useL2Wallet();
-
-  useEffect(() => {
-    // reset L2 wallet if the user closed the modal on connecting
-    if (prevShow && !show && status === WalletStatus.CONNECTING) {
-      resetWallet();
-    }
-  }, [show, status]);
-
-  return useCallback(
-    (networkName = NetworkType.L1) => {
-      showModal({
-        withHeader: false,
-        body: {
-          components: [
-            {
-              path: 'UI/Modal/LoginModal/LoginModal',
-              props: {networkName}
-            }
-          ]
-        },
-        containerStyle: {
-          background: 'unset',
-          boxShadow: 'unset',
-          width: '464px'
-        },
-        exitable: true
-      });
-    },
-    [showModal]
-  );
-};
-
-export const useBlockedAddressModal = () => {
-  const {showModal} = useContext(ModalContext);
-  const {titleTxt, closeButtonTxt} = useBlockedAddressModalTranslation();
-  const {buttonProps, containerStyle} = MODAL_HEADER_WITH_ICON_STYLE;
-
-  return useCallback(
-    account => {
-      showModal({
-        header: {
-          components: [
-            {
-              path: 'UI/Modal/ModalHeaderWithIcon/ModalHeaderWithIcon',
-              props: {
-                icon: WarningIcon,
-                title: titleTxt,
-                subtitle: account
-              }
-            }
-          ]
-        },
-        body: {
-          components: [
-            {
-              path: 'UI/Modal/BlockedAddressModal/BlockedAddressModal'
-            }
-          ]
-        },
-        footer: {
-          withButtons: true,
-          buttonProps: {
-            ...buttonProps,
-            text: closeButtonTxt
-          }
-        },
-        containerStyle
-      });
-    },
-    [showModal]
-  );
-};*/

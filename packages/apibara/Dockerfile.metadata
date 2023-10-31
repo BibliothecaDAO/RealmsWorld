@@ -1,0 +1,11 @@
+FROM quay.io/apibara/sink-webhook:0.3
+
+ARG NETWORK_NAME
+ENV ENVFILE=${NETWORK_NAME}.env
+
+COPY src ./data/src
+COPY $ENVFILE ./data/.env
+
+ENV AUTH_TOKEN=dna_FCqLW4vWwpveLSLpp16V
+
+CMD ["run", "--allow-env=/data/.env", "/data/src/erc721_metadata.ts", "--persist-to-etcd=decent-respect.railway.internal:2379", "--sink-id=erc721_metadata"]

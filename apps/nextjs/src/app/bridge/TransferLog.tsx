@@ -9,7 +9,7 @@ import {
   STARKSCAN_TX_URL,
 } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
-import LordsIcon from "@/icons/lords.svgr";
+import LordsIcon from "@/icons/lords.svg";
 import { cn } from "@/utils/utils";
 import { useNetwork } from "@starknet-react/core";
 import type { ChainTypeL2 } from "@starkware-industries/commons-js-enums";

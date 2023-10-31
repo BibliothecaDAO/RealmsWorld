@@ -21,6 +21,10 @@ export const L2Token = ({
     id: contractAddress + ":" + tokenId,
   });
 
+  if (!erc721Tokens) {
+    return <div>Token Information Loading</div>;
+  }
+
   return (
     <>
       {erc721Tokens ? (

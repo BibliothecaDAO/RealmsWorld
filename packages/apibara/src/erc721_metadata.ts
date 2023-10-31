@@ -22,8 +22,9 @@ export const config: Config<Starknet, Webhook> = {
   },
   sinkType: "webhook",
   sinkOptions: {
-    targetUrl: "http://localhost:8288/e/local",
+    targetUrl: "https://inn.gs/e/" + Deno.env.get("INNGEST_EVENT_KEY"),
     raw: true,
+    header: ["x-inngest-env: LS-updates"],
   },
 };
 

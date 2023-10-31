@@ -1,3 +1,5 @@
+import { RESERVOIR_API_URL } from "@/constants/env";
+
 function buildQueryString(queryObject: any) {
   const queryParams = Object.entries(queryObject)
     .map(([key, value]: any) => {
@@ -74,13 +76,11 @@ export const getToken = async ({
   try {
     /*console.log(
       `${
-        process.env.NEXT_PUBLIC_RESERVOIR_API
+        RESERVOIR_API_URL
       }/tokens/v6?${queryString}&${check()}`,
     );*/
     const res = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_RESERVOIR_API
-      }/tokens/v6?${queryString}&${check()}`,
+      `${RESERVOIR_API_URL}/tokens/v6?${queryString}&${check()}`,
       {
         headers: {
           "Content-Type": "application/json",

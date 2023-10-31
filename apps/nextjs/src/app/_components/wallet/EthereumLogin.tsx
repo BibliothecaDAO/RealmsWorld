@@ -2,8 +2,8 @@
 
 import { Button } from "@/app/_components/ui/button";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
-import EthereumLogo from "@/icons/ethereum.svgr";
-import Lords from "@/icons/lords.svgr";
+import EthereumLogo from "@/icons/ethereum.svg";
+import Lords from "@/icons/lords.svg";
 import { formatBigInt, shortenHex } from "@/utils/utils";
 import { LogOut } from "lucide-react";
 import {

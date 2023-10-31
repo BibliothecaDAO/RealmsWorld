@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { games } from "@/constants";
-import Discord from "@/icons/discord.svgr";
+import Discord from "@/icons/discord.svg";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getGamesByContract } from "@/utils/getters";
 import { ExternalLink, Globe, Twitter } from "lucide-react";

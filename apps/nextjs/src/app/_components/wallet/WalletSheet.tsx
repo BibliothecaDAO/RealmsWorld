@@ -18,8 +18,9 @@ import { Account } from "@/app/bridge/Account";
 import { useUIContext } from "@/app/providers/UIProvider";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
 import {
-  useConnectors,
+  useDisconnect,
   useAccount as useL2Account,
+  useConnect as useL2Connect,
   useNetwork,
 } from "@starknet-react/core";
 import { ArrowDown, ArrowUp } from "lucide-react";
@@ -48,7 +49,7 @@ import { StarknetLoginModal } from "./StarknetLoginModal";
 export const WalletSheet = () => {
   const { address: l2Address, isConnected: isL2Connected } = useL2Account();
   const { chain } = useNetwork();
-  const { disconnect } = useConnectors();
+  const { disconnect } = useDisconnect();
   const [isWrongNetwork, setIsWrongNetwork] = useState(false);
 
   const onDisconnect = () => {
@@ -67,8 +68,8 @@ export const WalletSheet = () => {
   useEffect(() => {
     if (isL2Connected) {
       if (
-        (chain?.id === NETWORK_ID.goerli && network === "mainnet") ||
-        (chain?.id === NETWORK_ID.mainnet && network === "goerli")
+        (chain?.id.toString() === NETWORK_ID.goerli && network === "mainnet") ||
+        (chain?.id.toString() === NETWORK_ID.mainnet && network === "goerli")
       ) {
         setIsWrongNetwork(true);
       } else {
@@ -105,7 +106,7 @@ export const WalletSheet = () => {
     <>
       <div className="flex space-x-2">
         <EthereumLoginButton openAccount />
-        <StarknetLoginButton />
+        <StarknetLoginButton openAccount />
         <StarknetLoginModal />
       </div>
       <Sheet open={isAccountOpen} onOpenChange={toggleAccount}>

@@ -63,9 +63,9 @@ export default function RootLayout({
       />
 
       <div className="relative -mt-56 flex h-full lg:pl-32">
-        <div className="flex-grow p-4 sm:p-8">
+        <div className="flex-grow">
           <CollectionSummary address={tokenAddresses.L1} />
-          <div className="mb-3 flex justify-center gap-4 border-b  py-4">
+          <div className="mb-3 flex justify-center gap-4 overflow-x-auto border-b py-4">
             {tabs.map((tab) => (
               <NavLink
                 key={tab.name}
@@ -78,7 +78,7 @@ export default function RootLayout({
               </NavLink>
             ))}
           </div>
-          {children}
+          <div className=" p-4 sm:p-8">{children}</div>
         </div>
       </div>
     </div>

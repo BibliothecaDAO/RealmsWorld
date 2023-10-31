@@ -1,3 +1,4 @@
+import { RESERVOIR_API_URL } from "@/constants/env";
 import { formatQueryString } from "@/utils/utils";
 
 export const getCollections = async (contracts: { contract: string }[]) => {
@@ -6,7 +7,7 @@ export const getCollections = async (contracts: { contract: string }[]) => {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_RESERVOIR_API}/collections/v5?${queryParams}`,
+      `${RESERVOIR_API_URL}/collections/v5?${queryParams}`,
       {
         headers: {
           "Content-Type": "application/json",

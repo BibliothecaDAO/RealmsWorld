@@ -1,11 +1,8 @@
 import React from "react";
 import { useUIContext } from "@/app/providers/UIProvider";
-import StarknetLogo from "@/icons/starknet.svgr";
+import StarknetLogo from "@/icons/starknet.svg";
 import { shortenHex } from "@/utils/utils";
-import {
-  useConnectors,
-  useAccount as useL2Account,
-} from "@starknet-react/core";
+import { useAccount as useL2Account } from "@starknet-react/core";
 
 import { Button } from "../ui/button";
 
@@ -16,14 +13,11 @@ export const StarknetLoginButton = ({
 }) => {
   const { address, isConnected } = useL2Account();
   const { isAccountOpen, toggleAccount, toggleStarknetLogin } = useUIContext();
-  const { available, connect } = useConnectors();
-
-  if (!available) {
-    return null;
-  }
 
   const onConnectClick = () => {
-    return isConnected ? toggleAccount() : toggleStarknetLogin();
+    return !isConnected
+      ? toggleStarknetLogin()
+      : openAccount && toggleAccount();
   };
 
   return (

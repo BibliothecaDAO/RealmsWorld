@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import LordsIcon from "@/icons/lords.svgr";
+import LordsIcon from "@/icons/lords.svg";
 import { cva, VariantProps } from "class-variance-authority";
 import type { animate, HTMLMotionProps } from "framer-motion";
 import { stagger, useAnimate } from "framer-motion";

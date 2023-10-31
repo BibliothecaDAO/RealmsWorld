@@ -12,7 +12,7 @@ export default function RootLayout({
   params: { id: string };
 }) {
   return (
-    <div className="container mx-auto flex h-full flex-wrap p-4 pt-16 sm:p-8">
+    <div className="container mx-auto flex flex-wrap p-4 pt-16 sm:p-8">
       {children}
     </div>
   );

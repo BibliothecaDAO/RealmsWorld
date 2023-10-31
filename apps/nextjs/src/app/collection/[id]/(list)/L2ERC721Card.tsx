@@ -57,11 +57,32 @@ export const L2ERC721Card = (props: TokenCardProps) => {
           </div>
           <h6> {decodeURIComponent(token.name || "")}</h6>
           <h6>{token.owner && shortenHex(token.owner, 8)}</h6>
-          {token.metadata?.type && (
+          {token.metadata?.attributes?.length && (
             <>
-              <p>Type: {token.metadata?.type}</p>
-              <p>Tier: {token.metadata?.tier}</p>
-              <p>Level: {token.metadata?.level}</p>
+              <p>
+                Type:{" "}
+                {
+                  token.metadata?.attributes.find(
+                    (trait) => trait.trait_type === "type",
+                  )?.value
+                }
+              </p>
+              <p>
+                Tier:{" "}
+                {
+                  token.metadata?.attributes.find(
+                    (trait) => trait.trait_type === "tier",
+                  )?.value
+                }
+              </p>
+              <p>
+                Level:{" "}
+                {
+                  token.metadata?.attributes.find(
+                    (trait) => trait.trait_type === "level",
+                  )?.value
+                }
+              </p>
             </>
           )}
 

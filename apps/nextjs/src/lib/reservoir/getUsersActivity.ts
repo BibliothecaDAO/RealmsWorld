@@ -1,8 +1,9 @@
+import { RESERVOIR_API_URL } from "@/constants/env";
 import { reservoirLootCollectionSetId } from "@/constants/erc721Tokens";
 
 export const getUsersActivity = async ({ address }: { address: string }) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_RESERVOIR_API}/users/activity/v6?users=${address}&collectionsSetId=${reservoirLootCollectionSetId}`;
+    const url = `${RESERVOIR_API_URL}/users/activity/v6?users=${address}&collectionsSetId=${reservoirLootCollectionSetId}`;
     const res = await fetch(url, {
       headers: {
         "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useUIContext } from "@/app/providers/UIProvider";
-import { useAccount, useConnectors } from "@starknet-react/core";
+import { useAccount, useConnect } from "@starknet-react/core";
 import { motion } from "framer-motion";
 //import { Mail } from "lucide-react";
 import type { WalletProvider } from "get-starknet-core";
@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader } from "../ui/dialog";
 import WalletIcons from "./WalletIcons";
 
 export const StarknetLoginModal = () => {
-  const { connect, connectors } = useConnectors();
+  const { connect, connectors } = useConnect();
   const {
     isStarknetLoginOpen,
     toggleStarknetLogin,
@@ -21,15 +21,6 @@ export const StarknetLoginModal = () => {
   const { isConnected } = useAccount();
 
   const [braavos, setBraavos] = useState<string>("");
-  const combinations = [
-    [0, 1, 2],
-    [0, 2, 1],
-    [1, 0, 2],
-    [1, 2, 0],
-    [2, 0, 1],
-    [2, 1, 0],
-  ];
-  const rand = useMemo(() => Math.floor(Math.random() * 6), []);
   const [argent, setArgent] = useState<string>("");
 
   function getBrowser(): string | undefined {
@@ -92,20 +83,18 @@ export const StarknetLoginModal = () => {
             <h6 className="-mt-3 mb-6 text-base">Connect Starknet Wallet</h6>
           </DialogHeader>
           <div className="flex flex-col space-y-2 self-center">
-            {combinations[rand]?.map((index) => {
-              const connector = connectors[index];
+            {connectors?.map((connector, index) => {
               if (connector?.available()) {
                 return (
                   <div className="mt-5 flex justify-center" key={connector.id}>
                     <Button
                       className="w-full justify-between self-center px-4 py-6 font-sans text-lg font-light capitalize"
                       variant={"outline"}
-                      onClick={() => connect(connector)}
+                      onClick={() => connect({ connector })}
                     >
                       <div className="flex items-center justify-center">
                         <WalletIcons id={connector.id} />
-                        {connector.id === "braavos" ||
-                        connector.id === "argentX"
+                        {connector.name
                           ? `Connect ${connector.name}`
                           : "Login with Email"}
                       </div>
@@ -141,28 +130,6 @@ export const StarknetLoginModal = () => {
                 }
               }
             })}
-
-            {/*connectors.map((connector) => {
-              if (connector.available()) {
-                return (
-                  <Button
-                    className="self-center w-full justify-between px-4 capitalize text-lg font-light py-6 font-sans"
-                    variant={"outline"}
-                    size={"lg"}
-                    key={connector.id}
-                    onClick={() => connect(connector)}
-                  >
-                    {connector.id.replace(/([A-Z])/g, " $1") ??
-                      "Continue with email"}
-                    {connector.icon ? (
-                      <img className="w-6 mr-3" src={connector.icon} alt="" />
-                    ) : (
-                      <Mail className="mr-3 " />
-                    )}
-                  </Button>
-                );
-              }
-            })*/}
           </div>
         </motion.div>
       </DialogContent>

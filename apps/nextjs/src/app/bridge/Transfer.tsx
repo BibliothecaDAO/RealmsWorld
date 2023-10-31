@@ -8,9 +8,9 @@ import { EthereumLoginButton } from "@/app/_components/wallet/EthereumLoginButto
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
 import { useTransferToL1 } from "@/hooks/useTransferToL1";
 import { useTransferToL2 } from "@/hooks/useTransferToL2";
-import EthereumLogo from "@/icons/ethereum.svgr";
-import LordsIcon from "@/icons/lords.svgr";
-import StarknetLogo from "@/icons/starknet.svgr";
+import EthereumLogo from "@/icons/ethereum.svg";
+import LordsIcon from "@/icons/lords.svg";
+import StarknetLogo from "@/icons/starknet.svg";
 import { useAccount } from "@starknet-react/core";
 import { ArrowUpDown } from "lucide-react";
 import { useAccount as useL1Account } from "wagmi";

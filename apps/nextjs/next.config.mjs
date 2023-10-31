@@ -30,7 +30,7 @@ const config = {
     };
 
     config.module.rules.push({
-      test: /\.svgr$/i,
+      test: /\.svg$/i,
       //issuer: /\.[jt]sx?$/,
       use: ["@svgr/webpack"],
     });
@@ -41,28 +41,53 @@ const config = {
   experimental: {
     turbo: {
       rules: {
-        "*.svgr": ["@svgr/webpack"],
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
+        },
       },
     },
+    webpackBuildWorker: true,
   },
   images: {
     dangerouslyAllowSVG: true,
-    domains: [
-      "loot-survivor.vercel.app",
-      "i.seadn.io",
-      "api.reservoir.tools",
-      "raw.githubusercontent.com",
-      "blur.io",
-      "www.loot.exchange",
-      "gem.xyz",
-      "sudoswap.xyz",
-      "openseauserdata.com",
-      "alienswap.xyz",
-      "www.ens.vision",
-      "lh3.googleusercontent.com",
-      "magically.gg",
-      "pro.opensea.io",
+    remotePatterns: [
+      { protocol: "https", hostname: "loot-survivor.vercel.app" },
+      { protocol: "https", hostname: "i.seadn.io" },
+      { protocol: "https", hostname: "api.reservoir.tools" },
+      { protocol: "https", hostname: "raw.githubusercontent.com" },
+      { protocol: "https", hostname: "blur.io" },
+      { protocol: "https", hostname: "www.loot.exchange" },
+      { protocol: "https", hostname: "gem.xyz" },
+      { protocol: "https", hostname: "sudoswap.xyz" },
+      { protocol: "https", hostname: "openseauserdata.com" },
+      { protocol: "https", hostname: "alienswap.xyz" },
+      { protocol: "https", hostname: "www.ens.vision" },
+      { protocol: "https", hostname: "lh3.googleusercontent.com" },
+      { protocol: "https", hostname: "magically.gg" },
+      { protocol: "https", hostname: "pro.opensea.io" },
     ],
+  },
+  async headers() {
+    return [
+      {
+        // matching all API routes
+        source: "/api/:path*",
+        headers: [
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          { key: "Access-Control-Allow-Origin", value: "*" },
+          {
+            key: "Access-Control-Allow-Methods",
+            value: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+          },
+          {
+            key: "Access-Control-Allow-Headers",
+            value:
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+          },
+        ],
+      },
+    ];
   },
 };
 

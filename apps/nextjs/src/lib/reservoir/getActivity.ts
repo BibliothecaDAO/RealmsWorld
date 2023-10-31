@@ -1,3 +1,4 @@
+import { RESERVOIR_API_URL } from "@/constants/env";
 import { formatQueryString } from "@/utils/utils";
 
 export const getActivity = async ({
@@ -9,9 +10,7 @@ export const getActivity = async ({
 }) => {
   try {
     const res = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_RESERVOIR_API
-      }/collections/activity/v5?collection=${collection}&${formatQueryString(
+      `${RESERVOIR_API_URL}/collections/activity/v5?collection=${collection}&${formatQueryString(
         query.types,
         "types",
       )}`,
