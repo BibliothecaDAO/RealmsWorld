@@ -89,7 +89,7 @@ export const fetchMetadata = inngest.createFunction(
     const dbRes = await step.run(
       "Insert Beast Metadata to Postgres",
       async () => {
-        const query = await db
+        const query: { updatedId: string }[] = await db
           .update(schema.erc721Tokens)
           .set({
             image: parsedJson.image,
@@ -101,7 +101,8 @@ export const fetchMetadata = inngest.createFunction(
               schema.erc721Tokens.id,
               event.data.contract_address + ":" + event.data.tokenId,
             ),
-          );
+          )
+          .returning({ updatedId: schema.erc721Tokens.id });
 
         /*const query = await sql(
         "insert or update rw_erc721_tokens set image = $1, metadata = $2, name=$3 where id = $4",
@@ -113,11 +114,12 @@ export const fetchMetadata = inngest.createFunction(
         ],
       );*/
 
-        return query;
+        return query[0]?.updatedId;
       },
     );
     return NextResponse.json({
       event,
+      body: dbRes,
       res: dbRes,
     });
   },
