@@ -100,20 +100,38 @@ export const TokenInformation = ({
                       ))}
                     </div>
                       )*/}
-        {collectionId == "beasts" && token.metadata?.type && (
+        {collectionId == "beasts" && token.metadata?.attributes?.length && (
           <div className="bg-dark-green mt-4 rounded border">
             <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
               <h5>Type:</h5>
-              <span className="text-xl">{token.metadata?.type}</span>
+              <span className="text-xl">
+                {
+                  token.metadata?.attributes.find(
+                    (trait) => trait.trait_type === "type",
+                  )?.value
+                }
+              </span>
             </div>
             <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
               <h5>Tier: </h5>
-              <span className="text-xl">{token.metadata?.tier}</span>
+              <span className="text-xl">
+                {
+                  token.metadata?.attributes.find(
+                    (trait) => trait.trait_type === "tier",
+                  )?.value
+                }
+              </span>
             </div>
 
             <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
               <h5>Level: </h5>
-              <span className="text-xl">{token.metadata?.level}</span>
+              <span className="text-xl">
+                {
+                  token.metadata?.attributes.find(
+                    (trait) => trait.trait_type === "level",
+                  )?.value
+                }
+              </span>
             </div>
           </div>
         )}
