@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { hash, shortString, uint256 } from "starknet";
 
-import { sql } from "@realms-world/db";
+import { db, schema } from "@realms-world/db";
 
 import { getTokenContractAddresses } from "../utils/utils";
 //import { Client } from "https://esm.sh/ts-postgres";
@@ -86,22 +86,41 @@ export const fetchMetadata = inngest.createFunction(
       }
     }
 
-    const dbRes = await step.run("Insert Beast Metadata to Mongo", async () => {
-      const query = await sql(
-        "update rw_erc721_tokens set image = $1, metadata = $2, name=$3 where id = $4",
+    const dbRes = await step.run(
+      "Insert Beast Metadata to Postgres",
+      async () => {
+        const query = await db
+          .insert(schema.erc721Tokens)
+          .values({
+            id: event.data.contract_address + ":" + event.data.tokenId,
+            image: parsedJson.image,
+            name: parsedJson.name,
+            metadata: { attributes: parsedJson.attributes },
+          })
+          .onConflictDoUpdate({
+            target: schema.erc721Tokens.id,
+            set: {
+              image: parsedJson.image,
+              name: parsedJson.name,
+              metadata: { attributes: parsedJson.attributes },
+            },
+          });
+
+        /*const query = await sql(
+        "insert or update rw_erc721_tokens set image = $1, metadata = $2, name=$3 where id = $4",
         [
           parsedJson.image,
           flattenedAttributes,
           parsedJson.name,
           event.data.contract_address + ":" + event.data.tokenId,
         ],
-      );
+      );*/
 
-      return query;
-    });
+        return query;
+      },
+    );
     return NextResponse.json({
       event,
-      body: flattenedAttributes,
       res: dbRes,
     });
   },

@@ -2,6 +2,13 @@ import { GarphSchema } from "garph";
 
 export const g = new GarphSchema();
 
+const metadataAttributesType = g.type("MetadataAttributes", {
+  trait_type: g.string(),
+  value: g.string(),
+});
+const metadataType = g.type("Metadata", {
+  attributes: g.ref(metadataAttributesType).list().optional(),
+});
 export const ERC721TokensGQL = g.type("ERC721Tokens", {
   _cursor: g.int().optional(),
   id: g.string(),
@@ -10,7 +17,7 @@ export const ERC721TokensGQL = g.type("ERC721Tokens", {
   owner: g.string().optional(),
   image: g.string().optional(),
   name: g.id().optional(),
-  //metadata: g.ob
+  metadata: g.ref(metadataType).optional(),
 });
 
 export const queryType = g.type("Query", {
@@ -25,20 +32,3 @@ export const queryType = g.type("Query", {
     })
     .description("Gets an a list of ERC721 Tokens"),
 });
-
-/*export const mutationType = g.type("Mutation", {
-  addTodo: g
-    .ref(TodoGQL)
-    .args({
-      title: g.string(),
-    })
-    .description("Adds a new todo"),
-  removeTodo: g
-    .ref(TodoGQL)
-    .optional()
-    .args({
-      id: g.int(),
-    })
-    .description("Removes an existing todo"),
-});
-*/

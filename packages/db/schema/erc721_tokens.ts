@@ -11,8 +11,9 @@ export const erc721Tokens = pgSqlTable("erc721_tokens", {
   image: text("image"),
   name: text("name"),
   metadata: json("metadata").$type<{
-    tier: number;
-    level: number;
-    type: string;
+    attributes: {
+      trait_type?: string;
+      value: string | number;
+    }[];
   }>(),
 });

@@ -2,7 +2,7 @@ import type { InferResolvers } from "garph";
 import type { YogaInitialContext } from "graphql-yoga";
 
 import type { SQL } from "@realms-world/db";
-import { and, asc, db, eq, exists, gt, schema } from "@realms-world/db";
+import { and, asc, db, eq, gt, schema } from "@realms-world/db";
 
 import type { queryType } from "./schema";
 
@@ -33,19 +33,4 @@ export const resolvers: Resolvers = {
       });
     },
   },
-  /*Mutation: {
-    addTodo: (_, { title }, ctx) => {
-      return db
-        .insert(todos)
-        .values({
-          title,
-          createdAt: dayjs().unix(),
-        })
-        .returning()
-        .get();
-    },
-    removeTodo: (_, { id }, ctx) => {
-      return db.delete(todos).where(eq(todos.id, id)).returning().get();
-    },
-  },*/
 };
