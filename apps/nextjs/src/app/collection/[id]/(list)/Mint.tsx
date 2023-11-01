@@ -68,7 +68,7 @@ export default function Mint({ contractId }: { contractId: string }) {
     <div className="mx-auto mt-12 sm:mt-36 md:w-[750px]">
       <div className="bg-dark-green w-full rounded-xl border sm:flex">
         <Image
-          src="/tokens/golden-token.svg"
+          src="/collections/goldenToken.svg"
           alt="Golden Token"
           width={300}
           height={300}
