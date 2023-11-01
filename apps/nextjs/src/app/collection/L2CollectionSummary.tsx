@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { erc721Tokens } from "@/constants";
-import { games } from "@/constants";
+import { erc721Tokens, games } from "@/constants";
 import Discord from "@/icons/discord.svg";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getGamesByContract } from "@/utils/getters";
@@ -9,98 +8,46 @@ import { getTokenContractAddresses } from "@/utils/utils";
 import { ExternalLink, Globe, Twitter } from "lucide-react";
 import { formatEther } from "viem";
 
-import L2CollectionSummary from "./L2CollectionSummary";
-
-export default async function CollectionSummary({
+export default async function L2CollectionSummary({
   collectionId,
 }: {
   collectionId: keyof typeof erc721Tokens;
 }) {
   const tokenAddresses = getTokenContractAddresses(collectionId);
 
-  if (tokenAddresses.L2) {
-    return <L2CollectionSummary collectionId={collectionId} />;
-  }
-
-  const { collections } = await getCollections([
-    { contract: tokenAddresses.L1 },
-  ]);
-
-  const collection = collections?.[0];
-
-  if (!collection) {
-    return <div>Collection Not Found</div>;
-  }
-
-  const links = [
-    {
-      icon: <ExternalLink />,
-      value: `https://etherscan.io/address/${collection.id}`,
-    },
-    {
-      icon: <Discord className="h-[28px] w-[28px] fill-white" />,
-      value: collection.discordUrl,
-    },
-    {
-      icon: <Twitter />,
-      value: "https://twitter.com/" + collection.twitterUsername,
-    },
-    { icon: <Globe />, value: collection.externalUrl },
-  ];
-
-  const statistics = [
-    {
-      value: collection?.floorSale["1day"],
-      title: "Top Offer",
-    },
-    {
-      value:
-        collection.floorAsk.price?.amount.raw &&
-        formatEther(collection.floorAsk.price?.amount.raw),
-      title: "Floor",
-    },
-    { value: collection.onSaleCount, title: "Listed" },
-    {
-      value: collection.volume.allTime.toFixed(2),
-      title: "Total Volume",
-    },
-    { value: collection.tokenCount, title: "Count" },
-  ];
-
   const contract_details = [
     {
       title: "Type",
-      value: collection.contractKind,
+      value: "ERC721",
     },
     {
       title: "Chain",
-      value: "Ethereum",
+      value: "Starknet",
     },
   ];
 
-  const comptatible_games = getGamesByContract(games, collection.id);
+  //const comptatible_games = getGamesByContract(games, collection.id);
 
   return (
     <div className="-mt-16 sm:mt-0 sm:flex">
       <div className="flex-none self-center sm:pr-10">
-        {collection.image && (
-          <Image
-            src={collection.image}
-            alt={collection.name}
-            width={200}
-            height={200}
-            className="mx-auto border"
-          />
-        )}
+        <Image
+          src={`/collections/${collectionId}.svg`}
+          alt={collectionId}
+          width={200}
+          height={200}
+          className="mx-auto border"
+        />
+
         <div className="mx-auto my-4 flex justify-center space-x-2">
-          {links.map((social, index) => {
+          {/*links.map((social, index) => {
             if (social.value)
               return (
                 <Link key={index} href={`${social.value}`}>
                   {social.icon}
                 </Link>
               );
-          })}
+          })*/}
         </div>
       </div>
 
@@ -115,7 +62,7 @@ export default async function CollectionSummary({
             );
           })}
         </div>
-        <h1>{collection.name}</h1>
+        <h1>{erc721Tokens[collectionId].name}</h1>
         {/* <div className="flex flex-wrap mb-4 sm:space-x-2">
           {comptatible_games.map((game: any, index: any) => {
             return (
@@ -130,7 +77,7 @@ export default async function CollectionSummary({
           })}
         </div> */}
         <div className="flex flex-wrap justify-start lg:space-x-2">
-          {statistics.map((statistic, index) => {
+          {/*statistics.map((statistic, index) => {
             return (
               <div
                 key={index}
@@ -142,7 +89,7 @@ export default async function CollectionSummary({
                 <div className="text-sm lg:text-xl">{statistic.value}</div>
               </div>
             );
-          })}
+          })*/}
         </div>
 
         {/* <p

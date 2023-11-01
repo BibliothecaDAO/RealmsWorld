@@ -25,9 +25,7 @@ export default function RootLayout({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   };
-  const tokenAddresses = getTokenContractAddresses(
-    params.id as keyof typeof erc721Tokens,
-  );
+
   const isMintable = params.id == "goldenToken";
   const tabs = [
     {
@@ -64,7 +62,7 @@ export default function RootLayout({
 
       <div className="relative -mt-56 flex h-full lg:pl-32">
         <div className="flex-grow">
-          <CollectionSummary address={tokenAddresses.L1} />
+          <CollectionSummary collectionId={params.id} />
           <div className="mb-3 flex justify-center gap-4 overflow-x-auto border-b py-4">
             {tabs.map((tab) => (
               <NavLink

@@ -15,20 +15,21 @@ export default async function Page() {
   const l1Collections = await getCollections([
     { contract: getTokenContractAddresses("realms").L1! },
   ]);
+
   // TODO refine collection display logic (with l2 collections included)
   const collections: Collection[] = l1Collections?.collections;
-  const defaultImage = "/backgrounds/map.png";
-  const l2Collections: L2Collection[] | null =
-    process.env.NEXT_PUBLIC_IS_TESTNET == "true"
-      ? [
-          {
-            name: "Beasts",
-            link: "beasts",
-            image: defaultImage,
-          },
-          { name: "Golden Token", link: "goldenToken", image: defaultImage },
-        ]
-      : []; // TODO fix l2 collection list logic for mainnet
+  const l2Collections: L2Collection[] = [
+    {
+      name: "Beasts",
+      link: "beasts",
+      image: "/collections/beasts.svg",
+    },
+    {
+      name: "Golden Token",
+      link: "goldenToken",
+      image: "/collections/goldenToken.svg",
+    },
+  ];
 
   return (
     <>
