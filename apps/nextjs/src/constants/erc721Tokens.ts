@@ -38,7 +38,7 @@ export const erc721Tokens: ERC721Tokens = {
     },
   },
   goldenToken: {
-    name: "LS Golden Token",
+    name: "Golden Token",
     contractAddresses: {
       L1: {},
       L2: {
