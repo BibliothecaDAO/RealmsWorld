@@ -16,7 +16,7 @@ export interface ERC721Tokens {
 }
 export const erc721Tokens: ERC721Tokens = {
   realms: {
-    name: "Realms (for Adventurers)",
+    name: "Realms",
     contractAddresses: {
       L1: {
         [ChainType.L1.MAIN]: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
