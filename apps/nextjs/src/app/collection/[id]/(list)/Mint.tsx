@@ -77,7 +77,7 @@ export default function Mint({ contractId }: { contractId: string }) {
         <div className="p-6">
           <h1>Golden Token</h1>
           <p className="mb-8">
-            One free game of Loot Survivor, every day, forever
+            One free game, every day, forever
           </p>
 
           {account ? (
