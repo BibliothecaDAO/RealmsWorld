@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: docs
+        working-directory: apps/docs
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -55,7 +55,7 @@ jobs:
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v1
         with:
-          path: "docs/_site/"
+          path: "apps/docs/_site/"
 
   # Deployment job
   deploy:
