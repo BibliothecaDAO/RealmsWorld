@@ -26,11 +26,15 @@ nav_order: 1
 
 ## Packages
 
-The Realms.World platform consists of three key packages:
+The Realms.World platform consists of a few key packages:
 
-- [`ui`](/frontend): The Next.js Frontend
-- [`subgraph`](/subgraph): The L1 Starknet Messaging Indexer for Bridge Transactions
-- [`apibara`](/starknet-indexer): The L2 indexer for Bridge Transactions
+- [`apps/nextjs`](/frontend): The Next.js Frontend
+
+- [`packages/subgraph`](/subgraph): The L1 Starknet Messaging Indexer for Bridge Transactions
+- [`packages/apibara`](/starknet-indexer): The L2 indexer for Bridge and NFT Transactions + Metadata
+- [`packages/api`](/trpc): The TRPC router used by the frontend to communicate with the database
+- [`packages/graphql-server`](/graphql-endpoint): A GraphQL endpoint for the L2 Indexed data (currently used by Loot Survivor)
+- [`packages/db`](/drizzle-db): The Drizzle ORM containing schema for the Postgres Database (currently set up for the Neon.tech serverless database - but could be adapted to a local or Planetscale without too much trouble)
 
 ## Contributing
 

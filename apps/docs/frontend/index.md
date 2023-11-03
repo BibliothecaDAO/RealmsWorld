@@ -11,7 +11,7 @@ has_children: true
 
 ### Overview
 
-[Realms.World](https://realms.world){:target="\_blank" rel="noopener"} is built using Next.js 13, which allows for a seamless integration of server and client components. The application aims to maximize performance and scalability by leveraging Vercel's cache and local cache.
+[Realms.World](https://realms.world){:target="\_blank" rel="noopener"} is built using Next.js 14, which allows for a seamless integration of server and client components. The application aims to maximize performance and scalability by leveraging Vercel's cache and local cache and is built on top of the [T3 Stack](https://github.com/t3-oss/create-t3-turbo)
 
 ### Server Components
 
@@ -22,19 +22,11 @@ Any component/data that can be rendered/fetched on the server should be rendered
 To start developing on Realms.World run the following commands from the project root:
 
 ```bash
-cd ui
+bun i
 ```
 
 ```bash
-yarn or npm install
-```
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+bun run dev
 ```
 
 ## Enviroment Variables
@@ -43,4 +35,4 @@ Depending on which environemnt you want to run, either copy the values from `.en
 
 ## Indexers
 
-You only need to run the subgraph and/or Apibara indexers locally if you want to preview changes, otherwise just use the deployed instances (as set in the `.env` file)
+You only need to run the subgraph and/or Apibara indexers locally if you want to preview changes, otherwise just use the deployed instances/database URL (as set in the `.env` file)
