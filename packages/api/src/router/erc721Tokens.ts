@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import { and, asc, eq, exists, gt, schema } from "@realms-world/db";
+import { and, asc, eq, gt, gte, schema } from "@realms-world/db";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -34,8 +34,8 @@ export const erc721TokensRouter = createTRPCRouter({
         limit: limit + 1,
         where: and(
           cursor
-            ? gt(schema.erc721Tokens.token_id, cursor)
-            : gt(schema.erc721Tokens.token_id, 0),
+            ? gte(schema.erc721Tokens.token_id, cursor)
+            : gte(schema.erc721Tokens.token_id, 0),
           ...where,
         ),
         orderBy: asc(schema.erc721Tokens.token_id),
