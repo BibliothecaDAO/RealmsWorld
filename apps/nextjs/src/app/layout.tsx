@@ -29,9 +29,9 @@ const karla = Karla({
 });
 const backgroundImageStyle = {
   backgroundImage: `url(/backgrounds/map.svg)`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
+  //backgroundSize: "cover",
+  backgroundPosition: "top",
+  backgroundRepeat: "repeat-y",
 };
 
 export default function Layout(props: { children: React.ReactNode }) {

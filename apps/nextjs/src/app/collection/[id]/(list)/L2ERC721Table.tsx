@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { api } from "@/utils/api";
 import { useInView } from "framer-motion";
 
+import { TokenCardSkeleton } from "../../TokenCardSkeleton";
 import { L2ERC721Card } from "./L2ERC721Card";
 
 //import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
@@ -35,7 +36,7 @@ export const L2ERC721Table = ({
     if (isInView) {
       fetchNextPage();
     }
-  }, [isInView]);
+  }, [fetchNextPage, isInView]);
 
   return (
     <>
@@ -55,8 +56,13 @@ export const L2ERC721Table = ({
           : "No Assets Found"}
       </div>
       {!isLoading && hasNextPage && (
-        <div className="mt-16 w-full" ref={ref}>
-          Loading
+        <div
+          ref={ref}
+          className="mt-6 grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+        >
+          {Array.from({ length: 5 }).map((_, index) => (
+            <TokenCardSkeleton key={index} />
+          ))}
         </div>
       )}
     </>
