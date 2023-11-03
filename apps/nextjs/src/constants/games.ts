@@ -47,7 +47,14 @@ export const games = [
       discord: "https://discord.gg/realmsworld",
       twitter: "https://twitter.com/LootRealms",
     },
-    compatibleTokens: [],
+    compatibleTokens: [
+      {
+        name: "Golden Token",
+        contract: "goldenToken",
+        icon: "realms.png",
+        image: "/backgrounds/warRoom.png",
+      },
+    ],
     screenshots: [
       {
         src: "/screenshots/LS.png",

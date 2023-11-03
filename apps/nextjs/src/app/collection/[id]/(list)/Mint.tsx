@@ -61,7 +61,7 @@ export default function Mint({ contractId }: { contractId: string }) {
     data: submittedData,
     isLoading: isTxLoading,
     error,
-  } = useWaitForTransaction({ hash: mintData?.transaction_hash, watch: true });
+  } = useWaitForTransaction({ hash: mintData?.transaction_hash });
 
   const isLoading = isTxSubmitting || (mintData && isTxLoading);
   return (
@@ -76,9 +76,7 @@ export default function Mint({ contractId }: { contractId: string }) {
         />
         <div className="p-6">
           <h1>Golden Token</h1>
-          <p className="mb-8">
-            One free game, every day, forever
-          </p>
+          <p className="mb-8">One free game, every day, forever</p>
 
           {account ? (
             <div className="flex items-center">
@@ -105,6 +103,7 @@ export default function Mint({ contractId }: { contractId: string }) {
           )}
         </div>
       </div>
+      {error}
       {submittedData && (
         <div className="mt-12 w-full rounded-xl border p-6">
           <h1 className="flex">
