@@ -32,17 +32,21 @@ export default function RootLayout({
       name: "Trade",
       link: isMintable ? "trade" : "",
     },
-    { name: "Analytics", link: "analytics" },
-    {
-      name: "Activity",
-      link: "activity",
-    },
   ];
   if (isMintable) {
     tabs.unshift({
       name: "Mint",
       link: "",
     });
+  }
+  if (params.id == "realms") {
+    tabs.push(
+      { name: "Analytics", link: "analytics" },
+      {
+        name: "Activity",
+        link: "activity",
+      },
+    );
   }
   return (
     <div
