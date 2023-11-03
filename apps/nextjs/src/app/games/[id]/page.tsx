@@ -34,12 +34,11 @@ export default async function Page({ params }: { params: { id: string } }) {
       content: (
         <div>
           <div className="flex">
-            {/* TODO linking games and tokens
-            game?.compatibleTokens?.map((token, index) => (
+            {game?.compatibleTokens?.map((token, index) => (
               <Button href={`/collection/${token.contract}`} key={index}>
                 {token.name}
               </Button>
-            ))*/}
+            ))}
           </div>
         </div>
       ),
@@ -77,13 +76,35 @@ export default async function Page({ params }: { params: { id: string } }) {
                     White paper
                   </Button>
                 )}
-                <Button
-                  size={"xs"}
-                  variant={"outline"}
-                  href={game?.links.website}
-                >
-                  Website
-                </Button>
+                {game?.links.website && (
+                  <Button
+                    size={"xs"}
+                    variant={"outline"}
+                    href={game?.links.website}
+                    className="mr-2"
+                  >
+                    Website
+                  </Button>
+                )}
+                {game?.links.mainnet && (
+                  <Button
+                    size={"xs"}
+                    variant={"outline"}
+                    href={game?.links.mainnet}
+                    className="mr-2"
+                  >
+                    Mainnet
+                  </Button>
+                )}
+                {game?.links.testnet && (
+                  <Button
+                    size={"xs"}
+                    variant={"outline"}
+                    href={game?.links.testnet}
+                  >
+                    Testnet
+                  </Button>
+                )}
               </div>
 
               <Tabs defaultValue={tabs[0]?.name}>
@@ -96,7 +117,11 @@ export default async function Page({ params }: { params: { id: string } }) {
                 </TabsList>
 
                 {tabs.map((tab, index) => (
-                  <TabsContent value={tab.name} key={index}>
+                  <TabsContent
+                    className="bg-dark-green rounded border p-4"
+                    value={tab.name}
+                    key={index}
+                  >
                     {tab.content}
                   </TabsContent>
                 ))}

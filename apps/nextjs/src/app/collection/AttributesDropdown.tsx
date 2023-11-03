@@ -25,7 +25,7 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
     >
       <div className="sticky  top-0 z-[100] overflow-y-auto pt-12">
         <ScrollArea.Root className="ScrollAreaRoot bg-dark-green border px-2">
-          <ScrollArea.Viewport className="h-screen">
+          <ScrollArea.Viewport className="h-auto">
             <Button className="sm:hidden" variant={"default"}>
               Close
             </Button>

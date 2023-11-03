@@ -18,7 +18,7 @@ export const games = [
     compatibleTokens: [
       {
         name: "Realms",
-        //contract: whiteListedContracts.realms.MAIN,
+        contract: "realms",
         icon: "realms.png",
         image: "/backgrounds/warRoom.png",
       },
@@ -36,13 +36,14 @@ export const games = [
     id: "loot-survivor",
     image: "/backgrounds/dragon.png",
     color: "#f5f5f5",
-    status: "alpha",
+    status: "beta",
     chains: ["Starknet"],
     description: "Play to Die",
     longform:
       "Survivors is the first Loot adventure game exploring the Play2Die mechanic. It is a game of onchain survival where you must defeat beasts and collect gear in the fight to stay alive and make it to the top of the leaderboard.",
     links: {
-      website: "https://beta-survivor.realms.world/",
+      mainnet: "https://survivor.realms.world/",
+      testnet: "https://beta-survivor.realms.world/",
       discord: "https://discord.gg/realmsworld",
       twitter: "https://twitter.com/LootRealms",
     },

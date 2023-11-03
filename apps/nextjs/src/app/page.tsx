@@ -9,6 +9,8 @@ import Starknet from "@/icons/starknet.svg";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import type { Collection, Game } from "@/types";
 
+import CollectionsList from "./collection/CollectionsList";
+
 //import { AuthShowcase } from "./_components/auth-showcase";
 
 export default async function Home() {
@@ -71,11 +73,7 @@ export default async function Home() {
       <hr className="my-8 border" />
       <div className="my-20 ">
         <h3 className="mb-8">Featured Collections</h3>
-        <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
-          {collections?.map((collection: Collection, index) => {
-            return <CollectionCard collection={collection} key={index} />;
-          })}
-        </div>
+        <CollectionsList />
       </div>
     </div>
   );
