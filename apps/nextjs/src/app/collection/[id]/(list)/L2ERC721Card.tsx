@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/app/_components/ui/button";
+import { useStarkDisplayName } from "@/hooks/useStarkName";
 import type { RouterOutputs } from "@/utils/api";
 import { findTokenName, shortenHex } from "@/utils/utils";
 
@@ -24,6 +25,7 @@ export const L2ERC721Card = (props: TokenCardProps) => {
 
   const imageSize = isGrid ? 800 : 60;
 
+  const starkName = useStarkDisplayName(token.owner);
   return (
     <div className={layout === "grid" ? grid : list}>
       <Link
@@ -56,7 +58,7 @@ export const L2ERC721Card = (props: TokenCardProps) => {
             )*/}
           </div>
           <h6> {decodeURIComponent(token.name || "")}</h6>
-          <h6>{token.owner && shortenHex(token.owner, 8)}</h6>
+          <h6>{starkName}</h6>
           {token.metadata?.attributes?.length && (
             <>
               <p>
