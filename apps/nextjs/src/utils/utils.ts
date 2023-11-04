@@ -108,6 +108,6 @@ export function formatQueryString(querybatch: any, type = "contract") {
   return "";
 }
 
-export const isStarknetAddress = (address: string) => {
-  return address.length == 66;
-};
+export function isStarknetAddress(address: string) {
+  return address?.length == 66 || address.length == 65;
+}

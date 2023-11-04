@@ -28,7 +28,7 @@ export const erc721TokensRouter = createTRPCRouter({
         );
       }
       if (owner) {
-        where.push(eq(schema.erc721Tokens.owner, owner));
+        where.push(eq(schema.erc721Tokens.owner, owner.toLowerCase()));
       }
       const items = await ctx.db.query.erc721Tokens.findMany({
         limit: limit + 1,
