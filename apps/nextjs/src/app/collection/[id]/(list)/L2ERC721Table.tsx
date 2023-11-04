@@ -11,24 +11,28 @@ import { L2ERC721Card } from "./L2ERC721Card";
 
 export const L2ERC721Table = ({
   contractAddress,
+  ownerAddress,
 }: {
   contractAddress: string;
+  ownerAddress?: string;
 }) => {
   const isGrid = true;
   const grid =
     "grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
   const list = "grid grid-cols-1 w-full";
   const ref = useRef(null);
+  const filters: any = { limit: 10, contractAddress };
+
+  if (ownerAddress) {
+    filters.owner = ownerAddress;
+  }
 
   const [erc721Tokens, { fetchNextPage, isLoading, hasNextPage }] =
-    api.erc721Tokens.all.useSuspenseInfiniteQuery(
-      { limit: 10, contractAddress },
-      {
-        getNextPageParam(lastPage) {
-          return lastPage.nextCursor;
-        },
+    api.erc721Tokens.all.useSuspenseInfiniteQuery(filters, {
+      getNextPageParam(lastPage) {
+        return lastPage.nextCursor;
       },
-    );
+    });
   const isInView = useInView(ref, { once: false });
 
   useEffect(() => {
@@ -41,7 +45,7 @@ export const L2ERC721Table = ({
   return (
     <>
       <div className={isGrid ? grid : list}>
-        {erc721Tokens
+        {erc721Tokens.pages[0]?.items.length
           ? erc721Tokens?.pages?.map((page, index) =>
               page.items.map((token, index) => {
                 return (

@@ -1,74 +1,44 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { NavLink } from "@/app/_components/ui/nav-link";
-import { /*hexToNumber,*/ shortenHex } from "@/utils/utils";
+import { isStarknetAddress } from "@/utils/utils";
 import { motion } from "framer-motion";
+import { isAddress } from "viem";
 
-export default function RootLayout({
+import { UserProfile } from "../UserProfile";
+import { UserTabs } from "../UserTabs";
+
+export default function UserLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
   params: { address: string };
 }) {
-  const defaultImage = "/backgrounds/dummy_background.webp";
-  const imageUrl = params.address
-    ? `/backgrounds/${params.address}.png`
-    : defaultImage;
+  const isL2 = isStarknetAddress(params?.address);
 
-  const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${imageUrl}), url(${defaultImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };
-  //const id = hexToNumber(params.address, 1, 10);
-  const tabs = [
-    {
-      name: "Mainnet",
-      link: "",
-    },
-    { name: "Starknet", link: "starknet" },
-    {
-      name: "Activity",
-      link: "activity",
-    },
-  ];
+  const isL1 = isAddress(params?.address);
+
+  //const isUserAddress = [l1Account, l2Account].includes(params?.address);
+
   return (
     <div className="h-full w-full">
       <motion.div
         initial={{ opacity: 0.2 }}
         animate={{ opacity: 1 }}
-        className="-mt-24 h-96 w-full"
-        style={backgroundImageStyle}
+        className="mask-transparent -mt-24 h-96 w-full before:bg-[url(/backgrounds/dummy_background.png)] before:bg-cover before:bg-center before:bg-no-repeat"
       />
-      <motion.div className="sm:pl-32 ">
+      <motion.div className="relative z-10 sm:pl-32">
         <div className="-mt-64 flex h-full p-8">
-          <div className="from-theme-gray-light hidden w-1/3 flex-none rounded-t-2xl bg-gradient-to-b p-4 sm:block">
-            <h5>{shortenHex(params.address)}</h5>
-            {/*<Image
-              src={`/users/${id}.png`}
-              alt="An example image"
-              width={2000}
-              height={2000}
-              className="mx-auto rounded"
-  />*/}
-          </div>
-          <div className="flex-shrink p-8 sm:w-2/3">
-            <div className=" mb-4 flex w-full space-x-4 border-b py-3 text-xl">
-              {tabs.map((tab) => (
-                <NavLink
-                  key={tab.name}
-                  exact
-                  href={`/user/${params.address}${tab.link && "/" + tab.link}`}
-                >
-                  {tab.name}
-                </NavLink>
-              ))}
-            </div>
-            {children}
+          <UserProfile
+            l1Address={isL1 ? params.address : ""}
+            l2Address={isL2 ? params.address : ""}
+          />
+
+          <div className="flex-shrink p-8 sm:w-3/4">
+            <UserTabs address={params.address} />
+            <div className="relative z-10">{children} </div>
           </div>
         </div>
       </motion.div>
