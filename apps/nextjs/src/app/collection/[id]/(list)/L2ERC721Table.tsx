@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
+import { useUIContext } from "@/app/providers/UIProvider";
 import { api } from "@/utils/api";
 import { useInView } from "framer-motion";
 
 import { TokenCardSkeleton } from "../../TokenCardSkeleton";
-import { TradeFilters } from "../../TradeFilters";
 import { L2ERC721Card } from "./L2ERC721Card";
 
 //import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
@@ -18,7 +18,7 @@ export const L2ERC721Table = ({
   contractAddress: string;
   ownerAddress?: string;
 }) => {
-  const isGrid = true;
+  const { isGrid } = useUIContext();
   const grid =
     "grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
   const list = "grid grid-cols-1 w-full";
