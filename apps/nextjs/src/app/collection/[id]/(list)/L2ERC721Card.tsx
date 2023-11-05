@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/app/_components/ui/button";
+import { useStarkDisplayName } from "@/hooks/useStarkName";
 import type { RouterOutputs } from "@/utils/api";
 import { findTokenName, shortenHex } from "@/utils/utils";
 
@@ -24,8 +25,32 @@ export const L2ERC721Card = (props: TokenCardProps) => {
 
   const imageSize = isGrid ? 800 : 60;
 
+  /* const { data, isLoading, error, refetch } = useContractRead({
+    address: ethAddress,
+    abi: compiledErc721.abi,
+    functionName: 'tokenURI',
+    args: [address],
+    watch: false
+  })
+
+  if(!token.name) {
+
+  }*/
+  const starkName = useStarkDisplayName(token.owner);
+
+  function renderAttribute(token: typeof props.token, traitType: string) {
+    const attribute = token.metadata?.attributes.find(
+      (trait) => trait.trait_type === traitType,
+    );
+    return attribute ? (
+      <p className="capitalize">
+        {traitType}: {attribute.value}
+      </p>
+    ) : null;
+  }
+
   return (
-    <div className={layout === "grid" ? grid : list}>
+    <div className={isGrid ? grid : list}>
       <Link
         href={`/collection/${findTokenName(token.contract_address ?? "")}/${
           token.token_id
@@ -56,33 +81,12 @@ export const L2ERC721Card = (props: TokenCardProps) => {
             )*/}
           </div>
           <h6> {decodeURIComponent(token.name || "")}</h6>
-          <h6>{token.owner && shortenHex(token.owner, 8)}</h6>
+          <h6>{starkName}</h6>
           {token.metadata?.attributes?.length && (
             <>
-              <p>
-                Type:{" "}
-                {
-                  token.metadata?.attributes.find(
-                    (trait) => trait.trait_type === "type",
-                  )?.value
-                }
-              </p>
-              <p>
-                Tier:{" "}
-                {
-                  token.metadata?.attributes.find(
-                    (trait) => trait.trait_type === "tier",
-                  )?.value
-                }
-              </p>
-              <p>
-                Level:{" "}
-                {
-                  token.metadata?.attributes.find(
-                    (trait) => trait.trait_type === "level",
-                  )?.value
-                }
-              </p>
+              {renderAttribute(token, "type")}
+              {renderAttribute(token, "tier")}
+              {renderAttribute(token, "level")}
             </>
           )}
 
@@ -107,14 +111,22 @@ export const L2ERC721Card = (props: TokenCardProps) => {
           </div>
         </div>
       ) : (
-        <div className={`flex w-full justify-between px-3`}>
-          <div className="flex w-full">
-            <div className="self-center">
+        <div className={`flex w-full justify-between overflow-y-auto px-3`}>
+          <div className="flex w-full justify-start">
+            <div className="w-96 self-center">
               <div className="text-sm">#{token.token_id} </div>
-              <div className="self-center">
+              <div className="self-center whitespace-nowrap ">
                 {decodeURIComponent(token.name || "")}
               </div>
             </div>
+            {token.metadata?.attributes?.length && (
+              <div className="hidden items-center space-x-6 self-center px-3 sm:flex">
+                {renderAttribute(token, "type")}
+                {renderAttribute(token, "tier")}
+                {renderAttribute(token, "level")}
+              </div>
+            )}
+            <div className=" ml-auto mr-4 self-center sm:mr-8">{starkName}</div>
 
             {/*<h6 className="self-center ml-auto">
               {token.market.floorAsk.price
@@ -137,7 +149,7 @@ export const L2ERC721Card = (props: TokenCardProps) => {
               </div>*/}
           </div>
 
-          <div className="flex justify-between space-x-2 self-center">
+          <div className="flex justify-between self-center">
             <Button
               href={`/collection/beasts/${token.token_id}`}
               variant={"outline"}

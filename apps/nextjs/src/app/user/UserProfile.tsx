@@ -2,6 +2,7 @@
 
 import crypto from "crypto";
 import Image from "next/image";
+import { useStarkDisplayName } from "@/hooks/useStarkName";
 import EthereumLogo from "@/icons/ethereum.svg";
 import Starknet from "@/icons/starknet.svg";
 import { shortenHex } from "@/utils/utils";
@@ -34,12 +35,13 @@ export const UserProfile = ({
     ? hexToNumber(l1Shown, 1, 10)
     : hexToNumber(l2Shown, 1, 10);
 
+  const starkName = useStarkDisplayName(l2Shown);
   return (
     <div className="from-theme-gray-light hidden w-1/4 flex-none rounded-t-2xl bg-gradient-to-b p-4 sm:block">
       <h5>
         {l2Shown && (
           <div className="flex">
-            <Starknet className="mr-2 w-6" /> {shortenHex(l2Shown)}
+            <Starknet className="mr-2 w-6" /> {starkName}
           </div>
         )}
         {l1Shown && (

@@ -13,6 +13,7 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
+    "@avnu/avnu-sdk": "^1.2.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.16",
@@ -49,7 +50,7 @@
     "@realms-world/auth": "workspace:*",
     "@realms-world/db": "workspace:*",
     "@realms-world/graphql-server": "workspace:*",
-    "@reservoir0x/reservoir-kit-ui": "^1.16.2",
+    "@reservoir0x/reservoir-kit-ui": "^1.17.0",
     "@starknet-react/core": "next",
     "@starknet-react/chains": "next",
     "@starkware-industries/commons-js-enums": "^1.2.0",
@@ -89,7 +90,7 @@
     "@realms-world/tailwind-config": "workspace:*",
     "@realms-world/tsconfig": "workspace:*",
     "@types/node": "^18.18.0",
-    "@types/react": "^18.2.33",
+    "@types/react": "^18.2.34",
     "@types/react-dom": "^18.2.14",
     "dotenv-cli": "^7.3.0",
     "eslint": "^8.52.0",

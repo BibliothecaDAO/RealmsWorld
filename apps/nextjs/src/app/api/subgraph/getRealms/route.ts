@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
 import { Realm } from "@/types";
+import { NextResponse } from "next/server";
 
-//export const runtime = "edge";
+export const runtime = "edge";
 const query = `query UsersRealms(
   $address: String!
   $addressId: ID!
