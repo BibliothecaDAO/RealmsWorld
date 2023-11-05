@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { api } from "@/utils/api";
 import { useInView } from "framer-motion";
 
@@ -13,31 +14,31 @@ import { L2ERC721Card } from "./L2ERC721Card";
 export const L2ERC721Table = ({
   contractAddress,
   ownerAddress,
-  searchParams,
 }: {
   contractAddress: string;
   ownerAddress?: string;
-  searchParams?: { sortDirection: string };
 }) => {
   const isGrid = true;
   const grid =
     "grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
   const list = "grid grid-cols-1 w-full";
   const ref = useRef(null);
+
+  const searchParams = useSearchParams();
+
+  const sortDirection = searchParams.get("sortDirection");
+
   const filters = {
     limit: 10,
     contractAddress,
-    direction: searchParams?.sortDirection,
+    direction: sortDirection,
   };
-
   if (ownerAddress) {
     filters.owner = ownerAddress;
   }
-  console.log(filters);
   const [erc721Tokens, { fetchNextPage, isLoading, hasNextPage, isFetching }] =
     api.erc721Tokens.all.useSuspenseInfiniteQuery(filters, {
       getNextPageParam(lastPage) {
-        console.log(lastPage);
         return lastPage.nextCursor;
       },
     });
