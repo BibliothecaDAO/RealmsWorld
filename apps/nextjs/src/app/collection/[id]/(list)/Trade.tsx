@@ -34,7 +34,13 @@ export async function Trade({
             </div>
           }
         >
-          <L2ERC721Table contractAddress={tokenAddresses.L2} />
+          <div className="mb-3 flex w-full justify-between">
+            <TradeFilters />
+          </div>
+          <L2ERC721Table
+            searchParams={searchParams}
+            contractAddress={tokenAddresses.L2}
+          />
         </Suspense>
       </div>
     );

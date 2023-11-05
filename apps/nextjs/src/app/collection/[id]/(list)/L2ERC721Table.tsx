@@ -5,6 +5,7 @@ import { api } from "@/utils/api";
 import { useInView } from "framer-motion";
 
 import { TokenCardSkeleton } from "../../TokenCardSkeleton";
+import { TradeFilters } from "../../TradeFilters";
 import { L2ERC721Card } from "./L2ERC721Card";
 
 //import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
@@ -12,24 +13,31 @@ import { L2ERC721Card } from "./L2ERC721Card";
 export const L2ERC721Table = ({
   contractAddress,
   ownerAddress,
+  searchParams,
 }: {
   contractAddress: string;
   ownerAddress?: string;
+  searchParams?: { sortDirection: string };
 }) => {
   const isGrid = true;
   const grid =
     "grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
   const list = "grid grid-cols-1 w-full";
   const ref = useRef(null);
-  const filters: any = { limit: 10, contractAddress };
+  const filters = {
+    limit: 10,
+    contractAddress,
+    direction: searchParams?.sortDirection,
+  };
 
   if (ownerAddress) {
     filters.owner = ownerAddress;
   }
-
-  const [erc721Tokens, { fetchNextPage, isLoading, hasNextPage }] =
+  console.log(filters);
+  const [erc721Tokens, { fetchNextPage, isLoading, hasNextPage, isFetching }] =
     api.erc721Tokens.all.useSuspenseInfiniteQuery(filters, {
       getNextPageParam(lastPage) {
+        console.log(lastPage);
         return lastPage.nextCursor;
       },
     });
@@ -38,7 +46,7 @@ export const L2ERC721Table = ({
   useEffect(() => {
     console.log("Element is in view: ", isInView);
     if (isInView) {
-      fetchNextPage();
+      !isFetching && fetchNextPage();
     }
   }, [fetchNextPage, isInView]);
 
