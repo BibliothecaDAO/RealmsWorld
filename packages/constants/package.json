@@ -1,0 +1,42 @@
+{
+  "name": "@realms-world/constants",
+  "private": true,
+  "version": "workspace:*",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "clsx": "^2.0.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "tailwind-merge": "^2.0.0"
+  },
+  "devDependencies": {
+    "@realms-world/eslint-config": "workspace:*",
+    "@realms-world/prettier-config": "workspace:*",
+    "@realms-world/tsconfig": "workspace:*",
+    "eslint": "^8.47.0",
+    "typescript": "^5.1.6"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@realms-world/eslint-config/base"
+    ]
+  },
+  "prettier": "@realms-world/prettier-config"
+}

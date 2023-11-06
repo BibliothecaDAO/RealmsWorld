@@ -29,6 +29,7 @@
     "@turbo/gen": "^1.10.16",
     "npm-check-updates": "^16.14.6",
     "prettier": "^3.0.3",
+    "tsup": "^7.2.0",
     "turbo": "^1.10.16",
     "typescript": "^5.2.2"
   },
