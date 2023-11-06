@@ -36,3 +36,7 @@ Depending on which environemnt you want to run, either copy the values from `.en
 ## Indexers
 
 You only need to run the subgraph and/or Apibara indexers locally if you want to preview changes, otherwise just use the deployed instances/database URL (as set in the `.env` file)
+
+## Add a Game/Collection/Token
+
+See [`Data`](/data)
