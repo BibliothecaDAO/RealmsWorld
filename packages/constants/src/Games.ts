@@ -72,4 +72,25 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
   },
+  {
+    name: "Arcane Assembler",
+    id: "arcane-assembler",
+    developer: "Arcane Assemblers",
+    genres: ["Play to Die", "Card Game"],
+    color: "#f5f5f5",
+    status: "development",
+    description: "Play to Die",
+    longform:
+      "Arcane Assembly is a Play2Die card game where you must build the most powerful spell you can... without exploding first. Forage for ingredients, perform rituals, and summon helpers but manage your time wisely. Spells left unattended quickly become unstable. Compete with other mages from across the realm for bragging rights and rewards.",
+    links: {
+      homepage: "https://github.com/ArcaneAssemblers/spellcrafter",
+      discord: "https://discord.gg/4S97gdsK",
+      twitter: "https://twitter.com/ArcaneAssembler",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "TBD",
+    chains: [ChainId.SN_GOERLI],
+    collections: [],
+    tokens: [],
+  },
 ];
