@@ -79,7 +79,7 @@ export const games: Game[] = [
     genres: ["Play to Die", "Card Game"],
     color: "#f5f5f5",
     status: "development",
-    description: "Play to Die",
+    description: "Balance Power and Chaos",
     longform:
       "Arcane Assembly is a Play2Die card game where you must build the most powerful spell you can... without exploding first. Forage for ingredients, perform rituals, and summon helpers but manage your time wisely. Spells left unattended quickly become unstable. Compete with other mages from across the realm for bragging rights and rewards.",
     links: {
