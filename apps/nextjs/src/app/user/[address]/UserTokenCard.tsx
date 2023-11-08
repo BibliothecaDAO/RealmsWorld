@@ -1,12 +1,12 @@
+import Image from "next/image";
 import { Button } from "@/app/_components/ui/button";
-import SafeImage from "@/app/_components/ui/safeimage";
-import { UserTokenData } from "@/types";
+import type { UserTokenData } from "@/types";
 
 function UserTokenCard({ token }: { token: UserTokenData }) {
   return (
     <div className="flex transform flex-col border duration-300   hover:-translate-y-1">
       {token.token.image && (
-        <SafeImage
+        <Image
           src={token.token.image}
           alt={"Image for: " + token.token.name}
           className="mx-auto "

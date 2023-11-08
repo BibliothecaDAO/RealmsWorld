@@ -9,7 +9,9 @@ import nextConfig from "../../../../next.config.mjs";
 export const isImageDomainAllowed = (src: string) => {
   try {
     const url = new URL(src);
-    return nextConfig.images?.domains?.includes(url.hostname);
+    return nextConfig.images?.remotePatterns?.some(
+      (pattern) => pattern.hostname == url.hostname,
+    );
   } catch (error) {
     return false;
   }
