@@ -103,34 +103,42 @@ export default function Mint({ contractId }: { contractId: string }) {
           )}
         </div>
       </div>
-      {error}
       {submittedData && (
         <div className="mt-12 w-full rounded-xl border p-6">
           <h1 className="flex">
             You have minted Golden Token #
             {(submittedData as any)?.events[1] ? (
-              uint256
-                .uint256ToBN({
-                  low: (submittedData as any)?.events[1]?.data[2],
-                  high: (submittedData as any)?.events[1]?.data[3],
-                })
-                .toString()
+              <>
+                {uint256
+                  .uint256ToBN({
+                    low: (submittedData as any)?.events[1]?.data[2],
+                    high: (submittedData as any)?.events[1]?.data[3],
+                  })
+                  .toString()}
+                <Button
+                  className=" justify-between normal-case"
+                  size={"xs"}
+                  variant={"outline"}
+                  rel="noopener noreferrer"
+                  href={STARKSCAN_TX_URL(mintData?.transaction_hash)}
+                >
+                  <span>View Tx Explorer</span>
+                  <ExternalLinkIcon className="ml-2 h-3 w-3" />
+                </Button>
+              </>
             ) : (
               <Loader2 className="ml-2 h-8 w-8 animate-spin" />
             )}
           </h1>
           <Button
-            className=" justify-between normal-case"
-            size={"xs"}
-            variant={"outline"}
-            rel="noopener noreferrer"
-            href={STARKSCAN_TX_URL(mintData?.transaction_hash)}
+            href={`/collection/goldenToken/${(submittedData as any)?.events[1]
+              ?.data[2]}`}
           >
-            <span>View Tx Explorer</span>
-            <ExternalLinkIcon className="ml-2 h-3 w-3" />
+            View Token
           </Button>
         </div>
       )}
+      {error && <div>Something Went Wrong</div>}
     </div>
   );
 }
