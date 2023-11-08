@@ -61,7 +61,7 @@ export const fetchMetadata = inngest.createFunction(
 
     if (metadata.error) {
       console.log(metadata.error);
-      await step.sleep("fetch sleep", "10s");
+      await step.sleep("fetch sleep", "20s");
       throw new Error("Failed to fetch item from Infura API");
     }
 
