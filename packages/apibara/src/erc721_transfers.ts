@@ -34,10 +34,6 @@ export default function transform({ header, events }: Block) {
 }
 
 function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
-  const from = BigInt(event.data[0]);
-  if (from !== 0n) {
-    return [];
-  }
   const token_id = parseInt(
     uint256.uint256ToBN({ low: event.data[2], high: event.data[3] }).toString(),
   );
