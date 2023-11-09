@@ -62,5 +62,3 @@ Check out the docs at [Add Data Docs](https://docs.realms.world/data)
 ### License
 
 Realms.World is an open-source project released under the MIT License. This license allows you to freely use, modify, and distribute the code, as long as you include the original copyright and permission notice in any copy of the software or substantial portions of it.
-
-##
