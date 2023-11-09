@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { CollectionCard } from "@/app/_components/CollectionCard";
 import { Carousel } from "@/app/_components/ui/carousel";
@@ -68,6 +69,20 @@ export default async function Home() {
           {games.map((game: Game, index) => (
             <GameCard key={index} game={game} />
           ))}
+        </div>
+      </div>
+      <hr className="my-8 border" />
+      <h3 className="mb-8">Blog</h3>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="border">
+          <Link href={"/blog/loot-survivor"}>
+            <Image
+              src="/blog/loot-survivor/Realms.World_LS_article_modal.png"
+              width={600}
+              height={900}
+              alt="LS Blog"
+            ></Image>
+          </Link>
         </div>
       </div>
       <hr className="my-8 border" />

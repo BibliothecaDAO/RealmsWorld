@@ -18,8 +18,6 @@ export const GameCard = ({ game }: GameCardProps) => {
         alt={game.name}
         layout="fill"
         objectFit="cover"
-        width={500}
-        height={300}
         className="bg-medium-dark-green absolute inset-0 z-0 brightness-50 transition-all duration-300 hover:filter-none"
       />
       <div className="relative z-10">

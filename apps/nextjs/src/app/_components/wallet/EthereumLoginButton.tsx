@@ -42,7 +42,7 @@ export const EthereumLoginButton = ({
               ensName ?? truncatedAddress
             ) : (
               <>
-                <span>Connect Ethereum</span>
+                <span className="hidden sm:block">Connect Ethereum</span>
                 {isConnecting ||
                   (isLoading && (
                     <div className="absolute right-0 mr-8">

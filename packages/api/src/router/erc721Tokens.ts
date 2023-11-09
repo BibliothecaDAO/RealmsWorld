@@ -23,10 +23,10 @@ export const erc721TokensRouter = createTRPCRouter({
       const { cursor, contractAddress, owner, orderBy, direction } = input;
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
-      if (direction === "dsc") {
-        orderByFilter.push(desc(schema.erc721Tokens.token_id));
-      } else {
+      if (direction === "asc") {
         orderByFilter.push(asc(schema.erc721Tokens.token_id));
+      } else {
+        orderByFilter.push(desc(schema.erc721Tokens.token_id));
       }
 
       if (contractAddress) {
@@ -42,15 +42,14 @@ export const erc721TokensRouter = createTRPCRouter({
       }
       if (cursor) {
         whereFilter.push(
-          direction === "dsc"
-            ? lte(schema.erc721Tokens.token_id, cursor)
-            : gte(schema.erc721Tokens.token_id, cursor),
+          direction === "asc"
+            ? gte(schema.erc721Tokens.token_id, cursor)
+            : lte(schema.erc721Tokens.token_id, cursor),
         );
-      } else {
-        whereFilter.push(gte(schema.erc721Tokens.token_id, 0));
-      }
+      } /* else {
+        whereFilter.push(lte(schema.erc721Tokens.token_id, cursor));
+      }*/
 
-      console.log(cursor, limit);
       const items = await ctx.db.query.erc721Tokens.findMany({
         limit: limit + 1,
         where: and(...whereFilter),

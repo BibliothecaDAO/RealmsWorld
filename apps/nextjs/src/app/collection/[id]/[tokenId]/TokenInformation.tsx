@@ -133,6 +133,16 @@ export const TokenInformation = ({
                 }
               </span>
             </div>
+            <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
+              <h5>Health: </h5>
+              <span className="text-xl">
+                {
+                  token.metadata?.attributes.find(
+                    (trait) => trait.trait_type === "health",
+                  )?.value
+                }
+              </span>
+            </div>
           </div>
         )}
         {children}

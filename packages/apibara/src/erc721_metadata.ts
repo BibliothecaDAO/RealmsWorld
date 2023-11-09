@@ -24,7 +24,7 @@ export const config: Config<Starknet, Webhook> = {
   sinkOptions: {
     targetUrl: "https://inn.gs/e/" + Deno.env.get("INNGEST_EVENT_KEY"),
     raw: true,
-    header: ["x-inngest-env: LS-updates"],
+    header: ["x-inngest-env: content-mdx"],
   },
 };
 

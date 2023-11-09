@@ -87,6 +87,7 @@ export const L2ERC721Card = (props: TokenCardProps) => {
               {renderAttribute(token, "type")}
               {renderAttribute(token, "tier")}
               {renderAttribute(token, "level")}
+              {renderAttribute(token, "health")}
             </>
           )}
 
