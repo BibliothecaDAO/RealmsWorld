@@ -21,4 +21,14 @@ export const metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Realms.World | Loot Survivor Blogpost",
+    description:
+      "Blogpost: Loot Survivor Immutable Arcade + The Golden Token mint",
+    siteId: "1467726470533754880",
+    creator: "@bibliothecadao",
+    creatorId: "1467726470533754880",
+    images: ["/blog/loot-survivor/LS_article_meta_data_image.png"],
+  },
 };
