@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "@/app/_components/ui/button";
 import type { MDXComponents } from "mdx/types";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -11,6 +12,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
+    Button: (props) => <Button {...props}>{props.text}</Button>,
     ...components,
   };
 }

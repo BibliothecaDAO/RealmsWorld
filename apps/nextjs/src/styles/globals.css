@@ -42,7 +42,11 @@ h6 {
 body {
   @apply font-sans;
 }
-
+@layer base {
+  a {
+    @apply text-flamingo;
+  }
+}
 .ScrollAreaScrollbar {
   display: flex;
   /* ensures no selection */
