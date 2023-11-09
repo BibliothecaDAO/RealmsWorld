@@ -1,0 +1,261 @@
+# 🪦 Loot Survivor: The Immutable Arcade
+
+Lords, Ladies and Adventurers: Loot Survivor is running on Starknet. Loot Survivor is a highly competitive strategy game. Players take ‘runs’ into the mist where they encounter beasts and fall prey to traps. They must come up with tactics and execute a plan to survive for as long as they can, building an XP score. Much of this revolves around Loot they buy and equip in game, and their overall approach to exploration and encounters. There is strategic depth to gameplay. Players jockey for position on the global leaderboard - and the lucrative rewards earned by holding a position in the Top 3. It is a fully onchain game and can’t be taken down. \
+ \
+Read on to learn more about _The Immutable Arcade_ production release of Loot Survivor - including how you can play a free game every day if you [mint a Golden Token.](realms.world/collection/goldenToken)
+
+##
+
+![Loot Survivor Immortal Arcade](/blog/loot-survivor/LOOT_SURVIVOR_ARCADE.png "Drop in a few dollars of $Lords tokens to take a shot at the eternal leaderboard.")
+
+Drop in a few dollars of $Lords tokens to take a shot at the eternal leaderboard.
+
+###
+
+### 🪦 A Game of Survival
+
+Loot Survivor is from the 'Roguelike' game genre, distinguished by its challenging nature, character 'permadeath,' and procedurally generated levels. There are no saved games or checkpoints and there is no final boss: the game ends with the permanent death of the player’s Adventurer.
+
+The game is unapologetically hard, and requires resilience and strategy (check out this [guide](https://survivor-docs.realms.world/)). For all this difficulty, the feeling of posting your name and score to the leaderboard after a good run is profoundly rewarding. Though from different genres, players liken the bittersweet difficulty of Loot Survivor to that of a Dark Souls game—insanely challenging, humbling when it doesn’t go your way, euphoric when it does.
+
+![Loot Survivor Immortal Arcade](/blog/loot-survivor/Immutable_Arcade_Release_Poster_V1.png)
+
+A game starts with the player choosing their leaderboard moniker and selecting a starting weapon from four options: magical wand, spellcasting book, blade, or bludgeon. They are ready to step ‘into the mist’ where they will confront their first beast and begin their struggle for survival.
+
+From the outset there is both danger and strategy in equal measure. An Adventurer is allocated nine base stat points, randomly distributed across six skill types including 'intelligence' and 'dexterity'. How will players navigate their character’s progression from this random base stat build? Exploration and combat accrue XP, so surviving encounters leads to frequent level ups. With each level ascension, players can invest in-game gold in health and item upgrades, and start to execute their gameplan. You do have a gameplan, right, Adventurer anon?
+
+Early game tactics significantly diverge from late game strategies, and given the nuanced character build choices and item leveling, there are always new strategies to try and meta builds to be discovered. Pay attention to the modifications offered by the jewelry items. Make sure you know which weapon classes are strong/weak against which armor classes. Be aware, the game moves along at pace with an idle penalty that kicks in after a short period of inactivity.
+
+Every score is etched onto the immutable onchain leaderboard, standing perpetually as a testament to either a triumphant survival saga or a swift, calamitous demise. The players holding the top3 leaderboard positions receive $Lords tributes when new games are started - so both glory and gains are on the line with each Adventurer's life.
+
+![Loot Survivor Immortal Arcade](/blog/loot-survivor/LOOT_SURVIVOR_START_GAME.png "Choose your weapon and step immediately into the action where every decision matters.")
+
+### Loot Synergies
+
+Loot Survivor incorporates weapons, armor, and jewelry from the Loot contract deployed by Dom Hofman in 2021. Included in the Loot Survivor repository is a standalone Loot module, facilitating developers to seamlessly integrate Loot items into the game. In Loot Survivor, ownership of Loot is not a prerequisite for playing, nor does it confer any advantage - the game aims to provide all players an equal opportunity to earn a high score.
+
+![Loot Survivor Immortal Arcade](/blog/loot-survivor/LOOT_SURVIVOR_ADVENTURER_LOOT_LOADOUT.png "The onchain leaderboard. Note the ‘Payout’ of $Lords tributes to those that have held the top 3 positions.")
+
+### 🪦Arcade Machine Model
+
+To enjoy a game of Loot Survivor a player inserts $Lords tokens into the arcade machine. $Lords is the native currency of Realms.World. A game costs 25 $Lords to play; around $2.5 dollars at time of publication. The price of the game can be trustlessly modified in the case where the price of $Lords increases or decreases significantly to maintain the goal of a low cost to play.
+
+Similar to an arcade machine, players play Loot Survivor to earn the top score. Unlike traditional arcade machines where the leaderboard is heavily fragmented and ephemeral, Loot Survivor features a single global leaderboard whose integrity is backed by the power of STARKs. It is an immutable contract meaning that the game rules will not change.
+
+Another benefit of being fully onchain is that Loot Survivor has low operating expenses. This allows the game to distribute the majority of the tokens put into the machine, to players and builders, to help drive competition and the quality of the game experience.
+
+The Arcade Machine configuration of Loot Survivor is an expression of the #Play2Die model that has been adapted to make an enjoyable and viable game with the state of Ethereum scaling today. The cost of onchain data storage on layer 1 is ~95% of a Starknet transaction today. After EIP4844 and Volition on Starknet gas costs will drop 10x-100x. Post these upgrades the landscape could evolve to facilitate a scenario where Adventurers, escrowed with Lords tokens, could move freely across the world entering different games. This would create a two sided marketplace for developers and gamers. The network isn’t ready for that much writing to the chain, so Loot Survivor has been shipped as sophisticated onchain game as is viable on mainnet today.
+
+The Arcade Machine configuration of Loot Survivor is an expression of the #Play2Die model, optimized for current Ethereum scaling conditions. Currently, onchain data storage on layer 1 costs about 95% of a Starknet transaction. However, with the introduction of EIP4844 and Volition on Starknet, gas costs are expected to decrease by 10x-100x. After these updates, the landscape could evolve to facilitate a scenario where Adventurers, backed by Lords tokens, seamlessly transition between different onchain games. This would establish a marketplace for both developers and gamers. However, due to the prohibitive cost of writing data to the chain today, Bibliotheca DAO is shipping Loot Survivor as an immutable contract with focus on gas efficiency and fun. See the technical notes for more detail on optimizations.
+
+![Loot Survivor Immortal Arcade](/blog/loot-survivor/LOOT_SURVIVOR_LEADERBOARD.png "The player card of a deceased Adventurer, showing health (0 out of 300), 16 gold coins, character level 38 and 1486 XP. The Adventurer had survived into the late game and had maxed out the greatness of their Loot armor, weapon and jewelry. RIP ODÏLOST")
+
+###
+
+### Collectible Beasts
+
+As you play you will encounter numerous beasts. There are 75 different enemies lying in wait for Adventurers playing Loot Survivor, and they will manifest at different ‘levels of greatness’ in the game. You might fight a level 1 greatness Ent, then later in the game encounter a much tougher level 25 greatness Ent.
+
+When a beast reaches level 19 greatness, it is ‘named’ with a prefix and suffix. If you encounter named beasts, and they have not been beaten by an earlier player, then you will be able to collect a trophy from them if you slay them.
+
+The trophies are fully onchain art, shipped directly to your wallet as a Starknet NFT. These are fully onchain pixel art collectibles made by[ @1337skulls](https://twitter.com/1337skulls)
+
+When it comes to named beasts, the naming convention emerges from the Loot contract. There are 69 first parts to the prefix (e.g . Victory) and 18 second parts to the prefix (e.g. Bane) which create a "Victory Bane" Warlock. There are 75 unique beasts so there are a total of 75 _ 69 _ 18 = 93150 unique beasts. There are also 75 genesis beasts which have no special names which will be split between the pixel artists that made them, the LS team, and community rewards. So the total supply is: 93225
+
+Our expectation is that the collection will take years to fully mint out, meaning there is no need to rush into this but as these start to get collected, it will become increasingly more rare to encounter one that hasn't been minted already
+
+We know that gas costs before EIP 4844 are not ideal, but early players of Loot Survivor will have a better chance of coming across uncollected beasts. After EIP 4844 gas costs will drop 10x-100x from current cost - scheduled for Q4.
+
+![Loot Survivor Immortal Arcade](/blog/loot-survivor/ONCHAIN_ART_VS_BEAST.png)
+
+### Golden Tokens
+
+A Golden Token is a limited edition NFT that provides one game of Loot Survivor, every 24 hours, forever. Golden Tokens are a Starknet NFT backed by onchain art, also created by 1337 Skulls pixel artists.
+
+They are available to mint for a limited period at 0.09eth [here](https://realms.world/collection/GoldenToken). A game costs 25 $Lords at about 0.09 cents at publishing, so a Golden Token makes sense if you are going to play more than 75 times. You can mint more than one get a free game from each Golden Token, every day, after a 24 hour period from last use.
+
+    [Golden Token Open Edition: ](https://realms.world/collection/GoldenToken)
+
+1 free game per day, forever.
+
+    0.09 eth (~75 games at 25 Lords per game)
+
+
+    Onchain art from[ @1337skulls](https://twitter.com/1337skulls)
+
+
+    A wallet can hold multiple Golden Tokens
+
+
+    Closes Tuesday 21st November
+
+###
+
+![Loot Survivor Immortal Arcade](/blog/loot-survivor/TOKEN_INFO.png)
+
+### Bot Protection
+
+One of the key design considerations was creating a game that humans would always enjoy playing. If someone can write a script that makes bots 10x better at the game than a human, then humans aren’t having fun.
+
+There are a number of features of the game which counter bots. There is a detailed technical section below that explains this, but from a player perspective this manifests in two visible ways.
+
+The Starting Timer is a countdown to when your game will start after you insert your Lords tokens or use your Golden Token. This time varies based upon the speed with which Starknet is minting blocks. In time this will be a consistent interval, but today it varies from 15 seconds to 3 minutes per block. Your game will start 11 blocks after you pay to play. So the range varies from less than 3 minutes to 33 minutes. Set a timer on your phone and do that chore you have been putting off.
+
+![Loot Survivor Immortal Arcade](/blog/loot-survivor/Start_time.png "Drop in a few dollars of $Lords tokens to take a shot at the eternal leaderboard.")
+
+The Idle Penalty kicks in and kills an Adventurer that hasn’t made a move in 7 minutes (increasing to 15 minutes with deployment, TBC). Again, this stops a bot from future gazing.
+
+### Level up your own XP on Testnet
+
+Loot Survivor is a challenging game. We recommend players start on the ‘unranked’ version on [testnet](https://goerli-survivor.realms.world/). There is no bot protection and so no wait times to start playing. When your strategy is honed: step up to ‘ranked’ mainnet play with mainnet Lords and eth.
+
+![Loot Survivor Immortal Arcade](/blog/loot-survivor/Ranked_vs_unranked.png "Drop in a few dollars of $Lords tokens to take a shot at the eternal leaderboard.")
+
+### Production Release on an Alpha Network
+
+Loot Survivor was playtested and hardened over several months with an average of 1,000 games a week on testnet by community players. The Pre Release on mainnet also received 1,000 games in its one week life as a tournament. Infrastructure has been optimized and many bugs squashed.
+
+It is still early for onchain games and the Starknet network which is in Alpha. It is possible that infrastructure may go down during a game. If you hit a snag head to the community discord and seek support, but no guarantee can be made a game can be rescued. If you prefer to avoid the chance of paying for a game that you cannot complete due to some kind of technical outage, why not play on [testnet](https://goerli-survivor.realms.world/)? It’s the same game, but with less bot protection due to the valueless assets on testnet.
+
+You can play via the contract or host the fully open source client for yourself to mitigate this possibility. Check out Github and ask in the discord if you want to do this.
+
+### 🪦 Produced by Bibliotheca DAO
+
+Loot Survivor is a creation of Bibliotheca DAO, which came into existence two years ago with the explicit aim of developing onchain games.
+
+Bibliotheca DAO's has been building Realms.World, and considers it a network and ecosystem with many parallels with the Ethereum network and ecosystem. Much like Ethereum, Realms.World is open-access, allowing anyone to build on top of it without needing permission. It remains uncontrolled by a central authority, although there's guidance from the Ethereum Foundation; it does not, however, own the network. A myriad of organizations, ranging from solo developers to large private entities, seek funding and build atop Ethereum. Its antifragile nature ensures its continuity even if the original developers cease operations.
+
+Realms.World mirrors these attributes, functioning as a credibly neutral network where hundreds or thousands of teams can innovate. All creations are MIT licensed open source and CCO. Approaching 20 are under development within this gaming network by an array of indie developers and small studios, all supported by the DAO and its community.
+
+If the game resonates with you, feel free to [fork it, mod it, extend it](https://github.com/BibliothecaDAO/loot-survivor), or venture to build something entirely novel in the Realms.World.
+
+### 🪦 Technical Achievements - notes for devs and game designers
+
+Loot Survivor is built on the Layer 2 validity rollup Starknet. Realms.World is one of the earliest and most active Starknet projects. Developers contributing to the DAO highlight Cairo as the most powerful language to write complex onchain apps like complex games, and zero-knowledge machine learning. It is still early for onchain gaming as even on layer 2 gas costs are a significant restraint on what can be built, but with EIP4844 a new era beckons. More on this shortly, but for now here are some technical accomplishments from Loot Survivor.
+
+<span class="underline">Written in Cairo.</span> Cairo is a Turing-complete language
+making it possible for developers to harness the power of STARKs. Having Loot Survivor
+written in Cairo means that the validity of each game can be proven using a Zero-Knowledge
+proof. As an extension, the integrity of the leaderboard is backed by ZK proofs and
+settled to Ethereum for maximum settlement assurances. <span class="underline">
+  Arcade Account for safe, frictionless gameplay:
+</span> An Arcade Account allows gamers to play Loot Survivor without having to sign
+a wallet transaction for each action. Arcade Accounts are sub-accounts to your primary
+wallet account (e.g., Argent, Braavos etc) with access control restrictions. In the
+case of a Loot Survivor Arcade Account, the signing key is only able to interact
+with the Loot Survivor contract and send assets back to the primary wallet account.
+More generally, Arcade Accounts expose an interface ID for introspection, so other
+contracts can integrate with them as well. For instance, if the Arcade Account signs
+a transaction and that transaction results in receiving an NFT, the contract will
+mint the NFT to the primary wallet account, not the Arcade Account! This is Account
+Abstraction realized.
+
+<span class="underline">Single Slot Adventurer</span>: The Adventurer featured
+in Loot Survivor is a rich data model that features: xp, health, gold, seven
+dimensions of stats, 8 equipped items, and more. To minimize the cost of gas to
+players, this model has been surgically packed into a single 252bit Cairo felt.
+When players discover gold, purchase items to equip, or earn XP and level up,
+this all results in a single storage update. Furthermore, Loot Survivor exposes
+recursive functions such as “Attack to the death” which enable players to
+compress strings of actions into a single storage slot update.
+
+<span class="underline">Ultra-low Gas</span>: As a result of minimizing storage
+updates which is the most expensive part of executing code on a distributed
+blockchain, the cost of Loot Survivor is close to the theoretical cheapest game
+possible. With EIP-4844 and additional Starknet technological gains, it should
+be possible to play a game for $0.25 or less in-game.
+
+<span class="underline">Optimistic Client Rendering</span>: The client for Loot
+Survivor updates directly from the events emitted from the contract which
+results in a maximally responsive experience for players. Should the optimistic
+data layer miss an event, the client is also backed using a traditional web3
+indexer with a persistent database.
+
+<span class="underline">Randomness and Bot Resilience:</span> Loot Survivor includes
+elements of luck based on random numbers. To ensure all players have an equal chance
+of achieving a high score, it is imperative this randomness be strong. While a service
+such as Chainlink VRF would be a great option, this infrastructure isn’t available
+on Starknet and is unlikely to be economically feasible given the low-cost arcade
+model of Loot Survivor. As such, Loot Survivor includes a custom entropy system that
+has the following properties:
+
+1. A global game entropy that can be rotated every N blocks by any caller. As part of normal gameplay, the contract will check to see if this can be rotated and automatically rotate it available. There is also an external/public `rotate_game_entropy()` that anyone can call to rotate it. To provide maximum security, community members can run bots to ensure this entropy source is being rotated at the minimum interval which ensures there is no game manipulation.
+2. When the game entropy is rotated, the contract stores the current block number and timestamp along with the next eligible block for rotation. With access to the previous block number and timestamp, when handling the rotation, it can calculate the average speed of Starknet blocks. This information is used to set the block number for the next eligible entropy rotation with a current target of 10mins. For example, if Starknet is producing blocks every 30s, the next eligible game entropy rotation will be current block + 20. If Starknet is producing blocks every 3mins, the next eligible game entropy rotation will be current block + 4 blocks.
+3. The global game entropy is a hash of the last updated block number, last updated block time, and the block number of the next rotation. As long as the community ensures the entropy is rotated at the minimum interval, this entropy source can be trusted. To minimize gas costs to maintain this entropy source, rotating game entropy uses a single storage slot, and performs minimal computation.
+4. To prevent all players from experiencing the same outcomes for a given game entropy, each adventurer is assigned a unique hash as part of starting a game. This hash includes the ID of the adventurer which is unique for every adventurer/game, ensuring that each adventurer has a unique hash.
+5. When players are taking an action such as exploring, the adventurer hash is combined with the global game entropy/hash and the adventurer's XP to produce one or more random numbers. Since XP is not directly manipulatable by players and is always incrementing, this along with adventurer hash and game entropy ensure a unique output is produced after each action.
+6. Lastly, the game includes an “idle death penalty” which forces players to act within a certain number of blocks or face immediate death. The number of blocks is dynamic and based on the game entropy blocks - 1. The result is that the result of an action is fixed. If a player simulates the outcome, doesn’t like the result, and waits for the result to change via the global game entropy, they will exceed the death penalty.
+7. If a player takes action after exceeding the idle death penalty, they will immediately be killed. Furthermore, the contract provides a public `slay_idle_adventurers()` which anyone can call on an adventurer once they exceed the idle death penalty.
+
+While the above system provides strong sources of non-manipulatable entropy, it alone would not be sufficient to disarm bots. The reason is because bots are uniquely capable of executing transactions instantaneously, allowing them to execute an entire game in a single block, avoiding the game entropy rotations. To prevent this, Loot Survivor includes a per-block rate limit. The rate limit uses the blocks per hour calculation performed during game entropy rotations to determine block speed and then sets an actions per block based on this number. At the time of writing, the game is targeting a rate limit of 20s/action. In the case where Starknet is producing blocks at 3 minute intervals as is the case on Goerli, this will allow players to make nine actions per block. In the case where the blockspeed is 30s, this will allow players to take two actions/block. This rate limit is dynamic and able to automatically adjust to varying blockspeeds using the game entropy system.
+
+The combination of the global game entropy, fixed outcomes, idle death penalty, and rate limit significantly limit the power of bots.
+
+<span class="underline">Dynamically Generated Beasts and Obstacles </span>: All
+levels, beasts, and obstacles are dynamically generated at runtime. This allows
+a theoretically unlimited number of beasts and obstacles to be used without
+increasing storage costs. Loot Survivor features 75 core beasts and 60
+obstacles. The beasts feature special name prefixes which produce over 93k
+unique beasts. Given the relatively short duration of this game, this results in
+players encountering different obstacles and beasts every time they play.
+
+<span class="underline">Builder Rewards: </span>When $Lords are inserted into
+Loot Survivor, a percentage of those are automatically distributed to the group
+or individual providing the Client interface. To utilize this, Client developers
+simply need to pass the address for these rewards into the call to start a new
+game. The goal of this feature is to incentivise the development of numerous
+clients that increase the quality and durability of the game.
+
+<span class="underline">Player Rewards:</span> Similar to the Builder Rewards, a
+percentage of the tokens inserted into the Loot Survivor arcade machine are distributed
+to the top three scores as a reward for this achievement. This happens immediately
+upon the start of each game such that no tokens are escrowed in the Loot Survivor
+contract.
+
+<span class="underline">DAO Rewards: </span>The remaining tokens are distributed
+to the Bibliotheca DAO treasury where Realms holders can decide what to do with
+them.
+
+If you want to get into the tech - start with the [github](https://github.com/BibliothecaDAO/loot-survivor) and then come to the [discord](discord.gg/bibliothecaDAO) and ask questions in the Survivor channels.
+
+## 🪦Didn’t read all that? Here are key features of the game
+
+- Arcade play. Put in your tokens and play a game. You don’t need an expensive NFT. There is no speculation.
+- Every game is different. A session is procedural generated, with random starting character build outs.
+- Permadeath of your character. The game is brutal - and so satisfying when your strategy plays out!
+- Deceptively simple. Loot Survivor is a complex infinite puzzle, living onchain.
+- Eternal leaderboard. Your score will be onchain as long as Ethereum produces blocks.
+- Rewards forever. The top 3 leaderboard positions receive $Lords tributes from new game sessions.
+- Strategic and competitive. Climbing the leaderboard is a test of skill. Hunt the new meta.
+- Immutable contract. The game rules cannot be changed.
+- Gas optimized, but after EIP4844 will be 10x-100x cheaper.
+- Collectible beast 1 of 1 onchain pixel art from 1337Skulls
+- Original music score. Soundscape from Casey Wescott, algorithmic musician and member of Fleet Foxes.
+- Love Loot? You will love Loot Survivor’s attention to detail.
+- Human friendly. Designed to be challenging for bot builders to dominate.
+- Arcade Accounts for focused gameplay. Play transaction-free in a burner wallet.
+- Play on mobile. Play on the go via the Braavos mobile wallet.
+
+### 🪦 Ready to play?
+
+- Got a Starknet wallet? If not download from Argent / Braavos. Follow this guide to bridge Ethereum for gas.
+- Need Lords on L2?
+  - Bridge from L1 here
+  - Buy directly on L2 here
+- Go to Realms.World or direct to Survivor.Realms.World
+- Connect your wallet.
+- Set-up an Arcade Account for transaction free gaming. Sign 2 transactions upfront.
+- Go to start, choose a weapon. Enter a name. You are ready to play!
+- A fuller guide is [here](https://survivor-docs.realms.world/)
+- Want to try out on testnet first? Simply click the link in the client (Play for free) and switch the network to Goerli testnet in your wallet browser extension.
+- To share feedback join the discord and visit the Survivor channels.
+
+🪦 LOOT SURVIVOR ASSET KIT
+
+Google drive
+
+[https://drive.google.com/drive/folders/1HhQfmhcjq2otMLPTnR-TtCkGcY4_P0Yl?usp=sharing](https://drive.google.com/drive/folders/1HhQfmhcjq2otMLPTnR-TtCkGcY4_P0Yl?usp=sharing)
+
+Figma (2nd page)
+
+[https://www.figma.com/file/FUbm1H4cc1ZyqDOvuBJpwC/realms.world-marketing-assets?type=design&node-id=503-30439&mode=design&t=yBOkfhDdivxzNBN8-0](https://www.figma.com/file/FUbm1H4cc1ZyqDOvuBJpwC/realms.world-marketing-assets?type=design&node-id=503-30439&mode=design&t=yBOkfhDdivxzNBN8-0)
