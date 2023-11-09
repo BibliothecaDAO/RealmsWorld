@@ -33,7 +33,7 @@ export const StarknetLoginButton = ({
         {address && isConnected ? (
           <>{shortenHex(address, 8)}</>
         ) : (
-          "Connect Starknet"
+          <span className="hidden sm:block">Connect Starknet</span>
         )}
       </span>
     </Button>
