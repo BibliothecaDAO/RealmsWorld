@@ -1,7 +1,7 @@
 # 🪦 Loot Survivor: The Immutable Arcade
 
-Lords, Ladies and Adventurers: Loot Survivor is running on Starknet. Loot Survivor is a highly competitive strategy game. Players take ‘runs’ into the mist where they encounter beasts and fall prey to traps. They must come up with tactics and execute a plan to survive for as long as they can, building an XP score. Much of this revolves around Loot they buy and equip in game, and their overall approach to exploration and encounters. There is strategic depth to gameplay. Players jockey for position on the global leaderboard - and the lucrative rewards earned by holding a position in the Top 3. It is a fully onchain game and can’t be taken down. \
- \
+Lords, Ladies and Adventurers: Loot Survivor is running on Starknet. Loot Survivor is a highly competitive strategy game. Players take ‘runs’ into the mist where they encounter beasts and fall prey to traps. They must come up with tactics and execute a plan to survive for as long as they can, building an XP score. Much of this revolves around Loot they buy and equip in game, and their overall approach to exploration and encounters. There is strategic depth to gameplay. Players jockey for position on the global leaderboard - and the lucrative rewards earned by holding a position in the Top 3. It is a fully onchain game and can’t be taken down.
+
 Read on to learn more about _The Immutable Arcade_ production release of Loot Survivor - including how you can play a free game every day if you [mint a Golden Token.](realms.world/collection/goldenToken)
 
 ##
@@ -72,22 +72,19 @@ We know that gas costs before EIP 4844 are not ideal, but early players of Loot 
 
 A Golden Token is a limited edition NFT that provides one game of Loot Survivor, every 24 hours, forever. Golden Tokens are a Starknet NFT backed by onchain art, also created by 1337 Skulls pixel artists.
 
-They are available to mint for a limited period at 0.09eth [here](https://realms.world/collection/GoldenToken). A game costs 25 $Lords at about 0.09 cents at publishing, so a Golden Token makes sense if you are going to play more than 75 times. You can mint more than one get a free game from each Golden Token, every day, after a 24 hour period from last use.
+They are available to mint for a limited period at 0.09eth [here](https://realms.world/collection/goldenToken). A game costs 25 $Lords at about 0.09 cents at publishing, so a Golden Token makes sense if you are going to play more than 75 times. You can mint more than one get a free game from each Golden Token, every day, after a 24 hour period from last use.
 
-    [Golden Token Open Edition: ](https://realms.world/collection/GoldenToken)
+[Golden Token Open Edition: ](https://realms.world/collection/goldenToken)
 
-1 free game per day, forever.
+-1 free game per day, forever.
 
-    0.09 eth (~75 games at 25 Lords per game)
+-0.09 eth (~75 games at 25 Lords per game)
 
+-Onchain art from[ @1337skulls](https://twitter.com/1337skulls)
 
-    Onchain art from[ @1337skulls](https://twitter.com/1337skulls)
+-A wallet can hold multiple Golden Tokens
 
-
-    A wallet can hold multiple Golden Tokens
-
-
-    Closes Tuesday 21st November
+-Closes Tuesday 21st November
 
 ###
 
@@ -133,11 +130,11 @@ If the game resonates with you, feel free to [fork it, mod it, extend it](https:
 
 Loot Survivor is built on the Layer 2 validity rollup Starknet. Realms.World is one of the earliest and most active Starknet projects. Developers contributing to the DAO highlight Cairo as the most powerful language to write complex onchain apps like complex games, and zero-knowledge machine learning. It is still early for onchain gaming as even on layer 2 gas costs are a significant restraint on what can be built, but with EIP4844 a new era beckons. More on this shortly, but for now here are some technical accomplishments from Loot Survivor.
 
-<span class="underline">Written in Cairo.</span> Cairo is a Turing-complete language
+<span className="underline">Written in Cairo.</span> Cairo is a Turing-complete language
 making it possible for developers to harness the power of STARKs. Having Loot Survivor
 written in Cairo means that the validity of each game can be proven using a Zero-Knowledge
 proof. As an extension, the integrity of the leaderboard is backed by ZK proofs and
-settled to Ethereum for maximum settlement assurances. <span class="underline">
+settled to Ethereum for maximum settlement assurances. <span className="underline">
   Arcade Account for safe, frictionless gameplay:
 </span> An Arcade Account allows gamers to play Loot Survivor without having to sign
 a wallet transaction for each action. Arcade Accounts are sub-accounts to your primary
@@ -150,28 +147,28 @@ a transaction and that transaction results in receiving an NFT, the contract wil
 mint the NFT to the primary wallet account, not the Arcade Account! This is Account
 Abstraction realized.
 
-<span class="underline">Single Slot Adventurer</span>: The Adventurer featured
-in Loot Survivor is a rich data model that features: xp, health, gold, seven
-dimensions of stats, 8 equipped items, and more. To minimize the cost of gas to
-players, this model has been surgically packed into a single 252bit Cairo felt.
-When players discover gold, purchase items to equip, or earn XP and level up,
-this all results in a single storage update. Furthermore, Loot Survivor exposes
-recursive functions such as “Attack to the death” which enable players to
-compress strings of actions into a single storage slot update.
+<span className="underline">Single Slot Adventurer</span>: The Adventurer
+featured in Loot Survivor is a rich data model that features: xp, health, gold,
+seven dimensions of stats, 8 equipped items, and more. To minimize the cost of
+gas to players, this model has been surgically packed into a single 252bit Cairo
+felt. When players discover gold, purchase items to equip, or earn XP and level
+up, this all results in a single storage update. Furthermore, Loot Survivor
+exposes recursive functions such as “Attack to the death” which enable players
+to compress strings of actions into a single storage slot update.
 
-<span class="underline">Ultra-low Gas</span>: As a result of minimizing storage
-updates which is the most expensive part of executing code on a distributed
-blockchain, the cost of Loot Survivor is close to the theoretical cheapest game
-possible. With EIP-4844 and additional Starknet technological gains, it should
-be possible to play a game for $0.25 or less in-game.
+<span className="underline">Ultra-low Gas</span>: As a result of minimizing
+storage updates which is the most expensive part of executing code on a
+distributed blockchain, the cost of Loot Survivor is close to the theoretical
+cheapest game possible. With EIP-4844 and additional Starknet technological
+gains, it should be possible to play a game for $0.25 or less in-game.
 
-<span class="underline">Optimistic Client Rendering</span>: The client for Loot
-Survivor updates directly from the events emitted from the contract which
+<span className="underline">Optimistic Client Rendering</span>: The client for
+Loot Survivor updates directly from the events emitted from the contract which
 results in a maximally responsive experience for players. Should the optimistic
 data layer miss an event, the client is also backed using a traditional web3
 indexer with a persistent database.
 
-<span class="underline">Randomness and Bot Resilience:</span> Loot Survivor includes
+<span className="underline">Randomness and Bot Resilience:</span> Loot Survivor includes
 elements of luck based on random numbers. To ensure all players have an equal chance
 of achieving a high score, it is imperative this randomness be strong. While a service
 such as Chainlink VRF would be a great option, this infrastructure isn’t available
@@ -191,30 +188,30 @@ While the above system provides strong sources of non-manipulatable entropy, it 
 
 The combination of the global game entropy, fixed outcomes, idle death penalty, and rate limit significantly limit the power of bots.
 
-<span class="underline">Dynamically Generated Beasts and Obstacles </span>: All
-levels, beasts, and obstacles are dynamically generated at runtime. This allows
-a theoretically unlimited number of beasts and obstacles to be used without
-increasing storage costs. Loot Survivor features 75 core beasts and 60
+<span className="underline">Dynamically Generated Beasts and Obstacles </span>:
+All levels, beasts, and obstacles are dynamically generated at runtime. This
+allows a theoretically unlimited number of beasts and obstacles to be used
+without increasing storage costs. Loot Survivor features 75 core beasts and 60
 obstacles. The beasts feature special name prefixes which produce over 93k
 unique beasts. Given the relatively short duration of this game, this results in
 players encountering different obstacles and beasts every time they play.
 
-<span class="underline">Builder Rewards: </span>When $Lords are inserted into
-Loot Survivor, a percentage of those are automatically distributed to the group
-or individual providing the Client interface. To utilize this, Client developers
-simply need to pass the address for these rewards into the call to start a new
-game. The goal of this feature is to incentivise the development of numerous
-clients that increase the quality and durability of the game.
+<span className="underline">Builder Rewards: </span>When $Lords are inserted
+into Loot Survivor, a percentage of those are automatically distributed to the
+group or individual providing the Client interface. To utilize this, Client
+developers simply need to pass the address for these rewards into the call to
+start a new game. The goal of this feature is to incentivise the development of
+numerous clients that increase the quality and durability of the game.
 
-<span class="underline">Player Rewards:</span> Similar to the Builder Rewards, a
-percentage of the tokens inserted into the Loot Survivor arcade machine are distributed
+<span className="underline">Player Rewards:</span> Similar to the Builder Rewards,
+a percentage of the tokens inserted into the Loot Survivor arcade machine are distributed
 to the top three scores as a reward for this achievement. This happens immediately
 upon the start of each game such that no tokens are escrowed in the Loot Survivor
 contract.
 
-<span class="underline">DAO Rewards: </span>The remaining tokens are distributed
-to the Bibliotheca DAO treasury where Realms holders can decide what to do with
-them.
+<span className="underline">DAO Rewards: </span>The remaining tokens are
+distributed to the Bibliotheca DAO treasury where Realms holders can decide what
+to do with them.
 
 If you want to get into the tech - start with the [github](https://github.com/BibliothecaDAO/loot-survivor) and then come to the [discord](discord.gg/bibliothecaDAO) and ask questions in the Survivor channels.
 
@@ -240,8 +237,8 @@ If you want to get into the tech - start with the [github](https://github.com/Bi
 
 - Got a Starknet wallet? If not download from Argent / Braavos. Follow this guide to bridge Ethereum for gas.
 - Need Lords on L2?
-  - Bridge from L1 here
-  - Buy directly on L2 here
+  - Bridge from L1 [here](/bridge)
+  - Buy directly on L2 [here](https://app.avnu.fi/en?tokenFrom=0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49&tokenTo=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&amount=0.001)
 - Go to Realms.World or direct to Survivor.Realms.World
 - Connect your wallet.
 - Set-up an Arcade Account for transaction free gaming. Sign 2 transactions upfront.
@@ -252,6 +249,7 @@ If you want to get into the tech - start with the [github](https://github.com/Bi
 
 🪦 LOOT SURVIVOR ASSET KIT
 
+<div className="break-all">
 Google drive
 
 [https://drive.google.com/drive/folders/1HhQfmhcjq2otMLPTnR-TtCkGcY4_P0Yl?usp=sharing](https://drive.google.com/drive/folders/1HhQfmhcjq2otMLPTnR-TtCkGcY4_P0Yl?usp=sharing)
@@ -259,3 +257,5 @@ Google drive
 Figma (2nd page)
 
 [https://www.figma.com/file/FUbm1H4cc1ZyqDOvuBJpwC/realms.world-marketing-assets?type=design&node-id=503-30439&mode=design&t=yBOkfhDdivxzNBN8-0](https://www.figma.com/file/FUbm1H4cc1ZyqDOvuBJpwC/realms.world-marketing-assets?type=design&node-id=503-30439&mode=design&t=yBOkfhDdivxzNBN8-0)
+
+</div>
