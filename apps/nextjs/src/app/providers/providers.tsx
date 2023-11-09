@@ -40,8 +40,6 @@ const { chains } = configureChains(
   [publicProvider()],
 );
 
-const providers = [starkPublicProvider()];
-
 export function Provider({ children }: any) {
   return (
     <StarknetConfig
@@ -51,7 +49,7 @@ export function Provider({ children }: any) {
           ? [starkGoerli]
           : [starkMainnet]),
       ]}
-      providers={providers}
+      provider={starkPublicProvider()}
       connectors={starkConnectors as any}
     >
       <WagmiConfig
