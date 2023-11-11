@@ -60,10 +60,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="my-4 grid min-h-[400px] grid-cols-1 gap-8 sm:grid-cols-2">
         {game && (
           <>
-            {screenshotList && (
+            {game.screenshots && (
               <Carousel
                 className="h-full"
-                images={screenshotList}
+                images={game.screenshots}
                 autoPlay
                 showPreview
               />
