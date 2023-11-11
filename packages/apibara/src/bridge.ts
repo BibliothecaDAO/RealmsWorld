@@ -8,7 +8,7 @@ import type {
   EventWithTransaction,
   Starknet,
 } from "https://esm.sh/@apibara/indexer/starknet";
-import { hash, uint256 } from "https://esm.sh/starknet";
+import { hash, uint256 } from "https://esm.sh/starknet@v5.19.5";
 import { formatUnits } from "https://esm.sh/viem@1.2.7";
 
 function eventKey(name: string) {
