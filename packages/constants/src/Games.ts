@@ -72,4 +72,25 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
   },
+  {
+    name: "StarkLand",
+    id: "stark-land",
+    developer: "VivaLabs",
+    genres: ["SLG", "PvP"],
+    color: "#f5f5f5",
+    status: "alpha",
+    description: "Full on chain SLG",
+    longform:
+      "Realm holders can create their Realm World, where players can mine, war, explore in your world, also invade other World.",
+    links: {
+      homepage: "https://app.starkland.xyz/",
+      twitter: "https://twitter.com/starkland_xyz",
+      whitepaper: "https://starknopoly.gitbook.io/starkland/",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "Trade for resources",
+    chains: [ChainId.SN_MAIN],
+    collections: [Collections.GOLDEN_TOKEN],
+    tokens: [Tokens.LORDS],
+  },
 ];
