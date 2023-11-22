@@ -72,4 +72,22 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
   },
+  {
+    name: "Loot Auto Chess",
+    id: "loot-auto-chess",
+    developer: "HelheimLabs",
+    genres: ["PvP", "Auto Battle"],
+    color: "#f5f5f8",
+    status: "In development",
+    description: "Auto Chess Battle",
+    longform:
+      "Players can strategically select and upgrade heroes to form powerful combinations, manage their in-game economy wisely to optimize their team, and position their heroes effectively on the board to outlast their opponents in automated battles.",
+    links: {
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "For ticket",
+    chains: [],
+    collections: [Collections.GOLDEN_TOKEN,Collections.BEASTS],
+    tokens: [Tokens.LORDS],
+  },
 ];
