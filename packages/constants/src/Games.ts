@@ -72,4 +72,26 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
   },
+  {
+    name: "Mississippi",
+    id: "mississippi",
+    developer: "Mississippi Team",
+    genres: ["SLG","PVP", "Roguelike"],
+    color: "#6F391E",
+    status: "beta",
+    description: "Fully on-chain PVP roguelike game",
+    longform:
+      'Mississippi is a fully on-chain PVP roguelike game. We hope to create an expansive cavern space, containing abundant resources, which players need to explore and exploit as many resources from the cavern as possible within a fixed time limit. Besides, we will integrate with the Lootverse, such as by "extracting" equipment and resources from Loot Bags and Realms, which can give players specific attributes for each round.',
+    links: {
+      mainnet: "https://0xMssp.xyz/",
+      testnet: "https://test.0xMssp.xyz/",
+      discord: "https://discord.com/invite/rg9V8J49",
+      twitter: "https://twitter.com/0xMississippi",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "N/A",
+    chains: [ChainId.MISSISSIPPI_TESTNET],
+    collections: [Collections.REALMS],
+    tokens: [Tokens.LORDS],
+  },
 ];
