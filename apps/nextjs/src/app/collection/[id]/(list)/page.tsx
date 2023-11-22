@@ -6,7 +6,7 @@ import { getToken } from "@/lib/reservoir/getToken";
 import type { Collection } from "@/types";
 import { getTokenContractAddresses } from "@/utils/utils";
 
-import Mint from "./Mint";
+//import Mint from "./Mint";
 import { Trade } from "./Trade";
 
 //export const runtime = "edge";
@@ -40,13 +40,13 @@ export default async function Page({
   };
 }) {
   //const token = erc721Tokens[params.id as keyof typeof erc721Tokens];
-  const isGoldenToken =
+  /*const isGoldenToken =
     params.id == getTokenContractAddresses("goldenToken").L2 ||
     params.id == "goldenToken";
 
   if (isGoldenToken) {
     return <Mint contractId={params.id} />;
-  }
+  }*/
 
   return (
     <Trade

@@ -26,7 +26,7 @@ export default function RootLayout({
     backgroundRepeat: "no-repeat",
   };
 
-  const isMintable = params.id == "goldenToken";
+  const isMintable = false; // params.id == "goldenToken";
   const tabs = [
     {
       name: "Trade",
