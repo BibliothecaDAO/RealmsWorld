@@ -23,7 +23,7 @@
     "@realms-world/eslint-config": "workspace:*",
     "@realms-world/prettier-config": "workspace:*",
     "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^8.52.0",
+    "eslint": "^8.53.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },

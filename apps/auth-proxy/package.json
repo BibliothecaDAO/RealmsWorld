@@ -1,39 +1,30 @@
 {
-  "name": "@realms-world/constants",
+  "name": "@realms-world/auth-proxy",
   "private": true,
-  "version": "workspace:*",
-  "exports": {
-    ".": "./index.ts"
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "src/*"
-      ]
-    }
-  },
-  "license": "MIT",
+  "type": "module",
   "scripts": {
-    "build": "tsup",
+    "build": "nitro build",
     "clean": "rm -rf .turbo node_modules",
+    "dev": "nitro dev --port 3001",
     "lint": "eslint .",
-    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "clsx": "^2.0.0",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.3.1",
-    "tailwind-merge": "^2.0.0"
+    "@auth/core": "^0.18.1"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "workspace:*",
     "@realms-world/prettier-config": "workspace:*",
+    "@realms-world/tailwind-config": "workspace:*",
     "@realms-world/tsconfig": "workspace:*",
     "eslint": "^8.53.0",
-    "typescript": "^5.1.6"
+    "nitropack": "^2.7.2",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
   },
   "eslintConfig": {
+    "root": true,
     "extends": [
       "@realms-world/eslint-config/base"
     ]

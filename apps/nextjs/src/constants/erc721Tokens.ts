@@ -33,7 +33,7 @@ export const erc721Tokens: ERC721Tokens = {
         [ChainType.L2.MAIN]:
           "0x0158160018d590d93528995b340260e65aedd76d28a686e9daa5c4e8fad0c5dd",
         [ChainType.L2.GOERLI]:
-          "0x0430b9086918f71c1a50261001479713dcbc1f1b5b824d9f5c66026924e44560",
+          "0x05c909139dbef784180eef8ce7a2f5bf52afe567aa73aaa77b8d8243ad5b6b96",
       },
     },
   },

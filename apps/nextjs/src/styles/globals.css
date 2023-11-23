@@ -43,7 +43,7 @@ body {
   @apply font-sans;
 }
 @layer base {
-  a {
+  p > a {
     @apply text-flamingo;
   }
 }

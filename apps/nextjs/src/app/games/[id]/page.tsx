@@ -25,13 +25,13 @@ export async function generateMetadata({
 export default async function Page({ params }: { params: { id: string } }) {
   const game = games.find((game) => game.id === params.id);
 
-  const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
+  /* const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
   const dir = path.resolve("public", dirRelativeToPublicFolder);
   const screenshotFiles = await fs.readdir(path.join(dir));
   const screenshotList = screenshotFiles.map((image, index) => ({
     src: `/games/${params.id}/screenshots/${image}`,
     alt: `${game?.name} Screenshot ${index}`,
-  }));
+  }));*/ //TODO not working in Vercel production
 
   const tabs = [
     {
@@ -60,10 +60,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="my-4 grid min-h-[400px] grid-cols-1 gap-8 sm:grid-cols-2">
         {game && (
           <>
-            {screenshotList && (
+            {game.screenshots && (
               <Carousel
                 className="h-full"
-                images={screenshotList}
+                images={game.screenshots}
                 autoPlay
                 showPreview
               />
