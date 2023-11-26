@@ -20,7 +20,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "garph": "^0.6.3",
+    "garph": "^0.6.4",
     "graphql-yoga": "^5.0.0",
     "graphql": "^16.8.1"
   },
@@ -28,8 +28,8 @@
     "@realms-world/eslint-config": "workspace:*",
     "@realms-world/prettier-config": "workspace:*",
     "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^8.53.0",
-    "typescript": "^5.2.2"
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.2"
   },
   "eslintConfig": {
     "extends": [

@@ -3,22 +3,22 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { mkdirSync } from 'node:fs';
 import { parentPort, threadId } from 'node:worker_threads';
-import { provider, isWindows } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/std-env/dist/index.mjs';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, isEvent, createEvent, getRequestHeader, eventHandler, setHeaders, sendRedirect, proxyRequest, setResponseStatus, setResponseHeader, send, createApp, createRouter as createRouter$1, toNodeListener, fetchWithEvent, lazyEventHandler, toWebRequest } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/h3/dist/index.mjs';
-import { createFetch as createFetch$1, Headers as Headers$1 } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/ofetch/dist/node.mjs';
-import destr from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/destr/dist/index.mjs';
-import { createCall, createFetch } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/unenv/runtime/fetch/index.mjs';
-import { createHooks } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/hookable/dist/index.mjs';
-import { snakeCase } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/scule/dist/index.mjs';
-import { klona } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/defu/dist/defu.mjs';
-import { hash } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/ohash/dist/index.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/ufo/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/unstorage/drivers/fs.mjs';
-import { toRouteMatcher, createRouter } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/radix3/dist/index.mjs';
-import { Auth } from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/@auth/core/index.js';
-import Discord from 'file:///Users/red/Documents/GitHub/RealmsWorld/node_modules/@auth/core/providers/discord.js';
+import { provider, isWindows } from 'file:///home/red/Repos/RealmsWorld/node_modules/std-env/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, isEvent, createEvent, getRequestHeader, eventHandler, setHeaders, sendRedirect, proxyRequest, setResponseStatus, setResponseHeader, send, createApp, createRouter as createRouter$1, toNodeListener, fetchWithEvent, lazyEventHandler, toWebRequest } from 'file:///home/red/Repos/RealmsWorld/node_modules/h3/dist/index.mjs';
+import { createFetch as createFetch$1, Headers as Headers$1 } from 'file:///home/red/Repos/RealmsWorld/node_modules/ofetch/dist/node.mjs';
+import destr from 'file:///home/red/Repos/RealmsWorld/node_modules/destr/dist/index.mjs';
+import { createCall, createFetch } from 'file:///home/red/Repos/RealmsWorld/node_modules/unenv/runtime/fetch/index.mjs';
+import { createHooks } from 'file:///home/red/Repos/RealmsWorld/node_modules/hookable/dist/index.mjs';
+import { snakeCase } from 'file:///home/red/Repos/RealmsWorld/node_modules/scule/dist/index.mjs';
+import { klona } from 'file:///home/red/Repos/RealmsWorld/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file:///home/red/Repos/RealmsWorld/node_modules/defu/dist/defu.mjs';
+import { hash } from 'file:///home/red/Repos/RealmsWorld/node_modules/ohash/dist/index.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery } from 'file:///home/red/Repos/RealmsWorld/node_modules/ufo/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file:///home/red/Repos/RealmsWorld/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file:///home/red/Repos/RealmsWorld/node_modules/unstorage/drivers/fs.mjs';
+import { toRouteMatcher, createRouter } from 'file:///home/red/Repos/RealmsWorld/node_modules/radix3/dist/index.mjs';
+import { Auth } from 'file:///home/red/Repos/RealmsWorld/node_modules/@auth/core/index.js';
+import Discord from 'file:///home/red/Repos/RealmsWorld/node_modules/@auth/core/providers/discord.js';
 
 const inlineAppConfig = {};
 
@@ -99,7 +99,7 @@ new Proxy(/* @__PURE__ */ Object.create(null), {
   }
 });
 
-const serverAssets = [{"baseName":"server","dir":"/Users/red/Documents/GitHub/RealmsWorld/apps/auth-proxy/assets"}];
+const serverAssets = [{"baseName":"server","dir":"/home/red/Repos/RealmsWorld/apps/auth-proxy/assets"}];
 
 const assets = createStorage();
 
@@ -111,11 +111,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/red/Documents/GitHub/RealmsWorld/apps/auth-proxy","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/red/Documents/GitHub/RealmsWorld/apps/auth-proxy","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/red/Documents/GitHub/RealmsWorld/apps/auth-proxy/.nitro","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/red/Documents/GitHub/RealmsWorld/apps/auth-proxy/.nitro/cache","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/Users/red/Documents/GitHub/RealmsWorld/apps/auth-proxy/.data/kv","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/red/Repos/RealmsWorld/apps/auth-proxy","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/red/Repos/RealmsWorld/apps/auth-proxy","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/red/Repos/RealmsWorld/apps/auth-proxy/.nitro","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/red/Repos/RealmsWorld/apps/auth-proxy/.nitro/cache","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/home/red/Repos/RealmsWorld/apps/auth-proxy/.data/kv","ignore":["**/node_modules/**","**/.git/**"]}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -413,6 +413,9 @@ function hasReqHeader(event, name, includes) {
   return value && typeof value === "string" && value.toLowerCase().includes(includes);
 }
 function isJsonRequest(event) {
+  if (hasReqHeader(event, "accept", "text/html")) {
+    return false;
+  }
   return hasReqHeader(event, "accept", "application/json") || hasReqHeader(event, "user-agent", "curl/") || hasReqHeader(event, "user-agent", "httpie/") || hasReqHeader(event, "sec-fetch-mode", "cors") || event.path.startsWith("/api/") || event.path.endsWith(".json");
 }
 function normalizeError(error) {
@@ -532,38 +535,42 @@ const plugins = [
   
 ];
 
-const isDev = "development" === "development";
-const errorHandler = (function(error, event) {
-  const { stack, statusCode, statusMessage, message } = normalizeError(error);
-  const showDetails = isDev && statusCode !== 404;
-  const errorObject = {
-    url: event.path || "",
-    statusCode,
-    statusMessage,
-    message,
-    stack: showDetails ? stack.map((i) => i.text) : void 0
-  };
-  if (error.unhandled || error.fatal) {
-    const tags = [
-      "[nitro]",
-      "[request error]",
-      error.unhandled && "[unhandled]",
-      error.fatal && "[fatal]"
-    ].filter(Boolean).join(" ");
-    console.error(
-      tags,
-      error.message + "\n" + stack.map((l) => "  " + l.text).join("  \n")
-    );
+function defineNitroErrorHandler(handler) {
+  return handler;
+}
+const errorHandler = defineNitroErrorHandler(
+  function defaultNitroErrorHandler(error, event) {
+    const { stack, statusCode, statusMessage, message } = normalizeError(error);
+    const showDetails = statusCode !== 404;
+    const errorObject = {
+      url: event.path || "",
+      statusCode,
+      statusMessage,
+      message,
+      stack: showDetails ? stack.map((i) => i.text) : void 0
+    };
+    if (error.unhandled || error.fatal) {
+      const tags = [
+        "[nitro]",
+        "[request error]",
+        error.unhandled && "[unhandled]",
+        error.fatal && "[fatal]"
+      ].filter(Boolean).join(" ");
+      console.error(
+        tags,
+        error.message + "\n" + stack.map((l) => "  " + l.text).join("  \n")
+      );
+    }
+    setResponseStatus(event, statusCode, statusMessage);
+    if (isJsonRequest(event)) {
+      setResponseHeader(event, "Content-Type", "application/json");
+      return send(event, JSON.stringify(errorObject));
+    } else {
+      setResponseHeader(event, "Content-Type", "text/html");
+      return send(event, renderHTMLError(errorObject));
+    }
   }
-  setResponseStatus(event, statusCode, statusMessage);
-  if (isJsonRequest(event)) {
-    setResponseHeader(event, "Content-Type", "application/json");
-    return send(event, JSON.stringify(errorObject));
-  } else {
-    setResponseHeader(event, "Content-Type", "text/html");
-    return send(event, renderHTMLError(errorObject));
-  }
-});
+);
 function renderHTMLError(error) {
   const statusCode = error.statusCode || 500;
   const statusMessage = error.statusMessage || "Request Error";
@@ -597,10 +604,10 @@ function renderHTMLError(error) {
 `;
 }
 
-const _lazy_u0ICUT = () => Promise.resolve().then(function () { return ____auth_$1; });
+const _lazy_qvyt2b = () => Promise.resolve().then(function () { return ____auth_$1; });
 
 const handlers = [
-  { route: '/**:auth', handler: _lazy_u0ICUT, lazy: true, middleware: false, method: undefined }
+  { route: '/**:auth', handler: _lazy_qvyt2b, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
