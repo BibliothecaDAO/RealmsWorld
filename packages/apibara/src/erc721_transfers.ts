@@ -25,7 +25,7 @@ export const config: Config<Starknet, Postgres> = {
   sinkType: "postgres",
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
-    tableName: "rw_erc721_transfers",
+    tableName: "rw_erc721_tokens",
   },
 };
 
@@ -33,12 +33,9 @@ export default function transform({ header, events }: Block) {
   return events?.flatMap((event) => transferToTask(header!, event));
 }
 
-function transferToTask(
-  _header: BlockHeader,
-  { event, transaction }: EventWithTransaction,
-) {
+function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
   const from = BigInt(event.data[0]);
-  if (from == 0n) {
+  if (from !== 0n) {
     return [];
   }
   const token_id = parseInt(
@@ -46,11 +43,9 @@ function transferToTask(
   );
 
   return {
-    id: transaction.meta.hash,
-    token_key: event.fromAddress + ":" + token_id,
+    id: event.fromAddress + ":" + token_id,
     contract_address: event.fromAddress,
     token_id,
-    fromAddress: event.data[0],
-    toAddress: event.data[1],
+    owner: event.data[1],
   };
 }

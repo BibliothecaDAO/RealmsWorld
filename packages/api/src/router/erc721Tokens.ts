@@ -38,7 +38,7 @@ export const erc721TokensRouter = createTRPCRouter({
         );
       }
       if (owner) {
-        //whereFilter.push(eq(schema.erc721Tokens.owner, owner.toLowerCase()));
+        whereFilter.push(eq(schema.erc721Tokens.owner, owner.toLowerCase()));
       }
       if (cursor) {
         whereFilter.push(
@@ -53,11 +53,6 @@ export const erc721TokensRouter = createTRPCRouter({
         limit: limit + 1,
         where: and(...whereFilter),
         orderBy: orderByFilter,
-        with: {
-          transfers: {
-            orderBy: (transfers, { desc }) => [desc(transfers._cursor)],
-          },
-        },
       });
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
