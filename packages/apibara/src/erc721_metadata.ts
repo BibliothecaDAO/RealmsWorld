@@ -1,5 +1,5 @@
-import type { Config } from "https://esm.sh/@apibara/indexer";
-import type { Webhook } from "https://esm.sh/@apibara/indexer/sink/webhook";
+import type { Config } from "https://esm.sh/@apibara/indexer@0.2.2";
+import type { Webhook } from "https://esm.sh/@apibara/indexer@0.2.2/sink/webhook";
 import type {
   Block,
   BlockHeader,
