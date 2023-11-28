@@ -12,6 +12,7 @@ export const schema = { ...auth, ...erc721Tokens, ...bridge };
 export { pgSqlTable as tableCreator } from "./schema/_table";
 
 export * from "drizzle-orm";
+export { Int8Range } from "./int8range";
 
 if (!process.env.VERCEL_ENV) {
   neonConfig.wsProxy = (/*host*/) => `127.0.0.1/v1`;

@@ -1,12 +1,13 @@
 import { relations } from "drizzle-orm";
 import { bigint, integer, json, text } from "drizzle-orm/pg-core";
 
+import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
 
 export const erc721Tokens = pgSqlTable("erc721_tokens", {
-  _cursor: bigint("_cursor", { mode: "number" }),
-  id: text("id").primaryKey(),
-  token_id: integer("token_id"),
+  _cursor: int8range("_cursor"),
+  id: text("id").notNull(),
+  token_id: integer("token_id").notNull(),
   contract_address: text("contract_address"),
   minter: text("minter"),
   owner: text("owner"),

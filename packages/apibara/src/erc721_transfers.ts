@@ -7,7 +7,7 @@ import type {
   EventWithTransaction,
   Starknet,
 } from "https://esm.sh/@apibara/indexer/starknet";
-import { uint256 } from "https://esm.sh/starknet@5.19.5";
+import { uint256 } from "https://esm.sh/starknet";
 
 import { erc721ContractEvents } from "./utils.ts";
 

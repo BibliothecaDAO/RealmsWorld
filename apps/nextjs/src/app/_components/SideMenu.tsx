@@ -2,15 +2,20 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Album from "@/icons/album.svg";
+import Bridge from "@/icons/bridge.svg";
+import Coins from "@/icons/coins.svg";
 import Crown from "@/icons/crown.svg";
 import Discord from "@/icons/discord.svg";
 import Gamepad from "@/icons/gamepad.svg";
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
-import { Backpack, Coins, DoorOpen, Github, Twitter, X } from "lucide-react";
+import { Github, Twitter, X } from "lucide-react";
 
 import { useUIContext } from "../providers/UIProvider";
 import { Button } from "./ui/button";
+import { ScrollArea } from "./ui/scroll-area";
+import { WalletSheet } from "./wallet/WalletSheet";
 
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useUIContext();
@@ -20,22 +25,22 @@ const Sidebar = () => {
     {
       name: "Games",
       href: "/games",
-      icon: <Gamepad className="w-8 fill-current" />,
+      icon: <Gamepad className="w-[29px] fill-current" />,
     },
     {
       name: "Collections",
       href: "/collection",
-      icon: <Backpack />,
+      icon: <Album className="w-[25px]" />,
     },
     {
       name: "Bridge",
       href: "/bridge",
-      icon: <DoorOpen />,
+      icon: <Bridge className="w-[25px]" />,
     },
     {
       name: "Staking",
       href: "/staking",
-      icon: <Coins />,
+      icon: <Coins className="w-[25px]" />,
     },
   ];
 
@@ -65,66 +70,75 @@ const Sidebar = () => {
     <div
       className={`${
         isSidebarOpen ? "bg-dark-green" : "hidden"
-      } z-100 bg-dark-green group fixed top-0 z-20 h-screen w-screen flex-col border-[3px] transition-all duration-500 lg:flex lg:w-24 lg:hover:w-72`}
+      } z-100 bg-dark-green group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col border-[3px] transition-all duration-500 md:flex md:w-[102px] md:hover:w-60`}
     >
-      <Button
-        onClick={toggleSidebar}
-        className="block lg:hidden "
-        variant={"outline"}
-      >
-        <X />
-      </Button>
       <div className="absolute mx-4">
-        <SideHeaderImg className=" hidden w-full group-hover:block" />
+        <SideHeaderImg className="w-full opacity-0 group-hover:opacity-100" />
       </div>
       <Link
         className="font-sans-serif absolute z-20 mx-auto flex w-full justify-center p-4 text-xl font-semibold group-hover:pt-2.5 sm:text-2xl "
         href="/"
         onClick={toggleSidebar}
       >
-        <Crown className="w-14 group-hover:hidden" />
-        <RWLogo className=" hidden w-[192px] fill-white transition-all duration-500 group-hover:block" />
+        <Crown className="absolute w-14 group-hover:opacity-0" />
+        <RWLogo className="absolute w-[152px] fill-white opacity-0 transition-all duration-500 group-hover:opacity-100" />
       </Link>
-      <div className="mt-16 h-full w-full border-t-[3px] pb-3 pt-8 group-hover:mt-24 group-hover:pt-0">
-        <div className="group-hover:!border-medium-dark-green relative z-10 m-2 mt-0 flex h-full flex-col items-center justify-between border-[3px] border-t-0 border-solid border-transparent px-2">
-          <div className="relative z-[3] w-full flex-1 grow self-stretch" />
-          <div className="relative z-[2] inline-flex w-full flex-[0_0_auto] flex-col items-start justify-center gap-[17px] pb-[48px] pt-0">
-            {menu.map((item, index) => {
-              return (
-                <Button
-                  className="duration-450 group flex w-full justify-start px-2 text-xl font-semibold normal-case transition-all"
-                  key={index}
-                  variant={"ghost"}
-                  onClick={() => {
-                    handleClick(item.href);
-                    toggleSidebar();
-                  }}
-                >
-                  <span className=" duration-450 pl-1 transition-all">
+      <div className="mt-16 h-full w-full border-t-[3px] pb-3">
+        <div className="group-hover:!border-medium-dark-green relative z-10 m-2 mt-0 h-full border-[3px] border-t-0 border-solid border-transparent">
+          <div className="relative flex h-full flex-col items-center">
+            <ScrollArea className="w-full">
+              <div className="relative z-[2] inline-flex w-full flex-[0_0_auto] flex-col items-start justify-center gap-[17px] px-4 md:mb-6 md:mt-10">
+                {menu.map((item, index) => {
+                  return (
+                    <Button
+                      className="group flex w-full justify-normal px-2 text-xl font-semibold normal-case transition-all duration-200"
+                      key={index}
+                      variant={"ghost"}
+                      onClick={() => {
+                        handleClick(item.href);
+                        toggleSidebar();
+                      }}
+                    >
+                      <span className="absolute">{item.icon}</span>
+
+                      <span className="visible absolute pl-12 opacity-100 transition-opacity group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-150 group-hover:duration-500 sm:opacity-0 ">
+                        {item.name}
+                      </span>
+                    </Button>
+                  );
+                })}
+              </div>
+            </ScrollArea>
+
+            <div className="w-full px-2">
+              <hr className="mb-4 border-b-[3px]" />
+            </div>
+            <div className=" flex flex-col space-y-2 sm:mt-auto">
+              {social.map((item, index) => {
+                return (
+                  <Button
+                    external
+                    variant={"ghost"}
+                    href={item.href}
+                    key={index}
+                  >
                     {item.icon}
-                  </span>
-
-                  <span className="visible pl-3 opacity-100 transition-all duration-500 group-hover:visible group-hover:flex group-hover:opacity-100 sm:hidden sm:opacity-0 ">
-                    {item.name}
-                  </span>
-                </Button>
-              );
-            })}
+                  </Button>
+                );
+              })}
+            </div>
+            <div className="my-4 w-full px-2">
+              <hr className="border-b-[3px]" />
+            </div>
+            <div className="w-full content-center items-center px-2">
+              <div className="absolute -ml-2 w-full text-center text-sm">
+                Connect Wallet
+              </div>
+              <div className="pt-8">
+                <WalletSheet />
+              </div>
+            </div>
           </div>
-          <hr className=" mb-4 w-full border-b-[3px] group-hover:mx-4" />
-
-          <div className="mt-12 flex flex-col space-y-2 sm:mt-auto">
-            {social.map((item, index) => {
-              return (
-                <Button external variant={"ghost"} href={item.href} key={index}>
-                  {item.icon}
-                </Button>
-              );
-            })}
-          </div>
-
-          <hr className="my-4 w-full border-b-[3px] group-hover:mx-4" />
-          <div className="relative z-[3] w-full flex-1 grow self-stretch" />
         </div>
       </div>
     </div>

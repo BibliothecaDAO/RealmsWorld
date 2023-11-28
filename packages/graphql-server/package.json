@@ -22,7 +22,8 @@
   "dependencies": {
     "garph": "^0.6.4",
     "graphql-yoga": "^5.0.0",
-    "graphql": "^16.8.1"
+    "graphql": "^16.8.1",
+    "@realms-world/db": "workspace:*"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "workspace:*",
