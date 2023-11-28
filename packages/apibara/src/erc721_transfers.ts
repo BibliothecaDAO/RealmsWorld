@@ -15,6 +15,7 @@ export const config: Config<Starknet, Postgres> = {
   streamUrl: Deno.env.get("STREAM_URL"),
   startingBlock: Number(Deno.env.get("ERC721_STARTING_BLOCK")),
   network: "starknet",
+  batchSize: 1,
   finality: "DATA_STATUS_PENDING",
   filter: {
     header: {
@@ -26,6 +27,7 @@ export const config: Config<Starknet, Postgres> = {
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
     tableName: "rw_erc721_transfers",
+    entityMode: false,
   },
 };
 
