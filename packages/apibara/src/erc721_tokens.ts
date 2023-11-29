@@ -26,7 +26,8 @@ export const config: Config<Starknet, Postgres> = {
   },
   sinkType: "postgres",
   sinkOptions: {
-    connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
+    connectionString:
+      "postgres://RedBeardEth:1mbJAUqlo5NS@ep-frosty-sea-90384545.us-east-2.aws.neon.tech/goerli?sslmode=require",
     tableName: "rw_erc721_tokens",
     //entityMode: true,
   },
