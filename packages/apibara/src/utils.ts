@@ -1,4 +1,4 @@
-import { hash } from "https://esm.sh/starknet@5.19.5";
+import { hash } from "https://esm.sh/starknet";
 
 export const whitelistedContracts = [
   Deno.env.get("BEASTS_CONTRACT") as `0x${string}`,
