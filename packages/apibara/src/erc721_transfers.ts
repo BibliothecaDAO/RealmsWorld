@@ -1,6 +1,6 @@
 import type { Config } from "https://esm.sh/@apibara/indexer@0.2.2";
 import type { Postgres } from "https://esm.sh/@apibara/indexer@0.2.2/sink/postgres";
-import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
+//import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import type {
   Block,
   BlockHeader,

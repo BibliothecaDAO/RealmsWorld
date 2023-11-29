@@ -9,7 +9,7 @@ import type {
 } from "https://esm.sh/@apibara/indexer/starknet";
 import { uint256 } from "https://esm.sh/starknet";
 
-import { erc721ContractEvents } from "./utils.ts";
+//import { erc721ContractEvents } from "./utils.ts";
 
 export const config: Config<Starknet, Postgres> = {
   streamUrl: Deno.env.get("STREAM_URL"),
@@ -22,13 +22,13 @@ export const config: Config<Starknet, Postgres> = {
     header: {
       weak: true,
     },
-    events: erc721ContractEvents,
+    //events: erc721ContractEvents,
   },
   sinkType: "postgres",
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
     tableName: "rw_erc721_tokens",
-    entityMode: true,
+    //entityMode: true,
   },
 };
 
