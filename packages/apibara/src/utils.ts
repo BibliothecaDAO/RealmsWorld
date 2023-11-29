@@ -9,7 +9,7 @@ export const erc721ContractEvents = whitelistedContracts.map((contract) => {
   return {
     fromAddress: contract,
     keys: [hash.getSelectorFromName("Transfer") as `0x${string}`],
-    includeTransaction: true,
-    includeReceipt: false,
+    //includeTransaction: true,
+    //includeReceipt: false,
   };
 });
