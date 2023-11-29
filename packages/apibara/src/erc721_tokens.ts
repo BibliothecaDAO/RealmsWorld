@@ -12,12 +12,12 @@ import { uint256 } from "https://esm.sh/starknet";
 //import { erc721ContractEvents } from "./utils.ts";
 
 export const config: Config<Starknet, Postgres> = {
-  streamUrl: Deno.env.get("STREAM_URL"),
-  startingBlock: Number(Deno.env.get("ERC721_STARTING_BLOCK")),
+  //streamUrl: Deno.env.get("STREAM_URL"),
+  //startingBlock: Number(Deno.env.get("ERC721_STARTING_BLOCK")),
   network: "starknet",
   batchSize: 1,
   authToken: "dna_FCqLW4vWwpveLSLpp16V",
-  finality: "DATA_STATUS_PENDING",
+  //finality: "DATA_STATUS_PENDING",
   filter: {
     header: {
       weak: true,
