@@ -12,9 +12,12 @@ export const GameCard = async ({ game }: GameCardProps) => {
   const gameIconPng = `/games/${game.id}/icon.png`;
 
   const isImageFound = async (imageName: string) => {
-    return await fetch(`http://localhost:3000${imageName}`, {
-      method: "HEAD",
-    });
+    return await fetch(
+      (process.env.VERCEL_URL ?? "http://localhost:3000") + imageName,
+      {
+        method: "HEAD",
+      },
+    );
   };
   let imageName;
   const result = await isImageFound(gameIconPng);
