@@ -15,8 +15,6 @@ export const config: Config<Starknet, Postgres> = {
   streamUrl: Deno.env.get("STREAM_URL"),
   startingBlock: Number(Deno.env.get("ERC721_STARTING_BLOCK")),
   network: "starknet",
-  batchSize: 1,
-  authToken: "dna_FCqLW4vWwpveLSLpp16V",
   finality: "DATA_STATUS_PENDING",
   filter: {
     header: {
