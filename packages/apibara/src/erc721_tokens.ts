@@ -29,7 +29,6 @@ export const config: Config<Starknet, Postgres> = {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
     tableName: "rw_erc721_tokens",
     entityMode: true,
-    invalidate: [{ column: "metadata", value: "ETH" }],
   },
 };
 

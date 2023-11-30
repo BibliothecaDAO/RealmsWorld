@@ -1,4 +1,4 @@
-FROM quay.io/apibara/sink-postgres:0.4.8
+FROM quay.io/apibara/sink-postgres:0.4.9
 
 ARG NETWORK_NAME
 ENV ENVFILE=${NETWORK_NAME}.env
@@ -8,4 +8,4 @@ COPY $ENVFILE ./data/.env
 
 ENV AUTH_TOKEN=dna_FCqLW4vWwpveLSLpp16V
 
-CMD ["run",  "/data/src/erc721_tokens.ts", "--allow-env=/data/.env", "-A=dna_FCqLW4vWwpveLSLpp16V"]
+CMD ["run", "--allow-env=/data/.env", "/data/src/erc721_tokens.ts",  "-A=dna_FCqLW4vWwpveLSLpp16V", "--persist-to-etcd=decent-respect.railway.internal:2379", "--sink-id=erc721_tokens"]
