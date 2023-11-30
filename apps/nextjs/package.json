@@ -51,6 +51,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@realms-world/api": "workspace:*",
     "@realms-world/auth": "workspace:*",
+    "@realms-world/constants": "workspace:*",
     "@realms-world/db": "workspace:*",
     "@realms-world/graphql-server": "workspace:*",
     "@reservoir0x/reservoir-kit-ui": "^1.19.3",

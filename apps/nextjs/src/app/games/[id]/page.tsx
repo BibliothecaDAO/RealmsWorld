@@ -9,7 +9,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/app/_components/ui/tabs";
-import { games } from "@/constants/games";
+
+import { games } from "@realms-world/constants";
 
 export async function generateMetadata({
   params,
@@ -25,13 +26,13 @@ export async function generateMetadata({
 export default async function Page({ params }: { params: { id: string } }) {
   const game = games.find((game) => game.id === params.id);
 
-  /* const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
+  const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
   const dir = path.resolve("public", dirRelativeToPublicFolder);
   const screenshotFiles = await fs.readdir(path.join(dir));
   const screenshotList = screenshotFiles.map((image, index) => ({
     src: `/games/${params.id}/screenshots/${image}`,
     alt: `${game?.name} Screenshot ${index}`,
-  }));*/ //TODO not working in Vercel production
+  })); //TODO not working in Vercel production
 
   const tabs = [
     {
@@ -40,13 +41,18 @@ export default async function Page({ params }: { params: { id: string } }) {
     },
 
     {
-      name: "Tokens",
+      name: "Assets",
       content: (
         <div>
           <div className="flex">
-            {game?.compatibleTokens?.map((token, index) => (
-              <Button href={`/collection/${token.contract}`} key={index}>
-                {token.name}
+            {game?.tokens?.map((token, index) => (
+              <Button href={`/tokens/${token}`} key={index}>
+                {token}
+              </Button>
+            ))}
+            {game?.collections?.map((collection, index) => (
+              <Button href={`/collection/${collection}`} key={index}>
+                {collection}
               </Button>
             ))}
           </div>
@@ -60,10 +66,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="my-4 grid min-h-[400px] grid-cols-1 gap-8 sm:grid-cols-2">
         {game && (
           <>
-            {game.screenshots && (
+            {screenshotList && (
               <Carousel
                 className="h-full"
-                images={game.screenshots}
+                images={screenshotList}
                 autoPlay
                 showPreview
               />
