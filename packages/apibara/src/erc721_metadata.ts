@@ -1,5 +1,5 @@
-import type { Config } from "https://esm.sh/@apibara/indexer@0.2.2";
-import type { Webhook } from "https://esm.sh/@apibara/indexer@0.2.2/sink/webhook";
+import type { Config } from "https://esm.sh/@apibara/indexer";
+import type { Webhook } from "https://esm.sh/@apibara/indexer/sink/webhook";
 import type {
   Block,
   BlockHeader,
@@ -24,7 +24,10 @@ export const config: Config<Starknet, Webhook> = {
   sinkOptions: {
     targetUrl: "https://inn.gs/e/" + Deno.env.get("INNGEST_EVENT_KEY"),
     raw: true,
-    header: ["x-inngest-env: content-mdx"],
+    header: [
+      Deno.env.get("STREAM_URL") == "https://goerli.starknet.a5a.ch" ??
+        "x-inngest-env: testnet",
+    ],
   },
 };
 
