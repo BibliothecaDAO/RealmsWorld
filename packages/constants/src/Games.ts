@@ -25,12 +25,13 @@ export interface Game {
   chains: ChainId[];
   collections?: Collections[];
   tokens?: Tokens[];
+  screenshotLength: number;
 }
 
 export const games: Game[] = [
   {
     name: "Realms: Eternum",
-    id: "realms-adventurers",
+    id: "realms-eternum",
     developer: "BiblioDAO",
     genres: ["Economic Strategy", "PvP", "Raiding"],
     color: "#f5f5f5",
@@ -46,9 +47,10 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "Trade for resources",
-    chains: [ChainId.SN_MAIN],
+    chains: [ChainId.SN_GOERLI],
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
+    screenshotLength: 1,
   },
   {
     name: "Loot Survivor",
@@ -71,5 +73,6 @@ export const games: Game[] = [
     chains: [ChainId.SN_MAIN],
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
+    screenshotLength: 4,
   },
 ];

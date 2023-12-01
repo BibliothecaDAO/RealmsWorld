@@ -36,7 +36,8 @@ export const L2ERC721Card = (props: TokenCardProps) => {
   if(!token.name) {
 
   }*/
-  const starkName = useStarkDisplayName(token.owner);
+  const tokenOwner = token.transfers[0]?.toAddress ?? token.minter;
+  const starkName = useStarkDisplayName(tokenOwner ?? undefined);
 
   function renderAttribute(token: typeof props.token, traitType: string) {
     const attribute = token.metadata?.attributes.find(

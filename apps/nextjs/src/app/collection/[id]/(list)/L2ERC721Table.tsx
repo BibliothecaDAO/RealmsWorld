@@ -29,7 +29,7 @@ export const L2ERC721Table = ({
   const sortDirection = searchParams.get("sortDirection");
 
   const filters = {
-    limit: 10,
+    limit: 20,
     contractAddress,
     direction: sortDirection,
   };
@@ -47,7 +47,7 @@ export const L2ERC721Table = ({
   useEffect(() => {
     console.log("Element is in view: ", isInView);
     if (isInView) {
-      !isFetching && fetchNextPage();
+      fetchNextPage();
     }
   }, [fetchNextPage, isInView]);
 
@@ -73,7 +73,7 @@ export const L2ERC721Table = ({
           ref={ref}
           className="mt-6 grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
         >
-          {Array.from({ length: 5 }).map((_, index) => (
+          {Array.from({ length: 10 }).map((_, index) => (
             <TokenCardSkeleton key={index} />
           ))}
         </div>

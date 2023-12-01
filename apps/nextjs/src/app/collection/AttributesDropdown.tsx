@@ -37,54 +37,56 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
                       {attribute.key}
                     </AccordionTrigger>
                     <AccordionContent>
-                      {attribute.kind === "string" && (
-                        <div className=" p-1">
-                          {attribute.values.map((a: any, i: any) => {
-                            return (
-                              <Button
-                                key={i}
-                                size={"sm"}
-                                variant={
-                                  isAttributeInQuery(attribute.key, a.value)
-                                    ? "default"
-                                    : "outline"
-                                }
-                                onClick={() =>
-                                  handleAttributeClick(
-                                    attribute.key,
-                                    a.value,
-                                    attribute.key == "Resource",
-                                  )
-                                }
-                                className="my-1 mr-1"
-                              >
-                                {a.value}
-                              </Button>
-                            );
-                          })}
-                        </div>
-                      )}
+                      <div className="pt-1">
+                        {attribute.kind === "string" && (
+                          <div className=" p-1">
+                            {attribute.values.map((a: any, i: any) => {
+                              return (
+                                <Button
+                                  key={i}
+                                  size={"sm"}
+                                  variant={
+                                    isAttributeInQuery(attribute.key, a.value)
+                                      ? "default"
+                                      : "outline"
+                                  }
+                                  onClick={() =>
+                                    handleAttributeClick(
+                                      attribute.key,
+                                      a.value,
+                                      attribute.key == "Resource",
+                                    )
+                                  }
+                                  className="my-1 mr-1"
+                                >
+                                  {a.value}
+                                </Button>
+                              );
+                            })}
+                          </div>
+                        )}
 
-                      {attribute.kind === "number" && (
-                        <div className="flex space-x-2 px-2">
-                          <NumberSelect
-                            min={attribute.minRange}
-                            max={attribute.maxRange}
-                            onChange={(value) =>
-                              handleAttributeClick(attribute.key, value)
-                            }
-                          />
-                          <Button
-                            disabled={!isKeyInQuery(attribute.key)}
-                            variant={"default"}
-                            onClick={() =>
-                              handleAttributeClick(attribute.key, "")
-                            }
-                          >
-                            clear
-                          </Button>
-                        </div>
-                      )}
+                        {attribute.kind === "number" && (
+                          <div className="flex space-x-2 px-2">
+                            <NumberSelect
+                              min={attribute.minRange}
+                              max={attribute.maxRange}
+                              onChange={(value) =>
+                                handleAttributeClick(attribute.key, value)
+                              }
+                            />
+                            <Button
+                              disabled={!isKeyInQuery(attribute.key)}
+                              variant={"default"}
+                              onClick={() =>
+                                handleAttributeClick(attribute.key, "")
+                              }
+                            >
+                              clear
+                            </Button>
+                          </div>
+                        )}
+                      </div>
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>

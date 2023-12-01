@@ -1,5 +1,4 @@
-import { games } from './games';
-import { sortOptions, sortDirection } from './filters';
-import { erc721Tokens } from './erc721Tokens';
+import { erc721Tokens } from "./erc721Tokens";
+import { sortDirection, sortOptions } from "./filters";
 
-export { games, sortOptions, sortDirection, erc721Tokens }
+export { sortOptions, sortDirection, erc721Tokens };

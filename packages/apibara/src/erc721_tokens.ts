@@ -1,5 +1,5 @@
-import type { Config } from "https://esm.sh/@apibara/indexer@0.2.2";
-import type { Postgres } from "https://esm.sh/@apibara/indexer@0.2.2/sink/postgres";
+import type { Config } from "https://esm.sh/@apibara/indexer";
+import type { Postgres } from "https://esm.sh/@apibara/indexer/sink/postgres";
 //import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import type {
   Block,
@@ -25,8 +25,8 @@ export const config: Config<Starknet, Postgres> = {
   sinkType: "postgres",
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
-    tableName: "rw_erc721_transfers",
-    entityMode: false,
+    tableName: "rw_erc721_tokens",
+    entityMode: true,
   },
 };
 
@@ -34,24 +34,29 @@ export default function transform({ header, events }: Block) {
   return events?.flatMap((event) => transferToTask(header!, event));
 }
 
-function transferToTask(
-  _header: BlockHeader,
-  { event, transaction }: EventWithTransaction,
-) {
+function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
   const from = BigInt(event.data[0]);
-  if (from == 0n) {
-    return [];
-  }
   const token_id = parseInt(
     uint256.uint256ToBN({ low: event.data[2], high: event.data[3] }).toString(),
   );
-
-  return {
-    id: transaction.meta.hash,
-    token_key: event.fromAddress + ":" + token_id,
-    contract_address: event.fromAddress,
-    token_id,
-    fromAddress: event.data[0],
-    toAddress: event.data[1],
-  };
+  if (from == 0n) {
+    return {
+      insert: {
+        id: event.fromAddress + ":" + token_id,
+        contract_address: event.fromAddress,
+        token_id,
+        minter: event.data[1],
+        owner: event.data[1],
+      },
+    };
+  } else {
+    return {
+      entity: {
+        id: event.fromAddress + ":" + token_id,
+      },
+      update: {
+        owner: event.data[1],
+      },
+    };
+  }
 }

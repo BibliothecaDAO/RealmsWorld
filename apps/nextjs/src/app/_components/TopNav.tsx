@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "./ui/button";
-import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useState } from "react";
+import { useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu } from "lucide-react";
+
 import { useUIContext } from "../providers/UIProvider";
-import { WalletSheet } from "./wallet/WalletSheet";
+import { Button } from "./ui/button";
 
 export const TopNav = () => {
   const { scrollY } = useScroll();
@@ -20,15 +20,12 @@ export const TopNav = () => {
   return (
     <div
       id="topnav"
-      className={`fixed z-[100] w-full p-3 pl-4 sm:pl-8 lg:pl-32 ${
-        isScrolled ? "backdrop-blur-sm" : ""
-      }`}
+      className={`fixed z-[100] w-full p-3 pl-4 sm:pl-8 md:pl-32`}
     >
-      <div className="flex justify-between sm:justify-end ">
-        <Button className={"flex sm:hidden"} onClick={toggleSidebar}>
+      <div className="flex justify-between">
+        <Button className={"flex md:hidden"} onClick={toggleSidebar}>
           <Menu className="w-8" />
         </Button>
-        <WalletSheet />
       </div>
     </div>
   );

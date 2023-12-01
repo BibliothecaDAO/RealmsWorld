@@ -1,8 +1,9 @@
 {
   "extends": "@realms-world/tsconfig/base.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "outDir": "./dist"
   },
   "include": ["*.ts", "src"],
-  "exclude": ["node_modules"]
+  "exclude": ["dist", "build", "node_modules"]
 }

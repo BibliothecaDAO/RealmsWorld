@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import type { InferResolvers } from "garph";
 import type { YogaInitialContext } from "graphql-yoga";
 
@@ -13,7 +14,11 @@ type Resolvers = InferResolvers<
 
 export const resolvers: Resolvers = {
   Query: {
-    getERC721Tokens: (_, { limit, cursor, contract_address, owner }, ctx) => {
+    getERC721Tokens: async (
+      _,
+      { limit, cursor, contract_address, owner, block },
+      ctx,
+    ) => {
       const where: SQL[] = [];
       if (contract_address) {
         where.push(
@@ -26,10 +31,18 @@ export const resolvers: Resolvers = {
       if (owner) {
         where.push(eq(schema.erc721Tokens.owner, owner));
       }
-      return db.query.erc721Tokens.findMany({
+      if (!block) {
+        where.push(sql`upper_inf(_cursor)`);
+      }
+      return await db.query.erc721Tokens.findMany({
         limit: limit + 1,
         where: and(gt(schema.erc721Tokens.token_id, cursor), ...where),
         orderBy: asc(schema.erc721Tokens.token_id),
+        with: {
+          transfers: {
+            orderBy: (transfers, { desc }) => [desc(transfers._cursor)],
+          },
+        },
       });
     },
   },
