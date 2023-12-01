@@ -28,10 +28,14 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
   //const dir = path.resolve("public", dirRelativeToPublicFolder);
-  const screenshotFiles = await fs.readdir(
-    process.cwd() + "/public/" + dirRelativeToPublicFolder,
-  );
-  const screenshotList = screenshotFiles.map((image, index) => ({
+  const screenshotFiles = await fs.readdir(process.cwd());
+  const screenshotFiles1 = await fs.readdir(process.cwd() + "/public/");
+  const screenshotFiles2 = await fs.readdir(process.cwd() + "/games");
+  console.log(screenshotFiles);
+  console.log(screenshotFiles1);
+  console.log(screenshotFiles2);
+
+  const screenshotList = screenshotFiles?.map((image, index) => ({
     src: `/games/${params.id}/screenshots/${image}`,
     alt: `${game?.name} Screenshot ${index}`,
   })); //TODO not working in Vercel production
