@@ -46,7 +46,7 @@ export const EthereumLoginButton = ({
         >
           <span className="flex items-center font-sans normal-case">
             <EthereumLogo className="w-6" />
-            <span className={`hidden pl-2 ` + textClass ?? "sm:block"}>
+            <span className={`hidden pl-2 ${textClass ?? "sm:block"}`}>
               {isConnected ? (
                 ensName ?? truncatedAddress
               ) : (

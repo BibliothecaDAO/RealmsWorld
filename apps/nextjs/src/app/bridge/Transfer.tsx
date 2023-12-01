@@ -130,24 +130,25 @@ export const Transfer = ({ action }: { action: string }) => {
         <div className="relative mb-4  flex flex-col rounded border border-white/5 bg-white/10 p-4">
           {action == "withdraw" ? renderL1Network() : renderL2Network()}
         </div>
-
-        {!l1Account && <EthereumLoginButton />}
-        {!l2Account && <StarknetLoginButton />}
-        {l1Account && l2Account && (
-          <Button
-            className="mt-2 w-full"
-            onClick={() => onTransferClick()}
-            size={"lg"}
-            disabled={amount == "0"}
-            variant={"default"}
-          >
-            {!amount
-              ? "Please Enter Amount"
-              : action == "deposit"
-              ? "Transfer to L2"
-              : "Transfer to L1"}
-          </Button>
-        )}
+        <div className="flex gap-x-4 p-2">
+          {!l1Account && <EthereumLoginButton />}
+          {!l2Account && <StarknetLoginButton />}
+          {l1Account && l2Account && (
+            <Button
+              className="mt-2 w-full"
+              onClick={() => onTransferClick()}
+              size={"lg"}
+              disabled={amount == "0"}
+              variant={"default"}
+            >
+              {!amount
+                ? "Please Enter Amount"
+                : action == "deposit"
+                  ? "Transfer to L2"
+                  : "Transfer to L1"}
+            </Button>
+          )}
+        </div>
       </div>
     </>
   );
