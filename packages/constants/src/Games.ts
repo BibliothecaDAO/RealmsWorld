@@ -25,12 +25,13 @@ export interface Game {
   chains: ChainId[];
   collections?: Collections[];
   tokens?: Tokens[];
+  screenshotLength?: number;
 }
 
 export const games: Game[] = [
   {
     name: "Realms: Eternum",
-    id: "realms-adventurers",
+    id: "realms-eternum",
     developer: "BiblioDAO",
     genres: ["Economic Strategy", "PvP", "Raiding"],
     color: "#f5f5f5",
@@ -46,9 +47,10 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "Trade for resources",
-    chains: [ChainId.SN_MAIN],
+    chains: [ChainId.SN_GOERLI],
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
+    screenshotLength: 1,
   },
   {
     name: "Loot Survivor",
@@ -70,6 +72,47 @@ export const games: Game[] = [
     lords: "25 Per Adventurer",
     chains: [ChainId.SN_MAIN],
     collections: [Collections.GOLDEN_TOKEN],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 4,
+  },
+  {
+    name: "Loot Auto Chess",
+    id: "loot-auto-chess",
+    developer: "HelheimLabs",
+    genres: ["PvP", "Auto Battle"],
+    color: "#f5f5f8",
+    status: "In development",
+    description: "Auto Chess Battle",
+    longform:
+      "Players can strategically select and upgrade heroes to form powerful combinations, manage their in-game economy wisely to optimize their team, and position their heroes effectively on the board to outlast their opponents in automated battles.",
+    links: {},
+    operatingSystems: ["Web Browser"],
+    lords: "For ticket",
+    chains: [],
+    collections: [Collections.GOLDEN_TOKEN, Collections.BEASTS],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 1,
+  },
+  {
+    name: "Mississippi",
+    id: "mississippi",
+    developer: "Mississippi Team",
+    genres: ["SLG","PVP", "Roguelike"],
+    color: "#6F391E",
+    status: "beta",
+    description: "Fully on-chain PVP roguelike game",
+    longform:
+      'Mississippi is a fully on-chain PVP roguelike game. We hope to create an expansive cavern space, containing abundant resources, which players need to explore and exploit as many resources from the cavern as possible within a fixed time limit. Besides, we will integrate with the Lootverse, such as by "extracting" equipment and resources from Loot Bags and Realms, which can give players specific attributes for each round.',
+    links: {
+      mainnet: "https://0xMssp.xyz/",
+      testnet: "https://test.0xMssp.xyz/",
+      discord: "https://discord.com/invite/rg9V8J49",
+      twitter: "https://twitter.com/0xMississippi",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "N/A",
+    chains: [ChainId.MISSISSIPPI_TESTNET],
+    collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
   },
   {

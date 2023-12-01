@@ -59,7 +59,7 @@ const config = {
     remotePatterns: [
       { protocol: "https", hostname: "loot-survivor.vercel.app" },
       { protocol: "https", hostname: "*.seadn.io" },
-      { protocol: "https", hostname: "api.reservoir.tools" },
+      { protocol: "https", hostname: "*.reservoir.tools" },
       { protocol: "https", hostname: "raw.githubusercontent.com" },
       { protocol: "https", hostname: "blur.io" },
       { protocol: "https", hostname: "www.loot.exchange" },

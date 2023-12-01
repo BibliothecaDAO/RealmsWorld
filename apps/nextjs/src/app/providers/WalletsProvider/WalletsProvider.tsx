@@ -82,7 +82,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     abi: L2_C1ERC20,
     functionName: "balance_of",
     enabled: !!l2Account,
-    args: [l2Account],
+    args: l2Account ? [l2Account] : undefined,
     watch: true,
   });
 
@@ -91,7 +91,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     abi: L2_ERC20,
     functionName: "balanceOf",
     enabled: !!l2Account,
-    args: [l2Account],
+    args: l2Account ? [l2Account] : undefined,
     watch: true,
   });
 

@@ -6,7 +6,7 @@ import type {
   EventWithTransaction,
   Starknet,
 } from "https://esm.sh/@apibara/indexer/starknet";
-import { uint256 } from "https://esm.sh/starknet@5.19.5";
+import { uint256 } from "https://esm.sh/starknet";
 
 import { erc721ContractEvents } from "./utils.ts";
 
@@ -24,7 +24,11 @@ export const config: Config<Starknet, Webhook> = {
   sinkOptions: {
     targetUrl: "https://inn.gs/e/" + Deno.env.get("INNGEST_EVENT_KEY"),
     raw: true,
-    header: ["x-inngest-env: content-mdx"],
+    header: [
+      Deno.env.get("STREAM_URL") == "https://goerli.starknet.a5a.ch"
+        ? "x-inngest-env: testnet"
+        : "test: test",
+    ],
   },
 };
 

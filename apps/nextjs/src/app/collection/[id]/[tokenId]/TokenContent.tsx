@@ -9,10 +9,11 @@ import {
 import { BuyButton } from "@/app/collection/BuyModal";
 import { ListingModal } from "@/app/collection/ListingModal";
 import { GameCard } from "@/app/games/GameCard";
-import { games } from "@/constants";
 import type { Collection, Game, Token } from "@/types";
 import { getGamesByContract } from "@/utils/getters";
 import { useAccount } from "wagmi";
+
+import { games } from "@realms-world/constants";
 
 import { TokenActivity } from "./TokenActivity";
 
@@ -40,7 +41,7 @@ export const TokenContent = ({ token, collection }: Props) => {
       name: "Games",
       content: (
         <div className="grid gap-4 sm:grid-cols-2">
-          {comptatible_games.map((game: Game, index: any) => {
+          {comptatible_games?.map((game: Game, index: any) => {
             return <GameCard key={index} game={game} />;
           })}
         </div>

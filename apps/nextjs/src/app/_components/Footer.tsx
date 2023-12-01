@@ -19,10 +19,14 @@ export const Footer = () => {
       name: "Discord",
       href: "https://discord.gg/realmsworld",
     },
+    {
+      name: "Brand Assets",
+      href: "https://drive.google.com/drive/folders/17vrwIjwqifxBVTkHmxoK1VhQ31hVSbDH",
+    },
   ];
 
   return (
-    <div className="mt-40 h-[500px]  w-full " /*style={backgroundImageStyle}*/>
+    <div className="my-24 w-full " /*style={backgroundImageStyle}*/>
       <div className="container mx-auto px-10 pt-10 sm:px-32 ">
         <div className="w-full">
           <h1>Realms.World</h1>

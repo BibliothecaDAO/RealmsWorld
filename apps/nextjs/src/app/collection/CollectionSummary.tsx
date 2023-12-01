@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { erc721Tokens } from "@/constants";
-import { games } from "@/constants";
 import Discord from "@/icons/discord.svg";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getGamesByContract } from "@/utils/getters";
 import { getTokenContractAddresses } from "@/utils/utils";
 import { ExternalLink, Globe, Twitter } from "lucide-react";
 import { formatEther } from "viem";
+
+import { games } from "@realms-world/constants";
 
 import L2CollectionSummary from "./L2CollectionSummary";
 
