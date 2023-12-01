@@ -27,8 +27,13 @@ export default async function Page({ params }: { params: { id: string } }) {
   const game = games.find((game) => game.id === params.id);
 
   const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
-  const dir = path.resolve("public", dirRelativeToPublicFolder);
-  const screenshotFiles = await fs.readdir(path.join(dir));
+  //const dir = path.resolve("public", dirRelativeToPublicFolder);
+  const screenshotFiles = await fs.readdir(
+    process.cwd() +
+      "/" +
+      (process.env.VERCEL_URL ? "" : "public/") +
+      dirRelativeToPublicFolder,
+  );
   const screenshotList = screenshotFiles.map((image, index) => ({
     src: `/games/${params.id}/screenshots/${image}`,
     alt: `${game?.name} Screenshot ${index}`,
@@ -92,11 +97,11 @@ export default async function Page({ params }: { params: { id: string } }) {
                     White paper
                   </Button>
                 )}
-                {game?.links.website && (
+                {game?.links.homepage && (
                   <Button
                     size={"xs"}
                     variant={"outline"}
-                    href={game?.links.website}
+                    href={game?.links.homepage}
                     className="mr-2"
                   >
                     Website
