@@ -29,10 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
   //const dir = path.resolve("public", dirRelativeToPublicFolder);
   const screenshotFiles = await fs.readdir(
-    process.cwd() +
-      "/" +
-      (process.env.VERCEL_URL ? "" : "public/") +
-      dirRelativeToPublicFolder,
+    process.cwd() + "/public/" + dirRelativeToPublicFolder,
   );
   const screenshotList = screenshotFiles.map((image, index) => ({
     src: `/games/${params.id}/screenshots/${image}`,
