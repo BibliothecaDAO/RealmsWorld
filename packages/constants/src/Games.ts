@@ -97,7 +97,7 @@ export const games: Game[] = [
     name: "Mississippi",
     id: "mississippi",
     developer: "Mississippi Team",
-    genres: ["SLG","PVP", "Roguelike"],
+    genres: ["SLG", "PVP", "Roguelike"],
     color: "#6F391E",
     status: "beta",
     description: "Fully on-chain PVP roguelike game",
@@ -114,6 +114,7 @@ export const games: Game[] = [
     chains: [ChainId.MISSISSIPPI_TESTNET],
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
+    screenshotLength: 4,
   },
   {
     name: "StarkLand",
@@ -135,5 +136,6 @@ export const games: Game[] = [
     chains: [ChainId.SN_MAIN],
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
+    screenshotLength: 3,
   },
 ];

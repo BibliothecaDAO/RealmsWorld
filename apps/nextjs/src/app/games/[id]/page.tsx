@@ -50,7 +50,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       name: "Assets",
       content: (
         <div>
-          <div className="flex">
+          <div className="flex gap-x-2">
             {game?.tokens?.map((token, index) => (
               <Button href={`/tokens/${token}`} key={index}>
                 {token}
@@ -69,11 +69,16 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <main className="container mx-auto px-4 ">
-      <div className="my-4 grid min-h-[400px] grid-cols-1 gap-8 sm:grid-cols-2">
+      <div className="my-4 grid grid-cols-1 gap-8 sm:min-h-[500px] sm:grid-cols-2">
         {game && (
           <>
             {game.screenshotLength && (
-              <Carousel className="h-full" images={list} autoPlay showPreview />
+              <Carousel
+                className="h-full min-h-[350px]"
+                images={list}
+                autoPlay
+                showPreview
+              />
             )}
             <div>
               <div className="flex space-x-2 uppercase">
