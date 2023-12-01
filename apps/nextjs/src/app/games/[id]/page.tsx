@@ -27,13 +27,14 @@ export default async function Page({ params }: { params: { id: string } }) {
   const game = games.find((game) => game.id === params.id);
 
   const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
-  //const dir = path.resolve("public", dirRelativeToPublicFolder);
-  const screenshotFiles = await fs.readdir(process.cwd());
-  const screenshotFiles1 = await fs.readdir(process.cwd() + "/public/");
-  const screenshotFiles2 = await fs.readdir(process.cwd() + "/games");
+  const screenshotFiles = await fs.readdir(path.resolve(process.cwd()));
   console.log(screenshotFiles);
-  console.log(screenshotFiles1);
+
+  const dir = path.resolve(process.cwd(), dirRelativeToPublicFolder);
+  const screenshotFiles2 = await fs.readdir(dir);
   console.log(screenshotFiles2);
+  /* const screenshotFiles1 = await fs.readdir(process.cwd() + "/public/");
+  console.log(screenshotFiles1);*/
 
   const screenshotList = screenshotFiles?.map((image, index) => ({
     src: `/games/${params.id}/screenshots/${image}`,
