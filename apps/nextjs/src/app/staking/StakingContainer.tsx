@@ -42,18 +42,18 @@ export const StakingContainer = () => {
   const [hexProof, setHexProof] = useState();
   const [poolTotal, setPoolTotal] = useState<bigint>(0n);
   const [poolClaimAmount, setPoolClaimAmount] = useState<bigint>();
-  /*const sdk = getBuiltGraphSDK({
-    realmsSubgraph: process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
-  });*/
+
   const address = addressL1 ? addressL1.toLowerCase() : "0x";
 
   useEffect(() => {
-    fetch(`/api/staking/${addressL1}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setHexProof(data.proof);
-        setPoolTotal(parseEther(data.amount.toString()));
-      });
+    if (addressL1) {
+      fetch(`/api/staking/${addressL1}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setHexProof(data.proof);
+          setPoolTotal(parseEther(data.amount.toString()));
+        });
+    }
   }, [addressL1]);
 
   const { data: realmsData, isLoading: realmsDataIsLoading } = useQuery({
@@ -68,13 +68,7 @@ export const StakingContainer = () => {
         }),
     enabled: !!addressL1,
     refetchInterval: 10000,
-  }); /*
-  const { data: totalStakedRealmsData } = useQuery({
-    queryKey: ["StakedRealmsTotal"],
-    queryFn: () =>
-      sdk.WalletsRealms({ addresses: [galleonAddress, carrackAddress] }),
-    enabled: !!addressL1,
-  });*/
+  });
 
   const {
     data: lordsAvailableData,

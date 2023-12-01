@@ -282,7 +282,6 @@ interface ScreenShot {
 export interface Game {
   name: string;
   id: string;
-  icon: string;
   status: string;
   image: string;
   color: string;

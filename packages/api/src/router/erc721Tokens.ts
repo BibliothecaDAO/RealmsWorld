@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
@@ -15,12 +16,14 @@ export const erc721TokensRouter = createTRPCRouter({
         owner: z.string().nullish(),
         orderBy: z.string().nullish(),
         direction: z.string().nullish(),
+        block: z.number().nullish(),
       }),
     )
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 50;
       //TODO add orderBy conditions
-      const { cursor, contractAddress, owner, orderBy, direction } = input;
+      const { cursor, contractAddress, owner, orderBy, block, direction } =
+        input;
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
       if (direction === "asc") {
@@ -49,10 +52,18 @@ export const erc721TokensRouter = createTRPCRouter({
       } /* else {
         whereFilter.push(lte(schema.erc721Tokens.token_id, cursor));
       }*/
+      if (!block) {
+        whereFilter.push(sql`upper_inf(_cursor)`);
+      }
       const items = await ctx.db.query.erc721Tokens.findMany({
         limit: limit + 1,
         where: and(...whereFilter),
         orderBy: orderByFilter,
+        with: {
+          transfers: {
+            orderBy: (transfers, { desc }) => [desc(transfers._cursor)],
+          },
+        },
       });
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
