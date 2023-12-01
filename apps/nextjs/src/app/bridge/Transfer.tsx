@@ -40,6 +40,7 @@ export const Transfer = ({ action }: { action: string }) => {
     networkName: string,
     networkLogo: JSX.Element,
     isWithdraw: boolean,
+    isL2?: boolean,
   ) => {
     return (
       <>
@@ -57,7 +58,7 @@ export const Transfer = ({ action }: { action: string }) => {
           </div>
           <TokenBalance
             balance={
-              isWithdraw
+              isL2
                 ? balances.l2?.lords || BigInt(0)
                 : balances.l1?.lords || BigInt(0)
             }
@@ -69,18 +70,19 @@ export const Transfer = ({ action }: { action: string }) => {
     );
   };
 
-  const renderL1Network = () => {
+  const renderL1Network = (action) => {
     return renderNetwork(
       "Ethereum",
       <EthereumLogo className="m-auto mt-1 h-6 w-6" />,
-      false,
+      action != "withdraw",
     );
   };
 
-  const renderL2Network = () => {
+  const renderL2Network = (action) => {
     return renderNetwork(
       "Starknet",
       <StarknetLogo className="m-auto mt-1 h-6 w-6" />,
+      action == "withdraw",
       true,
     );
   };
@@ -107,7 +109,9 @@ export const Transfer = ({ action }: { action: string }) => {
     <>
       <div className="relative">
         <div className="relative mb-2 rounded border border-white/5 bg-white/10 p-4">
-          {action == "withdraw" ? renderL2Network() : renderL1Network()}
+          {action == "withdraw"
+            ? renderL2Network(action)
+            : renderL1Network(action)}
           {renderTokenInput()}
           {/*allowance: {allowance?.toString()}*/}
         </div>
@@ -128,26 +132,29 @@ export const Transfer = ({ action }: { action: string }) => {
         </Link>
 
         <div className="relative mb-4  flex flex-col rounded border border-white/5 bg-white/10 p-4">
-          {action == "withdraw" ? renderL1Network() : renderL2Network()}
+          {action == "withdraw"
+            ? renderL1Network(action)
+            : renderL2Network(action)}
         </div>
-
-        {!l1Account && <EthereumLoginButton />}
-        {!l2Account && <StarknetLoginButton />}
-        {l1Account && l2Account && (
-          <Button
-            className="mt-2 w-full"
-            onClick={() => onTransferClick()}
-            size={"lg"}
-            disabled={amount == "0"}
-            variant={"default"}
-          >
-            {!amount
-              ? "Please Enter Amount"
-              : action == "deposit"
-              ? "Transfer to L2"
-              : "Transfer to L1"}
-          </Button>
-        )}
+        <div className="flex gap-x-4 p-2">
+          {!l1Account && <EthereumLoginButton />}
+          {!l2Account && <StarknetLoginButton />}
+          {l1Account && l2Account && (
+            <Button
+              className="mt-2 w-full"
+              onClick={() => onTransferClick()}
+              size={"lg"}
+              disabled={amount == "0"}
+              variant={"default"}
+            >
+              {amount == "0"
+                ? "Please Enter Amount"
+                : action == "deposit"
+                  ? "Transfer to L2"
+                  : "Transfer to L1"}
+            </Button>
+          )}
+        </div>
       </div>
     </>
   );

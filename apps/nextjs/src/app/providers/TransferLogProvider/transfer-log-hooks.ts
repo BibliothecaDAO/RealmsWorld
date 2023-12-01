@@ -5,7 +5,7 @@ import { isDeposit } from "@/types/bridge";
 
 import { TransferLogContext } from "./transfer-log-context";
 
-export const useTransferLog = (isL1: boolean = true) => {
+export const useTransferLog = (isL1 = true) => {
   const { transfersQueryL1, transfersQueryL2 } = useContext(TransferLogContext);
   const query = isL1 ? transfersQueryL1 : transfersQueryL2;
   return useMemo(() => {
@@ -75,7 +75,6 @@ function isIterable(input) {
 }
 
 const flattenPages = (data: any) => {
-  console.log(data);
   return data?.pages.length
     ? [
         ...(data?.pages?.[0]?.data.withdrawals || []),

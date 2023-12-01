@@ -24,7 +24,7 @@ export const TokenInformation = ({
   const isBeasts = collectionId == "beasts";
   return (
     <>
-      <div className="flex w-full flex-none rounded-t md:w-1/2 lg:mt-12">
+      <div className="flex w-full flex-none flex-col rounded-t md:w-1/2 lg:mt-12">
         {token.image && (
           <Image
             src={token.image}
@@ -65,7 +65,7 @@ export const TokenInformation = ({
           </div>
         )}
       </div>
-      <div className="w-auto p-4 md:w-1/2 md:p-8">
+      <div className="w-full py-4 md:w-1/2 md:p-8">
         <Link
           className="flex opacity-70 hover:opacity-100"
           href={`/collection/${collectionId}`}

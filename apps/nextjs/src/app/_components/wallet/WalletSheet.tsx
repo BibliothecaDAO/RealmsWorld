@@ -104,14 +104,24 @@ export const WalletSheet = () => {
   ];
   return (
     <>
-      <div className="flex space-x-2">
-        <EthereumLoginButton openAccount />
-        <StarknetLoginButton openAccount />
+      <div className="my-4 flex w-full flex-col space-y-4 px-1">
+        <EthereumLoginButton
+          variant={"default"}
+          textClass="group-hover:block"
+          openAccount
+          buttonClass="w-full"
+        />
+        <StarknetLoginButton
+          textClass="group-hover:block"
+          variant={"default"}
+          buttonClass="w-full"
+          openAccount
+        />
         <StarknetLoginModal />
       </div>
       <Sheet open={isAccountOpen} onOpenChange={toggleAccount}>
         <SheetContent position={"right"} size={"lg"}>
-          <div className="mt-8 flex h-auto w-full flex-col gap-y-4">
+          <div className="mt-8 flex h-auto w-full flex-col gap-y-6">
             <EthereumLogin />
             <StarkLogin />
             <Collapsible

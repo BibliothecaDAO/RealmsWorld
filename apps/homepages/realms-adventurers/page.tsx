@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 export default function HomePage() {
-  const game = games.find((game) => game.id === "realms-adventurers");
+  const game = games.find((game) => game.id === "realms-eternum");
 
   if (!game) {
     return;

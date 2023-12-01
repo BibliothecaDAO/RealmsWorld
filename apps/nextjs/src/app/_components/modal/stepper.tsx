@@ -1,10 +1,10 @@
 "use client";
-import { Step, StepLabel, Stepper as MuiStepper } from "@mui/material";
-import PropTypes from "prop-types";
-import React from "react";
 
+import React from "react";
+import { Stepper as MuiStepper, Step, StepLabel } from "@mui/material";
+import { blue, blueGrey, lightBlue } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { blue, lightBlue, blueGrey } from "@mui/material/colors";
+import PropTypes from "prop-types";
 
 export interface StepperProps {
   children: React.ReactNode;
@@ -18,10 +18,14 @@ export const StepperTheme: React.FC<StepperProps> = ({
         styleOverrides: {
           root: {
             ".MuiSvgIcon-root": {
-              color: blueGrey,
+              color: "#4D4E46",
               fontSize: "32px",
+
               "&.Mui-completed, &.Mui-active": {
-                color: blueGrey,
+                color: "#FBE1BB",
+              },
+              ".MuiStepIcon-text": {
+                fill: blueGrey,
               },
             },
           },
@@ -45,7 +49,7 @@ export const StepperTheme: React.FC<StepperProps> = ({
             "&.MuiStepLabel-alternativeLabel": {
               marginTop: "8px",
               fontWeight: "900",
-              color: "white",
+              color: "#FBE1BB",
             },
           },
         },
