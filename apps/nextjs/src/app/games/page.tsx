@@ -1,6 +1,7 @@
 import { GameCard } from "@/app/games/GameCard";
-import { games } from "@/constants";
-import type { Game } from "@/types";
+
+import type { Game } from "@realms-world/constants";
+import { games } from "@realms-world/constants";
 
 export const metadata = {
   title: "Games of the Realms",

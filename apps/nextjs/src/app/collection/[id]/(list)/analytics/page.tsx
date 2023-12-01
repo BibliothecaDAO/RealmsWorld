@@ -27,7 +27,10 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <div className="mt-8 grid gap-20 md:grid-cols-2">
       {cards.map((card, index) => (
-        <div key={index} className="rounded-xl border-2 px-8 py-2">
+        <div
+          key={index}
+          className="bg-dark-green rounded-xl border-2 px-8 py-2"
+        >
           {card.component}
         </div>
       ))}

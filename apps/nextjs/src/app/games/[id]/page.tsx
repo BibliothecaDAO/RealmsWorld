@@ -10,7 +10,7 @@ import {
   TabsTrigger,
 } from "@/app/_components/ui/tabs";
 
-import { games } from "@realms-world/constants";
+import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
 
 export async function generateMetadata({
   params,
@@ -26,20 +26,19 @@ export async function generateMetadata({
 export default async function Page({ params }: { params: { id: string } }) {
   const game = games.find((game) => game.id === params.id);
 
-  const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
-  const screenshotFiles = await fs.readdir(path.resolve(process.cwd()));
-  console.log(screenshotFiles);
-
-  const dir = path.resolve(process.cwd(), dirRelativeToPublicFolder);
-  const screenshotFiles2 = await fs.readdir(dir);
-  console.log(screenshotFiles2);
-  /* const screenshotFiles1 = await fs.readdir(process.cwd() + "/public/");
-  console.log(screenshotFiles1);*/
-
-  const screenshotList = screenshotFiles?.map((image, index) => ({
+  /*const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
+  const dir = path.resolve("public", dirRelativeToPublicFolder);
+  const screenshotFiles = await fs.readdir(path.join(dir));
+  const screenshotList = screenshotFiles.map((image, index) => ({
     src: `/games/${params.id}/screenshots/${image}`,
     alt: `${game?.name} Screenshot ${index}`,
-  })); //TODO not working in Vercel production
+  })); */ //TODO not working in Vercel production
+
+  const screenshotList = new Array(game?.screenshotLength);
+  const list = [...screenshotList].map((image, index) => ({
+    src: `/games/${params.id}/screenshots/${index + 1}.png`,
+    alt: `${game?.name} Screenshot ${index + 1}`,
+  }));
 
   const tabs = [
     {
@@ -73,17 +72,16 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="my-4 grid min-h-[400px] grid-cols-1 gap-8 sm:grid-cols-2">
         {game && (
           <>
-            {screenshotList && (
-              <Carousel
-                className="h-full"
-                images={screenshotList}
-                autoPlay
-                showPreview
-              />
+            {game.screenshotLength && (
+              <Carousel className="h-full" images={list} autoPlay showPreview />
             )}
             <div>
               <div className="flex space-x-2 uppercase">
-                {game?.chains.map((a, i) => <div key={i}>chain: {a}</div>)}
+                {game?.chains.map((a, i) => (
+                  <div key={i}>
+                    chain: {CHAIN_IDS_TO_NAMES[a].replace(/_/g, " ")}
+                  </div>
+                ))}
                 <div>|</div>
                 <div>status: {game?.status}</div>
               </div>
