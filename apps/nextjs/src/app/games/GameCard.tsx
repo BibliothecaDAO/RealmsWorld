@@ -41,15 +41,15 @@ export const GameCard = async ({ game }: GameCardProps) => {
         height={400}
         className=" bottom-0 top-0 h-full w-full object-fill brightness-75 transition-all duration-300 hover:filter-none"
       />
-      <div className="absolute">
+      <div className="absolute flex max-h-full max-w-full flex-col items-center justify-center  object-contain">
         <Image
           src={imageName}
           alt={game.name}
-          width={400}
-          height={200}
-          className=""
+          width={300}
+          height={150}
+          className="w-auto max-w-[75%]"
         />
-        <p className="mt-8 text-lg font-semibold">{game.description}</p>
+        <p className="mt-2  text-lg font-semibold">{game.description}</p>
       </div>
       {/*<div className="invisible z-10 opacity-0 duration-300 group-hover:visible group-hover:translate-y-3 group-hover:opacity-100">
         <Button variant={"default"}>Explore</Button>

@@ -85,12 +85,12 @@ export const games: Game[] = [
     description: "Auto Chess Battle",
     longform:
       "Players can strategically select and upgrade heroes to form powerful combinations, manage their in-game economy wisely to optimize their team, and position their heroes effectively on the board to outlast their opponents in automated battles.",
-    links: {
-    },
+    links: {},
     operatingSystems: ["Web Browser"],
     lords: "For ticket",
     chains: [],
-    collections: [Collections.GOLDEN_TOKEN,Collections.BEASTS],
+    collections: [Collections.GOLDEN_TOKEN, Collections.BEASTS],
     tokens: [Tokens.LORDS],
+    screenshotLength: 1,
   },
 ];
