@@ -10,7 +10,7 @@ export default async function Page() {
   return (
     <>
       <div className="mask-transparent h-96 w-full before:bg-[url(/backgrounds/map.png)] before:bg-cover before:bg-center before:bg-no-repeat" />
-      <div className="-mt-24 h-screen w-full">
+      <div className="-mt-24 w-full">
         <div className="container mx-auto px-8 ">
           <h1>Collections</h1>
           <CollectionsList />

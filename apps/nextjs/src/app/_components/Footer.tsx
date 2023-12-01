@@ -19,6 +19,10 @@ export const Footer = () => {
       name: "Discord",
       href: "https://discord.gg/realmsworld",
     },
+    {
+      name: "Brand Assets",
+      href: "https://drive.google.com/drive/folders/17vrwIjwqifxBVTkHmxoK1VhQ31hVSbDH",
+    },
   ];
 
   return (
