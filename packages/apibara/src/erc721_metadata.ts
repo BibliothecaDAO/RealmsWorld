@@ -27,7 +27,7 @@ export const config: Config<Starknet, Webhook> = {
     header: [
       Deno.env.get("STREAM_URL") == "https://goerli.starknet.a5a.ch"
         ? "x-inngest-env: testnet"
-        : "",
+        : "test: test",
     ],
   },
 };
