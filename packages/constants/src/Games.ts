@@ -25,7 +25,7 @@ export interface Game {
   chains: ChainId[];
   collections?: Collections[];
   tokens?: Tokens[];
-  screenshotLength: number;
+  screenshotLength?: number;
 }
 
 export const games: Game[] = [
