@@ -4,7 +4,7 @@ import Link from "next/link";
 import { NETWORK_NAME } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
 //import { Progress } from "@/app/_components/ui/progress";
-//import Table from "@/app/homepages/realms-adventurers/components/Table";
+//import Table from "@/app/homepages/realms-eternum/components/Table";
 import { shortenHex } from "@/utils/utils";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 
@@ -39,9 +39,9 @@ export const TopOwners = ({
                   {owner.address === stakingAddresses[NETWORK_NAME].v1Galleon
                     ? "Galleon Staking"
                     : owner.address ===
-                      stakingAddresses[NETWORK_NAME].v2Carrack.toLowerCase()
-                    ? "Carrack Staking"
-                    : shortenHex(owner.address, 8)}
+                        stakingAddresses[NETWORK_NAME].v2Carrack.toLowerCase()
+                      ? "Carrack Staking"
+                      : shortenHex(owner.address, 8)}
                 </Link>
               </div>
               <div>{owner.ownership.tokenCount}</div>

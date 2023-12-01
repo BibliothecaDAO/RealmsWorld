@@ -30,7 +30,7 @@ export interface Game {
 export const games: Game[] = [
   {
     name: "Realms: Eternum",
-    id: "realms-adventurers",
+    id: "realms-eternum",
     developer: "BiblioDAO",
     genres: ["Economic Strategy", "PvP", "Raiding"],
     color: "#f5f5f5",

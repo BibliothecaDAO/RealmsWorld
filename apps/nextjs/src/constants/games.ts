@@ -1,7 +1,7 @@
 export const games = [
   {
     name: "Realms: Eternum",
-    id: "realms-adventurers",
+    id: "realms-eternum",
     image: "/backgrounds/dummy_background.png",
     color: "#f5f5f5",
     status: "alpha",
@@ -29,7 +29,7 @@ export const games = [
         alt: "Realms: Eternum",
       },
     ],
-    homepage: "/homepages/realms-adventurers",
+    homepage: "/homepages/realms-eternum",
   },
   {
     name: "Loot Survivor",
@@ -73,6 +73,6 @@ export const games = [
         alt: "Survivors",
       },
     ],
-    homepage: "/homepages/realms-adventurers",
+    homepage: "/homepages/realms-eternum",
   },
 ];
