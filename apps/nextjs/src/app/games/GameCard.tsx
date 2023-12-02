@@ -31,7 +31,7 @@ export const GameCard = async ({ game }: GameCardProps) => {
 
   return (
     <Link
-      className="group relative flex h-72 flex-col items-center justify-center border text-center shadow-xl  duration-300 hover:opacity-80"
+      className="group relative flex h-80 flex-col items-center justify-center border text-center shadow-xl  duration-300 hover:opacity-80"
       href={`/games/${game.id}`} // navigate to a custom game homepage if one is specified, default page otherwise
     >
       <Image
@@ -39,17 +39,17 @@ export const GameCard = async ({ game }: GameCardProps) => {
         alt={game.name}
         width={800}
         height={400}
-        className=" bottom-0 top-0 h-full w-full object-fill brightness-75 transition-all duration-300 hover:filter-none"
+        className="absolute bottom-0 top-0 h-full w-full object-fill brightness-75 transition-all duration-300 hover:filter-none"
       />
-      <div className="absolute">
+      <div className="relative flex h-full max-w-full flex-col items-center justify-center  object-contain">
         <Image
           src={imageName}
           alt={game.name}
-          width={400}
-          height={200}
-          className=""
+          width={300}
+          height={150}
+          className="max-h-[180px] w-auto max-w-[75%] object-contain"
         />
-        <p className="mt-8 text-lg font-semibold">{game.description}</p>
+        <p className="mt-2  text-lg font-semibold">{game.description}</p>
       </div>
       {/*<div className="invisible z-10 opacity-0 duration-300 group-hover:visible group-hover:translate-y-3 group-hover:opacity-100">
         <Button variant={"default"}>Explore</Button>
