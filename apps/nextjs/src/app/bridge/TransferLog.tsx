@@ -167,7 +167,12 @@ export const TransferLog = ({
 
 const CompleteTransferButton = ({ onClick }: { onClick: any }) => {
   return (
-    <Button variant={"outline"} size={"xs"} onClick={onClick}>
+    <Button
+      variant={"outline"}
+      className="border-green-300 text-green-400"
+      size={"xs"}
+      onClick={onClick}
+    >
       Complete Transfer
     </Button>
   );

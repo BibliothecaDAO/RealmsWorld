@@ -1,10 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
-/*import { useTransferToL2Tracking } from './useTracking';
-import { useTransfer } from './useTransfer';
-import { useIsMaxTotalBalanceExceeded } from './useIsMaxTotalBalanceExceeded';
-import { useTransfersLog } from '../providers/TransfersLogProvider';*/
-
 import { ChainType, tokens } from "@/constants/tokens";
 import {
   ActionType,

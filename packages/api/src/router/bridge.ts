@@ -1,19 +1,34 @@
 import { z } from "zod";
 
 import { asc, eq, or, schema } from "@realms-world/db";
+import type { SQL } from "@realms-world/db";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const bridgeRouter = createTRPCRouter({
   all: publicProcedure
-    .input(z.object({ l1Account: z.string(), l2Account: z.string() }).partial())
+    .input(
+      z
+        .object({
+          l1Account: z.string().nullish(),
+          l2Account: z.string().nullish(),
+        })
+        .partial(),
+    )
     .query(({ ctx, input }) => {
+      const { l1Account, l2Account } = input;
+      const whereFilter: SQL[] = [];
+      if (l1Account) {
+        whereFilter.push(
+          eq(schema.bridge.l1Account, input.l1Account?.toLowerCase() ?? ""),
+        );
+      }
+      if (l2Account) {
+        whereFilter.push(eq(schema.bridge.l2Account, input.l2Account ?? ""));
+      }
       // return ctx.db.select().from(schema.post).orderBy(desc(schema.post.id));
       return ctx.db.query.bridge.findMany({
-        where: or(
-          eq(schema.bridge.l1Account, input.l1Account?.toLowerCase() ?? ""),
-          eq(schema.bridge.l2Account, input.l2Account ?? ""),
-        ),
+        where: or(...whereFilter),
         orderBy: asc(schema.bridge.timestamp),
       });
     }),
