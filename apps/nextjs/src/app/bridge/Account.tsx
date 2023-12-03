@@ -27,7 +27,7 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
     completeTransferToL1(transfer);
   };
   return (
-    <div className=" h-full max-h-[700px] overflow-y-auto p-2">
+    <>
       {transfers?.length
         ? transfers.map((transfer: any, index: number) => (
             <TransferLog
@@ -38,7 +38,7 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
             />
           ))
         : null}
-    </div>
+    </>
   );
 };
 

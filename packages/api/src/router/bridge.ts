@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { asc, eq, or, schema } from "@realms-world/db";
+import { desc, eq, or, schema } from "@realms-world/db";
 import type { SQL } from "@realms-world/db";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
@@ -29,7 +29,7 @@ export const bridgeRouter = createTRPCRouter({
       // return ctx.db.select().from(schema.post).orderBy(desc(schema.post.id));
       return ctx.db.query.bridge.findMany({
         where: or(...whereFilter),
-        orderBy: asc(schema.bridge.timestamp),
+        orderBy: desc(schema.bridge.timestamp),
       });
     }),
 

@@ -18,7 +18,7 @@ import { LogOut, Mail } from "lucide-react";
 import { AccountLink } from "./AccountLink";
 import { StarknetLoginButton } from "./StarknetLoginButton";
 
-export const StarkLogin = () => {
+export const StarkAccount = () => {
   const { disconnect } = useDisconnect();
   const { status, address } = useAccount();
   const { balances } = useWalletsProviderContext();
@@ -87,10 +87,10 @@ export const StarkLogin = () => {
       </div>
     );
   return (
-    <div className="w-full self-center">
+    <div className="ml-2 w-full self-center">
       <StarknetLoginButton />
     </div>
   );
 };
 
-export default StarkLogin;
+export default StarkAccount;

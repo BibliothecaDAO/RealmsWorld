@@ -63,7 +63,7 @@ export const useTransferToL1 = () => {
 
         console.log("Calling initiate withdraw");
 
-        await initiateWithdraw(amount);
+        initiateWithdraw(amount);
 
         if (withdrawHash?.transaction_hash) {
           const transferData = {

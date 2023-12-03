@@ -54,15 +54,18 @@ export const useBridgeContract = () => {
     hash: depositData?.hash,
   });
 
-  const [amount, setAmount] = useState<string>("");
+  const [amount, setAmount] = useState<string | null>();
 
   const calls = useMemo(() => {
-    const tx = {
-      contractAddress: l2BridgeAddress as `0x${string}`,
-      entrypoint: "initiate_withdrawal",
-      calldata: [addressL1, parseEther(amount).toString(), 0],
-    };
-    return [tx];
+    if (amount) {
+      console.log(amount);
+      const tx = {
+        contractAddress: l2BridgeAddress as `0x${string}`,
+        entrypoint: "initiate_withdrawal",
+        calldata: [addressL1, parseEther(amount).toString(), 0],
+      };
+      return [tx];
+    }
   }, [amount]);
 
   const { write, data: withdrawHash } = useL2ContractWrite({ calls });
@@ -71,8 +74,9 @@ export const useBridgeContract = () => {
     setAmount(amount);
   };
   useEffect(() => {
-    if (calls.length) {
+    if (calls?.length) {
       write();
+      setAmount(null);
     }
   }, [calls]);
 

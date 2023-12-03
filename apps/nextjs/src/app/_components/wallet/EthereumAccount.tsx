@@ -18,7 +18,7 @@ import {
 import { AccountLink } from "./AccountLink";
 import { EthereumLoginButton } from "./EthereumLoginButton";
 
-function EthereumLogin() {
+function EthereumAccount() {
   const { address, isConnected } = useAccount();
   const { error } = useConnect();
   const { disconnect } = useDisconnect();
@@ -30,8 +30,8 @@ function EthereumLogin() {
 
   if (isConnected)
     return (
-      <div className=" rounded border p-2">
-        <div className="flex w-full flex-col justify-between">
+      <div className="w-full rounded border p-2">
+        <div className="flex flex-col justify-between">
           <div className="flex justify-between">
             <div className="flex">
               <EthereumLogo className="mx-2 w-5" />
@@ -88,11 +88,11 @@ function EthereumLogin() {
       </div>
     );
   return (
-    <div className="w-full self-center">
+    <div className="ml-2 w-full self-center">
       <EthereumLoginButton />
       {error && <div>{error.message}</div>}
     </div>
   );
 }
 
-export default EthereumLogin;
+export default EthereumAccount;

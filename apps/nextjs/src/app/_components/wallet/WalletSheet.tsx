@@ -4,8 +4,10 @@ import { Button } from "@/app/_components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/app/_components/ui/dialog";
 import {
   Tabs,
@@ -14,24 +16,21 @@ import {
   TabsTrigger,
 } from "@/app/_components/ui/tabs";
 import { Account } from "@/app/bridge/Account";
-//import { Account } from "@/app/bridge/Account";
 import { useUIContext } from "@/app/providers/UIProvider";
-import { CollapsibleContent } from "@radix-ui/react-collapsible";
+import Bridge from "@/icons/bridge.svg";
 import {
   useDisconnect,
   useAccount as useL2Account,
   useConnect as useL2Connect,
   useNetwork,
 } from "@starknet-react/core";
-import { ArrowDown, ArrowUp } from "lucide-react";
-import { useConnect, useAccount as useL1Account } from "wagmi";
 
-import { Collapsible, CollapsibleTrigger } from "../ui/collapsible";
+import { ScrollArea } from "../ui/scroll-area";
 //import { AuthShowcase } from "../auth-showcase";
 import { Sheet, SheetContent } from "../ui/sheet";
-import EthereumLogin from "./EthereumLogin";
+import EthereumAccount from "./EthereumAccount";
 import { EthereumLoginButton } from "./EthereumLoginButton";
-import StarkLogin from "./StarkLogin";
+import StarkAccount from "./StarkAccount";
 import { StarknetLoginButton } from "./StarknetLoginButton";
 import { StarknetLoginModal } from "./StarknetLoginModal";
 
@@ -121,39 +120,50 @@ export const WalletSheet = () => {
       </div>
       <Sheet open={isAccountOpen} onOpenChange={toggleAccount}>
         <SheetContent position={"right"} size={"lg"}>
-          <div className="mt-8 flex h-auto w-full flex-col gap-y-6">
-            <EthereumLogin />
-            <StarkLogin />
-            <Collapsible
-              className="CollapsibleRoot"
-              open={open}
-              onOpenChange={setOpen}
-            >
-              <CollapsibleTrigger asChild>
-                <button className="hover:bg-medium-dark-green flex w-full justify-between rounded-t border-b px-4 py-3">
-                  <span className="text-xl">Bridge Transactions</span>
+          <div className="mt-8 flex h-auto w-full flex-col items-start gap-y-6">
+            <EthereumAccount />
+            <StarkAccount />
+            <div className="mt-4">
+              <h6>Actions</h6>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    //disabled={!realms?.length}
+                    className="self-center"
+                    size={"lg"}
+                    variant={"outline"}
+                  >
+                    <Bridge className="mr-2 w-[25px]" />
+                    Bridge Transactions
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-screen flex h-full max-h-screen w-full flex-col sm:max-h-[760px] sm:w-[650px]">
+                  <DialogHeader>
+                    <h6 className="my-0 py-0">Bridge Transactions</h6>
+                  </DialogHeader>
+                  <Tabs
+                    defaultValue={tabs[0]?.name}
+                    className="flex max-h-full flex-col"
+                  >
+                    <TabsList className="justify-center pb-2">
+                      {tabs.map((tab, index) => (
+                        <TabsTrigger value={tab.name} key={index}>
+                          {tab.name}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
 
-                  {open ? <ArrowDown /> : <ArrowUp />}
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <Tabs defaultValue={tabs[0]?.name}>
-                  <TabsList className="justify-center pb-2">
                     {tabs.map((tab, index) => (
-                      <TabsTrigger value={tab.name} key={index}>
-                        {tab.name}
-                      </TabsTrigger>
+                      <TabsContent value={tab.name} key={index}>
+                        <ScrollArea className="h-[500px] max-h-screen w-full">
+                          {tab.content}
+                        </ScrollArea>
+                      </TabsContent>
                     ))}
-                  </TabsList>
-
-                  {tabs.map((tab, index) => (
-                    <TabsContent value={tab.name} key={index}>
-                      {tab.content}
-                    </TabsContent>
-                  ))}
-                </Tabs>
-              </CollapsibleContent>
-            </Collapsible>
+                  </Tabs>
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
         </SheetContent>
       </Sheet>
