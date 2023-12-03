@@ -11,9 +11,7 @@ export const useTransferLog = (isL1 = true) => {
   return useMemo(() => {
     return {
       ...query,
-      transfers: isL1
-        ? flattenPages(query?.data)
-        : flattenWithdrawals(query.data),
+      transfers: isL1 ? flattenPages(query?.data) : query.data,
     };
   }, [query]);
 };

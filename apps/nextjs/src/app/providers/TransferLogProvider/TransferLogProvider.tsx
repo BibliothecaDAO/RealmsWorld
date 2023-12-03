@@ -23,7 +23,7 @@ import { useAccount as useL1Account } from "wagmi";
 import { TransferLogContext } from "./transfer-log-context";
 
 const GET_PENDING_WITHDRAWALS_REFETCH_INTERVAL = 1000 * 30;
-const GET_TRANSFERS_REFETCH_INTERVAL = 1000 * 60 * 3;
+const GET_TRANSFERS_REFETCH_INTERVAL = 1000 * 15;
 
 /*export const fetchPendingWithdrawals = async (accountL1): Promise<> =>
   await fetch("GET_PENDING_WITHDRAWALS_ENDPOINT");*/
@@ -77,6 +77,9 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
       l1Account: padAddress(accountL1 ?? ""),
       l2Account: padAddress(accountL2 ?? ""),
       //limit: 10,
+    },
+    {
+      refetchInterval: GET_TRANSFERS_REFETCH_INTERVAL,
     },
     /*{
       getNextPageParam: (lastPage) => lastPage.nextCursor,

@@ -14,7 +14,6 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
-import EthereumLogin from "@/app/_components/wallet/EthereumLogin";
 import { stakingAddresses } from "@/constants/staking";
 import Lords from "@/icons/lords.svg";
 import { getTokenContractAddresses } from "@/utils/utils";

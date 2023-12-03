@@ -90,7 +90,10 @@ export const TransferLog = ({
   const renderTransferStatus = () => {
     return (
       <div
-        className={cn("text-gray h-6", isRejected(typedStatus) && "text-red")}
+        className={cn(
+          "text-gray mb-1 text-sm",
+          isRejected(typedStatus) && "text-red",
+        )}
       >
         {!isOnChain(typedStatus)
           ? TransactionStatusFriendlyMessage[
@@ -137,28 +140,33 @@ export const TransferLog = ({
   };
 
   return (
-    <div className=" relative my-1 flex justify-between rounded border p-4">
-      <div className="flex self-center">
+    <div className="my-1 flex flex-col rounded border p-4">
+      <div className="flex justify-between">
+        <div className="text-xs font-semibold text-gray-600">{`${
+          transfer.timestamp
+            ? getFullTime(transfer.timestamp)
+            : getFullTime(createdTimestamp * 1000)
+        }`}</div>
+        {renderTransferStatus()}
+      </div>
+      <div className="flex w-full items-center justify-between self-center">
         {sign == "-" ? (
           <MinusCircleIcon className="mr-1 self-center fill-red-300 stroke-red-900" />
         ) : (
           <PlusCircleIcon className="mr-1 self-center fill-green-300 stroke-green-900" />
         )}{" "}
         <div className="ml-3">
-          <div className="mb-2 text-xs font-semibold text-gray-600">{`${
-            transfer.timestamp || getFullTime(createdTimestamp * 1000)
-          }`}</div>
           <div className="flex text-2xl font-semibold">
             {transfer.amount ? amount : formatEther(amount || 0)}
             <LordsIcon className="ml-3 h-5 w-5 self-center fill-white" />
           </div>
         </div>
-      </div>
-      <div className="flex flex-col items-end justify-around">
-        {renderTransferStatus()}
-        <div className="my-1 flex items-center space-x-2">
-          {renderL1TxButton()}
-          {renderL2TxButton()}
+        <div className="flex-grow" />
+        <div className="flex flex-col items-end justify-around">
+          <div className="flex items-center space-x-2">
+            {renderL1TxButton()}
+            {renderL2TxButton()}
+          </div>
         </div>
       </div>
     </div>
@@ -167,7 +175,12 @@ export const TransferLog = ({
 
 const CompleteTransferButton = ({ onClick }: { onClick: any }) => {
   return (
-    <Button variant={"outline"} size={"xs"} onClick={onClick}>
+    <Button
+      variant={"outline"}
+      className="border-green-300 text-green-400"
+      size={"xs"}
+      onClick={onClick}
+    >
       Complete Transfer
     </Button>
   );
