@@ -137,7 +137,7 @@ export const WalletSheet = () => {
                     Bridge Transactions
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="h-full min-w-[500px] sm:max-h-[80%]">
+                <DialogContent className="flex h-full min-w-[500px] flex-col sm:max-h-[80%]">
                   <DialogHeader>
                     <h6 className="my-0 py-0">Bridge Transactions</h6>
                   </DialogHeader>
