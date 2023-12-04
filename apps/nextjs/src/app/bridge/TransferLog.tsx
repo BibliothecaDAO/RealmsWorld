@@ -90,7 +90,10 @@ export const TransferLog = ({
   const renderTransferStatus = () => {
     return (
       <div
-        className={cn("text-gray h-6", isRejected(typedStatus) && "text-red")}
+        className={cn(
+          "text-gray mb-1 text-sm",
+          isRejected(typedStatus) && "text-red",
+        )}
       >
         {!isOnChain(typedStatus)
           ? TransactionStatusFriendlyMessage[
@@ -137,28 +140,31 @@ export const TransferLog = ({
   };
 
   return (
-    <div className=" relative my-1 flex justify-between rounded border p-4">
-      <div className="flex self-center">
-        {sign == "-" ? (
-          <MinusCircleIcon className="mr-1 self-center fill-red-300 stroke-red-900" />
-        ) : (
-          <PlusCircleIcon className="mr-1 self-center fill-green-300 stroke-green-900" />
-        )}{" "}
-        <div className="ml-3">
-          <div className="mb-2 text-xs font-semibold text-gray-600">{`${
-            transfer.timestamp || getFullTime(createdTimestamp * 1000)
-          }`}</div>
-          <div className="flex text-2xl font-semibold">
-            {transfer.amount ? amount : formatEther(amount || 0)}
-            <LordsIcon className="ml-3 h-5 w-5 self-center fill-white" />
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col items-end justify-around">
+    <div className="m-1 flex flex-col rounded border p-2 sm:p-3">
+      <div className="mb-1 flex justify-between">
+        <div className="text-xs font-semibold text-gray-600">{`${
+          transfer.timestamp
+            ? getFullTime(transfer.timestamp)
+            : getFullTime(createdTimestamp * 1000)
+        }`}</div>
         {renderTransferStatus()}
-        <div className="my-1 flex items-center space-x-2">
-          {renderL1TxButton()}
-          {renderL2TxButton()}
+      </div>
+      <div className="flex w-full items-center justify-between gap-x-2 self-center">
+        {sign == "-" ? (
+          <MinusCircleIcon className="self-center fill-red-300 stroke-red-900" />
+        ) : (
+          <PlusCircleIcon className="self-center fill-green-300 stroke-green-900" />
+        )}
+        <div className="flex font-semibold sm:text-xl">
+          {transfer.amount ? amount : formatEther(amount || 0)}
+          <LordsIcon className="mx-1.5 h-5 w-5 self-center fill-white" />
+        </div>
+        <div className="flex-grow" />
+        <div className="flex flex-col items-end justify-around">
+          <div className="flex items-center space-x-2">
+            {renderL1TxButton()}
+            {renderL2TxButton()}
+          </div>
         </div>
       </div>
     </div>
@@ -167,8 +173,13 @@ export const TransferLog = ({
 
 const CompleteTransferButton = ({ onClick }: { onClick: any }) => {
   return (
-    <Button variant={"outline"} size={"xs"} onClick={onClick}>
-      Complete Transfer
+    <Button
+      variant={"outline"}
+      className="border-green-300 text-xs text-green-400"
+      size={"xs"}
+      onClick={onClick}
+    >
+      Claim<span className="hidden sm:ml-1 sm:block">On L1</span>
     </Button>
   );
 };

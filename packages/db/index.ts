@@ -5,9 +5,10 @@ import { drizzle } from "drizzle-orm/neon-http";
 
 import * as auth from "./schema/auth";
 import * as bridge from "./schema/bridge";
+import * as erc721Market from "./schema/erc721_market";
 import * as erc721Tokens from "./schema/erc721_tokens";
 
-export const schema = { ...auth, ...erc721Tokens, ...bridge };
+export const schema = { ...auth, ...erc721Tokens, ...bridge, ...erc721Market };
 
 export { pgSqlTable as tableCreator } from "./schema/_table";
 
