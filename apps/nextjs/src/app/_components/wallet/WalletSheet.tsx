@@ -46,7 +46,11 @@ import { StarknetLoginModal } from "./StarknetLoginModal";
   },
 ];*/
 export const WalletSheet = () => {
-  const { address: l2Address, isConnected: isL2Connected } = useL2Account();
+  const {
+    address: l2Address,
+    isConnected: isL2Connected,
+    chainId,
+  } = useL2Account();
   const { chain } = useNetwork();
   const { disconnect } = useDisconnect();
   const [isWrongNetwork, setIsWrongNetwork] = useState(false);
@@ -60,15 +64,15 @@ export const WalletSheet = () => {
     process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "goerli" : "mainnet";
 
   const NETWORK_ID = {
-    mainnet: "0x534e5f4d41494e",
-    goerli: "0x534e5f474f45524c49",
+    mainnet: 23448594291968334n,
+    goerli: 1536727068981429685321n,
   };
 
   useEffect(() => {
-    if (isL2Connected) {
+    if (isL2Connected && chainId) {
       if (
-        (chain?.id.toString() === NETWORK_ID.goerli && network === "mainnet") ||
-        (chain?.id.toString() === NETWORK_ID.mainnet && network === "goerli")
+        (chainId === NETWORK_ID.goerli && network === "mainnet") ||
+        (chainId === NETWORK_ID.mainnet && network === "goerli")
       ) {
         setIsWrongNetwork(true);
       } else {
@@ -174,7 +178,7 @@ export const WalletSheet = () => {
 
       {isWrongNetwork && (
         <Dialog open={isWrongNetwork}>
-          <DialogContent className="w-full">
+          <DialogContent close={false} className="z-50 h-72 w-full">
             <DialogHeader>
               <DialogTitle>Wrong Network</DialogTitle>
             </DialogHeader>
