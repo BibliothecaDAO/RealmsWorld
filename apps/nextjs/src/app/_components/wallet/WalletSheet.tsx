@@ -120,7 +120,7 @@ export const WalletSheet = () => {
       </div>
       <Sheet open={isAccountOpen} onOpenChange={toggleAccount}>
         <SheetContent position={"right"} size={"lg"}>
-          <div className="mt-8 flex h-auto w-full flex-col items-start gap-y-6">
+          <div className="mt-8 flex w-full flex-col items-start gap-y-4">
             <EthereumAccount />
             <StarkAccount />
             <div className="mt-4">
@@ -137,15 +137,15 @@ export const WalletSheet = () => {
                     Bridge Transactions
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-screen flex h-full max-h-screen w-full flex-col sm:max-h-[760px] sm:w-[650px]">
+                <DialogContent className="h-full min-w-[500px] sm:max-h-[80%]">
                   <DialogHeader>
                     <h6 className="my-0 py-0">Bridge Transactions</h6>
                   </DialogHeader>
                   <Tabs
                     defaultValue={tabs[0]?.name}
-                    className="flex max-h-full flex-col"
+                    className="relative h-full min-h-0"
                   >
-                    <TabsList className="justify-center pb-2">
+                    <TabsList className="absolute my-0 w-full justify-center py-2">
                       {tabs.map((tab, index) => (
                         <TabsTrigger value={tab.name} key={index}>
                           {tab.name}
@@ -154,8 +154,12 @@ export const WalletSheet = () => {
                     </TabsList>
 
                     {tabs.map((tab, index) => (
-                      <TabsContent value={tab.name} key={index}>
-                        <ScrollArea className="h-[500px] max-h-screen w-full">
+                      <TabsContent
+                        value={tab.name}
+                        key={index}
+                        className="h-full pt-14"
+                      >
+                        <ScrollArea className="h-full">
                           {tab.content}
                         </ScrollArea>
                       </TabsContent>

@@ -29,7 +29,7 @@ export const AccountLink = ({ isL1 }: { isL1: boolean }) => {
           external
         >
           <span className="hidden sm:block">{text} </span>
-          <ExternalLinkIcon className="ml-2 h-3 w-3" />
+          <ExternalLinkIcon className="h-3 w-3" />
         </Button>
       ))}
     </div>

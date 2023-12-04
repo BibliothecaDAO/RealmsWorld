@@ -30,60 +30,58 @@ function EthereumAccount() {
 
   if (isConnected)
     return (
-      <div className="w-full rounded border p-2">
-        <div className="flex flex-col justify-between">
-          <div className="flex justify-between">
-            <div className="flex">
-              <EthereumLogo className="mx-2 w-5" />
-              <div className="text-bright-yellow/50 mr-2 self-center">
-                {chain?.name}
-              </div>
-              <div className="mr-2 self-center text-lg">
-                {ensAddress ?? shortenHex(address ?? "")}
-              </div>
-              <AccountLink isL1 />
+      <div className="flex w-full flex-col justify-between rounded border p-2">
+        <div className="flex justify-between">
+          <div className="flex">
+            <EthereumLogo className="mx-2 w-5" />
+            <div className="text-bright-yellow/50 mr-2 self-center">
+              {chain?.name}
             </div>
-            <Button
-              variant="outline"
-              size={"xs"}
-              className=""
-              onClick={() => disconnect()}
-            >
-              <LogOut className="w-4 self-center" />
-            </Button>
+            <div className="mr-2 self-center text-lg">
+              {ensAddress ?? shortenHex(address ?? "")}
+            </div>
+            <AccountLink isL1 />
           </div>
-          <div className="align-items-center mt-2 flex justify-between">
-            <Button href={"/user/" + address} variant={"outline"}>
-              <Album className="mr-2 h-6 w-6" />
-              Assets
-            </Button>
-            <div className="flex flex-grow" />
-            <div className="flex">
-              <div className="flex items-center justify-between px-4">
-                <div className="flex text-lg sm:text-2xl">
-                  <EthereumLogo className="mr-2 w-4" />
-                  {balances.l1.eth ? formatBigInt(balances.l1.eth, 3) : 0}
-                </div>
-              </div>
-              <div className="flex items-center justify-between  px-4">
-                <div className="flex text-lg sm:text-2xl">
-                  <Lords className="w-6 fill-current pr-2" />
-                  {balances.l1.lords && balances.l1.lords > 0
-                    ? formatBigInt(balances.l1.lords, 3)
-                    : 0}
-                </div>
-                <Button
-                  href="/bridge"
-                  size={"xs"}
-                  variant={"subtle"}
-                  className="self-center"
-                >
-                  Bridge
-                </Button>
+          <Button
+            variant="outline"
+            size={"xs"}
+            className=""
+            onClick={() => disconnect()}
+          >
+            <LogOut className="w-4 self-center" />
+          </Button>
+        </div>
+        <div className="align-items-center mt-2 flex justify-between">
+          <Button href={"/user/" + address} variant={"outline"}>
+            <Album className="mr-2 h-6 w-6" />
+            Assets
+          </Button>
+          <div className="flex flex-grow" />
+          <div className="flex">
+            <div className="flex items-center justify-between px-4">
+              <div className="flex text-lg sm:text-2xl">
+                <EthereumLogo className="mr-2 w-4" />
+                {balances.l1.eth ? formatBigInt(balances.l1.eth, 3) : 0}
               </div>
             </div>
-            <div className="flex flex-grow" />
+            <div className="flex items-center justify-between  px-4">
+              <div className="flex text-lg sm:text-2xl">
+                <Lords className="w-6 fill-current pr-2" />
+                {balances.l1.lords && balances.l1.lords > 0
+                  ? formatBigInt(balances.l1.lords, 3)
+                  : 0}
+              </div>
+              <Button
+                href="/bridge"
+                size={"xs"}
+                variant={"subtle"}
+                className="self-center"
+              >
+                Bridge
+              </Button>
+            </div>
           </div>
+          <div className="flex flex-grow" />
         </div>
       </div>
     );

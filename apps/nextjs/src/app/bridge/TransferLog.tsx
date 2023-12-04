@@ -140,8 +140,8 @@ export const TransferLog = ({
   };
 
   return (
-    <div className="my-1 flex flex-col rounded border p-4">
-      <div className="flex justify-between">
+    <div className="m-1 flex flex-col rounded border p-2 sm:p-3">
+      <div className="mb-1 flex justify-between">
         <div className="text-xs font-semibold text-gray-600">{`${
           transfer.timestamp
             ? getFullTime(transfer.timestamp)
@@ -149,17 +149,15 @@ export const TransferLog = ({
         }`}</div>
         {renderTransferStatus()}
       </div>
-      <div className="flex w-full items-center justify-between self-center">
+      <div className="flex w-full items-center justify-between gap-x-2 self-center">
         {sign == "-" ? (
-          <MinusCircleIcon className="mr-1 self-center fill-red-300 stroke-red-900" />
+          <MinusCircleIcon className="self-center fill-red-300 stroke-red-900" />
         ) : (
-          <PlusCircleIcon className="mr-1 self-center fill-green-300 stroke-green-900" />
-        )}{" "}
-        <div className="ml-3">
-          <div className="flex text-2xl font-semibold">
-            {transfer.amount ? amount : formatEther(amount || 0)}
-            <LordsIcon className="ml-3 h-5 w-5 self-center fill-white" />
-          </div>
+          <PlusCircleIcon className="self-center fill-green-300 stroke-green-900" />
+        )}
+        <div className="flex font-semibold sm:text-xl">
+          {transfer.amount ? amount : formatEther(amount || 0)}
+          <LordsIcon className="mx-1.5 h-5 w-5 self-center fill-white" />
         </div>
         <div className="flex-grow" />
         <div className="flex flex-col items-end justify-around">
@@ -177,11 +175,11 @@ const CompleteTransferButton = ({ onClick }: { onClick: any }) => {
   return (
     <Button
       variant={"outline"}
-      className="border-green-300 text-green-400"
+      className="border-green-300 text-xs text-green-400"
       size={"xs"}
       onClick={onClick}
     >
-      Complete Transfer
+      Claim<span className="hidden sm:ml-1 sm:block">On L1</span>
     </Button>
   );
 };
