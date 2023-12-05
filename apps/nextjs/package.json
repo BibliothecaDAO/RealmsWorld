@@ -28,6 +28,7 @@
     "@realms-world/graphql-server": "workspace:*",
     "@realms-world/styles": "workspace:*",
     "@realms-world/ui": "workspace:*",
+    "@realms-world/utils": "workspace:*",
     "@reservoir0x/reservoir-kit-ui": "^1.20.0",
     "@starknet-react/chains": "^0.1.0",
     "@starknet-react/core": "^2.1.1",
