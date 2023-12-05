@@ -111,3 +111,14 @@ export function formatQueryString(querybatch: any, type = "contract") {
 export function isStarknetAddress(address: string) {
   return address?.length == 66 || address.length == 65;
 }
+
+export const isBrowserLocaleClockType24h = () => {
+  const language =
+    typeof window !== "undefined" ? window.navigator.language : "en-US";
+
+  const hr = new Intl.DateTimeFormat(language, {
+    hour: "numeric",
+  }).format();
+
+  return Number.isInteger(Number(hr));
+};

@@ -297,3 +297,8 @@ export interface Realm {
   id: string;
   name: string;
 }
+
+export interface DateRange {
+  from: Date | undefined;
+  to?: Date | undefined;
+}
