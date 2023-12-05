@@ -41,7 +41,7 @@ const DialogOverlay = React.forwardRef<
     asChild
   >
     <motion.div
-      className="bg-medium-dark-green/50 fixed inset-0 z-40 cursor-pointer backdrop-blur-[10px]"
+      className="fixed inset-0 z-40 cursor-pointer bg-medium-dark-green/50 backdrop-blur-[10px]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -67,12 +67,12 @@ const DialogContent = React.forwardRef<
       animate={{ y: 0 }}
       exit={{ y: "200%" }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
-      className="fixed bottom-0 top-0 z-50 flex items-center"
+      className="fixed bottom-0 top-0 z-50 flex w-full items-center"
     >
       <DialogPrimitive.Content
         ref={ref}
         className={cn(
-          "bg-dark-green animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0 relative z-50 my-auto grid max-h-screen w-full gap-4 rounded-b-lg border p-6 sm:max-w-lg sm:rounded-lg",
+          "animate-in data-[state=open]:fade-in-90 sm:zoom-in-90 relative z-50 mx-auto my-auto grid max-h-screen w-full gap-4 rounded-b-lg border bg-dark-green p-6 sm:max-w-lg sm:rounded-lg",
           className,
         )}
         {...props}
