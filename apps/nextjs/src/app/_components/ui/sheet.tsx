@@ -12,7 +12,7 @@ const Sheet = SheetPrimitive.Root;
 
 const SheetTrigger = SheetPrimitive.Trigger;
 
-const portalVariants = cva("fixed inset-0 z-50 flex", {
+const portalVariants = cva("fixed inset-0 z-40 flex", {
   variants: {
     position: {
       top: "items-start",
@@ -53,7 +53,7 @@ const SheetOverlay = React.forwardRef<
     ref={ref}
   >
     <motion.div
-      className="fixed inset-0 z-50 cursor-pointer bg-black/50 backdrop-blur-[10px]"
+      className="fixed inset-0 z-40 cursor-pointer bg-black/50 backdrop-blur-[10px]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -64,7 +64,7 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-  "fixed z-50 scale-100 gap-4 bg-white p-6 opacity-80 bg-dark-green",
+  "fixed z-40 scale-100 gap-4 bg-white p-6 opacity-80 bg-dark-green",
   {
     variants: {
       position: {
