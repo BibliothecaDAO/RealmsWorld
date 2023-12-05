@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { NavLink } from "@/app/_components/ui/nav-link";
 
-import { cn } from "../../utils/utils";
+import { NavLink } from "@realms-world/ui";
+import { cn } from "@realms-world/utils";
+
 import { Transfer } from "./Transfer";
 
 export const metadata: Metadata = {

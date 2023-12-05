@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { NavLink } from "@/app/_components/ui/nav-link";
 import { isStarknetAddress } from "@/utils/utils";
 import { motion } from "framer-motion";
 import { isAddress } from "viem";

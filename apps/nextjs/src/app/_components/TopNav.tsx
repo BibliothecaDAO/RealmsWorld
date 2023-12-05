@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu } from "lucide-react";
 
+import { Button } from "@realms-world/ui";
+
 import { useUIContext } from "../providers/UIProvider";
-import { Button } from "./ui/button";
 
 export const TopNav = () => {
   const { scrollY } = useScroll();

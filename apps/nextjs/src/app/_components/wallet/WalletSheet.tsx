@@ -1,20 +1,5 @@
 //import { shortenHex } from "@/utils/utils";
 import { Suspense, useEffect, useState } from "react";
-import { Button } from "@/app/_components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/app/_components/ui/dialog";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/app/_components/ui/tabs";
 import { Account } from "@/app/bridge/Account";
 import { useUIContext } from "@/app/providers/UIProvider";
 import Bridge from "@/icons/bridge.svg";
@@ -25,9 +10,24 @@ import {
   useNetwork,
 } from "@starknet-react/core";
 
-import { ScrollArea } from "../ui/scroll-area";
 //import { AuthShowcase } from "../auth-showcase";
-import { Sheet, SheetContent } from "../ui/sheet";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  ScrollArea,
+  Sheet,
+  SheetContent,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@realms-world/ui";
+
 import EthereumAccount from "./EthereumAccount";
 import { EthereumLoginButton } from "./EthereumLoginButton";
 import StarkAccount from "./StarkAccount";
@@ -112,7 +112,6 @@ export const WalletSheet = () => {
           variant={"default"}
           textClass="group-hover:block"
           openAccount
-          buttonClass="w-full"
         />
         <StarknetLoginButton
           textClass="group-hover:block"

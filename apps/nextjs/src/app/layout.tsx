@@ -4,7 +4,7 @@ import Sidebar from "@/app/_components/SideMenu";
 
 import { Provider } from "./providers/providers";
 
-import "@/styles/globals.css";
+import "@realms-world/styles/globals.css";
 
 import { headers } from "next/headers";
 

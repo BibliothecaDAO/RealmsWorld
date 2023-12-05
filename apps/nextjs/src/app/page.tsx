@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CollectionCard } from "@/app/_components/CollectionCard";
-import { Carousel } from "@/app/_components/ui/carousel";
 import { GameCard } from "@/app/games/GameCard";
 import DojoDark from "@/icons/mark-dark.svg";
 import RWLogo from "@/icons/rw-logo.svg";
@@ -11,6 +9,8 @@ import type { Collection } from "@/types";
 
 import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
+
+//import { Carousel } from "@realms-world/ui";
 
 import CollectionsList from "./collection/CollectionsList";
 
@@ -38,7 +38,7 @@ export default async function Home() {
       <h1 className="mb-8 flex justify-center font-sans text-4xl md:text-6xl">
         <RWLogo className="h-24 md:h-32" />
       </h1>
-      <div className="bg-dark-green my-4 flex w-fit flex-wrap p-1 text-xl">
+      <div className="my-4 flex w-fit flex-wrap bg-dark-green p-1 text-xl">
         <span className="align-center">Powered by </span>
         <Link href={"https://dojoengine.org/"}>
           <DojoDark className="mx-2 w-12" />

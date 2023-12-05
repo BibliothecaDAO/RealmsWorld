@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/app/_components/ui/button";
 import type { TokenMarketData } from "@/types";
 import { findTokenName } from "@/utils/utils";
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 import { formatEther } from "viem";
+
+import { Button } from "@realms-world/ui";
 
 import { BuyButton } from "./BuyModal";
 

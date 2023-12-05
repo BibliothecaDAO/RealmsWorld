@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 import type { WalletProvider } from "get-starknet-core";
 import getDiscoveryWallets from "get-starknet-core";
 
-import { Button } from "../ui/button";
-import { Dialog, DialogContent, DialogHeader } from "../ui/dialog";
+import { Button, Dialog, DialogContent, DialogHeader } from "@realms-world/ui";
+
 import WalletIcons from "./WalletIcons";
 
 export const StarknetLoginModal = () => {

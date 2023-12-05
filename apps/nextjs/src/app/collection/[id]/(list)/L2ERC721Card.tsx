@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/app/_components/ui/button";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import type { RouterOutputs } from "@/utils/api";
 import { findTokenName, shortenHex } from "@/utils/utils";
+
+import { Button } from "@realms-world/ui";
 
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 

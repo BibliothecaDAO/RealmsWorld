@@ -12,9 +12,9 @@ import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
 import { Github, Twitter, X } from "lucide-react";
 
+import { Button, ScrollArea } from "@realms-world/ui";
+
 import { useUIContext } from "../providers/UIProvider";
-import { Button } from "./ui/button";
-import { ScrollArea } from "./ui/scroll-area";
 import { WalletSheet } from "./wallet/WalletSheet";
 
 const Sidebar = () => {

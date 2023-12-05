@@ -1,15 +1,16 @@
 "use client";
 
 import NumberSelect from "@/app/_components/NumberSelect";
+import { useQuery } from "@/hooks/useQuery";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/app/_components/ui/accordion";
-import { Button } from "@/app/_components/ui/button";
-import { useQuery } from "@/hooks/useQuery";
-import * as ScrollArea from "@radix-ui/react-scroll-area";
+  Button,
+  ScrollArea,
+} from "@realms-world/ui";
 
 export const AttributesDropdown = ({ address, attributes }: any) => {
   const {

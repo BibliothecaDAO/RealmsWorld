@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/app/_components/ui/button";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import Album from "@/icons/album.svg";
 import EthereumLogo from "@/icons/ethereum.svg";
@@ -14,6 +13,8 @@ import {
   useEnsName,
   useNetwork,
 } from "wagmi";
+
+import { Button } from "@realms-world/ui";
 
 import { AccountLink } from "./AccountLink";
 import { EthereumLoginButton } from "./EthereumLoginButton";

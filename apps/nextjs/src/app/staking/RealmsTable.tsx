@@ -22,7 +22,7 @@ import Typography from "@mui/material/Typography";
 import { visuallyHidden } from "@mui/utils";
 import { ListFilter, Trash } from "lucide-react";
 
-import { Switch } from "../_components/ui/switch";
+import { Switch } from "@realms-world/ui";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {

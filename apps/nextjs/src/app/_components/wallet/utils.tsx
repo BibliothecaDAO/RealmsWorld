@@ -1,9 +1,10 @@
-import { Button } from "@/app/_components/ui/button";
 import { ETHERSCAN_ACCOUNT_URL, STARKSCAN_ACCOUNT_URL } from "@/constants/env";
 import { shortenHex } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { ExternalLinkIcon } from "lucide-react";
 import { useAccount } from "wagmi";
+
+import { Button } from "@realms-world/ui";
 
 export const RenderExplorers = ({ isL1 = true }) => {
   const { address } = useAccount();
