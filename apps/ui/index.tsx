@@ -63,6 +63,7 @@ export {
   ContextMenuSubTrigger,
   ContextMenuRadioGroup,
 } from "./src/components/ui/context-menu";
+export { DatePicker } from "./src/components/ui/date-picker";
 export {
   Dialog,
   DialogTrigger,
