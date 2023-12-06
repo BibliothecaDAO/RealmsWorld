@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Lords from "@/icons/lords.svg";
 import { faImages, faTag } from "@fortawesome/free-solid-svg-icons";
@@ -102,9 +102,8 @@ export function ListModal({
             return newExpirationTime.toDate();
           }
         }, [expirationOption]);
-        //TODO close dialog
-        /*
-        useEffect(() => {
+
+        /*useEffect(() => {
           if (listStep === ListStep.Complete && onListingComplete) {
             const data: ListingCallbackData = {
               tokenId: tokenId,
@@ -113,9 +112,9 @@ export function ListModal({
             }
             onListingComplete(data)
           }
-        }, [listStep]) 
+        }, [listStep]) */
 
-        useEffect(() => {
+        /* useEffect(() => {
           if (transactionError && onListingError) {
             const data: ListingCallbackData = {
               tokenId: tokenId,
@@ -217,7 +216,7 @@ export function ListModal({
             />*/}
                   <div className="flex flex-col items-center">
                     <div className="flex w-full flex-col">
-                      <span className="text-lg">Enter a price</span>
+                      <span className="mb-1 text-lg">Enter a price</span>
                       <div className="flex w-full items-center justify-between gap-x-4">
                         <div className="relative w-full">
                           <Input
@@ -237,10 +236,12 @@ export function ListModal({
                         {floorButtonEnabled ? (
                           <Button
                             color="secondary"
+                            variant={"outline"}
                             size="lg"
+                            className="px-6"
                             onClick={() => handleSetFloor()}
                           >
-                            Floor
+                            +Floor
                           </Button>
                         ) : null}
                         {/*TODO <FloorDropdown
@@ -291,7 +292,7 @@ export function ListModal({
                     </div>
                     <div className="my-4 flex w-full flex-col">
                       <span className="mb-1 text-lg">Expiration Date</span>
-                      <div className="align-items-center flex w-full">
+                      <div className="align-items-center flex w-full gap-x-4">
                         <Select
                           value={expirationOption?.text || ""}
                           onValueChange={(value: string) => {
@@ -303,8 +304,13 @@ export function ListModal({
                             }
                           }}
                         >
-                          <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Select an expiry" />
+                          <SelectTrigger className="h-12 w-[180px]">
+                            <SelectValue
+                              aria-label={expirationOption.text}
+                              placeholder="Select an expiry"
+                            >
+                              {expirationOption.text}
+                            </SelectValue>
                           </SelectTrigger>
                           <SelectContent>
                             {expirationOptions
@@ -341,7 +347,7 @@ export function ListModal({
                               }
                             }
                           }}
-                          className="mb-3 h-14 w-full border p-3"
+                          className="mb-3 h-12 w-full border p-3"
                         />
                       </div>
                     </div>
@@ -357,6 +363,7 @@ export function ListModal({
                     <div className="w-full">
                       <Button
                         disabled={canPurchase ? false : true}
+                        size={"lg"}
                         onClick={listToken}
                         className="w-full"
                       >

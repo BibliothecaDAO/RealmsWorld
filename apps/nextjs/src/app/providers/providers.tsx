@@ -43,7 +43,7 @@ const { chains } = configureChains(
 export function Provider({ children }: any) {
   return (
     <StarknetConfig
-      //autoConnect
+      autoConnect
       chains={[
         ...(process.env.NEXT_PUBLIC_IS_TESTNET === "true"
           ? [starkGoerli]

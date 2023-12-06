@@ -98,7 +98,7 @@ export const ListModalRenderer: FC<Props> = ({
     )
     const usdPrice = coinConversion.length > 0 ? coinConversion[0].price : 0*/
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (!open) {
       setListStep(ListStep.SetPrice);
       setTransactionError(null);
@@ -106,7 +106,7 @@ export const ListModalRenderer: FC<Props> = ({
       setStepData(null);
       setExpirationOption(expirationOptions[5]);
     }
-  }, [open]);*/
+  }, [open]);
 
   //TODO some liveliness check for marketplace
   /* useEffect(() => {
@@ -144,8 +144,8 @@ export const ListModalRenderer: FC<Props> = ({
           .L2 as `0x${string}`,
         entrypoint: "set_approval_for_all",
         calldata: [
-          address as `0x${string}`,
           "0x0136c83ac9a4938fa5205ac08a52937f5d19e02fe1fe5400d664f47c2b2297bb", //Marketplace address
+          1,
         ],
       },
       {

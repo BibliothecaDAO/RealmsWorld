@@ -76,28 +76,26 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
   };
 
   return (
-    <div className="border">
-      <div className="flex items-center justify-between p-6">
-        <div className="text-lg font-bold">Item not listed</div>
-        <ListModal
-          tokenId={tokenId}
-          collectionId={"test"}
-          trigger={
-            <Button onClick={() => onItemlist()} variant={"default"}>
-              <>
-                {isSubmitting ? (
-                  <div className="flex items-center justify-center">
-                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                    <span>Please wait</span>
-                  </div>
-                ) : (
-                  <>List Item</>
-                )}
-              </>
-            </Button>
-          }
-        />
-      </div>
+    <div className="my-4 flex items-center justify-between border p-6">
+      <div className="text-lg font-bold">Item not listed</div>
+      <ListModal
+        tokenId={tokenId}
+        collectionId={"test"}
+        trigger={
+          <Button onClick={() => onItemlist()} variant={"default"}>
+            <>
+              {isSubmitting ? (
+                <div className="flex items-center justify-center">
+                  <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                  <span>Please wait</span>
+                </div>
+              ) : (
+                <>List Item</>
+              )}
+            </>
+          </Button>
+        }
+      />
     </div>
   );
 };
