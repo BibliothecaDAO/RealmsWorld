@@ -1,10 +1,12 @@
 export enum ChainId {
   MAINNET = 1,
   GOERLI = 5,
-  MISSISSIPPI_TESTNET= 33784,
+  MISSISSIPPI_TESTNET = 33784,
 
   SN_MAIN = "0x534e5f4d41494e",
   SN_GOERLI = "0x534e5f474f45524c49",
+
+  SLOT_TESTNET = 555, // TODO: update with the real value
 }
 
 export const CHAIN_IDS_TO_NAMES = {
@@ -13,6 +15,7 @@ export const CHAIN_IDS_TO_NAMES = {
   [ChainId.MISSISSIPPI_TESTNET]: "Mississippi Testnet",
   [ChainId.SN_MAIN]: "starknet_mainnet",
   [ChainId.SN_GOERLI]: "starknet_goerli",
+  [ChainId.SLOT_TESTNET]: "Slot Testnet",
 } as const;
 
 export const L1_CHAIN_IDS = [ChainId.MAINNET, ChainId.GOERLI] as const;
