@@ -1,16 +1,16 @@
-import { promises as fs } from "fs";
-import path from "path";
+/*import { promises as fs } from "fs";
+import path from "path";*/
 import type { Metadata } from "next";
-import { Button } from "@/app/_components/ui/button";
-import { Carousel } from "@/app/_components/ui/carousel";
+
+import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
 import {
+  Button,
+  Carousel,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/app/_components/ui/tabs";
-
-import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
+} from "@realms-world/ui";
 
 export async function generateMetadata({
   params,
@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const screenshotList = screenshotFiles.map((image, index) => ({
     src: `/games/${params.id}/screenshots/${image}`,
     alt: `${game?.name} Screenshot ${index}`,
-  })); */ //TODO not working in Vercel production
+  }));*/ //TODO not working in Vercel production
 
   const screenshotList = new Array(game?.screenshotLength);
   const list = [...screenshotList].map((image, index) => ({
@@ -144,7 +144,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
                 {tabs.map((tab, index) => (
                   <TabsContent
-                    className="bg-dark-green rounded border p-4"
+                    className="rounded border bg-dark-green p-4"
                     value={tab.name}
                     key={index}
                   >

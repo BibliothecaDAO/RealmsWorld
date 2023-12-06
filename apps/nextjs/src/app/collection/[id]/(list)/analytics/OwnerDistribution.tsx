@@ -1,6 +1,6 @@
 "use client";
 
-import { Progress } from "@/app/_components/ui/progress";
+import { Progress } from "@realms-world/ui";
 
 //import PieChart from "@/homepages/realms-eternum/components/PieChart";
 

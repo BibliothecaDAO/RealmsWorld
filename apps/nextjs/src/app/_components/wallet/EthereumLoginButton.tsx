@@ -5,8 +5,8 @@ import type { VariantProps } from "class-variance-authority";
 import { ConnectKitButton, useModal } from "connectkit";
 import { useConnect } from "wagmi";
 
-import type { buttonVariants } from "../ui/button";
-import { Button } from "../ui/button";
+import type { buttonVariants } from "@realms-world/ui";
+import { Button } from "@realms-world/ui";
 
 export const EthereumLoginButton = ({
   openAccount = false,

@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { Button } from "@/app/_components/ui/button";
 import type { MDXComponents } from "mdx/types";
+
+import { Button } from "@realms-world/ui";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {

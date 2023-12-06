@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
+import { useContractWrite } from "@starknet-react/core";
 import { RefreshCw } from "lucide-react";
 
-//import { useToast } from "@/components/ui/use-toast";
+//import { useToast } from "@realms-world/ui";;
 
 interface TokenOwnerActionsProps {
   tokenId: string;
@@ -16,6 +17,34 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
   tokenOwnerAddress,
   contractAddress,
 }) => {
+  const calls = useMemo(() => {
+    const tx = [
+      {
+        contractAddress: tokenAddress as `0x${string}`,
+        entrypoint: "mint",
+        calldata: [],
+      },
+    ];
+    return tx;
+  }, [price, expiration]);
+
+  const {
+    data: mintData,
+    write,
+    isLoading: isTxSubmitting,
+  } = useContractWrite({
+    calls: [
+      {
+        contractAddress: tokens.L2.ETH.tokenAddress?.[
+          ChainType.L2[NETWORK_NAME]
+        ] as `0x${string}`,
+        entrypoint: "approve",
+        calldata: [tokenAddress as `0x${string}`, MINT_COST * mintQty, 0],
+      },
+      ...calls,
+    ],
+  });
+
   //const { toast } = useToast();
   //const { listItem } = useBurner();
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);

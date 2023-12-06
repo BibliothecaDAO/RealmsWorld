@@ -15,7 +15,6 @@ export default function RootLayout({
     "url(" +
     (params.id ? `/games/${params.id}/background.webp` : defaultImage) +
     ")";
-  console.log(params);
   return (
     <div
       className="h-full w-full"

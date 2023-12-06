@@ -3,7 +3,7 @@ import { useAccount as useL2Account } from "@starknet-react/core";
 import { ExternalLinkIcon } from "lucide-react";
 import { useAccount } from "wagmi";
 
-import { Button } from "../ui/button";
+import { Button } from "@realms-world/ui";
 
 export const AccountLink = ({ isL1 }: { isL1: boolean }) => {
   const { address } = useAccount();

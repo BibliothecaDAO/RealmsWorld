@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Button } from "@/app/_components/ui/button";
-import { Input } from "@/app/_components/ui/input";
 import { EthereumLoginButton } from "@/app/_components/wallet/EthereumLoginButton";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
 import { useTransferToL1 } from "@/hooks/useTransferToL1";
@@ -14,6 +12,8 @@ import StarknetLogo from "@/icons/starknet.svg";
 import { useAccount } from "@starknet-react/core";
 import { ArrowUpDown } from "lucide-react";
 import { useAccount as useL1Account } from "wagmi";
+
+import { Button, Input } from "@realms-world/ui";
 
 import { useWalletsProviderContext } from "../providers/WalletsProvider";
 import { TokenBalance } from "./TokenBalance";

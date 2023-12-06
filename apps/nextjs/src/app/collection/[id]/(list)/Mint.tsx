@@ -2,8 +2,6 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { Button } from "@/app/_components/ui/button";
-import { Input } from "@/app/_components/ui/input";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
 import { NETWORK_NAME, STARKSCAN_TX_URL } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
@@ -16,6 +14,8 @@ import {
 import { ExternalLinkIcon, Loader2 } from "lucide-react";
 import { uint256 } from "starknet";
 import { formatEther } from "viem";
+
+import { Button, Input } from "@realms-world/ui";
 
 // MAINNET TODO: UPDATE PRICE
 

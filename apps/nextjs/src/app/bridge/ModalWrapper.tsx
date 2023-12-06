@@ -2,13 +2,14 @@
 
 import type { ComponentType, LazyExoticComponent } from "react";
 import { lazy, Suspense } from "react";
+
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/app/_components/ui/dialog";
+} from "@realms-world/ui";
 
 import { useHideModal, useModal } from "../providers/ModalProvider";
 

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Switch } from "@/app/_components/ui/switch";
+
+import { Switch } from "@realms-world/ui";
 
 export const CollectionActivity = () => {
   const pathname = usePathname();

@@ -2,14 +2,7 @@ import { NETWORK_NAME } from "@/constants/env";
 import type { ERC721Tokens } from "@/constants/erc721Tokens";
 import { erc721Tokens } from "@/constants/erc721Tokens";
 import { ChainType, tokens } from "@/constants/tokens";
-import type { ClassValue } from "clsx";
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { formatUnits } from "viem";
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 export const isEth = (symbol: string) => {
   return symbol === tokens.L1.ETH.symbol;

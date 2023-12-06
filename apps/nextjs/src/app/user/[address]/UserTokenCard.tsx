@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { Button } from "@/app/_components/ui/button";
 import type { UserTokenData } from "@/types";
+
+import { Button } from "@realms-world/ui";
 
 function UserTokenCard({ token }: { token: UserTokenData }) {
   return (

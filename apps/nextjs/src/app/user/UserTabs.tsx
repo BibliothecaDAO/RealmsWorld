@@ -1,7 +1,7 @@
 import { /*hexToNumber,*/ isStarknetAddress, shortenHex } from "@/utils/utils";
 import { isAddress } from "viem";
 
-import { NavLink } from "../_components/ui/nav-link";
+import { NavLink } from "@realms-world/ui";
 
 export const UserTabs = ({ address }: { address: string }) => {
   const isL2 = isStarknetAddress(address);

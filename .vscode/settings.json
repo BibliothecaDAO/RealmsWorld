@@ -5,6 +5,7 @@
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
   "eslint.workingDirectories": [
     { "pattern": "apps/*/" },
+    { "pattern": "config/*/" },
     { "pattern": "packages/*/" },
     { "pattern": "tooling/*/" }
   ],
