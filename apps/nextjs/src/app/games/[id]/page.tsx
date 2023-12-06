@@ -1,5 +1,5 @@
-import { promises as fs } from "fs";
-import path from "path";
+/*import { promises as fs } from "fs";
+import path from "path";*/
 import type { Metadata } from "next";
 
 import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
@@ -26,15 +26,15 @@ export async function generateMetadata({
 export default async function Page({ params }: { params: { id: string } }) {
   const game = games.find((game) => game.id === params.id);
 
-  const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
+  /*const dirRelativeToPublicFolder = `games/${params.id}/screenshots`;
   const dir = path.resolve("public", dirRelativeToPublicFolder);
   const screenshotFiles = await fs.readdir(path.join(dir));
   const screenshotList = screenshotFiles.map((image, index) => ({
     src: `/games/${params.id}/screenshots/${image}`,
     alt: `${game?.name} Screenshot ${index}`,
-  })); //TODO not working in Vercel production
+  }));*/ //TODO not working in Vercel production
 
-  //const screenshotList = new Array(game?.screenshotLength);
+  const screenshotList = new Array(game?.screenshotLength);
   const list = [...screenshotList].map((image, index) => ({
     src: `/games/${params.id}/screenshots/${index + 1}.png`,
     alt: `${game?.name} Screenshot ${index + 1}`,
@@ -144,7 +144,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
                 {tabs.map((tab, index) => (
                   <TabsContent
-                    className="bg-dark-green rounded border p-4"
+                    className="rounded border bg-dark-green p-4"
                     value={tab.name}
                     key={index}
                   >

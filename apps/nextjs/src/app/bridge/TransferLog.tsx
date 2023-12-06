@@ -157,7 +157,9 @@ export const TransferLog = ({
           <PlusCircleIcon className="self-center fill-green-300 stroke-green-900" />
         )}
         <div className="flex font-semibold sm:text-xl">
-          {transfer.amount ? amount : formatEther(amount || 0)}
+          <span className="max-w-[120px] overflow-hidden text-ellipsis">
+            {transfer.amount ? amount : formatEther(amount || 0)}
+          </span>
           <LordsIcon className="mx-1.5 h-5 w-5 self-center fill-white" />
         </div>
         <div className="flex-grow" />
