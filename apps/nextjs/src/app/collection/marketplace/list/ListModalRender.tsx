@@ -1,6 +1,7 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
 import type { ExpirationOption } from "@/types";
+import type { RouterOutputs } from "@/utils/api";
 import { getTokenContractAddresses } from "@/utils/utils";
 import { useAccount, useContractWrite } from "@starknet-react/core";
 import dayjs from "dayjs";
@@ -32,7 +33,9 @@ export interface ListModalStepData {
 
 interface ChildrenProps {
   loading: boolean;
-  token?: any;
+  token?:
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
+    | RouterOutputs["erc721Tokens"]["byId"];
   collection?: any;
   listStep: ListStep;
   //usdPrice: number;
@@ -115,9 +118,6 @@ export const ListModalRenderer: FC<Props> = ({
         setListStep(ListStep.Unavailable)
       }
     }, [marketplace, exchange])*/
-  console.log(getTokenContractAddresses("goldenToken").L2);
-  console.log(price);
-  console.log(expirationOption);
 
   //TODO usememo
   let expirationTime: string | null = null;

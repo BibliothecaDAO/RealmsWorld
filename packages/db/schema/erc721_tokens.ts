@@ -3,6 +3,7 @@ import { bigint, integer, json, text } from "drizzle-orm/pg-core";
 
 import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
+import { erc721MarketListing } from "./erc721_market";
 
 export const erc721Tokens = pgSqlTable("erc721_tokens", {
   _cursor: int8range("_cursor"),
@@ -25,9 +26,13 @@ export const erc721Tokens = pgSqlTable("erc721_tokens", {
         }[];
   }>(),
 });
-export const erc721TokensRelations = relations(erc721Tokens, ({ many }) => ({
-  transfers: many(erc721Transfers),
-}));
+export const erc721TokensTransferRelations = relations(
+  erc721Tokens,
+  ({ many }) => ({
+    transfers: many(erc721Transfers),
+    listings: many(erc721MarketListing),
+  }),
+);
 
 export const erc721Transfers = pgSqlTable("erc721_transfers", {
   _cursor: bigint("_cursor", { mode: "number" }),

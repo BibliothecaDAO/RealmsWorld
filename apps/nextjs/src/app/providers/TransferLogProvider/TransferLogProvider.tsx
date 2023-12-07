@@ -74,8 +74,8 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
 
   const transfersQueryL2 = api.bridge.all.useQuery(
     {
-      l1Account: padAddress(accountL1 ?? ""),
-      l2Account: padAddress(accountL2 ?? ""),
+      l1Account: padAddress(accountL1),
+      l2Account: padAddress(accountL2),
       //limit: 10,
     },
     {

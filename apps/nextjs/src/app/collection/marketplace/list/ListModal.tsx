@@ -2,6 +2,7 @@ import type { ReactElement } from "react";
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Lords from "@/icons/lords.svg";
+import type { RouterOutputs } from "@/utils/api";
 import { faImages, faTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import ListCheckout from './ListCheckout'
@@ -48,6 +49,9 @@ const ModalCopy = {
 };
 
 type Props = Parameters<typeof Dialog> & {
+  token:
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
+    | RouterOutputs["erc721Tokens"]["byId"];
   tokenId?: string;
   collectionId?: string;
   trigger?: React.ReactNode;
@@ -57,6 +61,7 @@ const MINIMUM_AMOUNT = 0.000001;
 const MAXIMUM_AMOUNT = Infinity;
 
 export function ListModal({
+  token,
   trigger,
   tokenId,
   collectionId,
@@ -334,7 +339,6 @@ export function ListModal({
                           value={expirationDate}
                           defaultValue={expirationDate}
                           onChange={(e: any) => {
-                            console.log(e);
                             if (e) {
                               const customOption = expirationOptions.find(
                                 (option) => option.value === "custom",

@@ -37,7 +37,7 @@ export const L2ERC721Card = (props: TokenCardProps) => {
   if(!token.name) {
 
   }*/
-  const tokenOwner = token.transfers[0]?.toAddress ?? token.minter;
+  const tokenOwner = token.owner ?? token.minter;
   const starkName = useStarkDisplayName(tokenOwner ?? undefined);
 
   function renderAttribute(token: typeof props.token, traitType: string) {
@@ -54,7 +54,7 @@ export const L2ERC721Card = (props: TokenCardProps) => {
   return (
     <div className={isGrid ? grid : list}>
       <Link
-        href={`/collection/${findTokenName(token.contract_address ?? "")}/${
+        href={`/collection/${findTokenName(token.contract_address)}/${
           token.token_id
         }`}
       >

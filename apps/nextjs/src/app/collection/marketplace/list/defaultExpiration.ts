@@ -2,18 +2,6 @@ import type { ExpirationOption } from "@/types";
 
 const expirationOptions: ExpirationOption[] = [
   {
-    text: "1 Hour",
-    value: "hour",
-    relativeTime: 1,
-    relativeTimeUnit: "h",
-  },
-  {
-    text: "12 Hours",
-    value: "12 hours",
-    relativeTime: 12,
-    relativeTimeUnit: "h",
-  },
-  {
     text: "1 Day",
     value: "1 day",
     relativeTime: 1,
