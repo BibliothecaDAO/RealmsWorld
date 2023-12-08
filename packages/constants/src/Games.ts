@@ -159,4 +159,26 @@ export const games: Game[] = [
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
   },
+  {
+    name: "Rising Revenant",
+    id: "rising-revenant",
+    developer: "Grug's Lair",
+    genres: ["Last Man Standing", "Strategy"],
+    color: "#f5f5f5",
+    status: "development",
+    description: "Last man standing",
+    longform:
+      "Rising Revenant is a last man standing strategy game that is built on StarkNet and powered by Dojo. Rising Revenant offers an exhilarating mix of strategy, chance, and foresight, making it a captivating endeavor for gamers and crypto enthusiasts. Will you rise to the challenge and etch your name in the annals of this adventure?",
+    links: {
+      discord: "https://t.co/E9lZFnBzci",
+      twitter: "https://twitter.com/RRisingRevenant",
+      whitepaper: "https://github.com/GrugLikesRocks/Rising-Revenant",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "Trade for resources",
+    chains: [ChainId.SN_MAIN],
+    collections: [Collections.GOLDEN_TOKEN],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 3,
+  },
 ];
