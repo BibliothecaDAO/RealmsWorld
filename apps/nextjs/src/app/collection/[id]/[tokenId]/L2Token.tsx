@@ -4,6 +4,9 @@ import { api } from "@/utils/api";
 import { findTokenName, padAddress } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 
+import { Button } from "@realms-world/ui";
+
+import { BuyModal } from "../../marketplace/buy/BuyModal";
 import TokenOwnerActions from "../../marketplace/TokenOwnerActions";
 import { LoadingSkeleton } from "./loading";
 import { TokenInformation } from "./TokenInformation";
@@ -46,6 +49,27 @@ export const L2Token = ({
                 contractAddress={contractAddress}
               />
             )}
+            <BuyModal
+              trigger={<Button color="primary">Buy</Button>}
+              tokenId={tokenId}
+              token={erc721Token}
+              collectionId={collectionId}
+              orderId={0} //erc721Token?.listings?.[0]?.id}
+              //openState={openState}
+              /*onClose={(data, stepData, currentStep) => {
+        if (mutate && currentStep == BuyStep.Complete) mutate()
+      }}
+      onPointerDownOutside={(e) => {
+        const privyLayer = document.getElementById('privy-dialog')
+
+        const clickedInsidePrivyLayer =
+          privyLayer && e.target ? privyLayer.contains(e.target as Node) : false
+
+        if (clickedInsidePrivyLayer) {
+          e.preventDefault()
+        }
+      }}*/
+            />
             {collectionId == "beasts" &&
               erc721Token.metadata?.attributes?.length && (
                 <div className="mt-4 rounded border bg-dark-green">

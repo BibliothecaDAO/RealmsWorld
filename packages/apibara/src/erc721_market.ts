@@ -2,7 +2,8 @@ import type { Config } from "https://esm.sh/@apibara/indexer";
 //import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import type { Postgres } from "https://esm.sh/@apibara/indexer/sink/postgres";
 import type { Block, Starknet } from "https://esm.sh/@apibara/indexer/starknet";
-import { hash } from "https://esm.sh/starknet";
+import { hash, num } from "https://esm.sh/starknet";
+import { formatUnits } from "https://esm.sh/viem";
 
 import { whitelistedContracts } from "./utils.ts";
 
@@ -45,7 +46,7 @@ export default function transform({ header, events }: Block) {
         whitelistedContracts[collectionId - 1].toLowerCase() + ":" + tokenId,
       token_id: tokenId,
       collection_id: collectionId,
-      price: Number(BigInt(event.data[2])),
+      price: Number(formatUnits(BigInt(event.data[2]), 18)),
       expiration: Number(BigInt(event.data[3])),
       active: Number(BigInt(event.data[4])),
     };
