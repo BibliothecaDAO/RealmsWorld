@@ -1,7 +1,8 @@
-import PropTypes from "prop-types";
 import React from "react";
 import { ActionType } from "@/constants/transferSteps";
-import { Alert } from "../../ui/alert";
+import PropTypes from "prop-types";
+
+import { Alert } from "@realms-world/ui";
 
 const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
   const { type, l2hash, l1hash } = transfer;
@@ -34,8 +35,8 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
     ) : null;
 
   return (
-    <div className="flex flex-col items-center text-center mb-6 px-2 ">
-      <div className="w-2/3 text-sm  mb-4">{textMessage}</div>
+    <div className="mb-6 flex flex-col items-center px-2 text-center ">
+      <div className="mb-4 w-2/3  text-sm">{textMessage}</div>
       {messageComponent}
     </div>
   );

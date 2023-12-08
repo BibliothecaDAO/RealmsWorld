@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/app/_components/ui/button";
 import { ListModal } from "@reservoir0x/reservoir-kit-ui";
+
+import { Button } from "@realms-world/ui";
 
 export const ListingModal = ({ address, id }: any) => {
   const [openState, setOpenState] = useState(false);

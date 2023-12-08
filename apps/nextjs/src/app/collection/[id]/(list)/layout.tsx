@@ -1,9 +1,10 @@
 import React from "react";
-//import { Button } from "@/app/_components/ui/button";
-import { NavLink } from "@/app/_components/ui/nav-link";
 import CollectionSummary from "@/app/collection/CollectionSummary";
 import type { erc721Tokens } from "@/constants";
 import { getTokenContractAddresses } from "@/utils/utils";
+
+//import { Button } from "@realms-world/ui";
+import { NavLink } from "@realms-world/ui";
 
 //import { NETWORK_NAME } from "@/constants/env";
 //import { ChainType } from "@starkware-industries/commons-js-enums";

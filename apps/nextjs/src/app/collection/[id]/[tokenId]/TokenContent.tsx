@@ -1,11 +1,5 @@
 "use client";
 
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/app/_components/ui/tabs";
 import { BuyButton } from "@/app/collection/BuyModal";
 import { ListingModal } from "@/app/collection/ListingModal";
 import { GameCard } from "@/app/games/GameCard";
@@ -14,6 +8,7 @@ import { getGamesByContract } from "@/utils/getters";
 import { useAccount } from "wagmi";
 
 import { games } from "@realms-world/constants";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@realms-world/ui";
 
 import { TokenActivity } from "./TokenActivity";
 

@@ -1,18 +1,18 @@
-import { openInNewTab, evaluate } from "@starkware-industries/commons-js-utils";
-import PropTypes from "prop-types";
 import React from "react";
+import {
+  ETHERSCAN_TX_URL,
+  STARKSCAN_ETH_TX_URL,
+  STARKSCAN_TX_URL,
+  VOYAGER_TX_URL,
+} from "@/constants/env";
+import { ActionType } from "@/constants/transferSteps";
 import EtherscanLogo from "@/icons/etherscan.svg";
 import StarkScanLogo from "@/icons/starkscan.svg";
 import VoyagerLogo from "@/icons/voyager.svg";
-import {
-  ETHERSCAN_TX_URL,
-  VOYAGER_TX_URL,
-  STARKSCAN_TX_URL,
-  STARKSCAN_ETH_TX_URL,
-} from "@/constants/env";
+import { evaluate, openInNewTab } from "@starkware-industries/commons-js-utils";
+import PropTypes from "prop-types";
 
-import { Button } from "../../ui/button";
-import { ActionType } from "@/constants/transferSteps";
+import { Button } from "@realms-world/ui";
 
 const TransactionSubmittedModalButton = ({
   transfer,
@@ -32,12 +32,12 @@ const TransactionSubmittedModalButton = ({
       {
         name: "Etherscan",
         url: ETHERSCAN_TX_URL(l1hash),
-        logo: <EtherscanLogo className="w-5 h-5" />,
+        logo: <EtherscanLogo className="h-5 w-5" />,
       },
       {
         name: "StarkScan",
         url: STARKSCAN_ETH_TX_URL(l1hash),
-        logo: <StarkScanLogo className="w-5 h-5" />,
+        logo: <StarkScanLogo className="h-5 w-5" />,
       },
     ];
   }

@@ -3,7 +3,8 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { useEffect, useState } from "react";
-import { Carousel } from "@/app/_components/ui/carousel";
+
+import { Carousel } from "@realms-world/ui";
 
 export const GameScreenshots = async ({ id }: { id: string }) => {
   const [screenshotList, setScreenshotList] =

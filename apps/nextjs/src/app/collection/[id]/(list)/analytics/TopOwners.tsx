@@ -1,14 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { NETWORK_NAME } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
-//import { Progress } from "@/app/_components/ui/progress";
-//import Table from "@/app/homepages/realms-eternum/components/Table";
 import { shortenHex } from "@/utils/utils";
 
-//import { useOwnerListings } from "@reservoir0x/reservoir-kit-ui";
+import { ScrollArea } from "@realms-world/ui";
 
 export const TopOwners = ({
   owners,

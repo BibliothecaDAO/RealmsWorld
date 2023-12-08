@@ -6,14 +6,6 @@ import { ERC721 } from "@/abi/L1/ERC721";
 import { paymentPoolAbi } from "@/abi/L1/PaymentPool";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
-import { Alert } from "@/app/_components/ui/alert";
-import { Button } from "@/app/_components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-} from "@/app/_components/ui/dialog";
 import { stakingAddresses } from "@/constants/staking";
 import Lords from "@/icons/lords.svg";
 import { getTokenContractAddresses } from "@/utils/utils";
@@ -26,6 +18,15 @@ import {
   useContractWrite,
   useWaitForTransaction,
 } from "wagmi";
+
+import {
+  Alert,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@realms-world/ui";
 
 import { EthereumLoginButton } from "../_components/wallet/EthereumLoginButton";
 import RealmsTable from "./RealmsTable";

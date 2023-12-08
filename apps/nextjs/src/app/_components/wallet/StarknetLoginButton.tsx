@@ -5,8 +5,8 @@ import { shortenHex } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import type { VariantProps } from "class-variance-authority";
 
-import type { buttonVariants } from "../ui/button";
-import { Button } from "../ui/button";
+import type { buttonVariants } from "@realms-world/ui";
+import { Button } from "@realms-world/ui";
 
 export const StarknetLoginButton = ({
   openAccount = false,

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import type { DepositEvent, WithdrawalEvent } from "@/.graphclient";
-import { Button } from "@/app/_components/ui/button";
 import {
   NETWORK_NAME,
   STARKSCAN_ETH_TX_URL,
@@ -10,7 +9,6 @@ import {
 } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
 import LordsIcon from "@/icons/lords.svg";
-import { cn } from "@/utils/utils";
 import { useNetwork } from "@starknet-react/core";
 import type { ChainTypeL2 } from "@starkware-industries/commons-js-enums";
 import {
@@ -33,6 +31,9 @@ import {
 } from "lucide-react";
 import PropTypes from "prop-types";
 import { formatEther } from "viem";
+
+import { Button } from "@realms-world/ui";
+import { cn } from "@realms-world/utils";
 
 export const TransferLog = ({
   transfer,
@@ -156,7 +157,9 @@ export const TransferLog = ({
           <PlusCircleIcon className="self-center fill-green-300 stroke-green-900" />
         )}
         <div className="flex font-semibold sm:text-xl">
-          {transfer.amount ? amount : formatEther(amount || 0)}
+          <span className="max-w-[120px] overflow-hidden text-ellipsis">
+            {transfer.amount ? amount : formatEther(amount || 0)}
+          </span>
           <LordsIcon className="mx-1.5 h-5 w-5 self-center fill-white" />
         </div>
         <div className="flex-grow" />

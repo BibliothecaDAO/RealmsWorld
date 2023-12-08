@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/app/_components/ui/button";
 
 import type { Game } from "@realms-world/constants";
+import { Button } from "@realms-world/ui";
 
 interface GameCardProps {
   game: Game;
