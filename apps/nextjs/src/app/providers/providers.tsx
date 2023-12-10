@@ -6,6 +6,7 @@ import {
   mainnet as starkMainnet,
 } from "@starknet-react/chains";
 import {
+  blastProvider,
   StarknetConfig,
   publicProvider as starkPublicProvider,
 } from "@starknet-react/core";
@@ -19,6 +20,11 @@ import { publicProvider } from "wagmi/providers/public";
 
 import { TransferLogProvider } from "./TransferLogProvider";
 
+const starkProvider = process.env.NEXT_PUBLIC_BLAST_API
+  ? blastProvider({
+      apiKey: process.env.NEXT_PUBLIC_BLAST_API,
+    })
+  : starkPublicProvider();
 const starkConnectors = [
   new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
   new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
@@ -49,8 +55,8 @@ export function Provider({ children }: any) {
           ? [starkGoerli]
           : [starkMainnet]),
       ]}
-      provider={starkPublicProvider()}
-      connectors={starkConnectors as any}
+      provider={starkProvider}
+      connectors={starkConnectors}
     >
       <WagmiConfig
         config={createConfig(

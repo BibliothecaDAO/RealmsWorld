@@ -7,12 +7,9 @@ import {
   TransferToL2Steps,
 } from "@/constants/transferSteps";
 import { useAccount as useL2Account } from "@starknet-react/core";
-//import { constants } from 'starknet';
-import { EventName } from "@starkware-industries/commons-js-enums";
-import { formatEther, parseEther, parseGwei, parseUnits } from "viem";
+import { formatEther, parseEther, parseUnits } from "viem";
 import { useAccount as useL1Account, useWaitForTransaction } from "wagmi";
 
-//import { useSelectedToken } from '../providers/TransferProvider';
 import { useBridgeContract } from "./useBridgeContract";
 import { useTokenContractAPI } from "./useTokenContract";
 import { useTransfer } from "./useTransfer";
@@ -90,7 +87,7 @@ export const useTransferToL2 = () => {
     );
   };
 
-  const onDeposit = (event: any) => {
+  const onDeposit = async (event: any) => {
     console.log("Deposit event dispatched", event);
     //trackSuccess(event.transactionHash);
     const transferData = {
@@ -104,7 +101,7 @@ export const useTransferToL2 = () => {
       event,
     };
     //addTransfer(toObject(transferData));
-    refetch();
+    await refetch();
     handleData(transferData);
   };
   useEffect(() => {
@@ -115,7 +112,7 @@ export const useTransferToL2 = () => {
     }
   }, [depositError]);
 
-  const sendDeposit = async (amount: any) => {
+  const sendDeposit = async (amount: string) => {
     handleProgress(
       progressOptions.waitForConfirm(
         connector?.name || "Wallet",
@@ -142,7 +139,7 @@ export const useTransferToL2 = () => {
   }, [depositIsSuccess]);
 
   return useCallback(
-    async (amount: any) => {
+    async (amount: string) => {
       setAmount(amount);
       try {
         console.log("TransferToL2 called");
@@ -155,18 +152,18 @@ export const useTransferToL2 = () => {
           ),
         );
         console.log("Current allow value", allowance?.toString());
-        if (Number(formatEther(allowance || BigInt(0))) < Number(amount)) {
+        if (Number(formatEther(allowance ?? BigInt(0))) < Number(amount)) {
           console.log(
             "Allow value is smaller then amount, sending approve tx...",
             { amount, l1BridgeAddress },
           );
-          approve({
+          await approve({
             args: [l1BridgeAddress, parseEther(amount)],
           });
         }
         if (allowance && Number(formatEther(allowance)) >= Number(amount)) {
           console.log("Calling deposit");
-          sendDeposit(amount);
+          await sendDeposit(amount);
         }
       } catch (ex: any) {
         //trackError(ex);
