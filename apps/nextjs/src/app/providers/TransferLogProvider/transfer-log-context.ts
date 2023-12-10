@@ -1,19 +1,13 @@
 "use client";
 
 import { createContext } from "react";
-import {
-  Deposit,
-  DepositsQuery,
-  L2WithdrawalsQuery,
-  Withdrawal,
-  WithdrawalsQuery,
-} from "@/.graphclient";
-import { RouterOutputs } from "@/utils/api";
-import { UseInfiniteQueryResult } from "@tanstack/react-query";
-import { TRPCClientErrorLike } from "@trpc/react-query";
-import { UseTRPCQueryResult } from "@trpc/react-query/shared";
+import type { DepositsQuery } from "@/.graphclient";
+import type { RouterOutputs } from "@/utils/api";
+import type { UseInfiniteQueryResult } from "@tanstack/react-query";
+import type { TRPCClientErrorLike } from "@trpc/react-query";
+import type { UseTRPCQueryResult } from "@trpc/react-query/shared";
 
-import { AppRouter } from "@realms-world/api";
+import type { AppRouter } from "@realms-world/api";
 
 interface TransferLogContextValue {
   transfersQueryL1: UseInfiniteQueryResult<DepositsQuery>;
@@ -21,7 +15,7 @@ interface TransferLogContextValue {
     RouterOutputs["bridge"]["all"],
     TRPCClientErrorLike<AppRouter>
   >;
-  pendingWithdrawalsQuery: any;
+  //pendingWithdrawalsQuery: any;
 }
 
 export const TransferLogContext = createContext<TransferLogContextValue>({
@@ -33,8 +27,8 @@ export const TransferLogContext = createContext<TransferLogContextValue>({
     // @ts-ignore
     refetch: () => {},
   },
-  pendingWithdrawalsQuery: {
+  /*pendingWithdrawalsQuery: {
     // @ts-ignore
     refetch: () => {},
-  },
+  },*/
 });

@@ -20,19 +20,21 @@ export const useTransfers = () => {
   const {
     transfersQueryL1: { data: transfersL1, isFetching: isFetchingL1 },
     transfersQueryL2: { data: transfersL2, isFetching: isFetchingL2 },
-    pendingWithdrawalsQuery: {
+    /*pendingWithdrawalsQuery: {
       data: withdrawals,
       isFetching: isFetchingWithdrawals,
-    },
+    },*/
   } = useContext(TransferLogContext);
 
   const doneFetching = !!(
-    !isFetchingL1 &&
-    !isFetchingL2 &&
-    !isFetchingWithdrawals &&
-    transfersL1 &&
-    transfersL2 &&
-    withdrawals
+    (
+      !isFetchingL1 &&
+      !isFetchingL2 &&
+      //!isFetchingWithdrawals &&
+      transfersL1 &&
+      transfersL2
+    )
+    //withdrawals
   );
 
   return useMemo(() => {
@@ -54,7 +56,7 @@ export const useTransfers = () => {
     if (doneFetching) {
       console.log(transfersL1);
       const uniqueLogs = removeDuplicatesLogs([
-        ...(withdrawals?.pages || []),
+        //...(withdrawals?.pages || []),
         ...flattenPages(transfersL1),
         ...flattenPages(transfersL2),
       ]);

@@ -50,7 +50,7 @@ export const useTransferToL1 = () => {
   const progressOptions = useTransferProgress();
 
   return useCallback(
-    async (amount: any) => {
+    async (amount: string) => {
       try {
         console.log("TransferToL1 called");
 
@@ -80,7 +80,7 @@ export const useTransferToL1 = () => {
           });
           handleProgress(
             progressOptions.initiateWithdraw(
-              amount,
+              parseInt(amount),
               "LORDS",
               stepOf(TransferStep.INITIATE_WITHDRAW, TransferToL1Steps),
             ),

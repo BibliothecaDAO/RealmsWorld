@@ -35,7 +35,7 @@ interface WalletsProviderContextValue {
     };
   };
   l2loading: boolean;
-  // refetch: () => void;
+  refetch: () => void;
 }
 
 const WalletsProviderContext = createContext<
@@ -75,8 +75,8 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
 
   const {
     data: l2LordsBalance,
-    isLoading: l2LordsIsLoading,
-    //refetch: l2LordsRefetch,
+    isFetching: l2LordsIsLoading,
+    refetch: l2LordsRefetch,
   } = useContractRead({
     address: tokensConst.L2.LORDS.tokenAddress[ChainType.L2[network]]!,
     abi: L2_C1ERC20,
@@ -86,7 +86,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     watch: true,
   });
 
-  const { data: l2EthBalance, isLoading: l2EthIsLoading } = useContractRead({
+  const { data: l2EthBalance, isFetching: l2EthIsLoading } = useContractRead({
     address: tokensConst.L2.ETH.tokenAddress[ChainType.L2[network]]!,
     abi: L2_ERC20,
     functionName: "balanceOf",
@@ -102,7 +102,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     abi: L1_ERC20_ABI,
   };
 
-  const { data: l1LordsBalance } = useBalance({
+  const { data: l1LordsBalance, refetch: l1LordsRefetch } = useBalance({
     ...l1ERC20Contract,
     address: l1Account!,
     token: tokensConst.L1.LORDS.tokenAddress[
@@ -122,11 +122,17 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     }
   }, [l1Account, l2Account]);
 
+  const refetch = async () => {
+    l2LordsRefetch;
+    await l1LordsRefetch();
+  };
+
   const value = {
     accountHash,
     tokens,
     // updateTokenBalance,
     l2loading: l2LordsIsLoading || l2EthIsLoading,
+    refetch: refetch,
     balances: {
       l1: {
         eth: l1EthBalance?.value,
@@ -138,7 +144,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
           ? //@ts-ignore
             uint256.uint256ToBN(l2EthBalance?.balance)
           : 0n,
-        lords: l2LordsBalance,
+        lords: l2LordsBalance as bigint,
       },
     },
   };
