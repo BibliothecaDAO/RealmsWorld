@@ -1,5 +1,6 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
+import { NETWORK_NAME } from "@/constants/env";
 import type { ExpirationOption } from "@/types";
 import type { RouterOutputs } from "@/utils/api";
 import { getTokenContractAddresses } from "@/utils/utils";
@@ -7,7 +8,11 @@ import { useAccount, useContractWrite } from "@starknet-react/core";
 import dayjs from "dayjs";
 import { parseUnits } from "viem";
 
-import { MarketplaceCollectionIds } from "@realms-world/constants";
+import {
+  MarketplaceCollectionIds,
+  MarketplaceContract,
+} from "@realms-world/constants";
+import { ChainId } from "@realms-world/constants/src/Chains";
 
 import defaultExpirationOptions from "./defaultExpiration";
 
@@ -132,7 +137,7 @@ export const ListModalRenderer: FC<Props> = ({
       expirationTime = `${expirationOption.relativeTime}`;
     }
   }
-
+  console.log(MarketplaceContract[ChainId["SN_" + NETWORK_NAME]]);
   const {
     data: mintData,
     write,
@@ -144,19 +149,8 @@ export const ListModalRenderer: FC<Props> = ({
           .L2 as `0x${string}`,
         entrypoint: "set_approval_for_all",
         calldata: [
-          "0x0136c83ac9a4938fa5205ac08a52937f5d19e02fe1fe5400d664f47c2b2297bb", //Marketplace address
+          MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
           1,
-        ],
-      },
-      {
-        contractAddress:
-          "0x0136c83ac9a4938fa5205ac08a52937f5d19e02fe1fe5400d664f47c2b2297bb" as `0x${string}`,
-        entrypoint: "create",
-        calldata: [
-          tokenId as `0x${string}`,
-          MarketplaceCollectionIds["Golden Token"],
-          price,
-          expirationTime,
         ],
       },
     ],

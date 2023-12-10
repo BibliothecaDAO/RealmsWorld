@@ -77,7 +77,6 @@ export function ListModal({
     >
       {({
         loading,
-        token,
         collection,
         //usdPrice,
         listStep,
@@ -434,15 +433,13 @@ export function ListModal({
                   <div className="flex w-full flex-col items-center gap-6 px-2 pt-2">
                     <div className="flex w-full flex-col items-center gap-6 overflow-hidden">
                       <Image
-                        src={token?.token?.image || collection?.image}
-                        alt={token?.token?.name || token?.token?.tokenId}
+                        src={token?.image || collection?.image}
+                        alt={token?.name || token?.token_id}
                         width={120}
                         height={120}
                       />
                       <h6 className="h6 text-ellipsis">
-                        {token?.token?.tokenId
-                          ? `#${token?.token?.tokenId}`
-                          : token?.token?.name}
+                        {token?.token_id ? `#${token?.token_id}` : token?.name}
                       </h6>
                       <span className="text-ellipsis text-medium-dark-green">
                         {collection?.name}

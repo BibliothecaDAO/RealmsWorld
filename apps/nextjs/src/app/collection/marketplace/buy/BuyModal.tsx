@@ -246,7 +246,7 @@ export function BuyModal({
               setOpen(open);
             }}
           >
-            <DialogTrigger>{trigger}</DialogTrigger>
+            <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent>
               <DialogTitle>{title}</DialogTitle>
 

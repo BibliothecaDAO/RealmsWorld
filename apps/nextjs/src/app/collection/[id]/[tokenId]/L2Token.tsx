@@ -31,6 +31,19 @@ export const L2Token = ({
     return <div>Token Information Loading</div>;
   }
 
+  const activeListings = erc721Token?.listings?.filter(
+    (listing) => listing.active === 1,
+  );
+
+  const lowestPriceActiveListing = activeListings?.reduce(
+    (minPriceListing, currentListing) => {
+      return currentListing?.price < minPriceListing?.price
+        ? currentListing
+        : minPriceListing;
+    },
+    activeListings[0],
+  );
+
   const collectionId = findTokenName(contractAddress);
 
   return (
@@ -49,14 +62,19 @@ export const L2Token = ({
                 contractAddress={contractAddress}
               />
             )}
-            <BuyModal
-              trigger={<Button color="primary">Buy</Button>}
-              tokenId={tokenId}
-              token={erc721Token}
-              collectionId={collectionId}
-              orderId={0} //erc721Token?.listings?.[0]?.id}
-              //openState={openState}
-              /*onClose={(data, stepData, currentStep) => {
+            {lowestPriceActiveListing && (
+              <BuyModal
+                trigger={
+                  <Button className="mt-8 w-full" size={"lg"}>
+                    Buy
+                  </Button>
+                }
+                tokenId={tokenId}
+                token={erc721Token}
+                collectionId={collectionId}
+                orderId={0} //erc721Token?.listings?.[0]?.id}
+                //openState={openState}
+                /*onClose={(data, stepData, currentStep) => {
         if (mutate && currentStep == BuyStep.Complete) mutate()
       }}
       onPointerDownOutside={(e) => {
@@ -69,7 +87,8 @@ export const L2Token = ({
           e.preventDefault()
         }
       }}*/
-            />
+              />
+            )}
             {collectionId == "beasts" &&
               erc721Token.metadata?.attributes?.length && (
                 <div className="mt-4 rounded border bg-dark-green">
