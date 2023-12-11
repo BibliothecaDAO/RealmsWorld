@@ -29,24 +29,25 @@ const TokenAttributes = ({ token, attributeKeys }: any) => (
 
 export const L2ERC721Card = ({ token, layout = "grid" }: TokenCardProps) => {
   const isGrid = layout === "grid";
-  const imageSize = isGrid ? 800 : 60;
+  const imageSize = isGrid ? 800 : 80;
   const tokenOwner = token.transfers[0]?.toAddress ?? token.minter;
   const starkName = useStarkDisplayName(tokenOwner || "");
 
   const cardClassName = isGrid
     ? "bg-dark-green duration-300 transform border border-2 hover:border-white"
-    : "duration-300 transform bg-dark-green flex w-full border-2 border-white hover:border-black";
+    : "duration-300 transform bg-dark-green flex w-full border-2  hover:border-white";
 
   const imageAlt = token.name || `beasts-${token.token_id}`;
 
   return (
     <div className={cardClassName}>
       <Link
+        className={isGrid ? "" : "flex w-full"}
         href={`/collection/${findTokenName(token.contract_address ?? "")}/${
           token.token_id
         }`}
       >
-        <div className="relative">
+        <div className={` ${!isGrid && "p-2"} relative`}>
           {token.image && (
             <Image
               src={token.image}
@@ -56,9 +57,11 @@ export const L2ERC721Card = ({ token, layout = "grid" }: TokenCardProps) => {
               height={imageSize}
             />
           )}
-          <span className="absolute bottom-3 right-3 border bg-black px-3 py-1 text-xs">
-            #{token.token_id}
-          </span>
+          {isGrid && (
+            <span className="absolute bottom-3 right-3 border bg-black px-3 py-1 text-xs">
+              #{token.token_id}
+            </span>
+          )}
         </div>
 
         <TokenDetails token={token} isGrid={isGrid} starkName={starkName} />
@@ -105,4 +108,13 @@ const Price = () => {
   );
 };
 
-const ListDetails = ({ token, starkName }: any) => <div></div>;
+const ListDetails = ({ token, starkName }: any) => {
+  return (
+    <div className="px-6 py-3">
+      <div className="flex justify-between border-b pb-2">
+        <span className="">{decodeURIComponent(token.name || "")}</span>
+      </div>
+      <div className="mt-3 text-xs opacity-70">{starkName}</div>
+    </div>
+  );
+};
