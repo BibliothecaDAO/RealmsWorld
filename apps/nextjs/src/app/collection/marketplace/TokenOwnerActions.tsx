@@ -53,9 +53,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
     }
   };
 
-  const activeListings = token?.listings?.filter(
-    (listing) => listing.active === 1,
-  );
+  const activeListings = token?.listings?.filter((listing) => listing.active);
 
   const lowestPriceActiveListing = activeListings?.reduce(
     (minPriceListing, currentListing) => {
@@ -113,7 +111,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
         <ListingEditModal
           token={token}
           tokenId={tokenId}
-          listingId={lowestPriceActiveListing.id}
+          listingId={lowestPriceActiveListing?.id}
           collectionId={"test"}
           trigger={
             <Button onClick={() => onItemlist()} variant={"default"}>
