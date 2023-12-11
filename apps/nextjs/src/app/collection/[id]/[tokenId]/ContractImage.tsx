@@ -4,10 +4,11 @@ import { useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
+import type { ERC721Tokens } from "@/constants/erc721Tokens";
 import { erc721Tokens } from "@/constants/erc721Tokens";
 import type { Attributes, Collection, Token } from "@/types";
 import type { RouterOutputs } from "@/utils/api";
-import { shortenHex } from "@/utils/utils";
+import { getTokenContractAddresses, shortenHex } from "@/utils/utils";
 import { useContractRead } from "@starknet-react/core";
 import { ArrowLeft, Loader } from "lucide-react";
 import { shortString } from "starknet";
@@ -15,19 +16,22 @@ import { shortString } from "starknet";
 import { TokenAttribute } from "./TokenAttribute";
 
 export const ContractImage = ({
-  token,
+  tokenId,
   collectionId,
 }: {
-  token: RouterOutputs["erc721Tokens"]["byId"];
+  tokenId: number;
   collectionId: string;
 }) => {
   const isBeasts = collectionId == "beasts";
+  const tokenAddress = getTokenContractAddresses(
+    collectionId as keyof ERC721Tokens,
+  ).L2;
 
   const { data, isError, isLoading, error } = useContractRead({
     functionName: "token_uri",
-    args: [token?.token_id],
+    args: [tokenId],
     abi: L2_C1ERC20,
-    address: token?.contract_address,
+    address: tokenAddress,
     watch: true,
   });
   const tokenUriData = useMemo(() => {

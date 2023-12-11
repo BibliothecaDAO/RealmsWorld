@@ -36,19 +36,79 @@ export const config: Config<Starknet, Postgres> = {
   },
 };
 
+enum ActionType {
+  Create = 0,
+  Edit = 1,
+  Cancel = 2,
+  Accept = 3,
+}
+
 export default function transform({ header, events }: Block) {
   return events?.flatMap(({ event, receipt }) => {
-    const collectionId = Number(BigInt(event.data[1]));
-    const tokenId = Number(BigInt(event.data[0]));
-    return {
+    const tokenId = Number(BigInt(event.data[1]));
+    const collectionId = Number(BigInt(event.data[2]));
+    const price = Number(BigInt(event.data[3])).toFixed(0);
+    const type = Number(BigInt(event.data[6])); // TODO Rework for type
+    const orderId = Number(BigInt(event.data[7]));
+
+    /*return {
       hash: receipt.transactionHash,
       token_key:
-        whitelistedContracts[collectionId - 1].toLowerCase() + ":" + tokenId,
+        whitelistedContracts[collectionId].toLowerCase() + ":" + tokenId,
       token_id: tokenId,
       collection_id: collectionId,
-      price: Number(formatUnits(BigInt(event.data[2]), 18)),
-      expiration: Number(BigInt(event.data[3])),
-      active: Number(BigInt(event.data[4])),
-    };
+      created_by: event.data[0],
+      price: Number(BigInt(event.data[3])).toFixed(0),
+      expiration: Number(BigInt(event.data[4])),
+      id: Number(BigInt(event.data[6])),
+      active: Boolean(BigInt(event.data[5])),
+    };*/
+    switch (type) {
+      case ActionType.Create:
+        return {
+          insert: {
+            hash: receipt.transactionHash,
+            token_key:
+              whitelistedContracts[collectionId].toLowerCase() + ":" + tokenId,
+            token_id: tokenId,
+            collection_id: collectionId,
+            created_by: event.data[0],
+            price: price,
+            expiration: Number(BigInt(event.data[4])),
+            id: orderId,
+            active: Boolean(BigInt(event.data[5])),
+          },
+        };
+      case ActionType.Edit:
+        return {
+          entity: {
+            id: orderId,
+          },
+          update: {
+            price: price, //
+          },
+        };
+      case ActionType.Cancel:
+        return {
+          entity: {
+            id: orderId,
+          },
+          update: {
+            active: Boolean(BigInt(event.data[5])),
+          },
+        };
+      case ActionType.Accept:
+        return {
+          entity: {
+            id: orderId,
+          },
+          update: {
+            active: Boolean(BigInt(event.data[5])),
+          },
+        };
+      default:
+        console.warn("Unknown event", event.keys[0]);
+        return [];
+    }
   });
 }

@@ -91,7 +91,10 @@ export const erc721TokensRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.erc721Tokens.findFirst({
-        where: eq(schema.erc721Tokens.id, input.id),
+        where: and(
+          eq(schema.erc721Tokens.id, input.id),
+          sql`upper_inf(_cursor)`,
+        ),
         with: {
           listings: true,
           transfers: true,

@@ -213,7 +213,8 @@ export function BuyModal({
         const finalTxHashes = lastStepItems[lastStepItems.length - 1]?.txHashes;
 
         const price =
-          totalPrice; /*|| BigInt(token?.token?.lastSale?.price?.amount?.raw || 0)*/
+          token?.listings[0]?.price ??
+          0n; /*|| BigInt(token?.token?.lastSale?.price?.amount?.raw || 0)*/
 
         return (
           <Dialog
@@ -272,21 +273,6 @@ export function BuyModal({
                 </div>
               )}
 
-              {buyStep === BuyStep.SelectPayment && (
-                <div className="flex flex-col py-5">
-                  <div className="flex items-center gap-1 px-2">
-                    <Button
-                      onClick={() => setBuyStep(BuyStep.Checkout)}
-                      variant="outline"
-                      size="xs"
-                    >
-                      <FontAwesomeIcon icon={faChevronLeft} width={10} />
-                    </Button>
-                    <span className="text-lg">Select A Token</span>
-                  </div>
-                </div>
-              )}
-
               {buyStep === BuyStep.Checkout && !loading && (
                 <div className="flex flex-col">
                   {/*TODO Add error transactionError && <ErrorWell error={transactionError} />*/}
@@ -316,13 +302,8 @@ export function BuyModal({
                     <div className="flex h-16 items-start justify-between px-2">
                       <h6>You Pay</h6>
                       <div className="flex items-end gap-0.5">
-                        {token?.listings[0]?.price}
                         {token?.listings[0]?.price &&
-                          formatNumber(
-                            Number(
-                              formatUnits(BigInt(token?.listings[0].price), 18),
-                            ),
-                          )}
+                          formatNumber(token?.listings[0].price)}
                         <Lords className="h-6 w-6 fill-current" />
                         {/*<FormatCryptoCurrency
                           textStyle="h6"

@@ -14,7 +14,7 @@ import {
 } from "@realms-world/constants";
 import { ChainId } from "@realms-world/constants/src/Chains";
 
-import defaultExpirationOptions from "./defaultExpiration";
+import defaultExpirationOptions from "../defaultExpiration";
 
 export enum ListStep {
   Unavailable,
@@ -137,9 +137,8 @@ export const ListModalRenderer: FC<Props> = ({
       expirationTime = `${expirationOption.relativeTime}`;
     }
   }
-  console.log(MarketplaceContract[ChainId["SN_" + NETWORK_NAME]]);
   const {
-    data: mintData,
+    data,
     write,
     // isLoading: isTxSubmitting,
   } = useContractWrite({
@@ -151,6 +150,18 @@ export const ListModalRenderer: FC<Props> = ({
         calldata: [
           MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
           1,
+        ],
+      },
+      {
+        contractAddress: MarketplaceContract[
+          ChainId["SN_" + NETWORK_NAME]
+        ] as `0x${string}`,
+        entrypoint: "create",
+        calldata: [
+          tokenId as `0x${string}`,
+          MarketplaceCollectionIds["Golden Token"],
+          price,
+          expirationTime,
         ],
       },
     ],

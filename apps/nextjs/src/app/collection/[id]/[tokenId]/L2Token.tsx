@@ -1,5 +1,6 @@
 "use client";
 
+import Lords from "@/icons/lords.svg";
 import { api } from "@/utils/api";
 import { findTokenName, padAddress } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
@@ -32,7 +33,7 @@ export const L2Token = ({
   }
 
   const activeListings = erc721Token?.listings?.filter(
-    (listing) => listing.active === 1,
+    (listing) => listing.active,
   );
 
   const lowestPriceActiveListing = activeListings?.reduce(
@@ -45,96 +46,74 @@ export const L2Token = ({
   );
 
   const collectionId = findTokenName(contractAddress);
-
   return (
     <>
       {erc721Token ? (
         <>
           <TokenInformation
-            token={erc721Token}
+            //token={erc721Token}
             collectionId={collectionId}
-            collection={null}
+            collection={undefined}
+            name={erc721Token.name}
+            image={erc721Token.image}
+            tokenId={erc721Token.token_id}
+            owner={erc721Token.owner}
+            attributes={erc721Token.metadata?.attributes}
           >
-            {erc721Token.owner == padAddress(address) && (
+            {erc721Token.owner == padAddress(address) ? (
               <TokenOwnerActions
                 token={erc721Token}
                 tokenId={tokenId}
                 contractAddress={contractAddress}
               />
+            ) : (
+              <div className="mt-4 w-full rounded border bg-dark-green p-6">
+                {lowestPriceActiveListing ? (
+                  <>
+                    <div className="flex items-center gap-x-8">
+                      <div>
+                        <span className="text-sm text-bright-yellow/50">
+                          Price
+                        </span>
+                        <span className="flex text-2xl font-bold">
+                          {lowestPriceActiveListing.price}{" "}
+                          <Lords className="ml-2 w-6 fill-current" />
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-sm text-bright-yellow/50">
+                          Sale Ends
+                        </span>
+                        <span className="flex text-lg font-bold">
+                          {lowestPriceActiveListing.expiration &&
+                            new Date(
+                              parseInt(lowestPriceActiveListing?.expiration) *
+                                1000,
+                            ).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })}
+                        </span>
+                      </div>
+                    </div>
+                    <BuyModal
+                      trigger={
+                        <Button className="mt-6 w-full" size={"lg"}>
+                          Buy Now
+                        </Button>
+                      }
+                      tokenId={tokenId}
+                      token={erc721Token}
+                      collectionId={collectionId}
+                      orderId={0}
+                    />
+                  </>
+                ) : (
+                  "Not listed"
+                )}
+              </div>
             )}
-            {lowestPriceActiveListing && (
-              <BuyModal
-                trigger={
-                  <Button className="mt-8 w-full" size={"lg"}>
-                    Buy
-                  </Button>
-                }
-                tokenId={tokenId}
-                token={erc721Token}
-                collectionId={collectionId}
-                orderId={0} //erc721Token?.listings?.[0]?.id}
-                //openState={openState}
-                /*onClose={(data, stepData, currentStep) => {
-        if (mutate && currentStep == BuyStep.Complete) mutate()
-      }}
-      onPointerDownOutside={(e) => {
-        const privyLayer = document.getElementById('privy-dialog')
-
-        const clickedInsidePrivyLayer =
-          privyLayer && e.target ? privyLayer.contains(e.target as Node) : false
-
-        if (clickedInsidePrivyLayer) {
-          e.preventDefault()
-        }
-      }}*/
-              />
-            )}
-            {collectionId == "beasts" &&
-              erc721Token.metadata?.attributes?.length && (
-                <div className="mt-4 rounded border bg-dark-green">
-                  <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
-                    <h5>Type:</h5>
-                    <span className="text-xl">
-                      {
-                        erc721Token.metadata?.attributes.find(
-                          (trait) => trait.trait_type === "type",
-                        )?.value
-                      }
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
-                    <h5>Tier: </h5>
-                    <span className="text-xl">
-                      {
-                        erc721Token.metadata?.attributes.find(
-                          (trait) => trait.trait_type === "tier",
-                        )?.value
-                      }
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
-                    <h5>Level: </h5>
-                    <span className="text-xl">
-                      {
-                        erc721Token.metadata?.attributes.find(
-                          (trait) => trait.trait_type === "level",
-                        )?.value
-                      }
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
-                    <h5>Health: </h5>
-                    <span className="text-xl">
-                      {
-                        erc721Token.metadata?.attributes.find(
-                          (trait) => trait.trait_type === "health",
-                        )?.value
-                      }
-                    </span>
-                  </div>
-                </div>
-              )}
           </TokenInformation>
         </>
       ) : (

@@ -70,7 +70,7 @@ export const tokens = {
         [ChainType.L2.MAIN]:
           "0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49",
         [ChainType.L2.GOERLI]:
-          "0x0488c4091e5c57309f4acdce4f746898a82f50351d8c85278ad2e877c8c032bd",
+          "0x05e367ac160e5f90c5775089b582dfc987dd148a5a2f977c49def2a6644f724b",
       },
     },
   },

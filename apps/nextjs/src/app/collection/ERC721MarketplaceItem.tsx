@@ -10,7 +10,7 @@ interface Props {
   img?: string;
   name?: string;
   collection: string;
-  price?: number;
+  price?: bigint;
   usdPrice?: number | string;
   expires?: string;
   warning?: string;
@@ -34,7 +34,7 @@ const ERC721MarketplaceItem: FC<Props> = ({
   quantity,
 }) => {
   const royaltyPercent = royaltiesBps ? royaltiesBps / 100 : royaltiesBps;
-
+  console.log(typeof price);
   return (
     <div>
       <div className="justify-space-between flex items-center">
@@ -109,7 +109,7 @@ const ERC721MarketplaceItem: FC<Props> = ({
         </div>
         <div className="grid items-start justify-end gap-y-2">
           {price ? (
-            formatBigInt(price, 3)
+            formatBigInt(BigInt(price), 3)
               .toLocaleString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           ) : (

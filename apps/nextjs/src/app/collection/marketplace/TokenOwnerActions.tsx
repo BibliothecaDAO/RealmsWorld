@@ -10,6 +10,7 @@ import { formatEther } from "viem";
 import { Button, Dialog, DialogContent, DialogTrigger } from "@realms-world/ui";
 
 import { ListModal } from "./list/ListModal";
+import { ListingEditModal } from "./listEdit/ListingEditModal";
 
 //import { useToast } from "@realms-world/ui";;
 
@@ -82,7 +83,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
               <div className="flex gap-x-2">
                 <div className="flex max-w-[140px]">
                   <span className="truncate">
-                    {formatEther(BigInt(lowestPriceActiveListing.price))}
+                    {lowestPriceActiveListing.price}
                   </span>
                 </div>
                 <Lords className="w-8 fill-current pr-2" />
@@ -108,25 +109,48 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
           );
         })*/}
       </div>
-      <ListModal
-        token={token}
-        tokenId={tokenId}
-        collectionId={"test"}
-        trigger={
-          <Button onClick={() => onItemlist()} variant={"default"}>
-            <>
-              {isSubmitting ? (
-                <div className="flex items-center justify-center">
-                  <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                  <span>Please wait</span>
-                </div>
-              ) : (
-                <>{activeListings ? "New Listing" : "List Item"}</>
-              )}
-            </>
-          </Button>
-        }
-      />
+      {activeListings ? (
+        <ListingEditModal
+          token={token}
+          tokenId={tokenId}
+          listingId={lowestPriceActiveListing.id}
+          collectionId={"test"}
+          trigger={
+            <Button onClick={() => onItemlist()} variant={"default"}>
+              <>
+                {isSubmitting ? (
+                  <div className="flex items-center justify-center">
+                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                    <span>Please wait</span>
+                  </div>
+                ) : (
+                  "Edit Listing"
+                )}
+              </>
+            </Button>
+          }
+        />
+      ) : (
+        <ListModal
+          token={token}
+          tokenId={tokenId}
+          collectionId={"test"}
+          trigger={
+            <Button onClick={() => onItemlist()} variant={"default"}>
+              <>
+                {isSubmitting ? (
+                  <div className="flex items-center justify-center">
+                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                    <span>Please wait</span>
+                  </div>
+                ) : (
+                  "List Item"
+                )}
+              </>
+            </Button>
+          }
+        />
+      )}
     </div>
   );
 };

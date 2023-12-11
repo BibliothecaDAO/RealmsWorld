@@ -56,7 +56,7 @@ const ERC721LineItem: FC<ERC721LineItemProps> = ({
       <ERC721MarketplaceItem
         img={img}
         name={name}
-        price={Number(price)}
+        price={price}
         usdPrice={usdPrice}
         collection={collectionName}
         expires={expires}

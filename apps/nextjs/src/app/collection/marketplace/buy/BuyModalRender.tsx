@@ -1,8 +1,18 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { NETWORK_NAME } from "@/constants/env";
 import type { RouterOutputs } from "@/utils/api";
-import { useAccount } from "@starknet-react/core";
+import { getTokenContractAddresses } from "@/utils/utils";
+import { useAccount, useContractWrite } from "@starknet-react/core";
+import { uint256 } from "starknet";
 import { formatUnits } from "viem";
+
+import {
+  LORDS,
+  MarketplaceCollectionIds,
+  MarketplaceContract,
+} from "@realms-world/constants";
+import { ChainId } from "@realms-world/constants/src/Chains";
 
 type Item = any; //Parameters<ReservoirClientActions['buyToken']>['0']['items'][0]
 
@@ -113,6 +123,32 @@ export const BuyModalRender: FC<Props> = ({
 
   const addFundsLink = `https://app.avnu.fi/en?tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49&amount=0.001`;
 
+  const {
+    data,
+    write,
+    // isLoading: isTxSubmitting,
+  } = useContractWrite({
+    calls: [
+      {
+        contractAddress: LORDS[ChainId["SN_" + NETWORK_NAME]]
+          ?.address as `0x${string}`,
+        entrypoint: "approve",
+        calldata: [
+          MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
+          listing?.price * 10 ** 18,
+          0,
+        ],
+      },
+      {
+        contractAddress: MarketplaceContract[
+          ChainId["SN_" + NETWORK_NAME]
+        ] as `0x${string}`,
+        entrypoint: "accept",
+        calldata: [listing?.id],
+      },
+    ],
+  });
+
   const buyToken = useCallback(async () => {
     if (!tokenId || !collectionId) {
       const error = new Error("Missing tokenId or collectionId");
@@ -135,6 +171,8 @@ export const BuyModalRender: FC<Props> = ({
       item.token = `${contract}:${tokenId}`;
     }
     items.push(item);
+
+    write();
 
     /* client.actions
       .buyToken({
@@ -245,7 +283,7 @@ export const BuyModalRender: FC<Props> = ({
     const gasCost = 0n;
 
     if (orderId) {
-      total = BigInt(listing?.price || 0) * BigInt(quantity);
+      total = (listing?.price || 0) * quantity;
     } /*else if (token?.market?.floorAsk?.price) {
       total = BigInt(token.market.floorAsk.price?.amount?.raw || 0);
     }*/
