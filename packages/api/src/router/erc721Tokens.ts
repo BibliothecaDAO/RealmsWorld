@@ -96,7 +96,9 @@ export const erc721TokensRouter = createTRPCRouter({
           sql`upper_inf(_cursor)`,
         ),
         with: {
-          listings: true,
+          listings: {
+            where: (listings, { sql }) => sql`upper_inf(_cursor)`,
+          },
           transfers: true,
         },
       });

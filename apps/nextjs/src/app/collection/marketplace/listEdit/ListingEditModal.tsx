@@ -147,9 +147,9 @@ export function ListingEditModal({
         }, [transactionError]);
 
         const isListingAvailable =
-          listing && (listing.active === 1 || listing.status === 0) && !loading;
+          listing && (listing.active || listing.status === 0) && !loading;
 
-        const isListingEditable = listing && listing.active === 1 && !loading;
+        const isListingEditable = listing?.active && !loading;
 
         const minimumAmount = MINIMUM_AMOUNT;
         const maximumAmount = MAXIMUM_AMOUNT;
@@ -185,6 +185,8 @@ export function ListingEditModal({
               <DialogTitle>{copy.title}</DialogTitle>
               {!isListingAvailable && !loading && (
                 <div className="flex flex-col justify-center px-2 py-3">
+                  {isListingAvailable.toString()}
+
                   <h6 className="text-center">
                     Selected listing is no longer available
                   </h6>

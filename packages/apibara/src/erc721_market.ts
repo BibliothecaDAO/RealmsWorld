@@ -32,7 +32,7 @@ export const config: Config<Starknet, Postgres> = {
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
     tableName: "rw_erc721_market",
-    entityMode: false,
+    entityMode: true,
   },
 };
 
@@ -48,21 +48,9 @@ export default function transform({ header, events }: Block) {
     const tokenId = Number(BigInt(event.data[1]));
     const collectionId = Number(BigInt(event.data[2]));
     const price = Number(BigInt(event.data[3])).toFixed(0);
-    const type = Number(BigInt(event.data[6])); // TODO Rework for type
-    const orderId = Number(BigInt(event.data[7]));
+    const orderId = Number(BigInt(event.data[6]));
+    const type = Number(BigInt(event.data[7]));
 
-    /*return {
-      hash: receipt.transactionHash,
-      token_key:
-        whitelistedContracts[collectionId].toLowerCase() + ":" + tokenId,
-      token_id: tokenId,
-      collection_id: collectionId,
-      created_by: event.data[0],
-      price: Number(BigInt(event.data[3])).toFixed(0),
-      expiration: Number(BigInt(event.data[4])),
-      id: Number(BigInt(event.data[6])),
-      active: Boolean(BigInt(event.data[5])),
-    };*/
     switch (type) {
       case ActionType.Create:
         return {

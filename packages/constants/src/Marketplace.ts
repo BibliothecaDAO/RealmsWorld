@@ -9,5 +9,5 @@ export const MarketplaceCollectionIds = {
 export const MarketplaceContract: Record<number | string, string> = {
   [ChainId.SN_MAIN]: "",
   [ChainId.SN_GOERLI]:
-    "0x51e8ff6ca9f95c9d727c2ce51e2f19972f95619bcc72c7ee00b6831c7ef16f3",
+    "0x07724c0cc6d78237b0c6103eb545c4f8560389145d87e02057c093bc9c275cd0",
 };

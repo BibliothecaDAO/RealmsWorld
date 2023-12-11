@@ -107,7 +107,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
           );
         })*/}
       </div>
-      {activeListings ? (
+      {activeListings?.length ? (
         <ListingEditModal
           token={token}
           tokenId={tokenId}
