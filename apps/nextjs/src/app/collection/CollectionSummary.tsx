@@ -82,7 +82,7 @@ export default async function CollectionSummary({
   const comptatible_games = getGamesByContract(games, collection.id);
 
   return (
-    <div className="-mt-16 sm:mt-0 sm:flex">
+    <div className=" pt-10 sm:flex">
       <div className="flex-none self-center sm:pr-10">
         {collection.image && (
           <Image
@@ -137,7 +137,7 @@ export default async function CollectionSummary({
                 key={index}
                 className="border-black bg-black/40 px-4 py-2  lg:px-5"
               >
-                <div className="font-sans-serif mb-1 text-xs text-white/40">
+                <div className="mb-1 font-sans-serif text-xs text-white/40">
                   {statistic.title}
                 </div>
                 <div className="text-sm lg:text-xl">{statistic.value}</div>

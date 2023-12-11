@@ -32,7 +32,7 @@ h5 {
 }
 
 h6 {
-  @apply my-1 text-base sm:my-1 sm:text-lg md:my-2 md:text-xl;
+  @apply mt-2 text-base uppercase opacity-60 sm:text-xs;
 }
 
 .theme-shadow {

@@ -2,171 +2,107 @@ import Image from "next/image";
 import Link from "next/link";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import type { RouterOutputs } from "@/utils/api";
-import { findTokenName, shortenHex } from "@/utils/utils";
-
-import { Button } from "@realms-world/ui";
-
-// import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
+import { findTokenName } from "@/utils/utils";
 
 interface TokenCardProps {
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   layout?: "grid" | "list";
 }
 
-export const L2ERC721Card = (props: TokenCardProps) => {
-  const { token, layout } = props;
+const TokenAttributes = ({ token, attributeKeys }: any) => (
+  <table className="min-w-full text-xs">
+    <tbody>
+      {attributeKeys.map((key: any) => {
+        const attribute = token.metadata?.attributes?.find(
+          (trait: any) => trait.trait_type === key,
+        );
+        return attribute ? (
+          <tr className="hover:bright-yellow hover:bg-theme-gray" key={key}>
+            <td className="border px-2 py-1 uppercase">{key}:</td>
+            <td className="border px-2 py-1">{attribute.value}</td>
+          </tr>
+        ) : null;
+      })}
+    </tbody>
+  </table>
+);
 
-  const isGrid = layout == "grid";
-
-  const grid =
-    "bg-dark-green duration-300 transform border   hover:-translate-y-1";
-
-  const list =
-    "duration-300 transform border bg-dark-green  hover:-translate-y-1 flex w-full";
-
+export const L2ERC721Card = ({ token, layout = "grid" }: TokenCardProps) => {
+  const isGrid = layout === "grid";
   const imageSize = isGrid ? 800 : 60;
-
-  /* const { data, isLoading, error, refetch } = useContractRead({
-    address: ethAddress,
-    abi: compiledErc721.abi,
-    functionName: 'tokenURI',
-    args: [address],
-    watch: false
-  })
-
-  if(!token.name) {
-
-  }*/
   const tokenOwner = token.transfers[0]?.toAddress ?? token.minter;
-  const starkName = useStarkDisplayName(tokenOwner ?? undefined);
+  const starkName = useStarkDisplayName(tokenOwner || "");
 
-  function renderAttribute(token: typeof props.token, traitType: string) {
-    const attribute = token.metadata?.attributes.find(
-      (trait) => trait.trait_type === traitType,
-    );
-    return attribute ? (
-      <p className="capitalize">
-        {traitType}: {attribute.value}
-      </p>
-    ) : null;
-  }
+  const cardClassName = isGrid
+    ? "bg-dark-green duration-300 transform border border-2 hover:border-white"
+    : "duration-300 transform bg-dark-green flex w-full border-2 border-white hover:border-black";
+
+  const imageAlt = token.name || `beasts-${token.token_id}`;
 
   return (
-    <div className={isGrid ? grid : list}>
+    <div className={cardClassName}>
       <Link
         href={`/collection/${findTokenName(token.contract_address ?? "")}/${
           token.token_id
         }`}
       >
-        {token.image && (
-          <Image
-            src={token.image || ""}
-            alt={token.name || `beasts-${token.token_id}`}
-            className={`${isGrid ? "mx-auto " : ""}`}
-            width={imageSize}
-            height={imageSize}
-          />
-        )}
-      </Link>
-      {isGrid ? (
-        <div className={`w-full px-3 pb-2 pt-4`}>
-          <div className="flex w-full justify-between text-sm">
-            <span className="font-semibold">#{token.token_id} </span>
-            {/*token.market.floorAsk.source.icon && (
-              <Image
-                src={token.market.floorAsk.source.icon}
-                alt="An example image"
-                width={20}
-                height={20}
-                className=""
-              />
-            )*/}
-          </div>
-          <h6> {decodeURIComponent(token.name || "")}</h6>
-          <h6>{starkName}</h6>
-          {token.metadata?.attributes?.length && (
-            <>
-              {renderAttribute(token, "type")}
-              {renderAttribute(token, "tier")}
-              {renderAttribute(token, "level")}
-              {renderAttribute(token, "health")}
-            </>
+        <div className="relative">
+          {token.image && (
+            <Image
+              src={token.image}
+              alt={imageAlt}
+              className={isGrid ? "mx-auto" : ""}
+              width={imageSize}
+              height={imageSize}
+            />
           )}
-
-          <div className="my-3 h-6 text-sm">
-            {/*token.market.floorAsk.price &&
-              formatEther(
-                BigInt(token.market.floorAsk.price.amount.raw)
-              ).toLocaleLowerCase() + "ETH"*/}
-          </div>
-
-          <div className="flex justify-between space-x-2">
-            <Button
-              href={`/collection/${findTokenName(
-                token.contract_address ?? "",
-              )}/${token.token_id}`}
-              variant={"ghost"}
-              size={"xs"}
-              className="w-full"
-            >
-              view
-            </Button>
-          </div>
+          <span className="absolute bottom-3 right-3 border bg-black px-3 py-1 text-xs">
+            #{token.token_id}
+          </span>
         </div>
-      ) : (
-        <div className={`flex w-full justify-between overflow-y-auto px-3`}>
-          <div className="flex w-full justify-start">
-            <div className="w-96 self-center">
-              <div className="text-sm">#{token.token_id} </div>
-              <div className="self-center whitespace-nowrap ">
-                {decodeURIComponent(token.name || "")}
-              </div>
-            </div>
-            {token.metadata?.attributes?.length && (
-              <div className="hidden items-center space-x-6 self-center px-3 sm:flex">
-                {renderAttribute(token, "type")}
-                {renderAttribute(token, "tier")}
-                {renderAttribute(token, "level")}
-              </div>
-            )}
-            <div className=" ml-auto mr-4 self-center sm:mr-8">{starkName}</div>
 
-            {/*<h6 className="self-center ml-auto">
-              {token.market.floorAsk.price
-                ? formatEther(
-                    BigInt(token.market.floorAsk.price.amount.raw)
-                  ).toLocaleLowerCase()
-                : ""}{" "}
-              ETH
-            </h6>
-            <div className="self-center justify-between px-3 text-sm">
-              {token.market.floorAsk.source.icon && (
-                <Image
-                  src={token.market.floorAsk.source.icon}
-                  alt="An example image"
-                  width={20}
-                  height={20}
-                  className=""
-                />
-              )}
-              </div>*/}
-          </div>
-
-          <div className="flex justify-between self-center">
-            <Button
-              href={`/collection/beasts/${token.token_id}`}
-              variant={"outline"}
-              className="w-full"
-            >
-              view
-            </Button>
-            {/*<BuyButton
-              address={token.contract}
-              id={token.id}
-            />*/}
-          </div>
-        </div>
-      )}
+        <TokenDetails token={token} isGrid={isGrid} starkName={starkName} />
+      </Link>
     </div>
   );
 };
+
+const TokenDetails = ({ token, isGrid, starkName }: any) =>
+  isGrid ? (
+    <GridDetails token={token} starkName={starkName} isGrid />
+  ) : (
+    <ListDetails token={token} starkName={starkName} />
+  );
+
+const GridDetails = ({ token, starkName }: any) => (
+  <div className="w-full p-3">
+    <div className="flex justify-between border-b pb-2">
+      <span className="">{decodeURIComponent(token.name || "")}</span>
+    </div>
+
+    <TokenAttributes
+      token={token}
+      attributeKeys={["type", "tier", "level", "health"]}
+    />
+    <Price />
+    {/* <ViewButton token={token} isGrid /> */}
+    <div className="mt-3 text-xs opacity-70">{starkName}</div>
+  </div>
+);
+
+const Price = () => {
+  return (
+    <div className="flex justify-between">
+      <div>
+        <h6 className="uppercase">Price</h6>
+        <div>100</div>
+      </div>
+      <div>
+        <h6 className="uppercase">Last price</h6>
+        <div>100</div>
+      </div>
+    </div>
+  );
+};
+
+const ListDetails = ({ token, starkName }: any) => <div></div>;
