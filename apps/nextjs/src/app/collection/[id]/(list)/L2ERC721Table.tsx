@@ -20,8 +20,9 @@ export const L2ERC721Table = ({
 }) => {
   const { isGrid } = useUIContext();
   const grid =
-    "grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
+    "grid grid-cols-1 gap-6  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6";
   const list = "grid grid-cols-1 w-full";
+
   const ref = useRef(null);
 
   const searchParams = useSearchParams();
@@ -33,22 +34,22 @@ export const L2ERC721Table = ({
     contractAddress,
     direction: sortDirection,
   };
+
   if (ownerAddress) {
     filters.owner = ownerAddress;
   }
+
   const [erc721Tokens, { fetchNextPage, isLoading, hasNextPage, isFetching }] =
     api.erc721Tokens.all.useSuspenseInfiniteQuery(filters, {
       getNextPageParam(lastPage) {
         return lastPage.nextCursor;
       },
     });
+
   const isInView = useInView(ref, { once: false });
 
   useEffect(() => {
-    console.log("Element is in view: ", isInView);
-    if (isInView) {
-      fetchNextPage();
-    }
+    if (isInView) fetchNextPage();
   }, [fetchNextPage, isInView]);
 
   return (
@@ -67,17 +68,14 @@ export const L2ERC721Table = ({
               }),
             )
           : "No Assets Found"}
-      </div>
-      {!isLoading && hasNextPage && (
-        <div
-          ref={ref}
-          className="mt-6 grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
-        >
-          {Array.from({ length: 10 }).map((_, index) => (
+
+        {isFetching &&
+          hasNextPage &&
+          Array.from({ length: 3 }).map((_, index) => (
             <TokenCardSkeleton key={index} />
           ))}
-        </div>
-      )}
+      </div>
+      <div ref={ref} />
     </>
   );
 };

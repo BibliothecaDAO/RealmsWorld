@@ -29,17 +29,17 @@ export default async function L2CollectionSummary({
   //const comptatible_games = getGamesByContract(games, collection.id);
 
   return (
-    <div className="-mt-16 sm:mt-0 sm:flex">
+    <div className="sm:mt-10 sm:flex">
       <div className="flex-none self-center sm:pr-10">
         <Image
           src={`/collections/${collectionId}.svg`}
           alt={collectionId}
-          width={200}
-          height={200}
-          className="mx-auto border"
+          width={100}
+          height={100}
+          className="mx-auto rounded-full border"
         />
 
-        <div className="mx-auto my-4 flex justify-center space-x-2">
+        <div className="mx-auto flex justify-center space-x-2">
           {/*links.map((social, index) => {
             if (social.value)
               return (
@@ -52,7 +52,7 @@ export default async function L2CollectionSummary({
       </div>
 
       <div>
-        <div className="mb-3 flex flex-wrap space-x-2 text-xs">
+        <div className="mb-1 flex flex-wrap space-x-2 text-xs">
           {contract_details.map((detail, index) => {
             return (
               <div key={index} className="uppercase">

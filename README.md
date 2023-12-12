@@ -28,6 +28,10 @@ Realms.World is the information and activity hub for entrance to the Realms Auto
 - [`packages/subgraph`](https://bibliothecadao.github.io/subgraph) - The L1 Starknet Messaging Indexer for Bridge Transactions
 - [`packages/apibara`](https://bibliothecadao.github.io/starknet-indexer) = The L2 indexer for Bridge and NFT Transactions
 
+### Running the app
+
+This will launch storybook and the Realms.World client.
+
 ```bash
 bun i
 ```

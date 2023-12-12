@@ -59,17 +59,10 @@ export default function RootLayout({
         } as React.CSSProperties
       }
     >
-      <div
-        // initial={{ opacity: 0.2 }}
-        // animate={{ opacity: 1 }}
-        //className="-mt-24 h-96 w-full"
-        className="mask-transparent h-96 w-full before:bg-[url:var(--image-url)] before:bg-cover before:bg-center before:bg-no-repeat"
-      />
-
-      <div className="relative -mt-56 flex h-full lg:pl-32">
+      <div className="relative flex h-full lg:pl-32">
         <div className="flex-grow">
           <CollectionSummary collectionId={params.id} />
-          <div className="mb-3 flex justify-center gap-4 overflow-x-auto border-b py-4">
+          <div className="mb-3 flex justify-center gap-4 overflow-x-auto border-b py-1  ">
             {tabs.map((tab) => (
               <NavLink
                 key={tab.name}
@@ -83,7 +76,7 @@ export default function RootLayout({
               </NavLink>
             ))}
           </div>
-          <div className=" p-4 sm:p-8">{children}</div>
+          <div className="p-2 ">{children}</div>
         </div>
       </div>
     </div>

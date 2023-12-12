@@ -10,7 +10,7 @@ export const CollectionCard = ({ collection }: Props) => {
   return (
     <Link
       href={`/collection/${collection.link ?? "realms"}`} //TODO make dynamic depending on collection url (currently not passed from reservoir collections query)
-      className="hover:bg-medium-dark-green bg-dark-green group flex border p-5 duration-300 hover:opacity-80"
+      className="group flex border bg-dark-green p-5 duration-300 hover:bg-medium-dark-green hover:opacity-80"
     >
       {collection.image && (
         <Image

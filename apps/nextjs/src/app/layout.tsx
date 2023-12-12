@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bai_Jamjuree, Karla } from "next/font/google";
+import { Bai_Jamjuree, Inconsolata, Karla, Silkscreen } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
 
 import { Provider } from "./providers/providers";
@@ -14,14 +14,14 @@ import { TRPCReactProvider } from "./providers/TRPCProvider";
 import { UIContextProvider } from "./providers/UIProvider";
 import { WalletsProvider } from "./providers/WalletsProvider";
 
-const baiJamjuree = Bai_Jamjuree({
+const baiJamjuree = Silkscreen({
   subsets: ["latin"],
   variable: "--font-bai-jamjuree",
-  weight: ["500", "600", "700"],
+  weight: ["400"],
   display: "swap",
 });
 
-const karla = Karla({
+const karla = Inconsolata({
   subsets: ["latin"],
   variable: "--font-karla",
   weight: "800",

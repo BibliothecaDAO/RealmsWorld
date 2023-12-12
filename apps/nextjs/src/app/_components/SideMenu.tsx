@@ -70,13 +70,13 @@ const Sidebar = () => {
     <div
       className={`${
         isSidebarOpen ? "bg-dark-green" : "hidden"
-      } z-100 bg-dark-green group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col border-[3px] transition-all duration-500 md:flex md:w-[102px] md:hover:w-60`}
+      } z-100 group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col border-r-[3px] bg-dark-green transition-all duration-500 md:flex md:w-[102px] md:hover:w-60`}
     >
       <div className="absolute mx-4">
         <SideHeaderImg className="w-full opacity-0 group-hover:opacity-100" />
       </div>
       <Link
-        className="font-sans-serif absolute z-20 mx-auto flex w-full justify-center p-4 text-xl font-semibold group-hover:pt-2.5 sm:text-2xl "
+        className="absolute z-20 mx-auto flex w-full justify-center p-4 font-sans-serif text-xl font-semibold group-hover:pt-2.5 sm:text-2xl "
         href="/"
         onClick={toggleSidebar}
       >
@@ -84,7 +84,7 @@ const Sidebar = () => {
         <RWLogo className="absolute w-[152px] fill-white opacity-0 transition-all duration-500 group-hover:opacity-100" />
       </Link>
       <div className="mt-16 h-full w-full border-t-[3px] pb-3">
-        <div className="group-hover:!border-medium-dark-green relative z-10 m-2 mt-0 h-full border-[3px] border-t-0 border-solid border-transparent">
+        <div className="relative z-10 m-2 mt-0 h-full border-[3px] border-t-0 border-solid border-transparent group-hover:!border-medium-dark-green">
           <div className="relative flex h-full flex-col items-center">
             <ScrollArea className="w-full">
               <div className="relative z-[2] inline-flex w-full flex-[0_0_auto] flex-col items-start justify-center gap-[17px] px-4 md:mb-6 md:mt-10">

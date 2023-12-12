@@ -39,13 +39,13 @@ export const TokenInformation = ({
             alt={name ?? "token"}
             width={1000}
             height={1000}
-            className={`mx-auto border ${isBeasts && "my-auto max-w-[350px]"}`}
+            className={`mx-auto border`}
           />
         ) : (
           <ContractImage tokenId={tokenId} collectionId={collectionId} />
         )}
         {attributes?.length && (
-          <div className="my-2 grid grid-cols-2 gap-2">
+          <div className="my-2 grid grid-cols-3 gap-2">
             {attributes.map((attribute: Attributes, index) => (
               <TokenAttribute
                 key={index}
