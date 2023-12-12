@@ -1,6 +1,7 @@
 import React from "react";
 import CollectionSummary from "@/app/collection/CollectionSummary";
 import type { erc721Tokens } from "@/constants";
+import { NETWORK_NAME } from "@/constants/env";
 import { getTokenContractAddresses } from "@/utils/utils";
 
 //import { Button } from "@realms-world/ui";
@@ -27,7 +28,7 @@ export default function RootLayout({
     backgroundRepeat: "no-repeat",
   };
 
-  const isMintable = false; // params.id == "goldenToken";
+  const isMintable = NETWORK_NAME == "GOERLI" && params.id == "goldenToken";
   const tabs = [
     {
       name: "Trade",

@@ -5,6 +5,7 @@ import Starknet from "@/icons/starknet.svg";
 import { formatBigInt } from "@/utils/utils";
 
 import { Tooltip, TooltipProvider } from "@realms-world/ui";
+import { formatBN } from "@realms-world/utils";
 
 interface Props {
   img?: string;
@@ -109,9 +110,7 @@ const ERC721MarketplaceItem: FC<Props> = ({
         </div>
         <div className="grid items-start justify-end gap-y-2">
           {price ? (
-            formatBigInt(BigInt(price), 3)
-              .toLocaleString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            formatBN(price, 4, 18)
           ) : (
             <span className={isUnavailable ? "subtle" : "base"}>--</span>
           )}

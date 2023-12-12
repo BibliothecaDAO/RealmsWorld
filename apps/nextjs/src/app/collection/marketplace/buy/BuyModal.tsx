@@ -34,22 +34,11 @@ import {
 import { formatNumber } from "@realms-world/utils";
 
 import ERC721LineItem from "../../ERC721LineItem";
-// import TokenLineItem from '../TokenLineItem'
 import type { BuyModalStepData } from "./BuyModalRender";
 import { BuyModalRender, BuyStep } from "./BuyModalRender";
 
-//import { Execute, ReservoirWallet } from '@reservoir0x/reservoir-sdk'
-//import ProgressBar from '../ProgressBar'
-//import QuantitySelector from '../QuantitySelector'
-//  import { ProviderOptionsContext } from '../../ReservoirKitProvider'
-//import { truncateAddress } from '../../lib/truncate'
-//import { SelectPaymentToken } from '../SelectPaymentToken'
-// import { WalletClient } from 'viem'
-//import getChainBlockExplorerUrl from '../../lib/getChainBlockExplorerUrl'
-//import { Dialog } from '../../primitives/Dialog'
-
 interface PurchaseData {
-  tokenId?: string;
+  tokenId?: number;
   collectionId?: string;
   maker?: string;
   steps?: any; //Execute['steps']
@@ -72,7 +61,6 @@ const ModalCopy = {
 
 interface Props {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>];
-  tokenId?: string;
   token?: RouterOutputs["erc721Tokens"]["byId"];
   collectionId?: string;
   defaultQuantity?: number;
@@ -117,7 +105,6 @@ export function BuyModal({
   openState,
   trigger,
   token,
-  tokenId,
   collectionId,
   orderId,
   normalizeRoyalties,
@@ -139,7 +126,6 @@ export function BuyModal({
       token={token}
       open={open}
       defaultQuantity={defaultQuantity}
-      tokenId={tokenId}
       collectionId={collectionId}
       orderId={orderId}
       normalizeRoyalties={normalizeRoyalties}
@@ -173,7 +159,7 @@ export function BuyModal({
         useEffect(() => {
           if (buyStep === BuyStep.Complete && onPurchaseComplete) {
             const data: PurchaseData = {
-              tokenId: tokenId,
+              tokenId: token?.token_id,
               collectionId: collectionId,
               maker: address,
             };
@@ -187,7 +173,7 @@ export function BuyModal({
         useEffect(() => {
           if (transactionError && onPurchaseError) {
             const data: PurchaseData = {
-              tokenId: tokenId,
+              tokenId: token?.token_id,
               collectionId: collectionId,
               maker: address,
             };
@@ -214,7 +200,7 @@ export function BuyModal({
 
         const price =
           token?.listings[0]?.price ??
-          0n; /*|| BigInt(token?.token?.lastSale?.price?.amount?.raw || 0)*/
+          0; /*|| BigInt(token?.token?.lastSale?.price?.amount?.raw || 0)*/
 
         return (
           <Dialog
@@ -238,7 +224,7 @@ export function BuyModal({
             onOpenChange={(open) => {
               if (!open && onClose) {
                 const data: PurchaseData = {
-                  tokenId: tokenId,
+                  tokenId: token?.token_id,
                   collectionId: collectionId,
                   maker: address,
                 };

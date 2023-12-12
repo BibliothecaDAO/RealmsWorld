@@ -47,7 +47,7 @@ export default function transform({ header, events }: Block) {
   return events?.flatMap(({ event, receipt }) => {
     const tokenId = Number(BigInt(event.data[1]));
     const collectionId = Number(BigInt(event.data[2]));
-    const price = Number(BigInt(event.data[3])).toFixed(0);
+    const price = formatUnits(BigInt(event.data[3]).toString(), 18);
     const orderId = Number(BigInt(event.data[6]));
     const type = Number(BigInt(event.data[7]));
 

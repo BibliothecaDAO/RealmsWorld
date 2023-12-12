@@ -146,10 +146,10 @@ export const ListModalRenderer: FC<Props> = ({
       {
         contractAddress: getTokenContractAddresses("goldenToken")
           .L2 as `0x${string}`,
-        entrypoint: "set_approval_for_all",
+        entrypoint: "approve",
         calldata: [
           MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
-          1,
+          price,
         ],
       },
       {

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { bigint, boolean, numeric, text } from "drizzle-orm/pg-core";
+import { boolean, integer, numeric, text } from "drizzle-orm/pg-core";
 
 import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
@@ -7,14 +7,14 @@ import { erc721Tokens } from "./erc721_tokens";
 
 export const erc721MarketListing = pgSqlTable("erc721_market", {
   _cursor: int8range("_cursor"),
-  id: bigint("id", { mode: "number" }),
+  id: integer("id"),
   hash: text("hash"),
   token_key: text("token_key"),
-  token_id: numeric("token_id"),
-  collection_id: numeric("collection_id"),
+  token_id: integer("token_id"),
+  collection_id: integer("collection_id"),
   created_by: text("created_by"),
-  price: bigint("price", { mode: "number" }),
-  expiration: numeric("expiration"),
+  price: numeric("price"),
+  expiration: integer("expiration"),
   active: boolean("active"),
 });
 

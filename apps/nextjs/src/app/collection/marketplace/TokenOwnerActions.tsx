@@ -4,11 +4,12 @@ import React, { useMemo } from "react";
 import Lords from "@/icons/lords.svg";
 import type { RouterOutputs } from "@/utils/api";
 import { useContractWrite } from "@starknet-react/core";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Trash, Trash2 } from "lucide-react";
 import { formatEther } from "viem";
 
 import { Button, Dialog, DialogContent, DialogTrigger } from "@realms-world/ui";
 
+import { ListCancelModal } from "./cancel/ListCancelModal";
 import { ListModal } from "./list/ListModal";
 import { ListingEditModal } from "./listEdit/ListingEditModal";
 
@@ -37,7 +38,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
       /*await listItem({
         tokenId: parseInt(tokenId),
         tokenOwnerAddress,
-        contractAddress
+        <contractAddress2 className="02"></contractAddress2>
       });
       toast({
         title: "Order placed",
@@ -71,7 +72,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
           <>
             {lowestPriceActiveListing.expiration &&
               new Date(
-                parseInt(lowestPriceActiveListing?.expiration) * 1000,
+                lowestPriceActiveListing?.expiration * 1000,
               ).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "short",
@@ -108,26 +109,36 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
         })*/}
       </div>
       {activeListings?.length ? (
-        <ListingEditModal
-          token={token}
-          tokenId={tokenId}
-          listingId={lowestPriceActiveListing?.id}
-          collectionId={"test"}
-          trigger={
-            <Button onClick={() => onItemlist()} variant={"default"}>
-              <>
-                {isSubmitting ? (
-                  <div className="flex items-center justify-center">
-                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                    <span>Please wait</span>
-                  </div>
-                ) : (
-                  "Edit Listing"
-                )}
-              </>
-            </Button>
-          }
-        />
+        <div className="flex gap-x-3">
+          <ListingEditModal
+            token={token}
+            tokenId={tokenId}
+            listingId={lowestPriceActiveListing?.id}
+            collectionId={"test"}
+            trigger={
+              <Button onClick={() => onItemlist()} variant={"default"}>
+                <>
+                  {isSubmitting ? (
+                    <div className="flex items-center justify-center">
+                      <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                      <span>Please wait</span>
+                    </div>
+                  ) : (
+                    "Edit Listing"
+                  )}
+                </>
+              </Button>
+            }
+          />
+          <ListCancelModal
+            token={token}
+            trigger={
+              <Button onClick={() => onItemlist()} variant={"outline"}>
+                <Trash2 className="h-auto w-7" />
+              </Button>
+            }
+          />
+        </div>
       ) : (
         <ListModal
           token={token}

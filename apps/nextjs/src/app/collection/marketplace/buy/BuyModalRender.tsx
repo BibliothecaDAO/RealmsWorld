@@ -283,7 +283,7 @@ export const BuyModalRender: FC<Props> = ({
     const gasCost = 0n;
 
     if (orderId) {
-      total = (listing?.price || 0) * quantity;
+      total = (parseInt(listing?.price) || 0) * quantity;
     } /*else if (token?.market?.floorAsk?.price) {
       total = BigInt(token.market.floorAsk.price?.amount?.raw || 0);
     }*/

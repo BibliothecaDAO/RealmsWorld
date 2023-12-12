@@ -17,8 +17,6 @@ import { ChainId } from "@realms-world/constants/src/Chains";
 import expirationOptions from "../defaultExpiration";
 import type { Listing } from "../list/ListModalRender";
 
-type Exchange = NonNullable<Marketplace["exchanges"]>["string"];
-
 export enum EditListingStep {
   Edit,
   Approving,
@@ -37,7 +35,7 @@ interface ChildrenProps {
   listing?: any; ///NonNullable<ReturnType<typeof useListings>["data"]>[0];
   tokenId?: string;
   contract?: string;
-  price: bigint | undefined;
+  price: number;
   collection?: any;
   // quantityAvailable: number;
   //quantity: number;
@@ -50,7 +48,7 @@ interface ChildrenProps {
   //usdPrice: number;
   steps: any; //Execute["steps"] | null;
   stepData: EditListingStepData | null;
-  setPrice: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setPrice: React.Dispatch<React.SetStateAction<number>>;
   //setQuantity: React.Dispatch<React.SetStateAction<number>>;
   setExpirationOption: React.Dispatch<React.SetStateAction<ExpirationOption>>;
   setEditListingStep: React.Dispatch<React.SetStateAction<EditListingStep>>;
@@ -84,15 +82,15 @@ export const ListingEditModalRender: FC<Props> = ({
   const [stepData, setStepData] = useState<EditListingStepData | null>(null);
   const [steps, setSteps] = useState<Execute["steps"] | null>(null);
 
-  const [price, setPrice] = useState<number | undefined>(0);
+  const [price, setPrice] = useState<number>(0);
   const [quantity, setQuantity] = useState(1);
 
   const listing = token?.listings?.[0] ?? undefined;
-  const contract = listing?.tokenSetId?.split(":")[1];
+  const contract = listing?.token_key?.split(":")[1];
 
   useEffect(() => {
     if (listing?.price) {
-      setPrice(listing?.price);
+      setPrice(parseInt(listing?.price));
     }
   }, [listing?.price]);
 
@@ -138,7 +136,7 @@ export const ListingEditModalRender: FC<Props> = ({
           ChainId["SN_" + NETWORK_NAME]
         ] as `0x${string}`,
         entrypoint: "edit",
-        calldata: [listingId, price],
+        calldata: [listingId, price.toString()],
       },
     ],
   });
@@ -167,7 +165,7 @@ export const ListingEditModalRender: FC<Props> = ({
 
     const listing: Listing = {
       token: `${contract}:${tokenId}`,
-      weiPrice: (parseUnits(`${price!}`, 18) * BigInt(quantity)).toString(),
+      weiPrice: (parseUnits(`${price}`, 18) * BigInt(quantity)).toString(),
     };
 
     if (quantity > 1) {

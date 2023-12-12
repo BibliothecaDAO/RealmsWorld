@@ -116,10 +116,10 @@ export function ListingEditModal({
         editListing,
       }) => {
         const expires = listing?.expiration;
+        console.log(price);
+        console.log(typeof price);
 
-        const profit =
-          (BigInt(10000 - (royaltyBps || 0)) * (BigInt(price) ?? BigInt(0))) /
-          BigInt(1000);
+        const profit = ((10000 - (royaltyBps || 0)) * (price ?? 0)) / 1000;
 
         const updatedTotalUsd = profit; /*usdPrice*/
 
@@ -185,8 +185,6 @@ export function ListingEditModal({
               <DialogTitle>{copy.title}</DialogTitle>
               {!isListingAvailable && !loading && (
                 <div className="flex flex-col justify-center px-2 py-3">
-                  {isListingAvailable.toString()}
-
                   <h6 className="text-center">
                     Selected listing is no longer available
                   </h6>
@@ -261,16 +259,16 @@ export function ListingEditModal({
                         <div className="relative w-full">
                           <Input
                             type="number"
-                            value={price}
+                            value={price?.toString()}
                             //collection={collection}
                             //usdPrice={usdPrice}
                             //quantity={quantity}
                             placeholder={"Enter a listing price"}
                             onChange={(e) => {
                               if (e.target.value === "") {
-                                setPrice(undefined);
+                                setPrice(0);
                               } else {
-                                setPrice(Number(e.target.value));
+                                setPrice(parseInt(e.target.value));
                               }
                             }}
                             className={"h-12 w-full"}
@@ -324,6 +322,7 @@ export function ListingEditModal({
                       <div className="my-2">
                         <div className="mb-2">Expiration Date</div>
                         <Select
+                          disabled={true}
                           value={expirationOption?.text || ""}
                           onValueChange={(value: string) => {
                             const option = expirationOptions.find(
@@ -336,10 +335,10 @@ export function ListingEditModal({
                         >
                           <SelectTrigger className="h-12 w-[180px]">
                             <SelectValue
-                              aria-label={expirationOption.text}
+                              aria-label={expirationOption?.text}
                               placeholder="Select an expiry"
                             >
-                              {expirationOption.text}
+                              {expirationOption?.text}
                             </SelectValue>
                           </SelectTrigger>
                           <SelectContent>
@@ -382,8 +381,6 @@ export function ListingEditModal({
                   <div className=" border p-2">
                     <ERC721LineItem
                       tokenDetails={token}
-                      img={token?.image}
-                      name={token?.name}
                       price={profit}
                       //usdPrice={updatedTotalUsd.toString()}
                       collection={collection?.name || ""}
