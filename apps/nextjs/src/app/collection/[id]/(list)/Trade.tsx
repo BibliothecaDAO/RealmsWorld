@@ -27,8 +27,8 @@ export async function Trade({
       <div className="w-full">
         <Suspense
           fallback={
-            <div className="grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-              {Array.from({ length: 10 }).map((_, index) => (
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
+              {Array.from({ length: 3 }).map((_, index) => (
                 <TokenCardSkeleton key={index} />
               ))}
             </div>
@@ -56,6 +56,7 @@ export async function Trade({
   if (!tokens) {
     return <div>Collection Not Found</div>;
   }
+
   return (
     <>
       <div className="mb-3 flex w-full justify-between">
