@@ -71,7 +71,7 @@ interface Props {
   trigger?: React.ReactNode;
 }
 
-const MINIMUM_AMOUNT = 0.000001;
+const MINIMUM_AMOUNT = 0.000000000000000001;
 const MAXIMUM_AMOUNT = Infinity;
 
 export function ListingEditModal({
@@ -116,8 +116,6 @@ export function ListingEditModal({
         editListing,
       }) => {
         const expires = listing?.expiration;
-        console.log(price);
-        console.log(typeof price);
 
         const profit = ((10000 - (royaltyBps || 0)) * (price ?? 0)) / 1000;
 

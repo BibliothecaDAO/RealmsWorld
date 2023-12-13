@@ -136,7 +136,7 @@ export const ListingEditModalRender: FC<Props> = ({
           ChainId["SN_" + NETWORK_NAME]
         ] as `0x${string}`,
         entrypoint: "edit",
-        calldata: [listingId, price.toString()],
+        calldata: [listingId, parseUnits(`${price}`, 18).toString()],
       },
     ],
   });

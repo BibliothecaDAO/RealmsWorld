@@ -57,7 +57,7 @@ type Props = Parameters<typeof Dialog> & {
   trigger?: React.ReactNode;
 };
 
-const MINIMUM_AMOUNT = 0.000001;
+const MINIMUM_AMOUNT = 0.000000000000001;
 const MAXIMUM_AMOUNT = Infinity;
 
 export function ListModal({

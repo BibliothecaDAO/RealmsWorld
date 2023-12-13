@@ -49,11 +49,11 @@ interface ChildrenProps {
   listingData: ListingData[];
   transactionError?: Error | null;
   stepData: ListModalStepData | null;
-  price: string;
+  price: number;
   royaltyBps?: number;
   setListStep: React.Dispatch<React.SetStateAction<ListStep>>;
   setExpirationOption: React.Dispatch<React.SetStateAction<ExpirationOption>>;
-  setPrice: React.Dispatch<React.SetStateAction<string>>;
+  setPrice: React.Dispatch<React.SetStateAction<number>>;
   listToken: () => void;
 }
 
@@ -86,7 +86,7 @@ export const ListModalRenderer: FC<Props> = ({
   const [listingData, setListingData] = useState<ListingData[]>([]);
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [stepData, setStepData] = useState<ListModalStepData | null>(null);
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState<number>(0);
   const [quantity, setQuantity] = useState(1);
   const contract = collectionId ? collectionId?.split(":")[0] : undefined;
   const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
@@ -146,10 +146,10 @@ export const ListModalRenderer: FC<Props> = ({
       {
         contractAddress: getTokenContractAddresses("goldenToken")
           .L2 as `0x${string}`,
-        entrypoint: "approve",
+        entrypoint: "set_approval_for_all",
         calldata: [
           MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
-          price,
+          1,
         ],
       },
       {
@@ -160,7 +160,7 @@ export const ListModalRenderer: FC<Props> = ({
         calldata: [
           tokenId as `0x${string}`,
           MarketplaceCollectionIds["Golden Token"],
-          price,
+          parseUnits(`${price}`, 18).toString(),
           expirationTime,
         ],
       },
