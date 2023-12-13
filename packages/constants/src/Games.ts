@@ -241,4 +241,26 @@ export const games: Game[] = [
     tokens: [],
     screenshotLength: 4,
   },
+  {
+    name: "Call the Banners",
+    id: "call-the-banners",
+    developer: "Banners (for Adventurers)",
+    genres: ["Social", "Strategy", "PvP"],
+    color: "#f5f5f5",
+    status: "development",
+    description: "Medieval Castle Siege Game",
+    longform:
+      "Call the Banners is a game where mercenaries navigate blurred lines between loyalty and betrayal in a medieval siege. Choose a side, manage resources, and strategize to destroy the opposing castle, with victory bringing rewards. Which side will you lend your sword?",
+    links: {
+      discord: "https://discord.gg/8WybFeKn",
+      twitter: "https://twitter.com/callthe_banners",
+      homepage: "https://www.bannersnft.com/",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "TBD",
+    chains: [ChainId.SN_MAIN],
+    collections: [],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 1,
+  }
 ];
