@@ -239,5 +239,6 @@ export const games: Game[] = [
     chains: [ChainId.SN_GOERLI],
     collections: [],
     tokens: [],
+    screenshotLength: 4,
   },
 ];
