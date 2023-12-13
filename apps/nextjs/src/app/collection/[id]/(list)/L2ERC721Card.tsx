@@ -46,7 +46,7 @@ export const L2ERC721Card = ({
           token={token}
           isGrid={isGrid}
           starkName={useStarkDisplayName(
-            token.transfers[0]?.toAddress ?? token.minter ?? "",
+            token.transfers?.[0]?.toAddress ?? token.minter ?? "",
           )}
         />
       </Link>

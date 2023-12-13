@@ -4,7 +4,11 @@ import { NETWORK_NAME } from "@/constants/env";
 import type { ExpirationOption } from "@/types";
 import type { RouterOutputs } from "@/utils/api";
 import { getTokenContractAddresses } from "@/utils/utils";
-import { useAccount, useContractWrite } from "@starknet-react/core";
+import {
+  useAccount,
+  useContractWrite,
+  useWaitForTransaction,
+} from "@starknet-react/core";
 import dayjs from "dayjs";
 import { formatUnits, parseUnits, zeroAddress } from "viem";
 
@@ -127,7 +131,8 @@ export const ListingEditModalRender: FC<Props> = ({
 
   const {
     data,
-    write,
+    writeAsync,
+    error,
     // isLoading: isTxSubmitting,
   } = useContractWrite({
     calls: [
@@ -140,6 +145,17 @@ export const ListingEditModalRender: FC<Props> = ({
       },
     ],
   });
+  const { data: transactionData, error: txErrror } = useWaitForTransaction({
+    hash: data?.transaction_hash,
+    watch: true,
+  });
+  useEffect(() => {
+    if (data?.transaction_hash) {
+      if (transactionData?.execution_status == "SUCCEEDED") {
+        setEditListingStep(EditListingStep.Complete);
+      }
+    }
+  }, [data, transactionData, transactionError]);
 
   const editListing = useCallback(async () => {
     if (!address) {
@@ -177,7 +193,7 @@ export const ListingEditModalRender: FC<Props> = ({
     }
 
     setEditListingStep(EditListingStep.Approving);
-    write();
+    await writeAsync();
 
     /*client.actions
       .listToken({

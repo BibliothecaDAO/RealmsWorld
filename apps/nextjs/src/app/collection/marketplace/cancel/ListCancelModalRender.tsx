@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
 import { NETWORK_NAME } from "@/constants/env";
-import { useContractWrite } from "@starknet-react/core";
+import { useContractWrite, useWaitForTransaction } from "@starknet-react/core";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
@@ -10,7 +10,7 @@ import {
 } from "@realms-world/constants";
 import { ChainId } from "@realms-world/constants/src/Chains";
 
-import { useCoinConversion } from "../../hooks";
+//import { useCoinConversion } from "../../hooks";
 
 export enum CancelStep {
   Cancel,
@@ -21,8 +21,8 @@ export enum CancelStep {
 export interface CancelListingStepData {
   totalSteps: number;
   stepProgress: number;
-  currentStep: any; //Execute['steps'][0]
-  currentStepItem: any; // NonNullable<Execute['steps'][0]['items']>[0]
+  currentStep: any;
+  currentStepItem: any;
 }
 
 interface ChildrenProps {
@@ -36,7 +36,7 @@ interface ChildrenProps {
   usdPrice: number*/
   blockExplorerBaseUrl: string;
   blockExplorerName: string;
-  steps: any; // Execute['steps'] | null
+  steps: any;
   stepData: CancelListingStepData | null;
   setCancelStep: React.Dispatch<React.SetStateAction<CancelStep>>;
   cancelOrder: () => void;
@@ -58,7 +58,7 @@ export const ListCancelModalRender: FC<Props> = ({
   const [cancelStep, setCancelStep] = useState<CancelStep>(CancelStep.Cancel);
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [stepData, setStepData] = useState<CancelListingStepData | null>(null);
-  const [steps, setSteps] = useState<any /*Execute['steps'] | null*/>(null);
+  const [steps, setSteps] = useState<any>(null);
 
   const blockExplorerBaseUrl = "https://etherscan.io";
 
@@ -75,7 +75,7 @@ export const ListCancelModalRender: FC<Props> = ({
 
   const {
     data,
-    write,
+    writeAsync,
     // isLoading: isTxSubmitting,
   } = useContractWrite({
     calls: [
@@ -88,7 +88,17 @@ export const ListCancelModalRender: FC<Props> = ({
       },
     ],
   });
-
+  const { data: transactionData, error: txErrror } = useWaitForTransaction({
+    hash: data?.transaction_hash,
+    watch: true,
+  });
+  useEffect(() => {
+    if (data?.transaction_hash) {
+      if (transactionData?.execution_status == "SUCCEEDED") {
+        setCancelStep(CancelStep.Complete);
+      }
+    }
+  }, [data, transactionData, transactionError]);
   const cancelOrder = useCallback(async () => {
     if (!listing) {
       const error = new Error("Missing list id to cancel");
@@ -98,66 +108,7 @@ export const ListCancelModalRender: FC<Props> = ({
 
     setCancelStep(CancelStep.Approving);
 
-    write();
-
-    /*client.actions
-      .cancelOrder({
-        chainId: rendererChain?.id,
-        ids: [listingId],
-        wallet,
-        onProgress: (steps: Execute["steps"]) => {
-          if (!steps) {
-            return;
-          }
-          setSteps(steps);
-
-          const executableSteps = steps.filter(
-            (step) => step.items && step.items.length > 0,
-          );
-
-          const stepCount = executableSteps.length;
-
-          let currentStepItem:
-            | NonNullable<Execute["steps"][0]["items"]>[0]
-            | undefined;
-
-          const currentStepIndex = executableSteps.findIndex((step) => {
-            currentStepItem = step.items?.find(
-              (item) => item.status === "incomplete",
-            );
-            return currentStepItem;
-          });
-
-          const currentStep =
-            currentStepIndex > -1
-              ? executableSteps[currentStepIndex]
-              : executableSteps[stepCount - 1];
-
-          if (currentStepItem) {
-            setStepData({
-              totalSteps: stepCount,
-              stepProgress: currentStepIndex,
-              currentStep,
-              currentStepItem,
-            });
-          } else if (
-            steps.every(
-              (step) =>
-                !step.items ||
-                step.items.length == 0 ||
-                step.items?.every((item) => item.status === "complete"),
-            )
-          ) {
-            setCancelStep(CancelStep.Complete);
-          }
-        },
-      })
-      .catch((error: Error) => {
-        setTransactionError(error);
-        setCancelStep(CancelStep.Cancel);
-        setStepData(null);
-        setSteps(null);
-      });*/
+    await writeAsync();
   }, [listing]);
 
   useEffect(() => {

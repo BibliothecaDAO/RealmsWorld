@@ -12,6 +12,7 @@ import { Loader } from "lucide-react";
 //import { formatUnits, zeroAddress } from "viem";
 
 import {
+  Alert,
   Button,
   DatePicker,
   Dialog,
@@ -26,6 +27,8 @@ import {
 } from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
+import Earnings from "./Earnings";
+import ListItem from "./ListItem";
 import type { ListingData } from "./ListModalRender";
 import {
   ListModalRenderer,
@@ -145,7 +148,7 @@ export function ListModal({
           Number(price) <= maximumAmount &&
           Number(price) >= minimumAmount;
 
-        const canPurchase = price !== "" && withinPricingBounds;
+        const canPurchase = price !== 0 && withinPricingBounds;
 
         const handleSetFloor = () => {
           // If currency matches floor ask currency, use decimal floor price
@@ -212,12 +215,8 @@ export function ListModal({
               )}
               {!loading && listStep == ListStep.SetPrice && (
                 <div className="flex flex-col">
-                  {/*transactionError && <ErrorWell error={transactionError} />}
-                <ListCheckout
-                  collection={collection}
-                  token={token}
-                  chain={modalChain}
-            />*/}
+                  {transactionError && <Alert message={transactionError} />}
+                  <ListItem collection={collection} token={token} />
                   <div className="flex flex-col items-center">
                     <div className="flex w-full flex-col">
                       <span className="mb-1 text-lg">Enter a price</span>
@@ -227,7 +226,7 @@ export function ListModal({
                             type="number"
                             value={price}
                             onChange={(e) => {
-                              setPrice(e.target.value);
+                              setPrice(parseInt(e.target.value));
                             }}
                             placeholder="Amount"
                             className={"h-12 w-full"}
@@ -354,25 +353,23 @@ export function ListModal({
                         />
                       </div>
                     </div>
-                    {/*TODO <PriceBreakdown
-                    price={price}
-                    usdPrice={usdPrice}
-                    currency={currency}
-                    quantity={quantity}
-                    collection={collection}
-                    marketplace={marketplace}
-                  />
-                      </div>*/}
-                    <div className="w-full">
-                      <Button
-                        disabled={canPurchase ? false : true}
-                        size={"lg"}
-                        onClick={listToken}
-                        className="w-full"
-                      >
-                        {copy.ctaList}
-                      </Button>
-                    </div>
+                    <Earnings
+                      price={price}
+                      //usdPrice={usdPrice}
+                      royaltiesBps={500} //TODO make dynamic
+                      quantity={1}
+                      collection={collection}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <Button
+                      disabled={canPurchase ? false : true}
+                      size={"lg"}
+                      onClick={listToken}
+                      className="w-full"
+                    >
+                      {copy.ctaList}
+                    </Button>
                   </div>
                 </div>
               )}

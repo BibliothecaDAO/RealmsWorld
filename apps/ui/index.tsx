@@ -34,6 +34,11 @@ export { Carousel } from "./src/components/ui/carousel";
     CardDescription,
     CardContent,
   } from "./src/components/ui/card";*/
+export {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "./src/components/ui/collapsible";
 export { Checkbox } from "./src/components/ui/checkbox";
 export {
   Command,

@@ -183,7 +183,7 @@ export function ListCancelModal({
                   </>
                     )*/}
                   <Button disabled={true} className="m-2">
-                    <Loader />
+                    <Loader className="animate-spin" />
                     {stepData?.currentStepItem.txHashes
                       ? copy.ctaAwaitingValidation
                       : copy.ctaAwaitingApproval}

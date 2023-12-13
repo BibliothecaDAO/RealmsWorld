@@ -28,11 +28,11 @@
   },
   "devDependencies": {
     "@manypkg/cli": "^0.21.1",
-    "@turbo/gen": "^1.11.1",
+    "@turbo/gen": "^1.11.2",
     "npm-check-updates": "^16.14.11",
     "prettier": "^3.1.1",
     "tsup": "^8.0.1",
-    "turbo": "^1.11.1",
+    "turbo": "^1.11.2",
     "typescript": "^5.3.3"
   },
   "overrides": {

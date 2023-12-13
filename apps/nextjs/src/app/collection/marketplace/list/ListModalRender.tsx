@@ -4,7 +4,11 @@ import { NETWORK_NAME } from "@/constants/env";
 import type { ExpirationOption } from "@/types";
 import type { RouterOutputs } from "@/utils/api";
 import { getTokenContractAddresses } from "@/utils/utils";
-import { useAccount, useContractWrite } from "@starknet-react/core";
+import {
+  useAccount,
+  useContractWrite,
+  useWaitForTransaction,
+} from "@starknet-react/core";
 import dayjs from "dayjs";
 import { parseUnits } from "viem";
 
@@ -139,7 +143,8 @@ export const ListModalRenderer: FC<Props> = ({
   }
   const {
     data,
-    write,
+    writeAsync,
+    error: writeError,
     // isLoading: isTxSubmitting,
   } = useContractWrite({
     calls: [
@@ -166,6 +171,23 @@ export const ListModalRenderer: FC<Props> = ({
       },
     ],
   });
+  const { data: transactionData, error: txErrror } = useWaitForTransaction({
+    hash: data?.transaction_hash,
+    watch: true,
+  });
+  useEffect(() => {
+    if (data?.transaction_hash) {
+      if (transactionData?.execution_status == "SUCCEEDED") {
+        setListStep(ListStep.Complete);
+      }
+    }
+  }, [data, transactionData, transactionError]);
+  useEffect(() => {
+    if (writeError) {
+      setListStep(ListStep.SetPrice);
+      setTransactionError(writeError);
+    }
+  }, [writeError]);
 
   const listToken = useCallback(async () => {
     setTransactionError(null);
@@ -200,15 +222,7 @@ export const ListModalRenderer: FC<Props> = ({
     setListingData([{ listing }]);
     setListStep(ListStep.Listing);
 
-    write();
-
-    setListStep(ListStep.Complete);
-
-    //TODO error handling
-    /* .catch((error: Error) => {
-        setListStep(ListStep.SetPrice);
-        setTransactionError(error);
-      });*/
+    await writeAsync();
   }, [collectionId, tokenId, expirationOption, quantity, price]);
 
   return (

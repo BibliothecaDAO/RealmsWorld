@@ -26,3 +26,10 @@ export const CollectionAddresses: {
       "0x003583470a8943479f8609192da4427cac45bdf66a58c84043c7ab2fc722c0c0",
   },
 };
+export const CollectionRoyalties: {
+  readonly [key in Collections]: number;
+} = {
+  [Collections.REALMS]: 0,
+  [Collections.BEASTS]: 500,
+  [Collections.GOLDEN_TOKEN]: 500,
+};

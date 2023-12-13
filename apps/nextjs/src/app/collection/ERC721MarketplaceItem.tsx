@@ -11,7 +11,7 @@ interface Props {
   img?: string;
   name?: string;
   collection: string;
-  price?: bigint;
+  price?: number;
   usdPrice?: number | string;
   expires?: string;
   warning?: string;
@@ -114,11 +114,7 @@ const ERC721MarketplaceItem: FC<Props> = ({
             <span className={isUnavailable ? "subtle" : "base"}>--</span>
           )}
           {usdPrice ? (
-            <span className="text-xs">
-              {formatBigInt(usdPrice, 3)
-                .toLocaleString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            </span>
+            <span className="text-xs">{formatBN(usdPrice, 4, 18)}</span>
           ) : null}
           {warning && <span className="text-red">{warning}</span>}
         </div>

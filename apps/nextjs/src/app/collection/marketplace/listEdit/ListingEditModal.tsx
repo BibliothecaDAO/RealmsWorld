@@ -393,9 +393,8 @@ export function ListingEditModal({
                     <>
                       <Progress
                         title={
-                          stepData?.currentStepItem.txHashes
-                            ? "Finalizing on blockchain"
-                            : "Approve Reservoir Oracle to update the listing"
+                          stepData?.currentStepItem.txHashes &&
+                          "Finalizing on blockchain"
                         }
                         txHashes={stepData?.currentStepItem?.txHashes}
                       />
