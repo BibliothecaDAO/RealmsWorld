@@ -5,7 +5,7 @@ import type { RouterOutputs } from "@/utils/api";
 import { getTokenContractAddresses } from "@/utils/utils";
 import { useAccount, useContractWrite } from "@starknet-react/core";
 import { uint256 } from "starknet";
-import { formatUnits } from "viem";
+import { formatUnits, parseUnits } from "viem";
 
 import {
   LORDS,
@@ -135,7 +135,7 @@ export const BuyModalRender: FC<Props> = ({
         entrypoint: "approve",
         calldata: [
           MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
-          listing?.price * 10 ** 18,
+          parseUnits(`${listing?.price}`, 18).toString(),
           0,
         ],
       },
@@ -150,8 +150,8 @@ export const BuyModalRender: FC<Props> = ({
   });
 
   const buyToken = useCallback(async () => {
-    if (!tokenId || !collectionId) {
-      const error = new Error("Missing tokenId or collectionId");
+    if (!listing) {
+      const error = new Error("Missing Listing");
       setTransactionError(error);
       throw error;
     }

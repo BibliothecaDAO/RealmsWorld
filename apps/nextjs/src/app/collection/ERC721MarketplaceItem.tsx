@@ -35,7 +35,6 @@ const ERC721MarketplaceItem: FC<Props> = ({
   quantity,
 }) => {
   const royaltyPercent = royaltiesBps ? royaltiesBps / 100 : royaltiesBps;
-  console.log(typeof price);
   return (
     <div>
       <div className="justify-space-between flex items-center">
