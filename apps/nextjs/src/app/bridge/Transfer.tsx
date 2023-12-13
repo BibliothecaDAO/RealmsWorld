@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Button } from "@/app/_components/ui/button";
-import { Input } from "@/app/_components/ui/input";
 import { EthereumLoginButton } from "@/app/_components/wallet/EthereumLoginButton";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
 import { useTransferToL1 } from "@/hooks/useTransferToL1";
@@ -14,6 +12,8 @@ import StarknetLogo from "@/icons/starknet.svg";
 import { useAccount } from "@starknet-react/core";
 import { ArrowUpDown } from "lucide-react";
 import { useAccount as useL1Account } from "wagmi";
+
+import { Button, Input } from "@realms-world/ui";
 
 import { useWalletsProviderContext } from "../providers/WalletsProvider";
 import { TokenBalance } from "./TokenBalance";
@@ -40,16 +40,17 @@ export const Transfer = ({ action }: { action: string }) => {
     networkName: string,
     networkLogo: JSX.Element,
     isWithdraw: boolean,
+    isL2?: boolean,
   ) => {
     return (
       <>
         <div className="relative flex items-center justify-between">
           <div className="flex-col">
-            <span className="border-bright-yellow/40 bg-medium-dark-green text-bright-yellow/60 rounded border px-2 text-xs font-bold uppercase tracking-wide">
+            <span className="rounded border border-bright-yellow/40 bg-medium-dark-green px-2 text-xs font-bold uppercase tracking-wide text-bright-yellow/60">
               {isWithdraw ? "from" : "to"}
             </span>
             <div className="my-1 flex text-lg ">
-              <div className="bg-bright-yellow/60 mr-2 h-[32px] w-[32px] self-center rounded-full">
+              <div className="mr-2 h-[32px] w-[32px] self-center rounded-full bg-bright-yellow/60">
                 {networkLogo}
               </div>
               <h5 className="self-center">{networkName}</h5>
@@ -57,30 +58,31 @@ export const Transfer = ({ action }: { action: string }) => {
           </div>
           <TokenBalance
             balance={
-              isWithdraw
+              isL2
                 ? balances.l2?.lords || BigInt(0)
                 : balances.l1?.lords || BigInt(0)
             }
             symbol="Lords"
-            isLoading={isWithdraw ? l2loading : false}
+            isLoading={isL2 ? l2loading && !balances.l2?.lords : false}
           />
         </div>
       </>
     );
   };
 
-  const renderL1Network = () => {
+  const renderL1Network = (action) => {
     return renderNetwork(
       "Ethereum",
       <EthereumLogo className="m-auto mt-1 h-6 w-6" />,
-      false,
+      action != "withdraw",
     );
   };
 
-  const renderL2Network = () => {
+  const renderL2Network = (action) => {
     return renderNetwork(
       "Starknet",
       <StarknetLogo className="m-auto mt-1 h-6 w-6" />,
+      action == "withdraw",
       true,
     );
   };
@@ -107,7 +109,9 @@ export const Transfer = ({ action }: { action: string }) => {
     <>
       <div className="relative">
         <div className="relative mb-2 rounded border border-white/5 bg-white/10 p-4">
-          {action == "withdraw" ? renderL2Network() : renderL1Network()}
+          {action == "withdraw"
+            ? renderL2Network(action)
+            : renderL1Network(action)}
           {renderTokenInput()}
           {/*allowance: {allowance?.toString()}*/}
         </div>
@@ -118,7 +122,7 @@ export const Transfer = ({ action }: { action: string }) => {
             action == "deposit" ? "withdraw" : "deposit"
           }`}
         >
-          <div className="bg-bright-yellow/60 absolute left-1/2 z-10 -ml-4 -mt-5 flex h-8 w-8 rounded-2xl border border-white/5 stroke-black hover:bg-white/90">
+          <div className="absolute left-1/2 z-10 -ml-4 -mt-5 flex h-8 w-8 rounded-2xl border border-white/5 bg-bright-yellow/60 stroke-black hover:bg-white/90">
             <ArrowUpDown
               className={`${
                 action == "deposit" ? "rotate-180" : ""
@@ -128,26 +132,29 @@ export const Transfer = ({ action }: { action: string }) => {
         </Link>
 
         <div className="relative mb-4  flex flex-col rounded border border-white/5 bg-white/10 p-4">
-          {action == "withdraw" ? renderL1Network() : renderL2Network()}
+          {action == "withdraw"
+            ? renderL1Network(action)
+            : renderL2Network(action)}
         </div>
-
-        {!l1Account && <EthereumLoginButton />}
-        {!l2Account && <StarknetLoginButton />}
-        {l1Account && l2Account && (
-          <Button
-            className="mt-2 w-full"
-            onClick={() => onTransferClick()}
-            size={"lg"}
-            disabled={amount == "0"}
-            variant={"default"}
-          >
-            {!amount
-              ? "Please Enter Amount"
-              : action == "deposit"
-              ? "Transfer to L2"
-              : "Transfer to L1"}
-          </Button>
-        )}
+        <div className="flex gap-x-4 p-2">
+          {!l1Account && <EthereumLoginButton />}
+          {!l2Account && <StarknetLoginButton />}
+          {l1Account && l2Account && (
+            <Button
+              className="mt-2 w-full"
+              onClick={() => onTransferClick()}
+              size={"lg"}
+              disabled={amount == "0"}
+              variant={"default"}
+            >
+              {amount == "0"
+                ? "Please Enter Amount"
+                : action == "deposit"
+                  ? "Transfer to L2"
+                  : "Transfer to L1"}
+            </Button>
+          )}
+        </div>
       </div>
     </>
   );

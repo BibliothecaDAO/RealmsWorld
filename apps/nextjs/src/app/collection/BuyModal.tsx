@@ -1,8 +1,9 @@
 "use client";
 
-import { Button } from "@/app/_components/ui/button";
 import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 import { useModal } from "connectkit";
+
+import { Button } from "@realms-world/ui";
 
 export const BuyButton = ({ address, id, size = "sm" }: any) => {
   const { setOpen } = useModal();

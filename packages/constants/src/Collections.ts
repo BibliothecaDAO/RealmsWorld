@@ -15,7 +15,7 @@ export const CollectionAddresses: {
   },
   [Collections.BEASTS]: {
     [ChainId.SN_MAIN]:
-      "0x063a16e123229edb3652ecd4b2bf5ff65fe27b367c10c3db367d2c3d7f782a02",
+      "0x0158160018d590d93528995b340260e65aedd76d28a686e9daa5c4e8fad0c5dd",
     [ChainId.SN_GOERLI]:
       "0x071f603af70d1570600de027af3edae09a5869b7b6d38e27315a77d9db79f45e",
   },

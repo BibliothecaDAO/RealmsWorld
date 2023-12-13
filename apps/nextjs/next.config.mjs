@@ -2,6 +2,8 @@
 import "./src/env.mjs";
 import "@realms-world/auth/env.mjs";
 
+import createMDX from "@next/mdx";
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -14,6 +16,8 @@ const config = {
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
+  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
+
   webpack(config, { isServer }) {
     if (!isServer) {
       config.resolve.fallback = {
@@ -47,6 +51,7 @@ const config = {
         },
       },
     },
+    mdxRs: true,
     webpackBuildWorker: true,
   },
   images: {
@@ -54,7 +59,7 @@ const config = {
     remotePatterns: [
       { protocol: "https", hostname: "loot-survivor.vercel.app" },
       { protocol: "https", hostname: "*.seadn.io" },
-      { protocol: "https", hostname: "api.reservoir.tools" },
+      { protocol: "https", hostname: "*.reservoir.tools" },
       { protocol: "https", hostname: "raw.githubusercontent.com" },
       { protocol: "https", hostname: "blur.io" },
       { protocol: "https", hostname: "www.loot.exchange" },
@@ -91,4 +96,8 @@ const config = {
   },
 };
 
-export default config;
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+});
+
+export default withMDX(config);

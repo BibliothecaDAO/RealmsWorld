@@ -7,6 +7,7 @@
   "packageManager": "bun@1.0.6",
   "workspaces": [
     "apps/*",
+    "config/*",
     "packages/*",
     "tooling/*"
   ],
@@ -18,20 +19,21 @@
     "db:studio": "bun --cwd packages/db studio",
     "deps:update": "ncu -i --deep --install never",
     "dev": "turbo dev --parallel",
-    "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache'",
-    "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
+    "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
+    "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
+    "lint:ws": "bunx sherif@latest",
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "@manypkg/cli": "^0.21.0",
-    "@turbo/gen": "^1.10.16",
-    "npm-check-updates": "^16.14.6",
-    "prettier": "^3.0.3",
-    "tsup": "^7.2.0",
-    "turbo": "^1.10.16",
-    "typescript": "^5.2.2"
+    "@manypkg/cli": "^0.21.1",
+    "@turbo/gen": "^1.11.0",
+    "npm-check-updates": "^16.14.11",
+    "prettier": "^3.1.0",
+    "tsup": "^8.0.1",
+    "turbo": "^1.11.0",
+    "typescript": "^5.3.2"
   },
   "overrides": {
     "@tanstack/react-query": "4.35.7",

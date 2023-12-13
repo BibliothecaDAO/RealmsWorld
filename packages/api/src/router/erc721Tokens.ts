@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
@@ -15,18 +16,20 @@ export const erc721TokensRouter = createTRPCRouter({
         owner: z.string().nullish(),
         orderBy: z.string().nullish(),
         direction: z.string().nullish(),
+        block: z.number().nullish(),
       }),
     )
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 50;
       //TODO add orderBy conditions
-      const { cursor, contractAddress, owner, orderBy, direction } = input;
+      const { cursor, contractAddress, owner, orderBy, block, direction } =
+        input;
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
-      if (direction === "dsc") {
-        orderByFilter.push(desc(schema.erc721Tokens.token_id));
-      } else {
+      if (direction === "asc") {
         orderByFilter.push(asc(schema.erc721Tokens.token_id));
+      } else {
+        orderByFilter.push(desc(schema.erc721Tokens.token_id));
       }
 
       if (contractAddress) {
@@ -42,19 +45,25 @@ export const erc721TokensRouter = createTRPCRouter({
       }
       if (cursor) {
         whereFilter.push(
-          direction === "dsc"
-            ? lte(schema.erc721Tokens.token_id, cursor)
-            : gte(schema.erc721Tokens.token_id, cursor),
+          direction === "asc"
+            ? gte(schema.erc721Tokens.token_id, cursor)
+            : lte(schema.erc721Tokens.token_id, cursor),
         );
-      } else {
-        whereFilter.push(gte(schema.erc721Tokens.token_id, 0));
+      } /* else {
+        whereFilter.push(lte(schema.erc721Tokens.token_id, cursor));
+      }*/
+      if (!block) {
+        whereFilter.push(sql`upper_inf(_cursor)`);
       }
-
-      console.log(cursor, limit);
       const items = await ctx.db.query.erc721Tokens.findMany({
         limit: limit + 1,
         where: and(...whereFilter),
         orderBy: orderByFilter,
+        with: {
+          transfers: {
+            orderBy: (transfers, { desc }) => [desc(transfers._cursor)],
+          },
+        },
       });
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {

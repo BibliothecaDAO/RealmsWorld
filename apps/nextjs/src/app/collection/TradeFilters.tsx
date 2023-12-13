@@ -1,16 +1,17 @@
 "use client";
 
-import { Button } from "@/app/_components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/app/_components/ui/dropdown-menu";
 import { useUIContext } from "@/app/providers/UIProvider";
 import { sortDirection, sortOptions } from "@/constants";
 import { useQuery } from "@/hooks/useQuery";
 import { Filter, Grid, List } from "lucide-react";
+
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@realms-world/ui";
 
 export const TradeFilters = () => {
   const { handleAttributeClick, getQueriesFromUrl } = useQuery();

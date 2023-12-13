@@ -5,13 +5,20 @@ import { drizzle } from "drizzle-orm/neon-http";
 
 import * as auth from "./schema/auth";
 import * as bridge from "./schema/bridge";
+//import * as erc721MarketListing from "./schema/erc721_market";
 import * as erc721Tokens from "./schema/erc721_tokens";
 
-export const schema = { ...auth, ...erc721Tokens, ...bridge };
+export const schema = {
+  ...auth,
+  ...erc721Tokens,
+  ...bridge,
+  //...erc721MarketListing,
+};
 
 export { pgSqlTable as tableCreator } from "./schema/_table";
 
 export * from "drizzle-orm";
+export { Int8Range } from "./int8range";
 
 if (!process.env.VERCEL_ENV) {
   neonConfig.wsProxy = (/*host*/) => `127.0.0.1/v1`;

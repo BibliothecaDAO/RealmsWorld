@@ -1,6 +1,13 @@
 import * as React from "react";
-import { ThemeProvider, alpha, createTheme } from "@mui/material/styles";
+import type { Realm } from "@/.graphclient";
+import { UsersRealmsQuery } from "@/.graphclient";
 import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import { blueGrey, grey } from "@mui/material/colors";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import { alpha, createTheme, ThemeProvider } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,17 +17,12 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import { Trash, ListFilter } from "lucide-react";
+import Typography from "@mui/material/Typography";
 import { visuallyHidden } from "@mui/utils";
-import { Realm, UsersRealmsQuery } from "@/.graphclient";
-import { blueGrey, grey } from "@mui/material/colors";
+import { ListFilter, Trash } from "lucide-react";
+
+import { Switch } from "@realms-world/ui";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -36,7 +38,7 @@ type Order = "asc" | "desc";
 
 function getComparator<Key extends keyof Pick<Realm, "id" | "name">>(
   order: Order,
-  orderBy: Key
+  orderBy: Key,
 ): (a: Pick<Realm, "id" | "name">, b: Pick<Realm, "id" | "name">) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -49,7 +51,7 @@ function getComparator<Key extends keyof Pick<Realm, "id" | "name">>(
 // with exampleArray.slice().sort(exampleComparator)
 function stableSort<T>(
   array: readonly T[],
-  comparator: (a: T, b: T) => number
+  comparator: (a: T, b: T) => number,
 ) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
@@ -88,7 +90,7 @@ interface EnhancedTableProps {
   numSelected: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    property: keyof Pick<Realm, "id" | "name">
+    property: keyof Pick<Realm, "id" | "name">,
   ) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
@@ -115,12 +117,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     <TableHead>
       <TableRow>
         <TableCell
-          sx={{ backgroundColor: "black", color: "white" }}
+          sx={{ backgroundColor: "#4D4E46", color: "rgb(251, 225, 187)" }}
           padding="checkbox"
         >
           <Checkbox
             color="primary"
-            className="!text-white"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
@@ -133,8 +134,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           <TableCell
             key={headCell.id}
             sx={{
-              backgroundColor: "black",
-              color: "white !important",
+              backgroundColor: "#4D4E46",
+              color: "rgb(251, 225, 187) !important",
               textTransform: "uppercase",
               fontWeight: "800",
             }}
@@ -147,7 +148,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
               sx={{
-                color: "white !important",
+                color: "rgb(251, 225, 187) !important",
                 ".MuiTableSortLabel-icon": { color: "white !important" },
               }}
             >
@@ -182,7 +183,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           bgcolor: (theme) =>
             alpha(
               theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
+              theme.palette.action.activatedOpacity,
             ),
         }),
       }}
@@ -236,7 +237,7 @@ export default function RealmsTable({
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Pick<Realm, "id" | "name">
+    property: keyof Pick<Realm, "id" | "name">,
   ) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -265,7 +266,7 @@ export default function RealmsTable({
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selectedRealms.slice(0, selectedIndex),
-        selectedRealms.slice(selectedIndex + 1)
+        selectedRealms.slice(selectedIndex + 1),
       );
     }
 
@@ -277,14 +278,14 @@ export default function RealmsTable({
   };
 
   const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
+  const handleChangeDense = (event: boolean) => {
+    setDense(event);
   };
 
   const isSelected = (name: string) => selectedRealms.indexOf(name) !== -1;
@@ -298,7 +299,7 @@ export default function RealmsTable({
       rows
         .sort(getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [order, orderBy, page, rowsPerPage, rows]
+    [order, orderBy, page, rowsPerPage, rows],
   );
 
   return (
@@ -349,7 +350,7 @@ export default function RealmsTable({
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
-                      className="!text-white"
+                      className="!text-bright-yellow"
                       checked={isItemSelected}
                       inputProps={{
                         "aria-labelledby": labelId,
@@ -362,12 +363,12 @@ export default function RealmsTable({
                     scope="row"
                     padding="none"
                     align="left"
-                    className="text-white"
+                    className=""
                   >
-                    <span className="text-white">{row.id}</span>
+                    <span className="text-bright-yellow">{row.id}</span>
                   </TableCell>
                   <TableCell align="left">
-                    <span className="text-white">{row.name}</span>
+                    <span className="text-bright-yellow">{row.name}</span>
                   </TableCell>
                 </TableRow>
               );
@@ -386,9 +387,15 @@ export default function RealmsTable({
       </TableContainer>
       <div className="flex justify-between">
         <FormControlLabel
-          className="!sm:min-h-[25px] -top-20"
-          control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Dense padding"
+          className="!sm:min-h-[25px] -top-20 [&>*]:!text-sm"
+          control={
+            <Switch
+              checked={dense}
+              onCheckedChange={(event) => handleChangeDense(event)}
+              className="mr-2 w-[39px]"
+            />
+          }
+          label="Dense view"
         />
         <TablePagination
           rowsPerPageOptions={[20]}
@@ -403,7 +410,7 @@ export default function RealmsTable({
           backIconButtonProps={{
             sx: { "&.Mui-disabled": { color: `${grey[600]} !important` } },
           }}
-          className="!text-white"
+          className="!text-bright-yellow"
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />

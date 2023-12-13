@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { NavLink } from "@/app/_components/ui/nav-link";
 
-import { cn } from "../../utils/utils";
+import { NavLink } from "@realms-world/ui";
+import { cn } from "@realms-world/utils";
+
 import { Transfer } from "./Transfer";
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default async function Page({
   ];
 
   return (
-    <div className="relative z-10">
+    <div className="relative z-10 p-2">
       <h2 className="mx-auto mb-6 text-center">The Lords Bridge</h2>
       <div className=" bg-dark-green container mx-auto w-full flex-col rounded-lg border p-2 md:w-[500px]">
         <div className="mb-2 flex w-full justify-center space-x-2 rounded text-xl">

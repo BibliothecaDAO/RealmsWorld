@@ -24,7 +24,11 @@ export const config: Config<Starknet, Webhook> = {
   sinkOptions: {
     targetUrl: "https://inn.gs/e/" + Deno.env.get("INNGEST_EVENT_KEY"),
     raw: true,
-    header: ["x-inngest-env: LS-updates"],
+    header: [
+      Deno.env.get("STREAM_URL") == "https://goerli.starknet.a5a.ch"
+        ? "x-inngest-env: testnet"
+        : "test: test",
+    ],
   },
 };
 

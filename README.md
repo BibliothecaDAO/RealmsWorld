@@ -56,6 +56,7 @@ We welcome contributions from the community to help improve Realms.World. If you
 We will review your contribution and provide feedback. Once your changes have been approved, they will be merged into the main branch.
 
 ### To add a Game
+
 Check out the docs at [Add Data Docs](https://docs.realms.world/data)
 
 ### License

@@ -8,12 +8,8 @@ import { useCallback, useState } from "react";
   fetchPendingWithdrawals,
 } from "@api";*/
 
-import {
-  GET_L2_APIBARA_ENDPOINT,
-  GET_TRANSFERS_ENDPOINT,
-} from "@/constants/env";
+import { GET_TRANSFERS_ENDPOINT } from "@/constants/env";
 import { getBridgeDeposits } from "@/lib/subgraph/getBridgeDeposits";
-import { getBridgeWithdrawals } from "@/lib/subgraph/getBridgeWithdrawals";
 import { api } from "@/utils/api";
 import { padAddress } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
@@ -23,7 +19,7 @@ import { useAccount as useL1Account } from "wagmi";
 import { TransferLogContext } from "./transfer-log-context";
 
 const GET_PENDING_WITHDRAWALS_REFETCH_INTERVAL = 1000 * 30;
-const GET_TRANSFERS_REFETCH_INTERVAL = 1000 * 60 * 3;
+const GET_TRANSFERS_REFETCH_INTERVAL = 1000 * 15;
 
 /*export const fetchPendingWithdrawals = async (accountL1): Promise<> =>
   await fetch("GET_PENDING_WITHDRAWALS_ENDPOINT");*/
@@ -43,20 +39,20 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
   const [nextL1, setNextL1] = useState("");
   const [nextL2, setNextL2] = useState("");
 
-  const pendingWithdrawalsQuery = useInfiniteQuery({
+  /*const pendingWithdrawalsQuery = useInfiniteQuery({
     queryKey: ["PendingWithdrawals", accountL1],
     queryFn: () => {
-      /*const [bridge] = api.bridge.all.useQuery({
+      const [bridge] = api.bridge.all.useQuery({
         l1Account: padAddress(accountL1 ?? ""),
         l2Account: padAddress(accountL2 ?? ""),
       });
-      return bridge;*/
+      return bridge;
     },
     enabled: !!accountL1,
-    //initialPageParam: "0",
+    initialPageParam: "0",
     getNextPageParam: () => nextL1,
     refetchInterval: GET_PENDING_WITHDRAWALS_REFETCH_INTERVAL,
-  });
+  });*/
 
   const transfersQueryL1 = useInfiniteQuery({
     queryKey: ["Deposits", GET_TRANSFERS_ENDPOINT, accountL1],
@@ -78,6 +74,9 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
       l2Account: padAddress(accountL2 ?? ""),
       //limit: 10,
     },
+    {
+      refetchInterval: GET_TRANSFERS_REFETCH_INTERVAL,
+    },
     /*{
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       // initialCursor: 1, // <-- optional you can pass an initialCursor
@@ -95,7 +94,7 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
   const context = {
     transfersQueryL1,
     transfersQueryL2,
-    pendingWithdrawalsQuery,
+    //pendingWithdrawalsQuery,
   };
 
   return (

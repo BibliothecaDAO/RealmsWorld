@@ -1,8 +1,9 @@
 "use client";
 
-import { Button } from "@/app/_components/ui/button";
 import { useQuery } from "@/hooks/useQuery";
 import { X } from "lucide-react";
+
+import { Button } from "@realms-world/ui";
 
 export const AttributeTags = () => {
   const { handleAttributeClick, getQueriesFromUrl } = useQuery();

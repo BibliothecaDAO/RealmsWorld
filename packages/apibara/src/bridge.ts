@@ -1,13 +1,8 @@
 import type { Config } from "https://esm.sh/@apibara/indexer";
-import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
+//import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import type { Postgres } from "https://esm.sh/@apibara/indexer/sink/postgres";
-import type { Webhook } from "https://esm.sh/@apibara/indexer/sink/webhook";
-import type {
-  Block,
-  BlockHeader,
-  EventWithTransaction,
-  Starknet,
-} from "https://esm.sh/@apibara/indexer/starknet";
+//import type { Webhook } from "https://esm.sh/@apibara/indexer/sink/webhook";
+import type { Block, Starknet } from "https://esm.sh/@apibara/indexer/starknet";
 import { hash, uint256 } from "https://esm.sh/starknet";
 import { formatUnits } from "https://esm.sh/viem@1.2.7";
 
@@ -23,6 +18,7 @@ export const config: Config<Starknet, Postgres> = {
   streamUrl: Deno.env.get("STREAM_URL"),
   startingBlock: Number(Deno.env.get("BRIDGE_STARTING_BLOCK")),
   network: "starknet",
+  finality: "DATA_STATUS_PENDING",
   filter: {
     header: {
       weak: true,
@@ -30,11 +26,17 @@ export const config: Config<Starknet, Postgres> = {
     events: [
       {
         fromAddress: Deno.env.get("BRIDGE_CONTRACT") as `0x${string}`,
-        keys: [WITHDRAWAL_INITIATED],
+        keys: [
+          hash.getSelectorFromName("WithdrawalInitiated") as `0x${string}`,
+        ],
+        includeTransaction: true,
+        includeReceipt: true,
       },
       {
         fromAddress: Deno.env.get("BRIDGE_CONTRACT") as `0x${string}`,
-        keys: [DEPOSIT_HANDLED],
+        keys: [hash.getSelectorFromName("DepositHandled") as `0x${string}`],
+        includeTransaction: true,
+        includeReceipt: true,
       },
     ],
   },
@@ -42,11 +44,12 @@ export const config: Config<Starknet, Postgres> = {
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
     tableName: "rw_bridge",
+    entityMode: false,
   },
 };
 
 export default function transform({ header, events }: Block) {
-  return events.flatMap(({ event, receipt }) => {
+  return events?.flatMap(({ event, receipt }) => {
     switch (event.keys[0]) {
       case WITHDRAWAL_INITIATED: {
         return {
@@ -58,7 +61,7 @@ export default function transform({ header, events }: Block) {
             uint256.uint256ToBN({ low: event.data[1], high: event.data[2] }),
             18,
           ),
-          timestamp: header.timestamp,
+          timestamp: header?.timestamp,
         };
       }
       case DEPOSIT_HANDLED: {
@@ -70,7 +73,7 @@ export default function transform({ header, events }: Block) {
             uint256.uint256ToBN({ low: event.data[1], high: event.data[2] }),
             18,
           ),
-          timestamp: header.timestamp,
+          timestamp: header?.timestamp,
         };
       }
       default: {

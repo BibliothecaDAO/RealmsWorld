@@ -5,15 +5,13 @@ import { isDeposit } from "@/types/bridge";
 
 import { TransferLogContext } from "./transfer-log-context";
 
-export const useTransferLog = (isL1: boolean = true) => {
+export const useTransferLog = (isL1 = true) => {
   const { transfersQueryL1, transfersQueryL2 } = useContext(TransferLogContext);
   const query = isL1 ? transfersQueryL1 : transfersQueryL2;
   return useMemo(() => {
     return {
       ...query,
-      transfers: isL1
-        ? flattenPages(query?.data)
-        : flattenWithdrawals(query.data),
+      transfers: isL1 ? flattenPages(query?.data) : query.data,
     };
   }, [query]);
 };
@@ -22,19 +20,21 @@ export const useTransfers = () => {
   const {
     transfersQueryL1: { data: transfersL1, isFetching: isFetchingL1 },
     transfersQueryL2: { data: transfersL2, isFetching: isFetchingL2 },
-    pendingWithdrawalsQuery: {
+    /*pendingWithdrawalsQuery: {
       data: withdrawals,
       isFetching: isFetchingWithdrawals,
-    },
+    },*/
   } = useContext(TransferLogContext);
 
   const doneFetching = !!(
-    !isFetchingL1 &&
-    !isFetchingL2 &&
-    !isFetchingWithdrawals &&
-    transfersL1 &&
-    transfersL2 &&
-    withdrawals
+    (
+      !isFetchingL1 &&
+      !isFetchingL2 &&
+      //!isFetchingWithdrawals &&
+      transfersL1 &&
+      transfersL2
+    )
+    //withdrawals
   );
 
   return useMemo(() => {
@@ -56,7 +56,7 @@ export const useTransfers = () => {
     if (doneFetching) {
       console.log(transfersL1);
       const uniqueLogs = removeDuplicatesLogs([
-        ...(withdrawals?.pages || []),
+        //...(withdrawals?.pages || []),
         ...flattenPages(transfersL1),
         ...flattenPages(transfersL2),
       ]);
@@ -75,7 +75,6 @@ function isIterable(input) {
 }
 
 const flattenPages = (data: any) => {
-  console.log(data);
   return data?.pages.length
     ? [
         ...(data?.pages?.[0]?.data.withdrawals || []),

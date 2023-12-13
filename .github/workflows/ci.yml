@@ -7,35 +7,61 @@ on:
     branches: ["main"]
   merge_group:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
 # You can leverage Vercel Remote Caching with Turbo to speed up your builds
 # @link https://turborepo.org/docs/core-concepts/remote-caching#remote-caching-on-vercel-builds
 env:
+  FORCE_COLOR: 3
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
-  build-lint:
+  lint:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup bun
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
+      - name: Setup
+        uses: ./tooling/github/setup
 
-      # - name: Setup Node 18
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 18
+      - name: Copy env
+        shell: bash
+        run: cp .env.example .env
 
-      - name: Install deps (with cache)
-        run: bun install
+      - name: Lint
+        run: bun lint && bun lint:ws
 
-      - name: Build, lint and type-check
-        run: bun turbo build --filter=!lords-bridge-subgraph lint format typecheck
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Check workspaces
-        run: bunx sherif@0.2.0
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Format
+        run: bun format
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Typecheck
+        run: turbo typecheck
+
+  comment-if-failed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - uses: juliusmarminge/gh-failed-action-commenter@main

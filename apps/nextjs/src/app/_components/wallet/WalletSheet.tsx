@@ -1,37 +1,36 @@
 //import { shortenHex } from "@/utils/utils";
 import { Suspense, useEffect, useState } from "react";
-import { Button } from "@/app/_components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/app/_components/ui/dialog";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/app/_components/ui/tabs";
 import { Account } from "@/app/bridge/Account";
-//import { Account } from "@/app/bridge/Account";
 import { useUIContext } from "@/app/providers/UIProvider";
-import { CollapsibleContent } from "@radix-ui/react-collapsible";
+import Bridge from "@/icons/bridge.svg";
 import {
   useDisconnect,
   useAccount as useL2Account,
   useConnect as useL2Connect,
   useNetwork,
 } from "@starknet-react/core";
-import { ArrowDown, ArrowUp } from "lucide-react";
-import { useConnect, useAccount as useL1Account } from "wagmi";
 
-import { Collapsible, CollapsibleTrigger } from "../ui/collapsible";
 //import { AuthShowcase } from "../auth-showcase";
-import { Sheet, SheetContent } from "../ui/sheet";
-import EthereumLogin from "./EthereumLogin";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  ScrollArea,
+  Sheet,
+  SheetContent,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@realms-world/ui";
+
+import EthereumAccount from "./EthereumAccount";
 import { EthereumLoginButton } from "./EthereumLoginButton";
-import StarkLogin from "./StarkLogin";
+import StarkAccount from "./StarkAccount";
 import { StarknetLoginButton } from "./StarknetLoginButton";
 import { StarknetLoginModal } from "./StarknetLoginModal";
 
@@ -47,7 +46,11 @@ import { StarknetLoginModal } from "./StarknetLoginModal";
   },
 ];*/
 export const WalletSheet = () => {
-  const { address: l2Address, isConnected: isL2Connected } = useL2Account();
+  const {
+    address: l2Address,
+    isConnected: isL2Connected,
+    chainId,
+  } = useL2Account();
   const { chain } = useNetwork();
   const { disconnect } = useDisconnect();
   const [isWrongNetwork, setIsWrongNetwork] = useState(false);
@@ -61,15 +64,15 @@ export const WalletSheet = () => {
     process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "goerli" : "mainnet";
 
   const NETWORK_ID = {
-    mainnet: "0x534e5f4d41494e",
-    goerli: "0x534e5f474f45524c49",
+    mainnet: 23448594291968334n,
+    goerli: 1536727068981429685321n,
   };
 
   useEffect(() => {
-    if (isL2Connected) {
+    if (isL2Connected && chainId) {
       if (
-        (chain?.id.toString() === NETWORK_ID.goerli && network === "mainnet") ||
-        (chain?.id.toString() === NETWORK_ID.mainnet && network === "goerli")
+        (chainId === NETWORK_ID.goerli && network === "mainnet") ||
+        (chainId === NETWORK_ID.mainnet && network === "goerli")
       ) {
         setIsWrongNetwork(true);
       } else {
@@ -104,53 +107,77 @@ export const WalletSheet = () => {
   ];
   return (
     <>
-      <div className="flex space-x-2">
-        <EthereumLoginButton openAccount />
-        <StarknetLoginButton openAccount />
+      <div className="my-4 flex w-full flex-col space-y-4 px-1">
+        <EthereumLoginButton
+          variant={"default"}
+          textClass="group-hover:block"
+          openAccount
+        />
+        <StarknetLoginButton
+          textClass="group-hover:block"
+          variant={"default"}
+          buttonClass="w-full"
+          openAccount
+        />
         <StarknetLoginModal />
       </div>
       <Sheet open={isAccountOpen} onOpenChange={toggleAccount}>
         <SheetContent position={"right"} size={"lg"}>
-          <div className="mt-8 flex h-auto w-full flex-col gap-y-4">
-            <EthereumLogin />
-            <StarkLogin />
-            <Collapsible
-              className="CollapsibleRoot"
-              open={open}
-              onOpenChange={setOpen}
-            >
-              <CollapsibleTrigger asChild>
-                <button className="hover:bg-medium-dark-green flex w-full justify-between rounded-t border-b px-4 py-3">
-                  <span className="text-xl">Bridge Transactions</span>
+          <div className="mt-8 flex w-full flex-col items-start gap-y-4">
+            <EthereumAccount />
+            <StarkAccount />
+            <div className="mt-4">
+              <h6>Actions</h6>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    //disabled={!realms?.length}
+                    className="self-center"
+                    size={"lg"}
+                    variant={"outline"}
+                  >
+                    <Bridge className="mr-2 w-[25px]" />
+                    Bridge Transactions
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="flex h-full min-w-[500px] flex-col sm:max-h-[80%]">
+                  <DialogHeader>
+                    <h6 className="my-0 py-0">Bridge Transactions</h6>
+                  </DialogHeader>
+                  <Tabs
+                    defaultValue={tabs[0]?.name}
+                    className="relative h-full min-h-0"
+                  >
+                    <TabsList className="absolute my-0 w-full justify-center py-2">
+                      {tabs.map((tab, index) => (
+                        <TabsTrigger value={tab.name} key={index}>
+                          {tab.name}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
 
-                  {open ? <ArrowDown /> : <ArrowUp />}
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <Tabs defaultValue={tabs[0]?.name}>
-                  <TabsList className="justify-center pb-2">
                     {tabs.map((tab, index) => (
-                      <TabsTrigger value={tab.name} key={index}>
-                        {tab.name}
-                      </TabsTrigger>
+                      <TabsContent
+                        value={tab.name}
+                        key={index}
+                        className="h-full pt-14"
+                      >
+                        <ScrollArea className="h-full">
+                          {tab.content}
+                        </ScrollArea>
+                      </TabsContent>
                     ))}
-                  </TabsList>
-
-                  {tabs.map((tab, index) => (
-                    <TabsContent value={tab.name} key={index}>
-                      {tab.content}
-                    </TabsContent>
-                  ))}
-                </Tabs>
-              </CollapsibleContent>
-            </Collapsible>
+                  </Tabs>
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
         </SheetContent>
       </Sheet>
 
       {isWrongNetwork && (
         <Dialog open={isWrongNetwork}>
-          <DialogContent className="w-full">
+          <DialogContent close={false} className="z-50 h-72 w-full">
             <DialogHeader>
               <DialogTitle>Wrong Network</DialogTitle>
             </DialogHeader>

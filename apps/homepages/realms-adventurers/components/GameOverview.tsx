@@ -1,7 +1,8 @@
 // components/Overview.tsx
 import React from "react";
-import { Button } from "@/app/_components/ui/button";
 import { Game } from "@/types";
+
+import { Button } from "@realms-world/ui";
 
 interface OverviewProps {
   game: Game;

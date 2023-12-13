@@ -4,7 +4,7 @@ import Sidebar from "@/app/_components/SideMenu";
 
 import { Provider } from "./providers/providers";
 
-import "@/styles/globals.css";
+import "@realms-world/styles/globals.css";
 
 import { headers } from "next/headers";
 
@@ -17,7 +17,7 @@ import { WalletsProvider } from "./providers/WalletsProvider";
 const baiJamjuree = Bai_Jamjuree({
   subsets: ["latin"],
   variable: "--font-bai-jamjuree",
-  weight: ["500", "700"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -45,7 +45,7 @@ export default function Layout(props: { children: React.ReactNode }) {
           <UIContextProvider>
             <Provider>
               <WalletsProvider>
-                <main className="flex flex-wrap">
+                <main className="flex-wrap md:flex">
                   <Sidebar />
                   <div className="z-10 flex flex-grow flex-col">
                     <TopNav />

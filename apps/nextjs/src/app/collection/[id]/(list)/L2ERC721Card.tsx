@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/app/_components/ui/button";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import type { RouterOutputs } from "@/utils/api";
 import { findTokenName, shortenHex } from "@/utils/utils";
+
+import { Button } from "@realms-world/ui";
 
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 
@@ -36,7 +37,8 @@ export const L2ERC721Card = (props: TokenCardProps) => {
   if(!token.name) {
 
   }*/
-  const starkName = useStarkDisplayName(token.owner);
+  const tokenOwner = token.transfers[0]?.toAddress ?? token.minter;
+  const starkName = useStarkDisplayName(tokenOwner ?? undefined);
 
   function renderAttribute(token: typeof props.token, traitType: string) {
     const attribute = token.metadata?.attributes.find(
@@ -87,6 +89,7 @@ export const L2ERC721Card = (props: TokenCardProps) => {
               {renderAttribute(token, "type")}
               {renderAttribute(token, "tier")}
               {renderAttribute(token, "level")}
+              {renderAttribute(token, "health")}
             </>
           )}
 
