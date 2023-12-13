@@ -37,14 +37,13 @@ const Earnings: FC<EarningsBreakdownProps> = ({
         className="w-full overflow-visible"
         style={{ width: "100%", borderRadius: 0, overflow: "visible" }}
       >
-        <CollapsibleTrigger>
-          {" "}
+        <CollapsibleTrigger asChild>
           <Button
             variant={"ghost"}
-            className="justify-space-between flex w-full items-start"
+            className="flex	 w-full items-start justify-between"
           >
             <div className="flex items-center gap-2">
-              <h6>Total Earnings</h6>
+              <h6 className="mt-0">Total Earnings</h6>
               <span>
                 <FontAwesomeIcon icon={faChevronDown} width={16} height={16} />
               </span>

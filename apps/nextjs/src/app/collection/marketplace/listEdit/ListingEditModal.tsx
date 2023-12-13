@@ -401,7 +401,7 @@ export function ListingEditModal({
                     </>
                   )}
                   <Button disabled={true} className="m-2">
-                    <Loader className="mr-2" />
+                    <Loader className="mr-2 animate-spin" />
                     {stepData?.currentStepItem?.txHashes
                       ? copy.ctaAwaitingValidation
                       : copy.ctaAwaitingApproval}

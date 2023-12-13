@@ -1,9 +1,11 @@
 "use client";
 
+import { useTimeDiff } from "@/hooks/useTimeDiff";
 import Lords from "@/icons/lords.svg";
 import { api } from "@/utils/api";
 import { findTokenName, padAddress } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
+import { Clock } from "lucide-react";
 
 import { Button } from "@realms-world/ui";
 
@@ -46,6 +48,8 @@ export const L2Token = ({
   );
 
   const collectionId = findTokenName(contractAddress);
+  const expiryDiff = useTimeDiff(lowestPriceActiveListing?.expiration);
+
   return (
     <>
       {erc721Token ? (
@@ -60,43 +64,40 @@ export const L2Token = ({
             owner={erc721Token.owner}
             attributes={erc721Token.metadata?.attributes}
           >
-            {erc721Token.owner == padAddress(address) ? (
-              <TokenOwnerActions
-                token={erc721Token}
-                tokenId={tokenId}
-                contractAddress={contractAddress}
-              />
-            ) : (
-              <div className="mt-4 w-full rounded border bg-dark-green p-6">
+            {lowestPriceActiveListing?.expiration && (
+              <div className="my-4 flex items-center border bg-dark-green p-4">
+                <Clock className="mr-2 w-8" />
+                <span>Listing ends in {expiryDiff}</span>
+              </div>
+            )}
+            <div className="my-4 flex flex-wrap items-center justify-between border bg-dark-green p-5">
+              <div className="flex gap-x-4 text-lg font-bold">
                 {lowestPriceActiveListing ? (
                   <>
-                    <div className="flex items-center gap-x-8">
-                      <div>
-                        <span className="text-sm text-bright-yellow/50">
-                          Price
-                        </span>
-                        <span className="flex text-2xl font-bold">
-                          {lowestPriceActiveListing.price}{" "}
-                          <Lords className="ml-2 w-6 fill-current" />
-                        </span>
+                    {lowestPriceActiveListing.price && (
+                      <div className="flex gap-x-2">
+                        <Lords className="w-8 fill-current pr-2" />
+                        <div className="flex max-w-[140px]">
+                          <span className="truncate text-3xl">
+                            {lowestPriceActiveListing.price}
+                          </span>
+                        </div>
                       </div>
-                      <div>
-                        <span className="text-sm text-bright-yellow/50">
-                          Sale Ends
-                        </span>
-                        <span className="flex text-lg font-bold">
-                          {lowestPriceActiveListing.expiration &&
-                            new Date(
-                              parseInt(lowestPriceActiveListing?.expiration) *
-                                1000,
-                            ).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                        </span>
-                      </div>
-                    </div>
+                    )}
+                  </>
+                ) : (
+                  "Item not Listed"
+                )}
+              </div>
+              {erc721Token.owner == padAddress(address) ? (
+                <TokenOwnerActions
+                  token={erc721Token}
+                  tokenId={tokenId}
+                  contractAddress={contractAddress}
+                />
+              ) : (
+                <div className="w-full">
+                  {lowestPriceActiveListing && (
                     <BuyModal
                       trigger={
                         <Button className="mt-6 w-full" size={"lg"}>
@@ -108,12 +109,10 @@ export const L2Token = ({
                       collectionId={collectionId}
                       orderId={0}
                     />
-                  </>
-                ) : (
-                  "Not listed"
-                )}
-              </div>
-            )}
+                  )}
+                </div>
+              )}
+            </div>
           </TokenInformation>
         </>
       ) : (

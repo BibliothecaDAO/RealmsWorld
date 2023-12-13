@@ -10,17 +10,17 @@ import type { CSS } from "@stitches/react";
 
 import { formatBN } from "@realms-world/utils";
 
-interface ListIemProps {
+interface ListItemProps {
   collection?: any; //NonNullable<ReturnType<typeof useCollections>['data']>[0]
   token?: RouterOutputs["erc721Tokens"]["byId"];
-  price?: string;
+  price?: number;
   quantity?: number;
   chain?: ReservoirChain | null;
   expirationOption?: ExpirationOption;
   containerCss?: CSS;
 }
 
-const ListIem: FC<ListIemProps> = ({
+const ListIem: FC<ListItemProps> = ({
   collection,
   token,
   price,

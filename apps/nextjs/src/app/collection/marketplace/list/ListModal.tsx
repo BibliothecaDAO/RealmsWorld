@@ -51,14 +51,14 @@ const ModalCopy = {
   ctaGoToToken: "Go to Token",
 };
 
-type Props = Parameters<typeof Dialog> & {
+interface Props {
   token:
     | RouterOutputs["erc721Tokens"]["all"]["items"][number]
     | RouterOutputs["erc721Tokens"]["byId"];
   tokenId?: string;
   collectionId?: string;
   trigger?: React.ReactNode;
-};
+}
 
 const MINIMUM_AMOUNT = 0.000000000000001;
 const MAXIMUM_AMOUNT = Infinity;
@@ -361,7 +361,7 @@ export function ListModal({
                       collection={collection}
                     />
                   </div>
-                  <div className="w-full">
+                  <div className="mt-2 w-full">
                     <Button
                       disabled={canPurchase ? false : true}
                       size={"lg"}
@@ -375,42 +375,20 @@ export function ListModal({
               )}
               {!loading && listStep == ListStep.Listing && (
                 <div className="flex flex-col">
-                  {/*TODO <ListCheckout
+                  <ListItem
                     collection={collection}
                     token={token}
                     price={price}
-                    currency={currency}
-                    quantity={quantity}
+                    quantity={1}
                     expirationOption={expirationOption}
                     containerCss={{
                       borderBottom: "1px solid",
                       borderBottomColor: "$neutralLine",
                       borderColor: "$neutralLine",
                     }}
-                  />*/}
+                  />
                   <div className="flex w-full flex-col items-center gap-2 p-8">
-                    {stepData ? (
-                      <>
-                        <h6 className="text-center">
-                          {stepData.currentStep.kind === "transaction"
-                            ? "Approve Collections"
-                            : "Confirm listing in your wallet"}
-                        </h6>
-                        <p className="mx-auto max-w-[395px] text-center">
-                          {stepData?.currentStep.description}
-                        </p>
-                        <div>
-                          <FontAwesomeIcon
-                            icon={
-                              stepData.currentStep.kind === "transaction"
-                                ? faImages
-                                : faTag
-                            }
-                            size="2x"
-                          />
-                        </div>
-                      </>
-                    ) : null}
+                    {stepData ? <></> : null}
                     {!stepData && (
                       <div className="flex h-full items-center justify-center py-2">
                         <Loader className="animate-spin" />
