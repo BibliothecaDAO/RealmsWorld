@@ -76,6 +76,28 @@ export const games: Game[] = [
     screenshotLength: 4,
   },
   {
+    name: "Loot Survivor x crypts-and-caverns",
+    id: "loot-survivor-x-crypts-and-caverns",
+    developer: "CheDao",
+    genres: ["Play to Die", "Roguelike"],
+    color: "#f5f5f5",
+    status: "beta",
+    description: "Play to Die",
+    longform:
+      "Loot Survivor-C&C is an extension developed based on Loot Survivor. Each C&C will become an independent instance. Players can enter the instance with their owned C&C, or challenge other players' instances by paying fees. The rewards and difficulty of the instance will be designed according to the points attribute of C&C. Players need to defeat all BOSSes to complete the challenge and get rewards.",
+    links: {
+      testnet: "https://loot-survivor.chedao.io/",
+      discord: "https://t.co/9eVrqycVCG",
+      twitter: "https://twitter.com/cryptsncaverns",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "25 Per Adventurer",
+    chains: [ChainId.SN_GOERLI],
+    collections: [Collections.GOLDEN_TOKEN],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 6,
+  },
+  {
     name: "Underdark",
     id: "underdark",
     developer: "Team Underworld",
@@ -193,11 +215,11 @@ export const games: Game[] = [
     operatingSystems: ["Web Browser"],
     lords: "As a game ticket",
     chains: [ChainId.SN_MAIN],
-    collections: [Collections.GOLDEN_TOKEN,Collections.REALMS],
+    collections: [Collections.GOLDEN_TOKEN, Collections.REALMS],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
-   },
-   {
+  },
+  {
     name: "Rising Revenant",
     id: "rising-revenant",
     developer: "Grug's Lair",
