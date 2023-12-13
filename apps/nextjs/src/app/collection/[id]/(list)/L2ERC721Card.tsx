@@ -14,44 +14,6 @@ export const L2ERC721Card = ({
   const isGrid = layout === "grid";
   const imageSize = isGrid ? 800 : 80;
 
-export const L2ERC721Card = (props: TokenCardProps) => {
-  const { token, layout } = props;
-
-  const isGrid = layout == "grid";
-
-  const grid =
-    "bg-dark-green duration-300 transform border   hover:-translate-y-1";
-
-  const list =
-    "duration-300 transform border bg-dark-green  hover:-translate-y-1 flex w-full";
-
-  const imageSize = isGrid ? 800 : 60;
-
-  /* const { data, isLoading, error, refetch } = useContractRead({
-    address: ethAddress,
-    abi: compiledErc721.abi,
-    functionName: 'tokenURI',
-    args: [address],
-    watch: false
-  })
-
-  if(!token.name) {
-
-  }*/
-  const tokenOwner = token.owner ?? token.minter;
-  const starkName = useStarkDisplayName(tokenOwner ?? undefined);
-
-  function renderAttribute(token: typeof props.token, traitType: string) {
-    const attribute = token.metadata?.attributes.find(
-      (trait) => trait.trait_type === traitType,
-    );
-    return attribute ? (
-      <p className="capitalize">
-        {traitType}: {attribute.value}
-      </p>
-    ) : null;
-  }
-
   return (
     <div
       className={`transform border-2 bg-dark-green duration-300 hover:border-white ${
