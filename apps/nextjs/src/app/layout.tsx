@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bai_Jamjuree, Inconsolata, Karla, Silkscreen } from "next/font/google";
+import { Inconsolata, Silkscreen } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
 
 import { Provider } from "./providers/providers";
@@ -24,14 +24,16 @@ const baiJamjuree = Silkscreen({
 const karla = Inconsolata({
   subsets: ["latin"],
   variable: "--font-karla",
-  weight: "800",
+  weight: "400",
   display: "swap",
 });
+
 const backgroundImageStyle = {
   backgroundImage: `url(/backgrounds/map.svg)`,
   //backgroundSize: "cover",
   backgroundPosition: "top",
   backgroundRepeat: "repeat-y",
+  backgroundOpacity: 0.1,
 };
 
 export default function Layout(props: { children: React.ReactNode }) {

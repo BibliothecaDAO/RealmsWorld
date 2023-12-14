@@ -6,6 +6,8 @@ import type { RouterOutputs } from "@/utils/api";
 import { shortenHex } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
 
+import { Button } from "@realms-world/ui";
+
 import { ContractImage } from "./ContractImage";
 import { TokenAttribute } from "./TokenAttribute";
 
@@ -32,20 +34,20 @@ export const TokenInformation = ({
 
   return (
     <>
-      <div className="flex w-full flex-none flex-col rounded-t md:w-1/2 lg:mt-12">
+      <div className="flex w-full flex-none flex-col md:w-1/3">
         {image ? (
           <Image
             src={image}
             alt={name ?? "token"}
             width={1000}
             height={1000}
-            className={`mx-auto border`}
+            className={`mx-auto border-2`}
           />
         ) : (
           <ContractImage tokenId={tokenId} collectionId={collectionId} />
         )}
         {attributes?.length && (
-          <div className="my-2 grid grid-cols-3 gap-2">
+          <div className="my-4 grid grid-cols-3 gap-4">
             {attributes.map((attribute: Attributes, index) => (
               <TokenAttribute
                 key={index}
@@ -60,25 +62,30 @@ export const TokenInformation = ({
           </div>
         )}
       </div>
-      <div className="w-full py-4 md:w-1/2 md:p-8">
-        <div className="flex justify-between">
-          <Link
-            className="flex opacity-70 hover:opacity-100"
+      <div className="my-1 w-full px-4 md:w-2/3 md:px-4">
+        <div className="mb-8 flex justify-between">
+          <Button
+            size={"sm"}
+            variant={"default"}
             href={`/collection/${collectionId}`}
           >
             <ArrowLeft className="mr-2 w-4 self-center" />{" "}
-            {erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
-          </Link>
+            <span className="self-center">
+              {erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
+            </span>
+          </Button>
           <div className="flex space-x-4 text-lg">
-            <span>ID:</span> <span>#{tokenId}</span>
+            <span>#{tokenId}</span>
           </div>
         </div>
 
-        <h1>{decodeURIComponent(name ?? "")}</h1>
+        <h1 className="mb-8">{decodeURIComponent(name ?? "")}</h1>
         {owner && (
           <div className="flex space-x-6 text-lg">
-            <div>Owner </div>
-            <Link href={`/user/${owner}`}>{shortenHex(owner, 8)}</Link>
+            <div className="self-center">Owner </div>
+            <Button variant={"ghost"} href={`/user/${owner}`}>
+              {shortenHex(owner, 8)}
+            </Button>
           </div>
         )}
         {children}
