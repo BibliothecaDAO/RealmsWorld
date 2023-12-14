@@ -235,7 +235,7 @@ export function BuyModal({
           >
             <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent>
-              <DialogTitle>{title}</DialogTitle>
+              {/* <DialogTitle>{title}</DialogTitle> */}
 
               {buyStep === BuyStep.Unavailable && !loading && (
                 <div className="flex flex-col">
@@ -284,29 +284,21 @@ export function BuyModal({
                       />
                     </div>
                   )}
-                  <div className="flex flex-col gap-2 pb-1 pt-2">
-                    <div className="flex h-16 items-start justify-between px-2">
-                      <h6>You Pay</h6>
-                      <div className="flex items-end gap-0.5">
+
+                  <div className="flex items-start justify-between border-2 p-2 font-sans">
+                    <div className="self-center">You Pay</div>
+                    <div className="flex space-x-3">
+                      <span>
+                        {" "}
                         {token?.listings[0]?.price &&
                           formatNumber(token?.listings[0].price)}
-                        <Lords className="h-6 w-6 fill-current" />
-                        {/*<FormatCryptoCurrency
-                          textStyle="h6"
-                          textColor="base"
-                          amount={paymentCurrency?.currencyTotalRaw}
-                          logoWidth={18}
-                        />
-                        <FormatCurrency
-                          amount={paymentCurrency?.usdTotalPriceRaw}
-                          style="tiny"
-                          color="subtle"
-                  />*/}
-                      </div>
+                      </span>
+
+                      <Lords className="h-6 w-6 fill-current" />
                     </div>
                   </div>
 
-                  <div className="w-full p-2">
+                  <div className="w-full">
                     {hasEnoughCurrency ? (
                       <Button
                         disabled={!hasEnoughCurrency}
@@ -372,16 +364,16 @@ export function BuyModal({
                     max={stepData?.totalSteps || 0}
                   />
                 )*/}
-                  {!stepData && (
+                  {/* {!stepData && (
                     <Loader className="mx-auto h-24 animate-spin" />
-                  )}
+                  )} */}
                   {/*stepData && (
                   <Progress
                     title={stepData?.currentStep.action || ""}
                     txHashes={stepData?.currentStepItem.txHashes}
                   />
                 )*/}
-                  <Button disabled={true} className="m-4">
+                  <Button disabled={true}>
                     <Loader className="mr-2 animate-spin" />
                     {stepData?.currentStepItem?.txHashes
                       ? copy.ctaAwaitingValidation

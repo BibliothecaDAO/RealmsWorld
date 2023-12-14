@@ -5,7 +5,6 @@ import Starknet from "@/icons/starknet.svg";
 import { formatBigInt } from "@/utils/utils";
 
 import { Tooltip, TooltipProvider } from "@realms-world/ui";
-import { formatBN } from "@realms-world/utils";
 
 interface Props {
   img?: string;
@@ -35,57 +34,52 @@ const ERC721MarketplaceItem: FC<Props> = ({
   quantity,
 }) => {
   const royaltyPercent = royaltiesBps ? royaltiesBps / 100 : royaltiesBps;
+
   return (
     <div>
       <div className="justify-space-between flex items-center">
-        <span className="mb-2 block text-lg">
+        {/* <span className="mb-2 block text-lg uppercase">
           {name ? "Item" : "Collection"}
-        </span>
+        </span> */}
         {priceSubtitle && (
           <span className="mb-2 block text-lg">{priceSubtitle}</span>
         )}
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="flex  justify-between">
+        <div className="my-3 flex items-center gap-2">
           {img && (
             <Image
               src={img}
               alt={name ?? "Lords Token"}
-              width={80}
-              height={80}
+              width={100}
+              height={100}
               className="shrink-0 overflow-hidden object-cover"
             />
           )}
-          <div className="grid">
-            <div className="mr-2 flex items-center gap-2 overflow-hidden">
-              <h6 className="text-ellipsify">{name ? name : collection}</h6>
-              {expires && quantity && quantity > 1 && !name ? (
-                <div className="flex items-center">
-                  <Starknet className="mr-2 h-6" />
-                  <span className="text-xs">Starknet</span>
-                </div>
-              ) : null}
+
+          <div className="grid p-2">
+            <div className="mr-2 flex gap-2 overflow-hidden">
+              <div className="mb-3 flex font-sans text-xl">
+                {name ? name : collection}
+              </div>
+
               {expires && quantity && quantity > 1 ? (
                 <div className="mr-auto rounded p-1 hover:bg-medium-dark-green/40">
                   <span className="text-xs">{quantity} items</span>
                 </div>
               ) : null}
             </div>
-            {!name && !quantity && expires ? (
-              <div className="items-center">
-                <Starknet className="mr-2 h-6" />
-                <span>Starknet</span>
-              </div>
-            ) : null}
-            {name && (
-              <div className="flex max-w-[280px]">
-                <span className="text-ellipsify"> {collection}</span>
+
+            {/* {name && (
+              <div className="my-1 flex">
+                <span> {collection}</span>
                 <hr />
                 <Starknet className="mr-2 h-6" />
-                <span>Starknet</span>
               </div>
-            )}
-            {!!expires && <span className="text-xs">Expires {expires}</span>}
+            )} */}
+
+            {expires && <span className="text-xs">Expires {expires}</span>}
+
             {!expires && quantity && quantity > 1 ? (
               <div className="mr-auto rounded bg-medium-dark-green/40 p-1">
                 <span className="text-xs">
@@ -94,7 +88,7 @@ const ERC721MarketplaceItem: FC<Props> = ({
               </div>
             ) : null}
             {!expires && !quantity && royaltiesBps ? (
-              <span className="flex gap-1">
+              <span className="flex gap-1 text-xs uppercase">
                 Creator Royalties: {royaltyPercent}%
                 <TooltipProvider>
                   <Tooltip
@@ -107,7 +101,8 @@ const ERC721MarketplaceItem: FC<Props> = ({
             ) : null}
           </div>
         </div>
-        <div className="grid items-start justify-end gap-y-2">
+
+        {/* <div className="grid items-start justify-end gap-y-2">
           {price ? (
             formatBN(price, 4, 18)
           ) : (
@@ -117,7 +112,7 @@ const ERC721MarketplaceItem: FC<Props> = ({
             <span className="text-xs">{formatBN(usdPrice, 4, 18)}</span>
           ) : null}
           {warning && <span className="text-red">{warning}</span>}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -52,21 +52,19 @@ const ERC721LineItem: FC<ERC721LineItemProps> = ({
     showRoyalties && collection?.royalties ? collection.royalties.bps : 500;
 
   return (
-    <div className="border-b p-2">
-      <ERC721MarketplaceItem
-        img={img}
-        name={name}
-        price={price}
-        usdPrice={usdPrice}
-        collection={collectionName}
-        expires={expires}
-        warning={warning}
-        isUnavailable={isUnavailable}
-        priceSubtitle={priceSubtitle}
-        royaltiesBps={royaltiesBps}
-        quantity={quantity}
-      />
-    </div>
+    <ERC721MarketplaceItem
+      img={img}
+      name={name}
+      price={price}
+      usdPrice={usdPrice}
+      collection={collectionName}
+      expires={expires}
+      warning={warning}
+      isUnavailable={isUnavailable}
+      priceSubtitle={priceSubtitle}
+      royaltiesBps={royaltiesBps}
+      quantity={quantity}
+    />
   );
 };
 
