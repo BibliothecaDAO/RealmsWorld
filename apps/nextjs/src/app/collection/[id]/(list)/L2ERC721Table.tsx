@@ -28,11 +28,13 @@ export const L2ERC721Table = ({
   const searchParams = useSearchParams();
 
   const sortDirection = searchParams.get("sortDirection");
+  const sortBy = searchParams.get("sortBy");
 
   const filters = {
     limit: 20,
     contractAddress,
     direction: sortDirection,
+    orderBy: sortBy,
   };
 
   if (ownerAddress) {

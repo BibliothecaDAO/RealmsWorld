@@ -1,3 +1,4 @@
+import { padAddress } from "@/utils/utils";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 
@@ -23,17 +24,14 @@ export const erc721TokensRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 50;
       //TODO add orderBy conditions
-      const {
-        cursor,
-        contractAddress,
-        owner,
-        orderBy,
-        block,
-        direction,
-        listings,
-      } = input;
+      const { cursor, contractAddress, owner, orderBy, block, direction } =
+        input;
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
+      const orderByVariable =
+        orderBy == "floorAskPrice"
+          ? schema.erc721Tokens.listings
+          : schema.erc721Tokens.token_id;
       if (direction === "asc") {
         orderByFilter.push(asc(schema.erc721Tokens.token_id));
       } else {
@@ -48,12 +46,11 @@ export const erc721TokensRouter = createTRPCRouter({
           ),
         );
       }
-      let withListings = false;
-      if (listings) {
-        withListings = true;
-      }
+
       if (owner) {
-        whereFilter.push(eq(schema.erc721Tokens.owner, owner.toLowerCase()));
+        whereFilter.push(
+          eq(schema.erc721Tokens.owner, padAddress(owner.toLowerCase())),
+        );
       }
       if (cursor) {
         whereFilter.push(
@@ -67,13 +64,11 @@ export const erc721TokensRouter = createTRPCRouter({
       if (!block) {
         whereFilter.push(sql`upper_inf(_cursor)`);
       }
+
       const items = await ctx.db.query.erc721Tokens.findMany({
         limit: limit + 1,
         where: and(...whereFilter),
         orderBy: orderByFilter,
-        /*with: {
-          listings: withListings,
-        },*/
       });
 
       let nextCursor: typeof cursor | undefined = undefined;
@@ -97,8 +92,9 @@ export const erc721TokensRouter = createTRPCRouter({
         ),
         with: {
           listings: {
-            where: (listings, { sql }) => sql`upper_inf(_cursor)`,
-            orderBy: (listings, { desc }) => desc(listings.active),
+            where: (listings, { sql }) =>
+              and(sql`upper_inf(_cursor)`, eq(listings.active, true)),
+            orderBy: (listings, { asc }) => asc(listings.price),
           },
           transfers: true,
         },

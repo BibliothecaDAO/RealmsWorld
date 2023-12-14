@@ -372,7 +372,9 @@ export function BuyModal({
                     max={stepData?.totalSteps || 0}
                   />
                 )*/}
-                  {!stepData && <Loader className="h-24 animate-spin" />}
+                  {!stepData && (
+                    <Loader className="mx-auto h-24 animate-spin" />
+                  )}
                   {/*stepData && (
                   <Progress
                     title={stepData?.currentStep.action || ""}
@@ -380,7 +382,7 @@ export function BuyModal({
                   />
                 )*/}
                   <Button disabled={true} className="m-4">
-                    <Loader />
+                    <Loader className="mr-2 animate-spin" />
                     {stepData?.currentStepItem?.txHashes
                       ? copy.ctaAwaitingValidation
                       : copy.ctaAwaitingApproval}

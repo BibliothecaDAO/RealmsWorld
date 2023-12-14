@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { bigint, integer, json, text } from "drizzle-orm/pg-core";
+import { bigint, integer, json, numeric, text } from "drizzle-orm/pg-core";
 
 import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
@@ -10,10 +10,14 @@ export const erc721Tokens = pgSqlTable("erc721_tokens", {
   id: text("id").notNull(),
   token_id: integer("token_id").notNull(),
   contract_address: text("contract_address"),
+  /*tokenId: integer("token_id").notNull(),
+  contractAddress: text("contract_address"),*/
   minter: text("minter"),
   owner: text("owner"),
   image: text("image"),
   name: text("name"),
+  //price: numeric("price"),
+  //lastPrice: numeric('last_price'),
   metadata: json("metadata").$type<{
     attributes:
       | {

@@ -3,7 +3,11 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { NETWORK_NAME } from "@/constants/env";
 import type { RouterOutputs } from "@/utils/api";
 import { getTokenContractAddresses } from "@/utils/utils";
-import { useAccount, useContractWrite } from "@starknet-react/core";
+import {
+  useAccount,
+  useContractWrite,
+  useWaitForTransaction,
+} from "@starknet-react/core";
 import { uint256 } from "starknet";
 import { formatUnits, parseUnits } from "viem";
 
@@ -148,6 +152,17 @@ export const BuyModalRender: FC<Props> = ({
       },
     ],
   });
+  const { data: transactionData, error: txErrror } = useWaitForTransaction({
+    hash: data?.transaction_hash,
+    watch: true,
+  });
+  useEffect(() => {
+    if (data?.transaction_hash) {
+      if (transactionData?.execution_status == "SUCCEEDED") {
+        setBuyStep(BuyStep.Complete);
+      }
+    }
+  }, [data, transactionData, transactionError]);
 
   const buyToken = useCallback(async () => {
     if (!listing) {

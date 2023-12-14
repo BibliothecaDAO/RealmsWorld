@@ -108,18 +108,24 @@ const GridDetails = ({
       token={token}
       attributeKeys={["type", "tier", "level", "health"]}
     />
-    <Price />
+    <Price listing={token?.listings?.[0]} />
     <div className="mt-3 text-xs opacity-70">{starkName}</div>
   </div>
 );
 
-const Price = () => {
+const Price = ({
+  listing,
+}: {
+  listing: RouterOutputs["erc721Tokens"]["all"]["items"][number]["listings"][number];
+}) => {
   return (
     <div className="flex justify-between">
-      <div>
-        <h6 className="uppercase">Price</h6>
-        <div>100</div>
-      </div>
+      {listing?.price && (
+        <div>
+          <h6 className="uppercase">Price</h6>
+          <div>{listing?.price}</div>
+        </div>
+      )}
       <div>
         <h6 className="uppercase">Last price</h6>
         <div>100</div>
@@ -138,7 +144,7 @@ const ListDetails = ({
   return (
     <div className="px-6 py-3">
       <div className="flex justify-between border-b pb-2">
-        <span className="">{decodeURIComponent(token.name ?? "")}</span>
+        <span className="">{decodeURIComponent(token?.name ?? "")}</span>
       </div>
       <div className="mt-3 text-xs opacity-70">{starkName}</div>
     </div>
