@@ -30,12 +30,12 @@ export const erc721TokensRouter = createTRPCRouter({
       const orderByFilter: SQL[] = [];
       const orderByVariable =
         orderBy == "floorAskPrice"
-          ? schema.erc721Tokens.listings
+          ? schema.erc721Tokens.price
           : schema.erc721Tokens.token_id;
       if (direction === "asc") {
-        orderByFilter.push(asc(schema.erc721Tokens.token_id));
+        orderByFilter.push(asc(orderByVariable));
       } else {
-        orderByFilter.push(desc(schema.erc721Tokens.token_id));
+        orderByFilter.push(desc(orderByVariable));
       }
 
       if (contractAddress) {

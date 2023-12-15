@@ -29,7 +29,7 @@ if (!process.env.VERCEL_ENV) {
 
 neonConfig.fetchConnectionCache = true;
 
-export const sql = neon(process.env.DATABASE_URL!);
+export const neonSql = neon(process.env.DATABASE_URL!);
 //const queryClient = postgres('postgres://postgres:postgres@localhost:5432');
 
-export const db = drizzle(sql, { schema });
+export const db = drizzle(neonSql, { schema });

@@ -108,22 +108,22 @@ const GridDetails = ({
       token={token}
       attributeKeys={["type", "tier", "level", "health"]}
     />
-    <Price listing={token?.listings?.[0]} />
+    <Price token={token} />
     <div className="mt-3 text-xs opacity-70">{starkName}</div>
   </div>
 );
 
 const Price = ({
-  listing,
+  token,
 }: {
-  listing: RouterOutputs["erc721Tokens"]["all"]["items"][number]["listings"][number];
+  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
 }) => {
   return (
     <div className="flex justify-between">
-      {listing?.price && (
+      {token?.price && (
         <div>
           <h6 className="uppercase">Price</h6>
-          <div>{listing?.price}</div>
+          <div>{token?.price}</div>
         </div>
       )}
       <div>

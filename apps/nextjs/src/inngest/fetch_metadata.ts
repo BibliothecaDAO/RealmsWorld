@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { hash, shortString, uint256 } from "starknet";
 
-import { db, eq, schema } from "@realms-world/db";
+import { and, db, eq, schema, sql } from "@realms-world/db";
 
 import { getTokenContractAddresses } from "../utils/utils";
 //import { Client } from "https://esm.sh/ts-postgres";
@@ -101,9 +101,12 @@ export const fetchMetadata = inngest.createFunction(
             metadata: { attributes: parsedJson.attributes },
           })
           .where(
-            eq(
-              schema.erc721Tokens.id,
-              event.data.contract_address + ":" + event.data.tokenId,
+            and(
+              eq(
+                schema.erc721Tokens.id,
+                event.data.contract_address + ":" + event.data.tokenId,
+              ),
+              sql`upper_inf(_cursor)`,
             ),
           )
           .returning({ updatedId: schema.erc721Tokens.id });
