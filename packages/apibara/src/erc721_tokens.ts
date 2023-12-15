@@ -14,6 +14,7 @@ import {
   erc721ContractEvents,
   marketplaceContractEvents,
   ORDER_EVENT,
+  OrderActionType,
   TRANSFER_EVENT,
   whitelistedContracts,
 } from "./utils.ts";
@@ -71,22 +72,67 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
         };
       }
     }
+    //Refactor to market indexer once apibara multi-table indexers availble
     case ORDER_EVENT: {
       const tokenId = Number(BigInt(event.data[1]));
       const collectionId = Number(BigInt(event.data[2]));
       const price = formatUnits(BigInt(event.data[3]).toString(), 18);
+      const type = Number(BigInt(event.data[7]));
 
-      return {
-        entity: {
-          id:
-            whitelistedContracts[collectionId - 1].toLowerCase() +
-            ":" +
-            tokenId,
-        },
-        update: {
-          price: price,
-        },
-      };
+      switch (type) {
+        case OrderActionType.Create:
+          return {
+            entity: {
+              id:
+                whitelistedContracts[collectionId - 1].toLowerCase() +
+                ":" +
+                tokenId,
+            },
+            update: {
+              price: price,
+            },
+          };
+        case OrderActionType.Edit:
+          return {
+            entity: {
+              id:
+                whitelistedContracts[collectionId - 1].toLowerCase() +
+                ":" +
+                tokenId,
+            },
+            update: {
+              price: price,
+            },
+          };
+        case OrderActionType.Accept:
+          return {
+            entity: {
+              id:
+                whitelistedContracts[collectionId - 1].toLowerCase() +
+                ":" +
+                tokenId,
+            },
+            update: {
+              price: undefined,
+            },
+          };
+        case OrderActionType.Cancel:
+          return {
+            entity: {
+              id:
+                whitelistedContracts[collectionId - 1].toLowerCase() +
+                ":" +
+                tokenId,
+            },
+            update: {
+              price: undefined,
+            },
+          };
+        default: {
+          console.warn("Unknown event", event.keys[0]);
+          return [];
+        }
+      }
     }
     default: {
       console.warn("Unknown event", event.keys[0]);

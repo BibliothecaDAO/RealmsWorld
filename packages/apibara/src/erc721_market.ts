@@ -28,13 +28,6 @@ export const config: Config<Starknet, Postgres> = {
   },
 };
 
-enum ActionType {
-  Create = 0,
-  Edit = 1,
-  Cancel = 2,
-  Accept = 3,
-}
-
 export default function transform({ header, events }: Block) {
   return events?.flatMap(({ event, receipt }) => {
     const tokenId = Number(BigInt(event.data[1]));
@@ -44,7 +37,7 @@ export default function transform({ header, events }: Block) {
     const type = Number(BigInt(event.data[7]));
 
     switch (type) {
-      case ActionType.Create:
+      case OrderActionType.Create:
         return {
           insert: {
             hash: receipt.transactionHash,
@@ -61,7 +54,7 @@ export default function transform({ header, events }: Block) {
             active: Boolean(BigInt(event.data[5])),
           },
         };
-      case ActionType.Edit:
+      case OrderActionType.Edit:
         return {
           entity: {
             id: orderId,
@@ -70,7 +63,7 @@ export default function transform({ header, events }: Block) {
             price: price, //
           },
         };
-      case ActionType.Cancel:
+      case OrderActionType.Cancel:
         return {
           entity: {
             id: orderId,
@@ -79,7 +72,7 @@ export default function transform({ header, events }: Block) {
             active: Boolean(BigInt(event.data[5])),
           },
         };
-      case ActionType.Accept:
+      case OrderActionType.Accept:
         return {
           entity: {
             id: orderId,

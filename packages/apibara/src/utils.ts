@@ -30,3 +30,10 @@ export const marketplaceContractEvents = [
     includeReceipt: true,
   },
 ];
+
+export enum OrderActionType {
+  Create = 0,
+  Edit = 1,
+  Cancel = 2,
+  Accept = 3,
+}
