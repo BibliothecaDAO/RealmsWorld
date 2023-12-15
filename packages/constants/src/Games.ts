@@ -76,13 +76,13 @@ export const games: Game[] = [
     screenshotLength: 4,
   },
   {
-    name: "Loot Survivor x crypts-and-caverns",
+    name: "Loot Survivor x Crypts And Caverns",
     id: "loot-survivor-x-crypts-and-caverns",
     developer: "CheDao",
     genres: ["Play to Die", "Roguelike"],
     color: "#f5f5f5",
     status: "beta",
-    description: "Play to Die",
+    description: "Crypts And Caverns",
     longform:
       "Loot Survivor-C&C is an extension developed based on Loot Survivor. Each C&C will become an independent instance. Players can enter the instance with their owned C&C, or challenge other players' instances by paying fees. The rewards and difficulty of the instance will be designed according to the points attribute of C&C. Players need to defeat all BOSSes to complete the challenge and get rewards.",
     links: {
