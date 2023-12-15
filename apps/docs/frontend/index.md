@@ -31,7 +31,7 @@ bun run dev
 
 ## Enviroment Variables
 
-Depending on which environemnt you want to run, either copy the values from `.env.goerli` or `.env.mainnet` into your `.env` file.
+Depending on which environment you want to run, either copy the values from `.env.goerli` or `.env.mainnet` into your `.env` file.
 
 ## Indexers
 
