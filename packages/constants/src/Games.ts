@@ -104,7 +104,7 @@ export const games: Game[] = [
     color: "#fbf6c0",
     status: "alpha",
     description: "The Mysteries Below the Realms",
-    longform: "Explore the endless mysteries of the The Underworld. A living autonomous (under)world of drama, story and danger, waiting to be explored and shaped by its inhabitants, and occupying the liminal space between and underneath. Underworld is an extension to Realms built on Starknet and Dojo, adding composable building blocks, and enabling a range of interoperable game experiences. The flagship game will be a retro narrative dungeon crawler.",
+    longform: "Explore the endless mysteries of The Underworld. A living autonomous (under)world of drama, story and danger, waiting to be explored and shaped by its inhabitants, and occupying the liminal space between and underneath. Underworld is an extension to Realms built on Starknet and Dojo, adding composable building blocks, and enabling a range of interoperable game experiences. The flagship game will be a retro narrative dungeon crawler.",
     links: {
       homepage: "https://lootunder.world",
       twitter: "https://x.com/LootUnderworld",
