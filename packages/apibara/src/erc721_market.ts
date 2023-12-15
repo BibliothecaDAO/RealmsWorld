@@ -4,7 +4,11 @@ import type { Postgres } from "https://esm.sh/@apibara/indexer/sink/postgres";
 import type { Block, Starknet } from "https://esm.sh/@apibara/indexer/starknet";
 import { formatUnits } from "https://esm.sh/viem";
 
-import { marketplaceContractEvents, whitelistedContracts } from "./utils.ts";
+import {
+  marketplaceContractEvents,
+  OrderActionType,
+  whitelistedContracts,
+} from "./utils.ts";
 
 //TODO Better path for contract addresses
 
