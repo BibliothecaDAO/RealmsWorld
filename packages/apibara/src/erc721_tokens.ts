@@ -78,7 +78,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
       const collectionId = Number(BigInt(event.data[2]));
       const price = formatUnits(BigInt(event.data[3]).toString(), 18);
       const type = Number(BigInt(event.data[7]));
-
+      const expiration = Number(BigInt(event.data[4]));
       switch (type) {
         case OrderActionType.Create:
           return {
@@ -90,6 +90,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
             },
             update: {
               price: price,
+              expiration: expiration,
             },
           };
         case OrderActionType.Edit:
@@ -102,6 +103,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
             },
             update: {
               price: price,
+              expiration: expiration,
             },
           };
         case OrderActionType.Accept:
@@ -114,6 +116,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
             },
             update: {
               price: undefined,
+              expiration: undefined,
             },
           };
         case OrderActionType.Cancel:
@@ -126,6 +129,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
             },
             update: {
               price: undefined,
+              expiration: undefined,
             },
           };
         default: {

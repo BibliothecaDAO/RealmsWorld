@@ -16,7 +16,8 @@ export const erc721Tokens = pgSqlTable("erc721_tokens", {
   owner: text("owner"),
   image: text("image"),
   name: text("name"),
-  //price: numeric("price"),
+  price: numeric("price"),
+  expiration: integer("expiration"),
   //lastPrice: numeric('last_price'),
   metadata: json("metadata").$type<{
     attributes:
