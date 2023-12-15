@@ -45,9 +45,7 @@ export const L2ERC721Card = ({
         <TokenDetails
           token={token}
           isGrid={isGrid}
-          starkName={useStarkDisplayName(
-            token.transfers?.[0]?.toAddress ?? token.minter ?? "",
-          )}
+          starkName={useStarkDisplayName(token.owner ?? token.minter ?? "")}
         />
       </Link>
     </div>
@@ -126,10 +124,13 @@ const Price = ({
           <div>{token?.price}</div>
         </div>
       )}
-      <div>
-        <h6 className="uppercase">Last price</h6>
-        <div>100</div>
-      </div>
+      {/*TODO Add last price sold */}
+      {/*token?.lastPrice && (
+        <div>
+          <h6 className="uppercase">Last price</h6>
+          <div>100</div>
+        </div>
+      )*/}
     </div>
   );
 };

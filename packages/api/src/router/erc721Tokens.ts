@@ -1,9 +1,9 @@
-import { padAddress } from "@/utils/utils";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
 import { and, asc, desc, eq, gte, lte, schema } from "@realms-world/db";
+import { padAddress } from "@realms-world/utils";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -27,16 +27,19 @@ export const erc721TokensRouter = createTRPCRouter({
       const { cursor, contractAddress, owner, orderBy, block, direction } =
         input;
       const whereFilter: SQL[] = [];
-      const orderByFilter: SQL[] = [];
+
       const orderByVariable =
         orderBy == "floorAskPrice"
           ? schema.erc721Tokens.price
           : schema.erc721Tokens.token_id;
-      if (direction === "asc") {
-        orderByFilter.push(asc(orderByVariable));
+      const orderByFilter: SQL =
+        direction === "asc" ? asc(orderByVariable) : desc(orderByVariable);
+
+      /*if (direction === "asc") {
+        orderByFilter = asc(orderByVariable);
       } else {
-        orderByFilter.push(desc(orderByVariable));
-      }
+        orderByFilter = desc(orderByVariable);
+      }*/
 
       if (contractAddress) {
         whereFilter.push(
