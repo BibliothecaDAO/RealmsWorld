@@ -18,7 +18,10 @@
     "next/router.d.ts",
     "next/dist/client/router.d.ts"
   ],
-  "deno.enable": false,
+  /*"deno.enable": false,
   "deno.lint": false,
-  "deno.unstable": false
+  "deno.unstable": false*/
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.unstable": true
 }

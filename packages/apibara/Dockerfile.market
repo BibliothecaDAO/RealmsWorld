@@ -1,11 +1,17 @@
-FROM quay.io/apibara/sink-postgres:0.4.9
+FROM quay.io/apibara/sink-postgres:0.4.10
 
 ARG NETWORK_NAME
+ARG POSTGRES_CONNECTION_STRING
+ARG AUTH_TOKEN
+ARG SCRIPT
+
 ENV ENVFILE=${NETWORK_NAME}.env
+ENV POSTGRES_CONNECTION_STRING=POSTGRES_CONNECTION_STRING
+ENV AUTH_TOKEN=AUTH_TOKEN
 
 COPY src ./data/src
 COPY $ENVFILE ./data/.env
+COPY ${SCRIPT} ./data/src/script.ts
 
-ENV AUTH_TOKEN=dna_FCqLW4vWwpveLSLpp16V
+CMD ["run", "--allow-env=/data/.env", "--allow-env-from-env=POSTGRES_CONNECTION_STRING,AUTH_TOKEN", "/data/src/script.ts"]
 
-CMD ["run", "--allow-env=/data/.env", "/data/src/erc721_market.ts",  "-A=dna_FCqLW4vWwpveLSLpp16V", "--persist-to-etcd=decent-respect.railway.internal:2379", "--sink-id=market"]
