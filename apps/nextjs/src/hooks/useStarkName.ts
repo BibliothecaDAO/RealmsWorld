@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useMemo } from "react";
 import { shortenHex } from "@/utils/utils";
 import { useStarkName } from "@starknet-react/core";

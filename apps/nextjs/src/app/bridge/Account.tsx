@@ -4,7 +4,7 @@ import React from "react";
 import { TransferLog } from "@/app/bridge/TransferLog";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
 import { useCompleteTransferToL1 } from "@/hooks/useTransferToL1";
-import { api } from "@/utils/api";
+import { api } from "@/trpc/react";
 import { padAddress } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
 //import { evaluate } from "@starkware-industries/commons-js-utils";

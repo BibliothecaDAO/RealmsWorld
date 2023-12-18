@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useUIContext } from "@/app/providers/UIProvider";
-import { api } from "@/utils/api";
+import { api } from "@/trpc/react";
 import { useInView } from "framer-motion";
 
 import { TokenCardSkeleton } from "../../TokenCardSkeleton";

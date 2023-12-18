@@ -6,11 +6,12 @@ import { Provider } from "./providers/providers";
 
 import "@realms-world/styles/globals.css";
 
+import { cache } from "react";
 import { headers } from "next/headers";
+import { TRPCReactProvider } from "@/trpc/react";
 
 import { Footer } from "./_components/Footer";
 import { TopNav } from "./_components/TopNav";
-import { TRPCReactProvider } from "./providers/TRPCProvider";
 import { UIContextProvider } from "./providers/UIProvider";
 import { WalletsProvider } from "./providers/WalletsProvider";
 
@@ -36,6 +37,8 @@ const backgroundImageStyle = {
   backgroundOpacity: 0.1,
 };
 
+const getHeaders = cache(async () => headers());
+
 export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -43,7 +46,7 @@ export default function Layout(props: { children: React.ReactNode }) {
         style={backgroundImageStyle}
         className={`bg-dark-green ${baiJamjuree.variable} ${karla.variable} text-bright-yellow`}
       >
-        <TRPCReactProvider headers={headers()}>
+        <TRPCReactProvider headersPromise={getHeaders()}>
           <UIContextProvider>
             <Provider>
               <WalletsProvider>

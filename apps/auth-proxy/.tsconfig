@@ -1,5 +1,5 @@
 {
-  "extends": "@acme/tsconfig/base.json",
+  "extends": "@realms-world/tsconfig/base.json",
   "include": [
     "routes"
   ]

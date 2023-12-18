@@ -10,7 +10,7 @@ import { useCallback, useState } from "react";
 
 import { GET_TRANSFERS_ENDPOINT } from "@/constants/env";
 import { getBridgeDeposits } from "@/lib/subgraph/getBridgeDeposits";
-import { api } from "@/utils/api";
+import { api } from "@/trpc/react";
 import { padAddress } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { useInfiniteQuery } from "@tanstack/react-query";

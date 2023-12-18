@@ -2,7 +2,16 @@ import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import { and, asc, desc, eq, gte, lte, schema } from "@realms-world/db";
+import {
+  and,
+  asc,
+  desc,
+  eq,
+  gte,
+  isNotNull,
+  lte,
+  schema,
+} from "@realms-world/db";
 import { padAddress } from "@realms-world/utils";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
@@ -66,6 +75,10 @@ export const erc721TokensRouter = createTRPCRouter({
       }*/
       if (!block) {
         whereFilter.push(sql`upper_inf(_cursor)`);
+      }
+
+      if (orderBy == "floorAskPrice") {
+        whereFilter.push(isNotNull(schema.erc721Tokens.price));
       }
 
       const items = await ctx.db.query.erc721Tokens.findMany({

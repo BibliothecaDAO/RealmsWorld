@@ -5,8 +5,6 @@ import type { erc721Tokens } from "@/constants";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
 import type { Collection, Market, Token } from "@/types";
-import type { RouterOutputs } from "@/utils/api";
-import { api } from "@/utils/api";
 import { getTokenContractAddresses, shortenHex } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
 import { formatEther } from "viem";

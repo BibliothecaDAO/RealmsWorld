@@ -2,7 +2,7 @@
 
 import { useTimeDiff } from "@/hooks/useTimeDiff";
 import Lords from "@/icons/lords.svg";
-import { api } from "@/utils/api";
+import { api } from "@/trpc/react";
 import { findTokenName, padAddress } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 import { Clock } from "lucide-react";
