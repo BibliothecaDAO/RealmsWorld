@@ -15,6 +15,7 @@ export const AttributeTags = () => {
           return (
             <Button
               variant={"outline"}
+              className="font-base"
               size={"xs"}
               key={index}
               onClick={() =>

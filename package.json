@@ -2,7 +2,7 @@
   "name": "@realms-world/monorepo",
   "private": true,
   "engines": {
-    "node": ">=v18.18.0"
+    "node": ">=20.10"
   },
   "packageManager": "bun@1.0.6",
   "workspaces": [
