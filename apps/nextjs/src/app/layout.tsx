@@ -8,6 +8,7 @@ import "@realms-world/styles/globals.css";
 
 import { cache } from "react";
 import { headers } from "next/headers";
+import { env } from "@/env";
 import { TRPCReactProvider } from "@/trpc/react";
 
 import { Footer } from "./_components/Footer";
@@ -37,7 +38,7 @@ const backgroundImageStyle = {
   backgroundOpacity: 0.1,
 };
 
-const getHeaders = cache(async () => headers());
+const getHeaders = cache(() => Promise.resolve(headers()));
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
@@ -72,6 +73,11 @@ const description =
   "Created for Adventurers by Bibliotheca DAO - your window into the onchain world of Realms and the Lootverse.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    env.VERCEL_ENV === "production"
+      ? "https://realms.world"
+      : "http://localhost:3000",
+  ),
   title: {
     template: "%s | Realms.World",
     default: "Realms.World | Home to the Adventurers",

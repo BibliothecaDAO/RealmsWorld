@@ -1,6 +1,6 @@
 // Importing env files here to validate on build
-import "./src/env.mjs";
-import "@realms-world/auth/env.mjs";
+import "./src/env.js";
+import "@realms-world/auth/env.js";
 
 import createMDX from "@next/mdx";
 
