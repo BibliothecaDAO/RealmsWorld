@@ -115,8 +115,8 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
                 tokenId,
             },
             update: {
-              price: undefined,
-              expiration: undefined,
+              price: null,
+              expiration: null,
             },
           };
         case OrderActionType.Cancel:
@@ -128,8 +128,8 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
                 tokenId,
             },
             update: {
-              price: undefined,
-              expiration: undefined,
+              price: null,
+              expiration: null,
             },
           };
         default: {
