@@ -1,7 +1,6 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { NETWORK_NAME } from "@/constants/env";
-import type { RouterOutputs } from "@/utils/api";
 import { getTokenContractAddresses } from "@/utils/utils";
 import {
   useAccount,
@@ -11,6 +10,7 @@ import {
 import { uint256 } from "starknet";
 import { formatUnits, parseUnits } from "viem";
 
+import type { RouterOutputs } from "@realms-world/api";
 import {
   LORDS,
   MarketplaceCollectionIds,
@@ -113,7 +113,7 @@ export const BuyModalRender: FC<Props> = ({
   const is1155 = token?.token?.kind === "erc1155";*/
   const isOwner = token?.owner?.toLowerCase() === address?.toLowerCase();
 
-  const listing = token?.listings[0];
+  const listing = token?.listings?.[0];
 
   const quantityRemaining = useMemo(() => {
     if (orderId) {
@@ -139,7 +139,7 @@ export const BuyModalRender: FC<Props> = ({
         entrypoint: "approve",
         calldata: [
           MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
-          parseUnits(`${listing?.price}`, 18).toString(),
+          parseUnits(`${listing?.price ?? 0}`, 18).toString(),
           0,
         ],
       },

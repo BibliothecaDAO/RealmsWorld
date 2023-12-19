@@ -10,7 +10,6 @@ import NumberSelect from "@/app/_components/NumberSelect";
 import { RenderExplorers } from "@/app/_components/wallet/utils";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import Lords from "@/icons/lords.svg";
-import type { RouterOutputs } from "@/utils/api";
 import { shortenHex } from "@/utils/utils";
 // import Progress from '../Progress'
 import {
@@ -24,6 +23,7 @@ import { useAccount } from "@starknet-react/core";
 import { Loader } from "lucide-react";
 import { formatUnits } from "viem";
 
+import type { RouterOutputs } from "@realms-world/api";
 import {
   Button,
   Dialog,
@@ -33,8 +33,8 @@ import {
 } from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
-import ERC721LineItem from "../../ERC721LineItem";
 import type { BuyModalStepData } from "./BuyModalRender";
+import ERC721LineItem from "../../ERC721LineItem";
 import { BuyModalRender, BuyStep } from "./BuyModalRender";
 
 interface PurchaseData {
@@ -199,7 +199,7 @@ export function BuyModal({
         const finalTxHashes = lastStepItems[lastStepItems.length - 1]?.txHashes;
 
         const price =
-          token?.listings[0]?.price ??
+          token?.listings?.[0]?.price ??
           0; /*|| BigInt(token?.token?.lastSale?.price?.amount?.raw || 0)*/
 
         return (
@@ -385,9 +385,10 @@ export function BuyModal({
               {buyStep === BuyStep.Complete && token && (
                 <div className="flex flex-col">
                   <div className="flex flex-col items-center text-center">
-                    {totalPurchases === 1 ? (
-                      <h5 className="my-8 text-center">Congratulations!</h5>
-                    ) : (
+                    {/*totalPurchases === 1 ? (*/}
+                    <h5 className="my-8 text-center">Congratulations!</h5>
+                    {
+                      /*}) : (
                       <>
                         <div
                           className={`text-color: ${
@@ -415,14 +416,15 @@ export function BuyModal({
                         </h5>
                       </>
                     )}
-                    {totalPurchases === 1 && token?.image && (
-                      <Image
-                        src={token?.image}
-                        alt="token image"
-                        width={100}
-                        height={100}
-                      />
-                    )}
+                    {totalPurchases === 1 &&*/ token?.image && (
+                        <Image
+                          src={token?.image}
+                          alt="token image"
+                          width={100}
+                          height={100}
+                        />
+                      )
+                    }
                     {totalPurchases > 1 && (
                       <div className="flex flex-col gap-y-2">
                         {/*TODO add explorer
@@ -457,36 +459,32 @@ export function BuyModal({
                       </div>
                     )}
 
-                    {totalPurchases === 1 && (
-                      <>
-                        <div className="m-w-full my-8 flex items-center justify-center">
-                          {!!token.collection?.image && (
-                            <div className="mr-1">
-                              <img
-                                src={token.collection?.image}
-                                style={{
-                                  width: 24,
-                                  height: 24,
-                                  borderRadius: "50%",
-                                }}
-                              />
-                            </div>
-                          )}
-                          <span className="text-ellipsify max-w-full">
-                            {token?.name ? token?.name : `#${token?.token_id}`}
-                          </span>
+                    <div className="m-w-full my-8 flex items-center justify-center">
+                      {!!token.collection?.image && (
+                        <div className="mr-1">
+                          <img
+                            src={token.collection?.image}
+                            style={{
+                              width: 24,
+                              height: 24,
+                              borderRadius: "50%",
+                            }}
+                          />
                         </div>
-                        <div className="mb-1 flex items-center">
-                          <div className="text-green mr-1">
-                            <FontAwesomeIcon icon={faCheckCircle} />
-                          </div>
-                          <span>
-                            Your transaction went through successfully
-                          </span>
-                        </div>
+                      )}
+                      <span className="text-ellipsify max-w-full">
+                        {token?.name ? token?.name : `#${token?.token_id}`}
+                      </span>
+                    </div>
+                    <div className="mb-1 flex items-center">
+                      <div className="text-green mr-1">
+                        <FontAwesomeIcon icon={faCheckCircle} />
+                      </div>
+                      <span>Your transaction went through successfully</span>
+                    </div>
 
-                        <div className="flex items-center gap-1">
-                          {/*TODO explorers 
+                    <div className="flex items-center gap-1">
+                      {/*TODO explorers 
                         finalTxHashes?.map((hash, index) => {
                           const truncatedTxHash = shortenHex(hash.txHash);
                           const blockExplorerBaseUrl = getChainBlockExplorerUrl(
@@ -505,9 +503,7 @@ export function BuyModal({
                             </Anchor>
                           );
                         })*/}
-                        </div>
-                      </>
-                    )}
+                    </div>
                   </div>
                   <div className="flex flex-col gap-1.5 p-2">
                     <Button

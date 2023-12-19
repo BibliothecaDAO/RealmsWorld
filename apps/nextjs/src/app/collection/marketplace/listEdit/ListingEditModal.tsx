@@ -6,12 +6,12 @@ import type {
 } from "react";
 import React, { useEffect, useState } from "react";
 import Lords from "@/icons/lords.svg";
-import type { RouterOutputs } from "@/utils/api";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Loader } from "lucide-react";
 import { formatUnits, zeroAddress } from "viem";
 
+import type { RouterOutputs } from "@realms-world/api";
 import {
   Alert,
   Button,
@@ -56,9 +56,7 @@ interface Props {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>];
   listingId?: string;
   tokenId?: string;
-  token?:
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
-    | RouterOutputs["erc721Tokens"]["byId"];
+  token?: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   collectionId?: string;
   normalizeRoyalties?: boolean;
   copyOverrides?: Partial<typeof ModalCopy>;

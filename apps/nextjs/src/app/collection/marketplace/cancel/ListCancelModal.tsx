@@ -6,11 +6,11 @@ import type {
 } from "react";
 import React, { useEffect, useState } from "react";
 import { useTimeDiff } from "@/hooks/useTimeDiff";
-import type { RouterOutputs } from "@/utils/api";
 import { faGasPump } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Loader } from "lucide-react";
 
+import type { RouterOutputs } from "@realms-world/api";
 import {
   Alert,
   Button,

@@ -1,8 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
-import type { RouterOutputs } from "@/utils/api";
 import { findTokenName } from "@/utils/utils";
+
+import type { RouterOutputs } from "@realms-world/api";
+import { Button } from "@realms-world/ui";
+
+import { BuyModal } from "../../marketplace/buy/BuyModal";
 
 export const L2ERC721Card = ({
   token,
@@ -20,34 +24,28 @@ export const L2ERC721Card = ({
         isGrid ?? "flex w-full"
       }`}
     >
-      <Link
-        href={`/collection/${findTokenName(token.contract_address)}/${
-          token.token_id
-        }`}
-      >
-        <div className={` ${!isGrid && "p-2"} relative`}>
-          {token.image && (
-            <Image
-              src={token.image}
-              alt={token.name ?? `beasts-${token.token_id}`}
-              className={isGrid ? "mx-auto" : ""}
-              width={imageSize}
-              height={imageSize}
-            />
-          )}
-          {isGrid && (
-            <span className="absolute bottom-3 right-3 border bg-black px-3 py-1 text-xs">
-              #{token.token_id}
-            </span>
-          )}
-        </div>
+      <div className={` ${!isGrid && "p-2"} relative`}>
+        {token.image && (
+          <Image
+            src={token.image}
+            alt={token.name ?? `beasts-${token.token_id}`}
+            className={isGrid ? "mx-auto" : ""}
+            width={imageSize}
+            height={imageSize}
+          />
+        )}
+        {isGrid && (
+          <span className="absolute bottom-3 right-3 border bg-black px-3 py-1 text-xs">
+            #{token.token_id}
+          </span>
+        )}
+      </div>
 
-        <TokenDetails
-          token={token}
-          isGrid={isGrid}
-          starkName={useStarkDisplayName(token.owner ?? token.minter ?? "")}
-        />
-      </Link>
+      <TokenDetails
+        token={token}
+        isGrid={isGrid}
+        starkName={useStarkDisplayName(token.owner ?? token.minter ?? "")}
+      />
     </div>
   );
 };
@@ -106,8 +104,21 @@ const GridDetails = ({
       token={token}
       attributeKeys={["type", "tier", "level", "health"]}
     />
-    <Price token={token} />
+    {token?.price && <Price token={token} />}
     <div className="mt-3 text-xs opacity-70">{starkName}</div>
+    {token?.price && (
+      <BuyModal
+        trigger={
+          <Button className="w-full" size={"lg"}>
+            Buy Now
+          </Button>
+        }
+        // tokenId={tokenId}
+        token={token}
+        collectionId={token.contract_address}
+        orderId={0}
+      />
+    )}
   </div>
 );
 
@@ -118,12 +129,10 @@ const Price = ({
 }) => {
   return (
     <div className="flex justify-between">
-      {token?.price && (
-        <div>
-          <h6 className="uppercase">Price</h6>
-          <div>{token?.price}</div>
-        </div>
-      )}
+      <div>
+        <h6 className="uppercase">Price</h6>
+        <div>{token?.price}</div>
+      </div>
       {/*TODO Add last price sold */}
       {/*token?.lastPrice && (
         <div>

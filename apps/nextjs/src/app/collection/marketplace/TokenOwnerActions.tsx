@@ -2,9 +2,9 @@
 
 import React from "react";
 import Lords from "@/icons/lords.svg";
-import type { RouterOutputs } from "@/utils/api";
 import { RefreshCw, Trash2 } from "lucide-react";
 
+import type { RouterOutputs } from "@realms-world/api";
 import { Button } from "@realms-world/ui";
 
 import { ListCancelModal } from "./cancel/ListCancelModal";
