@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useLordsPrice } from "@/hooks/useLordsPrice";
 import Album from "@/icons/album.svg";
 import Bridge from "@/icons/bridge.svg";
 import Coins from "@/icons/coins.svg";
 import Crown from "@/icons/crown.svg";
 import Discord from "@/icons/discord.svg";
 import Gamepad from "@/icons/gamepad.svg";
+import LordsIcon from "@/icons/lords.svg";
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
 import { Github, Twitter, X } from "lucide-react";
@@ -19,6 +21,8 @@ import { WalletSheet } from "./wallet/WalletSheet";
 
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useUIContext();
+
+  const { lordsPrice } = useLordsPrice();
 
   const router = useRouter();
   const menu = [
@@ -113,6 +117,11 @@ const Sidebar = () => {
             <div className="w-full px-2">
               <hr className="mb-4 border-b-[3px]" />
             </div>
+            <div className="mt-3 font-sans">
+              <LordsIcon className="mx-auto h-6 w-6 fill-bright-yellow pb-1" />
+              {lordsPrice}
+            </div>
+
             <div className=" flex flex-col space-y-2 sm:mt-auto">
               {social.map((item, index) => {
                 return (
