@@ -2,13 +2,13 @@ import type { ReactElement } from "react";
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Lords from "@/icons/lords.svg";
-import type { RouterOutputs } from "@/utils/api";
 import { faImages, faTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import ListCheckout from './ListCheckout'
 import dayjs from "dayjs";
 import { Loader } from "lucide-react";
 
+import type { RouterOutputs } from "@realms-world/api";
 //import { formatUnits, zeroAddress } from "viem";
 
 import {
@@ -27,9 +27,9 @@ import {
 } from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
+import type { ListingData } from "./ListModalRender";
 import Earnings from "./Earnings";
 import ListItem from "./ListItem";
-import type { ListingData } from "./ListModalRender";
 import {
   ListModalRenderer,
   ListModalStepData,
@@ -52,9 +52,7 @@ const ModalCopy = {
 };
 
 interface Props {
-  token:
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
-    | RouterOutputs["erc721Tokens"]["byId"];
+  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   tokenId?: string;
   collectionId?: string;
   trigger?: React.ReactNode;
@@ -76,7 +74,7 @@ export function ListModal({
     <ListModalRenderer
       open={open} //TODO
       tokenId={tokenId}
-      collectionId={collectionId}
+      collectionId={token.contract_address}
     >
       {({
         loading,

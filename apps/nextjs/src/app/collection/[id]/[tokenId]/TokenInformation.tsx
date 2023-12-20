@@ -1,11 +1,11 @@
+import type { Attributes, Collection, Token } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { erc721Tokens } from "@/constants/erc721Tokens";
-import type { Attributes, Collection, Token } from "@/types";
-import type { RouterOutputs } from "@/utils/api";
 import { shortenHex } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
 
+import type { RouterOutputs } from "@realms-world/api";
 import { Button } from "@realms-world/ui";
 
 import { ContractImage } from "./ContractImage";

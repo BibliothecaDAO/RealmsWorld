@@ -1,8 +1,8 @@
+import type { ExpirationOption } from "@/types";
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
 import { NETWORK_NAME } from "@/constants/env";
-import type { ExpirationOption } from "@/types";
-import type { RouterOutputs } from "@/utils/api";
+import { findCollectionKeyByAddress } from "@/utils/getters";
 import { getTokenContractAddresses } from "@/utils/utils";
 import {
   useAccount,
@@ -12,11 +12,12 @@ import {
 import dayjs from "dayjs";
 import { parseUnits } from "viem";
 
+import type { RouterOutputs } from "@realms-world/api";
 import {
+  ChainId,
   MarketplaceCollectionIds,
   MarketplaceContract,
 } from "@realms-world/constants";
-import { ChainId } from "@realms-world/constants/src/Chains";
 
 import defaultExpirationOptions from "../defaultExpiration";
 
@@ -42,9 +43,7 @@ export interface ListModalStepData {
 
 interface ChildrenProps {
   loading: boolean;
-  token?:
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
-    | RouterOutputs["erc721Tokens"]["byId"];
+  token?: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   collection?: any;
   listStep: ListStep;
   //usdPrice: number;
@@ -114,7 +113,7 @@ export const ListModalRenderer: FC<Props> = ({
     if (!open) {
       setListStep(ListStep.SetPrice);
       setTransactionError(null);
-      setPrice("");
+      setPrice(0);
       setStepData(null);
       setExpirationOption(expirationOptions[5]);
     }
@@ -149,8 +148,7 @@ export const ListModalRenderer: FC<Props> = ({
   } = useContractWrite({
     calls: [
       {
-        contractAddress: getTokenContractAddresses("goldenToken")
-          .L2 as `0x${string}`,
+        contractAddress: collectionId as `0x${string}`,
         entrypoint: "set_approval_for_all",
         calldata: [
           MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
@@ -164,7 +162,7 @@ export const ListModalRenderer: FC<Props> = ({
         entrypoint: "create",
         calldata: [
           tokenId as `0x${string}`,
-          MarketplaceCollectionIds["Golden Token"],
+          MarketplaceCollectionIds[findCollectionKeyByAddress(collectionId)],
           parseUnits(`${price}`, 18).toString(),
           expirationTime,
         ],

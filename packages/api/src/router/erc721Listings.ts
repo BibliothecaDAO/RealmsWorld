@@ -13,6 +13,7 @@ export const erc721ListingsRouter = createTRPCRouter({
         limit: z.number().min(1).max(100).nullish(),
         cursor: z.number().nullish(), // <-- "cursor" needs to exist, but can be any type
         //owner: z.string().nullish(), TODO from address
+        token_key: z.string().nullish(),
         orderBy: z.string().nullish(),
         direction: z.string().nullish(),
       }),
@@ -20,32 +21,30 @@ export const erc721ListingsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 50;
       //TODO add orderBy conditions
-      const { cursor, /* contractAddress, owner, orderBy, block,*/ direction } =
-        input;
+      const {
+        cursor,
+        /* contractAddress, owner, orderBy, block,*/ direction,
+        token_key,
+      } = input;
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
       if (direction === "asc") {
-        orderByFilter.push(asc(schema.erc721Tokens.token_id));
+        orderByFilter.push(asc(schema.erc721MarketListing.token_id));
       } else {
-        orderByFilter.push(desc(schema.erc721Tokens.token_id));
+        orderByFilter.push(desc(schema.erc721MarketListing.id));
       }
 
-      /*if (contractAddress) {
-        whereFilter.push(
-          eq(
-            schema.erc721Tokens.contract_address,
-            contractAddress.toLowerCase(),
-          ),
-        );
+      if (token_key) {
+        whereFilter.push(eq(schema.erc721MarketListing.token_key, token_key));
       }
-      if (owner) {
+      /*if (owner) {
         whereFilter.push(eq(schema.erc721Tokens.owner, owner.toLowerCase()));
       }*/
       if (cursor) {
         whereFilter.push(
           direction === "asc"
-            ? gte(schema.erc721Tokens.token_id, cursor)
-            : lte(schema.erc721Tokens.token_id, cursor),
+            ? gte(schema.erc721MarketListing.id, cursor)
+            : lte(schema.erc721MarketListing.id, cursor),
         );
       } /* else {
         whereFilter.push(lte(schema.erc721Tokens.token_id, cursor));

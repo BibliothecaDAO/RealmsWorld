@@ -1,7 +1,8 @@
 import type { FC } from "react";
 import React from "react";
-import type { RouterOutputs } from "@/utils/api";
 import { formatUnits } from "viem";
+
+import type { RouterOutputs } from "@realms-world/api";
 
 import ERC721MarketplaceItem from "./ERC721MarketplaceItem";
 

@@ -7,6 +7,8 @@ import { findTokenName } from "@/utils/utils";
 
 import { Button } from "@realms-world/ui";
 
+import { BuyModal } from "../../marketplace/buy/BuyModal";
+
 export const L2ERC721Card = ({
   token,
   layout = "grid",
@@ -115,6 +117,19 @@ const GridDetails = ({
       <Button size={"xs"} variant={"ghost"} href={`/user/${address}`}>
         {useStarkDisplayName(address)}
       </Button>
+      {token?.price && (
+        <BuyModal
+          trigger={
+            <Button className="w-full" size={"lg"}>
+              Buy Now
+            </Button>
+          }
+          // tokenId={tokenId}
+          token={token}
+          collectionId={token.contract_address}
+          orderId={0}
+        />
+      )}
     </div>
   </div>
 );
