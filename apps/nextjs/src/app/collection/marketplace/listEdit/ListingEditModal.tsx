@@ -259,10 +259,11 @@ export function ListingEditModal({
                         <div className="relative w-full">
                           <Input
                             type="number"
-                            value={price?.toString()}
+                            value={price}
                             //collection={collection}
                             //usdPrice={usdPrice}
                             //quantity={quantity}
+                            min={0}
                             placeholder={"Enter a listing price"}
                             onChange={(e) => {
                               if (e.target.value === "") {
@@ -278,12 +279,11 @@ export function ListingEditModal({
                               }
                             }}
                           />
-                          <div className="absolute right-0 top-0 flex pr-2 pt-3">
-                            <Lords className="mr-4 h-6 w-6 fill-white" />
+                          <div className="absolute right-0 top-0 z-0 mr-8 flex pr-2 pt-3">
+                            <Lords className="h-6 w-6 fill-white" />
                           </div>
                         </div>
-
-                        {price && price !== 0 && !withinPricingBounds && (
+                        {price && price !== 0 && !withinPricingBounds ? (
                           <div>
                             <span className="text-red">
                               {maximumAmount !== Infinity
@@ -295,7 +295,7 @@ export function ListingEditModal({
                                   )}`}
                             </span>
                           </div>
-                        )}
+                        ) : null}
 
                         {collection &&
                           collection?.floorAsk?.price?.amount?.native !==

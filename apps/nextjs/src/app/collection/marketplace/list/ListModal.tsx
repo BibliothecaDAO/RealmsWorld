@@ -211,14 +211,15 @@ export function ListModal({
                           <Input
                             type="number"
                             value={price}
+                            min={0}
                             onChange={(e) => {
                               setPrice(parseInt(e.target.value));
                             }}
                             placeholder="Amount"
                             className={"h-12 w-full"}
                           />
-                          <div className="absolute right-0 top-0 flex pr-2 pt-3">
-                            <Lords className="mr-4 h-6 w-6 fill-white" />
+                          <div className="absolute right-0 top-0 z-0 mr-8 flex pr-2 pt-3">
+                            <Lords className="h-6 w-6 fill-white" />
                           </div>
                         </div>
 

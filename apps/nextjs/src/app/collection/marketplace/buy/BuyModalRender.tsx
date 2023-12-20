@@ -140,7 +140,10 @@ export const BuyModalRender: FC<Props> = ({
   //const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;*/
   const totalUsd = totalIncludingFees * lordsPrice;
 
-  const addFundsLink = `https://app.avnu.fi/en?tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49&amount=0.001`;
+  const lordsAddress = LORDS[ChainId["SN_" + NETWORK_NAME]]
+    ?.address as `0x${string}`;
+
+  const addFundsLink = `https://app.avnu.fi/en?tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=${lordsAddress}&amount=${totalPrice}`;
 
   const {
     data,
@@ -150,8 +153,7 @@ export const BuyModalRender: FC<Props> = ({
   } = useContractWrite({
     calls: [
       {
-        contractAddress: LORDS[ChainId["SN_" + NETWORK_NAME]]
-          ?.address as `0x${string}`,
+        contractAddress: lordsAddress,
         entrypoint: "approve",
         calldata: [
           MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
