@@ -46,6 +46,7 @@ export const L2ERC721Table = ({
       getNextPageParam(lastPage) {
         return lastPage.nextCursor;
       },
+      refetchInterval: 15000,
     });
 
   const isInView = useInView(ref, { once: false });
