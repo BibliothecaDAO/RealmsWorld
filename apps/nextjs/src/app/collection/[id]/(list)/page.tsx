@@ -1,10 +1,10 @@
+import type { Collection } from "@/types";
 import type { Metadata } from "next";
 import { erc721Tokens } from "@/constants";
 import { NETWORK_NAME } from "@/constants/env";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
-import type { Collection } from "@/types";
 import { getTokenContractAddresses } from "@/utils/utils";
 
 import Mint from "./Mint";
@@ -40,14 +40,14 @@ export default async function Page({
     page?: string;
   };
 }) {
-  const isGoerliGoldenToken =
+  /*const isGoerliGoldenToken =
     NETWORK_NAME == "GOERLI" &&
     (params.id == getTokenContractAddresses("goldenToken").L2 ||
       params.id == "goldenToken");
 
   if (isGoerliGoldenToken) {
     return <Mint contractId={params.id} />;
-  }
+  }*/
 
   return (
     <Trade

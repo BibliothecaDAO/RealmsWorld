@@ -1,6 +1,6 @@
+import type { erc721Tokens } from "@/constants";
 import React from "react";
 import CollectionSummary from "@/app/collection/CollectionSummary";
-import type { erc721Tokens } from "@/constants";
 import { NETWORK_NAME } from "@/constants/env";
 import { getTokenContractAddresses } from "@/utils/utils";
 
@@ -35,12 +35,12 @@ export default function RootLayout({
       link: isMintable ? "trade" : "",
     },
   ];
-  if (isMintable) {
+  /*if (isMintable) {
     tabs.unshift({
       name: "Mint",
       link: "",
     });
-  }
+  }*/
   if (params.id == "realms") {
     tabs.push(
       { name: "Analytics", link: "analytics" },
@@ -70,6 +70,7 @@ export default function RootLayout({
                 className="hover:text-flamingo/70"
                 size={"sm"}
                 exact
+                disabled={true}
                 href={`/collection/${params.id}${tab.link && "/" + tab.link}`}
               >
                 {tab.name}
