@@ -36,7 +36,7 @@ export const erc721TokensRouter = createTRPCRouter({
       const { cursor, contractAddress, owner, orderBy, block, direction } =
         input;
       const whereFilter: SQL[] = [];
-      let orderByFilter: SQL = desc(schema.erc721Tokens.token_id);
+      const orderByFilter: SQL[] = [];
 
       /*const orderByVariable =
         orderBy == "floorAskPrice"
@@ -77,17 +77,21 @@ export const erc721TokensRouter = createTRPCRouter({
         whereFilter.push(sql`upper_inf(_cursor)`);
       }
 
-      if (orderBy == "floorAskPrice") {
-        whereFilter.push(isNotNull(schema.erc721Tokens.price));
-        orderByFilter =
-          direction === "dsc"
-            ? desc(schema.erc721Tokens.price)
-            : asc(schema.erc721Tokens.price);
-      } else {
-        orderByFilter =
+      if (orderBy == "tokenId") {
+        orderByFilter.push(
           direction === "asc"
             ? asc(schema.erc721Tokens.token_id)
-            : desc(schema.erc721Tokens.token_id);
+            : desc(schema.erc721Tokens.token_id),
+        );
+      } else {
+        //whereFilter.push(isNotNull(schema.erc721Tokens.price));
+        orderByFilter.push(
+          direction === "asc"
+            ? (asc(schema.erc721Tokens.price),
+              asc(schema.erc721Tokens.token_id))
+            : asc(schema.erc721Tokens.price),
+          desc(schema.erc721Tokens.token_id),
+        );
       }
 
       const items = await ctx.db.query.erc721Tokens.findMany({

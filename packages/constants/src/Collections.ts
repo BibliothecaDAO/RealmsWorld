@@ -17,7 +17,7 @@ export const CollectionAddresses: {
     [ChainId.SN_MAIN]:
       "0x0158160018d590d93528995b340260e65aedd76d28a686e9daa5c4e8fad0c5dd",
     [ChainId.SN_GOERLI]:
-      "0x071f603af70d1570600de027af3edae09a5869b7b6d38e27315a77d9db79f45e",
+      "0x05c909139dbef784180eef8ce7a2f5bf52afe567aa73aaa77b8d8243ad5b6b96",
   },
   [Collections.GOLDEN_TOKEN]: {
     [ChainId.SN_MAIN]:

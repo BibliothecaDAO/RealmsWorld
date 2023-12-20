@@ -171,23 +171,6 @@ export function ListModal({
               setOpen(open);
             }}
             //loading={loading}
-            /*onPointerDownOutside={(e) => {
-              if (
-                e.target instanceof Element &&
-                datetimeElement.current?.flatpickr?.calendarContainer &&
-                datetimeElement.current.flatpickr.calendarContainer.contains(
-                  e.target
-                )
-              ) {
-                e.preventDefault()
-              }
-              if (onPointerDownOutside) {
-                onPointerDownOutside(e)
-              }
-            }}
-            onFocusCapture={(e) => {
-              e.stopPropagation()
-            }}*/
           >
             <DialogTrigger>{trigger}</DialogTrigger>
             <DialogContent>
@@ -213,7 +196,12 @@ export function ListModal({
               )}
               {!loading && listStep == ListStep.SetPrice && (
                 <div className="flex flex-col">
-                  {transactionError && <Alert message={transactionError} />}
+                  {transactionError && (
+                    <Alert
+                      variant={"warning"}
+                      message={transactionError.message}
+                    />
+                  )}
                   <ListItem collection={collection} token={token} />
                   <div className="flex flex-col items-center">
                     <div className="flex w-full flex-col">

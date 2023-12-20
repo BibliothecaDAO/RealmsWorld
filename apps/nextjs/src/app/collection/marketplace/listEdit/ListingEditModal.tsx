@@ -198,7 +198,10 @@ export function ListingEditModal({
                 editListingStep === EditListingStep.Edit && (
                   <div className="flex flex-col">
                     {transactionError && (
-                      <Alert message={transactionError.message} />
+                      <Alert
+                        variant={"warning"}
+                        message={transactionError.message}
+                      />
                     )}
                     <div className="border-b p-2">
                       <ERC721LineItem

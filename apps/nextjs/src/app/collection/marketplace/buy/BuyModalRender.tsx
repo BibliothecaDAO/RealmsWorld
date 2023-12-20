@@ -181,7 +181,6 @@ export const BuyModalRender: FC<Props> = ({
   }, [data, transactionData, transactionError]);
   useEffect(() => {
     if (writeError) {
-      console.log(writeError);
       setBuyStep(BuyStep.Checkout);
       setTransactionError(writeError);
     }
