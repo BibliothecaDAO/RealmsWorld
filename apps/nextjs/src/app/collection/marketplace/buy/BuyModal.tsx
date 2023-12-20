@@ -7,6 +7,7 @@ import type {
 import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import NumberSelect from "@/app/_components/NumberSelect";
+import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
 import { RenderExplorers } from "@/app/_components/wallet/utils";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import Lords from "@/icons/lords.svg";
@@ -25,6 +26,7 @@ import { formatUnits } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
+  Alert,
   Button,
   Dialog,
   DialogContent,
@@ -246,7 +248,12 @@ export function BuyModal({
 
               {buyStep === BuyStep.Checkout && !loading && (
                 <div className="flex flex-col">
-                  {/*TODO Add error transactionError && <ErrorWell error={transactionError} />*/}
+                  {transactionError && (
+                    <Alert
+                      variant={"warning"}
+                      message={transactionError.message}
+                    />
+                  )}
                   <ERC721LineItem
                     tokenDetails={token}
                     collection={collection}
@@ -269,7 +276,6 @@ export function BuyModal({
                       />
                     </div>
                   )}
-
                   <div className="mt-4 flex items-start justify-between border-2 p-2 font-sans">
                     <div className="self-center">You Pay</div>
                     <div className="flex space-x-3">
@@ -280,51 +286,59 @@ export function BuyModal({
                       <Lords className="h-6 w-6 fill-current" />
                     </div>
                   </div>
-
                   <div className="w-full">
-                    {hasEnoughCurrency ? (
-                      <Button
-                        disabled={!hasEnoughCurrency}
-                        onClick={buyToken}
-                        className="w-full"
-                        color="primary"
-                      >
-                        {copy.ctaCheckout}
-                      </Button>
+                    {!address ? (
+                      <StarknetLoginButton
+                        openAccount={false}
+                        buttonClass="w-full mt-4"
+                      />
                     ) : (
-                      <div className="flex flex-col items-center">
-                        <div className="item-center my-1.5 flex flex-col">
-                          <span className="mr-3 text-red-500">
-                            Insufficient Balance
-                          </span>
-                          {/*<FormatCryptoCurrency
+                      <>
+                        {hasEnoughCurrency ? (
+                          <Button
+                            disabled={!hasEnoughCurrency}
+                            onClick={buyToken}
+                            className="w-full"
+                            color="primary"
+                          >
+                            {copy.ctaCheckout}
+                          </Button>
+                        ) : (
+                          <div className="flex flex-col items-center">
+                            <div className="item-center my-1.5 flex flex-col">
+                              <span className="mr-3 text-red-500">
+                                Insufficient Balance
+                              </span>
+                              {/*<FormatCryptoCurrency
                             amount={paymentCurrency?.balance}
                             textStyle="body3"
                           />*/}
-                        </div>
+                            </div>
 
-                        {gasCost > 0n && (
-                          <div className="flex items-center">
-                            <span className="mr-1.5 text-red-500">
-                              Estimated Gas Cost
-                            </span>
-                            {/*<FormatCryptoCurrency
+                            {gasCost > 0n && (
+                              <div className="flex items-center">
+                                <span className="mr-1.5 text-red-500">
+                                  Estimated Gas Cost
+                                </span>
+                                {/*<FormatCryptoCurrency
                               amount={gasCost}
                               textStyle="body3"
                             />*/}
+                              </div>
+                            )}
+
+                            <Button
+                              onClick={() => {
+                                window.open(addFundsLink, "_blank");
+                              }}
+                              variant={"outline"}
+                              className="w-full"
+                            >
+                              {copy.ctaInsufficientFunds}
+                            </Button>
                           </div>
                         )}
-
-                        <Button
-                          onClick={() => {
-                            window.open(addFundsLink, "_blank");
-                          }}
-                          variant={"outline"}
-                          className="w-full"
-                        >
-                          {copy.ctaInsufficientFunds}
-                        </Button>
-                      </div>
+                      </>
                     )}
                   </div>
                 </div>

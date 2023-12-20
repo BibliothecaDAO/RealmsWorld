@@ -62,7 +62,6 @@ interface ChildrenProps {
 
 interface Props {
   open: boolean;
-  listingId?: string;
   tokenId?: string;
   token?: RouterOutputs["erc721Tokens"]["byId"];
   collectionId?: string;
@@ -72,7 +71,6 @@ interface Props {
 
 export const ListingEditModalRender: FC<Props> = ({
   open,
-  listingId,
   tokenId,
   token,
   collectionId,
@@ -145,7 +143,7 @@ export const ListingEditModalRender: FC<Props> = ({
   const {
     data,
     writeAsync,
-    error,
+    error: writeError,
     // isLoading: isTxSubmitting,
   } = useContractWrite({
     calls: [
@@ -154,7 +152,7 @@ export const ListingEditModalRender: FC<Props> = ({
           ChainId["SN_" + NETWORK_NAME]
         ] as `0x${string}`,
         entrypoint: "edit",
-        calldata: [listingId, parseUnits(`${price}`, 18).toString()],
+        calldata: [listing?.id, parseUnits(`${price}`, 18).toString()],
       },
     ],
   });
@@ -169,16 +167,16 @@ export const ListingEditModalRender: FC<Props> = ({
       }
     }
   }, [data, transactionData, transactionError]);
+  useEffect(() => {
+    if (writeError) {
+      setEditListingStep(EditListingStep.Edit);
+      setTransactionError(writeError);
+    }
+  }, [writeError]);
 
   const editListing = useCallback(async () => {
     if (!address) {
       const error = new Error("Missing a wallet/signer");
-      setTransactionError(error);
-      throw error;
-    }
-
-    if (!listingId) {
-      const error = new Error("Missing list id to edit");
       setTransactionError(error);
       throw error;
     }

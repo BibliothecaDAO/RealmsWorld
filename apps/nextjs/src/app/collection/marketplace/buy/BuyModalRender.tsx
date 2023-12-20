@@ -145,6 +145,7 @@ export const BuyModalRender: FC<Props> = ({
   const {
     data,
     writeAsync,
+    error: writeError,
     // isLoading: isTxSubmitting,
   } = useContractWrite({
     calls: [
@@ -178,6 +179,13 @@ export const BuyModalRender: FC<Props> = ({
       }
     }
   }, [data, transactionData, transactionError]);
+  useEffect(() => {
+    if (writeError) {
+      console.log(writeError);
+      setBuyStep(BuyStep.Checkout);
+      setTransactionError(writeError);
+    }
+  }, [writeError]);
 
   const buyToken = useCallback(async () => {
     const contract = collectionId?.split(":")[0];
@@ -197,83 +205,6 @@ export const BuyModalRender: FC<Props> = ({
     items.push(item);
 
     await writeAsync();
-
-    /* client.actions
-      .buyToken({
-        chainId: rendererChain?.id,
-        items: items,
-        expectedPrice: {
-          [paymentCurrency?.address || zeroAddress]: {
-            raw: totalPrice,
-            currencyAddress: paymentCurrency?.address,
-            currencyDecimals: paymentCurrency?.decimals || 18,
-          },
-        },
-        wallet,
-        onProgress: (steps: Execute["steps"]) => {
-          if (!steps) {
-            return;
-          }
-          setSteps(steps);
-
-          const executableSteps = steps.filter(
-            (step) => step.items && step.items.length > 0,
-          );
-
-          const stepCount = executableSteps.length;
-
-          let currentStepItem:
-            | NonNullable<Execute["steps"][0]["items"]>[0]
-            | undefined;
-
-          const currentStepIndex = executableSteps.findIndex((step) => {
-            currentStepItem = step.items?.find(
-              (item) => item.status === "incomplete",
-            );
-            return currentStepItem;
-          });
-
-          const currentStep =
-            currentStepIndex > -1
-              ? executableSteps[currentStepIndex]
-              : executableSteps[stepCount - 1];
-
-          if (currentStepItem) {
-            setStepData({
-              totalSteps: stepCount,
-              stepProgress: currentStepIndex,
-              currentStep,
-              currentStepItem,
-            });
-          } else if (
-            steps.every(
-              (step) =>
-                !step.items ||
-                step.items.length == 0 ||
-                step.items?.every((item) => item.status === "complete"),
-            )
-          ) {
-            setBuyStep(BuyStep.Complete);
-          }
-        },
-        options,
-      })
-      .catch((error: Error) => {
-        if (error && error?.message && error?.message.includes("ETH balance")) {
-          setHasEnoughCurrency(false);
-        } else {
-          setTransactionError(error);
-          if (orderId) {
-            mutateListings();
-          }
-          mutateCollection();
-          mutateTokens();
-          fetchPath();
-        }
-        setBuyStep(BuyStep.Checkout);
-        setStepData(null);
-        setSteps(null);
-      });*/
   }, [
     tokenId,
     listing,
@@ -335,7 +266,6 @@ export const BuyModalRender: FC<Props> = ({
   ]);
 
   useEffect(() => {
-    console.log(formatUnits(balances.l2.lords ?? 0n, 18));
     if (
       // !lords or lords  balance < item total + gas
       parseInt(formatUnits(balances.l2.lords ?? 0n, 18)) < totalIncludingFees

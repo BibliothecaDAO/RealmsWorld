@@ -76,6 +76,7 @@ export const ListCancelModalRender: FC<Props> = ({
   const {
     data,
     writeAsync,
+    error: writeError,
     // isLoading: isTxSubmitting,
   } = useContractWrite({
     calls: [
@@ -99,6 +100,13 @@ export const ListCancelModalRender: FC<Props> = ({
       }
     }
   }, [data, transactionData, transactionError]);
+  useEffect(() => {
+    if (writeError) {
+      console.log(writeError);
+      setCancelStep(CancelStep.Cancel);
+      setTransactionError(writeError);
+    }
+  }, [writeError]);
   const cancelOrder = useCallback(async () => {
     if (!listing) {
       const error = new Error("Missing list id to cancel");
