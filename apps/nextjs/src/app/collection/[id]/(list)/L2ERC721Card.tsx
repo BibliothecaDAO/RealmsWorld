@@ -1,8 +1,11 @@
+import type { RouterOutputs } from "@/utils/api";
 import Image from "next/image";
 import Link from "next/link";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
-import type { RouterOutputs } from "@/utils/api";
+import LordsIcon from "@/icons/lords.svg";
 import { findTokenName } from "@/utils/utils";
+
+import { Button } from "@realms-world/ui";
 
 export const L2ERC721Card = ({
   token,
@@ -12,7 +15,7 @@ export const L2ERC721Card = ({
   layout?: "grid" | "list";
 }) => {
   const isGrid = layout === "grid";
-  const imageSize = isGrid ? 800 : 80;
+  const imageSize = isGrid ? 800 : 60;
 
   return (
     <div
@@ -24,8 +27,9 @@ export const L2ERC721Card = ({
         href={`/collection/${findTokenName(token.contract_address)}/${
           token.token_id
         }`}
+        className={`${isGrid ? "" : "flex"}`}
       >
-        <div className={` ${!isGrid && "p-2"} relative`}>
+        <div className={` ${!isGrid && "p-1"} relative`}>
           {token.image && (
             <Image
               src={token.image}
@@ -45,7 +49,7 @@ export const L2ERC721Card = ({
         <TokenDetails
           token={token}
           isGrid={isGrid}
-          starkName={useStarkDisplayName(token.owner ?? token.minter ?? "")}
+          address={token.owner ?? token.minter ?? ""}
         />
       </Link>
     </div>
@@ -55,16 +59,16 @@ export const L2ERC721Card = ({
 const TokenDetails = ({
   token,
   isGrid,
-  starkName,
+  address,
 }: {
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   isGrid: boolean;
-  starkName?: string;
+  address?: string;
 }) =>
   isGrid ? (
-    <GridDetails token={token} starkName={starkName} />
+    <GridDetails token={token} address={address} />
   ) : (
-    <ListDetails token={token} starkName={starkName} />
+    <ListDetails token={token} address={address} />
   );
 
 const TokenAttributes = ({
@@ -93,10 +97,10 @@ const TokenAttributes = ({
 
 const GridDetails = ({
   token,
-  starkName,
+  address,
 }: {
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
-  starkName?: string;
+  address?: string;
 }) => (
   <div className="w-full p-3">
     <div className="flex justify-between border-b pb-2">
@@ -107,7 +111,11 @@ const GridDetails = ({
       attributeKeys={["type", "tier", "level", "health"]}
     />
     <Price token={token} />
-    <div className="mt-3 text-xs opacity-70">{starkName}</div>
+    <div className="mt-3 text-xs opacity-70">
+      <Button size={"xs"} variant={"ghost"} href={`/user/${address}`}>
+        {useStarkDisplayName(address)}
+      </Button>
+    </div>
   </div>
 );
 
@@ -121,7 +129,10 @@ const Price = ({
       {token?.price && (
         <div>
           <h6 className="uppercase">Price</h6>
-          <div>{token?.price}</div>
+          <div className="flex">
+            {token?.price}
+            <LordsIcon className="mx-auto ml-3 h-4 w-4 self-center fill-bright-yellow" />{" "}
+          </div>
         </div>
       )}
       {/*TODO Add last price sold */}
@@ -137,17 +148,25 @@ const Price = ({
 
 const ListDetails = ({
   token,
-  starkName,
+  address,
 }: {
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
-  starkName?: string;
+  address?: string;
 }) => {
   return (
-    <div className="px-6 py-3">
-      <div className="flex justify-between border-b pb-2">
+    <div className="flex w-full space-x-6 self-center px-3">
+      <div className="flex justify-between self-center">
         <span className="">{decodeURIComponent(token?.name ?? "")}</span>
       </div>
-      <div className="mt-3 text-xs opacity-70">{starkName}</div>
+      <div className="mr-auto flex self-center">
+        {token?.price}
+        <LordsIcon className="mx-auto ml-3 h-6 w-6 fill-bright-yellow pb-1" />
+      </div>
+      <div className="fonts-sans ml-auto self-center text-xs opacity-70">
+        <Button variant={"ghost"} href={`/user/${address}`}>
+          {useStarkDisplayName(address)}
+        </Button>
+      </div>
     </div>
   );
 };

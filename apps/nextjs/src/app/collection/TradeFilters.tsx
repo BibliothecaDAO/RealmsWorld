@@ -49,6 +49,7 @@ export const TradeFilters = () => {
             return (
               <DropdownMenuItem
                 key={index}
+                className="font-sans"
                 onClick={() => handleAttributeClick(query.key, query.value)}
               >
                 {query.title}
@@ -68,6 +69,7 @@ export const TradeFilters = () => {
             return (
               <DropdownMenuItem
                 key={index}
+                className="font-sans"
                 onClick={() => handleAttributeClick(query.key, query.value)}
               >
                 {query.title}

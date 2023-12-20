@@ -10,12 +10,15 @@ export const AttributeTags = () => {
 
   return (
     <div className="w-full">
-      <div className="mb-2 flex flex-wrap space-x-1 px-4 pr-8">
+      <div className="mb-2 flex flex-wrap space-x-1">
         {getQueriesFromUrl().map((query, index) => {
+          const query_value = query.value?.replace(/([A-Z])/g, " $1").trim();
+
+          const query_key = query.key?.replace(/([A-Z])/g, " $1").trim();
           return (
             <Button
               variant={"outline"}
-              className="font-base"
+              className=""
               size={"xs"}
               key={index}
               onClick={() =>
@@ -28,7 +31,7 @@ export const AttributeTags = () => {
                 )
               }
             >
-              {query.key}: <span> {query.value} </span>
+              <span> {query_key}</span> : <span> {query_value} </span>
               <X className="ml-3 w-3" />
             </Button>
           );

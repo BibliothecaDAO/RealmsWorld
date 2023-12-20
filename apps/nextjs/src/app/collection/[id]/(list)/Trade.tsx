@@ -1,10 +1,10 @@
+import type { erc721Tokens } from "@/constants/erc721Tokens";
 import { Suspense } from "react";
 import { AttributesDropdown } from "@/app/collection/AttributesDropdown";
 import { AttributeTags } from "@/app/collection/AttributeTags";
 import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
 import { TokenTable } from "@/app/collection/TokenTable";
 import { TradeFilters } from "@/app/collection/TradeFilters";
-import type { erc721Tokens } from "@/constants/erc721Tokens";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getToken } from "@/lib/reservoir/getToken";
 import { getTokenContractAddresses } from "@/utils/utils";
@@ -34,10 +34,12 @@ export async function Trade({
             </div>
           }
         >
-          <div className="mb-3 flex w-full justify-between">
-            <TradeFilters />
+          <div className="mb-3 flex w-full">
+            <AttributeTags />
+            <div className="whitespace-nowrap">
+              <TradeFilters />
+            </div>
           </div>
-          <AttributeTags />
 
           <L2ERC721Table contractAddress={tokenAddresses.L2} />
         </Suspense>

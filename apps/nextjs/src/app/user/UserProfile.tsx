@@ -37,7 +37,7 @@ export const UserProfile = ({
 
   const starkName = useStarkDisplayName(l2Shown);
   return (
-    <div className="from-theme-gray-light hidden w-1/4 flex-none rounded-t-2xl bg-gradient-to-b p-4 sm:block">
+    <div className="hidden w-1/4 flex-none bg-gradient-to-b from-theme-gray-light p-4 sm:block">
       <h5>
         {l2Shown && (
           <div className="flex">

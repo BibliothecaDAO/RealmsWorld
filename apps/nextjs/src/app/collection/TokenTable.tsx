@@ -1,12 +1,10 @@
 "use client";
 
-import { TokenCard } from "@/app/collection/TokenCard";
 import type { TokenMarketData } from "@/types";
+import { TokenCard } from "@/app/collection/TokenCard";
 import { findTokenName } from "@/utils/utils";
 
 import { useUIContext } from "../providers/UIProvider";
-
-//import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
 
 export const TokenTable = ({
   address,

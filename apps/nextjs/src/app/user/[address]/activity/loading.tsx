@@ -3,7 +3,7 @@ import { ActivityCardSkeleton } from "@/app/collection/[id]/(list)/activity/Acti
 export default function Loading() {
   return (
     <>
-      {[...Array(6)].map((_, i) => (
+      {[...Array(3)].map((_, i) => (
         <ActivityCardSkeleton key={i} />
       ))}
     </>
