@@ -31,7 +31,7 @@ export const L2ERC721Table = ({
   const sortBy = searchParams.get("sortBy");
 
   const filters = {
-    limit: 20,
+    limit: 24,
     contractAddress,
     direction: sortDirection,
     orderBy: sortBy,

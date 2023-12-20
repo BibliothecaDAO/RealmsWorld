@@ -6,6 +6,7 @@ import { Button } from "@realms-world/ui";
 import { padAddress } from "@realms-world/utils";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";
+import { ListModal } from "../../marketplace/list/ListModal";
 import { ListingEditModal } from "../../marketplace/listEdit/ListingEditModal";
 
 export const CardAction = ({
@@ -44,6 +45,18 @@ export const CardAction = ({
             }
           />
         ))}
+      {!token?.price && token.owner == padAddress(address?.toLowerCase()) && (
+        <ListModal
+          token={token}
+          tokenId={token.token_id}
+          collectionId={"test"}
+          trigger={
+            <Button className="z-20 w-full" size={"lg"}>
+              List Item{" "}
+            </Button>
+          }
+        />
+      )}
     </>
   );
 };

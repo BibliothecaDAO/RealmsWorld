@@ -2,6 +2,7 @@ import type { ExpirationOption } from "@/types";
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { NETWORK_NAME } from "@/constants/env";
+import { api } from "@/trpc/react";
 import { getTokenContractAddresses } from "@/utils/utils";
 import {
   useAccount,
@@ -89,7 +90,19 @@ export const ListingEditModalRender: FC<Props> = ({
   const [price, setPrice] = useState<number>(0);
   const [quantity, setQuantity] = useState(1);
 
-  const listing = token?.listings?.[0] ?? undefined;
+  const filters = {
+    limit: 20,
+    token_key: token?.contract_address + ":" + token?.token_id,
+    enabled: false,
+  };
+  const { data: listingsData } = api.erc721Listings.all.useQuery(filters, {
+    enabled: open && !token?.listings?.[0],
+  });
+
+  const listing = useMemo(() => {
+    return token?.listings?.[0] ?? listingsData?.items?.[0];
+  }, [token, listingsData]);
+
   const contract = listing?.token_key?.split(":")[1];
 
   useEffect(() => {

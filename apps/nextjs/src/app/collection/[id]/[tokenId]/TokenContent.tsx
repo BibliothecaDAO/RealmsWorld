@@ -1,9 +1,9 @@
 "use client";
 
+import type { Collection, Game, Token } from "@/types";
 import { BuyButton } from "@/app/collection/BuyModal";
 import { ListingModal } from "@/app/collection/ListingModal";
 import { GameCard } from "@/app/games/GameCard";
-import type { Collection, Game, Token } from "@/types";
 import { getGamesByContract } from "@/utils/getters";
 import { useAccount } from "wagmi";
 
@@ -69,7 +69,7 @@ export const TokenContent = ({ token, collection }: Props) => {
           <TabsContent
             value={tab.name}
             key={index}
-            className="bg-dark-green rounded border px-5 py-2"
+            className="rounded border bg-dark-green px-5 py-2"
           >
             {tab.content}
           </TabsContent>

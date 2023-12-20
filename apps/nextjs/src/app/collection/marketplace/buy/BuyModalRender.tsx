@@ -1,5 +1,6 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import { NETWORK_NAME } from "@/constants/env";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import { api } from "@/trpc/react";
@@ -8,7 +9,7 @@ import {
   useContractWrite,
   useWaitForTransaction,
 } from "@starknet-react/core";
-import { parseUnits } from "viem";
+import { formatUnits, parseUnits } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
@@ -100,6 +101,7 @@ export const BuyModalRender: FC<Props> = ({
   const [steps, setSteps] = useState(/*<Execute["steps"] | null>*/ null);
   const [quantity, setQuantity] = useState(1);
   const { lordsPrice } = useLordsPrice();
+  const { balances } = useWalletsProviderContext();
 
   /*  const blockExplorerBaseUrl =
     wagmiChain?.blockExplorers?.default?.url || "https://etherscan.io";
@@ -302,8 +304,8 @@ export const BuyModalRender: FC<Props> = ({
       return;
     }
 
-    let total = 0n;
-    const gasCost = 0n;
+    let total = 0;
+    const gasCost = 0;
 
     if (orderId) {
       total = (parseInt(listing?.price) || 0) * quantity;
@@ -333,15 +335,16 @@ export const BuyModalRender: FC<Props> = ({
   ]);
 
   useEffect(() => {
+    console.log(formatUnits(balances.l2.lords ?? 0n, 18));
     if (
       // !lords or lords  balance < item total + gas
-      1 != 1
+      parseInt(formatUnits(balances.l2.lords ?? 0n, 18)) < totalIncludingFees
     ) {
       setHasEnoughCurrency(false);
     } else {
       setHasEnoughCurrency(true);
     }
-  }, [totalIncludingFees, gasCost]);
+  }, [totalIncludingFees, gasCost, balances.l2.lords]);
 
   useEffect(() => {
     if (!open) {

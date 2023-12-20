@@ -293,8 +293,8 @@ export function BuyModal({
                       </Button>
                     ) : (
                       <div className="flex flex-col items-center">
-                        <div className="item-center mb-1.5 flex flex-col">
-                          <span className="text-red mr-3">
+                        <div className="item-center my-1.5 flex flex-col">
+                          <span className="mr-3 text-red-500">
                             Insufficient Balance
                           </span>
                           {/*<FormatCryptoCurrency
@@ -305,7 +305,7 @@ export function BuyModal({
 
                         {gasCost > 0n && (
                           <div className="flex items-center">
-                            <span className="text-red mr-1.5">
+                            <span className="mr-1.5 text-red-500">
                               Estimated Gas Cost
                             </span>
                             {/*<FormatCryptoCurrency
@@ -322,7 +322,7 @@ export function BuyModal({
                           variant={"outline"}
                           className="w-full"
                         >
-                          {copy.ctaCheckout}
+                          {copy.ctaInsufficientFunds}
                         </Button>
                       </div>
                     )}
