@@ -37,7 +37,7 @@ export interface EditListingStepData {
 
 interface ChildrenProps {
   loading: boolean;
-  listing?: any; /
+  listing?: any;
   tokenId?: string;
   contract?: string;
   price: number;
