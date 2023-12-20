@@ -21,9 +21,12 @@ export const L2Token = ({
   contractAddress: string;
   tokenId: string;
 }) => {
-  const [erc721Token, { isLoading }] = api.erc721Tokens.byId.useSuspenseQuery({
-    id: contractAddress + ":" + tokenId,
-  });
+  const [erc721Token, { isLoading }] = api.erc721Tokens.byId.useSuspenseQuery(
+    {
+      id: contractAddress + ":" + tokenId,
+    },
+    { refetchInterval: 10000 },
+  );
   const { address } = useAccount();
 
   if (isLoading) return <LoadingSkeleton />;

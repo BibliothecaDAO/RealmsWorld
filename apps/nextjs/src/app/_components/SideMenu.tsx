@@ -95,7 +95,7 @@ const Sidebar = () => {
                 {menu.map((item, index) => {
                   return (
                     <Button
-                      className="group flex w-full justify-normal px-2 text-xl font-semibold normal-case transition-all duration-200"
+                      className="group flex w-full justify-normal px-2 text-lg font-semibold normal-case transition-all duration-200"
                       key={index}
                       variant={"ghost"}
                       onClick={() => {
@@ -105,7 +105,7 @@ const Sidebar = () => {
                     >
                       <span className="absolute">{item.icon}</span>
 
-                      <span className="visible absolute pl-12 opacity-100 transition-opacity group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-150 group-hover:duration-500 sm:opacity-0 ">
+                      <span className="visible absolute pl-9 opacity-100 transition-opacity group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-150 group-hover:duration-500 sm:opacity-0 ">
                         {item.name}
                       </span>
                     </Button>
