@@ -41,7 +41,9 @@ const ERC721LineItem: FC<ERC721LineItemProps> = ({
     return null;
   }
 
-  const name = tokenDetails?.name || `#${tokenDetails?.token_id}`;
+  const name = tokenDetails?.name
+    ? decodeURIComponent(tokenDetails?.name)
+    : `#${tokenDetails?.token_id}`;
   const collectionName =
     tokenDetails?.collection?.name || collection?.name || "";
 

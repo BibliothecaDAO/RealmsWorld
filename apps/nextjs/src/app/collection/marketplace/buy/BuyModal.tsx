@@ -468,7 +468,9 @@ export function BuyModal({
                         </div>
                       )}
                       <span className="text-ellipsify max-w-full">
-                        {token?.name ? token?.name : `#${token?.token_id}`}
+                        {token?.name
+                          ? decodeURI(token?.name)
+                          : `#${token?.token_id}`}
                       </span>
                     </div>
                     <div className="mb-1 flex items-center">
