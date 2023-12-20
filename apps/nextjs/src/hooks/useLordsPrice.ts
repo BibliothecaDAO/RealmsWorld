@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export const useLordsPrice = () => {
   const [lordsPrice, setLordsPrice] = useState(0);
   async function getLordsPrice() {
-    const url = `https://api.ethplorer.io/getTokenInfo/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0?apiKey=${process.env.NEXT_PUBLIC_APIKEY}`;
+    const url = `https://api.ethplorer.io/getTokenInfo/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0?apiKey=${process.env.NEXT_PUBLIC_ETHPLORER_APIKEY}`;
     await fetch(url)
       .then((response) => response.json())
       .catch((error) => {
