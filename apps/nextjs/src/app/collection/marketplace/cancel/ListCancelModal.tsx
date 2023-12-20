@@ -40,9 +40,6 @@ interface Props {
   onClose?: (data: any, currentStep: CancelStep) => void;
   onCancelComplete?: (data: any) => void;
   onCancelError?: (error: Error, data: any) => void;
-  /*onPointerDownOutside?: ComponentPropsWithoutRef<
-    typeof Dialog
-  >["onPointerDownOutside"];*/
 }
 
 export function ListCancelModal({
@@ -71,9 +68,6 @@ export function ListCancelModal({
         cancelOrder,
       }) => {
         const expires = useTimeDiff(listing?.expiration);
-        /*const listingImg = tokenId
-          ? `${modalChain?.baseApiUrl}/redirect/tokens/${contract}:${tokenId}/image/v1?imageSize=small`
-          : `${modalChain?.baseApiUrl}/redirect/collections/${contract}/image/v1`;*/
 
         useEffect(() => {
           if (cancelStep === CancelStep.Complete && onCancelComplete) {
@@ -110,11 +104,6 @@ export function ListCancelModal({
               }
               setOpen(open);
             }}
-            /*onPointerDownOutside={(e) => {
-              if (onPointerDownOutside) {
-                onPointerDownOutside(e);
-              }
-            }}*/
           >
             <DialogTrigger>{trigger}</DialogTrigger>
             <DialogContent>

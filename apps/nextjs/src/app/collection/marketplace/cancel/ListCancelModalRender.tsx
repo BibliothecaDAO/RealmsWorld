@@ -27,7 +27,7 @@ export interface CancelListingStepData {
 
 interface ChildrenProps {
   //loading: boolean;
-  listing?: any; //NonNullable<ReturnType<typeof useListings>["data"]>[0];
+  listing?: any;
   tokenId?: string;
   contract?: string;
   cancelStep: CancelStep;

@@ -17,7 +17,7 @@ interface EarningsBreakdownProps {
   price: number;
   usdPrice?: number;
   quantity: number;
-  collection?: any; // NonNullable<ReturnType<typeof useCollections>['data']>[0]
+  collection?: any;
   royaltiesBps: number;
 }
 

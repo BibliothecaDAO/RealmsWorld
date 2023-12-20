@@ -11,7 +11,7 @@ import type { RouterOutputs } from "@realms-world/api";
 import { formatBN } from "@realms-world/utils";
 
 interface ListItemProps {
-  collection?: any; //NonNullable<ReturnType<typeof useCollections>['data']>[0]
+  collection?: any;
   token?: RouterOutputs["erc721Tokens"]["byId"];
   price?: number;
   quantity?: number;

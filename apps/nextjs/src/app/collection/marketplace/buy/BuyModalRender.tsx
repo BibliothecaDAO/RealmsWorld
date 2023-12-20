@@ -19,7 +19,7 @@ import {
 } from "@realms-world/constants";
 import { ChainId } from "@realms-world/constants/src/Chains";
 
-type Item = any; //Parameters<ReservoirClientActions['buyToken']>['0']['items'][0]
+type Item = any;
 
 export enum BuyStep {
   Checkout,
@@ -32,8 +32,8 @@ export enum BuyStep {
 export interface BuyModalStepData {
   totalSteps: number;
   stepProgress: number;
-  currentStep: any; // Execute['steps'][0]
-  currentStepItem: any; // NonNullable<Execute['steps'][0]['items']>[0]
+  currentStep: any;
+  currentStepItem: any;
 }
 
 type Token = RouterOutputs["erc721Tokens"]["byId"];
@@ -41,8 +41,8 @@ type Token = RouterOutputs["erc721Tokens"]["byId"];
 interface ChildrenProps {
   loading: boolean;
   token?: Token;
-  collection?: any; //NonNullable<ReturnType<typeof useCollections>["data"]>[0];
-  listing?: any; //NonNullable<ReturnType<typeof useListings>["data"]>[0];
+  collection?: any;
+  listing?: any;
   quantityAvailable: number;
   averageUnitPrice: number;
   totalPrice: number;
@@ -57,7 +57,7 @@ interface ChildrenProps {
   usdPrice: number;
   balance?: bigint;
   address?: string;
-  steps: any; //Execute["steps"] | null;
+  steps: any;
   stepData: BuyModalStepData | null;
   quantity: number;
   isOwner: boolean;
@@ -98,7 +98,7 @@ export const BuyModalRender: FC<Props> = ({
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [hasEnoughCurrency, setHasEnoughCurrency] = useState(true);
   const [stepData, setStepData] = useState<BuyModalStepData | null>(null);
-  const [steps, setSteps] = useState(/*<Execute["steps"] | null>*/ null);
+  const [steps, setSteps] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { lordsPrice } = useLordsPrice();
   const { balances } = useWalletsProviderContext();

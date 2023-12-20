@@ -31,13 +31,13 @@ export enum EditListingStep {
 export interface EditListingStepData {
   totalSteps: number;
   stepProgress: number;
-  currentStep: any; //Execute["steps"][0];
-  currentStepItem: any; //NonNullable<Execute["steps"][0]["items"]>[0];
+  currentStep: any;
+  currentStepItem: any;
 }
 
 interface ChildrenProps {
   loading: boolean;
-  listing?: any; ///NonNullable<ReturnType<typeof useListings>["data"]>[0];
+  listing?: any; /
   tokenId?: string;
   contract?: string;
   price: number;
@@ -51,7 +51,7 @@ interface ChildrenProps {
   expirationOptions: ExpirationOption[];
   expirationOption: ExpirationOption | undefined;
   //usdPrice: number;
-  steps: any; //Execute["steps"] | null;
+  steps: any;
   stepData: EditListingStepData | null;
   setPrice: React.Dispatch<React.SetStateAction<number>>;
   //setQuantity: React.Dispatch<React.SetStateAction<number>>;

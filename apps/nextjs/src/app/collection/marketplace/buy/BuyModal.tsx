@@ -201,9 +201,7 @@ export function BuyModal({
         const successfulPurchases = quantity - failedPurchases;
         const finalTxHashes = lastStepItems[lastStepItems.length - 1]?.txHashes;
 
-        const price =
-          listing?.price ??
-          0; /*|| BigInt(token?.token?.lastSale?.price?.amount?.raw || 0)*/
+        const price = listing?.price ?? 0;
 
         return (
           <Dialog
