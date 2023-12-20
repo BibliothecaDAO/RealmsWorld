@@ -133,6 +133,7 @@ export function BuyModal({
     >
       {({
         loading,
+        listing,
         token,
         collection,
         quantityAvailable,
@@ -199,28 +200,13 @@ export function BuyModal({
         const finalTxHashes = lastStepItems[lastStepItems.length - 1]?.txHashes;
 
         const price =
-          token?.listings?.[0]?.price ??
+          listing?.price ??
           0; /*|| BigInt(token?.token?.lastSale?.price?.amount?.raw || 0)*/
 
         return (
           <Dialog
             //title={title}
             open={open}
-            /*onPointerDownOutside={(e) => {
-              const dismissableLayers = Array.from(
-                document.querySelectorAll("div[data-radix-dismissable]"),
-              );
-              const clickedDismissableLayer = dismissableLayers.some((el) =>
-                e.target ? el.contains(e.target as Node) : false,
-              );
-
-              if (!clickedDismissableLayer && dismissableLayers.length > 0) {
-                e.preventDefault();
-              }
-              if (onPointerDownOutside) {
-                onPointerDownOutside(e);
-              }
-            }}*/
             onOpenChange={(open) => {
               if (!open && onClose) {
                 const data: PurchaseData = {
@@ -289,9 +275,7 @@ export function BuyModal({
                     <div className="self-center">You Pay</div>
                     <div className="flex space-x-3">
                       <span>
-                        {" "}
-                        {token?.listings[0]?.price &&
-                          formatNumber(token?.listings[0].price)}
+                        {listing.price && formatNumber(listing.price)}
                       </span>
 
                       <Lords className="h-6 w-6 fill-current" />

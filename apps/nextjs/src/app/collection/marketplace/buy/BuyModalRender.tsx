@@ -1,14 +1,13 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { NETWORK_NAME } from "@/constants/env";
-import { getTokenContractAddresses } from "@/utils/utils";
+import { api } from "@/trpc/react";
 import {
   useAccount,
   useContractWrite,
   useWaitForTransaction,
 } from "@starknet-react/core";
-import { uint256 } from "starknet";
-import { formatUnits, parseUnits } from "viem";
+import { parseUnits } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
@@ -113,7 +112,19 @@ export const BuyModalRender: FC<Props> = ({
   const is1155 = token?.token?.kind === "erc1155";*/
   const isOwner = token?.owner?.toLowerCase() === address?.toLowerCase();
 
-  const listing = token?.listings?.[0];
+  const filters = {
+    limit: 20,
+    token_key: token?.contract_address + ":" + token?.token_id,
+    enabled: false,
+  };
+
+  const { data: listingsData } = api.erc721Listings.all.useQuery(filters, {
+    enabled: open && !token?.listings?.[0],
+  });
+
+  const listing = useMemo(() => {
+    return token?.listings?.[0] ?? listingsData?.items?.[0];
+  }, [token, listingsData]);
 
   const quantityRemaining = useMemo(() => {
     if (orderId) {
@@ -129,7 +140,7 @@ export const BuyModalRender: FC<Props> = ({
 
   const {
     data,
-    write,
+    writeAsync,
     // isLoading: isTxSubmitting,
   } = useContractWrite({
     calls: [
@@ -165,12 +176,6 @@ export const BuyModalRender: FC<Props> = ({
   }, [data, transactionData, transactionError]);
 
   const buyToken = useCallback(async () => {
-    if (!listing) {
-      const error = new Error("Missing Listing");
-      setTransactionError(error);
-      throw error;
-    }
-
     const contract = collectionId?.split(":")[0];
 
     setBuyStep(BuyStep.Approving);
@@ -187,7 +192,7 @@ export const BuyModalRender: FC<Props> = ({
     }
     items.push(item);
 
-    write();
+    await writeAsync();
 
     /* client.actions
       .buyToken({
@@ -267,6 +272,7 @@ export const BuyModalRender: FC<Props> = ({
       });*/
   }, [
     tokenId,
+    listing,
     collectionId,
     orderId,
     quantity,
