@@ -14,7 +14,7 @@ interface ERC721LineItemProps {
     NonNullable<ReturnType<typeof useCollections>["data"]>[0],
     "name" | "royalties" | "image"
   >;*/;
-  usdPrice?: string;
+  usdPrice?: number;
   isUnavailable?: boolean;
   warning?: string;
   price: number;

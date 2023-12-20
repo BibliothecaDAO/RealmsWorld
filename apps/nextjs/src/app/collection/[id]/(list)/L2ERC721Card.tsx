@@ -1,13 +1,14 @@
-import type { RouterOutputs } from "@/utils/api";
 import Image from "next/image";
 import Link from "next/link";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
 import { findTokenName } from "@/utils/utils";
 
+import type { RouterOutputs } from "@realms-world/api";
 import { Button } from "@realms-world/ui";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";
+import { CardAction } from "./CardAction";
 
 export const L2ERC721Card = ({
   token,
@@ -47,13 +48,13 @@ export const L2ERC721Card = ({
             </span>
           )}
         </div>
-
-        <TokenDetails
-          token={token}
-          isGrid={isGrid}
-          address={token.owner ?? token.minter ?? ""}
-        />
       </Link>
+
+      <TokenDetails
+        token={token}
+        isGrid={isGrid}
+        address={token.owner ?? token.minter ?? ""}
+      />
     </div>
   );
 };
@@ -117,20 +118,8 @@ const GridDetails = ({
       <Button size={"xs"} variant={"ghost"} href={`/user/${address}`}>
         {useStarkDisplayName(address)}
       </Button>
-      {token?.price && (
-        <BuyModal
-          trigger={
-            <Button className="w-full" size={"lg"}>
-              Buy Now
-            </Button>
-          }
-          // tokenId={tokenId}
-          token={token}
-          collectionId={token.contract_address}
-          orderId={0}
-        />
-      )}
     </div>
+    <CardAction token={token} />
   </div>
 );
 

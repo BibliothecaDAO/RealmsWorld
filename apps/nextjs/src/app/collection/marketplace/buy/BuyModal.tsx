@@ -148,8 +148,8 @@ export function BuyModal({
         stepData,
         //feeUsd,
         gasCost,
-        /*totalUsd,
-        usdPrice,*/
+        totalUsd,
+        usdPrice,
         isOwner,
         setQuantity,
         setBuyStep,
@@ -221,14 +221,13 @@ export function BuyModal({
           >
             <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent>
-              {/* <DialogTitle>{title}</DialogTitle> */}
-
+              <DialogTitle>{title}</DialogTitle>
               {buyStep === BuyStep.Unavailable && !loading && (
                 <div className="flex flex-col">
                   <ERC721LineItem
                     tokenDetails={token}
                     collection={collection}
-                    //usdPrice={lords?.usdTotalFormatted}
+                    usdPrice={usdPrice}
                     isUnavailable={true}
                     price={quantity > 1 ? averageUnitPrice : price}
                     priceSubtitle={quantity > 1 ? "Average Price" : undefined}
@@ -251,7 +250,7 @@ export function BuyModal({
                   <ERC721LineItem
                     tokenDetails={token}
                     collection={collection}
-                    //usdPrice={paymentCurrency?.usdTotalFormatted}
+                    usdPrice={usdPrice}
                     price={quantity > 1 ? averageUnitPrice : price}
                     className="border-0"
                     priceSubtitle={quantity > 1 ? "Average Price" : undefined}
@@ -271,7 +270,7 @@ export function BuyModal({
                     </div>
                   )}
 
-                  <div className="flex items-start justify-between border-2 p-2 font-sans">
+                  <div className="mt-4 flex items-start justify-between border-2 p-2 font-sans">
                     <div className="self-center">You Pay</div>
                     <div className="flex space-x-3">
                       <span>

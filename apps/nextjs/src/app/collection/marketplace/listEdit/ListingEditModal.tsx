@@ -176,7 +176,7 @@ export function ListingEditModal({
               }
             }}*/
           >
-            <DialogTrigger>{trigger}</DialogTrigger>
+            <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent>
               <DialogTitle>{copy.title}</DialogTitle>
               {!isListingAvailable && !loading && (

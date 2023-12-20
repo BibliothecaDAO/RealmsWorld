@@ -1,6 +1,7 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { NETWORK_NAME } from "@/constants/env";
+import { useLordsPrice } from "@/hooks/useLordsPrice";
 import { api } from "@/trpc/react";
 import {
   useAccount,
@@ -42,17 +43,17 @@ interface ChildrenProps {
   collection?: any; //NonNullable<ReturnType<typeof useCollections>["data"]>[0];
   listing?: any; //NonNullable<ReturnType<typeof useListings>["data"]>[0];
   quantityAvailable: number;
-  averageUnitPrice: bigint;
-  totalPrice: bigint;
-  totalIncludingFees: bigint;
+  averageUnitPrice: number;
+  totalPrice: number;
+  totalIncludingFees: number;
   buyStep: BuyStep;
   transactionError?: Error | null;
   hasEnoughCurrency: boolean;
   addFundsLink: string;
   gasCost: bigint;
-  /*feeUsd: string;
-  totalUsd: bigint;
-  usdPrice: number;*/
+  //feeUsd: string;
+  totalUsd: number;
+  usdPrice: number;
   balance?: bigint;
   address?: string;
   steps: any; //Execute["steps"] | null;
@@ -87,10 +88,10 @@ export const BuyModalRender: FC<Props> = ({
   children,
   usePermit,
 }) => {
-  const [totalPrice, setTotalPrice] = useState(0n);
-  const [totalIncludingFees, setTotalIncludingFees] = useState(0n);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalIncludingFees, setTotalIncludingFees] = useState(0);
   const [gasCost, setGasCost] = useState(0n);
-  const [averageUnitPrice, setAverageUnitPrice] = useState(0n);
+  const [averageUnitPrice, setAverageUnitPrice] = useState(0);
   const [isFetchingPath, setIsFetchingPath] = useState(false);
   const [buyStep, setBuyStep] = useState<BuyStep>(BuyStep.Checkout);
   const [transactionError, setTransactionError] = useState<Error | null>();
@@ -98,6 +99,7 @@ export const BuyModalRender: FC<Props> = ({
   const [stepData, setStepData] = useState<BuyModalStepData | null>(null);
   const [steps, setSteps] = useState(/*<Execute["steps"] | null>*/ null);
   const [quantity, setQuantity] = useState(1);
+  const { lordsPrice } = useLordsPrice();
 
   /*  const blockExplorerBaseUrl =
     wagmiChain?.blockExplorers?.default?.url || "https://etherscan.io";
@@ -132,9 +134,9 @@ export const BuyModalRender: FC<Props> = ({
     }
   }, [listing, token, orderId]);
 
-  /*const usdPrice = paymentCurrency?.usdPrice || 0;
-  const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;
-  const totalUsd = totalIncludingFees * usdPriceRaw;*/
+  const usdPrice = (listing?.price ?? 0) * lordsPrice;
+  //const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;*/
+  const totalUsd = totalIncludingFees * lordsPrice;
 
   const addFundsLink = `https://app.avnu.fi/en?tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49&amount=0.001`;
 
@@ -294,9 +296,9 @@ export const BuyModalRender: FC<Props> = ({
     if (quantity === -1) return;
     if (!token || (orderId && !listing) || isOwner) {
       setBuyStep(BuyStep.Unavailable);
-      setTotalPrice(0n);
-      setTotalIncludingFees(0n);
-      setAverageUnitPrice(0n);
+      setTotalPrice(0);
+      setTotalIncludingFees(0);
+      setAverageUnitPrice(0);
       return;
     }
 
@@ -305,19 +307,20 @@ export const BuyModalRender: FC<Props> = ({
 
     if (orderId) {
       total = (parseInt(listing?.price) || 0) * quantity;
-    } /*else if (token?.market?.floorAsk?.price) {
-      total = BigInt(token.market.floorAsk.price?.amount?.raw || 0);
-    }*/
+    } else if (listing?.price) {
+      total = listing?.price || 0;
+      console.log(total);
+    }
 
     if (total > 0) {
       setTotalPrice(total);
       setTotalIncludingFees(total);
       setGasCost(gasCost);
-      setAverageUnitPrice(total / BigInt(quantity));
+      setAverageUnitPrice(total / quantity);
     } else {
-      setTotalIncludingFees(0n);
-      setTotalPrice(0n);
-      setAverageUnitPrice(0n);
+      setTotalIncludingFees(0);
+      setTotalPrice(0);
+      setAverageUnitPrice(0);
     }
   }, [
     listing,
@@ -373,9 +376,9 @@ export const BuyModalRender: FC<Props> = ({
         transactionError,
         hasEnoughCurrency,
         addFundsLink,
-        /*feeUsd,
+        //feeUsd,
         totalUsd,
-        usdPrice,*/
+        usdPrice,
         address: address,
         steps,
         stepData,

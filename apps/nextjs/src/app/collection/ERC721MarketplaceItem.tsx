@@ -1,17 +1,19 @@
 import type { FC } from "react";
 import React from "react";
 import Image from "next/image";
+import Lords from "@/icons/lords.svg";
 import Starknet from "@/icons/starknet.svg";
 import { formatBigInt } from "@/utils/utils";
 
 import { Tooltip, TooltipProvider } from "@realms-world/ui";
+import { formatBN, formatNumber } from "@realms-world/utils";
 
 interface Props {
   img?: string;
   name?: string;
   collection: string;
   price?: number;
-  usdPrice?: number | string;
+  usdPrice?: number;
   expires?: string;
   warning?: string;
   isUnavailable?: boolean;
@@ -102,17 +104,22 @@ const ERC721MarketplaceItem: FC<Props> = ({
           </div>
         </div>
 
-        {/* <div className="grid items-start justify-end gap-y-2">
+        <div className="grid items-start justify-between  py-6">
           {price ? (
-            formatBN(price, 4, 18)
+            <div className="flex">
+              {formatNumber(price, 4)}
+              <Lords className="ml-2 w-5 fill-current" />
+            </div>
           ) : (
             <span className={isUnavailable ? "subtle" : "base"}>--</span>
           )}
           {usdPrice ? (
-            <span className="text-xs">{formatBN(usdPrice, 4, 18)}</span>
+            <span className="text-xs text-bright-yellow/50">
+              ${formatNumber(usdPrice, 4)}
+            </span>
           ) : null}
           {warning && <span className="text-red">{warning}</span>}
-        </div> */}
+        </div>
       </div>
     </div>
   );
