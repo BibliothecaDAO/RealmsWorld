@@ -228,6 +228,7 @@ export function ListModal({
                             variant={"outline"}
                             size="lg"
                             className="px-6"
+                            disabled
                             onClick={() => handleSetFloor()}
                           >
                             +Floor

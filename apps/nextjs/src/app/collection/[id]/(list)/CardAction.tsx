@@ -52,7 +52,7 @@ export const CardAction = ({
           collectionId={"test"}
           trigger={
             <Button className="z-20 w-full" size={"lg"}>
-              List Item{" "}
+              List Item
             </Button>
           }
         />

@@ -5,6 +5,7 @@ import type {
   SetStateAction,
 } from "react";
 import React, { useEffect, useState } from "react";
+import { useTimeDiff } from "@/hooks/useTimeDiff";
 import Lords from "@/icons/lords.svg";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -113,7 +114,7 @@ export function ListingEditModal({
         setExpirationOption,
         editListing,
       }) => {
-        const expires = listing?.expiration;
+        const expires = useTimeDiff(listing?.expiration || 0);
 
         const profit = ((10000 - (royaltyBps || 0)) * (price ?? 0)) / 1000;
 

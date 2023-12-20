@@ -22,33 +22,35 @@ export const L2ERC721Card = ({
 
   return (
     <div
-      className={`transform border-2 bg-dark-green duration-300 hover:border-white ${
+      className={`flex transform flex-col border-2 bg-dark-green duration-300 hover:border-white ${
         isGrid ?? "flex w-full"
       }`}
     >
-      <Link
-        href={`/collection/${findTokenName(token.contract_address)}/${
-          token.token_id
-        }`}
-        className={`${isGrid ? "" : "flex"}`}
-      >
-        <div className={` ${!isGrid && "p-1"} relative`}>
-          {token.image && (
-            <Image
-              src={token.image}
-              alt={token.name ?? `beasts-${token.token_id}`}
-              className={isGrid ? "mx-auto" : ""}
-              width={imageSize}
-              height={imageSize}
-            />
-          )}
-          {isGrid && (
-            <span className="absolute bottom-3 right-3 border bg-black px-3 py-1 text-xs">
-              #{token.token_id}
-            </span>
-          )}
-        </div>
-      </Link>
+      <div>
+        <Link
+          href={`/collection/${findTokenName(token.contract_address)}/${
+            token.token_id
+          }`}
+          className={`${isGrid ? "" : "flex"}`}
+        >
+          <div className={` ${!isGrid && "p-1"} relative`}>
+            {token.image && (
+              <Image
+                src={token.image}
+                alt={token.name ?? `beasts-${token.token_id}`}
+                className={isGrid ? "mx-auto" : ""}
+                width={imageSize}
+                height={imageSize}
+              />
+            )}
+            {isGrid && (
+              <span className="absolute bottom-3 right-3 border bg-black px-3 py-1 text-xs">
+                #{token.token_id}
+              </span>
+            )}
+          </div>
+        </Link>
+      </div>
 
       <TokenDetails
         token={token}
@@ -105,7 +107,7 @@ const GridDetails = ({
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   address?: string;
 }) => (
-  <div className="w-full p-3">
+  <div className="flex h-full w-full flex-col justify-between p-3">
     <div className="flex justify-between border-b pb-2">
       <span className="">{decodeURIComponent(token.name ?? "")}</span>
     </div>
@@ -114,12 +116,14 @@ const GridDetails = ({
       attributeKeys={["type", "tier", "level", "health"]}
     />
     <Price token={token} />
-    <div className="mt-3 text-xs opacity-70">
-      <Button size={"xs"} variant={"ghost"} href={`/user/${address}`}>
-        {useStarkDisplayName(address)}
-      </Button>
+    <div>
+      <div className="mt-3 text-xs opacity-70">
+        <Button size={"xs"} variant={"ghost"} href={`/user/${address}`}>
+          {useStarkDisplayName(address)}
+        </Button>
+      </div>
+      <CardAction token={token} />
     </div>
-    <CardAction token={token} />
   </div>
 );
 

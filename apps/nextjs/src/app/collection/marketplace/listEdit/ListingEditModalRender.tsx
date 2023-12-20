@@ -205,65 +205,6 @@ export const ListingEditModalRender: FC<Props> = ({
 
     setEditListingStep(EditListingStep.Approving);
     await writeAsync();
-
-    /*client.actions
-      .listToken({
-        chainId: rendererChain?.id,
-        listings: [listing],
-        wallet,
-        onProgress: (steps: Execute["steps"]) => {
-          if (!steps) {
-            return;
-          }
-          setSteps(steps);
-
-          const executableSteps = steps.filter(
-            (step) => step.items && step.items.length > 0,
-          );
-
-          const stepCount = executableSteps.length;
-
-          let currentStepItem:
-            | NonNullable<Execute["steps"][0]["items"]>[0]
-            | undefined;
-
-          const currentStepIndex = executableSteps.findIndex((step) => {
-            currentStepItem = step.items?.find(
-              (item) => item.status === "incomplete",
-            );
-            return currentStepItem;
-          });
-
-          const currentStep =
-            currentStepIndex > -1
-              ? executableSteps[currentStepIndex]
-              : executableSteps[stepCount - 1];
-
-          if (currentStepItem) {
-            setStepData({
-              totalSteps: stepCount,
-              stepProgress: currentStepIndex,
-              currentStep,
-              currentStepItem,
-            });
-          } else if (
-            steps.every(
-              (step) =>
-                !step.items ||
-                step.items.length == 0 ||
-                step.items?.every((item) => item.status === "complete"),
-            )
-          ) {
-            setEditListingStep(EditListingStep.Complete);
-          }
-        },
-      })
-      .catch((error: Error) => {
-        setTransactionError(error);
-        setEditListingStep(EditListingStep.Edit);
-        setStepData(null);
-        setSteps(null);
-      });*/
   }, [collectionId, tokenId, expirationOption, price, quantity, contract]);
 
   useEffect(() => {
