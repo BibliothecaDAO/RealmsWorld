@@ -1,5 +1,5 @@
+import LordsIcon from "@/icons/lords.svg";
 import { useAccount } from "@starknet-react/core";
-import { RefreshCw } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
 import { Button } from "@realms-world/ui";
@@ -23,8 +23,8 @@ export const CardAction = ({
         (token.owner !== padAddress(address?.toLowerCase()) ? (
           <BuyModal
             trigger={
-              <Button className="z-20 w-full" size={"lg"}>
-                Buy Now
+              <Button className="z-20 flex w-full  justify-between" size={"lg"}>
+                Buy Now <span className="flex">{token?.price} </span>
               </Button>
             }
             // tokenId={tokenId}
