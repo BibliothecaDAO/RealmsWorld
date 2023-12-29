@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "garph": "^0.6.4",
-    "graphql-yoga": "^5.0.2",
+    "graphql-yoga": "^5.1.0",
     "graphql": "^16.8.1",
     "@realms-world/db": "workspace:*"
   },
