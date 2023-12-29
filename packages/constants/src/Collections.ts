@@ -3,7 +3,7 @@ import { ChainId } from "./Chains";
 export enum Collections {
   REALMS = "Realms",
   BEASTS = "Beasts",
-  GOLDEN_TOKEN = "Golden Token",
+  GOLDEN_TOKEN = "GoldenToken",
 }
 
 export const CollectionAddresses: {
