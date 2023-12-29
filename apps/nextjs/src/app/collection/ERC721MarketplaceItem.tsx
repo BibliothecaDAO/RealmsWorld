@@ -39,16 +39,13 @@ const ERC721MarketplaceItem: FC<Props> = ({
 
   return (
     <div>
-      <div className="justify-space-between flex items-center">
-        {/* <span className="mb-2 block text-lg uppercase">
-          {name ? "Item" : "Collection"}
-        </span> */}
+      <div className="justify-space-between flex items-center border">
         {priceSubtitle && (
           <span className="mb-2 block text-lg">{priceSubtitle}</span>
         )}
       </div>
       <div className="flex  justify-between">
-        <div className="my-3 flex items-center gap-2">
+        <div className="my-3 flex  gap-2">
           {img && (
             <Image
               src={img}
@@ -59,9 +56,9 @@ const ERC721MarketplaceItem: FC<Props> = ({
             />
           )}
 
-          <div className="grid p-2">
+          <div className="grid px-2">
             <div className="mr-2 flex gap-2 overflow-hidden">
-              <div className="mb-3 flex font-sans text-xl">
+              <div className="flex font-sans text-xl">
                 {name ? name : collection}
               </div>
 
@@ -71,15 +68,6 @@ const ERC721MarketplaceItem: FC<Props> = ({
                 </div>
               ) : null}
             </div>
-
-            {/* {name && (
-              <div className="my-1 flex">
-                <span> {collection}</span>
-                <hr />
-                <Starknet className="mr-2 h-6" />
-              </div>
-            )} */}
-
             {expires && <span className="text-xs">Expires {expires}</span>}
 
             {!expires && quantity && quantity > 1 ? (
@@ -89,8 +77,24 @@ const ERC721MarketplaceItem: FC<Props> = ({
                 </span>
               </div>
             ) : null}
+            <div className="grid items-start justify-between font-sans">
+              {price ? (
+                <div className="flex">
+                  {formatNumber(price, 4)}
+                  <Lords className="ml-2 w-5 fill-current" />
+                </div>
+              ) : (
+                <span className={isUnavailable ? "subtle" : "base"}>--</span>
+              )}
+              {usdPrice ? (
+                <span className="text-xs text-bright-yellow/50">
+                  ${formatNumber(usdPrice, 4)}
+                </span>
+              ) : null}
+              {warning && <span className="text-red">{warning}</span>}
+            </div>
             {!expires && !quantity && royaltiesBps ? (
-              <span className="flex gap-1 text-xs uppercase">
+              <span className="flex gap-1 text-xs font-semibold uppercase">
                 Creator Royalties: {royaltyPercent}%
                 <TooltipProvider>
                   <Tooltip
@@ -102,23 +106,6 @@ const ERC721MarketplaceItem: FC<Props> = ({
               </span>
             ) : null}
           </div>
-        </div>
-
-        <div className="grid items-start justify-between  py-6">
-          {price ? (
-            <div className="flex">
-              {formatNumber(price, 4)}
-              <Lords className="ml-2 w-5 fill-current" />
-            </div>
-          ) : (
-            <span className={isUnavailable ? "subtle" : "base"}>--</span>
-          )}
-          {usdPrice ? (
-            <span className="text-xs text-bright-yellow/50">
-              ${formatNumber(usdPrice, 4)}
-            </span>
-          ) : null}
-          {warning && <span className="text-red">{warning}</span>}
         </div>
       </div>
     </div>

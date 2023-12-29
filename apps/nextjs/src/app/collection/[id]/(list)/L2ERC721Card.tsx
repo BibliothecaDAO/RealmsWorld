@@ -22,8 +22,8 @@ export const L2ERC721Card = ({
 
   return (
     <div
-      className={`flex transform flex-col border-2 bg-dark-green duration-300 hover:border-white ${
-        isGrid ?? "flex w-full"
+      className={`group flex transform border-2 bg-dark-green duration-300 hover:border-bright-yellow ${
+        isGrid ? "w-full flex-col" : "justify-between"
       }`}
     >
       <div>
@@ -44,9 +44,21 @@ export const L2ERC721Card = ({
               />
             )}
             {isGrid && (
-              <span className="absolute bottom-3 right-3 border bg-black px-3 py-1 text-xs">
+              <span className="absolute bottom-3 right-3 border bg-black px-3 py-1 font-sans text-xs">
                 #{token.token_id}
               </span>
+            )}
+
+            {isGrid && (
+              <div className="absolute left-3 top-3 border bg-black  text-xs">
+                <Button
+                  size={"xs"}
+                  variant={"ghost"}
+                  href={`/user/${token.owner ?? token.minter ?? ""}`}
+                >
+                  {useStarkDisplayName(token.owner ?? token.minter ?? "")}
+                </Button>
+              </div>
             )}
           </div>
         </Link>
@@ -83,7 +95,7 @@ const TokenAttributes = ({
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   attributeKeys: string[];
 }) => (
-  <table className="min-w-full text-xs">
+  <table className="min-w-full font-sans text-xs">
     <tbody>
       {attributeKeys.map((key: string) => {
         const attribute = token.metadata?.attributes?.find(
@@ -91,7 +103,7 @@ const TokenAttributes = ({
         );
         return attribute ? (
           <tr className="hover:bright-yellow hover:bg-theme-gray" key={key}>
-            <td className="border px-2 py-1 uppercase">{key}:</td>
+            <td className="w-1/3 border px-2 py-1 uppercase">{key}</td>
             <td className="border px-2 py-1">{attribute.value}</td>
           </tr>
         ) : null;
@@ -102,13 +114,12 @@ const TokenAttributes = ({
 
 const GridDetails = ({
   token,
-  address,
 }: {
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   address?: string;
 }) => (
-  <div className="flex h-full w-full flex-col justify-between p-3">
-    <div className="flex justify-between border-b pb-2">
+  <div className=" flex h-full w-full flex-col justify-between p-3">
+    <div className="flex justify-between pb-2">
       <span className="">{decodeURIComponent(token.name ?? "")}</span>
     </div>
     <TokenAttributes
@@ -117,12 +128,9 @@ const GridDetails = ({
     />
     <Price token={token} />
     <div>
-      <div className="mt-3 text-xs opacity-70">
-        <Button size={"xs"} variant={"ghost"} href={`/user/${address}`}>
-          {useStarkDisplayName(address)}
-        </Button>
+      <div className="absolute bottom-0 left-0 w-full px-3 opacity-0 transition-all duration-300 group-hover:bottom-4 group-hover:opacity-100">
+        <CardAction token={token} />
       </div>
-      <CardAction token={token} />
     </div>
   </div>
 );
@@ -133,23 +141,16 @@ const Price = ({
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
 }) => {
   return (
-    <div className="flex justify-between">
+    <div className="mt-3 flex justify-between font-sans">
       {token?.price && (
         <div>
           <h6 className="uppercase">Price</h6>
           <div className="flex">
             {token?.price}
-            <LordsIcon className="mx-auto ml-3 h-4 w-4 self-center fill-bright-yellow" />{" "}
+            <LordsIcon className="mx-auto ml-2 h-4 w-4 self-center fill-bright-yellow" />{" "}
           </div>
         </div>
       )}
-      {/*TODO Add last price sold */}
-      {/*token?.lastPrice && (
-        <div>
-          <h6 className="uppercase">Last price</h6>
-          <div>100</div>
-        </div>
-      )*/}
     </div>
   );
 };
@@ -162,18 +163,21 @@ const ListDetails = ({
   address?: string;
 }) => {
   return (
-    <div className="flex w-full space-x-6 self-center px-3">
-      <div className="flex justify-between self-center">
+    <div className="flex w-full justify-between space-x-6 self-center px-3">
+      <div className="mr-auto flex justify-between self-center">
         <span className="">{decodeURIComponent(token?.name ?? "")}</span>
       </div>
-      <div className="mr-auto flex self-center">
+      <div className="mr-auto flex self-center font-sans">
         {token?.price}
         <LordsIcon className="mx-auto ml-3 h-6 w-6 fill-bright-yellow pb-1" />
       </div>
-      <div className="fonts-sans ml-auto self-center text-xs opacity-70">
+      <div className="fonts-sans ml-auto self-center text-xs">
         <Button variant={"ghost"} href={`/user/${address}`}>
           {useStarkDisplayName(address)}
         </Button>
+      </div>
+      <div className="absolute bottom-0 right-0 w-full  px-3 opacity-0 transition-all duration-300 group-hover:bottom-2 group-hover:opacity-100">
+        <CardAction token={token} />
       </div>
     </div>
   );
