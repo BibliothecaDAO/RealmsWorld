@@ -1,5 +1,5 @@
-import React from "react";
 import type { VariantProps } from "class-variance-authority";
+import React from "react";
 import { cva } from "class-variance-authority";
 import { AlertTriangleIcon, CheckCircleIcon, InfoIcon } from "lucide-react";
 import PropTypes from "prop-types";
@@ -18,7 +18,7 @@ export const AlertAlign = {
   CENTER: "alignCenter",
   RIGHT: "alignRight",
 };
-const alertVariants = cva("flex rounded border text-lg p-4", {
+const alertVariants = cva("flex rounded border-2 text-lg p-2 font-sans", {
   variants: {
     variant: {
       success: "border-cyan-400 bg-emerald-300",
@@ -59,9 +59,11 @@ export const Alert = ({
   };
 
   return (
-    <div className={cn("flex rounded p-4", alertVariants({ variant, align }))}>
+    <div className={cn("flex rounded p-2", alertVariants({ variant, align }))}>
       <div className={cn("flex w-full" /*, styles[align]*/)}>
-        <div className="mr-2 flex h-5 w-5 justify-around">{renderIcon()}</div>
+        <div className="mr-2 flex h-5 w-5 justify-around self-center">
+          {renderIcon()}
+        </div>
         <div className="flex flex-col text-left ">
           {title && (
             <div
@@ -71,9 +73,9 @@ export const Alert = ({
           )}
           {message && (
             <div
+              className="self-center"
               dangerouslySetInnerHTML={{ __html: message }}
-              className="mt-2 text-sm font-normal"
-            ></div>
+            />
           )}
         </div>
       </div>

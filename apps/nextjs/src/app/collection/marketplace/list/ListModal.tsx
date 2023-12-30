@@ -205,7 +205,7 @@ export function ListModal({
                   <ListItem collection={collection} token={token} />
                   <div className="flex flex-col items-center">
                     <div className="flex w-full flex-col">
-                      <span className="mb-1 text-lg">Enter a price</span>
+                      <span className="mb-1 text-lg">Lords listing price</span>
                       <div className="flex w-full items-center justify-between gap-x-4">
                         <div className="relative w-full">
                           <Input
@@ -219,7 +219,7 @@ export function ListModal({
                             className={"h-12 w-full"}
                           />
                           <div className="absolute right-0 top-0 z-0 mr-8 flex pr-2 pt-3">
-                            <Lords className="h-6 w-6 fill-white" />
+                            <Lords className="h-6 w-6 fill-bright-yellow" />
                           </div>
                         </div>
 
@@ -245,7 +245,7 @@ export function ListModal({
                       </div>
                       {Number(price) !== 0 && !withinPricingBounds && (
                         <div className="border p-3">
-                          <span className="text-red">
+                          <span className="text-red-400">
                             {maximumAmount !== Infinity
                               ? `Amount must be between ${formatNumber(
                                   minimumAmount,
