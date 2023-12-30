@@ -1,5 +1,6 @@
 import type { UserTokenData } from "@/types";
 import { Suspense } from "react";
+import { LoadingSkeletonGrid } from "@/app/_components/LoadingSkeletonGrid";
 import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
 import { getUser } from "@/lib/reservoir/getUser";
 
@@ -28,11 +29,7 @@ async function UserTokenGrid({
         ))}
       </div>
       {dataContinuation && (
-        <Suspense
-          fallback={Array.from({ length: 3 }).map((_, index) => (
-            <TokenCardSkeleton key={index} />
-          ))}
-        >
+        <Suspense fallback={<LoadingSkeletonGrid />}>
           <UserTokenGrid address={address} continuation={dataContinuation} />
         </Suspense>
       )}
