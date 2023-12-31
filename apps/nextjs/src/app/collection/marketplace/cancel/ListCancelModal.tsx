@@ -128,7 +128,7 @@ export function ListCancelModal({
                     <ERC721LineItem
                       tokenDetails={token}
                       price={listing?.price}
-                      priceSubtitle="Price"
+                      // priceSubtitle="Price"
                       //usdPrice={totalUsd.toString()}
                       collection={
                         listing.criteria?.data?.collection?.name || ""
@@ -159,9 +159,9 @@ export function ListCancelModal({
                       quantity={1}
                     />
                   </div>
-                  {!stepData && (
+                  {/* {!stepData && (
                     <Loader className="mx-auto h-24 animate-spin" />
-                  )}
+                  )} */}
                   {/*stepData && (
                   <>
                     <Progress

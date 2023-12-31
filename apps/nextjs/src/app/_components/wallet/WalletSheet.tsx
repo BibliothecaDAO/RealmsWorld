@@ -127,7 +127,7 @@ export const WalletSheet = () => {
             <EthereumAccount />
             <StarkAccount />
             <div className="mt-4">
-              <h6>Actions</h6>
+              <h5>Actions</h5>
               <Dialog>
                 <DialogTrigger asChild>
                   <Button

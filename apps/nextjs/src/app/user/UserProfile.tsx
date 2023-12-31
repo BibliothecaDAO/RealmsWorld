@@ -1,7 +1,5 @@
 "use client";
 
-import crypto from "crypto";
-import Image from "next/image";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import EthereumLogo from "@/icons/ethereum.svg";
 import Starknet from "@/icons/starknet.svg";
@@ -22,42 +20,20 @@ export const UserProfile = ({
   const l1Shown = l1Address ?? l1Account;
   const l2Shown = l2Address ?? l2Account;
 
-  function hexToNumber(hexString: string, minValue = 1, maxValue = 10) {
-    const hash = crypto.createHash("sha256");
-    hash.update(hexString);
-    const hexDigest = hash.digest("hex");
-    const intValue = BigInt(`0x${hexDigest}`);
-    const scaledValue =
-      minValue + Number(intValue % BigInt(maxValue - minValue + 1));
-    return scaledValue;
-  }
-  const id = l1Shown
-    ? hexToNumber(l1Shown, 1, 10)
-    : hexToNumber(l2Shown, 1, 10);
-
   const starkName = useStarkDisplayName(l2Shown);
   return (
-    <div className="hidden w-1/4 flex-none bg-gradient-to-b from-theme-gray-light p-4 sm:block">
-      <h5>
-        {l2Shown && (
-          <div className="flex">
-            <Starknet className="mr-2 w-6" /> {starkName}
-          </div>
-        )}
-        {l1Shown && (
-          <div className="flex">
-            <EthereumLogo className="ml-[2px] mr-2 w-[22px]" />
-            {shortenHex(l1Shown)}
-          </div>
-        )}
-      </h5>
-      <Image
-        src={`/users/${id}.png`}
-        alt="An example image"
-        width={2000}
-        height={2000}
-        className="mx-auto rounded"
-      />
-    </div>
+    <h5>
+      {l2Shown && (
+        <div className="flex">
+          <Starknet className="mr-2 w-6" /> {starkName}
+        </div>
+      )}
+      {l1Shown && (
+        <div className="flex">
+          <EthereumLogo className="ml-[2px] mr-2 w-[22px]" />
+          {shortenHex(l1Shown)}
+        </div>
+      )}
+    </h5>
   );
 };

@@ -1,6 +1,6 @@
+import type { Collection, L2Collection } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import type { Collection, L2Collection } from "@/types";
 
 interface Props {
   collection: Collection | L2Collection;
@@ -10,14 +10,14 @@ export const CollectionCard = ({ collection }: Props) => {
   return (
     <Link
       href={`/collection/${collection.link ?? "realms"}`} //TODO make dynamic depending on collection url (currently not passed from reservoir collections query)
-      className="group flex border bg-dark-green p-5 duration-300 hover:bg-medium-dark-green hover:opacity-80"
+      className="group flex border-2 bg-dark-green p-5 duration-300 hover:border-bright-yellow hover:bg-medium-dark-green hover:opacity-80"
     >
       {collection.image && (
         <Image
           src={collection.image}
-          alt="An example image"
-          width={70}
-          height={70}
+          alt={collection.name}
+          width={50}
+          height={50}
           className="rounded-full"
         />
       )}

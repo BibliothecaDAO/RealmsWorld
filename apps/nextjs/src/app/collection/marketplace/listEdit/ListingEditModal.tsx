@@ -204,12 +204,12 @@ export function ListingEditModal({
                         message={transactionError.message}
                       />
                     )}
-                    <div className="border-b p-2">
+                    <div className="border-b">
                       <ERC721LineItem
                         tokenDetails={token}
                         name={token?.name}
                         price={listing?.price}
-                        priceSubtitle="Price"
+                        // priceSubtitle="Price"
                         royaltiesBps={royaltyBps}
                         //usdPrice={totalUsd.toString()}
                         collection={
@@ -219,33 +219,10 @@ export function ListingEditModal({
                         quantity={listing?.quantityRemaining}
                       />
                     </div>
-                    <div className="mt-4 flex flex-col px-2 py-1">
-                      {/*quantityAvailable > 1 && (
-                        <>
-                          <div className="mb-2">
-                            <div className="mb-2">Quantity</div>
-                            <Select
-                              value={`${quantity}`}
-                              onValueChange={(value: string) => {
-                                setQuantity(Number(value));
-                              }}
-                            >
-                              {[...Array(quantityAvailable)].map((_a, i) => (
-                                <SelectItem key={i} value={`${i + 1}`}>
-                                  <Select.ItemText>{i + 1}</Select.ItemText>
-                                </SelectItem>
-                              ))}
-                            </Select>
-                          </div>
-                          <span className="mb-8 inline-block">
-                            {quantityAvailable} items available
-                          </span>
-                        </>
-                              )*/}
+                    <div className="mt-4 flex flex-col">
                       <div className="mb-2 justify-between">
                         <p>Set New Price</p>
                         <div className="flex items-center gap-4">
-                          <p>You Get</p>
                           <TooltipProvider>
                             <Tooltip
                               side="left"
@@ -280,7 +257,7 @@ export function ListingEditModal({
                             }}
                           />
                           <div className="absolute right-0 top-0 z-0 mr-8 flex pr-2 pt-3">
-                            <Lords className="h-6 w-6 fill-white" />
+                            <Lords className="h-6 w-6 fill-bright-yellow" />
                           </div>
                         </div>
                         {price && price !== 0 && !withinPricingBounds ? (
@@ -319,43 +296,7 @@ export function ListingEditModal({
                             </div>
                           )}
                       </div>
-                      <div className="my-2">
-                        <div className="mb-2">Expiration Date</div>
-                        <Select
-                          disabled={true}
-                          value={expirationOption?.text || ""}
-                          onValueChange={(value: string) => {
-                            const option = expirationOptions.find(
-                              (option) => option.value == value,
-                            );
-                            if (option) {
-                              setExpirationOption(option);
-                            }
-                          }}
-                        >
-                          <SelectTrigger className="h-12 w-[180px]">
-                            <SelectValue
-                              aria-label={expirationOption?.text}
-                              placeholder="Select an expiry"
-                            >
-                              {expirationOption?.text}
-                            </SelectValue>
-                          </SelectTrigger>
-                          <SelectContent>
-                            {expirationOptions
-                              .filter(({ value }) => value !== "custom")
-                              .map((option) => (
-                                <SelectItem
-                                  key={option.text}
-                                  value={option.value}
-                                >
-                                  {option.text}
-                                </SelectItem>
-                              ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="flex gap-x-3">
+                      <div className="mt-2 flex gap-x-3">
                         <Button
                           onClick={() => {
                             setOpen(false);
@@ -378,19 +319,18 @@ export function ListingEditModal({
                 )}
               {editListingStep === EditListingStep.Approving && (
                 <div className="flex flex-col">
-                  <div className=" border p-2">
-                    <ERC721LineItem
-                      tokenDetails={token}
-                      price={profit}
-                      //usdPrice={updatedTotalUsd.toString()}
-                      collection={collection?.name || ""}
-                      expires={`in ${expirationOption?.text.toLowerCase()}`}
-                      quantity={1}
-                    />
-                  </div>
-                  {!stepData && (
+                  <ERC721LineItem
+                    tokenDetails={token}
+                    price={profit}
+                    //usdPrice={updatedTotalUsd.toString()}
+                    collection={collection?.name || ""}
+                    expires={`in ${expirationOption?.text.toLowerCase()}`}
+                    quantity={1}
+                  />
+
+                  {/* {!stepData && (
                     <Loader className="mx-auto my-2 h-[100px] w-auto animate-spin" />
-                  )}
+                  )} */}
                   {stepData && (
                     <>
                       <Progress
@@ -402,7 +342,7 @@ export function ListingEditModal({
                       />
                     </>
                   )}
-                  <Button disabled={true} className="m-2">
+                  <Button disabled={true}>
                     <Loader className="mr-2 animate-spin" />
                     {stepData?.currentStepItem?.txHashes
                       ? copy.ctaAwaitingValidation
@@ -419,10 +359,8 @@ export function ListingEditModal({
                     <h5 className="mb-4">Listing Updated!</h5>
                     <div className="mb-8">
                       Your listing for{" "}
-                      <span className="text-medium-dark-green">
-                        {token?.name}
-                      </span>{" "}
-                      has been updated.
+                      <span className="font-semibold">{token?.name}</span> has
+                      been updated.
                     </div>
                   </div>
                   <Button
