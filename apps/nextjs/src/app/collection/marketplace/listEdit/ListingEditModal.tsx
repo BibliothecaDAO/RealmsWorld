@@ -7,6 +7,7 @@ import type {
 import React, { useEffect, useState } from "react";
 import { useTimeDiff } from "@/hooks/useTimeDiff";
 import Lords from "@/icons/lords.svg";
+import { getTokenName } from "@/utils/utils";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Loader } from "lucide-react";
@@ -321,10 +322,10 @@ export function ListingEditModal({
                 <div className="flex flex-col">
                   <ERC721LineItem
                     tokenDetails={token}
-                    price={profit}
+                    price={price}
                     //usdPrice={updatedTotalUsd.toString()}
                     collection={collection?.name || ""}
-                    expires={`in ${expirationOption?.text.toLowerCase()}`}
+                    // expires={`in ${expirationOption?.text.toLowerCase()}`}
                     quantity={1}
                   />
 
@@ -359,8 +360,10 @@ export function ListingEditModal({
                     <h5 className="mb-4">Listing Updated!</h5>
                     <div className="mb-8">
                       Your listing for{" "}
-                      <span className="font-semibold">{token?.name}</span> has
-                      been updated.
+                      <span className="font-semibold">
+                        {decodeURIComponent(token?.name || "")}
+                      </span>{" "}
+                      has been updated.
                     </div>
                   </div>
                   <Button
