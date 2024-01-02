@@ -26,7 +26,7 @@ export async function generateMetadata({
   const collection: Collection = collectionData.collections?.[0];*/
   const collection = erc721Tokens[params.id as keyof typeof erc721Tokens];
   return {
-    title: `Collection: ${collection?.name}`,
+    title: `${collection?.name}`,
     description: `Collection Details and Marketplace for ${collection?.name} - Created for adventurers by Bibliotheca DAO`,
   };
 }

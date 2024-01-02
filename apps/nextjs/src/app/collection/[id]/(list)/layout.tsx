@@ -1,15 +1,8 @@
-import type { erc721Tokens } from "@/constants";
 import React from "react";
 import CollectionSummary from "@/app/collection/CollectionSummary";
 import { NETWORK_NAME } from "@/constants/env";
-import { getTokenContractAddresses } from "@/utils/utils";
 
-//import { Button } from "@realms-world/ui";
 import { NavLink } from "@realms-world/ui";
-
-//import { NETWORK_NAME } from "@/constants/env";
-//import { ChainType } from "@starkware-industries/commons-js-enums";
-//import { motion } from "framer-motion";
 
 export default function RootLayout({
   children,
@@ -20,13 +13,6 @@ export default function RootLayout({
 }) {
   const defaultImage = "/backgrounds/dummy_background.webp";
   const imageUrl = params.id ? `/backgrounds/${params.id}.png` : defaultImage;
-
-  const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${imageUrl}), url(${defaultImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };
 
   const isMintable = NETWORK_NAME == "GOERLI" && params.id == "goldenToken";
   const tabs = [

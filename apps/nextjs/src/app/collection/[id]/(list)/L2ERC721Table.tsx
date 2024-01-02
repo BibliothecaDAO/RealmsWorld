@@ -20,7 +20,7 @@ export const L2ERC721Table = ({
 }) => {
   const { isGrid } = useUIContext();
   const grid =
-    "grid grid-cols-1 gap-6  md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6";
+    "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6";
   const list = "grid grid-cols-1 w-full";
 
   const ref = useRef(null);

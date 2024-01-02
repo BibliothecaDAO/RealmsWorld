@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import React from "react";
-import { formatUnits } from "viem";
+import { getTokenName } from "@/utils/utils";
 
 import type { RouterOutputs } from "@realms-world/api";
 
@@ -41,31 +41,22 @@ const ERC721LineItem: FC<ERC721LineItemProps> = ({
     return null;
   }
 
-  const name = tokenDetails?.name
-    ? decodeURIComponent(tokenDetails?.name)
-    : `#${tokenDetails?.token_id}`;
-  const collectionName =
-    tokenDetails?.collection?.name || collection?.name || "";
-
-  const img = tokenDetails?.image
-    ? tokenDetails.image
-    : (collection?.image as string);
-
-  const royaltiesBps =
-    showRoyalties && collection?.royalties ? collection.royalties.bps : 500;
-
   return (
     <ERC721MarketplaceItem
-      img={img}
-      name={name}
+      img={
+        tokenDetails?.image ? tokenDetails.image : (collection?.image as string)
+      }
+      name={getTokenName(tokenDetails)}
       price={price}
       usdPrice={usdPrice}
-      collection={collectionName}
+      collection={tokenDetails?.collection?.name || collection?.name || ""}
       expires={expires}
       warning={warning}
       isUnavailable={isUnavailable}
       priceSubtitle={priceSubtitle}
-      royaltiesBps={royaltiesBps}
+      royaltiesBps={
+        showRoyalties && collection?.royalties ? collection.royalties.bps : 500
+      }
       quantity={quantity}
     />
   );

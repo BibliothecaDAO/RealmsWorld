@@ -1,9 +1,5 @@
 import React from "react";
 
-//import { NETWORK_NAME } from "@/constants/env";
-//import { ChainType } from "@starkware-industries/commons-js-enums";
-//import { motion } from "framer-motion";
-
 export default function RootLayout({
   children,
   params,

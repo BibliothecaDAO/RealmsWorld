@@ -1,8 +1,10 @@
-import { NETWORK_NAME } from "@/constants/env";
 import type { ERC721Tokens } from "@/constants/erc721Tokens";
+import { NETWORK_NAME } from "@/constants/env";
 import { erc721Tokens } from "@/constants/erc721Tokens";
 import { ChainType, tokens } from "@/constants/tokens";
 import { formatUnits } from "viem";
+
+import type { RouterOutputs } from "@realms-world/api";
 
 export const isEth = (symbol: string) => {
   return symbol === tokens.L1.ETH.symbol;
@@ -115,3 +117,15 @@ export const isBrowserLocaleClockType24h = () => {
 
   return Number.isInteger(Number(hr));
 };
+
+export function getTokenName(
+  tokenDetails: RouterOutputs["erc721Tokens"]["all"]["items"][number],
+) {
+  if (!tokenDetails) {
+    return "Invalid token details";
+  }
+
+  return tokenDetails.name
+    ? decodeURIComponent(tokenDetails.name)
+    : `#${tokenDetails.token_id}`;
+}
