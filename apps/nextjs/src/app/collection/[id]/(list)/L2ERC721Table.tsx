@@ -46,7 +46,7 @@ export const L2ERC721Table = ({
       getNextPageParam(lastPage) {
         return lastPage.nextCursor;
       },
-      refetchInterval: 15000,
+      refetchInterval: 0,
     });
 
   const isInView = useInView(ref, { once: false });
@@ -78,7 +78,7 @@ export const L2ERC721Table = ({
             <TokenCardSkeleton key={index} />
           ))}
       </div>
-      <div ref={ref} />
+      <div className="mt-6 w-full" ref={ref} />
     </>
   );
 };

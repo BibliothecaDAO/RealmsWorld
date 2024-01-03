@@ -7,13 +7,14 @@ import {
   asc,
   desc,
   eq,
-  gte,
   isNotNull,
+  isNull,
   lte,
   schema,
 } from "@realms-world/db";
 import { padAddress } from "@realms-world/utils";
 
+import { withCursorPagination } from "../cursorPagination";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const erc721TokensRouter = createTRPCRouter({
@@ -21,7 +22,12 @@ export const erc721TokensRouter = createTRPCRouter({
     .input(
       z.object({
         limit: z.number().min(1).max(100).nullish(),
-        cursor: z.number().nullish(), // <-- "cursor" needs to exist, but can be any type
+        cursor: z
+          .object({
+            token_id: z.number().nullish(),
+            price: z.string().nullish(),
+          })
+          .nullish(), // <-- "cursor" needs to exist, but can be any type
         contractAddress: z.string().nullish(),
         owner: z.string().nullish(),
         orderBy: z.string().nullish(),
@@ -38,17 +44,42 @@ export const erc721TokensRouter = createTRPCRouter({
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
 
-      /*const orderByVariable =
-        orderBy == "floorAskPrice"
-          ? schema.erc721Tokens.price
-          : schema.erc721Tokens.token_id;
-      direction === "asc" ? asc(orderByVariable) : desc(orderByVariable);*/
+      console.log(cursor);
 
-      /*if (direction === "asc") {
-        orderByFilter = asc(orderByVariable);
+      const cursors = [];
+      if (orderBy == "tokenId") {
+        cursors.push([
+          schema.erc721Tokens.token_id, // Column to use for cursor
+          direction ?? "desc", // Sort order ('asc' or 'desc')
+          cursor?.token_id, // Cursor value
+        ]);
       } else {
-        orderByFilter = desc(orderByVariable);
-      }*/
+        if (
+          cursor == undefined ||
+          (cursor?.token_id != 0 && cursor?.price != null)
+        ) {
+          cursors.push(
+            [
+              schema.erc721Tokens.price, // Column to use for cursor
+              direction ?? "asc", // Sort order ('asc' or 'desc')
+              cursor?.price, // Cursor value
+            ],
+            [
+              schema.erc721Tokens.token_id, // Column to use for cursor
+              direction ?? "asc", // Sort order ('asc' or 'desc')
+              cursor?.token_id, // Cursor value
+            ],
+          );
+          //whereFilter.push(isNotNull(schema.erc721Tokens.price));
+        } else {
+          cursors.push([
+            schema.erc721Tokens.token_id, // Column to use for cursor
+            direction ?? "asc", // Sort order ('asc' or 'desc')
+            cursor?.token_id, // Cursor value
+          ]);
+          whereFilter.push(isNull(schema.erc721Tokens.price));
+        }
+      }
 
       if (contractAddress) {
         whereFilter.push(
@@ -58,52 +89,29 @@ export const erc721TokensRouter = createTRPCRouter({
           ),
         );
       }
-
       if (owner) {
         whereFilter.push(
           eq(schema.erc721Tokens.owner, padAddress(owner.toLowerCase())),
         );
       }
-      if (cursor) {
-        whereFilter.push(
-          direction === "asc"
-            ? gte(schema.erc721Tokens.token_id, cursor)
-            : lte(schema.erc721Tokens.token_id, cursor),
-        );
-      } /* else {
-        whereFilter.push(lte(schema.erc721Tokens.token_id, cursor));
-      }*/
       if (!block) {
         whereFilter.push(sql`upper_inf(_cursor)`);
       }
 
-      if (orderBy == "tokenId") {
-        orderByFilter.push(
-          direction === "asc"
-            ? asc(schema.erc721Tokens.token_id)
-            : desc(schema.erc721Tokens.token_id),
-        );
-      } else {
-        //whereFilter.push(isNotNull(schema.erc721Tokens.price));
-        orderByFilter.push(
-          direction === "asc"
-            ? (asc(schema.erc721Tokens.price),
-              asc(schema.erc721Tokens.token_id))
-            : asc(schema.erc721Tokens.price),
-          desc(schema.erc721Tokens.token_id),
-        );
-      }
-
-      const items = await ctx.db.query.erc721Tokens.findMany({
-        limit: limit + 1,
-        where: and(...whereFilter),
-        orderBy: orderByFilter,
-      });
+      const items = await ctx.db.query.erc721Tokens.findMany(
+        withCursorPagination({
+          limit: limit + 1,
+          where: and(...whereFilter),
+          cursors: cursors,
+        }),
+      );
 
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
         const nextItem = items.pop();
-        nextCursor = nextItem!.token_id;
+        nextCursor = { token_id: nextItem!.token_id, price: nextItem!.price };
+      } else if (cursor?.price) {
+        nextCursor = { token_id: 0, price: null };
       }
       return {
         items,
