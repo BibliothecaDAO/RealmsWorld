@@ -11,7 +11,7 @@ import { L2ERC721Card } from "./L2ERC721Card";
 
 //import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
 
-export const L2ERC721Table = ({
+const L2ERC721Table = ({
   contractAddress,
   ownerAddress,
 }: {
@@ -78,7 +78,8 @@ export const L2ERC721Table = ({
             <TokenCardSkeleton key={index} />
           ))}
       </div>
-      <div className="mt-6 w-full" ref={ref} />
+      <div className="col-span-12 mt-6" ref={ref} />
     </>
   );
 };
+export default L2ERC721Table;

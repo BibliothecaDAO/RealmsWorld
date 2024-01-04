@@ -10,8 +10,9 @@ function eventKey(name: string) {
   return `0x${h.toString(16).padStart(64, "0")}`;
 }
 
-export const ORDER_EVENT = eventKey("OrderEvent");
 export const TRANSFER_EVENT = eventKey("Transfer");
+export const ORDER_EVENT = eventKey("OrderEvent");
+export const WHITELIST_EVENT = eventKey("WhiteListEvent");
 
 export const erc721ContractEvents = whitelistedContracts.map((contract) => {
   return {
@@ -30,7 +31,14 @@ export const marketplaceContractEvents = [
     includeReceipt: true,
   },
 ];
-
+export const marketplaceWhiteListEvents = [
+  {
+    fromAddress: Deno.env.get("MARKET_CONTRACT") as `0x${string}`,
+    keys: [WHITELIST_EVENT],
+    includeTransaction: false,
+    includeReceipt: true,
+  },
+];
 export enum OrderActionType {
   Create = 0,
   Edit = 1,

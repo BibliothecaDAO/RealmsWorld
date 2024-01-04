@@ -44,8 +44,6 @@ export const erc721TokensRouter = createTRPCRouter({
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
 
-      console.log(cursor);
-
       const cursors = [];
       if (orderBy == "tokenId") {
         cursors.push([
@@ -70,7 +68,6 @@ export const erc721TokensRouter = createTRPCRouter({
               cursor?.token_id, // Cursor value
             ],
           );
-          //whereFilter.push(isNotNull(schema.erc721Tokens.price));
         } else {
           cursors.push([
             schema.erc721Tokens.token_id, // Column to use for cursor

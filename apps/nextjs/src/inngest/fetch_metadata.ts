@@ -98,7 +98,7 @@ export const fetchMetadata = inngest.createFunction(
           .set({
             image: parsedJson.image,
             name: parsedJson.name,
-            metadata: { attributes: parsedJson.attributes },
+            //metadata: { attributes: parsedJson.attributes },
           })
           .where(
             and(
@@ -111,7 +111,7 @@ export const fetchMetadata = inngest.createFunction(
           )
           .returning({ updatedId: schema.erc721Tokens.id });
 
-        return query[0]?.updatedId;
+        return { metadata: parsedJson, updatedId: query[0]?.updatedId };
       },
     );
     if (!dbRes) {

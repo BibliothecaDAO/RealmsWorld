@@ -1,17 +1,13 @@
-import { Suspense } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import type { erc721Tokens } from "@/constants";
+import type { Collection, Market, Token } from "@/types";
+import { Suspense } from "react";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
-import type { Collection, Market, Token } from "@/types";
-import { getTokenContractAddresses, shortenHex } from "@/utils/utils";
-import { ArrowLeft } from "lucide-react";
+import { getTokenContractAddresses } from "@/utils/utils";
 import { formatEther } from "viem";
 
 import { L2Token } from "./L2Token";
 import { LoadingSkeleton } from "./loading";
-import { TokenAttributes } from "./TokenAttributes";
 import { TokenContent } from "./TokenContent";
 import { TokenInformation } from "./TokenInformation";
 
