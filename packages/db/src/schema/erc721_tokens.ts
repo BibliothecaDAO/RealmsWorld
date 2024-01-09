@@ -4,6 +4,7 @@ import { bigint, integer, json, numeric, text } from "drizzle-orm/pg-core";
 import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
 import { erc721MarketListing } from "./erc721_market";
+import { erc721TokenAttributes } from "./erc721_token_attributes";
 
 export const erc721Tokens = pgSqlTable("erc721_tokens", {
   _cursor: int8range("_cursor"),
@@ -19,7 +20,7 @@ export const erc721Tokens = pgSqlTable("erc721_tokens", {
   price: numeric("price"),
   expiration: integer("expiration"),
   //lastPrice: numeric('last_price'),
-  metadata: json("metadata").$type<{
+  /*metadata: json("metadata").$type<{
     attributes:
       | {
           trait_type: string;
@@ -29,15 +30,13 @@ export const erc721Tokens = pgSqlTable("erc721_tokens", {
           trait_type: string;
           value: number;
         }[];
-  }>(),
+  }>(),*/
 });
-export const erc721TokensTransferRelations = relations(
-  erc721Tokens,
-  ({ many }) => ({
-    transfers: many(erc721Transfers),
-    listings: many(erc721MarketListing),
-  }),
-);
+export const erc721TokensRelations = relations(erc721Tokens, ({ many }) => ({
+  transfers: many(erc721Transfers),
+  listings: many(erc721MarketListing),
+  attributes: many(erc721TokenAttributes),
+}));
 
 export const erc721Transfers = pgSqlTable("erc721_transfers", {
   _cursor: bigint("_cursor", { mode: "number" }),

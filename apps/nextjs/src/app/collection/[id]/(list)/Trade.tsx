@@ -8,6 +8,7 @@ import { TokenTable } from "@/app/collection/TokenTable";
 import { TradeFilters } from "@/app/collection/TradeFilters";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getToken } from "@/lib/reservoir/getToken";
+import { api } from "@/trpc/server";
 import { getTokenContractAddresses } from "@/utils/utils";
 
 const L2ERC721Table = dynamic(() => import("./L2ERC721Table"));
@@ -30,10 +31,9 @@ export async function Trade({
           <TradeFilters />
         </div>
         <div className="flex w-full">
-          <AttributesDropdown
-            address={tokenAddresses.L2}
-            attributes={tokenAddresses}
-          />
+          <Suspense>
+            <AttributesDropdown address={tokenAddresses.L2} />
+          </Suspense>
           <div className="w-full">
             <AttributeTags />
             <Suspense

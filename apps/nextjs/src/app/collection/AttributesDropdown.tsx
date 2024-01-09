@@ -2,6 +2,7 @@
 
 import NumberSelect from "@/app/_components/NumberSelect";
 import { useQuery } from "@/hooks/useQuery";
+import { api } from "@/trpc/react";
 
 import {
   Accordion,
@@ -20,6 +21,20 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
     getQueriesFromUrl,
   } = useQuery();
 
+  const [erc721Attributes, { isLoading }] =
+    api.erc721Attributes.all.useSuspenseQuery(
+      {
+        contractAddress: address,
+      },
+      /*{
+        getNextPageParam(lastPage) {
+          return lastPage.nextCursor;
+        },
+      },*/
+    );
+  console.log(erc721Attributes);
+
+  const finalAttributes = erc721Attributes.items ?? attributes.attributes;
   return (
     <div
       className={` ${"hidden"} w-screen overscroll-y-none p-3 sm:block sm:w-24 sm:flex-none sm:overscroll-auto lg:w-72`}
@@ -29,7 +44,7 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
           <Button className="sm:hidden" variant={"default"}>
             Close
           </Button>
-          {attributes.attributes?.map((attribute: any, index: number) => {
+          {finalAttributes?.map((attribute: any, index: number) => {
             return (
               <Accordion key={index} type="single" collapsible>
                 <AccordionItem value="item-1">

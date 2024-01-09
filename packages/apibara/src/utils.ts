@@ -1,27 +1,30 @@
+import type { EventFilter } from "https://esm.sh/@apibara/indexer/starknet";
 import { hash } from "https://esm.sh/starknet";
 
 export const whitelistedContracts = [
-  Deno.env.get("GOLDEN_TOKEN_CONTRACT") as `0x${string}`,
-  Deno.env.get("BEASTS_CONTRACT") as `0x${string}`,
+  Deno.env.get("GOLDEN_TOKEN_CONTRACT"),
+  Deno.env.get("BEASTS_CONTRACT"),
 ];
 
 function eventKey(name: string) {
   const h = BigInt(hash.getSelectorFromName(name));
-  return `0x${h.toString(16).padStart(64, "0")}`;
+  return `0x${h.toString(16).padStart(64, "0")}` as `0x${string}`;
 }
 
 export const TRANSFER_EVENT = eventKey("Transfer");
 export const ORDER_EVENT = eventKey("OrderEvent");
 export const WHITELIST_EVENT = eventKey("WhiteListEvent");
 
-export const erc721ContractEvents = whitelistedContracts.map((contract) => {
-  return {
-    fromAddress: contract,
-    keys: [TRANSFER_EVENT],
-    includeTransaction: true,
-    includeReceipt: false,
-  };
-});
+export const erc721ContractEvents: EventFilter[] = whitelistedContracts.map(
+  (contract) => {
+    return {
+      fromAddress: contract as `0x${string}`,
+      keys: [TRANSFER_EVENT],
+      includeTransaction: true,
+      includeReceipt: false,
+    };
+  },
+);
 
 export const marketplaceContractEvents = [
   {

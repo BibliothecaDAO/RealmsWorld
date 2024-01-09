@@ -93,6 +93,7 @@ export const fetchMetadata = inngest.createFunction(
     const dbRes = await step.run(
       "Insert Beast Metadata to Postgres",
       async () => {
+        const tokenKey = event.data.contract_address + ":" + event.data.tokenId;
         const query: { updatedId: string }[] = await db
           .update(schema.erc721Tokens)
           .set({
@@ -101,17 +102,102 @@ export const fetchMetadata = inngest.createFunction(
             //metadata: { attributes: parsedJson.attributes },
           })
           .where(
-            and(
-              eq(
-                schema.erc721Tokens.id,
-                event.data.contract_address + ":" + event.data.tokenId,
-              ),
-              sql`upper_inf(_cursor)`,
-            ),
+            and(eq(schema.erc721Tokens.id, tokenKey), sql`upper_inf(_cursor)`),
           )
           .returning({ updatedId: schema.erc721Tokens.id });
 
-        return { metadata: parsedJson, updatedId: query[0]?.updatedId };
+        let attributeKeyQuery: { updatedId: number | null }[] = [];
+        let attributesQuery: { updatedId: number | null }[] = [];
+        let tokenAttributeQuery: { updatedId: string | null }[] = [];
+        const attributeKeys = [];
+
+        const attributeKeyResult = await db
+          .select({
+            id: schema.erc721AttributeKeys.id,
+            key: schema.erc721AttributeKeys.key,
+          })
+          .from(schema.erc721AttributeKeys)
+          .where(
+            eq(
+              schema.erc721AttributeKeys.collectionId,
+              event.data.contract_address,
+            ),
+          );
+
+        const attributeKeysIdsMap = attributeKeyResult.map((a) => ({
+          [a.key ?? "-"]: { id: a.id },
+        }));
+        if (parsedJson.attributes) {
+          for (const attribute of parsedJson.attributes) {
+            // fetch attribute key fo collection if not exists insert
+            if (!attributeKeysIdsMap.includes(attribute.trait_type)) {
+              attributeKeyQuery = await db
+                .insert(schema.erc721AttributeKeys)
+                .values({
+                  key: attribute.trait_type,
+                  kind: typeof attribute.value,
+                  collectionId: event.data.contract_address,
+                })
+                .onConflictDoNothing()
+                .returning({ updatedId: schema.erc721AttributeKeys.id });
+              if (attributeKeyQuery[0]?.updatedId) {
+                attributeKeysIdsMap.push({
+                  [attribute.trait_type]: {
+                    id: attributeKeyQuery[0]?.updatedId,
+                  },
+                });
+              }
+            }
+            const attributesResult = await db
+              .select({
+                id: schema.erc721Attributes.id,
+              })
+              .from(schema.erc721Attributes)
+              .where(
+                and(
+                  eq(
+                    schema.erc721Attributes.attributeKeyId,
+                    attributeKeysIdsMap.find(
+                      (a) => attribute.trait_type in a,
+                    )?.[attribute.trait_type]?.id ?? 0,
+                  ),
+                  eq(schema.erc721Attributes.value, attribute.value),
+                ),
+              );
+            if (!attributesResult[0]?.id) {
+              attributesQuery = await db
+                .insert(schema.erc721Attributes)
+                .values({
+                  kind: typeof attribute.value,
+                  key: attribute.trait_type,
+                  value: attribute.value,
+                  collectionId: event.data.contract_address,
+                  attributeKeyId: attributeKeysIdsMap.find(
+                    (a) => attribute.trait_type in a,
+                  )?.[attribute.trait_type]?.id, //
+                })
+                .onConflictDoNothing()
+                .returning({ updatedId: schema.erc721Attributes.id });
+            }
+            tokenAttributeQuery = await db
+              .insert(schema.erc721TokenAttributes)
+              .values({
+                token_key: tokenKey,
+                key: attribute.trait_type,
+                value: attribute.value,
+                collectionId: event.data.contract_address,
+                attributeId:
+                  attributesQuery[0]?.updatedId ?? attributesResult[0]?.id,
+              })
+              .onConflictDoNothing()
+              .returning({ updatedId: schema.erc721TokenAttributes.key });
+          }
+        }
+        return {
+          token: query[0]?.updatedId,
+          attributeKey: attributeKeyQuery[0]?.updatedId,
+          //tokenAttribute: tokenAttributeQuery[0]?.updatedId,
+        };
       },
     );
     if (!dbRes) {

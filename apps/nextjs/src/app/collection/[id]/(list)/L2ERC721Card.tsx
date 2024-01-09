@@ -98,9 +98,7 @@ const TokenAttributes = ({
   <table className="min-w-full font-sans text-xs">
     <tbody>
       {attributeKeys.map((key: string) => {
-        const attribute = token.metadata?.attributes?.find(
-          (trait: any) => trait.trait_type === key,
-        );
+        const attribute = token.attributes?.find((trait) => trait.key === key);
         return attribute ? (
           <tr className="hover:bright-yellow hover:bg-theme-gray" key={key}>
             <td className="w-1/3 border px-2 py-1 uppercase">{key}</td>

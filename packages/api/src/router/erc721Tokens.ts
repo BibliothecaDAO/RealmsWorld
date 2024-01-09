@@ -95,13 +95,16 @@ export const erc721TokensRouter = createTRPCRouter({
         whereFilter.push(sql`upper_inf(_cursor)`);
       }
 
-      const items = await ctx.db.query.erc721Tokens.findMany(
-        withCursorPagination({
+      const items = await ctx.db.query.erc721Tokens.findMany({
+        ...withCursorPagination({
           limit: limit + 1,
           where: and(...whereFilter),
           cursors: cursors,
         }),
-      );
+        with: {
+          attributes: true,
+        },
+      });
 
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
