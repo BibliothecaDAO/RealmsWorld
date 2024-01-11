@@ -1,8 +1,14 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import UserClaim from "../claim.json";
+import UserClaims from "../claim.json";
 import CumulativePaymentTree from "../cumulative-payment-tree";
+
+const UserClaim = UserClaims.map((claim) => ({
+  ...claim,
+  amount: claim.amount + "0".repeat(18),
+  originalAmount: claim.amount,
+}));
 
 export function GET(
   request: NextRequest,
@@ -21,7 +27,7 @@ export function GET(
         params.address.toLowerCase(),
         10,
       );
-      const claimAm = claim.amount;
+      const claimAm = claim.originalAmount;
 
       return NextResponse.json({
         proof,
