@@ -32,7 +32,6 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
         },
       },*/
     );
-  console.log(erc721Attributes);
 
   const finalAttributes = erc721Attributes.items ?? attributes.attributes;
   return (
@@ -74,7 +73,7 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
                                 }
                                 className="my-1 mr-1"
                               >
-                                {a.value}
+                                {a.value} ({a.tokenCount})
                               </Button>
                             );
                           })}

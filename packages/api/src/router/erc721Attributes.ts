@@ -59,11 +59,13 @@ export const erc721AttributesRouter = createTRPCRouter({
 
       const items = await ctx.db
         .select({
-          id: schema.erc721AttributeKeys,
+          id: schema.erc721AttributeKeys.id,
           key: schema.erc721AttributeKeys.key,
           kind: schema.erc721AttributeKeys.kind,
           values: sql`array_agg(jsonb_build_object(
-            'value',${schema.erc721Attributes.value}))`.as("values"),
+            'value',${schema.erc721Attributes.value}, 'tokenCount',${schema.erc721Attributes.tokenCount}))`.as(
+            "values",
+          ),
         })
         .from(schema.erc721AttributeKeys)
         .where(and(...whereFilter))
