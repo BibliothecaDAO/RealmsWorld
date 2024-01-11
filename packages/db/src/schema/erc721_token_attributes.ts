@@ -1,5 +1,11 @@
 import { relations } from "drizzle-orm";
-import { integer, primaryKey, text } from "drizzle-orm/pg-core";
+import {
+  index,
+  integer,
+  primaryKey,
+  text,
+  uniqueIndex,
+} from "drizzle-orm/pg-core";
 
 import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
@@ -17,6 +23,12 @@ export const erc721TokenAttributes = pgSqlTable(
   (table) => {
     return {
       pk: primaryKey({ columns: [table.token_key, table.key, table.value] }),
+      tokenAttributesTokenKeyKeyValueIndex: index(
+        "token_attributes_token_key_key_value_index",
+      ).on(table.token_key, table.key, table.value),
+      tokenAttributesAttributeIdTokenKeyUniqueIndex: uniqueIndex(
+        "token_attributes_attribute_id_token_key_unique_index",
+      ).on(table.attributeId, table.token_key),
     };
   },
 );

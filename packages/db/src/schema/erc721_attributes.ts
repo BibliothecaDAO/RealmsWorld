@@ -1,5 +1,12 @@
 import { relations } from "drizzle-orm";
-import { integer, primaryKey, serial, text, unique } from "drizzle-orm/pg-core";
+import {
+  index,
+  integer,
+  primaryKey,
+  serial,
+  text,
+  unique,
+} from "drizzle-orm/pg-core";
 
 import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
@@ -14,7 +21,7 @@ export const erc721Attributes = pgSqlTable(
     kind: text("kind"),
     collectionId: text("collection_id"),
     attributeKeyId: integer("attribute_key_id"),
-    token_count: integer("token_count"),
+    tokenCount: integer("token_count").default(0),
     /*on_sale_count: number;
   floor_sell_value: number;
   top_buy_value: number;
@@ -23,6 +30,9 @@ export const erc721Attributes = pgSqlTable(
   },
   (t) => ({
     pk: primaryKey({ columns: [t.collectionId, t.key, t.value] }),
+    attributesAttributeKeyIdValueIndex: index(
+      "attributes_attribute_key_id_value_index",
+    ).on(t.attributeKeyId, t.value),
   }),
 );
 /*

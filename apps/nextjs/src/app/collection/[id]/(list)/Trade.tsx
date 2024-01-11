@@ -8,7 +8,7 @@ import { TokenTable } from "@/app/collection/TokenTable";
 import { TradeFilters } from "@/app/collection/TradeFilters";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getToken } from "@/lib/reservoir/getToken";
-import { api } from "@/trpc/server";
+//import { api } from "@/trpc/server";
 import { getTokenContractAddresses } from "@/utils/utils";
 
 const L2ERC721Table = dynamic(() => import("./L2ERC721Table"));
