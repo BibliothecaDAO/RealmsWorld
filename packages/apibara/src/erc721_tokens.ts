@@ -43,6 +43,7 @@ export default function transform({ header, events }: Block) {
 }
 
 function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
+  console.log(event.keys);
   switch (event.keys[0]) {
     case TRANSFER_EVENT: {
       const from = BigInt(event.data[0]);
