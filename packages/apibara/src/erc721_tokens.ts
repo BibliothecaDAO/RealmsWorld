@@ -48,7 +48,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
       const from = BigInt(/*event.data[0]*/ event.keys[1]);
       const token_id = parseInt(
         uint256
-          .uint256ToBN({ low: event.data[3], high: event.data[4] })
+          .uint256ToBN({ low: event.keys[3], high: event.keys[4] })
           .toString(),
       );
       if (from == 0n) {
