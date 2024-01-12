@@ -43,13 +43,12 @@ export default function transform({ header, events }: Block) {
 }
 
 function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
-  console.log(event.keys);
   switch (event.keys[0]) {
     case TRANSFER_EVENT: {
-      const from = BigInt(event.data[0]);
+      const from = BigInt(/*event.data[0]*/ event.keys[1]);
       const token_id = parseInt(
         uint256
-          .uint256ToBN({ low: event.data[2], high: event.data[3] })
+          .uint256ToBN({ low: event.data[3], high: event.data[4] })
           .toString(),
       );
       if (from == 0n) {
@@ -58,8 +57,8 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
             id: event.fromAddress + ":" + token_id,
             contract_address: event.fromAddress,
             token_id,
-            minter: event.data[1],
-            owner: event.data[1],
+            minter: event.keys[2] /*event.data[1]*/,
+            owner: event.keys[2] /*event.data[1]*/,
           },
         };
       } else {
@@ -68,7 +67,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
             id: event.fromAddress + ":" + token_id,
           },
           update: {
-            owner: event.data[1],
+            owner: event.keys[2] /*event.data[1]*/,
           },
         };
       }
