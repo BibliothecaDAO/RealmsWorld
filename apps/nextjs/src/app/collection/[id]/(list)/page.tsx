@@ -40,14 +40,14 @@ export default async function Page({
     page?: string;
   };
 }) {
-  /*const isGoerliGoldenToken =
-    NETWORK_NAME == "GOERLI" &&
+  const isSepoliaGoldenToken =
+    NETWORK_NAME == "SEPOLIA" &&
     (params.id == getTokenContractAddresses("goldenToken").L2 ||
       params.id == "goldenToken");
 
-  if (isGoerliGoldenToken) {
+  if (isSepoliaGoldenToken) {
     return <Mint contractId={params.id} />;
-  }*/
+  }
 
   return (
     <Trade

@@ -8,6 +8,6 @@ export const MarketplaceCollectionIds = {
 
 export const MarketplaceContract: Record<number | string, string> = {
   [ChainId.SN_MAIN]: "",
-  [ChainId.SN_GOERLI]:
-    "0x07724c0cc6d78237b0c6103eb545c4f8560389145d87e02057c093bc9c275cd0",
+  [ChainId.SN_SEPOLIA]:
+    "0x0297e088cd7777bebda7024e2dde81e9b745f41e5de0589c91de5caa885d9c32",
 };

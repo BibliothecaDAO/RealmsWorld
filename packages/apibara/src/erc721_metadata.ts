@@ -25,7 +25,7 @@ export const config: Config<Starknet, Webhook> = {
     targetUrl: "https://inn.gs/e/" + Deno.env.get("INNGEST_EVENT_KEY"),
     raw: true,
     header: [
-      Deno.env.get("STREAM_URL") == "https://goerli.starknet.a5a.ch"
+      Deno.env.get("STREAM_URL") == "https://sepolia.starknet.a5a.ch"
         ? "x-inngest-env: marketplace"
         : "test: test",
     ],

@@ -28,35 +28,32 @@ export const fetchMetadata = inngest.createFunction(
 
       const fetchUrl =
         process.env.NEXT_PUBLIC_IS_TESTNET == "true"
-          ? "https://starknet-goerli.infura.io"
+          ? "https://starknet-sepolia.blastapi.io/e9bdaf3f-f2fc-4351-bab5-238bcaa68849"
           : "https://starknet-mainnet.infura.io";
 
-      const response = await fetch(
-        fetchUrl + "/v3/badbe99a05ad427a9ddbbed9e002caf6",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            jsonrpc: "2.0",
-            method: "starknet_call",
-            params: [
-              {
-                contract_address: event.data.contract_address,
-                entry_point_selector:
-                  event.data.contract_address ==
-                  getTokenContractAddresses("beasts").L2
-                    ? tokenURI
-                    : token_uri, // Token URI
-                calldata: [tokenId.low, tokenId.high],
-              },
-              "pending",
-            ],
-            id: 0,
-          }),
+      const response = await fetch(fetchUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          method: "starknet_call",
+          params: [
+            {
+              contract_address: event.data.contract_address,
+              entry_point_selector:
+                event.data.contract_address ==
+                getTokenContractAddresses("beasts").L2
+                  ? tokenURI
+                  : token_uri, // Token URI
+              calldata: [tokenId.low, tokenId.high],
+            },
+            "pending",
+          ],
+          id: 0,
+        }),
+      });
       return await response.json();
     });
 

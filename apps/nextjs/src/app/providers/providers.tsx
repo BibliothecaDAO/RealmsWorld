@@ -2,8 +2,8 @@
 
 import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import {
-  goerli as starkGoerli,
   mainnet as starkMainnet,
+  sepolia as starkSepolia,
 } from "@starknet-react/chains";
 import {
   blastProvider,
@@ -15,16 +15,17 @@ import { ArgentMobileConnector } from "starknetkit/argentMobile";
 import { InjectedConnector } from "starknetkit/injected";
 import { WebWalletConnector } from "starknetkit/webwallet";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { goerli, mainnet } from "wagmi/chains";
+import { mainnet, sepolia } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 import { TransferLogProvider } from "./TransferLogProvider";
 
-const starkProvider = process.env.NEXT_PUBLIC_BLAST_API
+const starkProvider =
+  /*process.env.NEXT_PUBLIC_BLAST_API
   ? blastProvider({
       apiKey: process.env.NEXT_PUBLIC_BLAST_API,
     })
-  : starkPublicProvider();
+  :*/ starkPublicProvider();
 const starkConnectors = [
   new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
   new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
@@ -42,7 +43,7 @@ const theme = darkTheme({
 });
 
 const { chains } = configureChains(
-  [...(process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? [goerli] : [mainnet])],
+  [...(process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? [sepolia] : [mainnet])],
   [publicProvider()],
 );
 
@@ -52,7 +53,7 @@ export function Provider({ children }: any) {
       autoConnect
       chains={[
         ...(process.env.NEXT_PUBLIC_IS_TESTNET === "true"
-          ? [starkGoerli]
+          ? [starkSepolia]
           : [starkMainnet]),
       ]}
       provider={starkProvider}
@@ -82,9 +83,9 @@ export function Provider({ children }: any) {
                     active: true,
                   },
                   {
-                    id: 5,
-                    name: "goerli",
-                    baseApiUrl: "https://api-goerli.reservoir.tools",
+                    id: 11155111,
+                    name: "sepolia",
+                    baseApiUrl: "https://api-sepolia.reservoir.tools",
                     active: true,
                   },
                 ],

@@ -14,7 +14,7 @@ export default function RootLayout({
   const defaultImage = "/backgrounds/dummy_background.webp";
   const imageUrl = params.id ? `/backgrounds/${params.id}.png` : defaultImage;
 
-  const isMintable = NETWORK_NAME == "GOERLI" && params.id == "goldenToken";
+  const isMintable = NETWORK_NAME == "SEPOLIA" && params.id == "goldenToken";
   const tabs = [
     {
       name: "Trade",

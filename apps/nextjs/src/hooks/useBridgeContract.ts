@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
+import { NETWORK_NAME } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
 import { useContractWrite as useL2ContractWrite } from "@starknet-react/core";
 import { parseEther } from "viem";
@@ -14,13 +15,10 @@ import {
 export const useBridgeContract = () => {
   const { address: addressL1 } = useL1Account();
 
-  const network =
-    process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
-
   const l1BridgeAddress =
-    tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[network]];
+    tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]];
   const l2BridgeAddress =
-    tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[network]];
+    tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]];
 
   const {
     writeAsync: deposit,

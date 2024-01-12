@@ -36,11 +36,11 @@ const CHAIN_INFO: ChainInfoMap = {
     label: "Ethereum",
     nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
   },
-  [ChainId.GOERLI]: {
+  [ChainId.SEPOLIA]: {
     networkType: NetworkType.L1,
-    explorer: "https://goerli.etherscan.io/",
-    label: "Görli",
-    nativeCurrency: { name: "Görli Ether", symbol: "görETH", decimals: 18 },
+    explorer: "https://sepolia.etherscan.io/",
+    label: "Sepolia",
+    nativeCurrency: { name: "Sepolia Ether", symbol: "sETH", decimals: 18 },
   },
   [ChainId.SN_MAIN]: {
     networkType: NetworkType.L2,
@@ -49,9 +49,9 @@ const CHAIN_INFO: ChainInfoMap = {
     label: "Starknet",
     nativeCurrency: { name: "Ether", symbol: "sETH", decimals: 18 },
   },
-  [ChainId.SN_GOERLI]: {
+  [ChainId.SN_SEPOLIA]: {
     networkType: NetworkType.L2,
-    bridge: "https://goerli.starkgate.starknet.io/",
+    bridge: "https://sepolia.starkgate.starknet.io/",
     explorer: "https://optimistic.etherscan.io/",
     label: "SN Görli",
     nativeCurrency: { name: "Görli Ether", symbol: "sNgETH", decimals: 18 },

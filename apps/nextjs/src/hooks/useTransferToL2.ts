@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
+import { NETWORK_NAME } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
 import {
   ActionType,
@@ -54,11 +55,11 @@ export const useTransferToL2 = () => {
   const progressOptions = useTransferProgress();
 
   const { refetch } = useTransferLog();
-  const network =
-    process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
-  const tokenAddressL2 = tokens.L2.LORDS.tokenAddress?.[ChainType.L2[network]];
+
+  const tokenAddressL2 =
+    tokens.L2.LORDS.tokenAddress?.[ChainType.L2[NETWORK_NAME]];
   const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[
-    ChainType.L1[network]
+    ChainType.L1[NETWORK_NAME]
   ] as `0x${string}`;
 
   const onTransactionHash = (
