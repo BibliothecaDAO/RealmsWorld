@@ -44,7 +44,7 @@ export const accounts = pgSqlTable(
     session_state: varchar("session_state", { length: 255 }),
   },
   (account) => ({
-    compoundKey: primaryKey(account.provider, account.providerAccountId),
+    compoundKey: primaryKey({ columns: [account.provider, account.providerAccountId]}),
     userIdIdx: index("userId_idx").on(account.userId),
   }),
 );
@@ -63,7 +63,7 @@ export const sessions = pgSqlTable(
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (session) => ({
-    userIdIdx: index("userId_idx").on(session.userId),
+    userIdIdx2: index("userId_idx2").on(session.userId),
   }),
 );
 
@@ -79,6 +79,6 @@ export const verificationTokens = pgSqlTable(
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (vt) => ({
-    compoundKey: primaryKey(vt.identifier, vt.token),
+    compoundKey: primaryKey({columns: [vt.identifier, vt.token]}),
   }),
 );
