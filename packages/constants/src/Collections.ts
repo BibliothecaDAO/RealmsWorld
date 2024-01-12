@@ -23,7 +23,7 @@ export const CollectionAddresses: {
     [ChainId.SN_MAIN]:
       "0x04f5e296c805126637552cf3930e857f380e7c078e8f00696de4fc8545356b1d",
     [ChainId.SN_SEPOLIA]:
-      "0x003583470a8943479f8609192da4427cac45bdf66a58c84043c7ab2fc722c0c0",
+      "0x024f21982680442892d2f7ac4cee98c7d62708b04fdf9f8a0453415baca4b16f",
   },
 };
 export const CollectionRoyalties: {
