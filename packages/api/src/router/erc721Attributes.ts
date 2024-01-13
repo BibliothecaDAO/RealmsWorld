@@ -37,11 +37,6 @@ export const erc721AttributesRouter = createTRPCRouter({
 
       const cursors = [];
 
-      cursors.push([
-        schema.erc721Attributes.key, // Column to use for cursor
-        direction ?? "asc", // Sort order ('asc' or 'desc')
-        cursor, // Cursor value
-      ]);
       if (contractAddress) {
         whereFilter.push(
           eq(schema.erc721AttributeKeys.collectionId, contractAddress),
@@ -54,7 +49,11 @@ export const erc721AttributesRouter = createTRPCRouter({
       } = withCursorPagination({
         limit: limit + 1,
         where: and(...whereFilter),
-        cursors: cursors,
+        cursors: [
+          schema.erc721Attributes.id, // Column to use for cursor
+          direction ?? "asc", // Sort order ('asc' or 'desc')
+          cursor, // Cursor value
+        ],
       });
 
       const items = await ctx.db

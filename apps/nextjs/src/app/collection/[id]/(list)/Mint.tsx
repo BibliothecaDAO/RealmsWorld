@@ -66,7 +66,7 @@ export default function Mint({ contractId }: { contractId: string }) {
   const isLoading = isTxSubmitting || (mintData && isTxLoading);
   return (
     <div className="mx-auto mt-12 sm:mt-36 md:w-[750px]">
-      <div className="bg-dark-green w-full rounded-xl border sm:flex">
+      <div className="w-full rounded-xl border bg-dark-green sm:flex">
         <Image
           src="/collections/goldenToken.svg"
           alt="Golden Token"
@@ -107,7 +107,7 @@ export default function Mint({ contractId }: { contractId: string }) {
         <div className="mt-12 w-full rounded-xl border p-6">
           <h1 className="flex">
             You have minted Golden Token #
-            {(submittedData as any)?.events[1] ? (
+            {(submittedData as any)?.events[1].data ? (
               <>
                 {uint256
                   .uint256ToBN({

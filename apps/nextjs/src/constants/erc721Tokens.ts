@@ -32,7 +32,7 @@ export const erc721Tokens: ERC721Tokens = {
       L2: {
         [ChainType.L2.MAIN]:
           "0x0158160018d590d93528995b340260e65aedd76d28a686e9daa5c4e8fad0c5dd",
-        [ChainType.L2.SEPOLIA]: "",
+        [ChainType.L2.SEPOLIA]: "0x000",
       },
     },
   },

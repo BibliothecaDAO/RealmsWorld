@@ -21,7 +21,7 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
     getQueriesFromUrl,
   } = useQuery();
 
-  const [erc721Attributes, { isLoading }] =
+  /*const [erc721Attributes, { isLoading }] =
     api.erc721Attributes.all.useSuspenseQuery(
       {
         contractAddress: address,
@@ -30,10 +30,10 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
         getNextPageParam(lastPage) {
           return lastPage.nextCursor;
         },
-      },*/
-    );
+      },
+    );*/
 
-  const finalAttributes = erc721Attributes.items ?? attributes.attributes;
+  const finalAttributes = attributes.items ?? attributes?.attributes;
   return (
     <div
       className={` ${"hidden"} w-screen overscroll-y-none p-3 sm:block sm:w-24 sm:flex-none sm:overscroll-auto lg:w-72`}

@@ -8,7 +8,7 @@ import { TokenTable } from "@/app/collection/TokenTable";
 import { TradeFilters } from "@/app/collection/TradeFilters";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getToken } from "@/lib/reservoir/getToken";
-//import { api } from "@/trpc/server";
+import { api } from "@/trpc/server";
 import { getTokenContractAddresses } from "@/utils/utils";
 
 const L2ERC721Table = dynamic(() => import("./L2ERC721Table"));
@@ -24,6 +24,17 @@ export async function Trade({
 }) {
   const tokenAddresses = getTokenContractAddresses(contractId);
 
+  const erc721Attributes = await api.erc721Attributes.all(
+    {
+      contractAddress: tokenAddresses.L2,
+    },
+    /*{
+        getNextPageParam(lastPage) {
+          return lastPage.nextCursor;
+        },
+      },*/
+  );
+  console.log(erc721Attributes);
   if (tokenAddresses.L2) {
     return (
       <>
@@ -31,9 +42,12 @@ export async function Trade({
           <TradeFilters />
         </div>
         <div className="flex w-full">
-          <Suspense>
-            <AttributesDropdown address={tokenAddresses.L2} />
-          </Suspense>
+          {erc721Attributes.items.length ? (
+            <AttributesDropdown
+              address={tokenAddresses.L2}
+              attributes={erc721Attributes}
+            />
+          ) : null}
           <div className="w-full">
             <AttributeTags />
             <Suspense
