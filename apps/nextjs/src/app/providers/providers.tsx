@@ -1,5 +1,6 @@
 "use client";
 
+import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import {
   mainnet as starkMainnet,
@@ -10,13 +11,11 @@ import {
   StarknetConfig,
   publicProvider as starkPublicProvider,
 } from "@starknet-react/core";
-import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 import { ArgentMobileConnector } from "starknetkit/argentMobile";
 import { InjectedConnector } from "starknetkit/injected";
 import { WebWalletConnector } from "starknetkit/webwallet";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { http, WagmiProvider } from "wagmi";
 import { mainnet, sepolia } from "wagmi/chains";
-import { publicProvider } from "wagmi/providers/public";
 
 import { TransferLogProvider } from "./TransferLogProvider";
 
@@ -42,10 +41,15 @@ const theme = darkTheme({
   primaryHoverColor: "#252ea5",
 });
 
-const { chains } = configureChains(
-  [...(process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? [sepolia] : [mainnet])],
-  [publicProvider()],
-);
+export const config = getDefaultConfig({
+  appName: "Realms.World",
+  projectId: "REALMS_WORLD",
+  chains: [mainnet, sepolia],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+  },
+});
 
 export function Provider({ children }: any) {
   return (
@@ -59,18 +63,8 @@ export function Provider({ children }: any) {
       provider={starkProvider}
       connectors={starkConnectors}
     >
-      <WagmiConfig
-        config={createConfig(
-          getDefaultConfig({
-            appName: "Realms.World",
-            alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_API,
-            chains,
-            walletConnectProjectId:
-              process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-          }),
-        )}
-      >
-        <ConnectKitProvider theme="midnight">
+      <WagmiProvider config={config}>
+        <RainbowKitProvider>
           <TransferLogProvider>
             <ReservoirKitProvider
               options={{
@@ -95,8 +89,8 @@ export function Provider({ children }: any) {
               {children}
             </ReservoirKitProvider>
           </TransferLogProvider>
-        </ConnectKitProvider>
-      </WagmiConfig>
+        </RainbowKitProvider>
+      </WagmiProvider>
     </StarknetConfig>
   );
 }

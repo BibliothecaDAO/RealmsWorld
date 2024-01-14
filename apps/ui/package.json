@@ -89,7 +89,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "^1.2.0",
     "autoprefixer": "^10.4.16",
-    "chromatic": "^10.2.1",
+    "chromatic": "^10.2.2",
     "eslint-plugin-storybook": "^0.6.15",
     "jsdom": "^23.2.0",
     "postcss": "^8.4.33",
