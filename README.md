@@ -61,7 +61,7 @@ We will review your contribution and provide feedback. Once your changes have be
 
 ### To add a Game
 
-Check out the docs at [Add Data Docs](https://docs.realms.world/data)
+Check out the docs at [Add Data Docs](https://docs.realms.world/data) - WIP for Loot Survivor mods
 
 ### License
 
