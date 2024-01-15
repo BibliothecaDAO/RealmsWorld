@@ -1,12 +1,12 @@
-import type { Config } from "https://esm.sh/@apibara/indexer";
-import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
-import type { Postgres } from "https://esm.sh/@apibara/indexer/sink/postgres";
+import type { Config } from "https://esm.sh/@apibara/indexer@0.2.2";
+import type { Postgres } from "https://esm.sh/@apibara/indexer@0.2.2/sink/postgres";
 import type {
   Block,
   BlockHeader,
   EventWithTransaction,
   Starknet,
-} from "https://esm.sh/@apibara/indexer/starknet";
+} from "https://esm.sh/@apibara/indexer@0.2.2/starknet";
+import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import { uint256 } from "https://esm.sh/starknet";
 import { formatUnits } from "https://esm.sh/viem";
 
@@ -43,22 +43,30 @@ export default function transform({ header, events }: Block) {
 }
 
 function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
+  const isMainnet =
+    Deno.env.get("STREAM_URL") == "https://mainnet.starknet.a5a.ch";
+
   switch (event.keys[0]) {
     case TRANSFER_EVENT: {
-      const from = BigInt(/*event.data[0]*/ event.keys[1]);
+      const from = BigInt(isMainnet ? event.data[0] : event.keys[1]);
       const token_id = parseInt(
         uint256
-          .uint256ToBN({ low: event.keys[3], high: event.keys[4] })
+          .uint256ToBN({
+            low: isMainnet ? event.data[2] : event.keys[3],
+            high: isMainnet ? event.data[3] : event.keys[4],
+          })
           .toString(),
       );
+      const owner = isMainnet ? event.data[1] : event.keys[2];
+
       if (from == 0n) {
         return {
           insert: {
             id: event.fromAddress + ":" + token_id,
             contract_address: event.fromAddress,
             token_id,
-            minter: event.keys[2] /*event.data[1]*/,
-            owner: event.keys[2] /*event.data[1]*/,
+            minter: owner,
+            owner: owner,
           },
         };
       } else {
@@ -67,7 +75,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
             id: event.fromAddress + ":" + token_id,
           },
           update: {
-            owner: event.keys[2] /*event.data[1]*/,
+            owner: owner,
           },
         };
       }
@@ -84,7 +92,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
           return {
             entity: {
               id:
-                whitelistedContracts[collectionId - 1].toLowerCase() +
+                whitelistedContracts[collectionId - 1]!.toLowerCase() +
                 ":" +
                 tokenId,
             },
@@ -97,7 +105,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
           return {
             entity: {
               id:
-                whitelistedContracts[collectionId - 1].toLowerCase() +
+                whitelistedContracts[collectionId - 1]!.toLowerCase() +
                 ":" +
                 tokenId,
             },
@@ -110,7 +118,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
           return {
             entity: {
               id:
-                whitelistedContracts[collectionId - 1].toLowerCase() +
+                whitelistedContracts[collectionId - 1]!.toLowerCase() +
                 ":" +
                 tokenId,
             },
@@ -123,7 +131,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
           return {
             entity: {
               id:
-                whitelistedContracts[collectionId - 1].toLowerCase() +
+                whitelistedContracts[collectionId - 1]!.toLowerCase() +
                 ":" +
                 tokenId,
             },
