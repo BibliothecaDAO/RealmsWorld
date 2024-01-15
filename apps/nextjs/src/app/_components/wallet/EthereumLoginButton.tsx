@@ -1,3 +1,5 @@
+"use client";
+
 import type { VariantProps } from "class-variance-authority";
 import React from "react";
 import { useUIContext } from "@/app/providers/UIProvider";
@@ -44,7 +46,7 @@ export const EthereumLoginButton = ({
             }
             variant={variant ?? "outline"}
             size="lg"
-            onClick={() => (connected ? toggleAccount() : openConnectModal?.())}
+            onClick={connected ? toggleAccount : openConnectModal}
           >
             <span className="flex items-center font-sans normal-case">
               <EthereumLogo className="w-6" />

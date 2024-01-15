@@ -5,6 +5,7 @@ import Sidebar from "@/app/_components/SideMenu";
 import { Provider } from "./providers/providers";
 
 import "@realms-world/styles/globals.css";
+import "@rainbow-me/rainbowkit/styles.css";
 
 import { cache } from "react";
 import { headers } from "next/headers";
