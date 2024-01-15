@@ -35,5 +35,9 @@
     "turbo": "^1.11.3",
     "typescript": "^5.3.3"
   },
-  "prettier": "@realms-world/prettier-config"
+  "prettier": "@realms-world/prettier-config",
+  "dependencies": {
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.3.11"
+  }
 }

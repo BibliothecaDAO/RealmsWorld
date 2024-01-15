@@ -29,6 +29,7 @@ import {
   DialogTrigger,
 } from "@realms-world/ui";
 
+import { PaymentPoolV2 } from "../_components/staking/PaymentPoolV2";
 import { EthereumLoginButton } from "../_components/wallet/EthereumLoginButton";
 import RealmsTable from "./RealmsTable";
 
@@ -74,7 +75,7 @@ export const StakingContainer = () => {
     isError,
     isLoading: isGalleonLordsLoading,
   } = useContractRead({
-    address: stakingAddresses[network].v1Galleon as `0x${string}`,
+    address: stakingAddresses[NETWORK_NAME].v1Galleon as `0x${string}`,
     abi: GalleonStaking,
     functionName: "lordsAvailable",
     args: [address as `0x${string}`],
@@ -84,14 +85,14 @@ export const StakingContainer = () => {
     isLoading: isGalleonClaimLoading,
     write: claimGalleonLords,
   } = useContractWrite({
-    address: stakingAddresses[network].v1Galleon as `0x${string}`,
+    address: stakingAddresses[NETWORK_NAME].v1Galleon as `0x${string}`,
     abi: GalleonStaking,
     functionName: "claimLords",
   });
 
   const { data: carrackLordsAvailableData, isLoading: isCarrackLordsLoading } =
     useContractRead({
-      address: stakingAddresses[network].v2Carrack as `0x${string}`,
+      address: stakingAddresses[NETWORK_NAME].v2Carrack as `0x${string}`,
       abi: CarrackStaking,
       functionName: "lordsAvailable",
       args: [address as `0x${string}`],
@@ -102,7 +103,7 @@ export const StakingContainer = () => {
     isLoading: isCarrackClaimLoading,
     write: claimCarrackLords,
   } = useContractWrite({
-    address: stakingAddresses[network].v2Carrack as `0x${string}`,
+    address: stakingAddresses[NETWORK_NAME].v2Carrack as `0x${string}`,
     abi: CarrackStaking,
     functionName: "claimLords",
   });
@@ -112,14 +113,14 @@ export const StakingContainer = () => {
     isLoading: isPoolClaimLoading,
     write: claimPoolLords,
   } = useContractWrite({
-    address: stakingAddresses[network].paymentPool as `0x${string}`,
+    address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "withdraw",
     args: [parseEther(poolClaimAmount?.toString() ?? "0"), hexProof as any],
   });
 
   const { refetch, isLoading: poolWithdrawalsLoading } = useContractRead({
-    address: stakingAddresses[network].paymentPool as `0x${string}`,
+    address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "withdrawals",
     args: [address as `0x${string}`],
@@ -158,7 +159,8 @@ export const StakingContainer = () => {
           )}
         </div>
       </div>
-
+      <h3 className="mt-10">Rewards</h3>
+      <PaymentPoolV2 />
       <h3 className="mt-10">Galleon</h3>
       <div className="flex-col pb-2 text-lg">
         <span className="bg-dark-green px-2 py-1">
@@ -383,14 +385,14 @@ const StakingModal = ({
       address: realmsAddress as `0x${string}`,
       abi: ERC721,
       functionName: "isApprovedForAll",
-      args: [address!, carrackAddress as `0x${string}`],
+      args: [address, carrackAddress as `0x${string}`],
     });
   const { data: isGalleonApprovedData, refetch: refetchGalleonApprovedData } =
     useContractRead({
       address: realmsAddress as `0x${string}`,
       abi: ERC721,
       functionName: "isApprovedForAll",
-      args: [address!, galleonAddress as `0x${string}`],
+      args: [address, galleonAddress as `0x${string}`],
     });
 
   const { data: approvedTransactionData, isSuccess } =
