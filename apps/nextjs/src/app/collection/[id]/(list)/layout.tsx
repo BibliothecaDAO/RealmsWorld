@@ -18,15 +18,15 @@ export default function RootLayout({
   const tabs = [
     {
       name: "Trade",
-      link: isMintable ? "trade" : "",
+      link: "",
     },
   ];
-  /*if (isMintable) {
-    tabs.unshift({
+  if (isMintable) {
+    tabs.push({
       name: "Mint",
-      link: "",
+      link: "mint",
     });
-  }*/
+  }
   if (params.id == "realms") {
     tabs.push(
       { name: "Analytics", link: "analytics" },
@@ -56,7 +56,6 @@ export default function RootLayout({
                 className="hover:text-flamingo/70"
                 size={"sm"}
                 exact
-                disabled={true}
                 href={`/collection/${params.id}${tab.link && "/" + tab.link}`}
               >
                 {tab.name}

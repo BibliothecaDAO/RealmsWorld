@@ -1,17 +1,10 @@
 import type { erc721Tokens } from "@/constants/erc721Tokens";
 import { Suspense } from "react";
-import dynamic from "next/dynamic";
 import { AttributesDropdown } from "@/app/collection/AttributesDropdown";
 import { AttributeTags } from "@/app/collection/AttributeTags";
 import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
-import { TokenTable } from "@/app/collection/TokenTable";
+//import { TokenTable } from "@/app/collection/TokenTable";
 import { TradeFilters } from "@/app/collection/TradeFilters";
-import { getAttributes } from "@/lib/reservoir/getAttributes";
-import { getToken } from "@/lib/reservoir/getToken";
-import { api } from "@/trpc/server";
-import { getTokenContractAddresses } from "@/utils/utils";
-
-const L2ERC721Table = dynamic(() => import("./L2ERC721Table"));
 
 export async function Trade({
   contractId,
@@ -22,20 +15,7 @@ export async function Trade({
     page?: string;
   };
 }) {
-  const tokenAddresses = getTokenContractAddresses(contractId);
-
-  const erc721Attributes = await api.erc721Attributes.all(
-    {
-      contractAddress: tokenAddresses.L2,
-    },
-    /*{
-        getNextPageParam(lastPage) {
-          return lastPage.nextCursor;
-        },
-      },*/
-  );
-  console.log(erc721Attributes);
-  if (tokenAddresses.L2) {
+  /*if (tokenAddresses.L2) {
     return (
       <>
         <div className="mb-3 flex w-full justify-between">
@@ -65,22 +45,27 @@ export async function Trade({
         </div>
       </>
     );
-  }
+  }*/
 
-  const tokensData = getToken({
-    collection: tokenAddresses.L1,
-    query: searchParams ?? {},
-  });
+  return (
+    <>
+      {/*} <TokenTable
+                  address={tokenAddresses.L1}
+                  tokens={tokens.tokens}
+  />*/}
+    </>
+  );
+}
 
-  const attributesData = getAttributes({
-    collection: tokenAddresses.L1 ?? contractId,
-  });
-  const [tokens, attributes] = await Promise.all([tokensData, attributesData]);
-
-  if (!tokens) {
-    return <div>Collection Not Found</div>;
-  }
-
+export const TradeLayout = ({
+  tokenAddress,
+  attributes,
+  children,
+}: {
+  tokenAddress: string;
+  attributes: any;
+  children: React.ReactNode;
+}) => {
   return (
     <>
       <div className="mb-3 flex w-full justify-between">
@@ -88,10 +73,10 @@ export async function Trade({
       </div>
 
       <div className="flex w-full">
-        {tokenAddresses.L1 && (
+        {tokenAddress && (
           <>
             <AttributesDropdown
-              address={tokenAddresses.L1}
+              address={tokenAddress}
               attributes={attributes}
             />
             {/*<SweepButton id={params.address} />*/}
@@ -99,17 +84,14 @@ export async function Trade({
               <AttributeTags />
               <Suspense
                 fallback={
-                  <div className="flex w-full flex-col gap-4">
-                    <TokenCardSkeleton />
-                    <TokenCardSkeleton />
-                    <TokenCardSkeleton />
+                  <div className="mt-6 grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
+                    {Array.from({ length: 3 }).map((_, index) => (
+                      <TokenCardSkeleton key={index} />
+                    ))}
                   </div>
                 }
               >
-                <TokenTable
-                  address={tokenAddresses.L1}
-                  tokens={tokens.tokens}
-                />
+                {children}
               </Suspense>
             </div>
           </>
@@ -117,4 +99,4 @@ export async function Trade({
       </div>
     </>
   );
-}
+};

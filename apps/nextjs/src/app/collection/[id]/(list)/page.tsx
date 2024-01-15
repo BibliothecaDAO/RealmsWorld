@@ -1,29 +1,21 @@
-import type { Collection } from "@/types";
 import type { Metadata } from "next";
 import { erc721Tokens } from "@/constants";
-import { NETWORK_NAME } from "@/constants/env";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
-import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
+import { api } from "@/trpc/server";
 import { getTokenContractAddresses } from "@/utils/utils";
 
-import Mint from "./Mint";
-import { Trade } from "./Trade";
+import { TokenTable } from "../../TokenTable";
+import L2ERC721Table from "./L2ERC721Table";
+import { TradeLayout } from "./Trade";
 
-//export const runtime = "edge";
+export const runtime = "edge";
 
 export async function generateMetadata({
   params,
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  /*const tokenAddresses = getTokenContractAddresses(
-    params.id as keyof typeof erc721Tokens,
-  );
-  const collectionData = await getCollections([
-    { contract: tokenAddresses.L1 ?? params.id },
-  ]);
-  const collection: Collection = collectionData.collections?.[0];*/
   const collection = erc721Tokens[params.id as keyof typeof erc721Tokens];
   return {
     title: `${collection?.name}`,
@@ -40,19 +32,70 @@ export default async function Page({
     page?: string;
   };
 }) {
-  const isSepoliaGoldenToken =
+  const tokenAddresses = getTokenContractAddresses(
+    params.id as keyof typeof erc721Tokens,
+  );
+
+  /* isSepoliaGoldenToken =
     NETWORK_NAME == "SEPOLIA" &&
-    (params.id == getTokenContractAddresses("goldenToken").L2 ||
-      params.id == "goldenToken");
+    (tokenAddresses.L2 ?? params.id == "goldenToken");
 
   if (isSepoliaGoldenToken) {
     return <Mint contractId={params.id} />;
+  }*/
+  if (tokenAddresses.L2) {
+    console.log("here");
+    return <L2TokenData tokenAddress={tokenAddresses.L2} />;
   }
+  if (tokenAddresses.L1) {
+    return (
+      <L1TokenData
+        tokenAddress={tokenAddresses.L1}
+        searchParams={searchParams}
+      />
+    );
+  } else {
+    return <div>Collection Not Found</div>;
+  }
+}
+
+const L2TokenData = async ({ tokenAddress }: { tokenAddress: string }) => {
+  const erc721Attributes = await api.erc721Attributes.all({
+    contractAddress: tokenAddress,
+  });
 
   return (
-    <Trade
-      contractId={params.id as keyof typeof erc721Tokens}
-      searchParams={searchParams}
-    />
+    <TradeLayout tokenAddress={tokenAddress} attributes={erc721Attributes}>
+      <L2ERC721Table contractAddress={tokenAddress} />
+    </TradeLayout>
   );
-}
+};
+
+const L1TokenData = async ({
+  tokenAddress,
+  searchParams,
+}: {
+  tokenAddress: string;
+  searchParams?: {
+    page?: string;
+  };
+}) => {
+  const tokensData = getToken({
+    collection: tokenAddress,
+    query: searchParams ?? {},
+  });
+
+  const attributesData = getAttributes({
+    collection: tokenAddress,
+  });
+  const [tokens, attributes] = await Promise.all([tokensData, attributesData]);
+
+  if (!tokens) {
+    return <div>Collection Not Found</div>;
+  }
+  return (
+    <TradeLayout tokenAddress={tokenAddress} attributes={attributes}>
+      <TokenTable address={tokenAddress} tokens={tokens.tokens} />
+    </TradeLayout>
+  );
+};

@@ -6,10 +6,10 @@ NavLink: by default the active class is added when the href matches the start of
 Use the exact property to change it to an exact match with the whole URL pathname.
 
 */
+import type { VariantProps } from "class-variance-authority";
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { VariantProps } from "class-variance-authority";
 
 import { cn } from "@realms-world/utils";
 

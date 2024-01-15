@@ -1,8 +1,8 @@
 "use client";
 
 import type { Collection, Game, Token } from "@/types";
-import { BuyButton } from "@/app/collection/BuyModal";
-import { ListingModal } from "@/app/collection/ListingModal";
+//import { BuyButton } from "@/app/collection/BuyModal";
+//import { ListingModal } from "@/app/collection/ListingModal";
 import { GameCard } from "@/app/games/GameCard";
 import { getGamesByContract } from "@/utils/getters";
 import { useAccount } from "wagmi";
@@ -54,8 +54,8 @@ export const TokenContent = ({ token, collection }: Props) => {
 
   return (
     <div className="my-8 flex-grow">
-      <BuyButton size={"lg"} address={token.contract} id={token.tokenId} />
-      {owner && <ListingModal address={token.contract} id={token.tokenId} />}
+      {/*<BuyButton size={"lg"} address={token.contract} id={token.tokenId} />
+      {owner && <ListingModal address={token.contract} id={token.tokenId} />*/}
       <Tabs className="mt-12" defaultValue={tabs[0]?.name}>
         <TabsList>
           {tabs.map((tab, index) => (

@@ -9,7 +9,10 @@ import {
 } from "@/constants/transferSteps";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { formatEther, parseEther, parseUnits } from "viem";
-import { useAccount as useL1Account, useWaitForTransaction } from "wagmi";
+import {
+  useAccount as useL1Account,
+  useWaitForTransactionReceipt,
+} from "wagmi";
 
 import { useBridgeContract } from "./useBridgeContract";
 import { useTokenContractAPI } from "./useTokenContract";
@@ -44,8 +47,8 @@ export const useTransferToL2 = () => {
     data,
     isError,
     isSuccess: approveIsSuccess,
-  } = useWaitForTransaction({
-    hash: approveHash?.hash,
+  } = useWaitForTransactionReceipt({
+    hash: approveHash,
   });
 
   const { address: l1Account, connector } = useL1Account();

@@ -2,16 +2,28 @@
 
 import type { L1WriteBaseParams } from "@/types/L1WriteBaseParams";
 import type { Config } from "@wagmi/core";
-import type { ContractFunctionArgs, WriteContractReturnType } from "viem";
+import type { ContractFunctionArgs, Hash, WriteContractReturnType } from "viem";
+import type {
+  UseWriteContractParameters,
+  UseWriteContractReturnType,
+} from "wagmi";
 import type { WriteContractVariables } from "wagmi/query";
+import { useEffect, useMemo, useState } from "react";
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { NETWORK_NAME } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
-import { useAccount as useL1Account, useWriteContract } from "wagmi";
+import { useContractWrite as useL2ContractWrite } from "@starknet-react/core";
+import { parseEther } from "viem";
+import {
+  useConfig,
+  useAccount as useL1Account,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 
 import type { SupportedL1ChainId } from "@realms-world/constants/src/Chains";
 
-const FUNCTION = "deposit";
+const FUNCTION = "withdraw";
 
 export type WriteDepositLordsParameters<
   config extends Config,
@@ -28,7 +40,10 @@ export type WriteDepositLordsParameters<
   };
 } & { l2ChainId: number };
 
-export function useWriteDepositLords<config extends Config, context = unknown>(
+export function useWriteFinalizeWithdrawLords<
+  config extends Config,
+  context = unknown,
+>(
   {
     args,
     l2ChainId,

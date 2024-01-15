@@ -71,7 +71,7 @@ export const TokenInformation = ({
           >
             <ArrowLeft className="mr-2 w-4 self-center" />{" "}
             <span className="self-center">
-              {erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
+              {erc721Tokens[collectionId as keyof typeof erc721Tokens]?.name}
             </span>
           </Button>
           <div className="flex space-x-4 text-lg">

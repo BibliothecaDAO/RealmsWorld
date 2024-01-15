@@ -1,17 +1,17 @@
 "use client";
 
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
-import { useModal } from "connectkit";
 
 import { Button } from "@realms-world/ui";
 
 export const BuyButton = ({ address, id, size = "sm" }: any) => {
-  const { setOpen } = useModal();
+  const { openConnectModal } = useConnectModal();
   return (
     <BuyModal
       trigger={
         <Button
-          className="text-dark-green w-full"
+          className="w-full text-dark-green"
           size={size}
           variant={"default"}
         >
@@ -24,7 +24,7 @@ export const BuyButton = ({ address, id, size = "sm" }: any) => {
       onPurchaseError={(error, data) =>
         console.log("Transaction Error", error, data)
       }
-      onConnectWallet={() => setOpen(true)}
+      onConnectWallet={() => openConnectModal}
       onClose={(data, stepData, currentStep) => console.log("Modal Closed")}
     />
   );

@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import type { Realm } from "@/.graphclient";
+import { useEffect, useState } from "react";
 import { ERC721 } from "@/abi/L1/ERC721";
 import { paymentPoolAbi } from "@/abi/L1/PaymentPool";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
+import { NETWORK_NAME } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
 import Lords from "@/icons/lords.svg";
 import { getTokenContractAddresses } from "@/utils/utils";
@@ -16,7 +17,7 @@ import {
   useAccount,
   useContractRead,
   useContractWrite,
-  useWaitForTransaction,
+  useWaitForTransactionReceipt,
 } from "wagmi";
 
 import {
@@ -31,10 +32,8 @@ import {
 import { EthereumLoginButton } from "../_components/wallet/EthereumLoginButton";
 import RealmsTable from "./RealmsTable";
 
-const network =
-  process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
-const galleonAddress = stakingAddresses[network].v1Galleon;
-const carrackAddress = stakingAddresses[network].v2Carrack;
+const galleonAddress = stakingAddresses[NETWORK_NAME].v1Galleon;
+const carrackAddress = stakingAddresses[NETWORK_NAME].v2Carrack;
 const realmsAddress = getTokenContractAddresses("realms").L1;
 
 export const StakingContainer = () => {
@@ -145,7 +144,7 @@ export const StakingContainer = () => {
     <div className="text-center">
       <div className="col-span-2 flex flex-col ">
         <h3>Your Realms</h3>
-        <div className="bg-dark-green flex flex-col rounded border pb-8 pt-6">
+        <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
           {realmsDataIsLoading ? (
             "Loading"
           ) : (
@@ -172,7 +171,7 @@ export const StakingContainer = () => {
         </span>
       </div>
       <div className="grid grid-cols-2 gap-4 sm:gap-6">
-        <div className="bg-dark-green flex flex-col justify-center rounded border pb-8 pt-6">
+        <div className="flex flex-col justify-center rounded border bg-dark-green pb-8 pt-6">
           {realmsDataIsLoading ? (
             "Loading"
           ) : (
@@ -189,7 +188,7 @@ export const StakingContainer = () => {
             </>
           )}
         </div>
-        <div className="bg-dark-green flex flex-col rounded border pb-8 pt-6">
+        <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
           <span className="pb-4 text-lg">Lords Available</span>
 
           {!isGalleonLordsLoading && typeof lordsAvailableData == "bigint" ? (
@@ -270,7 +269,7 @@ export const StakingContainer = () => {
           </span>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
-          <div className="bg-dark-green flex flex-col justify-center rounded border pb-8 pt-6">
+          <div className="flex flex-col justify-center rounded border bg-dark-green pb-8 pt-6">
             {realmsDataIsLoading ? (
               "Loading"
             ) : (
@@ -287,7 +286,7 @@ export const StakingContainer = () => {
               </>
             )}
           </div>
-          <div className="bg-dark-green flex flex-col rounded border pb-8 pt-6">
+          <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
             <span className="pb-4 text-lg">Lords Available</span>
 
             {isCarrackLordsLoading ? (
@@ -394,9 +393,10 @@ const StakingModal = ({
       args: [address!, galleonAddress as `0x${string}`],
     });
 
-  const { data: approvedTransactionData, isSuccess } = useWaitForTransaction({
-    hash: approveCarrackData?.hash || approveGalleonData?.hash,
-  });
+  const { data: approvedTransactionData, isSuccess } =
+    useWaitForTransactionReceipt({
+      hash: approveCarrackData || approveGalleonData,
+    });
 
   useEffect(() => {
     refetchCarrackApprovedData(), refetchGalleonApprovedData();
@@ -413,7 +413,7 @@ const StakingModal = ({
       await approvalFunction();
     }
   };
-  const { data, isError, isLoading } = useWaitForTransaction({
+  const { data, isError, isLoading } = useWaitForTransactionReceipt({
     hash: "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
   });
   const onButtonClick = async () => {

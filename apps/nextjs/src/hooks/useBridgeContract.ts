@@ -9,7 +9,7 @@ import { parseEther } from "viem";
 import {
   useAccount as useL1Account,
   useContractWrite as useL1ContractWrite,
-  useWaitForTransaction,
+  useWaitForTransactionReceipt,
 } from "wagmi";
 
 export const useBridgeContract = () => {
@@ -20,7 +20,7 @@ export const useBridgeContract = () => {
   const l2BridgeAddress =
     tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]];
 
-  const {
+  /* const {
     writeAsync: deposit,
     data: depositData,
     error: depositError,
@@ -50,7 +50,7 @@ export const useBridgeContract = () => {
     isError: withdrawTxError,
   } = useWaitForTransaction({
     hash: depositData?.hash,
-  });
+  });*/
 
   const [amount, setAmount] = useState<string | null>();
 
@@ -80,17 +80,6 @@ export const useBridgeContract = () => {
 
   return {
     calls,
-    deposit,
-    depositData,
-    depositIsSuccess,
-    error: depositError || depostTxError,
-    depositTxStatus,
-    depositReceipt,
-    //depositEth,
-    withdraw,
-    withdrawError,
-    withdrawReceipt,
-    withdrawIsSuccess,
     initiateWithdraw,
     withdrawHash,
   };

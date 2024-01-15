@@ -1,13 +1,13 @@
+import type { TokenMarketData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import type { TokenMarketData } from "@/types";
 import { findTokenName } from "@/utils/utils";
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 import { formatEther } from "viem";
 
 import { Button } from "@realms-world/ui";
 
-import { BuyButton } from "./BuyModal";
+//import { BuyButton } from "./BuyModal";
 
 interface TokenCardProps {
   token: TokenMarketData;
@@ -71,13 +71,13 @@ export const TokenCard = (props: TokenCardProps) => {
             >
               view
             </Button>
-            {token.market.floorAsk.id && (
+            {/*token.market.floorAsk.id && (
               <BuyButton
                 size="xs"
                 address={token.token.contract}
                 id={token.token.tokenId}
               />
-            )}
+            )*/}
           </div>
         </div>
       ) : (

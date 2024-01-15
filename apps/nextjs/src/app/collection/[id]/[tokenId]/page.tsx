@@ -19,7 +19,6 @@ export default async function Page({
   const tokenAddresses = getTokenContractAddresses(
     params.id as keyof typeof erc721Tokens,
   );
-  const token_params = tokenAddresses.L1 + ":" + params.tokenId;
 
   if (tokenAddresses.L2) {
     return (
@@ -27,7 +26,29 @@ export default async function Page({
         <L2Token contractAddress={tokenAddresses.L2} tokenId={params.tokenId} />
       </Suspense>
     );
+  } else if (tokenAddresses.L1) {
+    return (
+      <L1TokenData
+        collectionId={params.id}
+        tokenAddress={tokenAddresses.L1}
+        tokenId={params.tokenId}
+      />
+    );
   }
+
+  return <>Collection Not Supported</>;
+}
+
+const L1TokenData = async ({
+  tokenAddress,
+  tokenId,
+  collectionId,
+}: {
+  tokenAddress: string;
+  tokenId: string;
+  collectionId: string;
+}) => {
+  const token_params = tokenAddress + ":" + tokenId;
 
   const tokensData = getToken({
     query: {
@@ -36,26 +57,30 @@ export default async function Page({
       includeQuantity: true,
     },
   });
-  const collectionData = getCollections([
-    { contract: tokenAddresses.L1 ?? params.id },
-  ]);
-
+  const collectionData = getCollections([{ contract: tokenAddress }]);
   const [{ tokens }, { collections }] = await Promise.all([
     tokensData,
     collectionData,
   ]);
-  const token: Token | null = tokens?.[0]?.token;
+  const token: Token | undefined = tokens?.[0]?.token;
   const market: Market | null = tokens?.[0]?.market;
-  const collection: Collection | null = collections?.[0];
+  const collection: Collection | undefined = collections?.[0];
 
-  //}
+  if (!tokens) {
+    return <div>Collection Not Found</div>;
+  }
+
   return (
     <>
       {token && (
         <TokenInformation
-          token={token}
+          name={token.name}
+          image={token.image}
+          tokenId={parseInt(token.tokenId)}
+          owner={token.owner}
+          attributes={token.attributes}
           collection={collection}
-          collectionId={params.id}
+          collectionId={collectionId}
         >
           {market?.floorAsk.price && (
             <h2>{formatEther(BigInt(market.floorAsk.price.amount.raw))} ETH</h2>
@@ -69,4 +94,4 @@ export default async function Page({
       )}
     </>
   );
-}
+};
