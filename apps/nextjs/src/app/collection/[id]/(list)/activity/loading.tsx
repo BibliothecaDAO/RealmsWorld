@@ -1,4 +1,4 @@
-import { CollectionActivitySkeleton } from "@/app/collection/CollectionActivity";
+import { CollectionActivitySkeleton } from "@/app/collection/[id]/(list)/activity/CollectionActivity";
 
 import { ActivityCardSkeleton } from "./ActivityCardSkeleton";
 

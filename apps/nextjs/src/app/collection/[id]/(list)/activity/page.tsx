@@ -1,10 +1,10 @@
 import type { erc721Tokens } from "@/constants";
-import { getActivity } from "@/lib/reservoir/getActivity";
 import type { Activity } from "@/types";
+import { getActivity } from "@/lib/reservoir/getActivity";
 import { getTokenContractAddresses } from "@/utils/utils";
 
-import { CollectionActivity } from "../../../CollectionActivity";
 import { ActivityCard } from "./ActivityCard";
+import { CollectionActivity } from "./CollectionActivity";
 
 export default async function Page({
   params,
