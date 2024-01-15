@@ -3,6 +3,7 @@
 import type { L1WriteBaseParams } from "@/types/L1WriteBaseParams";
 import type { Config } from "@wagmi/core";
 import type { ContractFunctionArgs, WriteContractReturnType } from "viem";
+import type { UseWriteContractReturnType } from "wagmi";
 import type { WriteContractVariables } from "wagmi/query";
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { NETWORK_NAME } from "@/constants/env";
@@ -27,6 +28,22 @@ export type WriteDepositLordsParameters<
     l2Address: string;
   };
 } & { l2ChainId: number };
+
+export type UseWriteDepositLordsReturnType<
+  config extends Config,
+  context = unknown,
+> = Omit<
+  UseWriteContractReturnType<
+    WriteDepositLordsParameters<config, SupportedL1ChainId>
+  >,
+  "write" | "writeAsync"
+> & {
+  writeDepositERC20Async: UseWriteContractReturnType<
+    WriteDepositLordsParameters<config, context>,
+    config,
+    context
+  >["writeAsync"];
+};
 
 export function useWriteDepositLords<config extends Config, context = unknown>(
   {
@@ -72,5 +89,5 @@ export function useWriteDepositLords<config extends Config, context = unknown>(
     options,
   );
 
-  return writeDepost;
+  return { writeDepost, ...writeReturn };
 }

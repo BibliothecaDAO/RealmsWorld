@@ -9,7 +9,7 @@ import { TokenTable } from "../../TokenTable";
 import L2ERC721Table from "./L2ERC721Table";
 import { TradeLayout } from "./Trade";
 
-export const runtime = "edge";
+//export const runtime = "edge";
 
 export async function generateMetadata({
   params,
@@ -44,7 +44,6 @@ export default async function Page({
     return <Mint contractId={params.id} />;
   }*/
   if (tokenAddresses.L2) {
-    console.log("here");
     return <L2TokenData tokenAddress={tokenAddresses.L2} />;
   }
   if (tokenAddresses.L1) {

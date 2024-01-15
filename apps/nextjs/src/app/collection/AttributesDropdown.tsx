@@ -2,7 +2,6 @@
 
 import NumberSelect from "@/app/_components/NumberSelect";
 import { useQuery } from "@/hooks/useQuery";
-import { api } from "@/trpc/react";
 
 import {
   Accordion,
@@ -20,18 +19,6 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
     isKeyInQuery,
     getQueriesFromUrl,
   } = useQuery();
-
-  /*const [erc721Attributes, { isLoading }] =
-    api.erc721Attributes.all.useSuspenseQuery(
-      {
-        contractAddress: address,
-      },
-      /*{
-        getNextPageParam(lastPage) {
-          return lastPage.nextCursor;
-        },
-      },
-    );*/
 
   const finalAttributes = attributes.items ?? attributes?.attributes;
   return (
