@@ -11,13 +11,13 @@ import { stakingAddresses } from "@/constants/staking";
 import Lords from "@/icons/lords.svg";
 import { getTokenContractAddresses } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { Loader, Loader2 } from "lucide-react";
 import { formatEther, parseEther } from "viem";
 import {
   useAccount,
-  useContractRead,
-  useContractWrite,
+  useReadContract,
   useWaitForTransactionReceipt,
+  useWriteContract,
 } from "wagmi";
 
 import {
@@ -32,8 +32,10 @@ import {
 import { EthereumLoginButton } from "../_components/wallet/EthereumLoginButton";
 import RealmsTable from "./RealmsTable";
 
-const galleonAddress = stakingAddresses[NETWORK_NAME].v1Galleon;
-const carrackAddress = stakingAddresses[NETWORK_NAME].v2Carrack;
+const galleonAddress = stakingAddresses[NETWORK_NAME]
+  .v1Galleon as `0x${string}`;
+const carrackAddress = stakingAddresses[NETWORK_NAME]
+  .v2Carrack as `0x${string}`;
 const realmsAddress = getTokenContractAddresses("realms").L1;
 
 export const StakingContainer = () => {
@@ -73,25 +75,21 @@ export const StakingContainer = () => {
     data: lordsAvailableData,
     isError,
     isLoading: isGalleonLordsLoading,
-  } = useContractRead({
-    address: stakingAddresses[network].v1Galleon as `0x${string}`,
+  } = useReadContract({
+    address: stakingAddresses[NETWORK_NAME].v1Galleon as `0x${string}`,
     abi: GalleonStaking,
     functionName: "lordsAvailable",
     args: [address as `0x${string}`],
   });
   const {
     data: galleonClaimData,
-    isLoading: isGalleonClaimLoading,
-    write: claimGalleonLords,
-  } = useContractWrite({
-    address: stakingAddresses[network].v1Galleon as `0x${string}`,
-    abi: GalleonStaking,
-    functionName: "claimLords",
-  });
+    isPending: isGalleonClaimLoading,
+    writeContract: claimGalleonLords,
+  } = useWriteContract();
 
   const { data: carrackLordsAvailableData, isLoading: isCarrackLordsLoading } =
-    useContractRead({
-      address: stakingAddresses[network].v2Carrack as `0x${string}`,
+    useReadContract({
+      address: stakingAddresses[NETWORK_NAME].v2Carrack as `0x${string}`,
       abi: CarrackStaking,
       functionName: "lordsAvailable",
       args: [address as `0x${string}`],
@@ -99,37 +97,35 @@ export const StakingContainer = () => {
 
   const {
     data: carrackClaimData,
-    isLoading: isCarrackClaimLoading,
-    write: claimCarrackLords,
-  } = useContractWrite({
-    address: stakingAddresses[network].v2Carrack as `0x${string}`,
-    abi: CarrackStaking,
-    functionName: "claimLords",
-  });
+    isPending: isCarrackClaimLoading,
+    writeContract: claimCarrackLords,
+  } = useWriteContract();
 
   const {
     data: poolClaimData,
-    isLoading: isPoolClaimLoading,
-    write: claimPoolLords,
-  } = useContractWrite({
-    address: stakingAddresses[network].paymentPool as `0x${string}`,
-    abi: paymentPoolAbi,
-    functionName: "withdraw",
-    args: [parseEther(poolClaimAmount?.toString() ?? "0"), hexProof as any],
-  });
+    isPending: isPoolClaimLoading,
+    writeContract: claimPoolLords,
+  } = useWriteContract();
 
-  const { refetch, isLoading: poolWithdrawalsLoading } = useContractRead({
-    address: stakingAddresses[network].paymentPool as `0x${string}`,
+  const {
+    data: poolWithdrawlsData,
+    isLoading: poolWithdrawalsLoading,
+    isFetched,
+  } = useReadContract({
+    address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "withdrawals",
     args: [address as `0x${string}`],
-    onSuccess(data) {
-      console.log(parseFloat(formatEther(data)));
-      const claimable = poolTotal - data;
-      setPoolClaimAmount(claimable);
-    },
-    enabled: !!address && !!poolTotal,
+    query: { enabled: !!address && !!poolTotal },
   });
+
+  useEffect(() => {
+    if (isFetched && poolWithdrawlsData) {
+      console.log(parseFloat(formatEther(poolWithdrawlsData)));
+      const claimable = poolTotal - poolWithdrawlsData;
+      setPoolClaimAmount(claimable);
+    }
+  }, [isFetched]);
 
   if (!addressL1) {
     return (
@@ -203,7 +199,14 @@ export const StakingContainer = () => {
                 size={"sm"}
                 className="self-center"
                 variant={"outline"}
-                onClick={() => claimGalleonLords()}
+                onClick={() =>
+                  claimGalleonLords({
+                    address: stakingAddresses[NETWORK_NAME]
+                      .v1Galleon as `0x${string}`,
+                    abi: GalleonStaking,
+                    functionName: "claimLords",
+                  })
+                }
               >
                 {isGalleonClaimLoading ? (
                   <>
@@ -235,7 +238,18 @@ export const StakingContainer = () => {
                 size={"sm"}
                 className="self-center"
                 variant={"outline"}
-                onClick={() => claimPoolLords()}
+                onClick={() =>
+                  claimPoolLords({
+                    address: stakingAddresses[NETWORK_NAME]
+                      .paymentPool as `0x${string}`,
+                    abi: paymentPoolAbi,
+                    functionName: "withdraw",
+                    args: [
+                      parseEther(poolClaimAmount?.toString() ?? "0"),
+                      hexProof as any,
+                    ],
+                  })
+                }
               >
                 {isPoolClaimLoading ? (
                   <>
@@ -307,7 +321,14 @@ export const StakingContainer = () => {
                   }
                   className="self-center"
                   variant={"outline"}
-                  onClick={() => claimCarrackLords()}
+                  onClick={() =>
+                    claimCarrackLords({
+                      address: stakingAddresses[NETWORK_NAME]
+                        .v2Carrack as `0x${string}`,
+                      abi: CarrackStaking,
+                      functionName: "claimLords",
+                    })
+                  }
                 >
                   Claim
                 </Button>
@@ -333,69 +354,39 @@ const StakingModal = ({
   const [selectedRealms, setSelectedRealms] = useState<readonly string[]>([]);
   const { address } = useAccount();
 
+  const { writeContractAsync: boardGalleon, isPending: isBoardGalleonPending } =
+    useWriteContract();
+  const { writeContractAsync: boardCarrack, isPending: isBoardCarrackPending } =
+    useWriteContract();
+  const { writeContractAsync: exitGalleon, isPending: isExitGalleonPending } =
+    useWriteContract();
+  const { writeContractAsync: exitCarrack, isPending: isExitCarrackPending } =
+    useWriteContract();
   const {
-    writeAsync: boardGalleon,
-    data: depositData,
-    error: depositError,
-  } = useContractWrite({
-    address: galleonAddress as `0x${string}`,
-    abi: GalleonStaking,
-    functionName: "boardShip",
-  });
-  const {
-    writeAsync: boardCarrack,
-    /*data: depositData,
-    error: depositError,*/
-  } = useContractWrite({
-    address: carrackAddress as `0x${string}`,
-    abi: CarrackStaking,
-    functionName: "boardShip",
-  });
-  const { writeAsync: exitGalleon } = useContractWrite({
-    address: galleonAddress as `0x${string}`,
-    abi: GalleonStaking,
-    functionName: "exitShip",
-  });
-  const { writeAsync: exitCarrack } = useContractWrite({
-    address: carrackAddress as `0x${string}`,
-    abi: CarrackStaking,
-    functionName: "exitShip",
-  });
-  const {
-    writeAsync: approveGalleon,
-    isLoading: isGalleonApproveLoading,
+    writeContractAsync: approveGalleon,
+    isPending: isGalleonApproveLoading,
     data: approveGalleonData,
-  } = useContractWrite({
-    address: realmsAddress as `0x${string}`,
-    abi: ERC721,
-    functionName: "setApprovalForAll",
-    args: [galleonAddress as `0x${string}`, true],
-  });
-  const { writeAsync: approveCarrack, data: approveCarrackData } =
-    useContractWrite({
-      address: realmsAddress as `0x${string}`,
-      abi: ERC721,
-      functionName: "setApprovalForAll",
-      args: [carrackAddress as `0x${string}`, true],
-    });
+  } = useWriteContract();
+  const { writeContractAsync: approveCarrack, data: approveCarrackData } =
+    useWriteContract();
   const { data: isCarrackApprovedData, refetch: refetchCarrackApprovedData } =
-    useContractRead({
+    useReadContract({
       address: realmsAddress as `0x${string}`,
       abi: ERC721,
       functionName: "isApprovedForAll",
-      args: [address!, carrackAddress as `0x${string}`],
+      args: [address!, carrackAddress],
     });
   const { data: isGalleonApprovedData, refetch: refetchGalleonApprovedData } =
-    useContractRead({
+    useReadContract({
       address: realmsAddress as `0x${string}`,
       abi: ERC721,
       functionName: "isApprovedForAll",
-      args: [address!, galleonAddress as `0x${string}`],
+      args: [address!, galleonAddress],
     });
 
   const { data: approvedTransactionData, isSuccess } =
     useWaitForTransactionReceipt({
-      hash: approveCarrackData || approveGalleonData,
+      hash: approveCarrackData ?? approveGalleonData,
     });
 
   useEffect(() => {
@@ -407,26 +398,66 @@ const StakingModal = ({
 
   const onApproveClick = async () => {
     const approvalFunction =
-      shipType === "galleon" ? approveGalleon : approveCarrack;
+      shipType === "galleon"
+        ? approveGalleon({
+            address: realmsAddress as `0x${string}`,
+            abi: ERC721,
+            functionName: "setApprovalForAll",
+            args: [galleonAddress, true],
+          })
+        : approveCarrack({
+            address: realmsAddress as `0x${string}`,
+            abi: ERC721,
+            functionName: "setApprovalForAll",
+            args: [carrackAddress, true],
+          });
 
     if (!isApproved) {
-      await approvalFunction();
+      await approvalFunction;
     }
   };
-  const { data, isError, isLoading } = useWaitForTransactionReceipt({
-    hash: "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
-  });
   const onButtonClick = async () => {
     if (!unstake) {
       const boardingFunction =
-        shipType === "galleon" ? boardGalleon : boardCarrack;
-      await boardingFunction({ args: [selectedRealms.map(BigInt)] });
+        shipType === "galleon"
+          ? boardGalleon({
+              address: galleonAddress,
+              abi: GalleonStaking,
+              functionName: "boardShip",
+              args: [selectedRealms.map(BigInt)],
+            })
+          : boardCarrack({
+              address: carrackAddress,
+              abi: CarrackStaking,
+              functionName: "boardShip",
+              args: [selectedRealms.map(BigInt)],
+            });
+      await boardingFunction;
     } else {
-      const exitFunction = shipType === "galleon" ? exitGalleon : exitCarrack;
-      await exitFunction({ args: [selectedRealms.map(BigInt)] });
+      const exitFunction =
+        shipType === "galleon"
+          ? exitGalleon({
+              address: galleonAddress,
+              abi: GalleonStaking,
+              functionName: "exitShip",
+              args: [selectedRealms.map(BigInt)],
+            })
+          : exitCarrack({
+              address: carrackAddress,
+              abi: CarrackStaking,
+              functionName: "exitShip",
+              args: [selectedRealms.map(BigInt)],
+            });
+      await exitFunction;
     }
     setSelectedRealms([]);
   };
+  const isPending =
+    isGalleonApproveLoading ||
+    isExitGalleonPending ||
+    isExitCarrackPending ||
+    isBoardCarrackPending ||
+    isBoardGalleonPending;
 
   const onSelectRealms = (realms: any) => {
     setSelectedRealms(realms);
@@ -469,11 +500,8 @@ const StakingModal = ({
                 Approve Realm Staking Contract
               </Button>
             ) : (
-              <Button
-                onClick={onButtonClick}
-                disabled={isGalleonApproveLoading}
-                size={"lg"}
-              >
+              <Button onClick={onButtonClick} disabled={isPending} size={"lg"}>
+                {isPending && <Loader className="mr-2 animate-spin" />}
                 {unstake ? "Unstake" : "Stake"} Realms
               </Button>
             )}
