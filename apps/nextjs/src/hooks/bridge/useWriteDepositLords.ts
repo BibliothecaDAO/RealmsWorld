@@ -39,10 +39,9 @@ export type UseWriteDepositLordsReturnType<
   "write" | "writeAsync"
 > & {
   writeDepositERC20Async: UseWriteContractReturnType<
-    WriteDepositLordsParameters<config, context>,
     config,
     context
-  >["writeAsync"];
+  >["writeContractAsync"];
 };
 
 export function useWriteDepositLords<config extends Config, context = unknown>(
