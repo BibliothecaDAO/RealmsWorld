@@ -93,7 +93,7 @@ export function useAirdropClaim() {
     const formattedAddress: string = getAddress(addressL1);
     // Get tokens for address
     const numTokens: string = parseUnits(
-      config.airdrop[getAddress(address)].toString(),
+      config.airdrop[getAddress(addressL1)].toString(),
       config.decimals,
     ).toString();
 
