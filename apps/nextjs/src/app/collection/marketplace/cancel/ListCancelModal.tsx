@@ -20,7 +20,7 @@ import {
   DialogTrigger,
 } from "@realms-world/ui";
 
-import ERC721LineItem from "../../ERC721LineItem";
+import ERC721LineItem from "../ERC721LineItem";
 //import getChainBlockExplorerUrl from "../../lib/getChainBlockExplorerUrl";
 import { CancelStep, ListCancelModalRender } from "./ListCancelModalRender";
 

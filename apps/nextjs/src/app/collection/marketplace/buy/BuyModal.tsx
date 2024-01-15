@@ -36,7 +36,7 @@ import {
 import { formatNumber } from "@realms-world/utils";
 
 import type { BuyModalStepData } from "./BuyModalRender";
-import ERC721LineItem from "../../ERC721LineItem";
+import ERC721LineItem from "../ERC721LineItem";
 import { BuyModalRender, BuyStep } from "./BuyModalRender";
 
 interface PurchaseData {

@@ -44,7 +44,7 @@ export default function Mint({ contractId }: { contractId: string }) {
   const {
     data: mintData,
     write,
-    isLoading: isTxSubmitting,
+    isPending: isTxSubmitting,
   } = useContractWrite({
     calls: [
       {
@@ -131,8 +131,9 @@ export default function Mint({ contractId }: { contractId: string }) {
             )}
           </h1>
           <Button
-            href={`/collection/goldenToken/${(submittedData as any)?.events[1]
-              ?.data[2]}`}
+            href={`/collection/goldenToken/${
+              (submittedData as any)?.events[1]?.data[2]
+            }`}
           >
             View Token
           </Button>

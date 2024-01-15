@@ -15,7 +15,7 @@ interface TokenCardProps {
   layout?: "grid" | "list";
 }
 
-export const TokenCard = (props: TokenCardProps) => {
+export const L1TokenCard = (props: TokenCardProps) => {
   const { token, layout, collectionName } = props;
 
   const isGrid = layout == "grid";

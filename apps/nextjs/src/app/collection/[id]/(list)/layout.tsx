@@ -1,5 +1,5 @@
 import React from "react";
-import CollectionSummary from "@/app/collection/CollectionSummary";
+import CollectionSummary from "@/app/collection/[id]/(list)/CollectionSummary";
 import { NETWORK_NAME } from "@/constants/env";
 
 import { NavLink } from "@realms-world/ui";

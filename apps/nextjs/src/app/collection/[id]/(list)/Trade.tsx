@@ -1,9 +1,8 @@
 import { Suspense } from "react";
-import { AttributesDropdown } from "@/app/collection/AttributesDropdown";
-import { AttributeTags } from "@/app/collection/AttributeTags";
+import { AttributesDropdown } from "@/app/collection/[id]/(list)/AttributesDropdown";
+import { AttributeTags } from "@/app/collection/[id]/(list)/AttributeTags";
+import { TradeFilters } from "@/app/collection/[id]/(list)/TradeFilters";
 import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
-//import { TokenTable } from "@/app/collection/TokenTable";
-import { TradeFilters } from "@/app/collection/TradeFilters";
 
 export const TradeLayout = ({
   tokenAddress,
