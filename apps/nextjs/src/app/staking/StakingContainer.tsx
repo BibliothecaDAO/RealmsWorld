@@ -121,7 +121,6 @@ export const StakingContainer = () => {
 
   useEffect(() => {
     if (isFetched && poolWithdrawlsData) {
-      console.log(parseFloat(formatEther(poolWithdrawlsData)));
       const claimable = poolTotal - poolWithdrawlsData;
       setPoolClaimAmount(claimable);
     }
@@ -195,7 +194,11 @@ export const StakingContainer = () => {
                 {formatEther(lordsAvailableData)}
               </span>
               <Button
-                disabled={lordsAvailableData == 0n || isGalleonClaimLoading}
+                disabled={
+                  lordsAvailableData == 0n ||
+                  isGalleonClaimLoading ||
+                  isCarrackClaimLoading
+                }
                 size={"sm"}
                 className="self-center"
                 variant={"outline"}
@@ -208,7 +211,7 @@ export const StakingContainer = () => {
                   })
                 }
               >
-                {isGalleonClaimLoading ? (
+                {isGalleonClaimLoading || isCarrackClaimLoading ? (
                   <>
                     <Loader2 className="h-5 w-5 animate-spin" />
                     Claiming

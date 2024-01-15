@@ -33,7 +33,7 @@ import {
 } from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
-import ERC721LineItem from "../../ERC721LineItem";
+import ERC721LineItem from "../ERC721LineItem";
 //import PriceInput from "../../primitives/PriceInput";
 
 //import Progress from "../Progress";

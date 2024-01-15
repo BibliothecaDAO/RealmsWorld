@@ -4,7 +4,7 @@ import { getTokenName } from "@/utils/utils";
 
 import type { RouterOutputs } from "@realms-world/api";
 
-import ERC721MarketplaceItem from "./ERC721MarketplaceItem";
+import ERC721MarketplaceItem from "../ERC721MarketplaceItem";
 
 interface ERC721LineItemProps {
   tokenDetails?: RouterOutputs["erc721Tokens"]["byId"] /*NonNullable<

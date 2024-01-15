@@ -5,7 +5,7 @@ import { getToken } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/server";
 import { getTokenContractAddresses } from "@/utils/utils";
 
-import { TokenTable } from "../../TokenTable";
+import { L1TokenTable } from "./L1TokenTable";
 import L2ERC721Table from "./L2ERC721Table";
 import { TradeLayout } from "./Trade";
 
@@ -94,7 +94,7 @@ const L1TokenData = async ({
   }
   return (
     <TradeLayout tokenAddress={tokenAddress} attributes={attributes}>
-      <TokenTable address={tokenAddress} tokens={tokens.tokens} />
+      <L1TokenTable address={tokenAddress} tokens={tokens.tokens} />
     </TradeLayout>
   );
 };

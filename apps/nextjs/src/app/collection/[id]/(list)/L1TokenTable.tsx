@@ -1,12 +1,12 @@
 "use client";
 
 import type { TokenMarketData } from "@/types";
-import { TokenCard } from "@/app/collection/TokenCard";
+import { L1TokenCard } from "@/app/collection/[id]/(list)/L1TokenCard";
 import { findTokenName } from "@/utils/utils";
 
-import { useUIContext } from "../providers/UIProvider";
+import { useUIContext } from "../../../providers/UIProvider";
 
-export const TokenTable = ({
+export const L1TokenTable = ({
   address,
   tokens,
 }: {
@@ -25,7 +25,7 @@ export const TokenTable = ({
       {tokens
         ? tokens.map((token, index) => {
             return (
-              <TokenCard
+              <L1TokenCard
                 key={index}
                 collectionName={collectionName}
                 token={token}

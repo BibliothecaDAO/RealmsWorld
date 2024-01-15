@@ -25,7 +25,6 @@ export const CollectionActivity = () => {
     const newState: Record<string, boolean> = {};
     newState[value] = !newState[value];
     setTypesState(newState);
-    // @ts-ignore
     const params = new URLSearchParams(searchParams);
     const valueExists =
       params.has("types") && params.getAll("types").includes(value);
@@ -43,7 +42,6 @@ export const CollectionActivity = () => {
   const searchAttributes = ["sale", "transfer", "bid", "ask"];
 
   useEffect(() => {
-    // @ts-ignore
     const params = new URLSearchParams(searchParams);
     const newState = searchAttributes.reduce((acc, attribute) => {
       const valueExists =
