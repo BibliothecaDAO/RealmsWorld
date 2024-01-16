@@ -25,8 +25,11 @@ export const fetchMetadata = inngest.createFunction(
       const tokenId = uint256.bnToUint256(
         BigInt(event.data.tokenId.toString()),
       );
+      const fetchUrl = `https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;
 
-      const fetchUrl = `https://starknet-${process.env.NEXT_PUBLIC_IS_TESTNET ? "sepolia" : "mainnet"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;
+      console.log(process.env.NEXT_PUBLIC_IS_TESTNET);
+
+      console.log(fetchUrl);
 
       const response = await fetch(fetchUrl, {
         method: "POST",
@@ -57,7 +60,7 @@ export const fetchMetadata = inngest.createFunction(
     if (metadata.error) {
       console.log(metadata.error);
       await step.sleep("fetch sleep", "20s");
-      throw new Error("Failed to fetch item from Infura API");
+      throw new Error("Failed to fetch item from Blast API");
     }
 
     const value: any = [];
