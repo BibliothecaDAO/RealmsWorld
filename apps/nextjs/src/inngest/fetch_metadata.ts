@@ -226,7 +226,7 @@ export const fetchMetadata = inngest.createFunction(
 
           tokenAttributeResult = await db
             .insert(schema.erc721TokenAttributes)
-            .values(tokenAttributeValues)
+            .values(addedTokenAttributes)
             .onConflictDoNothing()
             .returning({
               key: schema.erc721TokenAttributes.key,
@@ -256,6 +256,7 @@ export const fetchMetadata = inngest.createFunction(
             }
             sqlChunks.push(sql`end)`);
             const finalSql: SQL = sql.join(sqlChunks, sql.raw(" "));
+            console.log(finalSql);
             const res = await db
               .update(schema.erc721Attributes)
               .set({ tokenCount: finalSql })
