@@ -26,10 +26,7 @@ export const fetchMetadata = inngest.createFunction(
         BigInt(event.data.tokenId.toString()),
       );
 
-      const fetchUrl =
-        process.env.NEXT_PUBLIC_IS_TESTNET == "true"
-          ? "https://starknet-sepolia.blastapi.io/e9bdaf3f-f2fc-4351-bab5-238bcaa68849"
-          : "https://starknet-mainnet.infura.io";
+      const fetchUrl = `https://starknet-${process.env.NEXT_PUBLIC_IS_TESTNET ? "sepolia" : "mainnet"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;
 
       const response = await fetch(fetchUrl, {
         method: "POST",

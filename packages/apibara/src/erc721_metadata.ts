@@ -27,7 +27,7 @@ export const config: Config<Starknet, Webhook> = {
     header: [
       Deno.env.get("STREAM_URL") == "https://sepolia.starknet.a5a.ch"
         ? "x-inngest-env: marketplace"
-        : "test: test",
+        : "x-inngest-env: mainnet/marketplace",
     ],
   },
 };
