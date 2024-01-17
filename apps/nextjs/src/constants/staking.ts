@@ -9,6 +9,6 @@ export const stakingAddresses = {
     v1Galleon: "",
     v2Carrack: "",
     paymentPool: "",
-    paymentPoolV2: "0x957c6ba13fa696a362aceaa197d41720d885e054",
+    paymentPoolV2: "0x9af24c0a52ca10c53873a926Bf7504EA35f9Fe6C",
   },
 };

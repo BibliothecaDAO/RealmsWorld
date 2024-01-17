@@ -155,7 +155,7 @@ export const StakingContainer = () => {
         </div>
       </div>
       <h3 className="mt-10">Rewards</h3>
-      {/* <PaymentPoolV2 /> */}
+      <PaymentPoolV2 />
       <h3 className="mt-10">Galleon</h3>
       <div className="flex-col pb-2 text-lg">
         <span className="bg-dark-green px-2 py-1">

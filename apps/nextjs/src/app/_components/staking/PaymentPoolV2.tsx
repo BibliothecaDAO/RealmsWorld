@@ -9,7 +9,11 @@ export const PaymentPoolV2 = () => {
   return (
     <div className="flex-col pb-2 text-lg">
       <div>
-        <Button onClick={claimAirdrop}>claim</Button>
+        <div>{numTokens}</div>
+
+        <Button onClick={claimAirdrop}>
+          {alreadyClaimed ? "claimed" : "claim"}
+        </Button>
       </div>
     </div>
   );
