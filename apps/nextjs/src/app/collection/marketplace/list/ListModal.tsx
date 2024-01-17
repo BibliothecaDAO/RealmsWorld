@@ -213,7 +213,7 @@ export function ListModal({
                             value={price}
                             min={0}
                             onChange={(e) => {
-                              setPrice(parseInt(e.target.value));
+                              setPrice(parseInt(e.target.value || "0"));
                             }}
                             placeholder="Amount"
                             className={"h-12 w-full"}
