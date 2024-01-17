@@ -22,10 +22,12 @@ export const TradeLayout = ({
       <div className="flex w-full">
         {tokenAddress && (
           <>
-            <AttributesDropdown
-              address={tokenAddress}
-              attributes={attributes}
-            />
+            {attributes.length ? (
+              <AttributesDropdown
+                address={tokenAddress}
+                attributes={attributes}
+              />
+            ) : null}
             {/*<SweepButton id={params.address} />*/}
             <div className="w-full">
               <AttributeTags />

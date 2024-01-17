@@ -11,6 +11,7 @@ import {
   isNotNull,
   isNull,
   lte,
+  or,
   schema,
 } from "@realms-world/db";
 import { padAddress } from "@realms-world/utils";
@@ -35,7 +36,7 @@ export const erc721TokensRouter = createTRPCRouter({
         direction: z.string().nullish(),
         block: z.number().nullish(),
         listings: z.boolean().nullish(),
-        attributeFilter: z.unknown().nullish(),
+        attributeFilter: z.record(z.string(), z.string()).nullish(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -103,9 +104,12 @@ export const erc721TokensRouter = createTRPCRouter({
       if (!block) {
         whereFilter.push(sql`upper_inf(_cursor)`);
       }
-      console.log(attributeFilter);
-      if (attributeFilter) {
+      console.log(
+        "length " + attributeFilter && Object.keys(attributeFilter).length,
+      );
+      if (attributeFilter && Object.keys(attributeFilter).length !== 0) {
         const attributesObject: SQL[] = [];
+        console.log("here");
         for (const [key, value] of Object.entries(attributeFilter)) {
           attributesObject.push(
             eq(schema.erc721TokenAttributes.value, value),
@@ -118,7 +122,20 @@ export const erc721TokensRouter = createTRPCRouter({
             ctx.db
               .select({ id: schema.erc721TokenAttributes.token_key })
               .from(schema.erc721TokenAttributes)
-              .where(and(...attributesObject)),
+              .where(
+                or(
+                  and(
+                    eq(schema.erc721TokenAttributes.value, "Fairy"),
+                    eq(schema.erc721TokenAttributes.key, "name"),
+                  ),
+                  and(
+                    eq(schema.erc721TokenAttributes.value, "Magical"),
+                    eq(schema.erc721TokenAttributes.key, "type"),
+                  ),
+                ),
+              ),
+
+            //.where(and(...attributesObject)),
           ),
         );
       }

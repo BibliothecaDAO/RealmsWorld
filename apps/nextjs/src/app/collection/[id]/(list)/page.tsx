@@ -64,7 +64,10 @@ const L2TokenData = async ({ tokenAddress }: { tokenAddress: string }) => {
   });
 
   return (
-    <TradeLayout tokenAddress={tokenAddress} attributes={erc721Attributes}>
+    <TradeLayout
+      tokenAddress={tokenAddress}
+      attributes={erc721Attributes.items}
+    >
       <L2ERC721Table contractAddress={tokenAddress} />
     </TradeLayout>
   );
@@ -93,7 +96,7 @@ const L1TokenData = async ({
     return <div>Collection Not Found</div>;
   }
   return (
-    <TradeLayout tokenAddress={tokenAddress} attributes={attributes}>
+    <TradeLayout tokenAddress={tokenAddress} attributes={attributes.attributes}>
       <L1TokenTable address={tokenAddress} tokens={tokens.tokens} />
     </TradeLayout>
   );
