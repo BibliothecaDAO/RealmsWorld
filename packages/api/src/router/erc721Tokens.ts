@@ -104,12 +104,8 @@ export const erc721TokensRouter = createTRPCRouter({
       if (!block) {
         whereFilter.push(sql`upper_inf(_cursor)`);
       }
-      console.log(
-        "length " + attributeFilter && Object.keys(attributeFilter).length,
-      );
       if (attributeFilter && Object.keys(attributeFilter).length !== 0) {
         const attributesObject: SQL[] = [];
-        console.log("here");
         for (const [key, value] of Object.entries(attributeFilter)) {
           attributesObject.push(
             eq(schema.erc721TokenAttributes.value, value),
@@ -179,6 +175,7 @@ export const erc721TokensRouter = createTRPCRouter({
             orderBy: (listings, { asc }) => asc(listings.price),
           },
           transfers: true,
+          attributes: true,
         },
       });
     }),
