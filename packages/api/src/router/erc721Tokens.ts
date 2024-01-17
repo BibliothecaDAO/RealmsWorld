@@ -7,6 +7,7 @@ import {
   asc,
   desc,
   eq,
+  inArray,
   isNotNull,
   isNull,
   lte,
@@ -34,13 +35,21 @@ export const erc721TokensRouter = createTRPCRouter({
         direction: z.string().nullish(),
         block: z.number().nullish(),
         listings: z.boolean().nullish(),
+        attributeFilter: z.unknown().nullish(),
       }),
     )
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 50;
       //TODO add orderBy conditions
-      const { cursor, contractAddress, owner, orderBy, block, direction } =
-        input;
+      const {
+        cursor,
+        contractAddress,
+        owner,
+        orderBy,
+        block,
+        direction,
+        attributeFilter,
+      } = input;
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
 
@@ -93,6 +102,25 @@ export const erc721TokensRouter = createTRPCRouter({
       }
       if (!block) {
         whereFilter.push(sql`upper_inf(_cursor)`);
+      }
+      console.log(attributeFilter);
+      if (attributeFilter) {
+        const attributesObject: SQL[] = [];
+        for (const [key, value] of Object.entries(attributeFilter)) {
+          attributesObject.push(
+            eq(schema.erc721TokenAttributes.value, value),
+            eq(schema.erc721TokenAttributes.key, key),
+          );
+        }
+        whereFilter.push(
+          inArray(
+            schema.erc721Tokens.id,
+            ctx.db
+              .select({ id: schema.erc721TokenAttributes.token_key })
+              .from(schema.erc721TokenAttributes)
+              .where(and(...attributesObject)),
+          ),
+        );
       }
 
       const items = await ctx.db.query.erc721Tokens.findMany({

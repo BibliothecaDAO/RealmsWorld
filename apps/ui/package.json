@@ -47,7 +47,7 @@
     "class-variance-authority": "^0.7.0",
     "date-fns": "^3.2.0",
     "react-day-picker": "^8.10.0",
-    "lucide-react": "^0.309.0"
+    "lucide-react": "^0.311.0"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "workspace:*",
@@ -89,7 +89,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "^1.2.0",
     "autoprefixer": "^10.4.16",
-    "chromatic": "^10.2.2",
+    "chromatic": "^10.3.0",
     "eslint-plugin-storybook": "^0.6.15",
     "jsdom": "^23.2.0",
     "postcss": "^8.4.33",

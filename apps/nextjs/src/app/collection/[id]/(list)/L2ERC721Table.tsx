@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useUIContext } from "@/app/providers/UIProvider";
+import { cleanQuery } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/react";
 import { useInView } from "framer-motion";
 
@@ -30,9 +31,16 @@ const L2ERC721Table = ({
   const sortDirection = searchParams.get("sortDirection");
   const sortBy = searchParams.get("sortBy");
 
+  const attributesObject: any = {};
+  for (const [key, value] of searchParams.entries()) {
+    attributesObject[key] = value;
+  }
+  const attributeFilter = cleanQuery(attributesObject);
+
   const filters = {
     limit: 24,
     contractAddress,
+    attributeFilter: attributeFilter,
     direction: sortDirection,
     orderBy: sortBy,
   };
