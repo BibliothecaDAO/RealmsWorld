@@ -7,9 +7,11 @@ import {
   asc,
   desc,
   eq,
+  inArray,
   isNotNull,
   isNull,
   lte,
+  or,
   schema,
 } from "@realms-world/db";
 import { padAddress } from "@realms-world/utils";
@@ -34,13 +36,21 @@ export const erc721TokensRouter = createTRPCRouter({
         direction: z.string().nullish(),
         block: z.number().nullish(),
         listings: z.boolean().nullish(),
+        attributeFilter: z.record(z.string(), z.string()).nullish(),
       }),
     )
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 50;
       //TODO add orderBy conditions
-      const { cursor, contractAddress, owner, orderBy, block, direction } =
-        input;
+      const {
+        cursor,
+        contractAddress,
+        owner,
+        orderBy,
+        block,
+        direction,
+        attributeFilter,
+      } = input;
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
 
@@ -94,6 +104,37 @@ export const erc721TokensRouter = createTRPCRouter({
       if (!block) {
         whereFilter.push(sql`upper_inf(_cursor)`);
       }
+      if (attributeFilter && Object.keys(attributeFilter).length !== 0) {
+        const attributesObject: SQL[] = [];
+        for (const [key, value] of Object.entries(attributeFilter)) {
+          attributesObject.push(
+            eq(schema.erc721TokenAttributes.value, value),
+            eq(schema.erc721TokenAttributes.key, key),
+          );
+        }
+        whereFilter.push(
+          inArray(
+            schema.erc721Tokens.id,
+            ctx.db
+              .select({ id: schema.erc721TokenAttributes.token_key })
+              .from(schema.erc721TokenAttributes)
+              .where(
+                or(
+                  and(
+                    eq(schema.erc721TokenAttributes.value, "Fairy"),
+                    eq(schema.erc721TokenAttributes.key, "name"),
+                  ),
+                  and(
+                    eq(schema.erc721TokenAttributes.value, "Magical"),
+                    eq(schema.erc721TokenAttributes.key, "type"),
+                  ),
+                ),
+              ),
+
+            //.where(and(...attributesObject)),
+          ),
+        );
+      }
 
       const items = await ctx.db.query.erc721Tokens.findMany({
         ...withCursorPagination({
@@ -134,6 +175,7 @@ export const erc721TokensRouter = createTRPCRouter({
             orderBy: (listings, { asc }) => asc(listings.price),
           },
           transfers: true,
+          attributes: true,
         },
       });
     }),

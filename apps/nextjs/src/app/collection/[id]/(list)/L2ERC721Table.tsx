@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useUIContext } from "@/app/providers/UIProvider";
+import { cleanQuery } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/react";
 import { useInView } from "framer-motion";
 
@@ -20,7 +21,7 @@ const L2ERC721Table = ({
 }) => {
   const { isGrid } = useUIContext();
   const grid =
-    "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6";
+    "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
   const list = "grid grid-cols-1 w-full";
 
   const ref = useRef(null);
@@ -30,9 +31,16 @@ const L2ERC721Table = ({
   const sortDirection = searchParams.get("sortDirection");
   const sortBy = searchParams.get("sortBy");
 
+  const attributesObject: any = {};
+  for (const [key, value] of searchParams.entries()) {
+    attributesObject[key] = value;
+  }
+  const attributeFilter = cleanQuery(attributesObject);
+
   const filters = {
     limit: 24,
     contractAddress,
+    attributeFilter: attributeFilter,
     direction: sortDirection,
     orderBy: sortBy,
   };
