@@ -1,5 +1,5 @@
-{ "name": "@realms-world/{{name}}", "private": true, "version": "workspace:*",
-"exports": { ".": "./index.ts" }, "typesVersions": { "*": { "*": [ "src/*" ] }
+{ "name": "@realms-world/{{name}}", "private": true, "type": "module", "version": "workspace:*",
+"exports": {     ".": "./src/index.ts"
 }, "license": "MIT", "scripts": { "clean": "rm -rf .turbo node_modules", "lint":
 "eslint .", "format": "prettier --check \"**/*.{mjs,ts,md,json}\"", "typecheck":
 "tsc --noEmit" }, "dependencies": { }, "devDependencies": {

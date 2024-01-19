@@ -1,38 +1,45 @@
 import type { Metadata } from "next";
-import { Bai_Jamjuree, Karla } from "next/font/google";
+import { Inconsolata, Silkscreen } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
 
 import { Provider } from "./providers/providers";
 
 import "@realms-world/styles/globals.css";
+import "@rainbow-me/rainbowkit/styles.css";
 
+import { cache } from "react";
 import { headers } from "next/headers";
+import { env } from "@/env";
+import { TRPCReactProvider } from "@/trpc/react";
 
 import { Footer } from "./_components/Footer";
 import { TopNav } from "./_components/TopNav";
-import { TRPCReactProvider } from "./providers/TRPCProvider";
 import { UIContextProvider } from "./providers/UIProvider";
 import { WalletsProvider } from "./providers/WalletsProvider";
 
-const baiJamjuree = Bai_Jamjuree({
+const baiJamjuree = Silkscreen({
   subsets: ["latin"],
   variable: "--font-bai-jamjuree",
-  weight: ["500", "600", "700"],
+  weight: ["400"],
   display: "swap",
 });
 
-const karla = Karla({
+const karla = Inconsolata({
   subsets: ["latin"],
   variable: "--font-karla",
-  weight: "800",
+  weight: "400",
   display: "swap",
 });
+
 const backgroundImageStyle = {
   backgroundImage: `url(/backgrounds/map.svg)`,
   //backgroundSize: "cover",
   backgroundPosition: "top",
   backgroundRepeat: "repeat-y",
+  backgroundOpacity: 0.1,
 };
+
+const getHeaders = cache(() => Promise.resolve(headers()));
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
@@ -41,7 +48,7 @@ export default function Layout(props: { children: React.ReactNode }) {
         style={backgroundImageStyle}
         className={`bg-dark-green ${baiJamjuree.variable} ${karla.variable} text-bright-yellow`}
       >
-        <TRPCReactProvider headers={headers()}>
+        <TRPCReactProvider headersPromise={getHeaders()}>
           <UIContextProvider>
             <Provider>
               <WalletsProvider>
@@ -67,6 +74,11 @@ const description =
   "Created for Adventurers by Bibliotheca DAO - your window into the onchain world of Realms and the Lootverse.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    env.VERCEL_ENV === "production"
+      ? "https://realms.world"
+      : "http://localhost:3000",
+  ),
   title: {
     template: "%s | Realms.World",
     default: "Realms.World | Home to the Adventurers",
@@ -77,7 +89,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Realms.World |" + title,
+    title: "Realms.World | " + title,
     description: description,
     siteId: "1467726470533754880",
     creator: "@bibliothecadao",
@@ -94,6 +106,7 @@ export const metadata: Metadata = {
         url: "/backgrounds/banner.png",
         width: 800,
         height: 600,
+        alt: "Realms Autonomous World",
       },
       {
         url: "/backgrounds/banner.png",

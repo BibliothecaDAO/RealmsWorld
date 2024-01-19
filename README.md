@@ -28,6 +28,10 @@ Realms.World is the information and activity hub for entrance to the Realms Auto
 - [`packages/subgraph`](https://bibliothecadao.github.io/subgraph) - The L1 Starknet Messaging Indexer for Bridge Transactions
 - [`packages/apibara`](https://bibliothecadao.github.io/starknet-indexer) = The L2 indexer for Bridge and NFT Transactions
 
+### Running the app
+
+This will launch storybook and the Realms.World client.
+
 ```bash
 bun i
 ```
@@ -38,7 +42,7 @@ bun run dev
 
 ## Enviroment Variables
 
-Depending on which environment you want to run, either copy the values from `.env.goerli` or `.env.mainnet` into your `.env` file.
+Depending on which environment you want to run, either copy the values from `.env.sepolia` or `.env.mainnet` into your `.env` file.
 
 ### Documentation
 
@@ -57,7 +61,7 @@ We will review your contribution and provide feedback. Once your changes have be
 
 ### To add a Game
 
-Check out the docs at [Add Data Docs](https://docs.realms.world/data)
+Check out the docs at [Add Data Docs](https://docs.realms.world/data) - WIP for Loot Survivor mods
 
 ### License
 

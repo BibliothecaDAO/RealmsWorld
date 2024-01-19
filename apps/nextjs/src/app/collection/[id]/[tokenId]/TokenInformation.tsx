@@ -1,55 +1,57 @@
+import type { Attributes, Collection } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
-import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
 import { erc721Tokens } from "@/constants/erc721Tokens";
-import type { Attributes, Collection, Token } from "@/types";
 import { shortenHex } from "@/utils/utils";
-import { useContractRead } from "@starknet-react/core";
 import { ArrowLeft } from "lucide-react";
+
+import { Button } from "@realms-world/ui";
 
 import { ContractImage } from "./ContractImage";
 import { TokenAttribute } from "./TokenAttribute";
 
 export const TokenInformation = ({
-  token,
   children,
   collection,
   collectionId,
+  tokenId,
+  name,
+  owner,
+  image,
+  attributes,
 }: {
-  token: Pick<
-    Token,
-    "image" | "name" | "tokenId" | "owner" | "attributes" | "contract"
-  >;
-  collection: Collection | null;
+  collection?: Collection;
   collectionId: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  name: string | null;
+  owner: string | null;
+  image: string | null;
+  attributes?: any;
+  tokenId: number;
 }) => {
   const isBeasts = collectionId == "beasts";
 
-  const attributes = token.attributes ?? token.metadata?.attributes;
-
   return (
     <>
-      <div className="flex w-full flex-none flex-col rounded-t md:w-1/2 lg:mt-12">
-        {token.image ? (
+      <div className="flex w-full flex-none flex-col md:w-1/3">
+        {image ? (
           <Image
-            src={token.image}
-            alt={token.name ?? "token"}
+            src={image}
+            alt={name ?? "token"}
             width={1000}
             height={1000}
-            className={`mx-auto border ${isBeasts && "my-auto max-w-[350px]"}`}
+            className={`mx-auto border-2`}
           />
         ) : (
-          <ContractImage token={token} collectionId={collectionId} />
+          <ContractImage tokenId={tokenId} collectionId={collectionId} />
         )}
         {attributes?.length && (
-          <div className="my-2 grid grid-cols-2 gap-2">
+          <div className="my-4 grid grid-cols-3 gap-4">
             {attributes.map((attribute: Attributes, index) => (
               <TokenAttribute
                 key={index}
                 attributeTokenCount={attribute.tokenCount ?? undefined}
                 collectionTokenCount={parseInt(collection?.tokenCount ?? null)}
-                contractId={token.contract}
+                //contractId={token.contract}
                 floorAskPrice={attribute.floorAskPrice}
                 title={attribute.key ?? attribute.trait_type}
                 value={attribute.value}
@@ -58,41 +60,32 @@ export const TokenInformation = ({
           </div>
         )}
       </div>
-      <div className="w-full py-4 md:w-1/2 md:p-8">
-        <Link
-          className="flex opacity-70 hover:opacity-100"
-          href={`/collection/${collectionId}`}
-        >
-          <ArrowLeft className="mr-2 w-4 self-center" />{" "}
-          {erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
-        </Link>
-
-        <h1>{decodeURIComponent(token.name ?? "")}</h1>
-        <div className="flex space-x-4 text-lg">
-          <span>ID:</span> <span>#{token.tokenId ?? token.token_id}</span>
-        </div>
-        {token.owner && (
+      <div className="my-1 w-full px-4 md:w-2/3 md:px-4">
+        <div className="mb-8 flex justify-between">
+          <Button
+            size={"sm"}
+            variant={"default"}
+            href={`/collection/${collectionId}`}
+          >
+            <ArrowLeft className="mr-2 w-4 self-center" />{" "}
+            <span className="self-center">
+              {erc721Tokens[collectionId as keyof typeof erc721Tokens]?.name}
+            </span>
+          </Button>
           <div className="flex space-x-4 text-lg">
-            <div>Owner </div>
-            <Link href={`/user/${token.owner}`}>{shortenHex(token.owner)}</Link>
+            <span>#{tokenId}</span>
+          </div>
+        </div>
+
+        <h1 className="mb-8">{decodeURIComponent(name ?? "")}</h1>
+        {owner && (
+          <div className="flex space-x-6 text-lg">
+            <div className="self-center">Owner </div>
+            <Button variant={"ghost"} href={`/user/${owner}`}>
+              {shortenHex(owner, 8)}
+            </Button>
           </div>
         )}
-
-        {/*collectionId == "beasts" && token.metadata?.type && (
-                    <div className="my-2 flex flex-wrap">
-                      {token.metadata.map((attribute: Attributes, index) => (
-                        <TokenAttribute
-                          key={index}
-                          attributeTokenCount={attribute.tokenCount}
-                          collectionTokenCount={parseInt(collection.tokenCount)}
-                          contractId={token.contract}
-                          floorAskPrice={attribute.floorAskPrice}
-                          title={attribute.key}
-                          value={attribute.value}
-                        />
-                      ))}
-                    </div>
-                      )*/}
         {children}
       </div>
     </>

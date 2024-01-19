@@ -8,7 +8,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@realms-world/utils";
 
 const buttonVariants = cva(
-  "active:scale-95 inline-flex items-center justify-center rounded-md transition-colors  disabled:opacity-50  dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:text-bright-yellow/60 data-[state=open]:bg-medium-dark-green uppercase border border-transparent ",
+  "active:scale-95 inline-flex items-center justify-center transition-colors  disabled:opacity-50  dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:text-bright-yellow/60 data-[state=open]:bg-medium-dark-green uppercase border border-transparent font-sans ",
   {
     variants: {
       variant: {
@@ -25,9 +25,9 @@ const buttonVariants = cva(
       },
       size: {
         default: "h-10 py-2 px-4",
-        xs: "h-6 px-3 rounded-md text-xs",
-        sm: "h-9 px-3 rounded-md text-sm",
-        lg: "h-12 px-8 rounded-md",
+        xs: "h-6 px-3 text-xs",
+        sm: "h-9 px-3 text-sm",
+        lg: "h-12 px-8",
       },
     },
     defaultVariants: {

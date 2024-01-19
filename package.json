@@ -2,7 +2,7 @@
   "name": "@realms-world/monorepo",
   "private": true,
   "engines": {
-    "node": ">=v18.18.0"
+    "node": ">=20.10"
   },
   "packageManager": "bun@1.0.6",
   "workspaces": [
@@ -27,17 +27,17 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "@manypkg/cli": "^0.21.1",
+    "@manypkg/cli": "^0.21.2",
     "@turbo/gen": "^1.11.3",
-    "npm-check-updates": "^16.14.11",
-    "prettier": "^3.1.0",
+    "npm-check-updates": "^16.14.12",
+    "prettier": "^3.2.4",
     "tsup": "^8.0.1",
     "turbo": "^1.11.3",
     "typescript": "^5.3.3"
   },
-  "overrides": {
-    "@tanstack/react-query": "4.35.7",
-    "@auth/core": "0.18.0"
-  },
-  "prettier": "@realms-world/prettier-config"
+  "prettier": "@realms-world/prettier-config",
+  "dependencies": {
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.3.11"
+  }
 }

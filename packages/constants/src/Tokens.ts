@@ -33,8 +33,8 @@ export const ETH_SN_MAIN = new Token(
   "ETH",
   "Ether",
 );
-export const ETH_SN_GOERLI = new Token(
-  ChainId.SN_GOERLI,
+export const ETH_SN_SEPOLIA = new Token(
+  ChainId.SN_SEPOLIA,
   "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
   18,
   "ETH",
@@ -49,8 +49,8 @@ export const LORDS: Record<number | string, Token> = {
     "LORDS",
     "Lords",
   ),
-  [ChainId.GOERLI]: new Token(
-    ChainId.GOERLI,
+  [ChainId.SEPOLIA]: new Token(
+    ChainId.SEPOLIA,
     "0x7543919933eef56f754daf6835fa97f6dfd785d8",
     18,
     "LORDS",
@@ -63,9 +63,9 @@ export const LORDS: Record<number | string, Token> = {
     "LORDS",
     "Lords",
   ),
-  [ChainId.SN_GOERLI]: new Token(
-    ChainId.SN_GOERLI,
-    "0x0488c4091e5c57309f4acdce4f746898a82f50351d8c85278ad2e877c8c032bd",
+  [ChainId.SN_SEPOLIA]: new Token(
+    ChainId.SN_SEPOLIA,
+    "0x05e367ac160e5f90c5775089b582dfc987dd148a5a2f977c49def2a6644f724b",
     18,
     "LORDS",
     "Lords",
@@ -76,8 +76,8 @@ export const LORDS_BRIDGE_ADDRESS: Record<number | string, Token> = {};
 
 export function getStarknetNativeCurrency(chainId: number | string) {
   switch (chainId) {
-    case ChainId.SN_GOERLI:
-      return ETH_SN_GOERLI;
+    case ChainId.SN_SEPOLIA:
+      return ETH_SN_SEPOLIA;
     case ChainId.SN_MAIN:
       return ETH_SN_MAIN;
     default:

@@ -10,8 +10,8 @@ export async function generateMetadata({
   params: { address: string };
 }): Promise<Metadata> {
   return {
-    title: `Atlas - Collections Profile: ${params.address}`,
-    description: `Collection Details page for ${params.address} - Created for Adventurers by Bibliotheca DAO`,
+    title: `${params.address}`,
+    description: `${params.address} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
@@ -25,7 +25,7 @@ export default async function Page({
   }
 
   return (
-    <div>
+    <div className="w-full">
       <span>{isStarknetAddress(params.address)}</span>
       <UserTokenGrid address={params.address} continuation="" />
     </div>

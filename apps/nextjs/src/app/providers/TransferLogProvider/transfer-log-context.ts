@@ -1,13 +1,12 @@
 "use client";
 
-import { createContext } from "react";
 import type { DepositsQuery } from "@/.graphclient";
-import type { RouterOutputs } from "@/utils/api";
 import type { UseInfiniteQueryResult } from "@tanstack/react-query";
 import type { TRPCClientErrorLike } from "@trpc/react-query";
 import type { UseTRPCQueryResult } from "@trpc/react-query/shared";
+import { createContext } from "react";
 
-import type { AppRouter } from "@realms-world/api";
+import type { AppRouter, RouterOutputs } from "@realms-world/api";
 
 interface TransferLogContextValue {
   transfersQueryL1: UseInfiniteQueryResult<DepositsQuery>;

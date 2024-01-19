@@ -21,10 +21,12 @@ export const TokenAttribute = ({
 }: TokenAttributeProps) => {
   return (
     <Link href={`/collection/${contractId}?${title}=${value}`}>
-      <div className="bg-dark-green hover:bg-dark-green/80 rounded border p-4">
-        <div className="w-full text-xs uppercase opacity-90">{title}</div>
+      <div className="border-2 bg-dark-green px-4 py-2 transition duration-200 hover:bg-bright-yellow hover:text-dark-green">
+        <div className="w-full font-sans text-xs uppercase opacity-50">
+          {title}
+        </div>
         <div className="flex w-full justify-between">
-          <div className="font-sans-serif sm:text-lg">{value}</div>
+          <div className="font-sans-serif sm:text-xl">{value}</div>
           <div className="ml-3">{floorAskPrice}</div>
         </div>
         {attributeTokenCount && collectionTokenCount && (

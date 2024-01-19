@@ -12,6 +12,7 @@ import React, {
 import { ERC20 as L1_ERC20_ABI } from "@/abi/L1/ERC20";
 import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
 import L2_ERC20 from "@/abi/L2/ERC20.json";
+import { NETWORK_NAME } from "@/constants/env";
 import { ChainType, tokens as tokensConst } from "@/constants/tokens";
 import {
   useContractRead,
@@ -70,15 +71,12 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   const { address: l1Account } = useL1Account();
   const { address: l2Account } = useL2Account();
 
-  const network =
-    process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
-
   const {
     data: l2LordsBalance,
     isFetching: l2LordsIsLoading,
     refetch: l2LordsRefetch,
   } = useContractRead({
-    address: tokensConst.L2.LORDS.tokenAddress[ChainType.L2[network]]!,
+    address: tokensConst.L2.LORDS.tokenAddress[ChainType.L2[NETWORK_NAME]]!,
     abi: L2_C1ERC20,
     functionName: "balance_of",
     enabled: !!l2Account,
@@ -87,7 +85,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   });
 
   const { data: l2EthBalance, isFetching: l2EthIsLoading } = useContractRead({
-    address: tokensConst.L2.ETH.tokenAddress[ChainType.L2[network]]!,
+    address: tokensConst.L2.ETH.tokenAddress[ChainType.L2[NETWORK_NAME]]!,
     abi: L2_ERC20,
     functionName: "balanceOf",
     enabled: !!l2Account,
@@ -97,7 +95,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
 
   const l1ERC20Contract = {
     address: tokensConst.L1.LORDS.tokenAddress[
-      ChainType.L1[network]
+      ChainType.L1[NETWORK_NAME]
     ] as `0x${string}`,
     abi: L1_ERC20_ABI,
   };
@@ -106,7 +104,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     ...l1ERC20Contract,
     address: l1Account!,
     token: tokensConst.L1.LORDS.tokenAddress[
-      ChainType.L1[network]
+      ChainType.L1[NETWORK_NAME]
     ] as `0x${string}`,
   });
 

@@ -26,15 +26,15 @@ export const Footer = () => {
   ];
 
   return (
-    <div className="my-24 w-full " /*style={backgroundImageStyle}*/>
-      <div className="container mx-auto px-10 pt-10 sm:px-32 ">
+    <div className="my-24 w-full ">
+      <div className="pt-10 sm:pl-56">
         <div className="w-full">
           <h1>Realms.World</h1>
         </div>
-        <div>
+        <div className="mt-8">
           <ul>
             {footerLinks.map((item, index) => (
-              <li className="my-2 py-2 text-xl" key={index}>
+              <li className="my-1 py-1 text-lg" key={index}>
                 <Link href={item.href}>{item.name}</Link>
               </li>
             ))}

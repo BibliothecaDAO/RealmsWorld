@@ -26,7 +26,7 @@ export default async function Page() {
       <StakingContainer />
       <div className="mt-12 flex flex-col text-center">
         <h3>Data</h3>
-        <div className="bg-dark-green rounded border pb-8 pt-6 ">
+        <div className="rounded border bg-dark-green pb-8 pt-6 ">
           {/*<p>Current Epoch:</p>*/}
           <p>Total Realms Staked: {totalStakedRealms}</p>
           <p>

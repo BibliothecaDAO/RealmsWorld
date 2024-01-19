@@ -12,34 +12,13 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 const DialogPortal = DialogPrimitive.Portal;
 
-/*const DialogPortal = ({
-  className,
-  children,
-  ...props
-}: DialogPrimitive.DialogPortalProps) => (
-  <AnimatePresence>
-    <DialogPrimitive.Portal className={cn(className)} {...props}>
-      <div className="fixed inset-10 z-50 flex items-start justify-center sm:items-center">
-        {children}
-      </div>
-    </DialogPrimitive.Portal>
-  </AnimatePresence>
-);*/
 DialogPortal.displayName = DialogPrimitive.Portal.displayName;
 
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 >(({ className, children, ...props }, ref) => (
-  <DialogPrimitive.Overlay
-    /*className={cn(
-      "bg-background/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 backdrop-blur-sm",
-      className,
-    )}*/
-    {...props}
-    ref={ref}
-    asChild
-  >
+  <DialogPrimitive.Overlay {...props} ref={ref} asChild>
     <motion.div
       className="fixed inset-0 z-40 cursor-pointer bg-medium-dark-green/50 backdrop-blur-[10px]"
       initial={{ opacity: 0 }}
@@ -125,8 +104,8 @@ const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      "text-lg font-semibold text-slate-900",
-      "dark:text-slate-50",
+      "text-lg text-slate-900",
+      "dark:text-bright-yellow",
       className,
     )}
     {...props}

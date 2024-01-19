@@ -4,8 +4,6 @@ import { GameCard } from "@/app/games/GameCard";
 import DojoDark from "@/icons/mark-dark.svg";
 import RWLogo from "@/icons/rw-logo.svg";
 import Starknet from "@/icons/starknet.svg";
-import { getCollections } from "@/lib/reservoir/getCollections";
-import type { Collection } from "@/types";
 
 import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
@@ -14,25 +12,7 @@ import { games } from "@realms-world/constants";
 
 import CollectionsList from "./collection/CollectionsList";
 
-//import { AuthShowcase } from "./_components/auth-showcase";
-
 export default async function Home() {
-  const data = await getCollections([
-    {
-      contract: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
-    },
-  ]);
-
-  const collections: Collection[] = data.collections;
-  /*const defaultImage = "/backgrounds/map.png";
-
-  const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${defaultImage}), url(${defaultImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };*/
-
   return (
     <div className="container mx-auto mt-12 px-4 md:pl-24 lg:mt-12">
       <h1 className="mb-8 flex justify-center font-sans text-4xl md:text-6xl">
@@ -49,7 +29,6 @@ export default async function Home() {
         </Link>
         Realms.World is a fantasy multiverse filled with fully onchain games
       </div>
-      {/*<AuthShowcase />*/}
 
       <hr className="border" />
 

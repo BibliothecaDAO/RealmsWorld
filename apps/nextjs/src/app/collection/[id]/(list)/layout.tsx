@@ -1,14 +1,8 @@
 import React from "react";
-import CollectionSummary from "@/app/collection/CollectionSummary";
-import type { erc721Tokens } from "@/constants";
-import { getTokenContractAddresses } from "@/utils/utils";
+import CollectionSummary from "@/app/collection/[id]/(list)/CollectionSummary";
+import { NETWORK_NAME } from "@/constants/env";
 
-//import { Button } from "@realms-world/ui";
 import { NavLink } from "@realms-world/ui";
-
-//import { NETWORK_NAME } from "@/constants/env";
-//import { ChainType } from "@starkware-industries/commons-js-enums";
-//import { motion } from "framer-motion";
 
 export default function RootLayout({
   children,
@@ -20,24 +14,17 @@ export default function RootLayout({
   const defaultImage = "/backgrounds/dummy_background.webp";
   const imageUrl = params.id ? `/backgrounds/${params.id}.png` : defaultImage;
 
-  const backgroundImageStyle = {
-    backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(42,43,36, 1)), url(${imageUrl}), url(${defaultImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  };
-
-  const isMintable = false; // params.id == "goldenToken";
+  const isMintable = NETWORK_NAME == "SEPOLIA" && params.id == "goldenToken";
   const tabs = [
     {
       name: "Trade",
-      link: isMintable ? "trade" : "",
+      link: "",
     },
   ];
   if (isMintable) {
-    tabs.unshift({
+    tabs.push({
       name: "Mint",
-      link: "",
+      link: "mint",
     });
   }
   if (params.id == "realms") {
@@ -58,17 +45,10 @@ export default function RootLayout({
         } as React.CSSProperties
       }
     >
-      <div
-        // initial={{ opacity: 0.2 }}
-        // animate={{ opacity: 1 }}
-        //className="-mt-24 h-96 w-full"
-        className="mask-transparent h-96 w-full before:bg-[url:var(--image-url)] before:bg-cover before:bg-center before:bg-no-repeat"
-      />
-
-      <div className="relative -mt-56 flex h-full lg:pl-32">
+      <div className="relative flex h-full lg:pl-32">
         <div className="flex-grow">
           <CollectionSummary collectionId={params.id} />
-          <div className="mb-3 flex justify-center gap-4 overflow-x-auto border-b py-4">
+          <div className="mb-3 flex justify-center gap-4 overflow-x-auto border-b py-1  ">
             {tabs.map((tab) => (
               <NavLink
                 key={tab.name}
@@ -82,7 +62,7 @@ export default function RootLayout({
               </NavLink>
             ))}
           </div>
-          <div className=" p-4 sm:p-8">{children}</div>
+          <div className="p-2 ">{children}</div>
         </div>
       </div>
     </div>

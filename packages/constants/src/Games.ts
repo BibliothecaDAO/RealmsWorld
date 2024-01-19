@@ -47,7 +47,7 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "Trade for resources",
-    chains: [ChainId.SN_GOERLI],
+    chains: [ChainId.SN_SEPOLIA],
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
     screenshotLength: 1,
@@ -83,7 +83,8 @@ export const games: Game[] = [
     color: "#faffcb",
     status: "beta",
     description: "Play to Lose your Miiiind!",
-    longform: "Underdark: Lair of the Slenderduck is a unique location in Realms.World, and a generative on-chain dungeon skin-crawler built on StarkNet. You have hubristically stumbled into the twisting tunnels beneath the manor at Old Kurnkornor, where you will lose your mind. With each step your limited light fades, and you descend further into madness. Collect Dark Tar to renew your light, avoid the twisted duck spawn, and find the stairs to escape the Slenderduck's gibbering embrace, even if only for a few more precious moments of sanity.",
+    longform:
+      "Underdark: Lair of the Slenderduck is a unique location in Realms.World, and a generative on-chain dungeon skin-crawler built on StarkNet. You have hubristically stumbled into the twisting tunnels beneath the manor at Old Kurnkornor, where you will lose your mind. With each step your limited light fades, and you descend further into madness. Collect Dark Tar to renew your light, avoid the twisted duck spawn, and find the stairs to escape the Slenderduck's gibbering embrace, even if only for a few more precious moments of sanity.",
     links: {
       homepage: "https://lootunder.world/underdark",
       testnet: "https://underdark.lootunder.world/",
@@ -104,7 +105,8 @@ export const games: Game[] = [
     color: "#fbf6c0",
     status: "alpha",
     description: "The Mysteries Below the Realms",
-    longform: "Explore the endless mysteries of the The Underworld. A living autonomous (under)world of drama, story and danger, waiting to be explored and shaped by its inhabitants, and occupying the liminal space between and underneath. Underworld is an extension to Realms built on Starknet and Dojo, adding composable building blocks, and enabling a range of interoperable game experiences. The flagship game will be a retro narrative dungeon crawler.",
+    longform:
+      "Explore the endless mysteries of the The Underworld. A living autonomous (under)world of drama, story and danger, waiting to be explored and shaped by its inhabitants, and occupying the liminal space between and underneath. Underworld is an extension to Realms built on Starknet and Dojo, adding composable building blocks, and enabling a range of interoperable game experiences. The flagship game will be a retro narrative dungeon crawler.",
     links: {
       homepage: "https://lootunder.world",
       twitter: "https://x.com/LootUnderworld",
@@ -193,11 +195,11 @@ export const games: Game[] = [
     operatingSystems: ["Web Browser"],
     lords: "As a game ticket",
     chains: [ChainId.SN_MAIN],
-    collections: [Collections.GOLDEN_TOKEN,Collections.REALMS],
+    collections: [Collections.GOLDEN_TOKEN, Collections.REALMS],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
-   },
-   {
+  },
+  {
     name: "Rising Revenant",
     id: "rising-revenant",
     developer: "Grug's Lair",
@@ -236,7 +238,7 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "TBD",
-    chains: [ChainId.SN_GOERLI],
+    chains: [ChainId.SN_SEPOLIA],
     collections: [],
     tokens: [],
     screenshotLength: 4,
@@ -262,5 +264,5 @@ export const games: Game[] = [
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 1,
-  }
+  },
 ];

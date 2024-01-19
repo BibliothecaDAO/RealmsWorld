@@ -2,8 +2,21 @@ import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import { and, asc, desc, eq, gte, lte, schema } from "@realms-world/db";
+import {
+  and,
+  asc,
+  desc,
+  eq,
+  inArray,
+  isNotNull,
+  isNull,
+  lte,
+  or,
+  schema,
+} from "@realms-world/db";
+import { padAddress } from "@realms-world/utils";
 
+import { withCursorPagination } from "../cursorPagination";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const erc721TokensRouter = createTRPCRouter({
@@ -11,25 +24,68 @@ export const erc721TokensRouter = createTRPCRouter({
     .input(
       z.object({
         limit: z.number().min(1).max(100).nullish(),
-        cursor: z.number().nullish(), // <-- "cursor" needs to exist, but can be any type
+        cursor: z
+          .object({
+            token_id: z.number().nullish(),
+            price: z.string().nullish(),
+          })
+          .nullish(), // <-- "cursor" needs to exist, but can be any type
         contractAddress: z.string().nullish(),
         owner: z.string().nullish(),
         orderBy: z.string().nullish(),
         direction: z.string().nullish(),
         block: z.number().nullish(),
+        listings: z.boolean().nullish(),
+        attributeFilter: z.record(z.string(), z.string()).nullish(),
       }),
     )
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 50;
       //TODO add orderBy conditions
-      const { cursor, contractAddress, owner, orderBy, block, direction } =
-        input;
+      const {
+        cursor,
+        contractAddress,
+        owner,
+        orderBy,
+        block,
+        direction,
+        attributeFilter,
+      } = input;
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
-      if (direction === "asc") {
-        orderByFilter.push(asc(schema.erc721Tokens.token_id));
+
+      const cursors = [];
+      if (orderBy == "tokenId") {
+        cursors.push([
+          schema.erc721Tokens.token_id, // Column to use for cursor
+          direction ?? "desc", // Sort order ('asc' or 'desc')
+          cursor?.token_id, // Cursor value
+        ]);
       } else {
-        orderByFilter.push(desc(schema.erc721Tokens.token_id));
+        if (
+          cursor == undefined ||
+          (cursor?.token_id != 0 && cursor?.price != null)
+        ) {
+          cursors.push(
+            [
+              schema.erc721Tokens.price, // Column to use for cursor
+              direction ?? "asc", // Sort order ('asc' or 'desc')
+              cursor?.price, // Cursor value
+            ],
+            [
+              schema.erc721Tokens.token_id, // Column to use for cursor
+              direction ?? "asc", // Sort order ('asc' or 'desc')
+              cursor?.token_id, // Cursor value
+            ],
+          );
+        } else {
+          cursors.push([
+            schema.erc721Tokens.token_id, // Column to use for cursor
+            direction ?? "asc", // Sort order ('asc' or 'desc')
+            cursor?.token_id, // Cursor value
+          ]);
+          whereFilter.push(isNull(schema.erc721Tokens.price));
+        }
       }
 
       if (contractAddress) {
@@ -41,34 +97,51 @@ export const erc721TokensRouter = createTRPCRouter({
         );
       }
       if (owner) {
-        whereFilter.push(eq(schema.erc721Tokens.owner, owner.toLowerCase()));
-      }
-      if (cursor) {
         whereFilter.push(
-          direction === "asc"
-            ? gte(schema.erc721Tokens.token_id, cursor)
-            : lte(schema.erc721Tokens.token_id, cursor),
+          eq(schema.erc721Tokens.owner, padAddress(owner.toLowerCase())),
         );
-      } /* else {
-        whereFilter.push(lte(schema.erc721Tokens.token_id, cursor));
-      }*/
+      }
       if (!block) {
         whereFilter.push(sql`upper_inf(_cursor)`);
       }
+      if (attributeFilter && Object.keys(attributeFilter).length !== 0) {
+        const attributesObject: SQL[] = [];
+        for (const [key, value] of Object.entries(attributeFilter)) {
+          attributesObject.push(
+            eq(schema.erc721TokenAttributes.value, value),
+            eq(schema.erc721TokenAttributes.key, key),
+          );
+        }
+        whereFilter.push(
+          inArray(
+            schema.erc721Tokens.id,
+            ctx.db
+              .select({ id: schema.erc721TokenAttributes.token_key })
+              .from(schema.erc721TokenAttributes)
+              .where(and(...attributesObject)),
+
+            //.where(and(...attributesObject)),
+          ),
+        );
+      }
+
       const items = await ctx.db.query.erc721Tokens.findMany({
-        limit: limit + 1,
-        where: and(...whereFilter),
-        orderBy: orderByFilter,
+        ...withCursorPagination({
+          limit: limit + 1,
+          where: and(...whereFilter),
+          cursors: cursors,
+        }),
         with: {
-          transfers: {
-            orderBy: (transfers, { desc }) => [desc(transfers._cursor)],
-          },
+          attributes: true,
         },
       });
+
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
         const nextItem = items.pop();
-        nextCursor = nextItem!.token_id;
+        nextCursor = { token_id: nextItem!.token_id, price: nextItem!.price };
+      } else if (cursor?.price) {
+        nextCursor = { token_id: 0, price: null };
       }
       return {
         items,
@@ -80,7 +153,19 @@ export const erc721TokensRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.erc721Tokens.findFirst({
-        where: eq(schema.erc721Tokens.id, input.id),
+        where: and(
+          eq(schema.erc721Tokens.id, input.id),
+          sql`upper_inf(_cursor)`,
+        ),
+        with: {
+          listings: {
+            where: (listings, { sql }) =>
+              and(sql`upper_inf(_cursor)`, eq(listings.active, true)),
+            orderBy: (listings, { asc }) => asc(listings.price),
+          },
+          transfers: true,
+          attributes: true,
+        },
       });
     }),
 });
