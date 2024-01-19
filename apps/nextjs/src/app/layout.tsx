@@ -106,6 +106,7 @@ export const metadata: Metadata = {
         url: "/backgrounds/banner.png",
         width: 800,
         height: 600,
+        alt: "Realms Autonomous World",
       },
       {
         url: "/backgrounds/banner.png",

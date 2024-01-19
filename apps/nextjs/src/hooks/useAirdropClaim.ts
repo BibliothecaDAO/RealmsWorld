@@ -64,17 +64,16 @@ export function useAirdropClaim() {
     return 0;
   };
 
-  const getClaimedStatus = async (address: string): Promise<boolean> => {
-    // Collect token contract
-    const { data: balance } = useReadContract({
-      address: stakingAddresses[NETWORK_NAME].paymentPoolV2 as `0x${string}`,
-      abi: abi.abi,
-      functionName: "hasClaimed",
-      args: [address],
-    });
-    // Return claimed status
-    return balance.toString();
-  };
+  const {
+    data: balance,
+    error,
+    isPending,
+  } = useReadContract({
+    address: stakingAddresses[NETWORK_NAME].paymentPoolV2 as `0x${string}`,
+    abi: abi.abi,
+    functionName: "hasClaimed",
+    args: [addressL1?.toLowerCase()],
+  });
 
   const claimAirdrop = async (): Promise<void> => {
     if (!addressL1) {
@@ -107,33 +106,26 @@ export function useAirdropClaim() {
     }
   };
 
-  /**
-   * After authentication, update number of tokens to claim + claim status
-   */
-  const syncStatus = async (): Promise<void> => {
+  console.log(balance);
+
+  const syncStatus = async () => {
     // Toggle loading
     setDataLoading(true);
 
-    // Force authentication
     if (addressL1) {
-      // Collect number of tokens for address
       const tokens = getAirdropAmount(addressL1.toLowerCase());
       setNumTokens(tokens);
-
-      // Collect claimed status for address, if part of airdrop (tokens > 0)
-      if (tokens > 0) {
-        const claimed = await getClaimedStatus(addressL1.toLowerCase());
-        setAlreadyClaimed(claimed);
-      }
     }
 
-    // Toggle loading
     setDataLoading(false);
   };
 
-  // On load:
   useEffect(() => {
-    syncStatus();
+    const sync = async () => {
+      await syncStatus();
+    };
+
+    sync();
   }, [addressL1]);
 
   return {
@@ -141,5 +133,6 @@ export function useAirdropClaim() {
     numTokens,
     alreadyClaimed,
     claimAirdrop,
+    balance,
   };
 }
