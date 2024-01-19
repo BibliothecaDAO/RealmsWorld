@@ -151,12 +151,11 @@ export const StakingContainer = () => {
         <h3 className="mt-10">Galleon</h3>
         <div className="flex-col pb-2 text-lg">
           <span className="bg-dark-green px-2 py-1">
-            Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack)
+            Rewards: 49x $LORDS per epoch
           </span>
           <br />
           <span className="bg-dark-green px-2 py-1">
-            Redemption: Lords are locked until DAO approves the migration to
-            Starknet
+            Redemption: Claimable after each fully staked epoch (1 week)
           </span>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
@@ -263,76 +262,76 @@ export const StakingContainer = () => {
             )}
           </div>
         </div>
-        <div className="mt-10 flex flex-col">
-          <h3>Carrack</h3>
-          <div className="pb-2 text-lg">
-            <span className="bg-dark-green px-2 py-1">
-              Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack)
-            </span>
-            <br />
-            <span className="bg-dark-green px-2 py-1">
-              Redemption: Lords are locked until DAO approves the migration to
-              Starknet
-            </span>
-          </div>
-
+        {(realmsData?.bridgedV2Realms.length ||
+          (carrackLordsAvailableData &&
+            carrackLordsAvailableData?.[0] > 0n)) && (
           <div className="mt-10 flex flex-col">
-            <div className="grid grid-cols-2 gap-4 sm:gap-6">
-              <div className="flex flex-col justify-center rounded border bg-dark-green pb-8 pt-6">
-                {realmsDataIsLoading ? (
-                  "Loading"
-                ) : (
-                  <>
-                    <span className="text-2xl">
-                      {realmsData?.wallet?.bridgedV2RealmsHeld || 0}
-                    </span>
-                    <span className="mb-4">Staked Realms:</span>
-                    <StakingModal
-                      unstake
-                      type="carrack"
-                      realms={realmsData?.bridgedV2Realms}
-                    />
-                  </>
-                )}
-              </div>
-              <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
-                <span className="pb-4 text-lg">Lords Available</span>
+            <h3>Carrack</h3>
+            <div className="pb-2 text-lg">
+              <span className="bg-dark-green px-2 py-1">
+                Rewards: 49x $LORDS per epoch
+              </span>
+              <br />
+            </div>
 
-                {isCarrackLordsLoading ? (
-                  "Loading"
-                ) : (
-                  <>
-                    <span className="flex justify-center text-2xl">
-                      <Lords className="mr-2 h-8 w-8 fill-current" />
-                      {formatEther(carrackLordsAvailableData?.[0] || 0n)}
-                    </span>
-                    <span className="mb-4 text-sm">Epoch 35+</span>
+            <div className="mt-10 flex flex-col">
+              <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                <div className="flex flex-col justify-center rounded border bg-dark-green pb-8 pt-6">
+                  {realmsDataIsLoading ? (
+                    "Loading"
+                  ) : (
+                    <>
+                      <span className="text-2xl">
+                        {realmsData?.wallet?.bridgedV2RealmsHeld || 0}
+                      </span>
+                      <span className="mb-4">Staked Realms:</span>
+                      <StakingModal
+                        unstake
+                        type="carrack"
+                        realms={realmsData?.bridgedV2Realms}
+                      />
+                    </>
+                  )}
+                </div>
+                <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
+                  <span className="pb-4 text-lg">Lords Available</span>
 
-                    <Button
-                      size={"lg"}
-                      disabled={
-                        !carrackLordsAvailableData?.[0] ||
-                        carrackLordsAvailableData?.[0] == 0n
-                      }
-                      className="self-center"
-                      variant={"outline"}
-                      onClick={() =>
-                        claimCarrackLords({
-                          address: stakingAddresses[NETWORK_NAME]
-                            .v2Carrack as `0x${string}`,
-                          abi: CarrackStaking,
-                          functionName: "claimLords",
-                        })
-                      }
-                    >
-                      Claim
-                    </Button>
-                  </>
-                )}
+                  {isCarrackLordsLoading ? (
+                    "Loading"
+                  ) : (
+                    <>
+                      <span className="flex justify-center text-2xl">
+                        <Lords className="mr-2 h-8 w-8 fill-current" />
+                        {formatEther(carrackLordsAvailableData?.[0] || 0n)}
+                      </span>
+                      <span className="mb-4 text-sm">Epoch 35+</span>
+
+                      <Button
+                        size={"lg"}
+                        disabled={
+                          !carrackLordsAvailableData?.[0] ||
+                          carrackLordsAvailableData?.[0] == 0n
+                        }
+                        className="self-center"
+                        variant={"outline"}
+                        onClick={() =>
+                          claimCarrackLords({
+                            address: stakingAddresses[NETWORK_NAME]
+                              .v2Carrack as `0x${string}`,
+                            abi: CarrackStaking,
+                            functionName: "claimLords",
+                          })
+                        }
+                      >
+                        Claim
+                      </Button>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }
