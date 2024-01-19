@@ -40,7 +40,7 @@ const carrackAddress = stakingAddresses[NETWORK_NAME]
 const realmsAddress = getTokenContractAddresses("realms").L1;
 
 export const StakingContainer = () => {
-  const { address: addressL1 } = useAccount();
+  const { address: addressL1, isConnected } = useAccount();
   const [hexProof, setHexProof] = useState();
   const [poolTotal, setPoolTotal] = useState<bigint>(0n);
   const [poolClaimAmount, setPoolClaimAmount] = useState<bigint>();
@@ -53,7 +53,7 @@ export const StakingContainer = () => {
         .then((res) => res.json())
         .then((data) => {
           setHexProof(data.proof);
-          setPoolTotal(parseEther(data.amount.toString()));
+          data.amount && setPoolTotal(parseEther(data.amount?.toString()));
         });
     }
   }, [addressL1]);
@@ -127,164 +127,36 @@ export const StakingContainer = () => {
     }
   }, [isFetched]);
 
-  if (!addressL1) {
+  if (isConnected && addressL1) {
     return (
-      <div className="col-span-2 mx-auto mt-24 flex flex-col text-center">
-        <h1>Realms (NFT) Staking for $LORDS rewards</h1>
-        <h3 className="mb-12">Login to your Ethereum Wallet</h3>
-        <EthereumLoginButton variant={"default"} />
-      </div>
-    );
-  }
-  return (
-    <div className="text-center">
-      <div className="col-span-2 flex flex-col ">
-        <h3>Your Realms</h3>
-        <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
-          {realmsDataIsLoading ? (
-            "Loading"
-          ) : (
-            <>
-              <span className="text-2xl">
-                {realmsData?.wallet?.realmsHeld || 0}
-              </span>
-              <span className="mb-4">Realms Available</span>
-              <StakingModal realms={realmsData?.realms} />
-            </>
-          )}
+      <div className="text-center">
+        <div className="col-span-2 flex flex-col ">
+          <h3>Your Realms</h3>
+          <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
+            {realmsDataIsLoading ? (
+              "Loading"
+            ) : (
+              <>
+                <span className="text-2xl">
+                  {realmsData?.wallet?.realmsHeld || 0}
+                </span>
+                <span className="mb-4">Realms Available</span>
+                <StakingModal realms={realmsData?.realms} />
+              </>
+            )}
+          </div>
         </div>
-      </div>
-      <h3 className="mt-10">Rewards</h3>
-      {/* <PaymentPoolV2 /> */}
-      <h3 className="mt-10">Galleon</h3>
-      <div className="flex-col pb-2 text-lg">
-        <span className="bg-dark-green px-2 py-1">
-          Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack)
-        </span>
-        <br />
-        <span className="bg-dark-green px-2 py-1">
-          Redemption: Lords are locked until DAO approves the migration to
-          Starknet
-        </span>
-      </div>
-      <div className="grid grid-cols-2 gap-4 sm:gap-6">
-        <div className="flex flex-col justify-center rounded border bg-dark-green pb-8 pt-6">
-          {realmsDataIsLoading ? (
-            "Loading"
-          ) : (
-            <>
-              <span className="text-2xl">
-                {realmsData?.wallet?.bridgedRealmsHeld || 0}
-              </span>
-              <span className="mb-4">Realms Staked</span>
-              <StakingModal
-                unstake
-                type="galleon"
-                realms={realmsData?.bridgedRealms}
-              />
-            </>
-          )}
-        </div>
-        <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
-          <span className="pb-4 text-lg">Lords Available</span>
-
-          {!isGalleonLordsLoading && typeof lordsAvailableData == "bigint" ? (
-            <div className="flex items-center justify-center">
-              <span className="mr-6 text-sm">Epoch 1-10:</span>
-              <span className="mr-3 flex">
-                <Lords className="mr-2 h-5 w-5 fill-current" />
-                {formatEther(lordsAvailableData)}
-              </span>
-              <Button
-                disabled={
-                  lordsAvailableData == 0n ||
-                  isGalleonClaimLoading ||
-                  isCarrackClaimLoading
-                }
-                size={"sm"}
-                className="self-center"
-                variant={"outline"}
-                onClick={() =>
-                  claimGalleonLords({
-                    address: stakingAddresses[NETWORK_NAME]
-                      .v1Galleon as `0x${string}`,
-                    abi: GalleonStaking,
-                    functionName: "claimLords",
-                  })
-                }
-              >
-                {isGalleonClaimLoading || isCarrackClaimLoading ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    Claiming
-                  </>
-                ) : (
-                  "Claim"
-                )}
-              </Button>
-            </div>
-          ) : (
-            "Loading"
-          )}
-          {!poolWithdrawalsLoading ? (
-            <div className="mt-2 flex items-center justify-center">
-              <span className="mr-6 text-sm">Epoch 11-35:</span>
-              <span className="mr-3 flex">
-                <Lords className="mr-2 h-5 w-5 fill-current" />
-                {formatEther(poolClaimAmount ?? 0n).toLocaleString()} /{" "}
-                {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
-              </span>
-              <Button
-                disabled={
-                  !poolClaimAmount ||
-                  poolClaimAmount == 0n ||
-                  isPoolClaimLoading
-                }
-                size={"sm"}
-                className="self-center"
-                variant={"outline"}
-                onClick={() =>
-                  claimPoolLords({
-                    address: stakingAddresses[NETWORK_NAME]
-                      .paymentPool as `0x${string}`,
-                    abi: paymentPoolAbi,
-                    functionName: "withdraw",
-                    args: [
-                      parseEther(poolClaimAmount?.toString() ?? "0"),
-                      hexProof as any,
-                    ],
-                  })
-                }
-              >
-                {isPoolClaimLoading ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    Claiming
-                  </>
-                ) : (
-                  "Claim"
-                )}
-              </Button>
-            </div>
-          ) : (
-            "Loading"
-          )}
-          <span className="mt-3 text-sm">
-            Epoch 35+: <span className="ml-3">Future claim on Starknet</span>
-          </span>
-        </div>
-      </div>
-
-      <div className="mt-10 flex flex-col">
-        <h3>Carrack</h3>
-        <div className="pb-2 text-lg">
+        <h3 className="mt-10">Rewards</h3>
+        {/* <PaymentPoolV2 /> */}
+        <h3 className="mt-10">Galleon</h3>
+        <div className="flex-col pb-2 text-lg">
           <span className="bg-dark-green px-2 py-1">
-            Rewards: 43.75x $LORDS per epoch.
+            Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack)
           </span>
           <br />
           <span className="bg-dark-green px-2 py-1">
-            Claim: After each epoch (Realm must be staked for full epoch [1
-            week]).
+            Redemption: Lords are locked until DAO approves the migration to
+            Starknet
           </span>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
@@ -294,13 +166,13 @@ export const StakingContainer = () => {
             ) : (
               <>
                 <span className="text-2xl">
-                  {realmsData?.wallet?.bridgedV2RealmsHeld || 0}
+                  {realmsData?.wallet?.bridgedRealmsHeld || 0}
                 </span>
-                <span className="mb-4">Staked Realms:</span>
+                <span className="mb-4">Realms Staked</span>
                 <StakingModal
                   unstake
-                  type="carrack"
-                  realms={realmsData?.bridgedV2Realms}
+                  type="galleon"
+                  realms={realmsData?.bridgedRealms}
                 />
               </>
             )}
@@ -308,40 +180,168 @@ export const StakingContainer = () => {
           <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
             <span className="pb-4 text-lg">Lords Available</span>
 
-            {isCarrackLordsLoading ? (
-              "Loading"
-            ) : (
-              <>
-                <span className="flex justify-center text-2xl">
-                  <Lords className="mr-2 h-8 w-8 fill-current" />
-                  {formatEther(carrackLordsAvailableData?.[0] || 0n)}
+            {!isGalleonLordsLoading && typeof lordsAvailableData == "bigint" ? (
+              <div className="flex items-center justify-center">
+                <span className="mr-6 text-sm">Epoch 1-10:</span>
+                <span className="mr-3 flex">
+                  <Lords className="mr-2 h-5 w-5 fill-current" />
+                  {formatEther(lordsAvailableData)}
                 </span>
-                <span className="mb-4 text-sm">Epoch 35+</span>
-
                 <Button
-                  size={"lg"}
                   disabled={
-                    !carrackLordsAvailableData?.[0] ||
-                    carrackLordsAvailableData?.[0] == 0n
+                    lordsAvailableData == 0n ||
+                    isGalleonClaimLoading ||
+                    isCarrackClaimLoading
                   }
+                  size={"sm"}
                   className="self-center"
                   variant={"outline"}
                   onClick={() =>
-                    claimCarrackLords({
+                    claimGalleonLords({
                       address: stakingAddresses[NETWORK_NAME]
-                        .v2Carrack as `0x${string}`,
-                      abi: CarrackStaking,
+                        .v1Galleon as `0x${string}`,
+                      abi: GalleonStaking,
                       functionName: "claimLords",
                     })
                   }
                 >
-                  Claim
+                  {isGalleonClaimLoading || isCarrackClaimLoading ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Claiming
+                    </>
+                  ) : (
+                    "Claim"
+                  )}
                 </Button>
-              </>
+              </div>
+            ) : (
+              "Loading"
             )}
+            {!poolWithdrawalsLoading ? (
+              <div className="mt-2 flex items-center justify-center">
+                <span className="mr-6 text-sm">Epoch 11-35:</span>
+                <span className="mr-3 flex">
+                  <Lords className="mr-2 h-5 w-5 fill-current" />
+                  {formatEther(poolClaimAmount ?? 0n).toLocaleString()} /{" "}
+                  {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
+                </span>
+                <Button
+                  disabled={
+                    !poolClaimAmount ||
+                    poolClaimAmount == 0n ||
+                    isPoolClaimLoading
+                  }
+                  size={"sm"}
+                  className="self-center"
+                  variant={"outline"}
+                  onClick={() =>
+                    claimPoolLords({
+                      address: stakingAddresses[NETWORK_NAME]
+                        .paymentPool as `0x${string}`,
+                      abi: paymentPoolAbi,
+                      functionName: "withdraw",
+                      args: [
+                        parseEther(poolClaimAmount?.toString() ?? "0"),
+                        hexProof as any,
+                      ],
+                    })
+                  }
+                >
+                  {isPoolClaimLoading ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Claiming
+                    </>
+                  ) : (
+                    "Claim"
+                  )}
+                </Button>
+              </div>
+            ) : (
+              "Loading"
+            )}
+            <span className="mt-3 text-sm">
+              Epoch 35+: <span className="ml-3">Future claim on Starknet</span>
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-10 flex flex-col">
+          <h3>Carrack</h3>
+          <div className="pb-2 text-lg">
+            <span className="bg-dark-green px-2 py-1">
+              Rewards: 43.75x $LORDS per epoch.
+            </span>
+            <br />
+            <span className="bg-dark-green px-2 py-1">
+              Claim: After each epoch (Realm must be staked for full epoch [1
+              week]).
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-4 sm:gap-6">
+            <div className="flex flex-col justify-center rounded border bg-dark-green pb-8 pt-6">
+              {realmsDataIsLoading ? (
+                "Loading"
+              ) : (
+                <>
+                  <span className="text-2xl">
+                    {realmsData?.wallet?.bridgedV2RealmsHeld || 0}
+                  </span>
+                  <span className="mb-4">Staked Realms:</span>
+                  <StakingModal
+                    unstake
+                    type="carrack"
+                    realms={realmsData?.bridgedV2Realms}
+                  />
+                </>
+              )}
+            </div>
+            <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
+              <span className="pb-4 text-lg">Lords Available</span>
+
+              {isCarrackLordsLoading ? (
+                "Loading"
+              ) : (
+                <>
+                  <span className="flex justify-center text-2xl">
+                    <Lords className="mr-2 h-8 w-8 fill-current" />
+                    {formatEther(carrackLordsAvailableData?.[0] || 0n)}
+                  </span>
+                  <span className="mb-4 text-sm">Epoch 35+</span>
+
+                  <Button
+                    size={"lg"}
+                    disabled={
+                      !carrackLordsAvailableData?.[0] ||
+                      carrackLordsAvailableData?.[0] == 0n
+                    }
+                    className="self-center"
+                    variant={"outline"}
+                    onClick={() =>
+                      claimCarrackLords({
+                        address: stakingAddresses[NETWORK_NAME]
+                          .v2Carrack as `0x${string}`,
+                        abi: CarrackStaking,
+                        functionName: "claimLords",
+                      })
+                    }
+                  >
+                    Claim
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
+    );
+  }
+  return (
+    <div className="col-span-2 mx-auto mt-24 flex flex-col text-center">
+      <h1>Realms (NFT) Staking for $LORDS rewards</h1>
+      <h3 className="mb-12">Login to your Ethereum Wallet</h3>
+      <EthereumLoginButton variant={"default"} />
     </div>
   );
 };

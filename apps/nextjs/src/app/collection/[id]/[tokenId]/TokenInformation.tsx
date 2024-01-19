@@ -22,9 +22,9 @@ export const TokenInformation = ({
   collection?: Collection;
   collectionId: string;
   children?: React.ReactNode;
-  name: string;
-  owner: string;
-  image?: string;
+  name: string | null;
+  owner: string | null;
+  image: string | null;
   attributes?: any;
   tokenId: number;
 }) => {

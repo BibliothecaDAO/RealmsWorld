@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { erc721Tokens } from "@/constants";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getToken } from "@/lib/reservoir/getToken";
@@ -59,17 +60,19 @@ export default async function Page({
 }
 
 const L2TokenData = async ({ tokenAddress }: { tokenAddress: string }) => {
-  const erc721Attributes = await api.erc721Attributes.all({
+  const erc721Attributes = api.erc721Attributes.all({
     contractAddress: tokenAddress,
   });
 
   return (
-    <TradeLayout
-      tokenAddress={tokenAddress}
-      attributes={erc721Attributes.items}
-    >
-      <L2ERC721Table contractAddress={tokenAddress} />
-    </TradeLayout>
+    <Suspense>
+      <TradeLayout
+        tokenAddress={tokenAddress}
+        attributesPromise={erc721Attributes}
+      >
+        <L2ERC721Table contractAddress={tokenAddress} />
+      </TradeLayout>
+    </Suspense>
   );
 };
 

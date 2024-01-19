@@ -1,8 +1,11 @@
 "use client";
 
+import { use } from "react";
 import NumberSelect from "@/app/_components/NumberSelect";
 import { useQuery } from "@/hooks/useQuery";
+import { api } from "@/trpc/react";
 
+import type { RouterOutputs } from "@realms-world/api";
 import {
   Accordion,
   AccordionContent,
@@ -12,13 +15,31 @@ import {
   ScrollArea,
 } from "@realms-world/ui";
 
-export const AttributesDropdown = ({ address, attributes }: any) => {
+export const AttributesDropdown = ({
+  address,
+  attributes,
+  attributesPromise,
+}: {
+  address: string;
+  attributes?: any;
+  attributesPromise?: Promise<RouterOutputs["erc721Attributes"]["all"]>;
+}) => {
   const {
     handleAttributeClick,
     isAttributeInQuery,
     isKeyInQuery,
     getQueriesFromUrl,
   } = useQuery();
+  const { data: attributesFetched } = api.erc721Attributes.all.useQuery(
+    {
+      contractAddress: address,
+    },
+    {
+      initialData: attributesPromise ? use(attributesPromise) : undefined,
+      enabled: attributesPromise ? true : false,
+    },
+  );
+  const finalAttributes = attributesFetched?.items ?? attributes;
 
   return (
     <div
@@ -29,7 +50,7 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
           <Button className="sm:hidden" variant={"default"}>
             Close
           </Button>
-          {attributes?.map((attribute: any, index: number) => {
+          {finalAttributes?.map((attribute: any, index: number) => {
             return (
               <Accordion key={index} type="single" collapsible>
                 <AccordionItem value="item-1">

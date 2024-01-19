@@ -118,18 +118,7 @@ export const erc721TokensRouter = createTRPCRouter({
             ctx.db
               .select({ id: schema.erc721TokenAttributes.token_key })
               .from(schema.erc721TokenAttributes)
-              .where(
-                or(
-                  and(
-                    eq(schema.erc721TokenAttributes.value, "Fairy"),
-                    eq(schema.erc721TokenAttributes.key, "name"),
-                  ),
-                  and(
-                    eq(schema.erc721TokenAttributes.value, "Magical"),
-                    eq(schema.erc721TokenAttributes.key, "type"),
-                  ),
-                ),
-              ),
+              .where(and(...attributesObject)),
 
             //.where(and(...attributesObject)),
           ),

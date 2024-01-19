@@ -4,14 +4,18 @@ import { AttributeTags } from "@/app/collection/[id]/(list)/AttributeTags";
 import { TradeFilters } from "@/app/collection/[id]/(list)/TradeFilters";
 import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
 
+import type { RouterOutputs } from "@realms-world/api";
+
 export const TradeLayout = ({
   tokenAddress,
   attributes,
   children,
+  attributesPromise,
 }: {
   tokenAddress: string;
-  attributes: any;
+  attributes?: any;
   children: React.ReactNode;
+  attributesPromise?: Promise<RouterOutputs["erc721Attributes"]["all"]>;
 }) => {
   return (
     <>
@@ -22,10 +26,11 @@ export const TradeLayout = ({
       <div className="flex w-full">
         {tokenAddress && (
           <>
-            {attributes.length ? (
+            {attributes || attributesPromise ? (
               <AttributesDropdown
                 address={tokenAddress}
                 attributes={attributes}
+                attributesPromise={attributesPromise}
               />
             ) : null}
             {/*<SweepButton id={params.address} />*/}

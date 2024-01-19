@@ -55,9 +55,6 @@ const L2TokenData = async ({
   const erc721Token = await api.erc721Tokens.byId({
     id: contractAddress + ":" + tokenId,
   });
-  console.log(erc721Token);
-
-  delete erc721Token?._cursor;
 
   return (
     <>
@@ -68,13 +65,12 @@ const L2TokenData = async ({
           tokenId={erc721Token.token_id}
           owner={erc721Token.owner}
           attributes={erc721Token.attributes}
-          collection={erc721Token}
+          //collection={erc721Token}
           collectionId={collectionId}
         >
           <L2Token
             contractAddress={contractAddress}
             tokenId={tokenId}
-            collectionId={collectionId}
             token={JSON.parse(JSON.stringify(erc721Token))}
           />
         </TokenInformation>
