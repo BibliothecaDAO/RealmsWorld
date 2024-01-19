@@ -238,7 +238,7 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "TBD",
-    chains: [ChainId.SN_GOERLI],
+    chains: [ChainId.SN_SEPOLIA],
     collections: [],
     tokens: [],
     screenshotLength: 4,
@@ -264,5 +264,5 @@ export const games: Game[] = [
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 1,
-  }
+  },
 ];
