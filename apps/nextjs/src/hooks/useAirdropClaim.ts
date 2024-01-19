@@ -14,14 +14,6 @@ import {
 import abi from "../abi/L1/MerkleClaim.json";
 import airdrop from "../constants/airdrop.json";
 
-// const config = {
-//   decimals: 18,
-//   airdrop: {
-//     "0xedb229008E8876e0E4ADb08075D8F8B31630241C": 10,
-//     "0x4e7Cdd4F96a9720DC6379C24fe78879eAD04b070": 100,
-//   },
-// };
-
 function generateLeaf(address: string, value: string): Buffer {
   return Buffer.from(
     // Hash in appropriate Merkle format
@@ -121,8 +113,6 @@ export function useAirdropClaim() {
   const syncStatus = async (): Promise<void> => {
     // Toggle loading
     setDataLoading(true);
-
-    console.log(addressL1);
 
     // Force authentication
     if (addressL1) {
