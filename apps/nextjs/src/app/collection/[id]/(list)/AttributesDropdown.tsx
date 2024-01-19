@@ -41,6 +41,10 @@ export const AttributesDropdown = ({
   );
   const finalAttributes = attributesFetched?.items ?? attributes;
 
+  if (!finalAttributes.length) {
+    return null;
+  }
+
   return (
     <div
       className={` ${"hidden"} w-screen overscroll-y-none p-3 sm:block sm:w-24 sm:flex-none sm:overscroll-auto lg:w-72`}

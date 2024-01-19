@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
 import { NETWORK_NAME } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
@@ -29,20 +30,20 @@ export const stepOf = (step: any, steps: any) => {
 };
 
 export const useTransferToL2 = () => {
+  const l2BridgeAddress =
+    tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]];
   const [amount, setAmount] = useState("");
   //onst [trackInitiated, trackSuccess, trackError, trackReject] = useTransferToL2Tracking();
   const {
     deposit,
     depositIsSuccess,
-    error: depositError,
+    depositError,
     depositTxStatus,
     depositReceipt,
   } = useBridgeContract();
 
-  const { allowance, approve, approveHash } = useTokenContractAPI(
-    "LORDS",
-    true,
-  );
+  const { allowance, approve, approveHash, l1ERC20Contract } =
+    useTokenContractAPI("LORDS", true);
   const {
     data,
     isError,
@@ -123,9 +124,12 @@ export const useTransferToL2 = () => {
         stepOf(TransferStep.CONFIRM_TX, TransferToL2Steps),
       ),
     );
-    const { hash } = await deposit({
+    const hash = await deposit({
+      address: l1BridgeAddress,
+      abi: L1_BRIDGE_ABI,
+      functionName: "deposit",
       args: [parseUnits(amount, 18), BigInt(l2Account || "0x"), BigInt(1)],
-      value: BigInt(1),
+      value: parseEther("0.000000000001"),
     });
     onTransactionHash(depositError, hash, amount);
   };
@@ -162,6 +166,8 @@ export const useTransferToL2 = () => {
             { amount, l1BridgeAddress },
           );
           await approve({
+            ...l1ERC20Contract,
+            functionName: "approve",
             args: [l1BridgeAddress, parseEther(amount)],
           });
         }

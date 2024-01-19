@@ -6,10 +6,9 @@ import { ChainType, tokens } from "@/constants/tokens";
 import { isEth } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import {
-  useBalance,
-  useContractRead,
   useAccount as useL1Account,
-  useContractWrite as useL1ContractWrite,
+  useWriteContract as useL1ContractWrite,
+  useReadContract,
 } from "wagmi";
 
 export const useTokenContractAPI = (
@@ -35,15 +34,12 @@ export const useTokenContractAPI = (
   };
 
   const {
-    writeAsync: approve,
+    writeContractAsync: approve,
     data: approveHash,
-    isLoading: approveWriteLoading,
-  } = useL1ContractWrite({
-    ...l1ERC20Contract,
-    functionName: "approve",
-  });
+    isPending: approveWriteLoading,
+  } = useL1ContractWrite();
 
-  const { data: allowance /*, isError, isLoading */ } = useContractRead({
+  const { data: allowance /*, isError, isLoading */ } = useReadContract({
     ...l1ERC20Contract,
     functionName: "allowance",
     args: [
@@ -52,9 +48,10 @@ export const useTokenContractAPI = (
         ? l1Token.bridgeAddress[ChainType.L1[NETWORK_NAME]]
         : spender) as `0x${string}`,
     ],
-    enabled: !!(l1Account && spender),
+    //enabled: !!(l1Account && spender),
   });
   return {
+    l1ERC20Contract,
     approve,
     approveWriteLoading,
     approveHash,

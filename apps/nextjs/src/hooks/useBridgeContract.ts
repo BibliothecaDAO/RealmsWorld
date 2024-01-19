@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { NETWORK_NAME } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
 import { useContractWrite as useL2ContractWrite } from "@starknet-react/core";
 import { parseEther } from "viem";
 import {
   useAccount as useL1Account,
-  useContractWrite as useL1ContractWrite,
+  useWriteContract as useL1ContractWrite,
   useWaitForTransactionReceipt,
 } from "wagmi";
 
@@ -20,37 +19,30 @@ export const useBridgeContract = () => {
   const l2BridgeAddress =
     tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]];
 
-  /* const {
-    writeAsync: deposit,
+  const {
+    writeContractAsync: deposit,
     data: depositData,
     error: depositError,
-  } = useL1ContractWrite({
-    address: l1BridgeAddress as `0x${string}`,
-    abi: L1_BRIDGE_ABI,
-    functionName: "deposit",
-  });
+  } = useL1ContractWrite();
   const {
     data: depositReceipt,
     isLoading,
     status: depositTxStatus,
     isSuccess: depositIsSuccess,
     isError: depostTxError,
-  } = useWaitForTransaction({
-    hash: depositData?.hash,
+  } = useWaitForTransactionReceipt({
+    hash: depositData,
   });
 
-  const { writeAsync: withdraw, error: withdrawError } = useL1ContractWrite({
-    address: l1BridgeAddress as `0x${string}`,
-    abi: L1_BRIDGE_ABI,
-    functionName: "withdraw",
-  });
+  const { writeContractAsync: withdraw, error: withdrawError } =
+    useL1ContractWrite();
   const {
     data: withdrawReceipt,
     isSuccess: withdrawIsSuccess,
     isError: withdrawTxError,
-  } = useWaitForTransaction({
-    hash: depositData?.hash,
-  });*/
+  } = useWaitForTransactionReceipt({
+    hash: depositData,
+  });
 
   const [amount, setAmount] = useState<string | null>();
 
@@ -82,5 +74,14 @@ export const useBridgeContract = () => {
     calls,
     initiateWithdraw,
     withdrawHash,
+    withdraw,
+    withdrawIsSuccess,
+    withdrawReceipt,
+    withdrawError,
+    deposit,
+    depositIsSuccess,
+    depositError,
+    depositTxStatus,
+    depositReceipt,
   };
 };

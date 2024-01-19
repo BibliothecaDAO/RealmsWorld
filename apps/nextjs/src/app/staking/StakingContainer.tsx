@@ -361,8 +361,6 @@ const StakingModal = ({
 
   const { writeContractAsync: boardGalleon, isPending: isBoardGalleonPending } =
     useWriteContract();
-  const { writeContractAsync: boardCarrack, isPending: isBoardCarrackPending } =
-    useWriteContract();
   const { writeContractAsync: exitGalleon, isPending: isExitGalleonPending } =
     useWriteContract();
   const { writeContractAsync: exitCarrack, isPending: isExitCarrackPending } =
@@ -372,15 +370,6 @@ const StakingModal = ({
     isPending: isGalleonApproveLoading,
     data: approveGalleonData,
   } = useWriteContract();
-  const { writeContractAsync: approveCarrack, data: approveCarrackData } =
-    useWriteContract();
-  const { data: isCarrackApprovedData, refetch: refetchCarrackApprovedData } =
-    useReadContract({
-      address: realmsAddress as `0x${string}`,
-      abi: ERC721,
-      functionName: "isApprovedForAll",
-      args: [address, carrackAddress],
-    });
   const { data: isGalleonApprovedData, refetch: refetchGalleonApprovedData } =
     useReadContract({
       address: realmsAddress as `0x${string}`,
@@ -391,53 +380,33 @@ const StakingModal = ({
 
   const { data: approvedTransactionData, isSuccess } =
     useWaitForTransactionReceipt({
-      hash: approveCarrackData ?? approveGalleonData,
+      hash: approveGalleonData,
     });
 
   useEffect(() => {
-    refetchCarrackApprovedData(), refetchGalleonApprovedData();
+    refetchGalleonApprovedData();
   }, [isSuccess]);
 
-  const isApproved =
-    shipType === "galleon" ? isGalleonApprovedData : isCarrackApprovedData;
+  const isApproved = isGalleonApprovedData;
 
   const onApproveClick = async () => {
-    const approvalFunction =
-      shipType === "galleon"
-        ? approveGalleon({
-            address: realmsAddress as `0x${string}`,
-            abi: ERC721,
-            functionName: "setApprovalForAll",
-            args: [galleonAddress, true],
-          })
-        : approveCarrack({
-            address: realmsAddress as `0x${string}`,
-            abi: ERC721,
-            functionName: "setApprovalForAll",
-            args: [carrackAddress, true],
-          });
-
     if (!isApproved) {
-      await approvalFunction;
+      await approveGalleon({
+        address: realmsAddress as `0x${string}`,
+        abi: ERC721,
+        functionName: "setApprovalForAll",
+        args: [galleonAddress, true],
+      });
     }
   };
   const onButtonClick = async () => {
     if (!unstake) {
-      const boardingFunction =
-        shipType === "galleon"
-          ? boardGalleon({
-              address: galleonAddress,
-              abi: GalleonStaking,
-              functionName: "boardShip",
-              args: [selectedRealms.map(BigInt)],
-            })
-          : boardCarrack({
-              address: carrackAddress,
-              abi: CarrackStaking,
-              functionName: "boardShip",
-              args: [selectedRealms.map(BigInt)],
-            });
-      await boardingFunction;
+      await boardGalleon({
+        address: galleonAddress,
+        abi: GalleonStaking,
+        functionName: "boardShip",
+        args: [selectedRealms.map(BigInt)],
+      });
     } else {
       const exitFunction =
         shipType === "galleon"
@@ -461,7 +430,6 @@ const StakingModal = ({
     isGalleonApproveLoading ||
     isExitGalleonPending ||
     isExitCarrackPending ||
-    isBoardCarrackPending ||
     isBoardGalleonPending;
 
   const onSelectRealms = (realms: any) => {
@@ -514,9 +482,7 @@ const StakingModal = ({
         ) : (
           <div className="flex flex-col self-center">
             <h5>The Galleon</h5>
-            <div className="pb-2 text-lg">
-              Rewards: 49x $LORDS per epoch (a bonus of 12% over Carrack).
-            </div>
+            <div className="pb-2 text-lg">Rewards: 49x $LORDS per epoch.</div>
             <Alert
               message={
                 "Lords earnt after epoch 35 are locked until the DAO approves the migration to Starknet."
@@ -529,16 +495,6 @@ const StakingModal = ({
               variant={"outline"}
             >
               Board The Galleon
-            </Button>
-            <h5>The Galleon</h5>
-            <div className="pb-2 text-lg">
-              Rewards: 43.75x $LORDS per epoch.
-            </div>
-            <div className="pb-2 text-lg">
-              Claim: After each epoch (Realm must be staked for full epoch).
-            </div>
-            <Button onClick={() => setShipType("carrack")} variant={"outline"}>
-              Board The Carrack
             </Button>
           </div>
         )}
