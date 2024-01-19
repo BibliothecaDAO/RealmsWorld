@@ -89,7 +89,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Realms.World |" + title,
+    title: "Realms.World | " + title,
     description: description,
     siteId: "1467726470533754880",
     creator: "@bibliothecadao",
