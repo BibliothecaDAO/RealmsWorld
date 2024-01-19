@@ -163,7 +163,7 @@ export const ListModalRenderer: FC<Props> = ({
         calldata: [
           tokenId as `0x${string}`,
           MarketplaceCollectionIds[findCollectionKeyByAddress(collectionId)],
-          parseUnits(`${price}`, 18).toString(),
+          !price ? "0" : parseUnits(`${price}`, 18).toString(),
           expirationTime,
         ],
       },

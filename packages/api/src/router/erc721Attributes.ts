@@ -29,7 +29,7 @@ export const erc721AttributesRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const limit = input.limit ?? 50;
+      const limit = input.limit ?? 5000;
       //TODO add orderBy conditions
       const { contractAddress, cursor, orderBy, direction } = input;
       const whereFilter: SQL[] = [];

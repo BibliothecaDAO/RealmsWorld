@@ -20,7 +20,6 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
     getQueriesFromUrl,
   } = useQuery();
 
-  const finalAttributes = attributes.items ?? attributes?.attributes;
   return (
     <div
       className={` ${"hidden"} w-screen overscroll-y-none p-3 sm:block sm:w-24 sm:flex-none sm:overscroll-auto lg:w-72`}
@@ -30,7 +29,7 @@ export const AttributesDropdown = ({ address, attributes }: any) => {
           <Button className="sm:hidden" variant={"default"}>
             Close
           </Button>
-          {finalAttributes?.map((attribute: any, index: number) => {
+          {attributes?.map((attribute: any, index: number) => {
             return (
               <Accordion key={index} type="single" collapsible>
                 <AccordionItem value="item-1">

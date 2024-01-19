@@ -25,8 +25,7 @@ export const fetchMetadata = inngest.createFunction(
       const tokenId = uint256.bnToUint256(
         BigInt(event.data.tokenId.toString()),
       );
-
-      const fetchUrl = `https://starknet-${process.env.NEXT_PUBLIC_IS_TESTNET ? "sepolia" : "mainnet"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;
+      const fetchUrl = `https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;
 
       const response = await fetch(fetchUrl, {
         method: "POST",
@@ -57,7 +56,7 @@ export const fetchMetadata = inngest.createFunction(
     if (metadata.error) {
       console.log(metadata.error);
       await step.sleep("fetch sleep", "20s");
-      throw new Error("Failed to fetch item from Infura API");
+      throw new Error("Failed to fetch item from Blast API");
     }
 
     const value: any = [];
@@ -212,31 +211,34 @@ export const fetchMetadata = inngest.createFunction(
                   };
                 }
               }
-              // Insert Token Attributes
-              tokenAttributeResult = await db
-                .insert(schema.erc721TokenAttributes)
-                .values({
-                  token_key: tokenKey,
-                  key: attribute.trait_type,
-                  value: attribute.value,
-                  collectionId: event.data.contract_address,
-                  attributeId:
-                    attributesResult[0]?.id ?? attributesQuery[0]?.id,
-                })
-                .onConflictDoNothing()
-                .returning({
-                  key: schema.erc721TokenAttributes.key,
-                  value: schema.erc721TokenAttributes.value,
-                  attributeId: schema.erc721TokenAttributes.attributeId,
-                });
-
-              if (tokenAttributeResult[0]?.key && attributesResult[0]?.id) {
-                tokenAttributeCounter.push({
-                  id: attributesResult[0].id,
-                  count: 1,
-                });
-              }
+              // Insert Token
+              addedTokenAttributes.push({
+                token_key: tokenKey,
+                key: attribute.trait_type,
+                value: attribute.value,
+                collectionId: event.data.contract_address,
+                attributeId: attributesResult[0]?.id ?? attributesQuery[0]?.id,
+              });
             }
+          }
+          console.log(addedTokenAttributes);
+          console.log(attributesCountMap);
+
+          tokenAttributeResult = await db
+            .insert(schema.erc721TokenAttributes)
+            .values(addedTokenAttributes)
+            .onConflictDoNothing()
+            .returning({
+              key: schema.erc721TokenAttributes.key,
+              value: schema.erc721TokenAttributes.value,
+              attributeId: schema.erc721TokenAttributes.attributeId,
+            });
+
+          if (tokenAttributeResult[0]?.key && attributesResult[0]?.id) {
+            tokenAttributeCounter.push({
+              id: attributesResult[0].id,
+              count: 1,
+            });
           }
           if (Object.keys(attributesCountMap)) {
             const sqlChunks: SQL[] = [];
@@ -254,6 +256,7 @@ export const fetchMetadata = inngest.createFunction(
             }
             sqlChunks.push(sql`end)`);
             const finalSql: SQL = sql.join(sqlChunks, sql.raw(" "));
+            console.log(finalSql);
             const res = await db
               .update(schema.erc721Attributes)
               .set({ tokenCount: finalSql })

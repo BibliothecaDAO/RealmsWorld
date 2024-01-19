@@ -29,7 +29,7 @@ function buildQueryString(queryObject: any) {
   return queryParams;
 }
 
-function cleanQuery(query: any) {
+export function cleanQuery(query: any) {
   const cleanQuery = { ...query };
   delete cleanQuery.id;
   delete cleanQuery.sortBy;
