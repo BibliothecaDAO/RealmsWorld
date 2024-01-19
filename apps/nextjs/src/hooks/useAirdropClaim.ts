@@ -12,14 +12,7 @@ import {
 } from "wagmi";
 
 import abi from "../abi/L1/MerkleClaim.json";
-
-const config = {
-  decimals: 18,
-  airdrop: {
-    "0xedb229008E8876e0E4ADb08075D8F8B31630241C": 10,
-    "0x4e7Cdd4F96a9720DC6379C24fe78879eAD04b070": 100,
-  },
-};
+import airdrop from "../constants/airdrop.json";
 
 function generateLeaf(address: string, value: string): Buffer {
   return Buffer.from(
@@ -32,10 +25,10 @@ function generateLeaf(address: string, value: string): Buffer {
 // Setup merkle tree
 const merkleTree = new MerkleTree(
   // Generate leafs
-  Object.entries(config.airdrop).map(([address, tokens]: any) =>
+  Object.entries(airdrop.airdrop).map(([address, tokens]: any) =>
     generateLeaf(
       getAddress(address),
-      parseUnits(tokens.toString(), config.decimals).toString(),
+      parseUnits(tokens.toString(), airdrop.decimals).toString(),
     ),
   ),
   // Hashing function
@@ -57,48 +50,49 @@ export function useAirdropClaim() {
       address: stakingAddresses[NETWORK_NAME].paymentPoolV2 as `0x${string}`,
       abi: abi.abi,
       functionName: "claim",
-      args: [],
+      args: [amount, proof],
     });
   };
 
   const getAirdropAmount = (address: string): number => {
-    if (address in config.airdrop) {
+    if (address in airdrop.airdrop) {
       // Return number of tokens available
-      return config.airdrop[address];
+      return airdrop.airdrop[address];
     }
 
     // Else, return 0 tokens
     return 0;
   };
 
-  const getClaimedStatus = async (address: string): Promise<boolean> => {
-    // Collect token contract
-    const { data: balance } = useReadContract({
-      address: stakingAddresses[NETWORK_NAME].paymentPoolV2 as `0x${string}`,
-      abi: abi.abi,
-      functionName: "hasClaimed",
-      args: ["0x03A71968491d55603FFe1b11A9e23eF013f75bCF"],
-    });
-    // Return claimed status
-    return balance.toString();
-  };
+  const {
+    data: balance,
+    error,
+    isPending,
+  } = useReadContract({
+    address: stakingAddresses[NETWORK_NAME].paymentPoolV2 as `0x${string}`,
+    abi: abi.abi,
+    functionName: "hasClaimed",
+    args: [addressL1?.toLowerCase()],
+  });
 
   const claimAirdrop = async (): Promise<void> => {
-    // If not authenticated throw
     if (!addressL1) {
       throw new Error("Not Authenticated");
     }
 
-    // Get properly formatted address
-    const formattedAddress: string = getAddress(addressL1);
+    const formattedAddress: string = getAddress(addressL1).toLowerCase();
+
+    console.log(formattedAddress);
+
     // Get tokens for address
     const numTokens: string = parseUnits(
-      config.airdrop[getAddress(addressL1)].toString(),
-      config.decimals,
+      airdrop.airdrop[formattedAddress].toString(),
+      airdrop.decimals,
     ).toString();
 
     // Generate hashed leaf from address
     const leaf: Buffer = generateLeaf(formattedAddress, numTokens);
+
     // Generate airdrop proof
     const proof: string[] = merkleTree.getHexProof(leaf);
 
@@ -112,33 +106,26 @@ export function useAirdropClaim() {
     }
   };
 
-  /**
-   * After authentication, update number of tokens to claim + claim status
-   */
-  const syncStatus = async (): Promise<void> => {
+  console.log(balance);
+
+  const syncStatus = async () => {
     // Toggle loading
     setDataLoading(true);
 
-    // Force authentication
     if (addressL1) {
-      // Collect number of tokens for address
-      const tokens = getAirdropAmount(addressL1);
+      const tokens = getAirdropAmount(addressL1.toLowerCase());
       setNumTokens(tokens);
-
-      // Collect claimed status for address, if part of airdrop (tokens > 0)
-      if (tokens > 0) {
-        const claimed = await getClaimedStatus(addressL1);
-        setAlreadyClaimed(claimed);
-      }
     }
 
-    // Toggle loading
     setDataLoading(false);
   };
 
-  // On load:
   useEffect(() => {
-    syncStatus();
+    const sync = async () => {
+      await syncStatus();
+    };
+
+    sync();
   }, [addressL1]);
 
   return {
@@ -146,5 +133,6 @@ export function useAirdropClaim() {
     numTokens,
     alreadyClaimed,
     claimAirdrop,
+    balance,
   };
 }
