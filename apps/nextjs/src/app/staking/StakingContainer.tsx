@@ -12,7 +12,7 @@ import Lords from "@/icons/lords.svg";
 import { getTokenContractAddresses } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Loader, Loader2 } from "lucide-react";
-import { formatEther, parseEther } from "viem";
+import { formatEther, parseEther, parseUnits } from "viem";
 import {
   useAccount,
   useReadContract,
@@ -241,7 +241,7 @@ export const StakingContainer = () => {
                       abi: paymentPoolAbi,
                       functionName: "withdraw",
                       args: [
-                        parseEther(poolClaimAmount?.toString() ?? "0"),
+                        parseUnits(poolClaimAmount?.toString() ?? "0", 0),
                         hexProof as any,
                       ],
                     })
