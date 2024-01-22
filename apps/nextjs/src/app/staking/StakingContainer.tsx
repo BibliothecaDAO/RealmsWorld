@@ -119,7 +119,7 @@ export const StakingContainer = () => {
     address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "withdrawals",
-    args: [address.toLowerCase() as `0x${string}`],
+    args: [address as `0x${string}`],
     // query: { enabled: !!address && !!poolTotal },
   });
 
