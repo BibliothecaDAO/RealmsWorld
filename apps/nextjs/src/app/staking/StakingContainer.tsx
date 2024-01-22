@@ -49,18 +49,6 @@ export const StakingContainer = () => {
 
   const address = addressL1 ? addressL1.toLowerCase() : "0x";
 
-  useEffect(() => {
-    if (addressL1) {
-      fetch(`/api/staking/${addressL1}`)
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setHexProof(data.proof);
-          data.amount && setPoolTotal(parseEther(data.amount?.toString()));
-        });
-    }
-  }, [addressL1]);
-
   const { data: realmsData, isLoading: realmsDataIsLoading } = useQuery({
     queryKey: ["UsersRealms" + address],
     queryFn: async () =>
@@ -116,7 +104,7 @@ export const StakingContainer = () => {
     isLoading: poolWithdrawalsLoading,
     isFetched,
   } = useReadContract({
-    address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
+    address: stakingAddresses["MAIN"].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "withdrawals",
     args: [address as `0x${string}`],
@@ -126,6 +114,15 @@ export const StakingContainer = () => {
   console.log(poolTotal);
 
   useEffect(() => {
+    if (addressL1) {
+      fetch(`/api/staking/${addressL1}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setHexProof(data.proof);
+          data.amount && setPoolTotal(parseEther(data.amount?.toString()));
+        });
+    }
     if (isFetched && poolWithdrawlsData && !calculatedPoolAmount && poolTotal) {
       console.log("poolWithdrawlsData", poolWithdrawlsData);
       const claimable = poolTotal - poolWithdrawlsData;
