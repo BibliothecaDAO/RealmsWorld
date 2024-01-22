@@ -73,6 +73,7 @@ export const StakingContainer = () => {
     functionName: "lordsAvailable",
     args: [address as `0x${string}`],
   });
+
   const {
     data: galleonClaimData,
     isPending: isGalleonClaimLoading,
@@ -104,32 +105,40 @@ export const StakingContainer = () => {
     isLoading: poolWithdrawalsLoading,
     isFetched,
   } = useReadContract({
-    address: stakingAddresses["MAIN"].paymentPool as `0x${string}`,
+    address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "withdrawals",
     args: [address as `0x${string}`],
-    // query: { enabled: !!address && !!poolTotal },
+    // query: { enabled: !!address && !!poolTotal }
   });
 
-  console.log(poolTotal);
-
   useEffect(() => {
-    if (addressL1) {
-      fetch(`/api/staking/${addressL1}`)
-        .then((res) => res.json())
-        .then((data) => {
+    const fetchStakingData = async () => {
+      if (addressL1 && !poolWithdrawalsLoading) {
+        try {
+          const response = await fetch(`/api/staking/${addressL1}`);
+          const data = await response.json();
           console.log(data);
           setHexProof(data.proof);
-          data.amount && setPoolTotal(parseEther(data.amount?.toString()));
-        });
-    }
-    if (isFetched && poolWithdrawlsData && !calculatedPoolAmount && poolTotal) {
-      console.log("poolWithdrawlsData", poolWithdrawlsData);
-      const claimable = poolTotal - poolWithdrawlsData;
-      setPoolClaimAmount(claimable);
-      setCalculatedPoolAmount(true);
-    }
-  }, [isFetched]);
+          if (data.amount) {
+            setPoolTotal(parseEther(data.amount.toString()));
+
+            const claimable =
+              BigInt(data.amount.toString()) -
+              BigInt(poolWithdrawlsData ?? "0");
+
+            console.log("Claimable:", parseEther(claimable.toString()));
+            setPoolClaimAmount(parseEther(claimable.toString()));
+            setCalculatedPoolAmount(true);
+          }
+        } catch (error) {
+          console.error("Error fetching staking data:", error);
+        }
+      }
+    };
+
+    fetchStakingData();
+  }, [addressL1, isFetched, poolWithdrawlsData]);
 
   if (isConnected && addressL1) {
     return (
@@ -234,7 +243,11 @@ export const StakingContainer = () => {
                   size={"sm"}
                   className="self-center"
                   variant={"outline"}
-                  onClick={() =>
+                  onClick={() => {
+                    console.log(
+                      parseUnits(poolClaimAmount?.toString() ?? "0", 0),
+                      hexProof as any,
+                    );
                     claimPoolLords({
                       address: stakingAddresses[NETWORK_NAME]
                         .paymentPool as `0x${string}`,
@@ -244,8 +257,8 @@ export const StakingContainer = () => {
                         parseUnits(poolClaimAmount?.toString() ?? "0", 0),
                         hexProof as any,
                       ],
-                    })
-                  }
+                    });
+                  }}
                 >
                   {isPoolClaimLoading ? (
                     <>
@@ -373,7 +386,7 @@ const StakingModal = ({
       address: realmsAddress as `0x${string}`,
       abi: ERC721,
       functionName: "isApprovedForAll",
-      args: [address, galleonAddress],
+      args: [address as `0x${string}`, galleonAddress],
     });
 
   const { data: approvedTransactionData, isSuccess } =
