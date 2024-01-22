@@ -123,8 +123,10 @@ export const StakingContainer = () => {
     // query: { enabled: !!address && !!poolTotal },
   });
 
+  console.log(poolTotal);
+
   useEffect(() => {
-    if (isFetched && poolWithdrawlsData && !calculatedPoolAmount) {
+    if (isFetched && poolWithdrawlsData && !calculatedPoolAmount && poolTotal) {
       console.log("poolWithdrawlsData", poolWithdrawlsData);
       const claimable = poolTotal - poolWithdrawlsData;
       setPoolClaimAmount(claimable);
@@ -231,11 +233,7 @@ export const StakingContainer = () => {
                   {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
                 </span>
                 <Button
-                  disabled={
-                    poolClaimAmount == 0n ||
-                    isPoolClaimLoading ||
-                    poolClaimAmount == undefined
-                  }
+                  disabled={poolClaimAmount == 0n || isPoolClaimLoading}
                   size={"sm"}
                   className="self-center"
                   variant={"outline"}
