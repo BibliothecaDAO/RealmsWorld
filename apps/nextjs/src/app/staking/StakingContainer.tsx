@@ -44,6 +44,7 @@ export const StakingContainer = () => {
   const [hexProof, setHexProof] = useState();
   const [poolTotal, setPoolTotal] = useState<bigint>(0n);
   const [poolClaimAmount, setPoolClaimAmount] = useState<bigint>();
+  const [calculatedPoolAmount, setCalculatedPoolAmount] = useState(false);
 
   const address = addressL1 ? addressL1.toLowerCase() : "0x";
 
@@ -121,9 +122,10 @@ export const StakingContainer = () => {
   });
 
   useEffect(() => {
-    if (isFetched && poolWithdrawlsData) {
+    if (isFetched && poolWithdrawlsData && !calculatedPoolAmount) {
       const claimable = poolTotal - poolWithdrawlsData;
       setPoolClaimAmount(claimable);
+      setCalculatedPoolAmount(true);
     }
   }, [isFetched]);
 
