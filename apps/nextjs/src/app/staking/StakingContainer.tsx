@@ -41,6 +41,7 @@ const realmsAddress = getTokenContractAddresses("realms").L1;
 
 export const StakingContainer = () => {
   const { address: addressL1, isConnected } = useAccount();
+
   const [hexProof, setHexProof] = useState();
   const [poolTotal, setPoolTotal] = useState<bigint>(0n);
   const [poolClaimAmount, setPoolClaimAmount] = useState<bigint>();
@@ -53,6 +54,7 @@ export const StakingContainer = () => {
       fetch(`/api/staking/${addressL1}`)
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           setHexProof(data.proof);
           data.amount && setPoolTotal(parseEther(data.amount?.toString()));
         });
@@ -118,11 +120,12 @@ export const StakingContainer = () => {
     abi: paymentPoolAbi,
     functionName: "withdrawals",
     args: [address as `0x${string}`],
-    query: { enabled: !!address && !!poolTotal },
+    // query: { enabled: !!address && !!poolTotal },
   });
 
   useEffect(() => {
     if (isFetched && poolWithdrawlsData && !calculatedPoolAmount) {
+      console.log("poolWithdrawlsData", poolWithdrawlsData);
       const claimable = poolTotal - poolWithdrawlsData;
       setPoolClaimAmount(claimable);
       setCalculatedPoolAmount(true);
@@ -229,9 +232,9 @@ export const StakingContainer = () => {
                 </span>
                 <Button
                   disabled={
-                    !poolClaimAmount ||
                     poolClaimAmount == 0n ||
-                    isPoolClaimLoading
+                    isPoolClaimLoading ||
+                    poolClaimAmount == undefined
                   }
                   size={"sm"}
                   className="self-center"
