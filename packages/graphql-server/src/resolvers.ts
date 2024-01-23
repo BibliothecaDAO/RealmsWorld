@@ -39,6 +39,7 @@ export const resolvers: Resolvers = {
         where: and(gt(schema.erc721Tokens.token_id, cursor), ...where),
         orderBy: asc(schema.erc721Tokens.token_id),
         with: {
+          listings: true,
           transfers: {
             orderBy: (transfers, { desc }) => [desc(transfers._cursor)],
           },

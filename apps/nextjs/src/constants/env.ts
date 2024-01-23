@@ -5,8 +5,8 @@ export const SUPPORTED_L1_CHAIN_ID = Number(
   process.env.NEXT_PUBLIC_SUPPORTED_CHAIN_ID,
 );
 export const SUPPORTED_L2_CHAIN_ID =
-  SUPPORTED_L1_CHAIN_ID === ChainType.L1.GOERLI
-    ? ChainType.L2.GOERLI
+  SUPPORTED_L1_CHAIN_ID === ChainType.L1.SEPOLIA
+    ? ChainType.L2.SEPOLIA
     : ChainType.L2.MAIN;
 export const STARKNET_CONTRACT_ADDRESS =
   process.env.NEXT_PUBLIC_STARKNET_CONTRACT_ADDRESS;
@@ -33,9 +33,9 @@ export const GET_TRANSFERS_ENDPOINT = process.env.NEXT_PUBLIC_SUBGRAPH_NAME;
 export const GET_L2_APIBARA_ENDPOINT = process.env.NEXT_PUBLIC_APIBARA_HANDLE;
 
 export const NETWORK_NAME =
-  process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
+  process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "SEPOLIA" : "MAIN";
 export const RESERVOIR_API_URL =
   process.env.NEXT_PUBLIC_RESERVOIR_API ??
   `https://api${
-    process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "-goerli" : ""
+    process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "-sepolia" : ""
   }.reservoir.tools`;

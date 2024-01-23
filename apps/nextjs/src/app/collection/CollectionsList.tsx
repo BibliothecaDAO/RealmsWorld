@@ -1,5 +1,5 @@
-import { CollectionCard } from "@/app/_components/CollectionCard";
 import type { Collection, L2Collection } from "@/types";
+import { CollectionCard } from "@/app/_components/CollectionCard";
 import { getTokenContractAddresses } from "@/utils/utils";
 
 import { getCollections } from "../../lib/reservoir/getCollections";
@@ -31,7 +31,7 @@ export default async function CollectionsList() {
   ];
 
   return (
-    <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
+    <div className="grid w-full grid-cols-1 gap-6 ">
       {collections?.map((collection: Collection, index) => {
         return <CollectionCard collection={collection} key={index} />;
       })}

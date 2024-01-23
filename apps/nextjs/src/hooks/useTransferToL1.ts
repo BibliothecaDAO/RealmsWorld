@@ -1,7 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
+import { NETWORK_NAME } from "@/constants/env";
+import { ChainType, tokens } from "@/constants/tokens";
 import {
   ActionType,
   CompleteTransferToL1Steps,
@@ -104,6 +107,9 @@ export const useTransferToL1 = () => {
   );
 };
 
+const l1BridgeAddress =
+  tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]];
+
 export const useCompleteTransferToL1 = () => {
   const { withdraw, withdrawIsSuccess, withdrawReceipt, withdrawError } =
     useBridgeContract();
@@ -156,7 +162,10 @@ export const useCompleteTransferToL1 = () => {
           ),
         );
         console.log("Calling withdraw", withdrawalEvents.amount);
-        const { hash } = await withdraw({
+        const hash = await withdraw({
+          address: l1BridgeAddress as `0x${string}`,
+          abi: L1_BRIDGE_ABI,
+          functionName: "withdraw",
           args: [withdrawalEvents[0].amount, l1Account!],
         });
         onTransactionHash(withdrawError, hash);

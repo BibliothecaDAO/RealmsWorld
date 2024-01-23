@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
+import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
+import { NETWORK_NAME } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
 import {
   ActionType,
@@ -8,7 +10,10 @@ import {
 } from "@/constants/transferSteps";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { formatEther, parseEther, parseUnits } from "viem";
-import { useAccount as useL1Account, useWaitForTransaction } from "wagmi";
+import {
+  useAccount as useL1Account,
+  useWaitForTransactionReceipt,
+} from "wagmi";
 
 import { useBridgeContract } from "./useBridgeContract";
 import { useTokenContractAPI } from "./useTokenContract";
@@ -25,26 +30,26 @@ export const stepOf = (step: any, steps: any) => {
 };
 
 export const useTransferToL2 = () => {
+  const l2BridgeAddress =
+    tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]];
   const [amount, setAmount] = useState("");
   //onst [trackInitiated, trackSuccess, trackError, trackReject] = useTransferToL2Tracking();
   const {
     deposit,
     depositIsSuccess,
-    error: depositError,
+    depositError,
     depositTxStatus,
     depositReceipt,
   } = useBridgeContract();
 
-  const { allowance, approve, approveHash } = useTokenContractAPI(
-    "LORDS",
-    true,
-  );
+  const { allowance, approve, approveHash, l1ERC20Contract } =
+    useTokenContractAPI("LORDS", true);
   const {
     data,
     isError,
     isSuccess: approveIsSuccess,
-  } = useWaitForTransaction({
-    hash: approveHash?.hash,
+  } = useWaitForTransactionReceipt({
+    hash: approveHash,
   });
 
   const { address: l1Account, connector } = useL1Account();
@@ -54,11 +59,11 @@ export const useTransferToL2 = () => {
   const progressOptions = useTransferProgress();
 
   const { refetch } = useTransferLog();
-  const network =
-    process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
-  const tokenAddressL2 = tokens.L2.LORDS.tokenAddress?.[ChainType.L2[network]];
+
+  const tokenAddressL2 =
+    tokens.L2.LORDS.tokenAddress?.[ChainType.L2[NETWORK_NAME]];
   const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[
-    ChainType.L1[network]
+    ChainType.L1[NETWORK_NAME]
   ] as `0x${string}`;
 
   const onTransactionHash = (
@@ -119,9 +124,12 @@ export const useTransferToL2 = () => {
         stepOf(TransferStep.CONFIRM_TX, TransferToL2Steps),
       ),
     );
-    const { hash } = await deposit({
+    const hash = await deposit({
+      address: l1BridgeAddress,
+      abi: L1_BRIDGE_ABI,
+      functionName: "deposit",
       args: [parseUnits(amount, 18), BigInt(l2Account || "0x"), BigInt(1)],
-      value: BigInt(1),
+      value: parseEther("0.000000000001"),
     });
     onTransactionHash(depositError, hash, amount);
   };
@@ -158,6 +166,8 @@ export const useTransferToL2 = () => {
             { amount, l1BridgeAddress },
           );
           await approve({
+            ...l1ERC20Contract,
+            functionName: "approve",
             args: [l1BridgeAddress, parseEther(amount)],
           });
         }

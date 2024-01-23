@@ -10,7 +10,7 @@ import { useCallback, useState } from "react";
 
 import { GET_TRANSFERS_ENDPOINT } from "@/constants/env";
 import { getBridgeDeposits } from "@/lib/subgraph/getBridgeDeposits";
-import { api } from "@/utils/api";
+import { api } from "@/trpc/react";
 import { padAddress } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -19,7 +19,7 @@ import { useAccount as useL1Account } from "wagmi";
 import { TransferLogContext } from "./transfer-log-context";
 
 const GET_PENDING_WITHDRAWALS_REFETCH_INTERVAL = 1000 * 30;
-const GET_TRANSFERS_REFETCH_INTERVAL = 1000 * 15;
+const GET_TRANSFERS_REFETCH_INTERVAL = 0; // 1000 * 15;
 
 /*export const fetchPendingWithdrawals = async (accountL1): Promise<> =>
   await fetch("GET_PENDING_WITHDRAWALS_ENDPOINT");*/
@@ -70,8 +70,8 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
 
   const transfersQueryL2 = api.bridge.all.useQuery(
     {
-      l1Account: padAddress(accountL1 ?? ""),
-      l2Account: padAddress(accountL2 ?? ""),
+      l1Account: padAddress(accountL1),
+      l2Account: padAddress(accountL2),
       //limit: 10,
     },
     {

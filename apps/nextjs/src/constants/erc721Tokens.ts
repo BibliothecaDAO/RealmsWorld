@@ -20,7 +20,7 @@ export const erc721Tokens: ERC721Tokens = {
     contractAddresses: {
       L1: {
         [ChainType.L1.MAIN]: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
-        [ChainType.L1.GOERLI]: "0x3dc98f83a0f3ad77d44a68c6d15e08378de3df25",
+        [ChainType.L1.SEPOLIA]: "",
       },
       L2: {},
     },
@@ -32,8 +32,7 @@ export const erc721Tokens: ERC721Tokens = {
       L2: {
         [ChainType.L2.MAIN]:
           "0x0158160018d590d93528995b340260e65aedd76d28a686e9daa5c4e8fad0c5dd",
-        [ChainType.L2.GOERLI]:
-          "0x05c909139dbef784180eef8ce7a2f5bf52afe567aa73aaa77b8d8243ad5b6b96",
+        [ChainType.L2.SEPOLIA]: "0x000",
       },
     },
   },
@@ -44,8 +43,8 @@ export const erc721Tokens: ERC721Tokens = {
       L2: {
         [ChainType.L2.MAIN]:
           "0x04f5e296c805126637552cf3930e857f380e7c078e8f00696de4fc8545356b1d",
-        [ChainType.L2.GOERLI]:
-          "0x003583470a8943479f8609192da4427cac45bdf66a58c84043c7ab2fc722c0c0",
+        [ChainType.L2.SEPOLIA]:
+          "0x024f21982680442892d2f7ac4cee98c7d62708b04fdf9f8a0453415baca4b16f",
       },
     },
   },

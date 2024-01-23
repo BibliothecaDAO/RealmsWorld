@@ -1,19 +1,14 @@
-import { Suspense } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import type { erc721Tokens } from "@/constants";
+import type { Collection, Market, Token } from "@/types";
+import { Suspense } from "react";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
-import type { Collection, Market, Token } from "@/types";
-import type { RouterOutputs } from "@/utils/api";
-import { api } from "@/utils/api";
-import { getTokenContractAddresses, shortenHex } from "@/utils/utils";
-import { ArrowLeft } from "lucide-react";
+import { api } from "@/trpc/server";
+import { getTokenContractAddresses } from "@/utils/utils";
 import { formatEther } from "viem";
 
 import { L2Token } from "./L2Token";
 import { LoadingSkeleton } from "./loading";
-import { TokenAttributes } from "./TokenAttributes";
 import { TokenContent } from "./TokenContent";
 import { TokenInformation } from "./TokenInformation";
 
@@ -25,15 +20,75 @@ export default async function Page({
   const tokenAddresses = getTokenContractAddresses(
     params.id as keyof typeof erc721Tokens,
   );
-  const token_params = tokenAddresses.L1 + ":" + params.tokenId;
 
   if (tokenAddresses.L2) {
     return (
       <Suspense fallback={<LoadingSkeleton />}>
-        <L2Token contractAddress={tokenAddresses.L2} tokenId={params.tokenId} />
+        <L2TokenData
+          contractAddress={tokenAddresses.L2}
+          tokenId={params.tokenId}
+          collectionId={params.id}
+        />
       </Suspense>
     );
+  } else if (tokenAddresses.L1) {
+    return (
+      <L1TokenData
+        collectionId={params.id}
+        contractAddress={tokenAddresses.L1}
+        tokenId={params.tokenId}
+      />
+    );
   }
+
+  return <>Collection Not Supported</>;
+}
+const L2TokenData = async ({
+  contractAddress,
+  tokenId,
+  collectionId,
+}: {
+  contractAddress: string;
+  tokenId: string;
+  collectionId: string;
+}) => {
+  const erc721Token = await api.erc721Tokens.byId({
+    id: contractAddress + ":" + tokenId,
+  });
+
+  return (
+    <>
+      {erc721Token && (
+        <TokenInformation
+          name={erc721Token.name}
+          image={erc721Token.image}
+          tokenId={erc721Token.token_id}
+          owner={erc721Token.owner}
+          attributes={erc721Token.attributes}
+          //collection={erc721Token}
+          collectionId={collectionId}
+        >
+          <L2Token
+            contractAddress={contractAddress}
+            tokenId={tokenId}
+            token={JSON.parse(JSON.stringify(erc721Token))}
+          />
+        </TokenInformation>
+      )}
+    </>
+  );
+};
+
+const L1TokenData = async ({
+  contractAddress,
+  tokenId,
+  collectionId,
+}: {
+  contractAddress: string;
+  tokenId: string;
+  collectionId: string;
+}) => {
+  const token_params = contractAddress + ":" + tokenId;
 
   const tokensData = getToken({
     query: {
@@ -42,26 +97,30 @@ export default async function Page({
       includeQuantity: true,
     },
   });
-  const collectionData = getCollections([
-    { contract: tokenAddresses.L1 ?? params.id },
-  ]);
-
+  const collectionData = getCollections([{ contract: contractAddress }]);
   const [{ tokens }, { collections }] = await Promise.all([
     tokensData,
     collectionData,
   ]);
-  const token: Token | null = tokens?.[0]?.token;
+  const token: Token | undefined = tokens?.[0]?.token;
   const market: Market | null = tokens?.[0]?.market;
-  const collection: Collection | null = collections?.[0];
+  const collection: Collection | undefined = collections?.[0];
 
-  //}
+  if (!tokens) {
+    return <div>Collection Not Found</div>;
+  }
+
   return (
     <>
       {token && (
         <TokenInformation
-          token={token}
+          name={token.name}
+          image={token.image}
+          tokenId={parseInt(token.tokenId)}
+          owner={token.owner}
+          attributes={token.attributes}
           collection={collection}
-          collectionId={params.id}
+          collectionId={collectionId}
         >
           {market?.floorAsk.price && (
             <h2>{formatEther(BigInt(market.floorAsk.price.amount.raw))} ETH</h2>
@@ -75,4 +134,4 @@ export default async function Page({
       )}
     </>
   );
-}
+};

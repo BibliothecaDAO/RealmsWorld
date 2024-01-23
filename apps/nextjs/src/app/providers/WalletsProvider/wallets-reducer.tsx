@@ -1,7 +1,5 @@
+import { NETWORK_NAME } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
-
-const network =
-  process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "GOERLI" : "MAIN";
 
 export const actions = {
   UPDATE_TOKEN: "Tokens/UPDATE_TOKEN",
@@ -11,14 +9,14 @@ const tokenList = [
   ...Object.values(tokens.L1).map((t) => ({
     ...t,
     isL1: true,
-    bridgeAddress: t.bridgeAddress?.[ChainType.L1[network]],
-    tokenAddress: t.tokenAddress?.[ChainType.L1[network]],
+    bridgeAddress: t.bridgeAddress?.[ChainType.L1[NETWORK_NAME]],
+    tokenAddress: t.tokenAddress?.[ChainType.L1[NETWORK_NAME]],
   })),
   ...Object.values(tokens.L2).map((t) => ({
     ...t,
     isL2: true,
-    bridgeAddress: t.bridgeAddress?.[ChainType.L2[network]],
-    tokenAddress: t.tokenAddress?.[ChainType.L2[network]],
+    bridgeAddress: t.bridgeAddress?.[ChainType.L2[NETWORK_NAME]],
+    tokenAddress: t.tokenAddress?.[ChainType.L2[NETWORK_NAME]],
   })),
 ].map((t, index) => ({ ...t, index }));
 

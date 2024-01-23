@@ -2,6 +2,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { Account } from "@/app/bridge/Account";
 import { useUIContext } from "@/app/providers/UIProvider";
+import { NETWORK_NAME } from "@/constants/env";
 import Bridge from "@/icons/bridge.svg";
 import {
   useDisconnect,
@@ -60,19 +61,16 @@ export const WalletSheet = () => {
     disconnect();
   };
 
-  const network =
-    process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "goerli" : "mainnet";
-
   const NETWORK_ID = {
     mainnet: 23448594291968334n,
-    goerli: 1536727068981429685321n,
+    sepolia: 393402133025997798000961n,
   };
 
   useEffect(() => {
     if (isL2Connected && chainId) {
       if (
-        (chainId === NETWORK_ID.goerli && network === "mainnet") ||
-        (chainId === NETWORK_ID.mainnet && network === "goerli")
+        (chainId === NETWORK_ID.sepolia && NETWORK_NAME === "MAIN") ||
+        (chainId === NETWORK_ID.mainnet && NETWORK_NAME === "SEPOLIA")
       ) {
         setIsWrongNetwork(true);
       } else {
@@ -127,7 +125,7 @@ export const WalletSheet = () => {
             <EthereumAccount />
             <StarkAccount />
             <div className="mt-4">
-              <h6>Actions</h6>
+              <h5>Actions</h5>
               <Dialog>
                 <DialogTrigger asChild>
                   <Button
@@ -183,8 +181,8 @@ export const WalletSheet = () => {
             </DialogHeader>
             <span>
               Realms.World currently supports{" "}
-              <span className="capitalize">{network}</span>, please change the
-              connected network in your Starknet wallet, or:
+              <span className="capitalize">{NETWORK_NAME}</span>, please change
+              the connected network in your Starknet wallet, or:
             </span>
             <Button
               variant={"default"}

@@ -34,6 +34,11 @@ export { Carousel } from "./src/components/ui/carousel";
     CardDescription,
     CardContent,
   } from "./src/components/ui/card";*/
+export {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "./src/components/ui/collapsible";
 export { Checkbox } from "./src/components/ui/checkbox";
 export {
   Command,
@@ -63,6 +68,7 @@ export {
   ContextMenuSubTrigger,
   ContextMenuRadioGroup,
 } from "./src/components/ui/context-menu";
+export { DatePicker } from "./src/components/ui/date-picker";
 export {
   Dialog,
   DialogTrigger,

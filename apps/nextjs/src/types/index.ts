@@ -1,3 +1,5 @@
+import type { ManipulateType } from "dayjs";
+
 export interface Token {
   contract: string;
   tokenId: string;
@@ -296,4 +298,16 @@ export interface Game {
 export interface Realm {
   id: string;
   name: string;
+}
+
+export interface DateRange {
+  from: Date | undefined;
+  to?: Date | undefined;
+}
+
+export interface ExpirationOption {
+  text: string;
+  value: string;
+  relativeTime: number | null;
+  relativeTimeUnit: ManipulateType | null;
 }

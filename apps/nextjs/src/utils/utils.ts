@@ -1,8 +1,10 @@
-import { NETWORK_NAME } from "@/constants/env";
 import type { ERC721Tokens } from "@/constants/erc721Tokens";
+import { NETWORK_NAME } from "@/constants/env";
 import { erc721Tokens } from "@/constants/erc721Tokens";
 import { ChainType, tokens } from "@/constants/tokens";
 import { formatUnits } from "viem";
+
+import type { RouterOutputs } from "@realms-world/api";
 
 export const isEth = (symbol: string) => {
   return symbol === tokens.L1.ETH.symbol;
@@ -18,15 +20,15 @@ export const formatBigInt = (
   return formatUnits(value - remainder, decimals);
 };
 
-export function padAddress(address: string) {
-  if (address !== "") {
+export function padAddress(address?: string) {
+  if (address) {
     const length = address.length;
     const neededLength = 66 - length;
     let zeros = "";
     for (let i = 0; i < neededLength; i++) {
       zeros += "0";
     }
-    const newHex = address.substring(0, 2) + zeros + address.substring(2);
+    const newHex = address?.substring(0, 2) + zeros + address.substring(2);
     return newHex;
   } else {
     return "";
@@ -35,7 +37,6 @@ export function padAddress(address: string) {
 
 export function getTokenContractAddresses(name: keyof typeof erc721Tokens) {
   return {
-    //@ts-ignore
     L1: erc721Tokens[name]?.contractAddresses.L1?.[ChainType.L1[NETWORK_NAME]],
     L2: erc721Tokens[name]?.contractAddresses.L2?.[ChainType.L2[NETWORK_NAME]],
   };
@@ -103,4 +104,27 @@ export function formatQueryString(querybatch: any, type = "contract") {
 
 export function isStarknetAddress(address: string) {
   return address?.length == 66 || address.length == 65;
+}
+
+export const isBrowserLocaleClockType24h = () => {
+  const language =
+    typeof window !== "undefined" ? window.navigator.language : "en-US";
+
+  const hr = new Intl.DateTimeFormat(language, {
+    hour: "numeric",
+  }).format();
+
+  return Number.isInteger(Number(hr));
+};
+
+export function getTokenName(
+  tokenDetails: RouterOutputs["erc721Tokens"]["all"]["items"][number],
+) {
+  if (!tokenDetails) {
+    return "Invalid token details";
+  }
+
+  return tokenDetails.name
+    ? decodeURIComponent(tokenDetails.name)
+    : `#${tokenDetails.token_id}`;
 }
