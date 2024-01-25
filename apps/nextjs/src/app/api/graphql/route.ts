@@ -13,6 +13,7 @@ const { handleRequest } = createYoga({
     origin: "*",
   },
   maskedErrors: false,
+  logging: "debug",
 });
 
 export { handleRequest as GET, handleRequest as POST };
