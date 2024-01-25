@@ -125,6 +125,12 @@ const GridDetails = ({
       attributeKeys={["type", "tier", "level", "health"]}
     />
     <Price token={token} />
+    {token.lastPrice && (
+      <span className="flex text-bright-yellow/50">
+        Last sale: {token.lastPrice}
+        <LordsIcon className="ml-2 h-4 w-4 self-center fill-current" />
+      </span>
+    )}
     <div>
       <div className="absolute bottom-0 left-0 w-full px-3 opacity-0 transition-all duration-300 group-hover:bottom-4 group-hover:opacity-100">
         <CardAction token={token} />

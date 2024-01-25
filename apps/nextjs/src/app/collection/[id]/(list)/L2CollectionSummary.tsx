@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { erc721Tokens, games } from "@/constants";
 import Discord from "@/icons/discord.svg";
+import LordsIcon from "@/icons/lords.svg";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { api } from "@/trpc/server";
 import { getGamesByContract } from "@/utils/getters";
@@ -42,7 +43,12 @@ export default async function L2CollectionSummary({
     },*/
     //{ value: collection.onSaleCount, title: "Listed" },
     {
-      value: erc721Collection?.[0]?.volume,
+      value: (
+        <span className="flex">
+          {erc721Collection?.[0]?.volume}{" "}
+          <LordsIcon className="ml-2 w-5 fill-current" />
+        </span>
+      ),
       title: "Total Volume",
     },
     //{ value: collection.tokenCount, title: "Count" },

@@ -27,15 +27,14 @@ export default function RootLayout({
       link: "mint",
     });
   }
-  if (params.id == "realms") {
-    tabs.push(
-      { name: "Analytics", link: "analytics" },
-      {
-        name: "Activity",
-        link: "activity",
-      },
-    );
-  }
+  tabs.push(
+    { name: "Analytics", link: "analytics" },
+    {
+      name: "Activity",
+      link: "activity",
+    },
+  );
+
   return (
     <div
       className="h-full w-full"
