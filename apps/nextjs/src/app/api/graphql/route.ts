@@ -10,6 +10,7 @@ const { handleRequest } = createYoga({
     credentials: true,
     origin: "*",
   },
+  maskedErrors: false,
 });
 
 export { handleRequest as GET, handleRequest as POST };
