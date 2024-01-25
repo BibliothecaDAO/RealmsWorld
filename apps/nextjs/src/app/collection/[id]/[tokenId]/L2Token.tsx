@@ -36,7 +36,7 @@ export const L2Token = ({
   if (!erc721Token) return <div>Token Information Loading</div>;
 
   const activeListings = erc721Token.listings?.filter(
-    (listing) => listing.active,
+    (listing) => listing.active && listing.created_by == erc721Token.owner,
   );
 
   const lowestPriceActiveListing = activeListings?.reduce(
@@ -101,6 +101,17 @@ export const L2Token = ({
               )}
             </div>
           )}
+        </div>
+      </div>
+      <div className="mt-4 flex flex-wrap items-center justify-between border bg-dark-green p-4">
+        <div className="flex flex-col flex-wrap gap-x-2 text-lg">
+          {erc721Token.listings.map((listing) => {
+            return (
+              <div className="">
+                {listing.id} - {listing.price} - {listing.status}
+              </div>
+            );
+          })}
         </div>
       </div>
     </>

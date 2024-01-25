@@ -11,26 +11,13 @@ export const erc721Tokens = pgSqlTable("erc721_tokens", {
   id: text("id").notNull(),
   token_id: integer("token_id").notNull(),
   contract_address: text("contract_address"),
-  /*tokenId: integer("token_id").notNull(),
-  contractAddress: text("contract_address"),*/
   minter: text("minter"),
   owner: text("owner"),
   image: text("image"),
   name: text("name"),
   price: numeric("price"),
   expiration: integer("expiration"),
-  //lastPrice: numeric('last_price'),
-  /*metadata: json("metadata").$type<{
-    attributes:
-      | {
-          trait_type: string;
-          value: string;
-        }[]
-      | {
-          trait_type: string;
-          value: number;
-        }[];
-  }>(),*/
+  lastPrice: numeric("last_price"),
 });
 export const erc721TokensRelations = relations(erc721Tokens, ({ many }) => ({
   transfers: many(erc721Transfers),

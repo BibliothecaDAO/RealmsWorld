@@ -6,7 +6,7 @@ import { and, asc, desc, eq, gte, lte, schema } from "@realms-world/db";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
-export const erc721ListingsRouter = createTRPCRouter({
+export const erc721MarketEventsRouter = createTRPCRouter({
   all: publicProcedure
     .input(
       z.object({
@@ -29,13 +29,13 @@ export const erc721ListingsRouter = createTRPCRouter({
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
       if (direction === "asc") {
-        orderByFilter.push(asc(schema.erc721MarketListing.token_id));
+        orderByFilter.push(asc(schema.erc721MarketEvents.token_id));
       } else {
-        orderByFilter.push(desc(schema.erc721MarketListing.id));
+        orderByFilter.push(desc(schema.erc721MarketEvents.id));
       }
 
       if (token_key) {
-        whereFilter.push(eq(schema.erc721MarketListing.token_key, token_key));
+        whereFilter.push(eq(schema.erc721MarketEvents.token_key, token_key));
       }
       /*if (owner) {
         whereFilter.push(eq(schema.erc721Tokens.owner, owner.toLowerCase()));
@@ -43,8 +43,8 @@ export const erc721ListingsRouter = createTRPCRouter({
       if (cursor) {
         whereFilter.push(
           direction === "asc"
-            ? gte(schema.erc721MarketListing.id, cursor)
-            : lte(schema.erc721MarketListing.id, cursor),
+            ? gte(schema.erc721MarketEvents.id, cursor)
+            : lte(schema.erc721MarketEvents.id, cursor),
         );
       } /* else {
         whereFilter.push(lte(schema.erc721Tokens.token_id, cursor));
@@ -52,7 +52,7 @@ export const erc721ListingsRouter = createTRPCRouter({
       if (!block) {
         whereFilter.push(sql`upper_inf(_cursor)`);
       }*/
-      const items = await ctx.db.query.erc721MarketListing.findMany({
+      const items = await ctx.db.query.erc721MarketEvents.findMany({
         limit: limit + 1,
         where: and(...whereFilter),
         orderBy: orderByFilter,

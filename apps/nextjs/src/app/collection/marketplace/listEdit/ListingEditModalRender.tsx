@@ -93,7 +93,7 @@ export const ListingEditModalRender: FC<Props> = ({
     token_key: token?.contract_address + ":" + token?.token_id,
     enabled: false,
   };
-  const { data: listingsData } = api.erc721Listings.all.useQuery(filters, {
+  const { data: listingsData } = api.erc721MarketEvents.all.useQuery(filters, {
     enabled: open && !token?.listings?.[0],
   });
 

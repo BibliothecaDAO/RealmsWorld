@@ -122,7 +122,7 @@ export const BuyModalRender: FC<Props> = ({
     enabled: false,
   };
 
-  const { data: listingsData } = api.erc721Listings.all.useQuery(filters, {
+  const { data: listingsData } = api.erc721MarketEvents.all.useQuery(filters, {
     enabled: open && !token?.listings?.[0],
   });
 
