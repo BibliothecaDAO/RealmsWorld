@@ -72,7 +72,13 @@ export const LORDS: Record<number | string, Token> = {
   ),
 };
 
-export const LORDS_BRIDGE_ADDRESS: Record<number | string, Token> = {};
+export const LORDS_BRIDGE_ADDRESS: Record<number | string, string> = {
+  [ChainId.MAINNET]: "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
+  [ChainId.SEPOLIA]: "",
+  [ChainId.SN_MAIN]:
+    "0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
+  [ChainId.SN_SEPOLIA]: "",
+};
 
 export function getStarknetNativeCurrency(chainId: number | string) {
   switch (chainId) {

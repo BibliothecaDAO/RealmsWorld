@@ -7,8 +7,15 @@ import type {
   EventWithTransaction,
   Starknet,
 } from "https://esm.sh/@apibara/indexer/starknet";
+import { formatUnits } from "https://esm.sh/viem";
 
-import { marketplaceWhiteListEvents } from "./utils.ts";
+import {
+  marketplaceContractEvents,
+  marketplaceWhiteListEvents,
+  ORDER_EVENT,
+  OrderActionType,
+  WHITELIST_EVENT,
+} from "./utils.ts";
 
 export const config: Config<Starknet, Postgres> = {
   streamUrl: Deno.env.get("STREAM_URL"),
@@ -20,13 +27,13 @@ export const config: Config<Starknet, Postgres> = {
     header: {
       weak: true,
     },
-    events: marketplaceWhiteListEvents,
+    events: [...marketplaceWhiteListEvents, ...marketplaceContractEvents],
   },
   sinkType: "postgres",
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
     tableName: "rw_erc721_collections",
-    entityMode: false,
+    entityMode: true,
   },
 };
 export default function transform({ header, events }: Block) {
@@ -34,10 +41,29 @@ export default function transform({ header, events }: Block) {
 }
 
 function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
-  const collection = event.data[0];
-
-  return {
-    id: collection,
-    marketplaceId: Number(BigInt(event.data[1])),
-  };
+  switch (event.keys[0]) {
+    case WHITELIST_EVENT: {
+      const collection = event.data[0];
+      return {
+        insert: {
+          id: collection,
+          marketplaceId: Number(BigInt(event.data[1])),
+        },
+      };
+    }
+    case ORDER_EVENT: {
+      const type = Number(BigInt(event.data[7]));
+      switch (type) {
+        case OrderActionType.Accept:
+          return {
+            entity: {
+              id: Number(BigInt(event.data[2])),
+            },
+            update: {
+              allTimeVolume: formatUnits(BigInt(event.data[3]).toString(), 18), // need way to increment
+            },
+          };
+      }
+    }
+  }
 }

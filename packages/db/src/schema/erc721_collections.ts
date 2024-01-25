@@ -11,6 +11,9 @@ export const erc721Collections = pgSqlTable("erc721_collections", {
   marketplaceId: integer("marketplaceId"),
   tokenCount: integer("tokenCount"),
   ownerCount: integer("ownerCount"),
+  allTimeVolume: integer("allTimeVolume"),
+  floorSellValue: integer("floorSellValue"),
+
   /*  tokenIdRange: int8range("_cursor"),
   createdAt: string;
   updatedAt: string;
@@ -20,7 +23,6 @@ export const erc721Collections = pgSqlTable("erc721_collections", {
   day7Rank: number;
   day30Volume: number;
   day30Rank: number;
-  allTimeVolume: number;
   allTimeRank: number;
   indexMetadata: boolean;
   lastMetadataSync: string;
