@@ -1,6 +1,6 @@
-import { sql } from "drizzle-orm";
 import type { InferResolvers } from "garph";
 import type { YogaInitialContext } from "graphql-yoga";
+import { sql } from "drizzle-orm";
 
 import type { SQL } from "@realms-world/db";
 import { and, asc, db, eq, gt, schema } from "@realms-world/db";
@@ -38,12 +38,12 @@ export const resolvers: Resolvers = {
         limit: limit + 1,
         where: and(gt(schema.erc721Tokens.token_id, cursor), ...where),
         orderBy: asc(schema.erc721Tokens.token_id),
-        with: {
+        /*with: {
           listings: true,
           transfers: {
             orderBy: (transfers, { desc }) => [desc(transfers._cursor)],
           },
-        },
+        },*/
       });
     },
   },

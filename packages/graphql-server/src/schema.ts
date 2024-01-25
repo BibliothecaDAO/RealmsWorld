@@ -1,7 +1,4 @@
 import { GarphSchema } from "garph";
-import { Range } from "postgres-range";
-
-import { Int8Range } from "@realms-world/db";
 
 export const g = new GarphSchema();
 
