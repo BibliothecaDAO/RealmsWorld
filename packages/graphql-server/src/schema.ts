@@ -1,7 +1,4 @@
 import { GarphSchema } from "garph";
-import { Range } from "postgres-range";
-
-import { Int8Range } from "@realms-world/db";
 
 export const g = new GarphSchema();
 
@@ -30,7 +27,7 @@ const RangeType = g.type("RangeType", {
   }),
 });
 
-export const ERC721TranfersGQL = g.type("ERC721Transfers", {
+/*export const ERC721TranfersGQL = g.type("ERC721Transfers", {
   _cursor: g.int().optional(),
   id: g.string(),
   token_id: g.int().optional(),
@@ -38,7 +35,7 @@ export const ERC721TranfersGQL = g.type("ERC721Transfers", {
   token_key: g.string().optional(),
   fromAddress: g.string().optional(),
   toAddress: g.string().optional(),
-});
+});*/
 
 export const ERC721TokensGQL = g.type("ERC721Tokens", {
   _cursor: g.ref(() => RangeType).optional(),
@@ -50,7 +47,7 @@ export const ERC721TokensGQL = g.type("ERC721Tokens", {
   image: g.string().optional(),
   name: g.id().optional(),
   metadata: g.ref(metadataType).optional(),
-  transfers: g.ref(ERC721TranfersGQL).list().optional(),
+  //transfers: g.ref(ERC721TranfersGQL).list().optional(),
 });
 
 export const queryType = g.type("Query", {
