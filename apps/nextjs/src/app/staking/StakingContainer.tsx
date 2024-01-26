@@ -235,7 +235,7 @@ export const StakingContainer = () => {
                 <span className="mr-6 text-sm">Epoch 11-35:</span>
                 <span className="mr-3 flex">
                   <Lords className="mr-2 h-5 w-5 fill-current" />
-                  {formatEther(poolClaimAmount ?? 0n).toLocaleString()} /{" "}
+                  {poolClaimAmount?.toLocaleString() ?? 0} /{" "}
                   {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
                 </span>
                 <Button
