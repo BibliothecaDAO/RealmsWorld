@@ -41,12 +41,8 @@ const realmsAddress = getTokenContractAddresses("realms").L1;
 
 export const StakingContainer = () => {
   const { address: addressL1, isConnected } = useAccount();
-
   const [hexProof, setHexProof] = useState();
-  const [poolTotal, setPoolTotal] = useState<bigint>(0n);
-  const [poolClaimAmount, setPoolClaimAmount] = useState<bigint>();
-  const [calculatedPoolAmount, setCalculatedPoolAmount] = useState(false);
-
+  const [poolTotal, setPoolTotal] = useState<bigint>();
   const address = addressL1 ? addressL1.toLowerCase() : "0x";
 
   const { data: realmsData, isLoading: realmsDataIsLoading } = useQuery({
@@ -98,23 +94,24 @@ export const StakingContainer = () => {
     data: poolClaimData,
     isPending: isPoolClaimLoading,
     writeContract: claimPoolLords,
+    error: poolClaimError,
   } = useWriteContract();
 
   const {
     data: poolWithdrawlsData,
     isLoading: poolWithdrawalsLoading,
+    error,
     isFetched,
   } = useReadContract({
     address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "withdrawals",
-    args: [address as `0x${string}`],
+    args: [addressL1 as `0x${string}`],
     // query: { enabled: !!address && !!poolTotal }
   });
-
   useEffect(() => {
     const fetchStakingData = async () => {
-      if (addressL1 && !poolWithdrawalsLoading) {
+      if (addressL1) {
         try {
           const response = await fetch(`/api/staking/${addressL1}`);
           const data = await response.json();
@@ -122,14 +119,8 @@ export const StakingContainer = () => {
           setHexProof(data.proof);
           if (data.amount) {
             setPoolTotal(parseEther(data.amount.toString()));
-
-            const claimable =
-              BigInt(data.amount.toString()) -
-              BigInt(poolWithdrawlsData ?? "0");
-
-            console.log("Claimable:", parseEther(claimable.toString()));
-            setPoolClaimAmount(parseEther(claimable.toString()));
-            setCalculatedPoolAmount(true);
+          } else {
+            setPoolTotal(0n);
           }
         } catch (error) {
           console.error("Error fetching staking data:", error);
@@ -138,11 +129,19 @@ export const StakingContainer = () => {
     };
 
     fetchStakingData();
-  }, [addressL1, isFetched, poolWithdrawlsData]);
+  }, [addressL1]);
+
+  const wk1135ClaimAmount =
+    poolTotal && poolWithdrawlsData
+      ? formatEther(poolTotal - poolWithdrawlsData)
+      : "0";
 
   if (isConnected && addressL1) {
     return (
       <div className="text-center">
+        {poolClaimError && (
+          <Alert message={poolClaimError.toString()} variant="warning" />
+        )}
         <div className="col-span-2 flex flex-col ">
           <h3>Your Realms</h3>
           <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
@@ -235,28 +234,24 @@ export const StakingContainer = () => {
                 <span className="mr-6 text-sm">Epoch 11-35:</span>
                 <span className="mr-3 flex">
                   <Lords className="mr-2 h-5 w-5 fill-current" />
-                  {poolClaimAmount?.toLocaleString() ?? 0} /{" "}
-                  {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
+                  {poolWithdrawlsData !== undefined && poolTotal !== undefined
+                    ? wk1135ClaimAmount.toLocaleString()
+                    : "Loading"}
+                  / {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
                 </span>
                 <Button
-                  disabled={poolClaimAmount == 0n || isPoolClaimLoading}
+                  disabled={wk1135ClaimAmount == "0"}
                   size={"sm"}
                   className="self-center"
                   variant={"outline"}
                   onClick={() => {
-                    console.log(
-                      parseUnits(poolClaimAmount?.toString() ?? "0", 0),
-                      hexProof as any,
-                    );
+                    console.log(parseEther(wk1135ClaimAmount), hexProof as any);
                     claimPoolLords({
                       address: stakingAddresses[NETWORK_NAME]
                         .paymentPool as `0x${string}`,
                       abi: paymentPoolAbi,
                       functionName: "withdraw",
-                      args: [
-                        parseUnits(poolClaimAmount?.toString() ?? "0", 0),
-                        hexProof as any,
-                      ],
+                      args: [parseEther(wk1135ClaimAmount), hexProof as any],
                     });
                   }}
                 >
