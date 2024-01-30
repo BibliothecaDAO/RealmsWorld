@@ -3,6 +3,7 @@ import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getActivity } from "@/lib/reservoir/getActivity";
 import { api } from "@/trpc/server";
 
+import type { RouterInputs } from "@realms-world/api";
 import type { Collections } from "@realms-world/constants";
 import {
   getCollectionAddresses,
@@ -93,10 +94,7 @@ const L2Activites = async ({
         return status;
     }
   });
-  const filters: {
-    collectionId: number | undefined;
-    status?: string[];
-  } = {
+  const filters: RouterInputs["erc721MarketEvents"]["all"] = {
     collectionId: MarketplaceCollectionIds[collectionId as Collections],
   };
   if (statusArray) filters.status = status;

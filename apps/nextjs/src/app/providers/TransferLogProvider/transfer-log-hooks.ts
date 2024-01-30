@@ -65,23 +65,12 @@ export const useTransfers = () => {
     return [];
   }, [doneFetching]);
 };
-//@ts-ignore
-function isIterable(input) {
-  if (input === null || input === undefined) {
-    return false;
-  }
-
-  return typeof input[Symbol.iterator] === "function";
-}
 
 const flattenPages = (data: any) => {
   return data?.pages.length
     ? [
-        ...(data?.pages?.[0]?.data.withdrawals || []),
-        ...(data?.pages?.[0]?.data.deposits || []),
+        ...(data?.pages?.[0]?.data.withdrawals ?? []),
+        ...(data?.pages?.[0]?.data.deposits ?? []),
       ]
     : []; /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
 };
-const flattenWithdrawals = (data: any) =>
-  data?.pages?.reduce((prev: any, curr: any) => [...prev, ...curr], []) ||
-  []; /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/

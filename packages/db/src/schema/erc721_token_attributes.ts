@@ -7,7 +7,6 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
-import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
 import { erc721Tokens } from "./erc721_tokens";
 

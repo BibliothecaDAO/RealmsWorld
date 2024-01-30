@@ -1,17 +1,10 @@
-import type {
-  ComponentPropsWithoutRef,
-  Dispatch,
-  ReactElement,
-  SetStateAction,
-} from "react";
+import type { Dispatch, ReactElement, SetStateAction } from "react";
 import React, { useEffect, useState } from "react";
 import { useTimeDiff } from "@/hooks/useTimeDiff";
 import Lords from "@/icons/lords.svg";
-import { getTokenName } from "@/utils/utils";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Loader } from "lucide-react";
-import { formatUnits, zeroAddress } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
@@ -23,11 +16,6 @@ import {
   DialogTrigger,
   Input,
   Progress,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Tooltip,
   TooltipProvider,
 } from "@realms-world/ui";
@@ -56,9 +44,11 @@ const ModalCopy = {
 
 interface Props {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>];
-  listingId?: string;
+  listingId?: number;
   tokenId?: string;
-  token?: RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token?:
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
+    | RouterOutputs["erc721Tokens"]["byId"];
   collectionId?: string;
   normalizeRoyalties?: boolean;
   copyOverrides?: Partial<typeof ModalCopy>;
@@ -115,9 +105,9 @@ export function ListingEditModal({
         setExpirationOption,
         editListing,
       }) => {
-        const expires = useTimeDiff(listing?.expiration || 0);
+        const expires = useTimeDiff(listing?.expiration ?? 0);
 
-        const profit = ((10000 - (royaltyBps || 0)) * (price ?? 0)) / 1000;
+        const profit = ((10000 - (royaltyBps ?? 0)) * (price ?? 0)) / 1000;
 
         const updatedTotalUsd = profit; /*usdPrice*/
 
@@ -145,7 +135,7 @@ export function ListingEditModal({
         }, [transactionError]);
 
         const isListingAvailable =
-          listing && (listing.active || listing.status === 0) && !loading;
+          listing && (listing.active ?? listing.status === 0) && !loading;
 
         const isListingEditable = listing?.active && !loading;
 
@@ -214,7 +204,7 @@ export function ListingEditModal({
                         royaltiesBps={royaltyBps}
                         //usdPrice={totalUsd.toString()}
                         collection={
-                          listing.criteria?.data?.collection?.name || ""
+                          listing.criteria?.data?.collection?.name ?? ""
                         }
                         expires={expires}
                         quantity={listing?.quantityRemaining}
@@ -324,7 +314,7 @@ export function ListingEditModal({
                     tokenDetails={token}
                     price={price}
                     //usdPrice={updatedTotalUsd.toString()}
-                    collection={collection?.name || ""}
+                    collection={collection?.name ?? ""}
                     // expires={`in ${expirationOption?.text.toLowerCase()}`}
                     quantity={1}
                   />

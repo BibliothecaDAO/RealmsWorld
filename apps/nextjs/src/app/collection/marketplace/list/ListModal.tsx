@@ -39,7 +39,7 @@ import {
 interface ListingCallbackData {
   listings?: ListingData[];
   tokenId?: string;
-  collectionId?: string;
+  collectionId?: string | undefined;
 }
 
 const ModalCopy = {
@@ -52,21 +52,17 @@ const ModalCopy = {
 };
 
 interface Props {
-  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
-  tokenId?: string;
-  collectionId?: string;
+  token:
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
+    | RouterOutputs["erc721Tokens"]["byId"];
+  tokenId?: number;
   trigger?: React.ReactNode;
 }
 
 const MINIMUM_AMOUNT = 0.000000000000001;
 const MAXIMUM_AMOUNT = Infinity;
 
-export function ListModal({
-  token,
-  trigger,
-  tokenId,
-  collectionId,
-}: Props): ReactElement {
+export function ListModal({ token, trigger, tokenId }: Props): ReactElement {
   const copy: typeof ModalCopy = { ...ModalCopy /*, ...copyOverrides*/ };
   const [open, setOpen] = useState(false);
 
@@ -74,7 +70,7 @@ export function ListModal({
     <ListModalRenderer
       open={open} //TODO
       tokenId={tokenId}
-      collectionId={token.contract_address}
+      collectionId={token?.contract_address}
     >
       {({
         loading,
@@ -83,7 +79,7 @@ export function ListModal({
         listStep,
         expirationOption,
         expirationOptions,
-        listingData,
+        //listingData,
         transactionError,
         stepData,
         price,
@@ -130,10 +126,10 @@ export function ListModal({
           }
         }, [transactionError])*/
 
-        const floorAskPrice = collection?.floorAsk?.price;
+        /*const floorAskPrice = collection?.floorAsk?.price;
         const decimalFloorPrice = collection?.floorAsk?.price?.amount?.decimal;
         const nativeFloorPrice = collection?.floorAsk?.price?.amount?.native;
-        const usdFloorPrice = collection?.floorAsk?.price?.amount?.usd;
+        const usdFloorPrice = collection?.floorAsk?.price?.amount?.usd;*/
 
         const floorButtonEnabled = true;
 
@@ -150,9 +146,9 @@ export function ListModal({
 
         const handleSetFloor = () => {
           // If currency matches floor ask currency, use decimal floor price
-          if (decimalFloorPrice) {
+          /*if (decimalFloorPrice) {
             setPrice(decimalFloorPrice.toString());
-          }
+          }*/
         };
 
         return (
@@ -160,11 +156,11 @@ export function ListModal({
             open={open}
             onOpenChange={(open) => {
               if (!open /*&& onClose*/) {
-                const data: ListingCallbackData = {
+                /*const data: ListingCallbackData = {
                   tokenId: tokenId,
                   collectionId: collectionId,
                   listings: listingData,
-                };
+                };*/
                 // onClose(data, stepData, listStep)
               }
 
@@ -396,8 +392,8 @@ export function ListModal({
                   <div className="flex w-full flex-col items-center gap-6 px-2 pt-2">
                     <div className="flex w-full flex-col items-center gap-6 overflow-hidden">
                       <Image
-                        src={token?.image || collection?.image}
-                        alt={token?.name || token?.token_id}
+                        src={token?.image ?? collection?.image}
+                        alt={token?.name ?? token?.token_id.toString() ?? ""}
                         width={120}
                         height={120}
                       />

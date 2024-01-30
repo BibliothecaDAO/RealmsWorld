@@ -2,18 +2,7 @@ import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import {
-  and,
-  asc,
-  desc,
-  eq,
-  inArray,
-  isNotNull,
-  isNull,
-  lte,
-  or,
-  schema,
-} from "@realms-world/db";
+import { and, eq, inArray, isNull, schema } from "@realms-world/db";
 import { padAddress } from "@realms-world/utils";
 
 import { withCursorPagination } from "../cursorPagination";
@@ -52,7 +41,6 @@ export const erc721TokensRouter = createTRPCRouter({
         attributeFilter,
       } = input;
       const whereFilter: SQL[] = [];
-      const orderByFilter: SQL[] = [];
 
       const cursors = [];
       if (orderBy == "tokenId") {
@@ -129,6 +117,7 @@ export const erc721TokensRouter = createTRPCRouter({
         ...withCursorPagination({
           limit: limit + 1,
           where: and(...whereFilter),
+          //@ts-expect-error cursor can be single
           cursors: cursors,
         }),
         with: {

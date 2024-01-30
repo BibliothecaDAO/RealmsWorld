@@ -7,6 +7,8 @@ import { cleanQuery } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/react";
 import { useInView } from "framer-motion";
 
+import type { RouterInputs } from "@realms-world/api";
+
 import { TokenCardSkeleton } from "../../TokenCardSkeleton";
 import { L2ERC721Card } from "./L2ERC721Card";
 
@@ -37,7 +39,7 @@ const L2ERC721Table = ({
   }
   const attributeFilter = cleanQuery(attributesObject);
 
-  const filters = {
+  const filters: RouterInputs["erc721Tokens"]["all"] = {
     limit: 24,
     contractAddress,
     attributeFilter: attributeFilter,
@@ -49,7 +51,7 @@ const L2ERC721Table = ({
     filters.owner = ownerAddress;
   }
 
-  const [erc721Tokens, { fetchNextPage, isLoading, hasNextPage, isFetching }] =
+  const [erc721Tokens, { fetchNextPage, hasNextPage, isFetching }] =
     api.erc721Tokens.all.useSuspenseInfiniteQuery(filters, {
       getNextPageParam(lastPage) {
         return lastPage.nextCursor;

@@ -37,7 +37,7 @@ export default meta;
 type Story = StoryObj<typeof Select>;
 
 export const Base: Story = {
-  render: (args) => (
+  render: () => (
     <Select>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select a fruit" />

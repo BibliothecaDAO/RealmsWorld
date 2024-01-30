@@ -1,11 +1,12 @@
 "use client";
 
-import type { Collection, Game, Token } from "@/types";
+import type { Collection, Token } from "@/types";
 //import { BuyButton } from "@/app/collection/BuyModal";
 //import { ListingModal } from "@/app/collection/ListingModal";
 import { GameCard } from "@/app/games/GameCard";
 import { getGamesByContract } from "@/utils/getters";
-import { useAccount } from "wagmi";
+
+//import { useAccount } from "wagmi";
 
 import { games } from "@realms-world/constants";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@realms-world/ui";
@@ -19,13 +20,13 @@ interface Props {
 }
 
 export const TokenContent = ({ token, collection }: Props) => {
-  const { address, isConnecting, isConnected } = useAccount();
+  //const { address} = useAccount();
 
   const comptatible_games = getGamesByContract(games, collection.id);
 
-  const owner = address
+  /*const owner = address
     ? token.owner.toUpperCase() === address.toUpperCase()
-    : false;
+    : false;*/
 
   const tabs = [
     {
@@ -36,7 +37,7 @@ export const TokenContent = ({ token, collection }: Props) => {
       name: "Games",
       content: (
         <div className="grid gap-4 sm:grid-cols-2">
-          {comptatible_games?.map((game: Game, index: any) => {
+          {comptatible_games?.map((game, index) => {
             return <GameCard key={index} game={game} />;
           })}
         </div>

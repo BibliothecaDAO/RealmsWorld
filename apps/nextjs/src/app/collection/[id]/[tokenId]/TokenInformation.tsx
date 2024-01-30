@@ -4,6 +4,7 @@ import { erc721Tokens } from "@/constants/erc721Tokens";
 import { shortenHex } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
 
+import type { RouterOutputs } from "@realms-world/api";
 import { Button } from "@realms-world/ui";
 
 import { ContractImage } from "./ContractImage";
@@ -25,11 +26,11 @@ export const TokenInformation = ({
   name: string | null;
   owner: string | null;
   image: string | null;
-  attributes?: any;
+  attributes?:
+    | RouterOutputs["erc721Tokens"]["byId"]["attributes"]
+    | Attributes[];
   tokenId: number;
 }) => {
-  const isBeasts = collectionId == "beasts";
-
   return (
     <>
       <div className="flex w-full flex-none flex-col md:w-1/3">

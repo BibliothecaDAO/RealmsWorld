@@ -7,6 +7,8 @@ import { formatEther } from "viem";
 
 import { Button } from "@realms-world/ui";
 
+import { BuyButton } from "../../reservoir/BuyModal";
+
 //import { BuyButton } from "./BuyModal";
 
 interface TokenCardProps {
@@ -119,10 +121,11 @@ export const L1TokenCard = (props: TokenCardProps) => {
             >
               view
             </Button>
+            {/* TODO add back with reservoir
             <BuyButton
               address={token.token.contract}
               id={token.token.tokenId}
-            />
+            />*/}
           </div>
         </div>
       )}

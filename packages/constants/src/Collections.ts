@@ -33,6 +33,11 @@ export const CollectionRoyalties: {
   [Collections.BEASTS]: 500,
   [Collections.GOLDEN_TOKEN]: 500,
 };
+export const CollectionDisplayName = {
+  [Collections.REALMS]: "Realms",
+  [Collections.BEASTS]: "Beasts",
+  [Collections.GOLDEN_TOKEN]: "Golden Token",
+};
 
 export function getCollectionAddresses(
   collectionName: string,
@@ -41,8 +46,16 @@ export function getCollectionAddresses(
   return CollectionAddresses[normalizedCollectionName];
 }
 
-export const CollectionDisplayName = {
-  [Collections.REALMS]: "Realms",
-  [Collections.BEASTS]: "Beasts",
-  [Collections.GOLDEN_TOKEN]: "Golden Token",
-};
+export function getCollectionFromAddress(
+  address: string,
+): Collections | undefined {
+  for (const collection in CollectionAddresses) {
+    const chainAddresses = CollectionAddresses[collection as Collections];
+    for (const chainId in chainAddresses) {
+      if (chainAddresses[chainId as ChainId] === address) {
+        return collection as Collections;
+      }
+    }
+  }
+  return undefined;
+}

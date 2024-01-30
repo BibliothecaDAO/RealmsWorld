@@ -151,7 +151,7 @@ export const StakingContainer = () => {
             ) : (
               <>
                 <span className="text-2xl">
-                  {realmsData?.wallet?.realmsHeld || 0}
+                  {realmsData?.wallet?.realmsHeld ?? 0}
                 </span>
                 <span className="mb-4">Realms Available</span>
                 <StakingModal realms={realmsData?.realms} />
@@ -178,7 +178,7 @@ export const StakingContainer = () => {
             ) : (
               <>
                 <span className="text-2xl">
-                  {realmsData?.wallet?.bridgedRealmsHeld || 0}
+                  {realmsData?.wallet?.bridgedRealmsHeld ?? 0}
                 </span>
                 <span className="mb-4">Realms Staked</span>
                 <StakingModal
@@ -275,7 +275,7 @@ export const StakingContainer = () => {
             )}
           </div>
         </div>
-        {(realmsData?.bridgedV2Realms.length ||
+        {(realmsData?.bridgedV2Realms.length ??
           (carrackLordsAvailableData &&
             carrackLordsAvailableData?.[0] > 0n)) && (
           <div className="mt-10 flex flex-col">
@@ -295,7 +295,7 @@ export const StakingContainer = () => {
                   ) : (
                     <>
                       <span className="text-2xl">
-                        {realmsData?.wallet?.bridgedV2RealmsHeld || 0}
+                        {realmsData?.wallet?.bridgedV2RealmsHeld ?? 0}
                       </span>
                       <span className="mb-4">Staked Realms:</span>
                       <StakingModal
@@ -315,7 +315,7 @@ export const StakingContainer = () => {
                     <>
                       <span className="flex justify-center text-2xl">
                         <Lords className="mr-2 h-8 w-8 fill-current" />
-                        {formatEther(carrackLordsAvailableData?.[0] || 0n)}
+                        {formatEther(carrackLordsAvailableData?.[0] ?? 0n)}
                       </span>
                       <span className="mb-4 text-sm">Epoch 35+</span>
 
@@ -386,13 +386,12 @@ const StakingModal = ({
       address: realmsAddress as `0x${string}`,
       abi: ERC721,
       functionName: "isApprovedForAll",
-      args: [address as `0x${string}`, galleonAddress],
+      args: [address!, galleonAddress],
     });
 
-  const { data: approvedTransactionData, isSuccess } =
-    useWaitForTransactionReceipt({
-      hash: approveGalleonData,
-    });
+  const { isSuccess } = useWaitForTransactionReceipt({
+    hash: approveGalleonData,
+  });
 
   useEffect(() => {
     refetchGalleonApprovedData();

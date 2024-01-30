@@ -1,4 +1,3 @@
-import type { erc721Tokens } from "@/constants";
 import type { Collection } from "@reservoir0x/reservoir-kit-ui";
 import Image from "next/image";
 import Link from "next/link";

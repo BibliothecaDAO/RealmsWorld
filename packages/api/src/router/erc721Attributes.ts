@@ -2,19 +2,9 @@ import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import {
-  and,
-  asc,
-  desc,
-  eq,
-  isNotNull,
-  isNull,
-  lte,
-  schema,
-} from "@realms-world/db";
-import { padAddress } from "@realms-world/utils";
+import { and, eq, schema } from "@realms-world/db";
 
-import { withCursorPagination } from "../cursorPagination";
+//import { withCursorPagination } from "../cursorPagination";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const erc721AttributesRouter = createTRPCRouter({
@@ -29,20 +19,17 @@ export const erc721AttributesRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const limit = input.limit ?? 5000;
+      //const limit = input.limit ?? 5000;
       //TODO add orderBy conditions
-      const { contractAddress, cursor, orderBy, direction } = input;
+      const { contractAddress /*, orderBy, direction */ } = input;
       const whereFilter: SQL[] = [];
-      const orderByFilter: SQL[] = [];
-
-      const cursors = [];
 
       if (contractAddress) {
         whereFilter.push(
           eq(schema.erc721AttributeKeys.collectionId, contractAddress),
         );
       }
-      const {
+      /*const {
         orderBy: orderByRes,
         limit: limitRes,
         where,
@@ -54,7 +41,7 @@ export const erc721AttributesRouter = createTRPCRouter({
           direction ?? "asc", // Sort order ('asc' or 'desc')
           cursor, // Cursor value
         ],
-      });
+      });*/
 
       const items = await ctx.db
         .select({
@@ -90,14 +77,14 @@ export const erc721AttributesRouter = createTRPCRouter({
         }),
       });*/
 
-      let nextCursor: typeof cursor | undefined = undefined;
+      /*let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
         const nextItem = items.pop();
         nextCursor = nextItem!.value;
-      }
+      }*/
       return {
         items,
-        nextCursor,
+        //nextCursor,
       };
     }),
 

@@ -1,3 +1,4 @@
+import type { Attributes, TokenMarketData } from "@/types";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { erc721Tokens } from "@/constants";
@@ -5,7 +6,6 @@ import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getToken } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/server";
-import { getTokenContractAddresses } from "@/utils/utils";
 
 import { getCollectionAddresses } from "@realms-world/constants";
 
@@ -92,19 +92,22 @@ const L1TokenData = async ({
   const tokensData = getToken({
     collection: tokenAddress,
     query: searchParams ?? {},
-  });
+  }) as Promise<{ tokens: TokenMarketData[] }>;
 
   const attributesData = getAttributes({
     collection: tokenAddress,
-  });
-  const [tokens, attributes] = await Promise.all([tokensData, attributesData]);
+  }) as Promise<{ attributes: Attributes[] }>;
+  const [{ tokens }, { attributes }] = await Promise.all([
+    tokensData,
+    attributesData,
+  ]);
 
   if (!tokens) {
     return <div>Collection Not Found</div>;
   }
   return (
-    <TradeLayout tokenAddress={tokenAddress} attributes={attributes.attributes}>
-      <L1TokenTable address={tokenAddress} tokens={tokens.tokens} />
+    <TradeLayout tokenAddress={tokenAddress} attributes={attributes}>
+      <L1TokenTable address={tokenAddress} tokens={tokens} />
     </TradeLayout>
   );
 };

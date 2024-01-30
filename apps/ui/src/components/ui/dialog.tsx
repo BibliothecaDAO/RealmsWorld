@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { X } from "lucide-react";
 
 import { cn } from "@realms-world/utils";
@@ -17,7 +17,7 @@ DialogPortal.displayName = DialogPrimitive.Portal.displayName;
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, children, ...props }, ref) => (
+>(({ ...props }, ref) => (
   <DialogPrimitive.Overlay {...props} ref={ref} asChild>
     <motion.div
       className="fixed inset-0 z-40 cursor-pointer bg-medium-dark-green/50 backdrop-blur-[10px]"

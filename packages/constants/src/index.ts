@@ -8,5 +8,6 @@ export {
   Collections,
   CollectionAddresses,
   getCollectionAddresses,
+  getCollectionFromAddress,
   CollectionDisplayName,
 } from "./Collections";

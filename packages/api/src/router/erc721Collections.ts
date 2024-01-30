@@ -1,20 +1,8 @@
-import { sql, sum } from "drizzle-orm";
+import { sum } from "drizzle-orm";
 import { z } from "zod";
 
-import type { SQL } from "@realms-world/db";
-import {
-  and,
-  asc,
-  desc,
-  eq,
-  isNotNull,
-  isNull,
-  lte,
-  schema,
-} from "@realms-world/db";
-import { padAddress } from "@realms-world/utils";
+import { and, eq, schema } from "@realms-world/db";
 
-import { withCursorPagination } from "../cursorPagination";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const erc721CollectionsRouter = createTRPCRouter({
@@ -29,7 +17,7 @@ export const erc721CollectionsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 5000;
       //TODO add orderBy conditions
-      const { orderBy, direction } = input;
+      //const { orderBy, direction } = input;
       /*const orderByFilter: SQL[] = [];
       if (direction === "asc") {
         orderByFilter.push(asc(schema.erc721MarketEvents.token_id));

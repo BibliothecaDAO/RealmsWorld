@@ -1,7 +1,6 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
 import type { DepositEvent, WithdrawalEvent } from "@/.graphclient";
+import type { ChainTypeL2 } from "@starkware-industries/commons-js-enums";
+import React, { useEffect, useState } from "react";
 import {
   NETWORK_NAME,
   STARKSCAN_ETH_TX_URL,
@@ -10,7 +9,6 @@ import {
 import { ChainType, tokens } from "@/constants/tokens";
 import LordsIcon from "@/icons/lords.svg";
 import { useNetwork } from "@starknet-react/core";
-import type { ChainTypeL2 } from "@starkware-industries/commons-js-enums";
 import {
   isOnChain,
   isRejected,
@@ -45,7 +43,6 @@ export const TransferLog = ({
   onCompleteTransferClick: () => void;
 }) => {
   const [sign, setSign] = useState("");
-  const { chain } = useNetwork();
   const [l2hash, setL2hash] = useState("");
   const { depositEvents, withdrawalEvents, createdTimestamp } = transfer;
 
@@ -54,11 +51,9 @@ export const TransferLog = ({
     id,
     //l2Recipient,
     amount,
-    createdTxHash,
     finishedTxHash: l1hash,
-    finishedAtDate,
-  }: DepositEvent | WithdrawalEvent = depositEvents?.[0] ||
-  withdrawalEvents?.[0] ||
+  }: DepositEvent | WithdrawalEvent = depositEvents?.[0] ??
+  withdrawalEvents?.[0] ??
   transfer;
 
   const getl2hash = async () => {
@@ -98,7 +93,7 @@ export const TransferLog = ({
       >
         {!isOnChain(typedStatus)
           ? TransactionStatusFriendlyMessage[
-              typedStatus || TransactionStatus.NOT_RECEIVED
+              typedStatus ?? TransactionStatus.NOT_RECEIVED
             ]
           : ""}
       </div>
@@ -158,7 +153,7 @@ export const TransferLog = ({
         )}
         <div className="flex font-semibold sm:text-xl">
           <span className="max-w-[120px] overflow-hidden text-ellipsis">
-            {transfer.amount ? amount : formatEther(amount || 0)}
+            {transfer.amount ? amount : formatEther(amount ?? 0)}
           </span>
           <LordsIcon className="mx-1.5 h-5 w-5 self-center fill-white" />
         </div>

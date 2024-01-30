@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
-import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import { api } from "@/trpc/react";
 import {
@@ -11,13 +11,8 @@ import {
 } from "@starknet-react/core";
 import { formatUnits, parseUnits } from "viem";
 
-import type { RouterOutputs } from "@realms-world/api";
-import {
-  LORDS,
-  MarketplaceCollectionIds,
-  MarketplaceContract,
-} from "@realms-world/constants";
-import { ChainId } from "@realms-world/constants/src/Chains";
+import type { RouterInputs, RouterOutputs } from "@realms-world/api";
+import { LORDS, MarketplaceContract } from "@realms-world/constants";
 
 type Item = any;
 
@@ -38,7 +33,9 @@ export interface BuyModalStepData {
 
 interface ChildrenProps {
   loading: boolean;
-  token?: Omit<RouterOutputs["erc721Tokens"]["byId"], "transfers">;
+  token?:
+    | RouterOutputs["erc721Tokens"]["byId"]
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   collection?: any;
   listing?: any;
   quantityAvailable: number;
@@ -55,7 +52,6 @@ interface ChildrenProps {
   usdPrice: number;
   balance?: bigint;
   address?: string;
-  steps: any;
   stepData: BuyModalStepData | null;
   quantity: number;
   isOwner: boolean;
@@ -96,7 +92,6 @@ export const BuyModalRender: FC<Props> = ({
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [hasEnoughCurrency, setHasEnoughCurrency] = useState(true);
   const [stepData, setStepData] = useState<BuyModalStepData | null>(null);
-  const [steps, setSteps] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { lordsPrice } = useLordsPrice();
   const { balances } = useWalletsProviderContext();
@@ -106,18 +101,15 @@ export const BuyModalRender: FC<Props> = ({
   const blockExplorerBaseName =
     wagmiChain?.blockExplorers?.default?.name || "Etherscan";*/
 
-  const contract = collectionId ? collectionId?.split(":")[0] : undefined;
-
   const { address } = useAccount();
 
   /*const collection = collections?.[0] ? collections[0] : undefined;
   const is1155 = token?.token?.kind === "erc1155";*/
   const isOwner = token?.owner?.toLowerCase() === address?.toLowerCase();
 
-  const filters = {
+  const filters: RouterInputs["erc721MarketEvents"]["all"] = {
     limit: 20,
     token_key: token?.contract_address + ":" + token?.token_id,
-    enabled: false,
   };
 
   const { data: listingsData } = api.erc721MarketEvents.all.useQuery(filters, {
@@ -177,6 +169,7 @@ export const BuyModalRender: FC<Props> = ({
   });
   useEffect(() => {
     if (data?.transaction_hash) {
+      //@ts-expect-error Wrong starknet types
       if (transactionData?.execution_status == "SUCCEEDED") {
         setBuyStep(BuyStep.Complete);
       }
@@ -283,10 +276,9 @@ export const BuyModalRender: FC<Props> = ({
       setBuyStep(BuyStep.Checkout);
       setTransactionError(null);
       setStepData(null);
-      setSteps(null);
       setQuantity(1);
     } else {
-      setQuantity(defaultQuantity || 1);
+      setQuantity(defaultQuantity ?? 1);
     }
   }, [open]);
 
@@ -301,7 +293,7 @@ export const BuyModalRender: FC<Props> = ({
       {children({
         loading: !listing || !token,
         listing,
-        quantityAvailable: quantityRemaining || 1,
+        quantityAvailable: quantityRemaining ?? 1,
         totalPrice,
         totalIncludingFees,
         averageUnitPrice,
@@ -315,7 +307,6 @@ export const BuyModalRender: FC<Props> = ({
         totalUsd,
         usdPrice,
         address: address,
-        steps,
         stepData,
         quantity,
         isOwner,

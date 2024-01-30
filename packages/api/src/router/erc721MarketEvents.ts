@@ -1,4 +1,3 @@
-import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
@@ -25,7 +24,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
         collectionId: z.number().nullish(),
         token_key: z.string().nullish(),
         orderBy: z.string().nullish(),
-        status: z.array(z.string()).nullish(),
+        status: z.array(z.enum(["open", "filled", "cancelled"])).nullish(),
         direction: z.string().nullish(),
       }),
     )

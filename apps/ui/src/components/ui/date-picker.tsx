@@ -1,13 +1,13 @@
 "use client";
 
+import type { TimeValue } from "@react-aria/datepicker";
+import type { DateRange } from "types/date";
 import * as React from "react";
 import { Time } from "@internationalized/date";
 import * as Primitives from "@radix-ui/react-popover";
-import type { TimeValue } from "@react-aria/datepicker";
 import { cva } from "class-variance-authority";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon, Minus } from "lucide-react";
-import type { DateRange } from "types/date";
 
 import { cn, isBrowserLocaleClockType24h } from "@realms-world/utils";
 
@@ -112,10 +112,11 @@ const PresetContainer = <TPreset extends Preset, TValue>({
   onSelect,
   currentValue,
 }: PresetContainerProps<TPreset, TValue>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isDateRangePresets = (preset: any): preset is DateRangePreset => {
     return "dateRange" in preset;
   };
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isDatePresets = (preset: any): preset is DatePreset => {
     return "date" in preset;
   };
@@ -278,7 +279,6 @@ const SingleDatePicker = ({
 
   const initialDate = React.useMemo(() => {
     return date;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   /**
@@ -298,7 +298,6 @@ const SingleDatePicker = ({
     if (!open) {
       setMonth(date);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const onCancel = () => {
@@ -391,7 +390,7 @@ const SingleDatePicker = ({
         placeholder="Pick a date"
         disabled={disabled}
         className={className}
-        aria-required={props.required || props["aria-required"]}
+        aria-required={props.required ?? props["aria-required"]}
         aria-invalid={props["aria-invalid"]}
         aria-label={props["aria-label"]}
         aria-labelledby={props["aria-labelledby"]}
@@ -501,7 +500,6 @@ const RangeDatePicker = ({
 
   const initialRange = React.useMemo(() => {
     return range;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   /**
@@ -521,7 +519,6 @@ const RangeDatePicker = ({
     if (!open) {
       setMonth(range?.from);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const onRangeChange = (range: DateRange | undefined) => {
@@ -651,7 +648,7 @@ const RangeDatePicker = ({
         placeholder="Pick a date"
         disabled={disabled}
         className={className}
-        aria-required={props.required || props["aria-required"]}
+        aria-required={props.required ?? props["aria-required"]}
         aria-invalid={props["aria-invalid"]}
         aria-label={props["aria-label"]}
         aria-labelledby={props["aria-labelledby"]}
@@ -783,7 +780,7 @@ const validatePresets = (
 
           if (presetMonth < fromMonth.getMonth()) {
             throw new Error(
-              `Preset ${preset.label} is before fromMonth ${fromMonth}.`,
+              `Preset ${preset.label} is before fromMonth ${fromMonth.toString()}.`,
             );
           }
         }
@@ -793,7 +790,7 @@ const validatePresets = (
 
           if (presetMonth > toMonth.getMonth()) {
             throw new Error(
-              `Preset ${preset.label} is after toMonth ${toMonth}.`,
+              `Preset ${preset.label} is after toMonth ${toMonth.toString()}.`,
             );
           }
         }
@@ -803,7 +800,7 @@ const validatePresets = (
 
           if (presetDay < fromDay.getDate()) {
             throw new Error(
-              `Preset ${preset.label} is before fromDay ${fromDay}.`,
+              `Preset ${preset.label} is before fromDay ${fromDay.toString()}.`,
             );
           }
         }
@@ -867,11 +864,13 @@ const validatePresets = (
         if (fromDay) {
           const presetDay = preset.dateRange.from?.getDate();
 
-          if (presetDay && presetDay < fromDay.getDate()) {
+          if (
+            presetDay &&
+            preset.dateRange.from &&
+            presetDay < fromDay.getDate()
+          ) {
             throw new Error(
-              `Preset ${
-                preset.dateRange.from
-              }'s 'from' is before fromDay ${format(fromDay, "MMM dd, yyyy")}.`,
+              `Preset ${preset.dateRange.from.toString()}'s 'from' is before fromDay ${format(fromDay, "MMM dd, yyyy")}.`,
             );
           }
         }

@@ -17,7 +17,6 @@ interface EarningsBreakdownProps {
   price: number;
   usdPrice?: number;
   quantity: number;
-  collection?: any;
   royaltiesBps: number;
 }
 
@@ -25,7 +24,6 @@ const Earnings: FC<EarningsBreakdownProps> = ({
   price,
   usdPrice,
   quantity,
-  collection,
   royaltiesBps,
 }) => {
   const profit = (1 - (royaltiesBps || 0) * 0.0001) * Number(price) * quantity;

@@ -1,16 +1,6 @@
-import { relations } from "drizzle-orm";
-import {
-  index,
-  integer,
-  primaryKey,
-  serial,
-  text,
-  unique,
-} from "drizzle-orm/pg-core";
+import { index, integer, primaryKey, serial, text } from "drizzle-orm/pg-core";
 
-import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
-import { erc721Tokens } from "./erc721_tokens";
 
 export const erc721Attributes = pgSqlTable(
   "erc721_attributes",

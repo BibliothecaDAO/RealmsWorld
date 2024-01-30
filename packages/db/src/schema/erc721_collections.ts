@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { boolean, integer, numeric, text } from "drizzle-orm/pg-core";
+import { integer, text } from "drizzle-orm/pg-core";
 
 import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";

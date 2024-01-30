@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
-import { findTokenName } from "@/utils/utils";
 
 import type { RouterOutputs } from "@realms-world/api";
+import { getCollectionFromAddress } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";
@@ -28,7 +28,7 @@ export const L2ERC721Card = ({
     >
       <div>
         <Link
-          href={`/collection/${findTokenName(token.contract_address)}/${
+          href={`/collection/${token.contract_address && getCollectionFromAddress(token.contract_address)}/${
             token.token_id
           }`}
           className={`${isGrid ? "" : "flex"}`}
