@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { erc721Tokens } from "@/constants";
+import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getToken } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/server";
 import { getTokenContractAddresses } from "@/utils/utils";
+
+import { getCollectionAddresses } from "@realms-world/constants";
 
 import { L1TokenTable } from "./L1TokenTable";
 import L2ERC721Table from "./L2ERC721Table";
@@ -33,10 +36,11 @@ export default async function Page({
     page?: string;
   };
 }) {
-  const tokenAddresses = getTokenContractAddresses(
-    params.id as keyof typeof erc721Tokens,
-  );
+  const tokenAddresses = getCollectionAddresses(params.id);
 
+  if (!tokenAddresses) {
+    return <div>Collection Not Found</div>;
+  }
   /* isSepoliaGoldenToken =
     NETWORK_NAME == "SEPOLIA" &&
     (tokenAddresses.L2 ?? params.id == "goldenToken");
@@ -44,18 +48,18 @@ export default async function Page({
   if (isSepoliaGoldenToken) {
     return <Mint contractId={params.id} />;
   }*/
-  if (tokenAddresses.L2) {
-    return <L2TokenData tokenAddress={tokenAddresses.L2} />;
+  if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
+    return (
+      <L2TokenData tokenAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID]!} />
+    );
   }
-  if (tokenAddresses.L1) {
+  if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
     return (
       <L1TokenData
-        tokenAddress={tokenAddresses.L1}
+        tokenAddress={tokenAddresses[SUPPORTED_L1_CHAIN_ID]!}
         searchParams={searchParams}
       />
     );
-  } else {
-    return <div>Collection Not Found</div>;
   }
 }
 

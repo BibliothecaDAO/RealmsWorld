@@ -1,7 +1,7 @@
 import React from "react";
 import CollectionSummary from "@/app/collection/[id]/(list)/CollectionSummary";
-import { NETWORK_NAME } from "@/constants/env";
 
+import { Collections } from "@realms-world/constants";
 import { NavLink } from "@realms-world/ui";
 
 export default function RootLayout({
@@ -14,7 +14,9 @@ export default function RootLayout({
   const defaultImage = "/backgrounds/dummy_background.webp";
   const imageUrl = params.id ? `/backgrounds/${params.id}.png` : defaultImage;
 
-  const isMintable = NETWORK_NAME == "SEPOLIA" && params.id == "goldenToken";
+  const isMintable =
+    process.env.NEXT_PUBLIC_IS_TESTNET &&
+    params.id == (Collections.GOLDEN_TOKEN as string);
   const tabs = [
     {
       name: "Trade",

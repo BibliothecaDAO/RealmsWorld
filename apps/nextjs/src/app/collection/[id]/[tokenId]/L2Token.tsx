@@ -8,10 +8,18 @@ import { useAccount } from "@starknet-react/core";
 import { Clock } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { Button } from "@realms-world/ui";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Button,
+} from "@realms-world/ui";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";
 import TokenOwnerActions from "../../marketplace/TokenOwnerActions";
+import { L2ActivityCard } from "../(list)/activity/L2ActivityCard";
+import { ListingCard } from "../(list)/LIstingCard";
 import { LoadingSkeleton } from "./loading";
 import { TokenInformation } from "./TokenInformation";
 
@@ -103,17 +111,38 @@ export const L2Token = ({
           )}
         </div>
       </div>
-      <div className="mt-4 flex flex-wrap items-center justify-between border bg-dark-green p-4">
-        <div className="flex flex-col flex-wrap gap-x-2 text-lg">
-          {erc721Token.listings.map((listing) => {
-            return (
-              <div className="">
-                {listing.id} - {listing.price} - {listing.status}
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <Accordion type="multiple" defaultValue={"item-2"} className="">
+        <AccordionItem value="item-1">
+          <div className="mt-4 border bg-dark-green px-4">
+            <AccordionTrigger className="text-lg">Listings</AccordionTrigger>
+            <AccordionContent className="-mt-4 w-full flex-wrap gap-x-2">
+              {activeListings.length
+                ? activeListings.map((listing, index) => {
+                    return (
+                      <ListingCard
+                        key={index}
+                        activity={listing}
+                        token={token}
+                      />
+                    );
+                  })
+                : "No Active Listings"}
+            </AccordionContent>
+          </div>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+          <div className="mt-4 border bg-dark-green px-4">
+            <AccordionTrigger className="text-lg">
+              Token Activity
+            </AccordionTrigger>
+            <AccordionContent className="-mt-4 w-full flex-wrap gap-x-2">
+              {erc721Token.listings.map((listing, index) => {
+                return <L2ActivityCard key={index} activity={listing} />;
+              })}
+            </AccordionContent>
+          </div>
+        </AccordionItem>
+      </Accordion>
     </>
   );
 };

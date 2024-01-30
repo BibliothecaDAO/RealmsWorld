@@ -2,29 +2,34 @@ import type { erc721Tokens } from "@/constants";
 import type { Collection } from "@reservoir0x/reservoir-kit-ui";
 import Image from "next/image";
 import Link from "next/link";
+import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import Discord from "@/icons/discord.svg";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getGamesByContract } from "@/utils/getters";
-import { getTokenContractAddresses } from "@/utils/utils";
-import { ExternalLink, Globe, Twitter } from "lucide-react";
+import { ExternalLink, Globe, X } from "lucide-react";
 import { formatEther } from "viem";
 
-import { games } from "@realms-world/constants";
+import type { Collections } from "@realms-world/constants";
+import { games, getCollectionAddresses } from "@realms-world/constants";
 
 import L2CollectionSummary from "./L2CollectionSummary";
 
 export default async function CollectionSummary({
   collectionId,
 }: {
-  collectionId: keyof typeof erc721Tokens;
+  collectionId: string;
 }) {
-  const tokenAddresses = getTokenContractAddresses(collectionId);
+  const tokenAddresses = getCollectionAddresses(collectionId);
+  if (!tokenAddresses) {
+    return <div>Collection Not Found</div>;
+  }
 
-  if (tokenAddresses.L2) {
-    return <L2CollectionSummary collectionId={collectionId} />;
-  } else if (tokenAddresses.L1) {
+  if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
+    return <L2CollectionSummary collectionId={collectionId as Collections} />;
+  } else if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { collections }: { collections: Collection[] } = await getCollections(
-      [{ contract: tokenAddresses.L1 }],
+      [{ contract: tokenAddresses[SUPPORTED_L1_CHAIN_ID]! }],
     );
 
     const collection = collections?.[0];
@@ -43,7 +48,7 @@ export default async function CollectionSummary({
         value: collection.discordUrl,
       },
       {
-        icon: <Twitter />,
+        icon: <X />,
         value: "https://twitter.com/" + collection.twitterUsername,
       },
       { icon: <Globe />, value: collection.externalUrl },

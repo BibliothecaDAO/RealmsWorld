@@ -16,7 +16,7 @@ export const statusEnum = pgEnum("status", ["open", "cancelled", "filled"]);
 
 export const erc721MarketEvents = pgSqlTable("erc721_market_events", {
   _cursor: int8range("_cursor"),
-  id: integer("id"),
+  id: integer("id").notNull(),
   hash: text("hash"),
   token_key: text("token_key"),
   token_id: integer("token_id"),

@@ -63,7 +63,7 @@ const ModalCopy = {
 
 interface Props {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>];
-  token?: RouterOutputs["erc721Tokens"]["byId"];
+  token?: Omit<RouterOutputs["erc721Tokens"]["byId"], "transfers">;
   collectionId?: string;
   defaultQuantity?: number;
   orderId?: number;

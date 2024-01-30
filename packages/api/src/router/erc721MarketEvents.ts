@@ -2,7 +2,16 @@ import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import { and, asc, desc, eq, gte, lte, schema } from "@realms-world/db";
+import {
+  and,
+  asc,
+  desc,
+  eq,
+  gte,
+  inArray,
+  lte,
+  schema,
+} from "@realms-world/db";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -13,8 +22,10 @@ export const erc721MarketEventsRouter = createTRPCRouter({
         limit: z.number().min(1).max(100).nullish(),
         cursor: z.number().nullish(), // <-- "cursor" needs to exist, but can be any type
         //owner: z.string().nullish(), TODO from address
+        collectionId: z.number().nullish(),
         token_key: z.string().nullish(),
         orderBy: z.string().nullish(),
+        status: z.array(z.string()).nullish(),
         direction: z.string().nullish(),
       }),
     )
@@ -25,6 +36,8 @@ export const erc721MarketEventsRouter = createTRPCRouter({
         cursor,
         /* contractAddress, owner, orderBy, block,*/ direction,
         token_key,
+        collectionId,
+        status,
       } = input;
       const whereFilter: SQL[] = [];
       const orderByFilter: SQL[] = [];
@@ -36,6 +49,14 @@ export const erc721MarketEventsRouter = createTRPCRouter({
 
       if (token_key) {
         whereFilter.push(eq(schema.erc721MarketEvents.token_key, token_key));
+      }
+      if (collectionId) {
+        whereFilter.push(
+          eq(schema.erc721MarketEvents.collection_id, collectionId),
+        );
+      }
+      if (status?.length) {
+        whereFilter.push(inArray(schema.erc721MarketEvents.status, status));
       }
       /*if (owner) {
         whereFilter.push(eq(schema.erc721Tokens.owner, owner.toLowerCase()));

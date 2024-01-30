@@ -22,13 +22,10 @@ import { Button, Input } from "@realms-world/ui";
 const MINT_COST =
   process.env.NEXT_PUBLIC_IS_TESTNET == "true" ? 99000 : 90000000000000000;
 
-export default function Mint({ contractId }: { contractId: string }) {
+export default function Mint() {
   const { account } = useAccount();
 
   const tokenAddress = getTokenContractAddresses("goldenToken").L2;
-  const isGoldenToken =
-    contractId == tokenAddress || contractId == "goldenToken";
-
   const [hash, setHash] = useState(undefined);
   const [mintQty, setMintQty] = useState(1);
 

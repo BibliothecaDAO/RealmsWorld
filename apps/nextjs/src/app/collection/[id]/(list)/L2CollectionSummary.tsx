@@ -1,25 +1,30 @@
 import Image from "next/image";
-import Link from "next/link";
-import { erc721Tokens, games } from "@/constants";
+import { erc721Tokens } from "@/constants";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import Discord from "@/icons/discord.svg";
 import LordsIcon from "@/icons/lords.svg";
-import { getCollections } from "@/lib/reservoir/getCollections";
 import { api } from "@/trpc/server";
 import { getGamesByContract } from "@/utils/getters";
 import { getTokenContractAddresses } from "@/utils/utils";
 import { ExternalLink, Globe, Twitter } from "lucide-react";
 import { formatEther } from "viem";
 
+import type { Collections } from "@realms-world/constants";
+import {
+  CollectionDisplayName,
+  getCollectionAddresses,
+} from "@realms-world/constants";
+
 export default async function L2CollectionSummary({
   collectionId,
 }: {
-  collectionId: keyof typeof erc721Tokens;
+  collectionId: string;
 }) {
-  const tokenAddresses = getTokenContractAddresses(collectionId);
+  const tokenAddresses = getCollectionAddresses(collectionId);
+
   const erc721Collection = await api.erc721Collections.byId({
-    id: 1,
+    id: tokenAddresses[SUPPORTED_L2_CHAIN_ID]!,
   });
-  console.log(erc721Collection);
   const contract_details = [
     {
       title: "Type",
@@ -89,7 +94,7 @@ export default async function L2CollectionSummary({
             );
           })}
         </div>
-        <h1>{erc721Tokens[collectionId].name}</h1>
+        <h1>{CollectionDisplayName[collectionId as Collections]}</h1>
         {/* <div className="flex flex-wrap mb-4 sm:space-x-2">
           {comptatible_games.map((game: any, index: any) => {
             return (

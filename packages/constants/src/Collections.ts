@@ -1,9 +1,9 @@
 import { ChainId } from "./Chains";
 
 export enum Collections {
-  REALMS = "Realms",
-  BEASTS = "Beasts",
-  GOLDEN_TOKEN = "GoldenToken",
+  REALMS = "realms",
+  BEASTS = "beasts",
+  GOLDEN_TOKEN = "goldentoken",
 }
 
 export const CollectionAddresses: {
@@ -32,4 +32,17 @@ export const CollectionRoyalties: {
   [Collections.REALMS]: 0,
   [Collections.BEASTS]: 500,
   [Collections.GOLDEN_TOKEN]: 500,
+};
+
+export function getCollectionAddresses(
+  collectionName: string,
+): Partial<{ [key in ChainId]: string }> {
+  const normalizedCollectionName = collectionName as Collections;
+  return CollectionAddresses[normalizedCollectionName];
+}
+
+export const CollectionDisplayName = {
+  [Collections.REALMS]: "Realms",
+  [Collections.BEASTS]: "Beasts",
+  [Collections.GOLDEN_TOKEN]: "Golden Token",
 };

@@ -25,7 +25,7 @@ export default async function CollectionsList() {
     },
     {
       name: "Golden Token",
-      link: "goldenToken",
+      link: "goldentoken",
       image: "/collections/goldenToken.svg",
     },
   ];

@@ -5,7 +5,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Switch } from "@realms-world/ui";
 
-export const CollectionActivity = () => {
+export const CollectionActivity = ({
+  searchAttributes = ["sale", "transfer", "bid", "ask"],
+}: {
+  searchAttributes?: string[];
+}) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -38,8 +42,6 @@ export const CollectionActivity = () => {
     }
     router.replace(`${pathname}?${params}`);
   };
-
-  const searchAttributes = ["sale", "transfer", "bid", "ask"];
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);

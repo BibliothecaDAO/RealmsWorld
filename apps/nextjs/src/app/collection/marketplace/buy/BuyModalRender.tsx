@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
-import { NETWORK_NAME } from "@/constants/env";
+import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import { api } from "@/trpc/react";
 import {
@@ -36,11 +36,9 @@ export interface BuyModalStepData {
   currentStepItem: any;
 }
 
-type Token = RouterOutputs["erc721Tokens"]["byId"];
-
 interface ChildrenProps {
   loading: boolean;
-  token?: Token;
+  token?: Omit<RouterOutputs["erc721Tokens"]["byId"], "transfers">;
   collection?: any;
   listing?: any;
   quantityAvailable: number;
@@ -130,18 +128,21 @@ export const BuyModalRender: FC<Props> = ({
     return token?.listings?.[0] ?? listingsData?.items?.[0];
   }, [token, listingsData]);
 
+  if (!listing) {
+    return <>Listing Not Found</>;
+  }
+
   const quantityRemaining = useMemo(() => {
     if (orderId) {
       return /*listing?.quantityRemaining ||*/ 1;
     }
   }, [listing, token, orderId]);
 
-  const usdPrice = (listing?.price ?? 0) * lordsPrice;
+  const usdPrice = parseInt(listing?.price ?? "0") * lordsPrice;
   //const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;*/
   const totalUsd = totalIncludingFees * lordsPrice;
 
-  const lordsAddress = LORDS[ChainId["SN_" + NETWORK_NAME]]
-    ?.address as `0x${string}`;
+  const lordsAddress = LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`;
 
   const addFundsLink = `https://app.avnu.fi/en?tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=${lordsAddress}&amount=${totalPrice}`;
 
@@ -156,17 +157,17 @@ export const BuyModalRender: FC<Props> = ({
         contractAddress: lordsAddress,
         entrypoint: "approve",
         calldata: [
-          MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
+          MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`, //Marketplace address
           parseUnits(`${listing?.price ?? 0}`, 18).toString(),
           0,
         ],
       },
       {
         contractAddress: MarketplaceContract[
-          ChainId["SN_" + NETWORK_NAME]
+          SUPPORTED_L2_CHAIN_ID
         ] as `0x${string}`,
         entrypoint: "accept",
-        calldata: [listing?.id],
+        calldata: [listing.id.toString()],
       },
     ],
   });
@@ -237,12 +238,12 @@ export const BuyModalRender: FC<Props> = ({
     }
 
     let total = 0;
-    const gasCost = 0;
+    const gasCost = 0n;
 
     if (orderId) {
-      total = (parseInt(listing?.price) || 0) * quantity;
+      total = parseInt(listing.price ?? "0") * quantity;
     } else if (listing?.price) {
-      total = listing?.price || 0;
+      total = parseInt(listing?.price ?? 0);
       console.log(total);
     }
 

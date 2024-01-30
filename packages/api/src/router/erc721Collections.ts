@@ -48,7 +48,7 @@ export const erc721CollectionsRouter = createTRPCRouter({
     }),
 
   byId: publicProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db
         .select({
@@ -58,7 +58,7 @@ export const erc721CollectionsRouter = createTRPCRouter({
         .from(schema.erc721Collections)
         .where(
           and(
-            eq(schema.erc721Collections.marketplaceId, input.id),
+            eq(schema.erc721Collections.id, input.id),
             eq(schema.erc721MarketEvents.status, "filled"),
           ),
         )
