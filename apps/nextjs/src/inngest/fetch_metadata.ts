@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { hash, shortString, uint256 } from "starknet";
 
 import type { SQL } from "@realms-world/db";
+import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import { and, db, eq, inArray, schema, sql } from "@realms-world/db";
 
-import { getTokenContractAddresses } from "../utils/utils";
 //import { Client } from "https://esm.sh/ts-postgres";
 
 import { inngest } from "./client";
@@ -40,7 +41,9 @@ export const fetchMetadata = inngest.createFunction(
               contract_address: event.data.contract_address,
               entry_point_selector:
                 event.data.contract_address ==
-                getTokenContractAddresses("beasts").L2
+                getCollectionAddresses(Collections.BEASTS)[
+                  SUPPORTED_L2_CHAIN_ID
+                ]!
                   ? tokenURI
                   : token_uri, // Token URI
               calldata: [tokenId.low, tokenId.high],

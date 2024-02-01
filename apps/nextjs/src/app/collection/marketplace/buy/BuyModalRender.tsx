@@ -110,6 +110,7 @@ export const BuyModalRender: FC<Props> = ({
   const filters: RouterInputs["erc721MarketEvents"]["all"] = {
     limit: 20,
     token_key: token?.contract_address + ":" + token?.token_id,
+    upper_inf: true,
   };
 
   const { data: listingsData } = api.erc721MarketEvents.all.useQuery(filters, {
@@ -119,10 +120,6 @@ export const BuyModalRender: FC<Props> = ({
   const listing = useMemo(() => {
     return token?.listings?.[0] ?? listingsData?.items?.[0];
   }, [token, listingsData]);
-
-  if (!listing) {
-    return <>Listing Not Found</>;
-  }
 
   const quantityRemaining = useMemo(() => {
     if (orderId) {
@@ -159,7 +156,7 @@ export const BuyModalRender: FC<Props> = ({
           SUPPORTED_L2_CHAIN_ID
         ] as `0x${string}`,
         entrypoint: "accept",
-        calldata: [listing.id.toString()],
+        calldata: [(listing?.id ?? 0).toString()],
       },
     ],
   });
@@ -234,10 +231,9 @@ export const BuyModalRender: FC<Props> = ({
     const gasCost = 0n;
 
     if (orderId) {
-      total = parseInt(listing.price ?? "0") * quantity;
+      total = parseInt(listing?.price ?? "0") * quantity;
     } else if (listing?.price) {
       total = parseInt(listing?.price ?? 0);
-      console.log(total);
     }
 
     if (total > 0) {

@@ -122,7 +122,7 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
             </div>
           ) : (*/}
         <div className="flex items-center self-center">
-          {activity.price || 0}
+          {activity.price ?? 0}
           <LordsIcon className="ml-2 h-5 w-5 fill-current" />
         </div>
       </div>

@@ -1,7 +1,6 @@
 import type { TokenMarketData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { findTokenName } from "@/utils/utils";
 // import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 import { formatEther } from "viem";
 

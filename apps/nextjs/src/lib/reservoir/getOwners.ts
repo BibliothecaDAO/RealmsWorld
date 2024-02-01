@@ -7,7 +7,7 @@ export const getOwners = async ({ collection }: { collection: string }) => {
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.RESERVOIR_API_KEY || "",
+          "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
           "Access-Control-Allow-Origin": "*",
         },
       },

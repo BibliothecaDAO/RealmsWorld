@@ -1,13 +1,12 @@
 import Image from "next/image";
-import { erc721Tokens } from "@/constants";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import Discord from "@/icons/discord.svg";
+//import Discord from "@/icons/discord.svg";
 import LordsIcon from "@/icons/lords.svg";
 import { api } from "@/trpc/server";
-import { getGamesByContract } from "@/utils/getters";
-import { getTokenContractAddresses } from "@/utils/utils";
+
+/*import { getGamesByContract } from "@/utils/getters";
 import { ExternalLink, Globe, Twitter } from "lucide-react";
-import { formatEther } from "viem";
+import { formatEther } from "viem";*/
 
 import type { Collections } from "@realms-world/constants";
 import {

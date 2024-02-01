@@ -10,6 +10,7 @@ import {
   inArray,
   lte,
   schema,
+  sql,
 } from "@realms-world/db";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
@@ -26,6 +27,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
         orderBy: z.string().nullish(),
         status: z.array(z.enum(["open", "filled", "cancelled"])).nullish(),
         direction: z.string().nullish(),
+        upper_inf: z.boolean().nullish(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -34,6 +36,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
       const {
         cursor,
         /* contractAddress, owner, orderBy, block,*/ direction,
+        upper_inf,
         token_key,
         collectionId,
         status,
@@ -68,10 +71,10 @@ export const erc721MarketEventsRouter = createTRPCRouter({
         );
       } /* else {
         whereFilter.push(lte(schema.erc721Tokens.token_id, cursor));
-      }
-      if (!block) {
-        whereFilter.push(sql`upper_inf(_cursor)`);
       }*/
+      if (upper_inf) {
+        whereFilter.push(sql`upper_inf(_cursor)`);
+      }
       const items = await ctx.db.query.erc721MarketEvents.findMany({
         limit: limit + 1,
         where: and(...whereFilter),

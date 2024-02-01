@@ -1,13 +1,16 @@
 import type { Attributes, TokenMarketData } from "@/types";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { erc721Tokens } from "@/constants";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getToken } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/server";
 
-import { getCollectionAddresses } from "@realms-world/constants";
+import type { Collections } from "@realms-world/constants";
+import {
+  CollectionDisplayName,
+  getCollectionAddresses,
+} from "@realms-world/constants";
 
 import { L1TokenTable } from "./L1TokenTable";
 import L2ERC721Table from "./L2ERC721Table";
@@ -20,10 +23,10 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const collection = erc721Tokens[params.id as keyof typeof erc721Tokens];
+  const collection = CollectionDisplayName[params.id as Collections];
   return {
-    title: `${collection?.name}`,
-    description: `Collection Details and Marketplace for ${collection?.name} - Created for adventurers by Bibliotheca DAO`,
+    title: `${collection}`,
+    description: `Collection Details and Marketplace for ${collection} - Created for adventurers by Bibliotheca DAO`,
   };
 }
 

@@ -84,14 +84,12 @@ const L2Activites = async ({
       ? [searchParams.types]
       : searchParams.types;
 
-  const status = statusArray?.map((status) => {
+  const status: ("filled" | "open")[] = statusArray?.map((status) => {
     switch (status) {
       case "sale":
         return "filled";
       case "listing":
         return "open";
-      default:
-        return status;
     }
   });
   const filters: RouterInputs["erc721MarketEvents"]["all"] = {

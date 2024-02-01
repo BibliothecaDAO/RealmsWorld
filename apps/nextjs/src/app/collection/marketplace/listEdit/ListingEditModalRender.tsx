@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ExpirationOption } from "@/types";
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -86,6 +87,7 @@ export const ListingEditModalRender: FC<Props> = ({
   const filters: RouterInputs["erc721MarketEvents"]["all"] = {
     limit: 20,
     token_key: token?.contract_address + ":" + token?.token_id,
+    upper_inf: true,
   };
   const { data: listingsData } = api.erc721MarketEvents.all.useQuery(filters, {
     enabled: open && !token?.listings?.[0],
@@ -134,9 +136,6 @@ export const ListingEditModalRender: FC<Props> = ({
 */
   let expirationTime: string | null = null;
 
-  if (!listing) {
-    return <>Listing Not Found</>;
-  }
   const {
     data,
     writeAsync,
@@ -154,7 +153,7 @@ export const ListingEditModalRender: FC<Props> = ({
       },
     ],
   });
-  const { data: transactionData, error: txErrror } = useWaitForTransaction({
+  const { data: transactionData } = useWaitForTransaction({
     hash: data?.transaction_hash,
     watch: true,
   });

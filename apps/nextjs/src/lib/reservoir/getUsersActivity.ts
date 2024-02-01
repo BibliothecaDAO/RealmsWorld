@@ -7,7 +7,7 @@ export const getUsersActivity = async ({ address }: { address: string }) => {
     const res = await fetch(url, {
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": process.env.RESERVOIR_API_KEY || "",
+        "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
         "Access-Control-Allow-Origin": "*",
       },
     });

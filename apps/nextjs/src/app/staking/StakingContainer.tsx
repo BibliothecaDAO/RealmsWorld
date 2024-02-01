@@ -6,10 +6,9 @@ import { ERC721 } from "@/abi/L1/ERC721";
 import { paymentPoolAbi } from "@/abi/L1/PaymentPool";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
-import { NETWORK_NAME } from "@/constants/env";
+import { NETWORK_NAME, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
 import Lords from "@/icons/lords.svg";
-import { getTokenContractAddresses } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Loader, Loader2 } from "lucide-react";
 import { formatEther, parseEther, parseUnits } from "viem";
@@ -20,6 +19,7 @@ import {
   useWriteContract,
 } from "wagmi";
 
+import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import {
   Alert,
   Button,
@@ -37,7 +37,9 @@ const galleonAddress = stakingAddresses[NETWORK_NAME]
   .v1Galleon as `0x${string}`;
 const carrackAddress = stakingAddresses[NETWORK_NAME]
   .v2Carrack as `0x${string}`;
-const realmsAddress = getTokenContractAddresses("realms").L1;
+const realmsAddress = getCollectionAddresses(Collections.REALMS)[
+  SUPPORTED_L1_CHAIN_ID
+];
 
 export const StakingContainer = () => {
   const { address: addressL1, isConnected } = useAccount();
@@ -45,7 +47,6 @@ export const StakingContainer = () => {
   const [hexProof, setHexProof] = useState();
   const [poolTotal, setPoolTotal] = useState<bigint>(0n);
   const [poolClaimAmount, setPoolClaimAmount] = useState<bigint>();
-  const [calculatedPoolAmount, setCalculatedPoolAmount] = useState(false);
 
   const address = addressL1 ? addressL1.toLowerCase() : "0x";
 
@@ -129,7 +130,6 @@ export const StakingContainer = () => {
 
             console.log("Claimable:", parseEther(claimable.toString()));
             setPoolClaimAmount(parseEther(claimable.toString()));
-            setCalculatedPoolAmount(true);
           }
         } catch (error) {
           console.error("Error fetching staking data:", error);

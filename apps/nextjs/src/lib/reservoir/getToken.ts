@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { RESERVOIR_API_URL } from "@/constants/env";
 
 function buildQueryString(queryObject: any) {
@@ -80,11 +86,12 @@ export const getToken = async ({
       }/tokens/v6?${queryString}&${check()}`,
     );*/
     const res = await fetch(
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       `${RESERVOIR_API_URL}/tokens/v6?${queryString}&${check()}`,
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.RESERVOIR_API_KEY || "",
+          "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
         },
         next: { revalidate: 60 },
       },

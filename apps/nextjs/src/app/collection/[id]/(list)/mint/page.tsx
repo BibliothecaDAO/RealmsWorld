@@ -3,9 +3,12 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
-import { NETWORK_NAME, STARKSCAN_TX_URL } from "@/constants/env";
+import {
+  NETWORK_NAME,
+  STARKSCAN_TX_URL,
+  SUPPORTED_L2_CHAIN_ID,
+} from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
-import { getTokenContractAddresses } from "@/utils/utils";
 import {
   useAccount,
   useContractWrite,
@@ -15,6 +18,7 @@ import { ExternalLinkIcon, Loader2 } from "lucide-react";
 import { uint256 } from "starknet";
 import { formatEther } from "viem";
 
+import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import { Button, Input } from "@realms-world/ui";
 
 // MAINNET TODO: UPDATE PRICE
@@ -25,7 +29,9 @@ const MINT_COST =
 export default function Mint() {
   const { account } = useAccount();
 
-  const tokenAddress = getTokenContractAddresses("goldenToken").L2;
+  const tokenAddress = getCollectionAddresses(Collections.GOLDEN_TOKEN)[
+    SUPPORTED_L2_CHAIN_ID
+  ];
   const [hash, setHash] = useState(undefined);
   const [mintQty, setMintQty] = useState(1);
 

@@ -2,7 +2,8 @@
 
 import type { TokenMarketData } from "@/types";
 import { L1TokenCard } from "@/app/collection/[id]/(list)/L1TokenCard";
-import { findTokenName } from "@/utils/utils";
+
+import { getCollectionFromAddress } from "@realms-world/constants";
 
 import { useUIContext } from "../../../providers/UIProvider";
 
@@ -18,7 +19,7 @@ export const L1TokenTable = ({
   const grid =
     "grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
   const list = "grid grid-cols-1 mx-4 border border-t-0";
-  const collectionName = findTokenName(address);
+  const collectionName = getCollectionFromAddress(address);
 
   return (
     <div className={isGrid ? grid : list}>
@@ -27,7 +28,7 @@ export const L1TokenTable = ({
             return (
               <L1TokenCard
                 key={index}
-                collectionName={collectionName}
+                collectionName={collectionName ?? ""}
                 token={token}
                 layout={isGrid ? "grid" : "list"}
               />

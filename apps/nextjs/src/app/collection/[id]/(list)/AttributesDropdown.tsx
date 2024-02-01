@@ -24,12 +24,7 @@ export const AttributesDropdown = ({
   attributes?: any;
   attributesPromise?: Promise<RouterOutputs["erc721Attributes"]["all"]>;
 }) => {
-  const {
-    handleAttributeClick,
-    isAttributeInQuery,
-    isKeyInQuery,
-    getQueriesFromUrl,
-  } = useQuery();
+  const { handleAttributeClick, isAttributeInQuery, isKeyInQuery } = useQuery();
   const { data: attributesFetched } = api.erc721Attributes.all.useQuery(
     {
       contractAddress: address,

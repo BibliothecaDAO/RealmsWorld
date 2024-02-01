@@ -1,6 +1,8 @@
 import type { Collection, L2Collection } from "@/types";
 import { CollectionCard } from "@/app/_components/CollectionCard";
-import { getTokenContractAddresses } from "@/utils/utils";
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
+
+import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
 import { getCollections } from "../../lib/reservoir/getCollections";
 
@@ -11,12 +13,15 @@ export const metadata = {
 };
 
 export default async function CollectionsList() {
-  const l1Collections = await getCollections([
-    { contract: getTokenContractAddresses("realms").L1! },
-  ]);
+  const { collections } = (await getCollections([
+    {
+      contract: getCollectionAddresses(Collections.REALMS)[
+        SUPPORTED_L1_CHAIN_ID
+      ]!,
+    },
+  ])) as { collections: Collection[] };
 
   // TODO refine collection display logic (with l2 collections included)
-  const collections: Collection[] = l1Collections?.collections;
   const l2Collections: L2Collection[] = [
     {
       name: "Beasts",
@@ -26,7 +31,7 @@ export default async function CollectionsList() {
     {
       name: "Golden Token",
       link: "goldentoken",
-      image: "/collections/goldenToken.svg",
+      image: "/collections/goldentoken.svg",
     },
   ];
 

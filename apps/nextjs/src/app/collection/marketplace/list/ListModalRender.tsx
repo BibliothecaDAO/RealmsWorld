@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ExpirationOption } from "@/types";
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
-import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { findCollectionKeyByAddress } from "@/utils/getters";
 import {
   //useAccount,
@@ -13,7 +14,6 @@ import { parseUnits } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
-  ChainId,
   MarketplaceCollectionIds,
   MarketplaceContract,
 } from "@realms-world/constants";
@@ -89,7 +89,7 @@ export const ListModalRenderer: FC<Props> = ({
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [stepData, setStepData] = useState<ListModalStepData | null>(null);
   const [price, setPrice] = useState<number>(0);
-  const [quantity, setQuantity] = useState(1);
+  //const [quantity, setQuantity] = useState(1);
   const contract = collectionId ? collectionId?.split(":")[0] : undefined;
   const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
     expirationOptions[5]!,
@@ -221,7 +221,7 @@ export const ListModalRenderer: FC<Props> = ({
     setListStep(ListStep.Listing);
 
     await writeAsync();
-  }, [collectionId, tokenId, expirationOption, quantity, price]);
+  }, [collectionId, tokenId, expirationOption, price]);
 
   return (
     <>

@@ -1,8 +1,8 @@
 import type { ReactElement } from "react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import Lords from "@/icons/lords.svg";
-import { faImages, faTag } from "@fortawesome/free-solid-svg-icons";
+import { faTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import ListCheckout from './ListCheckout'
 import dayjs from "dayjs";
@@ -30,11 +30,7 @@ import { formatNumber } from "@realms-world/utils";
 import type { ListingData } from "./ListModalRender";
 import Earnings from "./Earnings";
 import ListItem from "./ListItem";
-import {
-  ListModalRenderer,
-  ListModalStepData,
-  ListStep,
-} from "./ListModalRender";
+import { ListModalRenderer, ListStep } from "./ListModalRender";
 
 interface ListingCallbackData {
   listings?: ListingData[];

@@ -3,11 +3,12 @@
 import { useTimeDiff } from "@/hooks/useTimeDiff";
 import Lords from "@/icons/lords.svg";
 import { api } from "@/trpc/react";
-import { findTokenName, padAddress } from "@/utils/utils";
+import { padAddress } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 import { Clock } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
+import { getCollectionFromAddress } from "@realms-world/constants";
 import {
   Accordion,
   AccordionContent,
@@ -20,8 +21,6 @@ import { BuyModal } from "../../marketplace/buy/BuyModal";
 import TokenOwnerActions from "../../marketplace/TokenOwnerActions";
 import { L2ActivityCard } from "../(list)/activity/L2ActivityCard";
 import { ListingCard } from "../(list)/LIstingCard";
-import { LoadingSkeleton } from "./loading";
-import { TokenInformation } from "./TokenInformation";
 
 export const L2Token = ({
   contractAddress,
@@ -32,7 +31,7 @@ export const L2Token = ({
   tokenId: string;
   token: RouterOutputs["erc721Tokens"]["byId"];
 }) => {
-  const { data: erc721Token, isLoading } = api.erc721Tokens.byId.useQuery(
+  const { data: erc721Token } = api.erc721Tokens.byId.useQuery(
     {
       id: contractAddress + ":" + tokenId,
     },
@@ -49,13 +48,13 @@ export const L2Token = ({
 
   const lowestPriceActiveListing = activeListings?.reduce(
     (minPriceListing, currentListing) =>
-      currentListing.price < minPriceListing.price
+      (currentListing.price ?? 0) < (minPriceListing?.price ?? 0)
         ? currentListing
         : minPriceListing,
     activeListings[0],
   );
 
-  const collectionId = findTokenName(contractAddress);
+  const collectionId = getCollectionFromAddress(contractAddress);
   const expiryDiff = useTimeDiff(lowestPriceActiveListing?.expiration || 0);
 
   const price = lowestPriceActiveListing?.price
@@ -87,11 +86,7 @@ export const L2Token = ({
             "Not listed"
           )}{" "}
           {erc721Token.owner == padAddress(address) ? (
-            <TokenOwnerActions
-              token={token}
-              tokenId={tokenId}
-              contractAddress={contractAddress}
-            />
+            <TokenOwnerActions token={token} tokenId={tokenId} />
           ) : (
             <div>
               {lowestPriceActiveListing && (
@@ -111,7 +106,11 @@ export const L2Token = ({
           )}
         </div>
       </div>
-      <Accordion type="multiple" defaultValue={"item-2"} className="">
+      <Accordion
+        type="multiple"
+        defaultValue={["item-1", "item-2"]}
+        className=""
+      >
         <AccordionItem value="item-1">
           <div className="mt-4 border bg-dark-green px-4">
             <AccordionTrigger className="text-lg">Listings</AccordionTrigger>
