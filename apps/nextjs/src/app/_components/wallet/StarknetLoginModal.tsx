@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+//import { Mail } from "lucide-react";
+import type { WalletProvider } from "get-starknet-core";
+import { useEffect, useState } from "react";
 import { useUIContext } from "@/app/providers/UIProvider";
 import { useAccount, useConnect } from "@starknet-react/core";
 import { motion } from "framer-motion";
-//import { Mail } from "lucide-react";
-import type { WalletProvider } from "get-starknet-core";
 import getDiscoveryWallets from "get-starknet-core";
 
 import { Button, Dialog, DialogContent, DialogHeader } from "@realms-world/ui";
@@ -58,6 +58,7 @@ export const StarknetLoginModal = () => {
         });
       });
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getWallets();
   }, []);
 
@@ -66,6 +67,7 @@ export const StarknetLoginModal = () => {
       toggleStarknetLogin();
       !isAccountOpen && toggleAccount();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
 
   return (
@@ -83,7 +85,7 @@ export const StarknetLoginModal = () => {
             <h6 className="-mt-3 mb-6 text-base">Connect Starknet Wallet</h6>
           </DialogHeader>
           <div className="flex flex-col space-y-2 self-center">
-            {connectors?.map((connector, index) => {
+            {connectors?.map((connector) => {
               if (connector?.available()) {
                 return (
                   <div className="mt-5 flex justify-center" key={connector.id}>

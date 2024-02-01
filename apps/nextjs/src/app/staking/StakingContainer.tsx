@@ -6,10 +6,9 @@ import { ERC721 } from "@/abi/L1/ERC721";
 import { paymentPoolAbi } from "@/abi/L1/PaymentPool";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
-import { NETWORK_NAME } from "@/constants/env";
+import { NETWORK_NAME, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
 import Lords from "@/icons/lords.svg";
-import { getTokenContractAddresses } from "@/utils/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Loader, Loader2 } from "lucide-react";
 import { formatEther, parseEther, parseUnits } from "viem";
@@ -20,6 +19,7 @@ import {
   useWriteContract,
 } from "wagmi";
 
+import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import {
   Alert,
   Button,
@@ -37,7 +37,9 @@ const galleonAddress = stakingAddresses[NETWORK_NAME]
   .v1Galleon as `0x${string}`;
 const carrackAddress = stakingAddresses[NETWORK_NAME]
   .v2Carrack as `0x${string}`;
-const realmsAddress = getTokenContractAddresses("realms").L1;
+const realmsAddress = getCollectionAddresses(Collections.REALMS)[
+  SUPPORTED_L1_CHAIN_ID
+];
 
 export const StakingContainer = () => {
   const { address: addressL1, isConnected } = useAccount();
@@ -150,7 +152,7 @@ export const StakingContainer = () => {
             ) : (
               <>
                 <span className="text-2xl">
-                  {realmsData?.wallet?.realmsHeld || 0}
+                  {realmsData?.wallet?.realmsHeld ?? 0}
                 </span>
                 <span className="mb-4">Realms Available</span>
                 <StakingModal realms={realmsData?.realms} />
@@ -177,7 +179,7 @@ export const StakingContainer = () => {
             ) : (
               <>
                 <span className="text-2xl">
-                  {realmsData?.wallet?.bridgedRealmsHeld || 0}
+                  {realmsData?.wallet?.bridgedRealmsHeld ?? 0}
                 </span>
                 <span className="mb-4">Realms Staked</span>
                 <StakingModal
@@ -270,7 +272,7 @@ export const StakingContainer = () => {
             )}
           </div>
         </div>
-        {(realmsData?.bridgedV2Realms.length ||
+        {(realmsData?.bridgedV2Realms.length ??
           (carrackLordsAvailableData &&
             carrackLordsAvailableData?.[0] > 0n)) && (
           <div className="mt-10 flex flex-col">
@@ -290,7 +292,7 @@ export const StakingContainer = () => {
                   ) : (
                     <>
                       <span className="text-2xl">
-                        {realmsData?.wallet?.bridgedV2RealmsHeld || 0}
+                        {realmsData?.wallet?.bridgedV2RealmsHeld ?? 0}
                       </span>
                       <span className="mb-4">Staked Realms:</span>
                       <StakingModal
@@ -310,7 +312,7 @@ export const StakingContainer = () => {
                     <>
                       <span className="flex justify-center text-2xl">
                         <Lords className="mr-2 h-8 w-8 fill-current" />
-                        {formatEther(carrackLordsAvailableData?.[0] || 0n)}
+                        {formatEther(carrackLordsAvailableData?.[0] ?? 0n)}
                       </span>
                       <span className="mb-4 text-sm">Epoch 35+</span>
 
@@ -381,13 +383,12 @@ const StakingModal = ({
       address: realmsAddress as `0x${string}`,
       abi: ERC721,
       functionName: "isApprovedForAll",
-      args: [address as `0x${string}`, galleonAddress],
+      args: [address!, galleonAddress],
     });
 
-  const { data: approvedTransactionData, isSuccess } =
-    useWaitForTransactionReceipt({
-      hash: approveGalleonData,
-    });
+  const { isSuccess } = useWaitForTransactionReceipt({
+    hash: approveGalleonData,
+  });
 
   useEffect(() => {
     refetchGalleonApprovedData();

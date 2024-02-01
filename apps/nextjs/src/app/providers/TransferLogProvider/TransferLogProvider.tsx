@@ -1,7 +1,8 @@
 "use client";
 
+import type { DepositsQuery } from "@/.graphclient";
 import type { ReactNode } from "react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 /*import {
   fetchL1Transfers,
   fetchL2Transfers,
@@ -18,7 +19,6 @@ import { useAccount as useL1Account } from "wagmi";
 
 import { TransferLogContext } from "./transfer-log-context";
 
-const GET_PENDING_WITHDRAWALS_REFETCH_INTERVAL = 1000 * 30;
 const GET_TRANSFERS_REFETCH_INTERVAL = 0; // 1000 * 15;
 
 /*export const fetchPendingWithdrawals = async (accountL1): Promise<> =>
@@ -37,7 +37,6 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
   const { address: accountL1 } = useL1Account();
   const { address: accountL2 } = useL2Account();
   const [nextL1, setNextL1] = useState("");
-  const [nextL2, setNextL2] = useState("");
 
   /*const pendingWithdrawalsQuery = useInfiniteQuery({
     queryKey: ["PendingWithdrawals", accountL1],
@@ -56,14 +55,15 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
 
   const transfersQueryL1 = useInfiniteQuery({
     queryKey: ["Deposits", GET_TRANSFERS_ENDPOINT, accountL1],
-    queryFn: async ({ pageParam = "" }) => {
+    queryFn: async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return await getBridgeDeposits({
         depositsWhere: { l1Sender: accountL1 },
         withdrawalsWhere: { l1Recipient: accountL1 },
       });
     },
     enabled: !!accountL1,
-    //initialPageParam: "0",
+    initialPageParam: "0",
     getNextPageParam: () => nextL1,
     refetchInterval: GET_TRANSFERS_REFETCH_INTERVAL,
   });
@@ -81,14 +81,6 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       // initialCursor: 1, // <-- optional you can pass an initialCursor
     },*/
-  );
-
-  const cloneLogsWithIds = useCallback(
-    (logs: any) =>
-      Array.isArray(logs)
-        ? logs.map((log: any) => ({ ...log, id: log.l2TxHash }))
-        : [],
-    [],
   );
 
   const context = {

@@ -1,7 +1,6 @@
-import type { ERC721Tokens } from "@/constants/erc721Tokens";
-import { NETWORK_NAME } from "@/constants/env";
-import { erc721Tokens } from "@/constants/erc721Tokens";
-import { ChainType, tokens } from "@/constants/tokens";
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { tokens } from "@/constants/tokens";
 import { formatUnits } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -34,32 +33,6 @@ export function padAddress(address?: string) {
     return "";
   }
 }
-
-export function getTokenContractAddresses(name: keyof typeof erc721Tokens) {
-  return {
-    L1: erc721Tokens[name]?.contractAddresses.L1?.[ChainType.L1[NETWORK_NAME]],
-    L2: erc721Tokens[name]?.contractAddresses.L2?.[ChainType.L2[NETWORK_NAME]],
-  };
-}
-
-export function findTokenName(contractAddress?: string): string {
-  for (const tokenName in erc721Tokens) {
-    const contractAddresses =
-      erc721Tokens[tokenName as keyof ERC721Tokens].contractAddresses;
-
-    for (const chainType in contractAddresses) {
-      const addresses = contractAddresses[chainType as keyof typeof ChainType];
-
-      for (const chainName in addresses) {
-        if (addresses[chainName] === contractAddress) {
-          return tokenName;
-        }
-      }
-    }
-  }
-  return contractAddress; // Return null if the contract address is not found in the object for the specified network type
-}
-
 export function shortenHex(hexString: string, numDigits = 6) {
   if (hexString.length <= numDigits) {
     return hexString;
@@ -95,6 +68,7 @@ export function buildQueryString(queryObject: any) {
 export function formatQueryString(querybatch: any, type = "contract") {
   if (querybatch && Array.isArray(querybatch) && querybatch.length > 0) {
     const queryString = querybatch
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       .map((contractObj) => `${type}=${contractObj[type]}`)
       .join("&");
     return queryString;

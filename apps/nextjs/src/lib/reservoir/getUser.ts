@@ -6,7 +6,7 @@ export const getUser = async ({
   continuation,
 }: {
   address: string;
-  continuation: any;
+  continuation?: string;
 }) => {
   try {
     const queryString = continuation ? `&continuation=${continuation}` : "";
@@ -15,11 +15,13 @@ export const getUser = async ({
     const res = await fetch(url, {
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": process.env.RESERVOIR_API_KEY || "",
+        "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
         "Access-Control-Allow-Origin": "*",
       },
     });
-    const data: any = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
   } catch (error) {
     return error;

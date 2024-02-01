@@ -1,3 +1,5 @@
+import type { Deposit_filter, Withdrawal_filter } from "@/.graphclient";
+
 const query = `query Deposits(
   $depositsWhere: Deposit_filter
   $withdrawalsWhere: Withdrawal_filter
@@ -46,12 +48,11 @@ const query = `query Deposits(
 
 export const getBridgeDeposits = async ({
   depositsWhere,
-  withdrawalsWhere,
-} /*first,
-  skip,*/
-: {
-  depositsWhere: any;
-  withdrawalsWhere: any;
+  withdrawalsWhere /*first,
+  skip,*/,
+}: {
+  depositsWhere: Deposit_filter;
+  withdrawalsWhere: Withdrawal_filter;
   /*first: number;
   skip: number;*/
 }) => {
@@ -66,12 +67,14 @@ export const getBridgeDeposits = async ({
         },
         body: JSON.stringify({
           query,
+
           variables: { depositsWhere, withdrawalsWhere },
         }),
       },
     );
-
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
   } catch (error) {
     return error;

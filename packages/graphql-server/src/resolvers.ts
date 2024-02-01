@@ -17,7 +17,7 @@ export const resolvers: Resolvers = {
     getERC721Tokens: async (
       _,
       { limit, cursor, contract_address, owner, block },
-      ctx,
+      __,
     ) => {
       const where: SQL[] = [];
       if (contract_address) {

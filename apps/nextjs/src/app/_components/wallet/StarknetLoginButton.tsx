@@ -20,12 +20,12 @@ export const StarknetLoginButton = ({
   buttonClass?: string;
 }) => {
   const { address, isConnected } = useL2Account();
-  const { isAccountOpen, toggleAccount, toggleStarknetLogin } = useUIContext();
+  const { toggleAccount, toggleStarknetLogin } = useUIContext();
 
   const onConnectClick = () => {
     return !isConnected
       ? toggleStarknetLogin()
-      : openAccount && toggleAccount({ openAccount });
+      : openAccount && toggleAccount();
   };
 
   return (

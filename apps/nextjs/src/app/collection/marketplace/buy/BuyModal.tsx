@@ -1,28 +1,15 @@
-import type {
-  ComponentPropsWithoutRef,
-  Dispatch,
-  ReactElement,
-  SetStateAction,
-} from "react";
-import React, { useContext, useEffect, useState } from "react";
+import type { ReactElement } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import NumberSelect from "@/app/_components/NumberSelect";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
-import { RenderExplorers } from "@/app/_components/wallet/utils";
-import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
+//import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import Lords from "@/icons/lords.svg";
-import { shortenHex } from "@/utils/utils";
 // import Progress from '../Progress'
-import {
-  faCheckCircle,
-  faChevronLeft,
-  faChevronRight,
-  faCircleExclamation,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAccount } from "@starknet-react/core";
 import { Loader } from "lucide-react";
-import { formatUnits } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
@@ -43,7 +30,6 @@ interface PurchaseData {
   tokenId?: number;
   collectionId?: string;
   maker?: string;
-  steps?: any; //Execute['steps']
 }
 
 const ModalCopy = {
@@ -62,8 +48,9 @@ const ModalCopy = {
 };
 
 interface Props {
-  openState?: [boolean, Dispatch<SetStateAction<boolean>>];
-  token?: RouterOutputs["erc721Tokens"]["byId"];
+  token?:
+    | RouterOutputs["erc721Tokens"]["byId"]
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   collectionId?: string;
   defaultQuantity?: number;
   orderId?: number;
@@ -104,7 +91,6 @@ function titleForStep(
 }
 
 export function BuyModal({
-  openState,
   trigger,
   token,
   collectionId,
@@ -121,7 +107,7 @@ export function BuyModal({
   const [open, setOpen] = useState(false);
 
   const { address } = useAccount();
-  const { balances } = useWalletsProviderContext();
+  //const { balances } = useWalletsProviderContext();
 
   return (
     <BuyModalRender
@@ -141,20 +127,16 @@ export function BuyModal({
         quantityAvailable,
         quantity,
         averageUnitPrice,
-        totalPrice,
         buyStep,
         transactionError,
         hasEnoughCurrency,
         addFundsLink,
-        steps,
         stepData,
         //feeUsd,
         gasCost,
-        totalUsd,
         usdPrice,
         isOwner,
         setQuantity,
-        setBuyStep,
         buyToken,
       }) => {
         const title = titleForStep(buyStep, copy, loading, isOwner);
@@ -166,9 +148,7 @@ export function BuyModal({
               collectionId: collectionId,
               maker: address,
             };
-            if (steps) {
-              data.steps = steps;
-            }
+
             onPurchaseComplete(data);
           }
         }, [buyStep]);
@@ -183,23 +163,6 @@ export function BuyModal({
             onPurchaseError(transactionError, data);
           }
         }, [transactionError]);
-
-        const executableSteps =
-          steps?.filter((step) => step.items && step.items.length > 0) || [];
-        const lastStepItems =
-          executableSteps[executableSteps.length - 1]?.items || [];
-
-        const totalPurchases =
-          stepData?.currentStep?.items?.reduce((total, item) => {
-            item.transfersData?.forEach((transferData) => {
-              total += Number(transferData.amount || 1);
-            });
-            return total;
-          }, 0) || 0;
-
-        const failedPurchases = quantity - totalPurchases;
-        const successfulPurchases = quantity - failedPurchases;
-        const finalTxHashes = lastStepItems[lastStepItems.length - 1]?.txHashes;
 
         const price = listing?.price ?? 0;
 
@@ -229,8 +192,10 @@ export function BuyModal({
                     collection={collection}
                     usdPrice={usdPrice}
                     isUnavailable={true}
-                    price={quantity > 1 ? averageUnitPrice : price}
-                    priceSubtitle={quantity > 1 ? "Average Price" : undefined}
+                    price={/*quantity > 1 ? averageUnitPrice :*/ price}
+                    priceSubtitle={
+                      /*quantity > 1 ? "Average Price" : */ undefined
+                    }
                     showRoyalties={true}
                   />
                   <Button
@@ -352,22 +317,6 @@ export function BuyModal({
                     priceSubtitle={quantity > 1 ? "Average Price" : undefined}
                     quantity={quantity}
                   />
-                  {/*stepData && stepData.totalSteps > 1 && (
-                  <ProgressBar
-                    css={{ px: "$4", mt: "$3" }}
-                    value={stepData?.stepProgress || 0}
-                    max={stepData?.totalSteps || 0}
-                  />
-                )*/}
-                  {/* {!stepData && (
-                    <Loader className="mx-auto h-24 animate-spin" />
-                  )} */}
-                  {/*stepData && (
-                  <Progress
-                    title={stepData?.currentStep.action || ""}
-                    txHashes={stepData?.currentStepItem.txHashes}
-                  />
-                )*/}
                   <Button disabled={true}>
                     <Loader className="mr-2 animate-spin" />
                     {stepData?.currentStepItem?.txHashes
@@ -380,84 +329,20 @@ export function BuyModal({
               {buyStep === BuyStep.Complete && token && (
                 <div className="flex flex-col">
                   <div className="flex flex-col items-center text-center">
-                    {/*totalPurchases === 1 ? (*/}
                     <h5 className="my-8 text-center">Congratulations!</h5>
-                    {
-                      /*}) : (
-                      <>
-                        <div
-                          className={`text-color: ${
-                            failedPurchases ? "$errorAccent" : "$successAccent"
-                          }
-                        `}
-                        >
-                          <FontAwesomeIcon
-                            icon={
-                              failedPurchases
-                                ? faCircleExclamation
-                                : faCheckCircle
-                            }
-                            fontSize={32}
-                          />
-                        </div>
-                        <h5 className="my-8 text-center">
-                          {failedPurchases
-                            ? `${successfulPurchases} ${
-                                successfulPurchases > 1 ? "items" : "item"
-                              } purchased, ${failedPurchases} ${
-                                failedPurchases > 1 ? "items" : "item"
-                              } failed`
-                            : "Congrats! Purchase was successful."}
-                        </h5>
-                      </>
-                    )}
-                    {totalPurchases === 1 &&*/ token?.image && (
-                        <Image
-                          src={token?.image}
-                          alt="token image"
-                          width={100}
-                          height={100}
-                        />
-                      )
-                    }
-                    {totalPurchases > 1 && (
-                      <div className="flex flex-col gap-y-2">
-                        {/*TODO add explorer
-                      stepData?.currentStep?.items?.map((item, itemIndex) => {
-                        if (
-                          Array.isArray(item?.txHashes) &&
-                          item?.txHashes.length > 0
-                        ) {
-                          return item.txHashes.map((hash, txHashIndex) => {
-                            const truncatedTxHash = shortenHex(
-                              hash.txHash,
-                            );
-                             const blockExplorerBaseUrl =
-                              getChainBlockExplorerUrl(hash.chainId);
-                            return (
-                              <Anchor
-                                key={`${itemIndex}-${txHashIndex}`}
-                                href={`${blockExplorerBaseUrl}/tx/${hash.txHash}`}
-                                color="primary"
-                                weight="medium"
-                                target="_blank"
-                                css={{ fontSize: 12 }}
-                              >
-                                View transaction: {truncatedTxHash}
-                              </Anchor>
-                            );
-                          });
-                        } else {
-                          return null;
-                        }
-                      })*/}
-                      </div>
+                    {token?.image && (
+                      <Image
+                        src={token?.image}
+                        alt="token image"
+                        width={100}
+                        height={100}
+                      />
                     )}
 
                     <div className="m-w-full my-8 flex items-center justify-center">
-                      {!!token.collection?.image && (
+                      {/*!!token.collection?.image && (
                         <div className="mr-1">
-                          <img
+                          <Image
                             src={token.collection?.image}
                             style={{
                               width: 24,
@@ -466,7 +351,7 @@ export function BuyModal({
                             }}
                           />
                         </div>
-                      )}
+                          )*/}
                       <span className="text-ellipsify max-w-full">
                         {token?.name
                           ? decodeURI(token?.name)

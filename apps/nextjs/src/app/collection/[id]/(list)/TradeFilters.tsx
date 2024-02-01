@@ -14,7 +14,7 @@ import {
 } from "@realms-world/ui";
 
 export const TradeFilters = () => {
-  const { handleAttributeClick, getQueriesFromUrl } = useQuery();
+  const { handleAttributeClick } = useQuery();
   const { isGrid, toggleFilter, toggleGrid } = useUIContext();
   return (
     <div className="ml-auto flex space-x-2">

@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
-import { findTokenName } from "@/utils/utils";
 
 import type { RouterOutputs } from "@realms-world/api";
+import { getCollectionFromAddress } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";
@@ -28,7 +28,7 @@ export const L2ERC721Card = ({
     >
       <div>
         <Link
-          href={`/collection/${findTokenName(token.contract_address)}/${
+          href={`/collection/${token.contract_address && getCollectionFromAddress(token.contract_address)}/${
             token.token_id
           }`}
           className={`${isGrid ? "" : "flex"}`}
@@ -125,6 +125,12 @@ const GridDetails = ({
       attributeKeys={["type", "tier", "level", "health"]}
     />
     <Price token={token} />
+    {token.lastPrice && (
+      <span className="flex text-bright-yellow/50">
+        Last sale: {token.lastPrice}
+        <LordsIcon className="ml-2 h-4 w-4 self-center fill-current" />
+      </span>
+    )}
     <div>
       <div className="absolute bottom-0 left-0 w-full px-3 opacity-0 transition-all duration-300 group-hover:bottom-4 group-hover:opacity-100">
         <CardAction token={token} />

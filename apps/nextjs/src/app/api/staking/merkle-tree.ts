@@ -1,3 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { ToBufferInputTypes } from "ethereumjs-util";
 import {
   bufferToHex,
   keccak256,
@@ -7,7 +15,9 @@ import {
 import Web3Utils from "web3-utils";
 
 export default class MerkleTree {
-  constructor(elements) {
+  elements: Buffer[];
+  layers: any[];
+  constructor(elements: any[]) {
     // Filter empty strings and hash elements
     this.elements = elements.filter((el) => el).map((el) => this.sha3(el));
 
@@ -20,7 +30,7 @@ export default class MerkleTree {
     this.layers = this.getLayers(this.elements);
   }
 
-  getLayers(elements) {
+  getLayers(elements: string | any[]) {
     if (elements.length === 0) {
       return [[""]];
     }
@@ -35,18 +45,21 @@ export default class MerkleTree {
 
     return layers;
   }
-  getNextLayer(elements) {
-    return elements.reduce((layer, el, idx, arr) => {
-      if (idx % 2 === 0) {
-        // Hash the current element with its pair element
-        layer.push(this.combinedHash(el, arr[idx + 1]));
-      }
+  getNextLayer(elements?: any) {
+    return elements?.reduce(
+      (layer: any[], el: any, idx: number, arr: Record<string, any>) => {
+        if (idx % 2 === 0) {
+          // Hash the current element with its pair element
+          layer.push(this.combinedHash(el, arr[idx + 1]));
+        }
 
-      return layer;
-    }, []);
+        return layer;
+      },
+      [],
+    );
   }
 
-  combinedHash(first, second) {
+  combinedHash(first: any, second: any) {
     if (!first) {
       return second;
     }
@@ -64,7 +77,7 @@ export default class MerkleTree {
     return bufferToHex(this.getRoot());
   }
 
-  getProof(el, prefix) {
+  getProof(el: any, prefix: any[]) {
     let idx = this.bufIndexOf(el, this.elements);
 
     if (idx === -1) {
@@ -88,20 +101,25 @@ export default class MerkleTree {
         prefix = [prefix];
       }
 
-      prefix = prefix.map((item) => setLengthLeft(toBuffer(item), 32));
+      prefix = prefix.map((item: ToBufferInputTypes) =>
+        setLengthLeft(toBuffer(item), 32),
+      );
       proof = prefix.concat(proof);
     }
 
     return proof;
   }
 
-  getHexProof(el, prefix) {
+  getHexProof(
+    el: { payee: string; amount: number },
+    prefix: (string | number)[],
+  ) {
     const proof = this.getProof(el, prefix);
 
     return this.bufArrToHex(proof);
   }
 
-  getPairElement(idx, layer) {
+  getPairElement(idx: number, layer: string | any[]) {
     const pairIdx = idx % 2 === 0 ? idx + 1 : idx - 1;
 
     if (pairIdx < layer.length) {
@@ -111,7 +129,7 @@ export default class MerkleTree {
     }
   }
 
-  bufIndexOf(el, arr) {
+  bufIndexOf(el: any, arr: any) {
     let hash;
 
     // Convert element to 32 byte hash if it is not one already
@@ -130,31 +148,36 @@ export default class MerkleTree {
     return -1;
   }
 
-  bufDedup(elements) {
-    return elements.filter((el, idx) => {
+  bufDedup(elements: any[]) {
+    return elements.filter((el: any, idx: number) => {
       return this.bufIndexOf(el, elements) === idx;
     });
   }
 
-  bufArrToHex(arr) {
-    if (arr.some((el) => !Buffer.isBuffer(el))) {
+  bufArrToHex(arr: any[]) {
+    if (arr.some((el: any) => !Buffer.isBuffer(el))) {
       throw new Error("Array is not an array of buffers");
     }
 
-    return "0x" + arr.map((el) => el.toString("hex")).join("");
+    return (
+      "0x" +
+      arr
+        .map((el: { toString: (arg0: string) => any }) => el.toString("hex"))
+        .join("")
+    );
   }
 
-  sortAndConcat(...args) {
+  sortAndConcat(...args: any[]) {
     return Buffer.concat([...args].sort(Buffer.compare));
   }
 
-  sha3(node) {
+  sha3(node: { payee: any; amount: any }) {
     return Buffer.from(
       Web3Utils.hexToBytes(
         Web3Utils.soliditySha3(
-          { t: "address", v: node["payee"] },
-          { t: "uint256", v: node["amount"] },
-        ),
+          { t: "address", v: node.payee },
+          { t: "uint256", v: node.amount },
+        )!,
       ),
     );
   }

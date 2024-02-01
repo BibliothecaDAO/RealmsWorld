@@ -33,6 +33,7 @@ const starkConnectors = [
   }),
   new ArgentMobileConnector(),
 ];
+const isTestnet = process.env.NEXT_PUBLIC_IS_TESTNET === "true";
 
 /*const theme = darkTheme({
   headlineFont: "Sans Serif",
@@ -44,9 +45,8 @@ const starkConnectors = [
 export const config = getDefaultConfig({
   appName: "Realms.World",
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-  chains: [mainnet, sepolia],
+  chains: [isTestnet ? sepolia : mainnet],
   transports: {
-    [mainnet.id]: http(),
     [sepolia.id]: http(),
     [mainnet.id]: http(),
   },

@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useContext, useMemo } from "react";
@@ -13,7 +19,7 @@ export const useTransferLog = (isL1 = true) => {
       ...query,
       transfers: isL1 ? flattenPages(query?.data) : query.data,
     };
-  }, [query]);
+  }, [isL1, query]);
 };
 
 export const useTransfers = () => {
@@ -40,16 +46,16 @@ export const useTransfers = () => {
   return useMemo(() => {
     const removeDuplicatesLogs = (logs: any) => {
       const unique = {};
-      //@ts-ignore
+      //@ts-expect-error imported
       return logs.filter((log) => !unique[log.id] && (unique[log.id] = true));
     };
 
     const sortLogsAccordingToTimestamp = (logs: any) => {
-      //@ts-ignore
+      //@ts-expect-error imported
       const extractTs = ({ type, l1TxTimestamp, l2TxTimestamp }) => {
         return isDeposit(type) ? l1TxTimestamp : l2TxTimestamp;
       };
-      //@ts-ignore
+      //@ts-expect-error imported
       return logs.sort((a, b) => extractTs(a) - extractTs(b));
     };
     console.log("done" + doneFetching);
@@ -63,25 +69,15 @@ export const useTransfers = () => {
       return sortLogsAccordingToTimestamp(uniqueLogs);
     }
     return [];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [doneFetching]);
 };
-//@ts-ignore
-function isIterable(input) {
-  if (input === null || input === undefined) {
-    return false;
-  }
-
-  return typeof input[Symbol.iterator] === "function";
-}
 
 const flattenPages = (data: any) => {
   return data?.pages.length
     ? [
-        ...(data?.pages?.[0]?.data.withdrawals || []),
-        ...(data?.pages?.[0]?.data.deposits || []),
+        ...(data?.pages?.[0]?.data.withdrawals ?? []),
+        ...(data?.pages?.[0]?.data.deposits ?? []),
       ]
     : []; /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
 };
-const flattenWithdrawals = (data: any) =>
-  data?.pages?.reduce((prev: any, curr: any) => [...prev, ...curr], []) ||
-  []; /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/

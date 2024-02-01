@@ -12,7 +12,9 @@ import { formatBN } from "@realms-world/utils";
 
 interface ListItemProps {
   collection?: any;
-  token?: RouterOutputs["erc721Tokens"]["byId"];
+  token:
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
+    | RouterOutputs["erc721Tokens"]["byId"];
   price?: number;
   quantity?: number;
   chain?: ReservoirChain | null;
@@ -24,7 +26,6 @@ const ListIem: FC<ListItemProps> = ({
   collection,
   token,
   price,
-  quantity,
   chain,
   expirationOption,
   containerCss,

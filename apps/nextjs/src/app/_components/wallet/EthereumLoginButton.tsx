@@ -11,12 +11,12 @@ import type { buttonVariants } from "@realms-world/ui";
 import { Button } from "@realms-world/ui";
 
 export const EthereumLoginButton = ({
-  openAccount = false,
+  // openAccount = false,
   variant,
   textClass,
   buttonClass,
 }: {
-  openAccount?: boolean;
+  //openAccount?: boolean;
   variant?: VariantProps<typeof buttonVariants>["variant"];
   textClass?: string;
   buttonClass?: string;
@@ -27,7 +27,7 @@ export const EthereumLoginButton = ({
       !isAccountOpen && openAccount && toggleAccount();
     },
   });*/
-  const { isAccountOpen, toggleAccount } = useUIContext();
+  const { /*isAccountOpen,*/ toggleAccount } = useUIContext();
 
   if (!connectors) {
     return null;

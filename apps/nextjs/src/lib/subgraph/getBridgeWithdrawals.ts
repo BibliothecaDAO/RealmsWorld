@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const query = `query Deposits(
   $depositsWhere: Deposit_filter
   $withdrawalsWhere: Withdrawal_filter
@@ -65,12 +66,15 @@ export const getBridgeWithdrawals = async ({
         },
         body: JSON.stringify({
           query,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           variables: { depositsWhere, withdrawalsWhere },
         }),
       },
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
   } catch (error) {
     return error;

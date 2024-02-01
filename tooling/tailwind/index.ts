@@ -1,4 +1,4 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -20,7 +20,9 @@ module.exports = {
         "dark-green": "#2A2B24",
         flamingo: "#FF93BA",
       },
+      //@ts-expect-error tailwind
       borderColor: ({ theme }) => ({
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
         DEFAULT: theme("colors.medium-dark-green"),
       }),
       fontFamily: {

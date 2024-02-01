@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import type { Attributes } from "@/types";
 
 interface TokenAttributeProps {
   title: string;
-  value: any;
+  value: string | number;
   contractId: string;
   floorAskPrice?: string | number;
   attributeTokenCount?: number;

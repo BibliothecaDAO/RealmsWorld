@@ -3,17 +3,24 @@
 import { useTimeDiff } from "@/hooks/useTimeDiff";
 import Lords from "@/icons/lords.svg";
 import { api } from "@/trpc/react";
-import { findTokenName, padAddress } from "@/utils/utils";
+import { padAddress } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 import { Clock } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { Button } from "@realms-world/ui";
+import { getCollectionFromAddress } from "@realms-world/constants";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Button,
+} from "@realms-world/ui";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";
 import TokenOwnerActions from "../../marketplace/TokenOwnerActions";
-import { LoadingSkeleton } from "./loading";
-import { TokenInformation } from "./TokenInformation";
+import { L2ActivityCard } from "../(list)/activity/L2ActivityCard";
+import { ListingCard } from "../(list)/LIstingCard";
 
 export const L2Token = ({
   contractAddress,
@@ -24,7 +31,7 @@ export const L2Token = ({
   tokenId: string;
   token: RouterOutputs["erc721Tokens"]["byId"];
 }) => {
-  const { data: erc721Token, isLoading } = api.erc721Tokens.byId.useQuery(
+  const { data: erc721Token } = api.erc721Tokens.byId.useQuery(
     {
       id: contractAddress + ":" + tokenId,
     },
@@ -36,18 +43,18 @@ export const L2Token = ({
   if (!erc721Token) return <div>Token Information Loading</div>;
 
   const activeListings = erc721Token.listings?.filter(
-    (listing) => listing.active,
+    (listing) => listing.active && listing.created_by == erc721Token.owner,
   );
 
   const lowestPriceActiveListing = activeListings?.reduce(
     (minPriceListing, currentListing) =>
-      currentListing.price < minPriceListing.price
+      (currentListing.price ?? 0) < (minPriceListing?.price ?? 0)
         ? currentListing
         : minPriceListing,
     activeListings[0],
   );
 
-  const collectionId = findTokenName(contractAddress);
+  const collectionId = getCollectionFromAddress(contractAddress);
   const expiryDiff = useTimeDiff(lowestPriceActiveListing?.expiration || 0);
 
   const price = lowestPriceActiveListing?.price
@@ -79,11 +86,7 @@ export const L2Token = ({
             "Not listed"
           )}{" "}
           {erc721Token.owner == padAddress(address) ? (
-            <TokenOwnerActions
-              token={token}
-              tokenId={tokenId}
-              contractAddress={contractAddress}
-            />
+            <TokenOwnerActions token={token} tokenId={tokenId} />
           ) : (
             <div>
               {lowestPriceActiveListing && (
@@ -103,6 +106,42 @@ export const L2Token = ({
           )}
         </div>
       </div>
+      <Accordion
+        type="multiple"
+        defaultValue={["item-1", "item-2"]}
+        className=""
+      >
+        <AccordionItem value="item-1">
+          <div className="mt-4 border bg-dark-green px-4">
+            <AccordionTrigger className="text-lg">Listings</AccordionTrigger>
+            <AccordionContent className="-mt-4 w-full flex-wrap gap-x-2">
+              {activeListings.length
+                ? activeListings.map((listing, index) => {
+                    return (
+                      <ListingCard
+                        key={index}
+                        activity={listing}
+                        token={token}
+                      />
+                    );
+                  })
+                : "No Active Listings"}
+            </AccordionContent>
+          </div>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+          <div className="mt-4 border bg-dark-green px-4">
+            <AccordionTrigger className="text-lg">
+              Token Activity
+            </AccordionTrigger>
+            <AccordionContent className="-mt-4 w-full flex-wrap gap-x-2">
+              {erc721Token.listings.map((listing, index) => {
+                return <L2ActivityCard key={index} activity={listing} />;
+              })}
+            </AccordionContent>
+          </div>
+        </AccordionItem>
+      </Accordion>
     </>
   );
 };

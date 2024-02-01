@@ -1,21 +1,30 @@
-import type { erc721Tokens } from "@/constants";
+import type { paths } from "@reservoir0x/reservoir-sdk";
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { getOwnersDistribution } from "@/lib/reservoir/getOwnerDistribution";
 import { getOwners } from "@/lib/reservoir/getOwners";
-import { getTokenContractAddresses } from "@/utils/utils";
+
+import { getCollectionAddresses } from "@realms-world/constants";
 
 import { OwnerDistribution } from "./OwnerDistribution";
 import { TopOwners } from "./TopOwners";
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const tokenAddresses = getTokenContractAddresses(
-    params.id as keyof typeof erc721Tokens,
-  );
-  const { ownersDistribution } = await getOwnersDistribution({
-    collection: tokenAddresses.L1 ?? params.id,
-  });
-  const { owners } = await getOwners({
-    collection: tokenAddresses.L1 ?? params.id,
-  });
+  const tokenAddresses = getCollectionAddresses(params.id);
+  const ownersDistributionData = getOwnersDistribution({
+    collection: tokenAddresses[SUPPORTED_L1_CHAIN_ID] ?? params.id,
+  }) as Promise<
+    paths["/collections/{collection}/owners-distribution/v1"]["get"]["responses"]["200"]["schema"]
+  >;
+  const ownersData = getOwners({
+    collection: tokenAddresses[SUPPORTED_L1_CHAIN_ID] ?? params.id,
+  }) as Promise<{
+    owners: paths["/owners/v2"]["get"]["responses"]["200"]["schema"];
+  }>;
+
+  const [{ ownersDistribution }, owners] = await Promise.all([
+    ownersDistributionData,
+    ownersData,
+  ]);
 
   const cards = [
     {
@@ -29,7 +38,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       {cards.map((card, index) => (
         <div
           key={index}
-          className="bg-dark-green rounded-xl border-2 px-8 py-2"
+          className="rounded-xl border-2 bg-dark-green px-8 py-2"
         >
           {card.component}
         </div>

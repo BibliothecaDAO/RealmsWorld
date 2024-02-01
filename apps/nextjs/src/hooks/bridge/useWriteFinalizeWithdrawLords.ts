@@ -2,24 +2,12 @@
 
 import type { L1WriteBaseParams } from "@/types/L1WriteBaseParams";
 import type { Config } from "@wagmi/core";
-import type { ContractFunctionArgs, Hash, WriteContractReturnType } from "viem";
-import type {
-  UseWriteContractParameters,
-  UseWriteContractReturnType,
-} from "wagmi";
+import type { ContractFunctionArgs, WriteContractReturnType } from "viem";
 import type { WriteContractVariables } from "wagmi/query";
-import { useEffect, useMemo, useState } from "react";
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
-import { NETWORK_NAME } from "@/constants/env";
-import { ChainType, tokens } from "@/constants/tokens";
-import { useContractWrite as useL2ContractWrite } from "@starknet-react/core";
-import { parseEther } from "viem";
-import {
-  useConfig,
-  useAccount as useL1Account,
-  useWaitForTransactionReceipt,
-  useWriteContract,
-} from "wagmi";
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
+import { tokens } from "@/constants/tokens";
+import { useAccount as useL1Account, useWriteContract } from "wagmi";
 
 import type { SupportedL1ChainId } from "@realms-world/constants/src/Chains";
 
@@ -46,31 +34,27 @@ export function useWriteFinalizeWithdrawLords<
 >(
   {
     args,
-    l2ChainId,
+
     ...rest
   }: {
     args: {
       amount: number;
       l2Address: string;
     };
-    l2ChainId: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     rest: any;
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options: any,
 ): Promise<WriteContractReturnType> {
-  const l1BridgeAddress =
-    tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]];
-  const l2BridgeAddress =
-    tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]];
-
-  const { error, writeContractAsync, ...writeReturn } = useWriteContract();
+  const { writeContractAsync } = useWriteContract();
   const { address: l1Address } = useL1Account();
 
   const writeDepost = writeContractAsync(
     {
       chainId: 1,
       address: tokens.L1.LORDS.bridgeAddress?.[
-        ChainType.L1[NETWORK_NAME]
+        SUPPORTED_L1_CHAIN_ID
       ] as `0x${string}`,
       abi: L1_BRIDGE_ABI,
       functionName: FUNCTION,

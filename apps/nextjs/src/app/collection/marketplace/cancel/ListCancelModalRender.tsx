@@ -1,14 +1,10 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
-import { NETWORK_NAME } from "@/constants/env";
+import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useContractWrite, useWaitForTransaction } from "@starknet-react/core";
 
 import type { RouterOutputs } from "@realms-world/api";
-import {
-  MarketplaceCollectionIds,
-  MarketplaceContract,
-} from "@realms-world/constants";
-import { ChainId } from "@realms-world/constants/src/Chains";
+import { MarketplaceContract } from "@realms-world/constants";
 
 //import { useCoinConversion } from "../../hooks";
 
@@ -16,13 +12,6 @@ export enum CancelStep {
   Cancel,
   Approving,
   Complete,
-}
-
-export interface CancelListingStepData {
-  totalSteps: number;
-  stepProgress: number;
-  currentStep: any;
-  currentStepItem: any;
 }
 
 interface ChildrenProps {
@@ -36,8 +25,6 @@ interface ChildrenProps {
   usdPrice: number*/
   blockExplorerBaseUrl: string;
   blockExplorerName: string;
-  steps: any;
-  stepData: CancelListingStepData | null;
   setCancelStep: React.Dispatch<React.SetStateAction<CancelStep>>;
   cancelOrder: () => void;
 }
@@ -57,8 +44,6 @@ export const ListCancelModalRender: FC<Props> = ({
 }) => {
   const [cancelStep, setCancelStep] = useState<CancelStep>(CancelStep.Cancel);
   const [transactionError, setTransactionError] = useState<Error | null>();
-  const [stepData, setStepData] = useState<CancelListingStepData | null>(null);
-  const [steps, setSteps] = useState<any>(null);
 
   const blockExplorerBaseUrl = "https://etherscan.io";
 
@@ -82,19 +67,20 @@ export const ListCancelModalRender: FC<Props> = ({
     calls: [
       {
         contractAddress: MarketplaceContract[
-          ChainId["SN_" + NETWORK_NAME]
+          SUPPORTED_L2_CHAIN_ID
         ] as `0x${string}`,
         entrypoint: "cancel",
         calldata: [listing?.id],
       },
     ],
   });
-  const { data: transactionData, error: txErrror } = useWaitForTransaction({
+  const { data: transactionData } = useWaitForTransaction({
     hash: data?.transaction_hash,
     watch: true,
   });
   useEffect(() => {
     if (data?.transaction_hash) {
+      //@ts-expect-error Wrong starknet types
       if (transactionData?.execution_status == "SUCCEEDED") {
         setCancelStep(CancelStep.Complete);
       }
@@ -123,8 +109,6 @@ export const ListCancelModalRender: FC<Props> = ({
     if (!open) {
       setCancelStep(CancelStep.Cancel);
       setTransactionError(null);
-      setStepData(null);
-      setSteps(null);
     }
   }, [open]);
 
@@ -143,8 +127,6 @@ export const ListCancelModalRender: FC<Props> = ({
         /*usdPrice,
         totalUsd,*/
         blockExplorerBaseUrl,
-        steps,
-        stepData,
         setCancelStep,
         cancelOrder,
       })}

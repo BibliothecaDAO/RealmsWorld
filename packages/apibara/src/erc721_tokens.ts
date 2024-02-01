@@ -125,6 +125,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
             update: {
               price: null,
               expiration: null,
+              last_price: price,
             },
           };
         case OrderActionType.Cancel:

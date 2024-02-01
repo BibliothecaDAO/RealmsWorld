@@ -70,9 +70,9 @@ export function getChainInfo(
     | undefined,
 ): L1ChainInfo | L2ChainInfo | undefined;
 
-export function getChainInfo(chainId: any): any {
+export function getChainInfo(chainId: unknown) {
   if (chainId) {
-    return CHAIN_INFO[chainId] ?? undefined;
+    return CHAIN_INFO[chainId as ChainId] ?? undefined;
   }
   return undefined;
 }
