@@ -1,0 +1,112 @@
+[
+  {
+    "name": "constructor",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "l1_bridge",
+        "type": "core::felt252"
+      }
+    ],
+    "outputs": [],
+    "state_mutability": "external"
+  },
+  {
+    "name": "set_l2_token_once",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "l2_token",
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ],
+    "outputs": [],
+    "state_mutability": "external"
+  },
+  {
+    "name": "handle_deposit",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "from_address",
+        "type": "core::felt252"
+      },
+      {
+        "name": "recipient",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "amount",
+        "type": "core::integer::u256"
+      }
+    ],
+    "outputs": [],
+    "state_mutability": "external"
+  },
+  {
+    "name": "initiate_withdrawal",
+    "type": "function",
+    "inputs": [
+      {
+        "name": "l1_recipient",
+        "type": "core::felt252"
+      },
+      {
+        "name": "amount",
+        "type": "core::integer::u256"
+      }
+    ],
+    "outputs": [],
+    "state_mutability": "external"
+  },
+  {
+    "name": "get_l1_bridge",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "core::felt252"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "get_token",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "DepositHandled",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "recipient",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "amount",
+        "type": "core::integer::u256"
+      }
+    ]
+  },
+  {
+    "name": "WithdrawalInitiated",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "recipient",
+        "type": "core::felt252"
+      },
+      {
+        "name": "amount",
+        "type": "core::integer::u256"
+      }
+    ]
+  }
+]

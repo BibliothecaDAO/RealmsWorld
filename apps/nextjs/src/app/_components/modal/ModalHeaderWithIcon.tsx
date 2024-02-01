@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import React from "react";
 
 const ModalHeaderWithIcon = ({
@@ -7,12 +8,12 @@ const ModalHeaderWithIcon = ({
 }: {
   title: string;
   subtitle: string;
-  icon: any;
+  icon: LucideIcon;
 }) => {
   return (
-    <div className="w-full mb-3">
-      <Icon className="h-12 w-12 mx-auto" />
-      <div className="text-xl mt-5 w-full">{title}</div>
+    <div className="mb-3 w-full">
+      <Icon className="mx-auto h-12 w-12" />
+      <div className="mt-5 w-full text-xl">{title}</div>
       {subtitle && <div className="mt-4 text-lg">{subtitle}</div>}
     </div>
   );

@@ -96,7 +96,9 @@ export const getToken = async ({
         next: { revalidate: 60 },
       },
     );
-    const data: any = await res.json();
+
+    const data = await res.json();
+
     return data;
   } catch (error) {
     return error;

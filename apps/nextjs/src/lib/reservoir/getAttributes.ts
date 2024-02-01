@@ -13,7 +13,9 @@ export const getAttributes = async ({ collection }: { collection: string }) => {
         next: { revalidate: 1000 },
       },
     );
-    const data: any = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
   } catch (error) {
     return error;

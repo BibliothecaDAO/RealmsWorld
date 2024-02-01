@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 "use client";
 
 import React from "react";
 import { Stepper as MuiStepper, Step, StepLabel } from "@mui/material";
-import { blue, blueGrey, lightBlue } from "@mui/material/colors";
+import { blueGrey } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import PropTypes from "prop-types";
 
 export interface StepperProps {
   children: React.ReactNode;
@@ -63,6 +64,7 @@ const Stepper = ({
   steps,
   activeStep,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   steps?: any;
   activeStep?: number;
 }) => {

@@ -7,7 +7,6 @@ import Bridge from "@/icons/bridge.svg";
 import {
   useDisconnect,
   useAccount as useL2Account,
-  useConnect as useL2Connect,
   useNetwork,
 } from "@starknet-react/core";
 
@@ -16,7 +15,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -79,10 +77,16 @@ export const WalletSheet = () => {
     } else {
       setIsWrongNetwork(false);
     }
-  }, [chain?.id, l2Address, isL2Connected]);
+  }, [
+    chain.id,
+    l2Address,
+    isL2Connected,
+    chainId,
+    NETWORK_ID.sepolia,
+    NETWORK_ID.mainnet,
+  ]);
 
   const { isAccountOpen, toggleAccount } = useUIContext();
-  const [open, setOpen] = useState(false);
 
   const tabs = [
     {
@@ -109,7 +113,7 @@ export const WalletSheet = () => {
         <EthereumLoginButton
           variant={"default"}
           textClass="group-hover:block"
-          openAccount
+          //openAccount
         />
         <StarknetLoginButton
           textClass="group-hover:block"

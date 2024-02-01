@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from "react";
 import { ActionType } from "@/constants/transferSteps";
 import PropTypes from "prop-types";
 
 import { Alert } from "@realms-world/ui";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
   const { type, l2hash, l1hash } = transfer;
   const isTransferCompleted = l1hash && l2hash;

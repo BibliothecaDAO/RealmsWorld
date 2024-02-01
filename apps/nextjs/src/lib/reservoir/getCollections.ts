@@ -2,8 +2,7 @@ import { RESERVOIR_API_URL } from "@/constants/env";
 import { formatQueryString } from "@/utils/utils";
 
 export const getCollections = async (contracts: { contract: string }[]) => {
-  let queryParams;
-  queryParams = formatQueryString(contracts);
+  const queryParams = formatQueryString(contracts);
 
   try {
     const res = await fetch(
@@ -17,7 +16,9 @@ export const getCollections = async (contracts: { contract: string }[]) => {
         next: { revalidate: 60 },
       },
     );
-    const data: any = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
   } catch (error) {
     console.log(error);

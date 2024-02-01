@@ -56,10 +56,11 @@ export const TransferLogProvider: React.FC<TransferLogProviderProps> = ({
   const transfersQueryL1 = useInfiniteQuery({
     queryKey: ["Deposits", GET_TRANSFERS_ENDPOINT, accountL1],
     queryFn: async () => {
-      return (await getBridgeDeposits({
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return await getBridgeDeposits({
         depositsWhere: { l1Sender: accountL1 },
         withdrawalsWhere: { l1Recipient: accountL1 },
-      })) as DepositsQuery;
+      });
     },
     enabled: !!accountL1,
     initialPageParam: "0",

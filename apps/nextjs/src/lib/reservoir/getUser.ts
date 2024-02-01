@@ -6,7 +6,7 @@ export const getUser = async ({
   continuation,
 }: {
   address: string;
-  continuation: any;
+  continuation?: string;
 }) => {
   try {
     const queryString = continuation ? `&continuation=${continuation}` : "";
@@ -19,7 +19,9 @@ export const getUser = async ({
         "Access-Control-Allow-Origin": "*",
       },
     });
-    const data: any = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
   } catch (error) {
     return error;

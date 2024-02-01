@@ -22,9 +22,9 @@ export const AccountLink = ({ isL1 = false }: { isL1: boolean }) => {
   ];
   const explorers = isL1 ? explorersL1 : explorersL2;
 
-  const displayEthAddress = ensAddress || shortenAddress(address || "");
+  const displayEthAddress = ensAddress ?? shortenAddress(address ?? "");
 
-  const displayStarkAddress = data || shortenAddress(l2address || "");
+  const displayStarkAddress = data ?? shortenAddress(l2address ?? "");
 
   return (
     <div className="mr-2">

@@ -1,6 +1,6 @@
 import { RESERVOIR_API_URL } from "@/constants/env";
 
-export const getTokenActivity = async ({ token }: { token: any }) => {
+export const getTokenActivity = async ({ token }: { token: string }) => {
   try {
     const res = await fetch(
       `${RESERVOIR_API_URL}/tokens/${token}/activity/v4`,
@@ -12,7 +12,9 @@ export const getTokenActivity = async ({ token }: { token: any }) => {
         },
       },
     );
-    const data: any = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
   } catch (error) {
     return error;

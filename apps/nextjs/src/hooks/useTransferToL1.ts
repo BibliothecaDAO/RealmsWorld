@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
@@ -14,12 +17,7 @@ import {
   TransferToL1Steps,
 } from "@/constants/transferSteps";
 import { useBridgeContract } from "@/hooks/useBridgeContract";
-import {
-  useContractWrite,
-  useAccount as useL2Account,
-  useWaitForTransaction,
-} from "@starknet-react/core";
-import { parseUnits } from "viem";
+import { useAccount as useL2Account } from "@starknet-react/core";
 import { useAccount } from "wagmi";
 
 import { useTransfer } from "./useTransfer";
@@ -29,10 +27,8 @@ export const useTransferToL1 = () => {
   const { initiateWithdraw, withdrawHash } = useBridgeContract();
   const { address: l1Account } = useAccount();
   const { address: l2Account, connector } = useL2Account();
-  const { data } = useWaitForTransaction({
-    hash: withdrawHash?.transaction_hash,
-    watch: true,
-  });
+  const { handleProgress, handleData, handleError } =
+    useTransfer(TransferToL1Steps);
   useEffect(() => {
     if (withdrawHash) {
       console.log("Done", { hash: withdrawHash?.transaction_hash });
@@ -46,10 +42,8 @@ export const useTransferToL1 = () => {
         l2hash: withdrawHash?.transaction_hash,
       });
     }
-  }, [withdrawHash]);
+  }, [handleData, l1Account, l2Account, withdrawHash]);
 
-  const { handleProgress, handleData, handleError } =
-    useTransfer(TransferToL1Steps);
   const progressOptions = useTransferProgress();
 
   return useCallback(
@@ -59,7 +53,7 @@ export const useTransferToL1 = () => {
 
         handleProgress(
           progressOptions.waitForConfirm(
-            connector?.id || "",
+            connector?.id ?? "",
             stepOf(TransferStep.CONFIRM_TX, TransferToL1Steps),
           ),
         );
@@ -69,15 +63,6 @@ export const useTransferToL1 = () => {
         initiateWithdraw(amount);
 
         if (withdrawHash?.transaction_hash) {
-          const transferData = {
-            type: ActionType.TRANSFER_TO_L1,
-            sender: l2Account,
-            recipient: l1Account,
-            name: "Lords",
-            symbol: "LORDS",
-            amount,
-            l2hash: withdrawHash?.transaction_hash,
-          };
           console.log("Tx hash received", {
             hash: withdrawHash?.transaction_hash,
           });
@@ -96,13 +81,12 @@ export const useTransferToL1 = () => {
       }
     },
     [
-      initiateWithdraw,
-      l1Account,
-      l2Account,
-      handleData,
-      handleError,
       handleProgress,
       progressOptions,
+      connector?.id,
+      initiateWithdraw,
+      withdrawHash?.transaction_hash,
+      handleError,
     ],
   );
 };
@@ -121,10 +105,9 @@ export const useCompleteTransferToL1 = () => {
   const { refetch } = useTransferLog(true);
   const [transfer, setTransfer] = useState({});
 
-  const onWithdrawal = (event: any) => {
+  const onWithdrawal = (event: typeof withdrawReceipt) => {
     console.log("Withdrawal event dispatched", event, transfer);
-    const { transactionHash: l1hash } = event;
-    const transferData = { ...transfer, l1hash };
+    const transferData = { ...transfer, l1hash: event?.blockHash };
     handleData(transferData);
     refetch();
   };

@@ -12,7 +12,9 @@ export const getOwners = async ({ collection }: { collection: string }) => {
         },
       },
     );
-    const data: any = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
   } catch (error) {
     return error;
