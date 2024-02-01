@@ -32,9 +32,10 @@ export const RESERVOIR_API_URL =
     process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "-sepolia" : ""
   }.reservoir.tools`;
 
-export const SUPPORTED_L1_CHAIN_ID = process.env.NEXT_PUBLIC_IS_TESTNET
-  ? ChainId.SEPOLIA
-  : ChainId.MAINNET;
+export const SUPPORTED_L1_CHAIN_ID =
+  process.env.NEXT_PUBLIC_IS_TESTNET == "true"
+    ? ChainId.SEPOLIA
+    : ChainId.MAINNET;
 
 export const SUPPORTED_L2_CHAIN_ID =
   SUPPORTED_L1_CHAIN_ID === ChainId.SEPOLIA
