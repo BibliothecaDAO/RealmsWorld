@@ -25,9 +25,9 @@ export const config: Config<Starknet, Webhook> = {
     targetUrl: "https://inn.gs/e/" + Deno.env.get("INNGEST_EVENT_KEY"),
     raw: true,
     header: [
-      Deno.env.get("INNGEST_EVENT_KEY")
+      Deno.env.get("INNGEST_ENV") == "production"
         ? "test: test"
-        : "x-inngest-env: " + Deno.env.get("INNGEST_EVENT_KEY"),
+        : "x-inngest-env: " + Deno.env.get("INNGEST_ENV"),
     ],
   },
 };
