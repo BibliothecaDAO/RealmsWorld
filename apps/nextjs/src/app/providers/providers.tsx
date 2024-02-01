@@ -48,6 +48,7 @@ export const config = getDefaultConfig({
   chains: [isTestnet ? sepolia : mainnet],
   transports: {
     [sepolia.id]: http(),
+    [mainnet.id]: http(),
   },
 });
 

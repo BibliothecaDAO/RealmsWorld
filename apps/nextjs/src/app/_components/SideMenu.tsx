@@ -12,7 +12,7 @@ import Gamepad from "@/icons/gamepad.svg";
 import LordsIcon from "@/icons/lords.svg";
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
-import { Github, X } from "lucide-react";
+import { Github, Twitter } from "lucide-react";
 
 import { Button, ScrollArea } from "@realms-world/ui";
 
@@ -57,7 +57,7 @@ const Sidebar = () => {
     {
       name: "Twitter",
       href: "https://twitter.com/lootrealms?lang=en",
-      icon: <X />,
+      icon: <Twitter />,
     },
     {
       name: "Github",
