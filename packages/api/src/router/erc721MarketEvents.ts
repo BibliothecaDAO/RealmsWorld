@@ -35,8 +35,9 @@ export const erc721MarketEventsRouter = createTRPCRouter({
       //TODO add orderBy conditions
       const {
         cursor,
-        /* contractAddress, owner, orderBy, block,*/ direction,
+        /* contractAddress, owner, , block,*/ direction,
         upper_inf,
+        orderBy,
         token_key,
         collectionId,
         status,
@@ -46,7 +47,11 @@ export const erc721MarketEventsRouter = createTRPCRouter({
       if (direction === "asc") {
         orderByFilter.push(asc(schema.erc721MarketEvents.token_id));
       } else {
-        orderByFilter.push(desc(schema.erc721MarketEvents.id));
+        if (orderBy == "timestamp") {
+          orderByFilter.push(desc(schema.erc721MarketEvents.updated_at));
+        } else {
+          orderByFilter.push(desc(schema.erc721MarketEvents.id));
+        }
       }
 
       if (token_key) {
@@ -57,7 +62,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
           eq(schema.erc721MarketEvents.collection_id, collectionId),
         );
       }
-      if (status?.length) {
+      if (status?.length && status[0] != undefined) {
         whereFilter.push(inArray(schema.erc721MarketEvents.status, status));
       }
       /*if (owner) {

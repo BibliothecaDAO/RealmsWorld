@@ -25,7 +25,13 @@ export const tokenURI = eventKey("tokenURI");
 export const token_uri = eventKey("token_uri");
 
 export const fetchMetadata = inngest.createFunction(
-  { name: "fetchMetadata", id: "fetchMeta" },
+  {
+    name: "fetchMetadata",
+    id: "fetchMeta",
+    concurrency: {
+      limit: 7,
+    },
+  },
   { event: "nft/mint" },
   async ({ event, step }) => {
     const metadata = await step.run("Fetch metadata", async () => {

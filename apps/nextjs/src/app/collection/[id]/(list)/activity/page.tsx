@@ -94,6 +94,7 @@ const L2Activites = async ({
   });
   const filters: RouterInputs["erc721MarketEvents"]["all"] = {
     collectionId: MarketplaceCollectionIds[collectionId as Collections],
+    orderBy: "timestamp",
   };
   if (statusArray) filters.status = status;
 
