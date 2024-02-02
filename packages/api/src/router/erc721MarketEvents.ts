@@ -85,7 +85,11 @@ export const erc721MarketEventsRouter = createTRPCRouter({
         where: and(...whereFilter),
         orderBy: orderByFilter,
         with: {
-          token: true,
+          token: {
+            //@ts-expect-error should allow where on relationship
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+            where: (token, { sql }) => sql`upper_inf(_cursor)`,
+          },
         },
       });
       console.log(items);

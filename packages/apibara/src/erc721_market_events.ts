@@ -87,6 +87,8 @@ export default function transform({ header, events }: Block) {
             id: orderId,
           },
           update: {
+            finalize_hash: receipt.transactionHash,
+            purchaser: receipt.events[0].data[0],
             active: Boolean(BigInt(event.data[5])),
             status: "filled",
             updated_at: header?.timestamp,

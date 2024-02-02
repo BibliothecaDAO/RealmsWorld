@@ -6,10 +6,10 @@ export const erc721Attributes = pgSqlTable(
   "erc721_attributes",
   {
     id: serial("id"),
-    value: text("value"),
-    key: text("key"),
+    value: text("value").notNull(),
+    key: text("key").notNull(),
     kind: text("kind"),
-    collectionId: text("collection_id"),
+    collectionId: text("collection_id").notNull(),
     attributeKeyId: integer("attribute_key_id"),
     tokenCount: integer("token_count").default(0),
     /*on_sale_count: number;

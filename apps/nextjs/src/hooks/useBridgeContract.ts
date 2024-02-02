@@ -53,10 +53,12 @@ export const useBridgeContract = () => {
 
   const calls: Call[] = useMemo(() => {
     if (!amount || !addressL1) return [];
-    return contract?.populateTransaction.initiate_withdrawal!(addressL1, {
-      low: parseEther(amount),
-      high: 0,
-    });
+    return [
+      contract?.populateTransaction.initiate_withdrawal!(addressL1, {
+        low: parseEther(amount),
+        high: 0,
+      }),
+    ];
 
     /*const tx = {
       contractAddress: l2BridgeAddress as `0x${string}`,

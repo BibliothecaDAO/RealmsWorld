@@ -90,7 +90,7 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
                   #{activity.token.token_id}
                 </span>{" "}
                 <br />
-                {activity.token.name}
+                {decodeURIComponent(activity.token.name ?? "")}
               </span>
             </Link>
           )}

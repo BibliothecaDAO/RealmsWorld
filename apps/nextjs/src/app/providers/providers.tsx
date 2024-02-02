@@ -19,12 +19,11 @@ import { mainnet, sepolia } from "wagmi/chains";
 
 import { TransferLogProvider } from "./TransferLogProvider";
 
-const starkProvider =
-  /*process.env.NEXT_PUBLIC_BLAST_API
+const starkProvider = process.env.NEXT_PUBLIC_BLAST_API
   ? blastProvider({
       apiKey: process.env.NEXT_PUBLIC_BLAST_API,
     })
-  :*/ starkPublicProvider();
+  : starkPublicProvider();
 const starkConnectors = [
   new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
   new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
