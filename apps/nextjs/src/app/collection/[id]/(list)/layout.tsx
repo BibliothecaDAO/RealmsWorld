@@ -15,7 +15,7 @@ export default function RootLayout({
   const imageUrl = params.id ? `/backgrounds/${params.id}.png` : defaultImage;
 
   const isMintable =
-    process.env.NEXT_PUBLIC_IS_TESTNET &&
+    process.env.NEXT_PUBLIC_IS_TESTNET == "true" &&
     params.id == (Collections.GOLDEN_TOKEN as string);
   const tabs = [
     {

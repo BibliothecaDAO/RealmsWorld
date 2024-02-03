@@ -41,7 +41,6 @@ export const erc721TokensRouter = createTRPCRouter({
         attributeFilter,
       } = input;
       const whereFilter: SQL[] = [];
-
       const cursors = [];
       if (orderBy == "tokenId") {
         cursors.push([

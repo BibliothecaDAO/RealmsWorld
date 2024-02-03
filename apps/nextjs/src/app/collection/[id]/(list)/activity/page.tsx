@@ -13,6 +13,7 @@ import {
 import { ActivityCard } from "./ActivityCard";
 import { CollectionActivity } from "./CollectionActivity";
 import { L2ActivityCard } from "./L2ActivityCard";
+import { L2ActivityTable } from "./L2ActivityTable";
 
 export default async function Page({
   params,
@@ -45,13 +46,11 @@ export default async function Page({
         <CollectionActivity
           searchAttributes={["sale", "transfer", "listing"]}
         />
-        <div id="activity-container" className="grid flex-grow grid-cols-1">
-          <L2Activites
-            tokenAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID]!}
-            searchParams={searchParams}
-            collectionId={params.id}
-          />
-        </div>
+        <L2ActivityTable
+          tokenAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID]!}
+          searchParams={searchParams}
+          collectionId={params.id}
+        />
       </div>
     );
   } else if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
@@ -69,44 +68,3 @@ export default async function Page({
     );
   }
 }
-
-const L2Activites = async ({
-  tokenAddress,
-  searchParams,
-  collectionId,
-}: {
-  tokenAddress: string;
-  searchParams: { types?: string[] | string };
-  collectionId: string;
-}) => {
-  const statusArray =
-    typeof searchParams.types === "string"
-      ? [searchParams.types]
-      : searchParams.types;
-
-  const status: ("filled" | "open")[] = statusArray?.map((status) => {
-    switch (status) {
-      case "sale":
-        return "filled";
-      case "listing":
-        return "open";
-    }
-  });
-  const filters: RouterInputs["erc721MarketEvents"]["all"] = {
-    collectionId: MarketplaceCollectionIds[collectionId as Collections],
-    orderBy: "timestamp",
-  };
-  if (statusArray) filters.status = status;
-
-  const erc721MarketEvents = await api.erc721MarketEvents.all(filters);
-
-  return (
-    <>
-      {erc721MarketEvents
-        ? erc721MarketEvents.items.map((activity, index: number) => {
-            return <L2ActivityCard key={index} activity={activity} />;
-          })
-        : "Encountered a temporary error. Please refresh the page and retry."}
-    </>
-  );
-};

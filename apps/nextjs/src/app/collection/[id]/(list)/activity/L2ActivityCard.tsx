@@ -114,6 +114,21 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
           "-"
         )}
       </div>
+      <div className="w-1/2 sm:w-2/12">
+        {activity.purchaser && (
+          <>
+            <span className="text-xs opacity-50">to:</span> <br />
+            {activity.created_by ? (
+              <Link href={`/user/${activity.purchaser}`}>
+                {activity.purchaser ? shortenHex(activity.purchaser) : ""}
+              </Link>
+            ) : (
+              "-"
+            )}
+          </>
+        )}
+      </div>
+
       <div className="flex w-1/2 self-center font-semibold sm:w-2/12">
         {/*activity.type != "transfer" &&
           (activity.price?.currency ? (

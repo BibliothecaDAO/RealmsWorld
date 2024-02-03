@@ -13,6 +13,7 @@ import {
   sql,
 } from "@realms-world/db";
 
+import { withCursorPagination } from "../cursorPagination";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const erc721MarketEventsRouter = createTRPCRouter({
@@ -20,7 +21,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
     .input(
       z.object({
         limit: z.number().min(1).max(100).nullish(),
-        cursor: z.number().nullish(), // <-- "cursor" needs to exist, but can be any type
+        cursor: z.union([z.number().nullish(), z.date().nullish()]), // <-- "cursor" needs to exist, but can be any type
         //owner: z.string().nullish(), TODO from address
         collectionId: z.number().nullish(),
         token_key: z.string().nullish(),
@@ -43,8 +44,22 @@ export const erc721MarketEventsRouter = createTRPCRouter({
         status,
       } = input;
       const whereFilter: SQL[] = [];
-      const orderByFilter: SQL[] = [];
-      if (direction === "asc") {
+
+      const cursors = [];
+      if (orderBy == "timestamp") {
+        cursors.push([
+          schema.erc721MarketEvents.updated_at, // Column to use for cursor
+          direction ?? "desc", // Sort order ('asc' or 'desc')
+          cursor, // Cursor value
+        ]);
+      } else {
+        cursors.push([
+          schema.erc721MarketEvents.id, // Column to use for cursor
+          direction ?? "desc", // Sort order ('asc' or 'desc')
+          cursor, // Cursor value
+        ]);
+      }
+      /*if (direction === "asc") {
         orderByFilter.push(asc(schema.erc721MarketEvents.token_id));
       } else {
         if (orderBy == "timestamp") {
@@ -52,7 +67,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
         } else {
           orderByFilter.push(desc(schema.erc721MarketEvents.id));
         }
-      }
+      }*/
 
       if (token_key) {
         whereFilter.push(eq(schema.erc721MarketEvents.token_key, token_key));
@@ -68,22 +83,18 @@ export const erc721MarketEventsRouter = createTRPCRouter({
       /*if (owner) {
         whereFilter.push(eq(schema.erc721Tokens.owner, owner.toLowerCase()));
       }*/
-      if (cursor) {
-        whereFilter.push(
-          direction === "asc"
-            ? gte(schema.erc721MarketEvents.id, cursor)
-            : lte(schema.erc721MarketEvents.id, cursor),
-        );
-      } /* else {
+      /* else {
         whereFilter.push(lte(schema.erc721Tokens.token_id, cursor));
       }*/
       if (upper_inf) {
         whereFilter.push(sql`upper_inf(_cursor)`);
       }
       const items = await ctx.db.query.erc721MarketEvents.findMany({
-        limit: limit + 1,
-        where: and(...whereFilter),
-        orderBy: orderByFilter,
+        ...withCursorPagination({
+          limit: limit + 1,
+          where: and(...whereFilter),
+          cursors: cursors,
+        }),
         with: {
           token: {
             //@ts-expect-error should allow where on relationship
@@ -92,11 +103,11 @@ export const erc721MarketEventsRouter = createTRPCRouter({
           },
         },
       });
-      console.log(items);
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
         const nextItem = items.pop();
-        nextCursor = nextItem!.token_id;
+        nextCursor =
+          orderBy == "timestamp" ? nextItem!.updated_at : nextItem!.id;
       }
       return {
         items,
