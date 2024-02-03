@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useRouter } from "next/navigation";
 import { useUIContext } from "@/app/providers/UIProvider";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
@@ -16,12 +17,20 @@ import { Button } from "@realms-world/ui";
 import { AccountLink } from "./AccountLink";
 import { StarknetLoginButton } from "./StarknetLoginButton";
 
-export const DisplayBalance = ({ icon, balance }: any) => (
+export const DisplayBalance = ({
+  icon,
+  balance,
+  tokenName,
+}: {
+  icon?: React.ReactElement;
+  balance?: bigint;
+  tokenName?: string;
+}) => (
   <div className="flex space-x-2 text-lg sm:text-2xl">
     <span className="self-center">
       {balance && balance > 0 ? formatBigInt(balance, 3).toLocaleString() : 0}
     </span>
-    <span className="self-center">{icon}</span>
+    <span className="self-center">{icon ?? tokenName}</span>
   </div>
 );
 

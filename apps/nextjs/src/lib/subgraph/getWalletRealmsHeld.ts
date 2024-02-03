@@ -31,7 +31,9 @@ export const getWalletRealmsHeld = async ({
       },
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     return data.data;
   } catch (error) {
     return error;

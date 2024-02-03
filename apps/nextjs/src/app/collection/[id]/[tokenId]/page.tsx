@@ -1,11 +1,12 @@
-import type { erc721Tokens } from "@/constants";
-import type { Collection, Market, Token } from "@/types";
+import type { Collection, Market, Token, TokenMarketData } from "@/types";
 import { Suspense } from "react";
+import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getCollections } from "@/lib/reservoir/getCollections";
 import { getToken } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/server";
-import { getTokenContractAddresses } from "@/utils/utils";
 import { formatEther } from "viem";
+
+import { getCollectionAddresses } from "@realms-world/constants";
 
 import { L2Token } from "./L2Token";
 import { LoadingSkeleton } from "./loading";
@@ -17,25 +18,25 @@ export default async function Page({
 }: {
   params: { id: string; tokenId: string };
 }) {
-  const tokenAddresses = getTokenContractAddresses(
-    params.id as keyof typeof erc721Tokens,
-  );
-
-  if (tokenAddresses.L2) {
+  const tokenAddresses = getCollectionAddresses(params.id);
+  if (!tokenAddresses) {
+    return <div>Collection Not Found</div>;
+  }
+  if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
     return (
       <Suspense fallback={<LoadingSkeleton />}>
         <L2TokenData
-          contractAddress={tokenAddresses.L2}
+          contractAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID]!}
           tokenId={params.tokenId}
           collectionId={params.id}
         />
       </Suspense>
     );
-  } else if (tokenAddresses.L1) {
+  } else if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
     return (
       <L1TokenData
         collectionId={params.id}
-        contractAddress={tokenAddresses.L1}
+        contractAddress={tokenAddresses[SUPPORTED_L1_CHAIN_ID]!}
         tokenId={params.tokenId}
       />
     );
@@ -71,6 +72,7 @@ const L2TokenData = async ({
           <L2Token
             contractAddress={contractAddress}
             tokenId={tokenId}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             token={JSON.parse(JSON.stringify(erc721Token))}
           />
         </TokenInformation>
@@ -96,15 +98,17 @@ const L1TokenData = async ({
       includeAttributes: true,
       includeQuantity: true,
     },
-  });
-  const collectionData = getCollections([{ contract: contractAddress }]);
+  }) as Promise<{ tokens: TokenMarketData[] }>;
+  const collectionData = getCollections([
+    { contract: contractAddress },
+  ]) as Promise<{ collections: Collection[] }>;
   const [{ tokens }, { collections }] = await Promise.all([
     tokensData,
     collectionData,
   ]);
-  const token: Token | undefined = tokens?.[0]?.token;
-  const market: Market | null = tokens?.[0]?.market;
-  const collection: Collection | undefined = collections?.[0];
+  const token = tokens?.[0]?.token;
+  const market = tokens?.[0]?.market;
+  const collection = collections?.[0];
 
   if (!tokens) {
     return <div>Collection Not Found</div>;

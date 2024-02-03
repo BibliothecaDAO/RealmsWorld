@@ -65,14 +65,20 @@ export const LORDS: Record<number | string, Token> = {
   ),
   [ChainId.SN_SEPOLIA]: new Token(
     ChainId.SN_SEPOLIA,
-    "0x05e367ac160e5f90c5775089b582dfc987dd148a5a2f977c49def2a6644f724b",
+    "0x019c92fa87f4d5e3be25c3dd6a284f30282a07e87cd782f5fd387b82c8142017",
     18,
     "LORDS",
     "Lords",
   ),
 };
 
-export const LORDS_BRIDGE_ADDRESS: Record<number | string, Token> = {};
+export const LORDS_BRIDGE_ADDRESS: Record<number | string, string> = {
+  [ChainId.MAINNET]: "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
+  [ChainId.SEPOLIA]: "",
+  [ChainId.SN_MAIN]:
+    "0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
+  [ChainId.SN_SEPOLIA]: "",
+};
 
 export function getStarknetNativeCurrency(chainId: number | string) {
   switch (chainId) {

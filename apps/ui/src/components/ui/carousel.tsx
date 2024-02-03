@@ -1,10 +1,10 @@
 "use client";
 
+import type { EmblaCarouselType, EmblaOptionsType } from "embla-carousel";
 import * as React from "react";
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import type { EmblaCarouselType, EmblaOptionsType } from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { cn } from "@realms-world/utils";

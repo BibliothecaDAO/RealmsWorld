@@ -1,15 +1,8 @@
 import { ChainType } from "@starkware-industries/commons-js-enums";
 import { evaluate } from "@starkware-industries/commons-js-utils";
 
-export const SUPPORTED_L1_CHAIN_ID = Number(
-  process.env.NEXT_PUBLIC_SUPPORTED_CHAIN_ID,
-);
-export const SUPPORTED_L2_CHAIN_ID =
-  SUPPORTED_L1_CHAIN_ID === ChainType.L1.SEPOLIA
-    ? ChainType.L2.SEPOLIA
-    : ChainType.L2.MAIN;
-export const STARKNET_CONTRACT_ADDRESS =
-  process.env.NEXT_PUBLIC_STARKNET_CONTRACT_ADDRESS;
+import { ChainId } from "@realms-world/constants";
+
 export const ETHERSCAN_URL = process.env.NEXT_PUBLIC_ETHERSCAN_URL;
 export const ETHERSCAN_TX_URL = (tx: any) =>
   evaluate(`${ETHERSCAN_URL}/tx/{{tx}}`, { tx });
@@ -27,8 +20,7 @@ export const STARKSCAN_ETH_TX_URL = (tx: any) =>
   evaluate(`${STARKSCAN_URL}/eth-tx/{{tx}}`, { tx });
 export const STARKSCAN_ACCOUNT_URL = (contract: any) =>
   evaluate(`${STARKSCAN_URL}/contract/{{contract}}`, { contract });
-export const LOCAL_STORAGE_ACCEPT_TERMS_KEY =
-  process.env.NEXT_PUBLIC_LOCAL_STORAGE_ACCEPT_TERMS;
+
 export const GET_TRANSFERS_ENDPOINT = process.env.NEXT_PUBLIC_SUBGRAPH_NAME;
 export const GET_L2_APIBARA_ENDPOINT = process.env.NEXT_PUBLIC_APIBARA_HANDLE;
 
@@ -39,3 +31,13 @@ export const RESERVOIR_API_URL =
   `https://api${
     process.env.NEXT_PUBLIC_IS_TESTNET === "true" ? "-sepolia" : ""
   }.reservoir.tools`;
+
+export const SUPPORTED_L1_CHAIN_ID =
+  process.env.NEXT_PUBLIC_IS_TESTNET == "true"
+    ? ChainId.SEPOLIA
+    : ChainId.MAINNET;
+
+export const SUPPORTED_L2_CHAIN_ID =
+  SUPPORTED_L1_CHAIN_ID === ChainId.SEPOLIA
+    ? ChainId.SN_SEPOLIA
+    : ChainId.SN_MAIN;

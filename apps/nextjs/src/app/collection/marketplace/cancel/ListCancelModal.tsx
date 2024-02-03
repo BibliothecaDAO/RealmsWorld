@@ -1,13 +1,6 @@
-import type {
-  ComponentPropsWithoutRef,
-  Dispatch,
-  ReactElement,
-  SetStateAction,
-} from "react";
+import type { ReactElement } from "react";
 import React, { useEffect, useState } from "react";
 import { useTimeDiff } from "@/hooks/useTimeDiff";
-import { faGasPump } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Loader } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -21,7 +14,6 @@ import {
 } from "@realms-world/ui";
 
 import ERC721LineItem from "../ERC721LineItem";
-//import getChainBlockExplorerUrl from "../../lib/getChainBlockExplorerUrl";
 import { CancelStep, ListCancelModalRender } from "./ListCancelModalRender";
 
 const ModalCopy = {
@@ -58,13 +50,10 @@ export function ListCancelModal({
     <ListCancelModalRender token={token} listingId={listingId} open={open}>
       {({
         listing,
-        tokenId,
-        contract,
         cancelStep,
         transactionError,
         stepData,
         //totalUsd,
-        blockExplorerName,
         cancelOrder,
       }) => {
         const expires = useTimeDiff(listing?.expiration);
@@ -131,7 +120,7 @@ export function ListCancelModal({
                       // priceSubtitle="Price"
                       //usdPrice={totalUsd.toString()}
                       collection={
-                        listing.criteria?.data?.collection?.name || ""
+                        listing.criteria?.data?.collection?.name ?? ""
                       }
                       expires={expires}
                       quantity={listing?.quantityRemaining}

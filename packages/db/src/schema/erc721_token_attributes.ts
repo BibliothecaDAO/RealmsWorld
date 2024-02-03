@@ -7,16 +7,15 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
-import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
 import { erc721Tokens } from "./erc721_tokens";
 
 export const erc721TokenAttributes = pgSqlTable(
   "erc721_token_attributes",
   {
-    token_key: text("token_key"),
-    value: text("value"),
-    key: text("key"),
+    token_key: text("token_key").notNull(),
+    value: text("value").notNull(),
+    key: text("key").notNull(),
     collectionId: text("collection_id"),
     attributeId: integer("attribute_id"),
   },

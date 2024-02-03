@@ -1,10 +1,16 @@
 "use client";
 
+import type { Attributes, Collection, Token } from "@/types";
 import Link from "next/link";
-import type { Attributes } from "@/types";
 
-export const TokenAttributes = ({ token, collection }: any) => {
-  return token.attributes.map((attributes: Attributes, index: string) => {
+export const TokenAttributes = ({
+  token,
+  collection,
+}: {
+  token: Token;
+  collection: Collection;
+}) => {
+  return token.attributes.map((attributes, index) => {
     return (
       <Link
         href={`/collection/${token.contract}?${attributes.key}=${attributes.value}`}
@@ -19,14 +25,16 @@ export const TokenAttributes = ({ token, collection }: any) => {
             <div className="font-sans-serif sm:text-lg">{attributes.value}</div>
             <div className="ml-3">{attributes.floorAskPrice}</div>
           </div>
-          <div className="w-full text-xs opacity-70">
-            {attributes.tokenCount} (
-            {(
-              (attributes.tokenCount / parseInt(collection.tokenCount)) *
-              100
-            ).toFixed(2)}
-            %)
-          </div>
+          {attributes.tokenCount && (
+            <div className="w-full text-xs opacity-70">
+              {attributes.tokenCount} (
+              {(
+                (attributes.tokenCount / parseInt(collection.tokenCount)) *
+                100
+              ).toFixed(2)}
+              %)
+            </div>
+          )}
         </div>
       </Link>
     );

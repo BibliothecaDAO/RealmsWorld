@@ -11,13 +11,15 @@ export const getOwnersDistribution = async ({
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.RESERVOIR_API_KEY || "",
+          "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
           "Access-Control-Allow-Origin": "*",
         },
         next: { revalidate: 1000 },
       },
     );
-    const data: any = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const data = await res.json();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
   } catch (error) {
     return error;

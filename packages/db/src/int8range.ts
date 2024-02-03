@@ -1,15 +1,10 @@
-import { customType } from "drizzle-orm/pg-core";
 import type { Range } from "postgres-range";
+import { customType } from "drizzle-orm/pg-core";
 import {
-  RANGE_LB_INC,
   parse as rangeParse,
   serialize as rangeSerialize,
 } from "postgres-range";
 
-interface TimeRangeInput {
-  endMs: number;
-  startMs: number;
-}
 type Comparable = string | number;
 
 type RangeBound<T extends Comparable> =

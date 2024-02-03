@@ -1,25 +1,15 @@
-import { relations } from "drizzle-orm";
-import {
-  index,
-  integer,
-  primaryKey,
-  serial,
-  text,
-  unique,
-} from "drizzle-orm/pg-core";
+import { index, integer, primaryKey, serial, text } from "drizzle-orm/pg-core";
 
-import { int8range } from "../int8range";
 import { pgSqlTable } from "./_table";
-import { erc721Tokens } from "./erc721_tokens";
 
 export const erc721Attributes = pgSqlTable(
   "erc721_attributes",
   {
     id: serial("id"),
-    value: text("value"),
-    key: text("key"),
+    value: text("value").notNull(),
+    key: text("key").notNull(),
     kind: text("kind"),
-    collectionId: text("collection_id"),
+    collectionId: text("collection_id").notNull(),
     attributeKeyId: integer("attribute_key_id"),
     tokenCount: integer("token_count").default(0),
     /*on_sale_count: number;

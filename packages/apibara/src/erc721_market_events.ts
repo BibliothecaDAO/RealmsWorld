@@ -27,7 +27,7 @@ export const config: Config<Starknet, Postgres> = {
   sinkType: "postgres",
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
-    tableName: "rw_erc721_market",
+    tableName: "rw_erc721_market_events",
     entityMode: true,
   },
 };
@@ -52,10 +52,12 @@ export default function transform({ header, events }: Block) {
             token_id: tokenId,
             collection_id: collectionId,
             created_by: event.data[0],
+            updated_at: header?.timestamp,
             price: price,
             expiration: Number(BigInt(event.data[4])),
             id: orderId,
             active: Boolean(BigInt(event.data[5])),
+            status: "open",
           },
         };
       case OrderActionType.Edit:
@@ -65,6 +67,7 @@ export default function transform({ header, events }: Block) {
           },
           update: {
             price: price, //
+            updated_at: header?.timestamp,
           },
         };
       case OrderActionType.Cancel:
@@ -74,6 +77,8 @@ export default function transform({ header, events }: Block) {
           },
           update: {
             active: Boolean(BigInt(event.data[5])),
+            status: "cancelled",
+            updated_at: header?.timestamp,
           },
         };
       case OrderActionType.Accept:
@@ -82,7 +87,11 @@ export default function transform({ header, events }: Block) {
             id: orderId,
           },
           update: {
+            finalize_hash: receipt.transactionHash,
+            purchaser: receipt.events[0].data[0],
             active: Boolean(BigInt(event.data[5])),
+            status: "filled",
+            updated_at: header?.timestamp,
           },
         };
       default:

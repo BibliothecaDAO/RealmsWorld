@@ -1,0 +1,14 @@
+name: "Check Production PR Branch"
+
+on:
+  pull_request:
+
+jobs:
+  check_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch
+        if: github.base_ref == 'production' && github.head_ref != 'main'
+        run: |
+          echo "ERROR: You can only merge to production from main."
+          exit 1

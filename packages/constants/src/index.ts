@@ -7,4 +7,7 @@ export {
   CollectionRoyalties,
   Collections,
   CollectionAddresses,
+  getCollectionAddresses,
+  getCollectionFromAddress,
+  CollectionDisplayName,
 } from "./Collections";

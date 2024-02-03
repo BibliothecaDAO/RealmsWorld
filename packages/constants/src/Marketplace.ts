@@ -1,7 +1,13 @@
 import { ChainId } from "./Chains";
 import { Collections } from "./Collections";
 
-export const MarketplaceCollectionIds = {
+export interface MarketplaceCollectionIdsType {
+  [Collections.REALMS]?: number;
+  [Collections.BEASTS]: number;
+  [Collections.GOLDEN_TOKEN]: number;
+}
+
+export const MarketplaceCollectionIds: MarketplaceCollectionIdsType = {
   [Collections.BEASTS]: 2,
   [Collections.GOLDEN_TOKEN]: 1,
 };
@@ -12,3 +18,14 @@ export const MarketplaceContract: Record<number | string, string> = {
   [ChainId.SN_SEPOLIA]:
     "0x0297e088cd7777bebda7024e2dde81e9b745f41e5de0589c91de5caa885d9c32",
 };
+export function getCollectionFromId(
+  collectionId: number,
+): Collections | undefined {
+  return (
+    Object.keys(
+      MarketplaceCollectionIds,
+    ) as (keyof MarketplaceCollectionIdsType)[]
+  ).find((key) => MarketplaceCollectionIds[key] === collectionId) as
+    | Collections
+    | undefined;
+}

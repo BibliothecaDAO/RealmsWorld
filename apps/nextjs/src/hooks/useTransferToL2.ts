@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useCallback, useEffect, useState } from "react";
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
@@ -30,25 +36,14 @@ export const stepOf = (step: any, steps: any) => {
 };
 
 export const useTransferToL2 = () => {
-  const l2BridgeAddress =
-    tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]];
   const [amount, setAmount] = useState("");
   //onst [trackInitiated, trackSuccess, trackError, trackReject] = useTransferToL2Tracking();
-  const {
-    deposit,
-    depositIsSuccess,
-    depositError,
-    depositTxStatus,
-    depositReceipt,
-  } = useBridgeContract();
+  const { deposit, depositIsSuccess, depositError, depositReceipt } =
+    useBridgeContract();
 
   const { allowance, approve, approveHash, l1ERC20Contract } =
     useTokenContractAPI("LORDS", true);
-  const {
-    data,
-    isError,
-    isSuccess: approveIsSuccess,
-  } = useWaitForTransactionReceipt({
+  const { isSuccess: approveIsSuccess } = useWaitForTransactionReceipt({
     hash: approveHash,
   });
 
@@ -60,8 +55,6 @@ export const useTransferToL2 = () => {
 
   const { refetch } = useTransferLog();
 
-  const tokenAddressL2 =
-    tokens.L2.LORDS.tokenAddress?.[ChainType.L2[NETWORK_NAME]];
   const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[
     ChainType.L1[NETWORK_NAME]
   ] as `0x${string}`;
@@ -83,15 +76,6 @@ export const useTransferToL2 = () => {
     }
   };
 
-  const toObject = (object: any) => {
-    return JSON.parse(
-      JSON.stringify(
-        object,
-        (key, value) => (typeof value === "bigint" ? value.toString() : value), // return everything else unchanged
-      ),
-    );
-  };
-
   const onDeposit = async (event: any) => {
     console.log("Deposit event dispatched", event);
     //trackSuccess(event.transactionHash);
@@ -105,7 +89,6 @@ export const useTransferToL2 = () => {
       amount: amount.toString(),
       event,
     };
-    //addTransfer(toObject(transferData));
     await refetch();
     handleData(transferData);
   };
@@ -115,12 +98,13 @@ export const useTransferToL2 = () => {
         progressOptions.error(TransferError.TRANSACTION_ERROR, depositError),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [depositError]);
 
-  const sendDeposit = async (amount: string) => {
+  const sendDeposit = useCallback(async (amount: string) => {
     handleProgress(
       progressOptions.waitForConfirm(
-        connector?.name || "Wallet",
+        connector?.name ?? "Wallet",
         stepOf(TransferStep.CONFIRM_TX, TransferToL2Steps),
       ),
     );
@@ -128,22 +112,25 @@ export const useTransferToL2 = () => {
       address: l1BridgeAddress,
       abi: L1_BRIDGE_ABI,
       functionName: "deposit",
-      args: [parseUnits(amount, 18), BigInt(l2Account || "0x"), BigInt(1)],
+      args: [parseUnits(amount, 18), BigInt(l2Account ?? "0x"), BigInt(1)],
       value: parseEther("0.000000000001"),
     });
     onTransactionHash(depositError, hash, amount);
-  };
+  }, []);
 
   useEffect(() => {
     if (approveIsSuccess) {
-      sendDeposit(amount);
+      void sendDeposit(amount);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [approveIsSuccess]);
 
   useEffect(() => {
     if (depositIsSuccess) {
-      onDeposit(depositReceipt);
+      void onDeposit(depositReceipt);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [depositIsSuccess]);
 
   return useCallback(
@@ -182,13 +169,14 @@ export const useTransferToL2 = () => {
       }
     },
     [
-      deposit,
-      l2Account,
+      handleProgress,
       progressOptions,
-      l1Account,
       allowance,
-      approve,
       l1BridgeAddress,
+      approve,
+      l1ERC20Contract,
+      sendDeposit,
+      handleError,
     ],
   );
 };

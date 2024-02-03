@@ -1,11 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ExpirationOption } from "@/types";
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
-import { NETWORK_NAME } from "@/constants/env";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { findCollectionKeyByAddress } from "@/utils/getters";
-import { getTokenContractAddresses } from "@/utils/utils";
 import {
-  useAccount,
+  //useAccount,
   useContractWrite,
   useWaitForTransaction,
 } from "@starknet-react/core";
@@ -14,7 +14,6 @@ import { parseUnits } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
-  ChainId,
   MarketplaceCollectionIds,
   MarketplaceContract,
 } from "@realms-world/constants";
@@ -62,8 +61,8 @@ interface ChildrenProps {
 
 interface Props {
   open: boolean;
-  tokenId?: string;
-  collectionId?: string;
+  tokenId?: number;
+  collectionId?: string | undefined | null;
   children: (props: ChildrenProps) => ReactNode;
 }
 
@@ -83,17 +82,17 @@ export const ListModalRenderer: FC<Props> = ({
   collectionId,
   children,
 }) => {
-  const { address } = useAccount();
+  //const { address } = useAccount();
 
   const [listStep, setListStep] = useState<ListStep>(ListStep.SetPrice);
   const [listingData, setListingData] = useState<ListingData[]>([]);
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [stepData, setStepData] = useState<ListModalStepData | null>(null);
   const [price, setPrice] = useState<number>(0);
-  const [quantity, setQuantity] = useState(1);
+  //const [quantity, setQuantity] = useState(1);
   const contract = collectionId ? collectionId?.split(":")[0] : undefined;
   const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
-    expirationOptions[5],
+    expirationOptions[5]!,
   );
 
   //TODO fetch actual royalty
@@ -115,7 +114,7 @@ export const ListModalRenderer: FC<Props> = ({
       setTransactionError(null);
       setPrice(0);
       setStepData(null);
-      setExpirationOption(expirationOptions[5]);
+      setExpirationOption(expirationOptions[5]!);
     }
   }, [open]);
 
@@ -151,18 +150,18 @@ export const ListModalRenderer: FC<Props> = ({
         contractAddress: collectionId as `0x${string}`,
         entrypoint: "set_approval_for_all",
         calldata: [
-          MarketplaceContract[ChainId["SN_" + NETWORK_NAME]] as `0x${string}`, //Marketplace address
+          MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`, //Marketplace address
           1,
         ],
       },
       {
         contractAddress: MarketplaceContract[
-          ChainId["SN_" + NETWORK_NAME]
+          SUPPORTED_L2_CHAIN_ID
         ] as `0x${string}`,
         entrypoint: "create",
         calldata: [
-          tokenId as `0x${string}`,
-          MarketplaceCollectionIds[findCollectionKeyByAddress(collectionId)],
+          tokenId,
+          MarketplaceCollectionIds[findCollectionKeyByAddress(collectionId!)],
           !price ? "0" : parseUnits(`${price}`, 18).toString(),
           expirationTime,
         ],
@@ -175,6 +174,7 @@ export const ListModalRenderer: FC<Props> = ({
   });
   useEffect(() => {
     if (data?.transaction_hash) {
+      //@ts-expect-error incorrect starknet react types
       if (transactionData?.execution_status == "SUCCEEDED") {
         setListStep(ListStep.Complete);
       }
@@ -221,7 +221,7 @@ export const ListModalRenderer: FC<Props> = ({
     setListStep(ListStep.Listing);
 
     await writeAsync();
-  }, [collectionId, tokenId, expirationOption, quantity, price]);
+  }, [collectionId, tokenId, expirationOption, price]);
 
   return (
     <>

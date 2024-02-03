@@ -1,5 +1,7 @@
 "use client";
 
+import type { paths } from "@reservoir0x/reservoir-sdk";
+
 import { Progress } from "@realms-world/ui";
 
 //import PieChart from "@/homepages/realms-eternum/components/PieChart";
@@ -7,7 +9,7 @@ import { Progress } from "@realms-world/ui";
 export const OwnerDistribution = ({
   ownersDistribution,
 }: {
-  ownersDistribution: { tokenCount: number; ownerCount: number }[];
+  ownersDistribution: paths["/collections/{collection}/owners-distribution/v1"]["get"]["responses"]["200"]["schema"]["ownersDistribution"];
 }) => {
   const tokenRanges = [
     { min: 0, max: 1 },
@@ -18,15 +20,18 @@ export const OwnerDistribution = ({
     { min: 51, max: 100000 },
   ];
 
-  const totalOwners = ownersDistribution.reduce(
-    (sum, { ownerCount }) => sum + ownerCount,
+  const totalOwners = ownersDistribution?.reduce(
+    (sum, { ownerCount }) => sum + (ownerCount ?? 0),
     0,
   );
 
   const ownerCountsByTokenRange = tokenRanges.map(({ min, max }) =>
     ownersDistribution
-      .filter(({ tokenCount }) => tokenCount >= min && tokenCount <= max)
-      .reduce((sum, { ownerCount, tokenCount }) => sum + ownerCount, 0),
+      ?.filter(
+        ({ tokenCount }) =>
+          (tokenCount ?? 0) >= min && (tokenCount ?? 0) <= max,
+      )
+      .reduce((sum, { tokenCount }) => sum + (tokenCount ?? 0), 0),
   );
 
   return (
@@ -38,25 +43,27 @@ export const OwnerDistribution = ({
 
       {ownerCountsByTokenRange.length &&
         ownerCountsByTokenRange.map((amount, index) => {
-          const ownerPercentage = (amount / totalOwners) * 100;
-          const range = tokenRanges[index];
-          const { min, max } = range!;
+          if (amount && totalOwners) {
+            const ownerPercentage = (amount / totalOwners) * 100;
+            const range = tokenRanges[index];
+            const { min, max } = range!;
 
-          const rangeLabel =
-            index > 0 && index + 1 !== tokenRanges.length
-              ? `${min}-${max}`
-              : `${min}+`;
+            const rangeLabel =
+              index > 0 && index + 1 !== tokenRanges.length
+                ? `${min}-${max}`
+                : `${min}+`;
 
-          const pluralSuffix = index > 0 ? "s" : "";
+            const pluralSuffix = index > 0 ? "s" : "";
 
-          return (
-            <div className="mb-3" key={max}>
-              <p className="pb-1">
-                {rangeLabel} item{pluralSuffix}: {ownerPercentage.toFixed(1)}%
-              </p>
-              <Progress value={ownerPercentage} />
-            </div>
-          );
+            return (
+              <div className="mb-3" key={max}>
+                <p className="pb-1">
+                  {rangeLabel} item{pluralSuffix}: {ownerPercentage.toFixed(1)}%
+                </p>
+                <Progress value={ownerPercentage} />
+              </div>
+            );
+          }
         })}
     </div>
   );

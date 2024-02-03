@@ -1,5 +1,5 @@
 import type { AnyColumn, SQL } from "drizzle-orm";
-import { and, asc, desc, eq, gte, lte, or } from "drizzle-orm";
+import { and, asc, desc, eq, gt, lt, or } from "drizzle-orm";
 
 // With multiple cursors
 export function withCursorPagination<
@@ -36,7 +36,7 @@ export function withCursorPagination<
   // Primary cursor
   const primaryColumn = cursors[0][0];
   const primaryOrder = cursors[0][1] === "asc" ? asc : desc;
-  const primaryOperator = cursors[0][1] === "asc" ? gte : lte;
+  const primaryOperator = cursors[0][1] === "asc" ? gt : lt;
   const primaryCursor = cursors[0][2];
 
   // Secondary cursor (unique fallback like an id field for a stable sort)
@@ -48,8 +48,8 @@ export function withCursorPagination<
     : null;
   const secondaryOperator = cursors[1]
     ? cursors[1][1] === "asc"
-      ? gte
-      : lte
+      ? gt
+      : lt
     : null;
   const secondaryCursor = cursors[1] ? cursors[1][2] : undefined;
 

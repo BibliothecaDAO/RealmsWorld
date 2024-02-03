@@ -3,17 +3,17 @@ import React from "react";
 import { getTokenName } from "@/utils/utils";
 
 import type { RouterOutputs } from "@realms-world/api";
+import {
+  CollectionDisplayName,
+  getCollectionFromAddress,
+} from "@realms-world/constants";
 
 import ERC721MarketplaceItem from "./ERC721MarketplaceItem";
 
 interface ERC721LineItemProps {
-  tokenDetails?: RouterOutputs["erc721Tokens"]["byId"] /*NonNullable<
-    NonNullable<ReturnType<typeof useTokens>>["data"]
-  >[0];*/;
-  collection?: any /*Pick<
-    NonNullable<ReturnType<typeof useCollections>["data"]>[0],
-    "name" | "royalties" | "image"
-  >;*/;
+  tokenDetails?:
+    | RouterOutputs["erc721Tokens"]["byId"]
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   usdPrice?: number;
   isUnavailable?: boolean;
   warning?: string;
@@ -27,14 +27,13 @@ interface ERC721LineItemProps {
 
 const ERC721LineItem: FC<ERC721LineItemProps> = ({
   tokenDetails,
-  collection,
   usdPrice,
   isUnavailable,
   price,
   priceSubtitle,
   warning,
   expires,
-  showRoyalties,
+  //showRoyalties,
   quantity,
 }) => {
   if (!tokenDetails) {
@@ -43,19 +42,23 @@ const ERC721LineItem: FC<ERC721LineItemProps> = ({
 
   return (
     <ERC721MarketplaceItem
-      img={
-        tokenDetails?.image ? tokenDetails.image : (collection?.image as string)
-      }
+      img={tokenDetails?.image ?? ""}
       name={getTokenName(tokenDetails)}
       price={price}
       usdPrice={usdPrice}
-      collection={tokenDetails?.collection?.name || collection?.name || ""}
       expires={expires}
       warning={warning}
+      collection={
+        tokenDetails.contract_address
+          ? CollectionDisplayName[
+              getCollectionFromAddress(tokenDetails.contract_address)!
+            ]
+          : ""
+      }
       isUnavailable={isUnavailable}
       priceSubtitle={priceSubtitle}
       royaltiesBps={
-        showRoyalties && collection?.royalties ? collection.royalties.bps : 500
+        /*showRoyalties && collection?.royalties ? collection.royalties.bps :*/ 500
       }
       quantity={quantity}
     />

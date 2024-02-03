@@ -1,10 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextResponse } from "next/server";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { hash, shortString, uint256 } from "starknet";
 
 import type { SQL } from "@realms-world/db";
+import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import { and, db, eq, inArray, schema, sql } from "@realms-world/db";
 
-import { getTokenContractAddresses } from "../utils/utils";
 //import { Client } from "https://esm.sh/ts-postgres";
 
 import { inngest } from "./client";
@@ -18,7 +25,13 @@ export const tokenURI = eventKey("tokenURI");
 export const token_uri = eventKey("token_uri");
 
 export const fetchMetadata = inngest.createFunction(
-  { name: "fetchMetadata", id: "fetchMeta" },
+  {
+    name: "fetchMetadata",
+    id: "fetchMeta",
+    concurrency: {
+      limit: 7,
+    },
+  },
   { event: "nft/mint" },
   async ({ event, step }) => {
     const metadata = await step.run("Fetch metadata", async () => {
@@ -40,7 +53,9 @@ export const fetchMetadata = inngest.createFunction(
               contract_address: event.data.contract_address,
               entry_point_selector:
                 event.data.contract_address ==
-                getTokenContractAddresses("beasts").L2
+                getCollectionAddresses(Collections.BEASTS)[
+                  SUPPORTED_L2_CHAIN_ID
+                ]!
                   ? tokenURI
                   : token_uri, // Token URI
               calldata: [tokenId.low, tokenId.high],
@@ -66,10 +81,11 @@ export const fetchMetadata = inngest.createFunction(
     }
 
     const jsonString = value.join("");
+    // eslint-disable-next-line no-control-regex
     const regex = new RegExp("\\u0015", "g");
     const modifiedJsonString = jsonString
       .replace(
-        /"name":"(.*?)"\,/g,
+        /"name":"(.*?)",/g,
         (match: any, name: any) => `"name":"${name.replaceAll('"', '\\"')}",`,
       )
       .replace(regex, "");
@@ -103,7 +119,6 @@ export const fetchMetadata = inngest.createFunction(
         let attributeKeyResult: { updatedId: number | null }[] = [];
         let attributesResult: { id: number | null }[] = [];
         let tokenAttributeResult: { key: string | null }[] = [];
-        let attributeKeysCountUpdate: { updatedId: number | null }[] = [];
         const attributesCountMap: Record<number, { tokenCount: number }> = {};
         const addedTokenAttributes = [];
         const tokenAttributeCounter = [];
@@ -195,7 +210,7 @@ export const fetchMetadata = inngest.createFunction(
                   .returning({ id: schema.erc721Attributes.id });
 
                 //Update count of attribute keys
-                attributeKeysCountUpdate = await db
+                await db
                   .update(schema.erc721AttributeKeys)
                   .set({
                     attributeCount: attributeKey?.attributeCount + 1,
@@ -257,7 +272,7 @@ export const fetchMetadata = inngest.createFunction(
             sqlChunks.push(sql`end)`);
             const finalSql: SQL = sql.join(sqlChunks, sql.raw(" "));
             console.log(finalSql);
-            const res = await db
+            await db
               .update(schema.erc721Attributes)
               .set({ tokenCount: finalSql })
               .where(inArray(schema.erc721Attributes.id, ids));

@@ -1,20 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import type { ERC721Tokens } from "@/constants/erc721Tokens";
-import type { Attributes, Collection, Token } from "@/types";
 import { useMemo } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
-import { erc721Tokens } from "@/constants/erc721Tokens";
-import { getTokenContractAddresses, shortenHex } from "@/utils/utils";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useContractRead } from "@starknet-react/core";
-import { ArrowLeft, Loader } from "lucide-react";
+import { Loader } from "lucide-react";
 import { shortString } from "starknet";
 
-import type { RouterOutputs } from "@realms-world/api";
-
-import { TokenAttribute } from "./TokenAttribute";
+import { getCollectionAddresses } from "@realms-world/constants";
 
 export const ContractImage = ({
   tokenId,
@@ -24,11 +21,10 @@ export const ContractImage = ({
   collectionId: string;
 }) => {
   const isBeasts = collectionId == "beasts";
-  const tokenAddress = getTokenContractAddresses(
-    collectionId as keyof ERC721Tokens,
-  ).L2;
+  const tokenAddress =
+    getCollectionAddresses(collectionId)[SUPPORTED_L2_CHAIN_ID];
 
-  const { data, isError, isLoading, error } = useContractRead({
+  const { data } = useContractRead({
     functionName: "token_uri",
     args: [tokenId],
     abi: L2_C1ERC20,

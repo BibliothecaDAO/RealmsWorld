@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Lords from "@/icons/lords.svg";
 import { RefreshCw, Trash2 } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -17,20 +16,16 @@ interface TokenOwnerActionsProps {
   token: RouterOutputs["erc721Tokens"]["byId"];
   tokenId: string;
   //tokenOwnerAddress: string;
-  contractAddress: string;
 }
 
 const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
   token,
   tokenId,
   //tokenOwnerAddress,
-  contractAddress,
 }) => {
   //const { toast } = useToast();
   //const { listItem } = useBurner();
-  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
-
-  const onItemlist = async () => {};
+  const [isSubmitting, _] = React.useState<boolean>(false);
 
   const activeListings = token?.listings?.filter((listing) => listing.active);
 
@@ -68,7 +63,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
             listingId={lowestPriceActiveListing?.id}
             collectionId={"test"}
             trigger={
-              <Button onClick={() => onItemlist()} variant={"default"}>
+              <Button variant={"default"}>
                 <>
                   {isSubmitting ? (
                     <div className="flex items-center justify-center">
@@ -85,7 +80,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
           <ListCancelModal
             token={token}
             trigger={
-              <Button onClick={() => onItemlist()} variant={"outline"}>
+              <Button variant={"outline"}>
                 <Trash2 className="h-auto w-7" />
               </Button>
             }
@@ -97,7 +92,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
           tokenId={tokenId}
           collectionId={"test"}
           trigger={
-            <Button onClick={() => onItemlist()} variant={"default"}>
+            <Button variant={"default"}>
               <>
                 {isSubmitting ? (
                   <div className="flex items-center justify-center">

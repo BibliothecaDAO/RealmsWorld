@@ -30,7 +30,6 @@ export const NavLink = ({
   variant,
   size,
   className,
-  ...props
 }: NavLinkProps) => {
   const pathname = usePathname();
   const isActive = exact ? pathname === href : pathname.startsWith(href);

@@ -19,12 +19,11 @@ import { mainnet, sepolia } from "wagmi/chains";
 
 import { TransferLogProvider } from "./TransferLogProvider";
 
-const starkProvider =
-  /*process.env.NEXT_PUBLIC_BLAST_API
+const starkProvider = process.env.NEXT_PUBLIC_BLAST_API
   ? blastProvider({
       apiKey: process.env.NEXT_PUBLIC_BLAST_API,
     })
-  :*/ starkPublicProvider();
+  : starkPublicProvider();
 const starkConnectors = [
   new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
   new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
@@ -33,6 +32,7 @@ const starkConnectors = [
   }),
   new ArgentMobileConnector(),
 ];
+const isTestnet = process.env.NEXT_PUBLIC_IS_TESTNET === "true";
 
 /*const theme = darkTheme({
   headlineFont: "Sans Serif",
@@ -44,9 +44,8 @@ const starkConnectors = [
 export const config = getDefaultConfig({
   appName: "Realms.World",
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-  chains: [mainnet, sepolia],
+  chains: [isTestnet ? sepolia : mainnet],
   transports: {
-    [mainnet.id]: http(),
     [sepolia.id]: http(),
     [mainnet.id]: http(),
   },

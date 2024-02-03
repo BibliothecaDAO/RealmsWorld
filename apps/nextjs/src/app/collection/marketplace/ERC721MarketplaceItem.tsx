@@ -2,11 +2,9 @@ import type { FC } from "react";
 import React from "react";
 import Image from "next/image";
 import Lords from "@/icons/lords.svg";
-import Starknet from "@/icons/starknet.svg";
-import { formatBigInt } from "@/utils/utils";
 
 import { Tooltip, TooltipProvider } from "@realms-world/ui";
-import { formatBN, formatNumber } from "@realms-world/utils";
+import { formatNumber } from "@realms-world/utils";
 
 interface Props {
   img?: string;

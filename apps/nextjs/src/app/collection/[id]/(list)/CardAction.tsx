@@ -1,4 +1,3 @@
-import LordsIcon from "@/icons/lords.svg";
 import { useAccount } from "@starknet-react/core";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -11,10 +10,8 @@ import { ListingEditModal } from "../../marketplace/listEdit/ListingEditModal";
 
 export const CardAction = ({
   token,
-  layout = "grid",
 }: {
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
-  layout?: "grid" | "list";
 }) => {
   const { address } = useAccount();
   return (
@@ -29,7 +26,7 @@ export const CardAction = ({
             }
             // tokenId={tokenId}
             token={token}
-            collectionId={token.contract_address}
+            collectionId={token.contract_address!}
             orderId={0}
           />
         ) : (
@@ -49,7 +46,7 @@ export const CardAction = ({
         <ListModal
           token={token}
           tokenId={token.token_id}
-          collectionId={"test"}
+          //collectionId={"test"}
           trigger={
             <Button className="z-20 w-full" size={"lg"}>
               List Item

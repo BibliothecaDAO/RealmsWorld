@@ -26,7 +26,7 @@ export const RenderExplorers = ({ isL1 = true }) => {
           variant={"outline"}
           href={url}
         >
-          <span>{shortenHex(text || "", 8)} </span>
+          <span>{shortenHex(text ?? "", 8)} </span>
           <ExternalLinkIcon className="ml-2 h-3 w-3" />
         </Button>
       ))}

@@ -1,6 +1,6 @@
+import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
-import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { Loader } from "lucide-react";
 
@@ -94,7 +94,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         ref={ref}
         {...props}
         className={cn(iconButtonVariants({ variant, size }), className)}
-        disabled={disabled || isLoading}
+        disabled={disabled ?? isLoading}
       >
         {renderInner()}
       </Component>

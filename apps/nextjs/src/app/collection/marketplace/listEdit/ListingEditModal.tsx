@@ -1,17 +1,13 @@
-import type {
-  ComponentPropsWithoutRef,
-  Dispatch,
-  ReactElement,
-  SetStateAction,
-} from "react";
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import type { Dispatch, ReactElement, SetStateAction } from "react";
 import React, { useEffect, useState } from "react";
 import { useTimeDiff } from "@/hooks/useTimeDiff";
 import Lords from "@/icons/lords.svg";
-import { getTokenName } from "@/utils/utils";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Loader } from "lucide-react";
-import { formatUnits, zeroAddress } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
@@ -23,11 +19,6 @@ import {
   DialogTrigger,
   Input,
   Progress,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Tooltip,
   TooltipProvider,
 } from "@realms-world/ui";
@@ -56,9 +47,11 @@ const ModalCopy = {
 
 interface Props {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>];
-  listingId?: string;
+  listingId?: number;
   tokenId?: string;
-  token?: RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token?:
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
+    | RouterOutputs["erc721Tokens"]["byId"];
   collectionId?: string;
   normalizeRoyalties?: boolean;
   copyOverrides?: Partial<typeof ModalCopy>;
@@ -91,20 +84,16 @@ export function ListingEditModal({
   const [open, setOpen] = useState(false);
   return (
     <ListingEditModalRender
-      listingId={listingId}
       token={token}
       tokenId={tokenId}
       collectionId={collectionId}
       open={open}
-      normalizeRoyalties={normalizeRoyalties}
     >
       {({
         loading,
         listing,
         price,
         collection,
-        expirationOption,
-        expirationOptions,
         editListingStep,
         transactionError,
         /*usdPrice,
@@ -112,14 +101,13 @@ export function ListingEditModal({
         royaltyBps,
         stepData,
         setPrice,
-        setExpirationOption,
         editListing,
       }) => {
-        const expires = useTimeDiff(listing?.expiration || 0);
+        const expires = useTimeDiff(listing?.expiration ?? 0);
 
-        const profit = ((10000 - (royaltyBps || 0)) * (price ?? 0)) / 1000;
+        //const profit = ((10000 - (royaltyBps ?? 0)) * (price ?? 0)) / 1000;
 
-        const updatedTotalUsd = profit; /*usdPrice*/
+        //const updatedTotalUsd = profit; /*usdPrice*/
 
         useEffect(() => {
           if (
@@ -145,7 +133,7 @@ export function ListingEditModal({
         }, [transactionError]);
 
         const isListingAvailable =
-          listing && (listing.active || listing.status === 0) && !loading;
+          listing && (listing.active ?? listing.status === 0) && !loading;
 
         const isListingEditable = listing?.active && !loading;
 
@@ -208,14 +196,9 @@ export function ListingEditModal({
                     <div className="border-b">
                       <ERC721LineItem
                         tokenDetails={token}
-                        name={token?.name}
                         price={listing?.price}
                         // priceSubtitle="Price"
-                        royaltiesBps={royaltyBps}
                         //usdPrice={totalUsd.toString()}
-                        collection={
-                          listing.criteria?.data?.collection?.name || ""
-                        }
                         expires={expires}
                         quantity={listing?.quantityRemaining}
                       />
@@ -324,7 +307,6 @@ export function ListingEditModal({
                     tokenDetails={token}
                     price={price}
                     //usdPrice={updatedTotalUsd.toString()}
-                    collection={collection?.name || ""}
                     // expires={`in ${expirationOption?.text.toLowerCase()}`}
                     quantity={1}
                   />
@@ -339,7 +321,6 @@ export function ListingEditModal({
                           stepData?.currentStepItem.txHashes &&
                           "Finalizing on blockchain"
                         }
-                        txHashes={stepData?.currentStepItem?.txHashes}
                       />
                     </>
                   )}
@@ -361,7 +342,7 @@ export function ListingEditModal({
                     <div className="mb-8">
                       Your listing for{" "}
                       <span className="font-semibold">
-                        {decodeURIComponent(token?.name || "")}
+                        {decodeURIComponent(token?.name ?? "")}
                       </span>{" "}
                       has been updated.
                     </div>
