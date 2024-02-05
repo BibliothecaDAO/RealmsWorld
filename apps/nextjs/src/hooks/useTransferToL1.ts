@@ -16,7 +16,7 @@ import {
   TransferStep,
   TransferToL1Steps,
 } from "@/constants/transferSteps";
-import { useBridgeContract } from "@/hooks/useBridgeContract";
+import { useWriteInitiateWithdrawLords } from "@/hooks/bridge/useWriteInitiateWithdrawLords";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { useAccount } from "wagmi";
 
@@ -24,7 +24,8 @@ import { useTransfer } from "./useTransfer";
 import { useTransferProgress } from "./useTransferProgress";
 
 export const useTransferToL1 = () => {
-  const { initiateWithdraw, withdrawHash } = useBridgeContract();
+  const { writeAsync, setAmount, withdrawHash } =
+    useWriteInitiateWithdrawLords();
   const { address: l1Account } = useAccount();
   const { address: l2Account, connector } = useL2Account();
   const { handleProgress, handleData, handleError } =

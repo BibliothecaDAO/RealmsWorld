@@ -1,4 +1,3 @@
-import { ChainType } from "@starkware-industries/commons-js-enums";
 import { evaluate } from "@starkware-industries/commons-js-utils";
 
 import { ChainId } from "@realms-world/constants";

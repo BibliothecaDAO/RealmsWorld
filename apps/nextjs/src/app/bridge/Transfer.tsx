@@ -4,6 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { EthereumLoginButton } from "@/app/_components/wallet/EthereumLoginButton";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
+import { ActionType, TransferToL1Steps } from "@/constants/transferSteps";
+import { useWriteInitiateWithdrawalLords } from "@/hooks/bridge/useWriteInitiateWithdrawalLords";
+import { useTransfer } from "@/hooks/useTransfer";
 import { useTransferToL1 } from "@/hooks/useTransferToL1";
 import { useTransferToL2 } from "@/hooks/useTransferToL2";
 import EthereumLogo from "@/icons/ethereum.svg";
@@ -22,15 +25,31 @@ export const Transfer = ({ action }: { action: string }) => {
   const { address: l1Account } = useL1Account();
   const { address: l2Account } = useAccount();
   // const [toastOpen, setToastOpen] = useState(false);
-  const [amount, setAmount] = useState("0");
   const { balances, l2loading } = useWalletsProviderContext();
+  const {
+    amount,
+    setAmount,
+    writeAsync: iniateWithdrawal,
+  } = useWriteInitiateWithdrawalLords();
+  const { handleProgress, handleData, handleError } =
+    useTransfer(TransferToL1Steps);
 
-  const transferToL1 = useTransferToL1();
   const transferToL2 = useTransferToL2();
 
   const onTransferClick = async () => {
     if (action == "withdraw") {
-      transferToL1(amount);
+      const withdrawHash = await iniateWithdrawal();
+      if (withdrawHash) {
+        handleData({
+          type: ActionType.TRANSFER_TO_L1,
+          sender: l2Account,
+          recipient: l1Account,
+          name: "Lords",
+          symbol: "LORDS",
+          amount: amount,
+          l2hash: withdrawHash?.transaction_hash,
+        });
+      }
     } else {
       transferToL2(amount);
     }

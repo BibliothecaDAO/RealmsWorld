@@ -21,7 +21,7 @@ import {
   useWaitForTransactionReceipt,
 } from "wagmi";
 
-import { useBridgeContract } from "./useBridgeContract";
+import { useBridgeContract } from "./bridge/useBridgeContract";
 import { useTokenContractAPI } from "./useTokenContract";
 import { useTransfer } from "./useTransfer";
 import { useTransferProgress } from "./useTransferProgress";
