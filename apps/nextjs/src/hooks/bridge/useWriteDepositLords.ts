@@ -1,92 +1,31 @@
-"use client";
-
-import type { L1WriteBaseParams } from "@/types/L1WriteBaseParams";
-import type { Config } from "@wagmi/core";
-import type { ContractFunctionArgs, WriteContractReturnType } from "viem";
-import type { UseWriteContractReturnType } from "wagmi";
-import type { WriteContractVariables } from "wagmi/query";
+import { useCallback } from "react";
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
-import { NETWORK_NAME } from "@/constants/env";
-import { ChainType, tokens } from "@/constants/tokens";
-import { useAccount as useL1Account, useWriteContract } from "wagmi";
-
-import type { SupportedL1ChainId } from "@realms-world/constants/src/Chains";
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
+import { tokens } from "@/constants/tokens";
+import { useAccount as useL2Account } from "@starknet-react/core";
+import { useWriteContract } from "wagmi";
 
 const FUNCTION = "deposit";
 
-export type WriteDepositLordsParameters<
-  config extends Config,
-  chainId extends SupportedL1ChainId,
-> = L1WriteBaseParams<
-  typeof L1_BRIDGE_ABI,
-  typeof FUNCTION,
-  config,
-  chainId
-> & {
-  args: {
-    amount: number;
-    l2Address: string;
-  };
-} & { l2ChainId: number };
+export function useWriteDepositLords() {
+  const { writeContractAsync, ...writeReturn } = useWriteContract();
 
-export type UseWriteDepositLordsReturnType<
-  config extends Config,
-  context = unknown,
-> = Omit<
-  UseWriteContractReturnType<
-    WriteDepositLordsParameters<config, SupportedL1ChainId>
-  >,
-  "write" | "writeAsync"
-> & {
-  writeDepositERC20Async: UseWriteContractReturnType<
-    config,
-    context
-  >["writeContractAsync"];
-};
+  // if (!l2Address) throw new Error("Missing L2 Address");
 
-export function useWriteDepositLords<config extends Config, context = unknown>(
-  {
-    args,
-    l2ChainId,
-    ...rest
-  }: {
-    args: {
-      amount: number;
-      l2Address: string;
-    };
-    l2ChainId: number;
-    rest: any;
-  },
-  options: any,
-): Promise<WriteContractReturnType> {
-  const l1BridgeAddress =
-    tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]];
-  const l2BridgeAddress =
-    tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]];
+  const writeAsync = useCallback(
+    async ({ amount, l2Address }: { amount: bigint; l2Address: string }) => {
+      console.log(l2Address, amount);
 
-  const { error, writeContractAsync, ...writeReturn } = useWriteContract();
-  const { address: l1Address } = useL1Account();
-
-  const writeDepost = writeContractAsync(
-    {
-      chainId: 1,
-      address: tokens.L1.LORDS.bridgeAddress?.[
-        ChainType.L1[NETWORK_NAME]
-      ] as `0x${string}`,
-      abi: L1_BRIDGE_ABI,
-      functionName: FUNCTION,
-      args: [args.amount, args.l2Address, BigInt(1)],
-      account: l1Address,
-      ...rest,
-    } as unknown as WriteContractVariables<
-      typeof L1_BRIDGE_ABI,
-      typeof FUNCTION,
-      ContractFunctionArgs<typeof L1_BRIDGE_ABI, "nonpayable", typeof FUNCTION>,
-      config,
-      config["chains"][number]["id"]
-    >,
-    options,
+      return await writeContractAsync({
+        address: tokens.L1.LORDS.bridgeAddress?.[
+          SUPPORTED_L1_CHAIN_ID
+        ] as `0x${string}`,
+        abi: L1_BRIDGE_ABI,
+        functionName: FUNCTION,
+        args: [amount, BigInt(l2Address), BigInt(1)],
+      });
+    },
+    [writeContractAsync],
   );
-
-  return { writeDepost, ...writeReturn };
+  return { writeAsync, ...writeReturn };
 }

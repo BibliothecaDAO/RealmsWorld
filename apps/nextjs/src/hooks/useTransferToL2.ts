@@ -7,7 +7,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
-import { NETWORK_NAME } from "@/constants/env";
+import { NETWORK_NAME, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
 import {
   ActionType,
@@ -21,7 +21,7 @@ import {
   useWaitForTransactionReceipt,
 } from "wagmi";
 
-import { useBridgeContract } from "./useBridgeContract";
+import { useWriteDepositLords } from "./bridge/useWriteDepositLords";
 import { useTokenContractAPI } from "./useTokenContract";
 import { useTransfer } from "./useTransfer";
 import { useTransferProgress } from "./useTransferProgress";
@@ -38,8 +38,7 @@ export const stepOf = (step: any, steps: any) => {
 export const useTransferToL2 = () => {
   const [amount, setAmount] = useState("");
   //onst [trackInitiated, trackSuccess, trackError, trackReject] = useTransferToL2Tracking();
-  const { deposit, depositIsSuccess, depositError, depositReceipt } =
-    useBridgeContract();
+  const { writeAsync, ...writeReturn } = useWriteDepositLords();
 
   const { allowance, approve, approveHash, l1ERC20Contract } =
     useTokenContractAPI("LORDS", true);
@@ -48,7 +47,7 @@ export const useTransferToL2 = () => {
   });
 
   const { address: l1Account, connector } = useL1Account();
-  const { address: l2Account } = useL2Account();
+  const { address: l2Address } = useL2Account();
   const { handleProgress, handleData, handleError } =
     useTransfer(TransferToL2Steps);
   const progressOptions = useTransferProgress();
@@ -56,7 +55,7 @@ export const useTransferToL2 = () => {
   const { refetch } = useTransferLog();
 
   const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[
-    ChainType.L1[NETWORK_NAME]
+    SUPPORTED_L1_CHAIN_ID
   ] as `0x${string}`;
 
   const onTransactionHash = (
@@ -82,7 +81,7 @@ export const useTransferToL2 = () => {
     const transferData = {
       type: ActionType.TRANSFER_TO_L2,
       sender: l1Account,
-      recipient: l2Account,
+      recipient: l2Address,
       l1hash: event.transactionHash,
       name: "Lords",
       symbol: "LORDS",
@@ -93,50 +92,57 @@ export const useTransferToL2 = () => {
     handleData(transferData);
   };
   useEffect(() => {
-    if (depositError) {
+    if (writeReturn.error) {
       handleError(
-        progressOptions.error(TransferError.TRANSACTION_ERROR, depositError),
+        progressOptions.error(
+          TransferError.TRANSACTION_ERROR,
+          writeReturn.error,
+        ),
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [depositError]);
+  }, [writeReturn.isError]);
 
-  const sendDeposit = useCallback(async (amount: string) => {
-    handleProgress(
-      progressOptions.waitForConfirm(
-        connector?.name ?? "Wallet",
-        stepOf(TransferStep.CONFIRM_TX, TransferToL2Steps),
-      ),
-    );
-    const hash = await deposit({
-      address: l1BridgeAddress,
-      abi: L1_BRIDGE_ABI,
-      functionName: "deposit",
-      args: [parseUnits(amount, 18), BigInt(l2Account ?? "0x"), BigInt(1)],
-      value: parseEther("0.000000000001"),
-    });
-    onTransactionHash(depositError, hash, amount);
-  }, []);
+  const sendDeposit = useCallback(
+    async ({ amount, l2Address }: { amount: string; l2Address: string }) => {
+      handleProgress(
+        progressOptions.waitForConfirm(
+          connector?.name ?? "Wallet",
+          stepOf(TransferStep.CONFIRM_TX, TransferToL2Steps),
+        ),
+      );
+      const hash = l2Address
+        ? await writeAsync({
+            amount: parseUnits(amount, 18),
+            l2Address: l2Address,
+          })
+        : null;
+
+      hash && onTransactionHash(writeReturn.error, hash, amount);
+    },
+    [],
+  );
 
   useEffect(() => {
-    if (approveIsSuccess) {
-      void sendDeposit(amount);
+    if (approveIsSuccess && l2Address) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      sendDeposit({ amount, l2Address });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [approveIsSuccess]);
+  }, [approveIsSuccess, l2Address]);
 
   useEffect(() => {
-    if (depositIsSuccess) {
-      void onDeposit(depositReceipt);
+    if (writeReturn.isSuccess) {
+      onDeposit(writeReturn.data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [depositIsSuccess]);
+  }, [writeReturn.isSuccess]);
 
   return useCallback(
-    async (amount: string) => {
-      setAmount(amount);
+    async ({ amount, l2Address }: { amount: string; l2Address: string }) => {
       try {
+        setAmount(amount);
         console.log("TransferToL2 called");
 
         console.log("Token needs approval");
@@ -146,7 +152,8 @@ export const useTransferToL2 = () => {
             stepOf(TransferStep.APPROVE, TransferToL2Steps),
           ),
         );
-        console.log("Current allow value", allowance?.toString());
+        console.log("Current allow value", formatEther(allowance ?? BigInt(0)));
+        console.log(amount);
         if (Number(formatEther(allowance ?? BigInt(0))) < Number(amount)) {
           console.log(
             "Allow value is smaller then amount, sending approve tx...",
@@ -160,7 +167,7 @@ export const useTransferToL2 = () => {
         }
         if (allowance && Number(formatEther(allowance)) >= Number(amount)) {
           console.log("Calling deposit");
-          await sendDeposit(amount);
+          await sendDeposit({ amount, l2Address });
         }
       } catch (ex: any) {
         //trackError(ex);
