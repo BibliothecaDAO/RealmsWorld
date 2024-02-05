@@ -18,14 +18,16 @@ import {
 } from "@/constants/transferSteps";
 import { useWriteInitiateWithdrawLords } from "@/hooks/bridge/useWriteInitiateWithdrawLords";
 import { useAccount as useL2Account } from "@starknet-react/core";
-import { useAccount } from "wagmi";
+import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 
+import { useWriteFinalizeWithdrawLords } from "./bridge/useWriteFinalizeWithdrawLords";
 import { useTransfer } from "./useTransfer";
 import { useTransferProgress } from "./useTransferProgress";
 
-export const useTransferToL1 = () => {
-  const { writeAsync, setAmount, withdrawHash } =
-    useWriteInitiateWithdrawLords();
+/*export const useTransferToL1 = ({ amount }) => {
+  const { writeAsync, withdrawHash } = useWriteInitiateWithdrawLords({
+    amount,
+  });
   const { address: l1Account } = useAccount();
   const { address: l2Account, connector } = useL2Account();
   const { handleProgress, handleData, handleError } =
@@ -61,7 +63,7 @@ export const useTransferToL1 = () => {
 
         console.log("Calling initiate withdraw");
 
-        initiateWithdraw(amount);
+        await writeAsync();
 
         if (withdrawHash?.transaction_hash) {
           console.log("Tx hash received", {
@@ -90,15 +92,12 @@ export const useTransferToL1 = () => {
       handleError,
     ],
   );
-};
-
-const l1BridgeAddress =
-  tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]];
-
+};*/
 export const useCompleteTransferToL1 = () => {
-  const { withdraw, withdrawIsSuccess, withdrawReceipt, withdrawError } =
-    useBridgeContract();
-  const { address: l1Account, connector } = useAccount();
+  const { address: l1Address, connector } = useAccount();
+
+  const { writeAsync, data } = useWriteFinalizeWithdrawLords();
+
   const { handleProgress, handleData, handleError } = useTransfer(
     CompleteTransferToL1Steps,
   );
@@ -106,12 +105,16 @@ export const useCompleteTransferToL1 = () => {
   const { refetch } = useTransferLog(true);
   const [transfer, setTransfer] = useState({});
 
-  const onWithdrawal = (event: typeof withdrawReceipt) => {
+  const onWithdrawal = (event) => {
     console.log("Withdrawal event dispatched", event, transfer);
     const transferData = { ...transfer, l1hash: event?.blockHash };
     handleData(transferData);
     refetch();
   };
+  const { isSuccess: withdrawIsSuccess, data: withdrawReceipt } =
+    useWaitForTransactionReceipt({
+      hash: data,
+    });
 
   useEffect(() => {
     if (withdrawIsSuccess) {
@@ -146,13 +149,13 @@ export const useCompleteTransferToL1 = () => {
           ),
         );
         console.log("Calling withdraw", withdrawalEvents.amount);
-        const hash = await withdraw({
-          address: l1BridgeAddress as `0x${string}`,
-          abi: L1_BRIDGE_ABI,
-          functionName: "withdraw",
-          args: [withdrawalEvents[0].amount, l1Account!],
+        if (!l1Address) return "L1 Address not defined";
+        const hash = await writeAsync({
+          amount: withdrawalEvents.amount,
+          l1Address,
         });
-        onTransactionHash(withdrawError, hash);
+        onTransactionHash(null, hash);
+
         //onWithdrawal(receipt.events[EventName.L1.LOG_WITHDRAWAL]);
       } catch (ex: any) {
         console.error(ex?.message, ex);
@@ -163,9 +166,8 @@ export const useCompleteTransferToL1 = () => {
       handleProgress,
       progressOptions,
       connector?.name,
-      withdraw,
-      l1Account,
-      withdrawError,
+      writeAsync,
+      l1Address,
       handleError,
     ],
   );

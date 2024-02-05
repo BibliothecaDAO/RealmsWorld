@@ -7,21 +7,25 @@ import { useWriteContract } from "wagmi";
 
 const FUNCTION = "deposit";
 
-export function useWriteDepositLords({ amount }: { amount: bigint }) {
-  const { error, writeContractAsync, ...writeReturn } = useWriteContract();
-  const { address: l2Address } = useL2Account();
+export function useWriteDepositLords() {
+  const { writeContractAsync, ...writeReturn } = useWriteContract();
 
-  if (!l2Address) throw new Error("Missing L2 Address");
+  // if (!l2Address) throw new Error("Missing L2 Address");
 
-  const writeDepostAsync = useCallback(async () => {
-    return await writeContractAsync({
-      address: tokens.L1.LORDS.bridgeAddress?.[
-        SUPPORTED_L1_CHAIN_ID
-      ] as `0x${string}`,
-      abi: L1_BRIDGE_ABI,
-      functionName: FUNCTION,
-      args: [amount, BigInt(l2Address), BigInt(1)],
-    });
-  }, [amount, l2Address, writeContractAsync]);
-  return { writeDepostAsync, ...writeReturn };
+  const writeAsync = useCallback(
+    async ({ amount, l2Address }: { amount: bigint; l2Address: string }) => {
+      console.log(l2Address, amount);
+
+      return await writeContractAsync({
+        address: tokens.L1.LORDS.bridgeAddress?.[
+          SUPPORTED_L1_CHAIN_ID
+        ] as `0x${string}`,
+        abi: L1_BRIDGE_ABI,
+        functionName: FUNCTION,
+        args: [amount, BigInt(l2Address), BigInt(1)],
+      });
+    },
+    [writeContractAsync],
+  );
+  return { writeAsync, ...writeReturn };
 }

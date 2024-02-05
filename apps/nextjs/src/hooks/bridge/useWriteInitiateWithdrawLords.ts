@@ -10,7 +10,11 @@ import {
 import { parseEther } from "viem";
 import { useAccount as useL1Account } from "wagmi";
 
-export const useWriteInitiateWithdrawLords = () => {
+export const useWriteInitiateWithdrawLords = ({
+  amount,
+}: {
+  amount: string | null;
+}) => {
   const { address: addressL1 } = useL1Account();
 
   const l2BridgeAddress =
@@ -19,7 +23,6 @@ export const useWriteInitiateWithdrawLords = () => {
     abi: L2BridgeABI,
     address: l2BridgeAddress as `0x${string}`,
   });
-  const [amount, setAmount] = useState<string | null>();
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const calls: Call[] = useMemo(() => {
@@ -39,7 +42,5 @@ export const useWriteInitiateWithdrawLords = () => {
     calls,
     writeAsync,
     withdrawHash,
-    amount,
-    setAmount,
   };
 };
