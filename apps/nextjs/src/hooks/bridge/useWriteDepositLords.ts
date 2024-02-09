@@ -1,9 +1,10 @@
 import { useCallback } from "react";
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
-import { tokens } from "@/constants/tokens";
-import { useAccount as useL2Account } from "@starknet-react/core";
+import { parseEther } from "viem";
 import { useWriteContract } from "wagmi";
+
+import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
 
 const FUNCTION = "deposit";
 
@@ -17,12 +18,12 @@ export function useWriteDepositLords() {
       console.log(l2Address, amount);
 
       return await writeContractAsync({
-        address: tokens.L1.LORDS.bridgeAddress?.[
-          SUPPORTED_L1_CHAIN_ID
-        ] as `0x${string}`,
+        address: LORDS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] as `0x${string}`,
         abi: L1_BRIDGE_ABI,
         functionName: FUNCTION,
         args: [amount, BigInt(l2Address), BigInt(1)],
+        //@ts-expect-error should accept value
+        value: parseEther("0.000000000001"),
       });
     },
     [writeContractAsync],

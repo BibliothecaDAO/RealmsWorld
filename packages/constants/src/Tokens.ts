@@ -26,21 +26,22 @@ class Token {
   }
 }
 
-export const ETH_SN_MAIN = new Token(
-  ChainId.SN_MAIN,
-  "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
-  18,
-  "ETH",
-  "Ether",
-);
-export const ETH_SN_SEPOLIA = new Token(
-  ChainId.SN_SEPOLIA,
-  "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
-  18,
-  "ETH",
-  "Ether",
-);
-
+export const ETH: Record<number | string, Token> = {
+  [ChainId.SN_MAIN]: new Token(
+    ChainId.SN_MAIN,
+    "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
+    18,
+    "ETH",
+    "Ether",
+  ),
+  [ChainId.SN_SEPOLIA]: new Token(
+    ChainId.SN_SEPOLIA,
+    "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
+    18,
+    "ETH",
+    "Ether",
+  ),
+};
 export const LORDS: Record<number | string, Token> = {
   [ChainId.MAINNET]: new Token(
     ChainId.MAINNET,
@@ -74,10 +75,11 @@ export const LORDS: Record<number | string, Token> = {
 
 export const LORDS_BRIDGE_ADDRESS: Record<number | string, string> = {
   [ChainId.MAINNET]: "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
-  [ChainId.SEPOLIA]: "",
+  [ChainId.SEPOLIA]: "0x6406465603487eE0Ad7A813b2bB6B0DFfB8f6aa7",
   [ChainId.SN_MAIN]:
     "0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
-  [ChainId.SN_SEPOLIA]: "",
+  [ChainId.SN_SEPOLIA]:
+    "0x042331a29c53f6084f08964cbd83b94c1a141e6d14009052d55b03793b21d5b3",
 };
 
 export function getStarknetNativeCurrency(chainId: number | string) {

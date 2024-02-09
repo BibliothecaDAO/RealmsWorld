@@ -3,8 +3,9 @@
 import { useCallback } from "react";
 import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
-import { tokens } from "@/constants/tokens";
 import { useWriteContract } from "wagmi";
+
+import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
 
 const FUNCTION = "withdraw";
 
@@ -24,9 +25,7 @@ export function useWriteFinalizeWithdrawLords() {
       console.log(l1Address, amount);
 
       return await writeContractAsync({
-        address: tokens.L1.LORDS.bridgeAddress?.[
-          SUPPORTED_L1_CHAIN_ID
-        ] as `0x${string}`,
+        address: LORDS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] as `0x${string}`,
         abi: L1_BRIDGE_ABI,
         functionName: FUNCTION,
         args: [amount, l1Address],

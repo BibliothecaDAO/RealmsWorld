@@ -1,15 +1,15 @@
 "use client";
 
 import { ERC20 as L1_ERC20_ABI } from "@/abi/L1/ERC20";
-import { NETWORK_NAME } from "@/constants/env";
-import { ChainType, tokens } from "@/constants/tokens";
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { isEth } from "@/utils/utils";
-import { useAccount as useL2Account } from "@starknet-react/core";
 import {
   useAccount as useL1Account,
   useWriteContract as useL1ContractWrite,
   useReadContract,
 } from "wagmi";
+
+import { LORDS, LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
 
 export const useTokenContractAPI = (
   symbol: "LORDS" | "ETH",
@@ -20,16 +20,12 @@ export const useTokenContractAPI = (
     const l2BridgeAddress = tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[network]]
     const l2LordsAddress = tokens.L2.LORDS.tokenAddress?.[ChainType.L2[network]]*/
 
-  const l1Token = tokens.L1[symbol];
-  const l2Token = tokens.L2[symbol];
-
   const { address: l1Account } = useL1Account();
-  const { address: l2Account } = useL2Account();
 
   const l1ERC20Contract = {
     address: isEth(symbol)
       ? "0x0000000000000000"
-      : (l1Token.tokenAddress[ChainType.L1[NETWORK_NAME]] as `0x${string}`),
+      : (LORDS[SUPPORTED_L1_CHAIN_ID]?.address as `0x${string}`),
     abi: L1_ERC20_ABI,
   };
 
@@ -45,7 +41,7 @@ export const useTokenContractAPI = (
     args: [
       l1Account!,
       (spender == true
-        ? l1Token.bridgeAddress[ChainType.L1[NETWORK_NAME]]
+        ? LORDS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID]
         : spender) as `0x${string}`,
     ],
     //enabled: !!(l1Account && spender),

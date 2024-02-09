@@ -16,7 +16,6 @@ import {
   TransferStep,
   TransferToL1Steps,
 } from "@/constants/transferSteps";
-import { useWriteInitiateWithdrawLords } from "@/hooks/bridge/useWriteInitiateWithdrawLords";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 
@@ -151,7 +150,7 @@ export const useCompleteTransferToL1 = () => {
         console.log("Calling withdraw", withdrawalEvents.amount);
         if (!l1Address) return "L1 Address not defined";
         const hash = await writeAsync({
-          amount: withdrawalEvents.amount,
+          amount: withdrawalEvents[0].amount,
           l1Address,
         });
         onTransactionHash(null, hash);
