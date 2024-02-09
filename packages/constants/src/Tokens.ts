@@ -83,12 +83,5 @@ export const LORDS_BRIDGE_ADDRESS: Record<number | string, string> = {
 };
 
 export function getStarknetNativeCurrency(chainId: number | string) {
-  switch (chainId) {
-    case ChainId.SN_SEPOLIA:
-      return ETH_SN_SEPOLIA;
-    case ChainId.SN_MAIN:
-      return ETH_SN_MAIN;
-    default:
-      throw new Error("Not Starknet");
-  }
+  return ETH[chainId];
 }
