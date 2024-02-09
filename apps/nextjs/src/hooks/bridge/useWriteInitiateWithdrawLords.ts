@@ -1,14 +1,15 @@
 import type { Call } from "starknet";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import L2BridgeABI from "@/abi/L2/LordsBridge.json";
-import { NETWORK_NAME } from "@/constants/env";
-import { ChainType, tokens } from "@/constants/tokens";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
   useContract,
   useContractWrite as useL2ContractWrite,
 } from "@starknet-react/core";
 import { parseEther } from "viem";
 import { useAccount as useL1Account } from "wagmi";
+
+import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
 
 export const useWriteInitiateWithdrawLords = ({
   amount,
@@ -17,8 +18,7 @@ export const useWriteInitiateWithdrawLords = ({
 }) => {
   const { address: addressL1 } = useL1Account();
 
-  const l2BridgeAddress =
-    tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]];
+  const l2BridgeAddress = LORDS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID];
   const { contract } = useContract({
     abi: L2BridgeABI,
     address: l2BridgeAddress as `0x${string}`,

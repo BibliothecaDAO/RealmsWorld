@@ -12,7 +12,11 @@ import React, {
 import { ERC20 as L1_ERC20_ABI } from "@/abi/L1/ERC20";
 import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
 import L2_ERC20 from "@/abi/L2/ERC20.json";
-import { NETWORK_NAME } from "@/constants/env";
+import {
+  NETWORK_NAME,
+  SUPPORTED_L1_CHAIN_ID,
+  SUPPORTED_L2_CHAIN_ID,
+} from "@/constants/env";
 import { ChainType, tokens as tokensConst } from "@/constants/tokens";
 import {
   useContractRead,
@@ -20,6 +24,8 @@ import {
 } from "@starknet-react/core";
 import { hash, uint256 } from "starknet";
 import { useBalance, useAccount as useL1Account } from "wagmi";
+
+import { ETH, LORDS } from "@realms-world/constants";
 
 import { initialState, reducer } from "./wallets-reducer";
 
@@ -76,7 +82,9 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     isFetching: l2LordsIsLoading,
     refetch: l2LordsRefetch,
   } = useContractRead({
-    address: tokensConst.L2.LORDS.tokenAddress[ChainType.L2[NETWORK_NAME]]!,
+    address:
+      LORDS[SUPPORTED_L2_CHAIN_ID]
+        ?.address /*tokensConst.L2.LORDS.tokenAddress[ChainType.L2[NETWORK_NAME]]!,*/,
     abi: L2_C1ERC20,
     functionName: "balance_of",
     enabled: !!l2Account,
@@ -85,7 +93,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   });
 
   const { data: l2EthBalance, isFetching: l2EthIsLoading } = useContractRead({
-    address: tokensConst.L2.ETH.tokenAddress[ChainType.L2[NETWORK_NAME]]!,
+    address: ETH[SUPPORTED_L2_CHAIN_ID]?.address,
     abi: L2_ERC20,
     functionName: "balanceOf",
     enabled: !!l2Account,
@@ -94,18 +102,14 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   });
 
   const l1ERC20Contract = {
-    address: tokensConst.L1.LORDS.tokenAddress[
-      ChainType.L1[NETWORK_NAME]
-    ] as `0x${string}`,
+    address: LORDS[SUPPORTED_L1_CHAIN_ID]?.address,
     abi: L1_ERC20_ABI,
   };
 
   const { data: l1LordsBalance, refetch: l1LordsRefetch } = useBalance({
     ...l1ERC20Contract,
     address: l1Account!,
-    token: tokensConst.L1.LORDS.tokenAddress[
-      ChainType.L1[NETWORK_NAME]
-    ] as `0x${string}`,
+    token: LORDS[SUPPORTED_L1_CHAIN_ID]?.address as `0x${string}`,
   });
 
   const { data: l1EthBalance } = useBalance({

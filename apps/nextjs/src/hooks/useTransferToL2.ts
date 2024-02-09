@@ -21,6 +21,8 @@ import {
   useWaitForTransactionReceipt,
 } from "wagmi";
 
+import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
+
 import { useWriteDepositLords } from "./bridge/useWriteDepositLords";
 import { useTokenContractAPI } from "./useTokenContract";
 import { useTransfer } from "./useTransfer";
@@ -54,7 +56,7 @@ export const useTransferToL2 = () => {
 
   const { refetch } = useTransferLog();
 
-  const l1BridgeAddress = tokens.L1.LORDS.bridgeAddress?.[
+  const l1BridgeAddress = LORDS_BRIDGE_ADDRESS[
     SUPPORTED_L1_CHAIN_ID
   ] as `0x${string}`;
 
@@ -82,7 +84,7 @@ export const useTransferToL2 = () => {
       type: ActionType.TRANSFER_TO_L2,
       sender: l1Account,
       recipient: l2Address,
-      l1hash: event.transactionHash,
+      l1hash: event,
       name: "Lords",
       symbol: "LORDS",
       amount: amount.toString(),
