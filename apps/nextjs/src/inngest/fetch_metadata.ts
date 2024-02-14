@@ -29,7 +29,7 @@ export const fetchMetadata = inngest.createFunction(
     name: "fetchMetadata",
     id: "fetchMeta",
     concurrency: {
-      limit: 7,
+      limit: 3,
     },
   },
   { event: "nft/mint" },
@@ -271,7 +271,6 @@ export const fetchMetadata = inngest.createFunction(
             }
             sqlChunks.push(sql`end)`);
             const finalSql: SQL = sql.join(sqlChunks, sql.raw(" "));
-            console.log(finalSql);
             await db
               .update(schema.erc721Attributes)
               .set({ tokenCount: finalSql })
