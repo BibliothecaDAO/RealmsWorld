@@ -101,14 +101,14 @@ export const StakingContainer = () => {
 
   const {
     data: poolBalanceData,
-    isLoading: poolWithdrawalsLoading,
+    isLoading: poolBalanceLoading,
     error,
     isFetched,
   } = useReadContract({
     address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
     functionName: "balanceForProofWithAddress",
-    args: hexProof && addressL1 && [hexProof, addressL1],
+    args: hexProof && addressL1 && [addressL1, hexProof],
     // query: { enabled: !!address && !!poolTotal }
   });
   useEffect(() => {
@@ -226,7 +226,7 @@ export const StakingContainer = () => {
             ) : (
               "Loading"
             )}
-            {!poolWithdrawalsLoading ? (
+            {!poolBalanceLoading ? (
               <div className="mt-2 flex items-center justify-center">
                 <span className="mr-6 text-sm">Epoch 11-35:</span>
                 <span className="mr-3 flex">
@@ -237,18 +237,20 @@ export const StakingContainer = () => {
                   / {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
                 </span>
                 <Button
-                  disabled={poolBalanceData == 0n}
+                  //disabled={!poolBalanceData || poolBalanceData == 0n}
                   size={"sm"}
                   className="self-center"
                   variant={"outline"}
                   onClick={() => {
-                    console.log(parseEther(poolBalanceData), hexProof as any);
                     claimPoolLords({
                       address: stakingAddresses[NETWORK_NAME]
                         .paymentPool as `0x${string}`,
                       abi: paymentPoolAbi,
                       functionName: "withdraw",
-                      args: [parseEther(poolBalanceData), hexProof as any],
+                      args: [
+                        parseEther((poolBalanceData ?? 0).toString()),
+                        hexProof as any,
+                      ],
                     });
                   }}
                 >
@@ -267,9 +269,8 @@ export const StakingContainer = () => {
             )}
           </div>
         </div>
-        {(realmsData?.bridgedV2Realms.length ??
-          (carrackLordsAvailableData &&
-            carrackLordsAvailableData?.[0] > 0n)) && (
+        {realmsData?.bridgedV2Realms.length ??
+        (carrackLordsAvailableData && carrackLordsAvailableData?.[0] > 0n) ? (
           <div className="mt-10 flex flex-col">
             <h3>Carrack</h3>
             <div className="pb-2 text-lg">
@@ -336,7 +337,7 @@ export const StakingContainer = () => {
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
     );
   }
