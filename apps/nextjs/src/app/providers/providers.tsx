@@ -45,6 +45,7 @@ export const config = getDefaultConfig({
   appName: "Realms.World",
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
   chains: [isTestnet ? sepolia : mainnet],
+  ssr: true,
   transports: {
     [sepolia.id]: http(),
     [mainnet.id]: http(),
