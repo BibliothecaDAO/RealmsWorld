@@ -237,7 +237,7 @@ export const StakingContainer = () => {
                   / {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
                 </span>
                 <Button
-                  //disabled={!poolBalanceData || poolBalanceData == 0n}
+                  disabled={!poolBalanceData || poolBalanceData == 0n}
                   size={"sm"}
                   className="self-center"
                   variant={"outline"}
