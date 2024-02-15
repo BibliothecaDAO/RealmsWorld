@@ -29,9 +29,9 @@
   "devDependencies": {
     "@manypkg/cli": "^0.21.2",
     "@turbo/gen": "^1.12.3",
-    "npm-check-updates": "^16.14.14",
+    "npm-check-updates": "^16.14.15",
     "prettier": "^3.2.5",
-    "tsup": "^8.0.1",
+    "tsup": "^8.0.2",
     "turbo": "^1.12.3",
     "typescript": "^5.3.3"
   },
