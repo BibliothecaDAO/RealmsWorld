@@ -50,6 +50,7 @@ export const config: Config<Starknet, Postgres> = {
 
 export default function transform({ header, events }: Block) {
   return events?.flatMap(({ event, receipt }) => {
+    if (!event.keys) return {};
     switch (event.keys[0]) {
       case WITHDRAWAL_INITIATED: {
         return {
