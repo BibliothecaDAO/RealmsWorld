@@ -100,15 +100,15 @@ export const StakingContainer = () => {
   } = useWriteContract();
 
   const {
-    data: poolWithdrawlsData,
+    data: poolBalanceData,
     isLoading: poolWithdrawalsLoading,
     error,
     isFetched,
   } = useReadContract({
     address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
-    functionName: "withdrawals",
-    args: [addressL1 as `0x${string}`],
+    functionName: "balanceForProofWithAddress",
+    args: hexProof && addressL1 && [hexProof, addressL1],
     // query: { enabled: !!address && !!poolTotal }
   });
   useEffect(() => {
@@ -132,11 +132,6 @@ export const StakingContainer = () => {
 
     fetchStakingData();
   }, [addressL1]);
-
-  const wk1135ClaimAmount =
-    poolTotal && poolWithdrawlsData
-      ? formatEther(poolTotal - poolWithdrawlsData)
-      : "0";
 
   if (isConnected && addressL1) {
     return (
@@ -236,24 +231,24 @@ export const StakingContainer = () => {
                 <span className="mr-6 text-sm">Epoch 11-35:</span>
                 <span className="mr-3 flex">
                   <Lords className="mr-2 h-5 w-5 fill-current" />
-                  {poolWithdrawlsData !== undefined && poolTotal !== undefined
-                    ? wk1135ClaimAmount.toLocaleString()
+                  {poolBalanceData !== undefined && poolTotal !== undefined
+                    ? poolBalanceData.toLocaleString()
                     : "Loading"}
                   / {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
                 </span>
                 <Button
-                  disabled={wk1135ClaimAmount == "0"}
+                  disabled={poolBalanceData == 0n}
                   size={"sm"}
                   className="self-center"
                   variant={"outline"}
                   onClick={() => {
-                    console.log(parseEther(wk1135ClaimAmount), hexProof as any);
+                    console.log(parseEther(poolBalanceData), hexProof as any);
                     claimPoolLords({
                       address: stakingAddresses[NETWORK_NAME]
                         .paymentPool as `0x${string}`,
                       abi: paymentPoolAbi,
                       functionName: "withdraw",
-                      args: [parseEther(wk1135ClaimAmount), hexProof as any],
+                      args: [parseEther(poolBalanceData), hexProof as any],
                     });
                   }}
                 >
