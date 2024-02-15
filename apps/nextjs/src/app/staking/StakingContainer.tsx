@@ -100,15 +100,15 @@ export const StakingContainer = () => {
   } = useWriteContract();
 
   const {
-    data: poolWithdrawlsData,
-    isLoading: poolWithdrawalsLoading,
+    data: poolBalanceData,
+    isLoading: poolBalanceLoading,
     error,
     isFetched,
   } = useReadContract({
     address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
     abi: paymentPoolAbi,
-    functionName: "withdrawals",
-    args: [addressL1 as `0x${string}`],
+    functionName: "balanceForProofWithAddress",
+    args: hexProof && addressL1 && [addressL1, hexProof],
     // query: { enabled: !!address && !!poolTotal }
   });
   useEffect(() => {
@@ -132,11 +132,6 @@ export const StakingContainer = () => {
 
     fetchStakingData();
   }, [addressL1]);
-
-  const wk1135ClaimAmount =
-    poolTotal && poolWithdrawlsData
-      ? formatEther(poolTotal - poolWithdrawlsData)
-      : "0";
 
   if (isConnected && addressL1) {
     return (
@@ -231,29 +226,31 @@ export const StakingContainer = () => {
             ) : (
               "Loading"
             )}
-            {!poolWithdrawalsLoading ? (
+            {!poolBalanceLoading ? (
               <div className="mt-2 flex items-center justify-center">
                 <span className="mr-6 text-sm">Epoch 11-35:</span>
                 <span className="mr-3 flex">
                   <Lords className="mr-2 h-5 w-5 fill-current" />
-                  {poolWithdrawlsData !== undefined && poolTotal !== undefined
-                    ? wk1135ClaimAmount.toLocaleString()
+                  {poolBalanceData !== undefined && poolTotal !== undefined
+                    ? poolBalanceData.toLocaleString()
                     : "Loading"}
                   / {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
                 </span>
                 <Button
-                  disabled={wk1135ClaimAmount == "0"}
+                  disabled={!poolBalanceData || poolBalanceData == 0n}
                   size={"sm"}
                   className="self-center"
                   variant={"outline"}
                   onClick={() => {
-                    console.log(parseEther(wk1135ClaimAmount), hexProof as any);
                     claimPoolLords({
                       address: stakingAddresses[NETWORK_NAME]
                         .paymentPool as `0x${string}`,
                       abi: paymentPoolAbi,
                       functionName: "withdraw",
-                      args: [parseEther(wk1135ClaimAmount), hexProof as any],
+                      args: [
+                        parseEther((poolBalanceData ?? 0).toString()),
+                        hexProof as any,
+                      ],
                     });
                   }}
                 >
@@ -272,9 +269,8 @@ export const StakingContainer = () => {
             )}
           </div>
         </div>
-        {(realmsData?.bridgedV2Realms.length ??
-          (carrackLordsAvailableData &&
-            carrackLordsAvailableData?.[0] > 0n)) && (
+        {realmsData?.bridgedV2Realms.length ??
+        (carrackLordsAvailableData && carrackLordsAvailableData?.[0] > 0n) ? (
           <div className="mt-10 flex flex-col">
             <h3>Carrack</h3>
             <div className="pb-2 text-lg">
@@ -341,7 +337,7 @@ export const StakingContainer = () => {
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
     );
   }

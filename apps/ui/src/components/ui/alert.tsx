@@ -64,7 +64,7 @@ export const Alert = ({
         <div className="mr-2 flex h-5 w-5 justify-around self-center">
           {renderIcon()}
         </div>
-        <div className="flex flex-col text-left ">
+        <div className="flex w-full flex-col text-left ">
           {title && (
             <div
               dangerouslySetInnerHTML={{ __html: title }}
@@ -73,7 +73,8 @@ export const Alert = ({
           )}
           {message && (
             <div
-              className="self-center"
+              className="text-ellipsis+ max-w-full self-center
+              "
               dangerouslySetInnerHTML={{ __html: message }}
             />
           )}
