@@ -229,7 +229,7 @@ export const StakingContainer = () => {
                 </span>
                 {poolBalanceData != undefined && (
                   <Button
-                    //disabled={!poolBalanceData || poolBalanceData == 0n}
+                    disabled={!poolBalanceData || poolBalanceData == 0n}
                     size={"sm"}
                     className="self-center"
                     variant={"outline"}
