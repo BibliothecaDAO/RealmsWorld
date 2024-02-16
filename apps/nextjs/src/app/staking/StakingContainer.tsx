@@ -11,7 +11,7 @@ import { stakingAddresses } from "@/constants/staking";
 import Lords from "@/icons/lords.svg";
 import { useQuery } from "@tanstack/react-query";
 import { Loader, Loader2 } from "lucide-react";
-import { formatEther, parseEther, parseUnits } from "viem";
+import { formatEther, parseEther } from "viem";
 import {
   useAccount,
   useReadContract,
@@ -43,7 +43,7 @@ const realmsAddress = getCollectionAddresses(Collections.REALMS)[
 
 export const StakingContainer = () => {
   const { address: addressL1, isConnected } = useAccount();
-  const [hexProof, setHexProof] = useState();
+  const [hexProof, setHexProof] = useState<`0x${string}` | undefined>();
   const [poolTotal, setPoolTotal] = useState<bigint>();
   const address = addressL1 ? addressL1.toLowerCase() : "0x";
 
@@ -61,22 +61,16 @@ export const StakingContainer = () => {
     refetchInterval: 10000,
   });
 
-  const {
-    data: lordsAvailableData,
-    isError,
-    isLoading: isGalleonLordsLoading,
-  } = useReadContract({
-    address: stakingAddresses[NETWORK_NAME].v1Galleon as `0x${string}`,
-    abi: GalleonStaking,
-    functionName: "lordsAvailable",
-    args: [address as `0x${string}`],
-  });
+  const { data: lordsAvailableData, isLoading: isGalleonLordsLoading } =
+    useReadContract({
+      address: stakingAddresses[NETWORK_NAME].v1Galleon as `0x${string}`,
+      abi: GalleonStaking,
+      functionName: "lordsAvailable",
+      args: [address as `0x${string}`],
+    });
 
-  const {
-    data: galleonClaimData,
-    isPending: isGalleonClaimLoading,
-    writeContract: claimGalleonLords,
-  } = useWriteContract();
+  const { isPending: isGalleonClaimLoading, writeContract: claimGalleonLords } =
+    useWriteContract();
 
   const { data: carrackLordsAvailableData, isLoading: isCarrackLordsLoading } =
     useReadContract({
@@ -86,38 +80,29 @@ export const StakingContainer = () => {
       args: [address as `0x${string}`],
     });
 
-  const {
-    data: carrackClaimData,
-    isPending: isCarrackClaimLoading,
-    writeContract: claimCarrackLords,
-  } = useWriteContract();
+  const { isPending: isCarrackClaimLoading, writeContract: claimCarrackLords } =
+    useWriteContract();
 
   const {
-    data: poolClaimData,
     isPending: isPoolClaimLoading,
     writeContract: claimPoolLords,
     error: poolClaimError,
   } = useWriteContract();
 
-  const {
-    data: poolBalanceData,
-    isLoading: poolBalanceLoading,
-    error,
-    isFetched,
-  } = useReadContract({
-    address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
-    abi: paymentPoolAbi,
-    functionName: "balanceForProofWithAddress",
-    args: hexProof && addressL1 && [addressL1, hexProof],
-    // query: { enabled: !!address && !!poolTotal }
-  });
+  const { data: poolBalanceData, isLoading: poolBalanceLoading } =
+    useReadContract({
+      address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
+      abi: paymentPoolAbi,
+      functionName: "balanceForProofWithAddress",
+      args: hexProof && addressL1 && [addressL1, hexProof],
+      // query: { enabled: !!address && !!poolTotal }
+    });
   useEffect(() => {
     const fetchStakingData = async () => {
       if (addressL1) {
         try {
           const response = await fetch(`/api/staking/${addressL1}`);
           const data = await response.json();
-          console.log(data);
           setHexProof(data.proof);
           if (data.amount) {
             setPoolTotal(parseEther(data.amount.toString()));
@@ -231,38 +216,43 @@ export const StakingContainer = () => {
                 <span className="mr-6 text-sm">Epoch 11-35:</span>
                 <span className="mr-3 flex">
                   <Lords className="mr-2 h-5 w-5 fill-current" />
-                  {poolBalanceData !== undefined && poolTotal !== undefined
-                    ? poolBalanceData.toLocaleString()
-                    : "Loading"}
-                  / {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
-                </span>
-                <Button
-                  disabled={!poolBalanceData || poolBalanceData == 0n}
-                  size={"sm"}
-                  className="self-center"
-                  variant={"outline"}
-                  onClick={() => {
-                    claimPoolLords({
-                      address: stakingAddresses[NETWORK_NAME]
-                        .paymentPool as `0x${string}`,
-                      abi: paymentPoolAbi,
-                      functionName: "withdraw",
-                      args: [
-                        parseEther((poolBalanceData ?? 0).toString()),
-                        hexProof as any,
-                      ],
-                    });
-                  }}
-                >
-                  {isPoolClaimLoading ? (
+                  {poolBalanceLoading ? (
+                    <Loader className="h-5 w-5" />
+                  ) : poolBalanceData != undefined && poolTotal ? (
                     <>
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                      Claiming
+                      {formatEther(poolBalanceData).toLocaleString()} /{" "}
+                      {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
                     </>
                   ) : (
-                    "Claim"
+                    0
                   )}
-                </Button>
+                </span>
+                {poolBalanceData != undefined && (
+                  <Button
+                    //disabled={!poolBalanceData || poolBalanceData == 0n}
+                    size={"sm"}
+                    className="self-center"
+                    variant={"outline"}
+                    onClick={() => {
+                      claimPoolLords({
+                        address: stakingAddresses[NETWORK_NAME]
+                          .paymentPool as `0x${string}`,
+                        abi: paymentPoolAbi,
+                        functionName: "withdraw",
+                        args: [poolBalanceData, hexProof!],
+                      });
+                    }}
+                  >
+                    {isPoolClaimLoading ? (
+                      <>
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                        Claiming
+                      </>
+                    ) : (
+                      "Claim"
+                    )}
+                  </Button>
+                )}
               </div>
             ) : (
               "Loading"
