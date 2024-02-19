@@ -1,9 +1,9 @@
+import type { getAttributes } from "@/lib/reservoir/getAttributes";
 import { Suspense } from "react";
 import { AttributesDropdown } from "@/app/collection/[id]/(list)/AttributesDropdown";
 import { AttributeTags } from "@/app/collection/[id]/(list)/AttributeTags";
 import { TradeFilters } from "@/app/collection/[id]/(list)/TradeFilters";
 import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
-import { Attributes } from "@/types";
 
 import type { RouterOutputs } from "@realms-world/api";
 
@@ -14,7 +14,7 @@ export const TradeLayout = ({
   attributesPromise,
 }: {
   tokenAddress: string;
-  attributes?: Attributes[];
+  attributes?: Awaited<ReturnType<typeof getAttributes>>["attributes"];
   children: React.ReactNode;
   attributesPromise?: Promise<RouterOutputs["erc721Attributes"]["all"]>;
 }) => {

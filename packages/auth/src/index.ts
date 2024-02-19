@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import type { DefaultSession } from "next-auth";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth from "next-auth";
 import Discord from "next-auth/providers/discord";
 
@@ -23,6 +23,7 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  //@ts-expect-error incorrect drizzle adapter
   adapter: DrizzleAdapter(db, tableCreator),
   providers: [Discord],
   callbacks: {

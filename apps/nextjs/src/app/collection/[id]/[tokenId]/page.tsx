@@ -1,4 +1,4 @@
-import type { Collection, Market, Token, TokenMarketData } from "@/types";
+import type { Collection, TokenMarketData } from "@/types";
 import { Suspense } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getCollections } from "@/lib/reservoir/getCollections";

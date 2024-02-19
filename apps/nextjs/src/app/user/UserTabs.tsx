@@ -1,4 +1,4 @@
-import { /*hexToNumber,*/ isStarknetAddress, shortenHex } from "@/utils/utils";
+import { /*hexToNumber,*/ isStarknetAddress } from "@/utils/utils";
 import { isAddress } from "viem";
 
 import { NavLink } from "@realms-world/ui";

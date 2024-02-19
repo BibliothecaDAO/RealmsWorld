@@ -9,8 +9,8 @@ export const useLordsPrice = () => {
       .catch((error) => {
         console.log(error);
       })
-      .then((data) => {
-        setLordsPrice(data.price?.rate.toFixed(2));
+      .then((data: { price: { rate: number } }) => {
+        setLordsPrice(Number(data.price?.rate.toFixed(2)));
       })
       .catch((error) => {
         console.log(error);
@@ -18,6 +18,7 @@ export const useLordsPrice = () => {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getLordsPrice();
   }, []);
 

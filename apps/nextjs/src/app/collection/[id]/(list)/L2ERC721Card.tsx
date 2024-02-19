@@ -7,7 +7,6 @@ import type { RouterOutputs } from "@realms-world/api";
 import { getCollectionFromAddress } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
-import { BuyModal } from "../../marketplace/buy/BuyModal";
 import { CardAction } from "./CardAction";
 
 export const L2ERC721Card = ({
@@ -19,6 +18,8 @@ export const L2ERC721Card = ({
 }) => {
   const isGrid = layout === "grid";
   const imageSize = isGrid ? 800 : 60;
+
+  const starkName = useStarkDisplayName(token.owner ?? token.minter ?? "");
 
   return (
     <div
@@ -56,7 +57,7 @@ export const L2ERC721Card = ({
                   variant={"ghost"}
                   href={`/user/${token.owner ?? token.minter ?? ""}`}
                 >
-                  {useStarkDisplayName(token.owner ?? token.minter ?? "")}
+                  {starkName}
                 </Button>
               </div>
             )}

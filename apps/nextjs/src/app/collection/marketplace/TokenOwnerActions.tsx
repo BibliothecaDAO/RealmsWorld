@@ -14,13 +14,11 @@ import { ListingEditModal } from "./listEdit/ListingEditModal";
 
 interface TokenOwnerActionsProps {
   token: RouterOutputs["erc721Tokens"]["byId"];
-  tokenId: string;
   //tokenOwnerAddress: string;
 }
 
 const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
   token,
-  tokenId,
   //tokenOwnerAddress,
 }) => {
   //const { toast } = useToast();
@@ -31,9 +29,16 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
 
   const lowestPriceActiveListing = activeListings?.reduce(
     (minPriceListing, currentListing) => {
-      return currentListing?.price < minPriceListing?.price
-        ? currentListing
-        : minPriceListing;
+      if (
+        currentListing?.price != undefined &&
+        minPriceListing?.price &&
+        minPriceListing?.price !== undefined &&
+        currentListing?.price < minPriceListing?.price
+      ) {
+        return currentListing;
+      } else {
+        return minPriceListing;
+      }
     },
     activeListings[0],
   );
@@ -59,9 +64,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
         <div className="flex gap-x-3">
           <ListingEditModal
             token={token}
-            tokenId={tokenId}
             listingId={lowestPriceActiveListing?.id}
-            collectionId={"test"}
             trigger={
               <Button variant={"default"}>
                 <>
@@ -89,8 +92,6 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
       ) : (
         <ListModal
           token={token}
-          tokenId={tokenId}
-          collectionId={"test"}
           trigger={
             <Button variant={"default"}>
               <>

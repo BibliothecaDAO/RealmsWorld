@@ -38,7 +38,7 @@ interface DialogContentProps
 const DialogContent = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
   DialogContentProps
->(({ close, className, children, ...props }, ref) => (
+>(({ close, className, children, ...props }) => (
   <DialogPortal>
     <DialogOverlay />
     <motion.div
@@ -49,7 +49,6 @@ const DialogContent = React.forwardRef<
       className="fixed bottom-0 top-0 z-50 flex w-full items-center"
     >
       <DialogPrimitive.Content
-        ref={ref}
         className={cn(
           "animate-in data-[state=open]:fade-in-90 sm:zoom-in-90 relative z-50 mx-auto my-auto grid max-h-screen w-full gap-4 rounded-b-lg border bg-dark-green p-6 sm:max-w-lg sm:rounded-lg",
           className,

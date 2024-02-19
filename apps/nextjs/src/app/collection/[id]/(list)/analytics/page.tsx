@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     owners: paths["/owners/v2"]["get"]["responses"]["200"]["schema"];
   }>;
 
-  const [{ ownersDistribution }, owners] = await Promise.all([
+  const [{ ownersDistribution }, { owners }] = await Promise.all([
     ownersDistributionData,
     ownersData,
   ]);

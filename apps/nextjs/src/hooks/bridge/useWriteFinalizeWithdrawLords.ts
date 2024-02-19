@@ -10,7 +10,7 @@ import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
 const FUNCTION = "withdraw";
 
 export function useWriteFinalizeWithdrawLords() {
-  const { writeContractAsync, ...writeReturn } = useWriteContract();
+  const { writeContractAsync, data, ...writeReturn } = useWriteContract();
 
   // if (!l2Address) throw new Error("Missing L2 Address");
 
@@ -33,5 +33,5 @@ export function useWriteFinalizeWithdrawLords() {
     },
     [writeContractAsync],
   );
-  return { writeAsync, ...writeReturn };
+  return { writeAsync, data, ...writeReturn };
 }

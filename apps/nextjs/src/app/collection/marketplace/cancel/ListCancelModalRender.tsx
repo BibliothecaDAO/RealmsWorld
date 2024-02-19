@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
-import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useContractWrite, useWaitForTransaction } from "@starknet-react/core";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -16,7 +16,7 @@ export enum CancelStep {
 
 interface ChildrenProps {
   //loading: boolean;
-  listing?: any;
+  listing?: RouterOutputs["erc721MarketEvents"]["all"]["items"][number];
   tokenId?: string;
   contract?: string;
   cancelStep: CancelStep;
@@ -26,7 +26,7 @@ interface ChildrenProps {
   blockExplorerBaseUrl: string;
   blockExplorerName: string;
   setCancelStep: React.Dispatch<React.SetStateAction<CancelStep>>;
-  cancelOrder: () => void;
+  cancelOrder: () => Promise<void>;
 }
 
 interface Props {
@@ -70,7 +70,7 @@ export const ListCancelModalRender: FC<Props> = ({
           SUPPORTED_L2_CHAIN_ID
         ] as `0x${string}`,
         entrypoint: "cancel",
-        calldata: [listing?.id],
+        calldata: listing?.id ? [BigInt(listing?.id)] : undefined,
       },
     ],
   });
@@ -103,7 +103,7 @@ export const ListCancelModalRender: FC<Props> = ({
     setCancelStep(CancelStep.Approving);
 
     await writeAsync();
-  }, [listing]);
+  }, [listing, writeAsync]);
 
   useEffect(() => {
     if (!open) {

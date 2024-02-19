@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { evaluate } from "@starkware-industries/commons-js-utils";
 
 import { ChainId } from "@realms-world/constants";

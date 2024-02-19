@@ -40,6 +40,7 @@ export interface Attributes {
   floorAskPrice?: number;
   topBidValue?: number | null;
   createdAt?: string;
+  values: (string | number)[];
 }
 
 export interface Market {

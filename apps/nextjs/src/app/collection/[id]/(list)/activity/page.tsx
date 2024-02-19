@@ -1,18 +1,11 @@
 import type { Activity } from "@/types";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getActivity } from "@/lib/reservoir/getActivity";
-import { api } from "@/trpc/server";
 
-import type { RouterInputs } from "@realms-world/api";
-import type { Collections } from "@realms-world/constants";
-import {
-  getCollectionAddresses,
-  MarketplaceCollectionIds,
-} from "@realms-world/constants";
+import { getCollectionAddresses } from "@realms-world/constants";
 
 import { ActivityCard } from "./ActivityCard";
 import { CollectionActivity } from "./CollectionActivity";
-import { L2ActivityCard } from "./L2ActivityCard";
 import { L2ActivityTable } from "./L2ActivityTable";
 
 export default async function Page({
@@ -47,7 +40,7 @@ export default async function Page({
           searchAttributes={["sale", "transfer", "listing"]}
         />
         <L2ActivityTable
-          tokenAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID]!}
+          //tokenAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID]!}
           searchParams={searchParams}
           collectionId={params.id}
         />

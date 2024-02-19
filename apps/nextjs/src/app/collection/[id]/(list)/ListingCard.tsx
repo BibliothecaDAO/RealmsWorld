@@ -1,5 +1,3 @@
-import type { Activity } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
 import { useTimeDiff } from "@/hooks/useTimeDiff";
 import LordsIcon from "@/icons/lords.svg";
@@ -27,7 +25,7 @@ export const ListingCard = ({ activity, token }: ActivityCardProps) => {
     <div className=" flex w-full flex-wrap border-b p-2">
       <div className="flex w-1/2 self-center font-semibold sm:w-2/12 ">
         <div className="flex items-center self-center">
-          {activity.price || 0}
+          {activity.price ?? 0}
           <LordsIcon className="ml-2 h-5 w-5 fill-current" />
         </div>
       </div>

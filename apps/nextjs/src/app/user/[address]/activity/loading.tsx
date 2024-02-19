@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { ActivityCardSkeleton } from "@/app/collection/[id]/(list)/activity/ActivityCardSkeleton";
 
 export default function Loading() {

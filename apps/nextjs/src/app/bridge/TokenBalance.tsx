@@ -10,11 +10,11 @@ export const TokenBalance = ({
   symbol,
   isLoading,
 }: {
-  balance: any;
+  balance: bigint | number | string;
   symbol: string;
   isLoading?: boolean;
 }) => {
-  const [balanceState, setBalanceState] = useState();
+  const [balanceState, setBalanceState] = useState<bigint | number | string>();
   useEffect(() => {
     setBalanceState(balance);
   }, [balance]);
@@ -24,7 +24,7 @@ export const TokenBalance = ({
       <span className="text-sm text-white/50">Available Balance</span>
       <div className="flex justify-end">
         <div className="flex text-sm">
-          {isLoading || typeof balanceState != "bigint" ? (
+          {isLoading ?? typeof balanceState != "bigint" ? (
             <Loader2 className="h-5 w-5 animate-spin" />
           ) : balanceState ? (
             formatBigInt(balanceState, 3)

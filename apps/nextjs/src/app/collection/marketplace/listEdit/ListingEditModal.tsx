@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -48,7 +49,6 @@ const ModalCopy = {
 interface Props {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>];
   listingId?: number;
-  tokenId?: string;
   token?:
     | RouterOutputs["erc721Tokens"]["all"]["items"][number]
     | RouterOutputs["erc721Tokens"]["byId"];
@@ -69,11 +69,8 @@ const MAXIMUM_AMOUNT = Infinity;
 
 export function ListingEditModal({
   token,
-  listingId,
-  tokenId,
   collectionId,
   trigger,
-  normalizeRoyalties,
   copyOverrides,
   onClose,
   onEditListingComplete,
@@ -85,7 +82,6 @@ export function ListingEditModal({
   return (
     <ListingEditModalRender
       token={token}
-      tokenId={tokenId}
       collectionId={collectionId}
       open={open}
     >
@@ -97,8 +93,8 @@ export function ListingEditModal({
         editListingStep,
         transactionError,
         /*usdPrice,
-        totalUsd,*/
-        royaltyBps,
+        totalUsd,
+        royaltyBps,*/
         stepData,
         setPrice,
         editListing,
@@ -120,6 +116,7 @@ export function ListingEditModal({
             };
             onEditListingComplete(data);
           }
+          // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [editListingStep]);
 
         useEffect(() => {
@@ -130,10 +127,11 @@ export function ListingEditModal({
             };
             onEditListingError(transactionError, data);
           }
+          // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [transactionError]);
 
         const isListingAvailable =
-          listing && (listing.active ?? listing.status === 0) && !loading;
+          listing && (listing.active ?? listing.status === "open") && !loading;
 
         const isListingEditable = listing?.active && !loading;
 
@@ -200,7 +198,7 @@ export function ListingEditModal({
                         // priceSubtitle="Price"
                         //usdPrice={totalUsd.toString()}
                         expires={expires}
-                        quantity={listing?.quantityRemaining}
+                        quantity={1 /*listing?.quantityRemaining*/}
                       />
                     </div>
                     <div className="mt-4 flex flex-col">

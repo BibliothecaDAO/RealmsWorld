@@ -13,7 +13,6 @@ import { TokenCardSkeleton } from "../../TokenCardSkeleton";
 import { L2ERC721Card } from "./L2ERC721Card";
 
 //import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
-
 const L2ERC721Table = ({
   contractAddress,
   ownerAddress,
@@ -33,7 +32,7 @@ const L2ERC721Table = ({
   const sortDirection = searchParams.get("sortDirection");
   const sortBy = searchParams.get("sortBy");
 
-  const attributesObject: any = {};
+  const attributesObject: Record<string, string> = {};
   for (const [key, value] of searchParams.entries()) {
     attributesObject[key] = value;
   }
@@ -62,6 +61,7 @@ const L2ERC721Table = ({
   const isInView = useInView(ref, { once: false });
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     if (isInView) fetchNextPage();
   }, [fetchNextPage, isInView]);
 
@@ -69,7 +69,7 @@ const L2ERC721Table = ({
     <>
       <div className={isGrid ? grid : list}>
         {erc721Tokens.pages[0]?.items.length
-          ? erc721Tokens?.pages?.map((page, index) =>
+          ? erc721Tokens?.pages?.map((page) =>
               page.items.map((token, index) => {
                 return (
                   <L2ERC721Card

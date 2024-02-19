@@ -6,8 +6,7 @@ import { formatEther } from "viem";
 
 import { Button } from "@realms-world/ui";
 
-import { BuyButton } from "../../reservoir/BuyModal";
-
+//import { BuyButton } from "../../reservoir/BuyModal";
 //import { BuyButton } from "./BuyModal";
 
 interface TokenCardProps {
