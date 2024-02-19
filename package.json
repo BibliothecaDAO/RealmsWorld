@@ -26,7 +26,7 @@
     "lint:ws": "bunx sherif@latest",
     "typecheck": "turbo typecheck"
   },
-  "dependencies": {
+  "devDependencies": {
     "@manypkg/cli": "^0.21.2",
     "@turbo/gen": "^1.12.4",
     "npm-check-updates": "^16.14.15",
