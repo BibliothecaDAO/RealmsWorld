@@ -1,6 +1,5 @@
 {
   "name": "@realms-world/monorepo",
-  "private": true,
   "engines": {
     "node": ">=20.10"
   },
