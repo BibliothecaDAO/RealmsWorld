@@ -23,7 +23,7 @@ function eventKey(name: string) {
 
 export const tokenURI = eventKey("tokenURI");
 export const token_uri = eventKey("token_uri");
-
+export const svg_image = eventKey("svg_image");
 export const fetchMetadata = inngest.createFunction(
   {
     name: "fetchMetadata",
@@ -40,6 +40,19 @@ export const fetchMetadata = inngest.createFunction(
       );
       const fetchUrl = `https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;
 
+      let entryPointSelector: string;
+      switch (event.data.contract_address) {
+        case getCollectionAddresses(Collections.BEASTS)[SUPPORTED_L2_CHAIN_ID]!:
+          entryPointSelector = tokenURI;
+          break;
+        case getCollectionAddresses(Collections.BLOBERT)[
+          SUPPORTED_L2_CHAIN_ID
+        ]!:
+          entryPointSelector = svg_image;
+          break;
+        default:
+          entryPointSelector = token_uri;
+      }
       const response = await fetch(fetchUrl, {
         method: "POST",
         headers: {
@@ -51,13 +64,7 @@ export const fetchMetadata = inngest.createFunction(
           params: [
             {
               contract_address: event.data.contract_address,
-              entry_point_selector:
-                event.data.contract_address ==
-                getCollectionAddresses(Collections.BEASTS)[
-                  SUPPORTED_L2_CHAIN_ID
-                ]!
-                  ? tokenURI
-                  : token_uri, // Token URI
+              entry_point_selector: entryPointSelector, // Token URI
               calldata: [tokenId.low, tokenId.high],
             },
             "pending",
@@ -65,7 +72,15 @@ export const fetchMetadata = inngest.createFunction(
           id: 0,
         }),
       });
-      return await response.json();
+      let responseJson = await response.json();
+      if (
+        event.data.contract_address ==
+        getCollectionAddresses(Collections.BLOBERT)[SUPPORTED_L2_CHAIN_ID]!
+      ) {
+        responseJson = responseJson.data;
+        responseJson = ["", "", ',"image":"', ...responseJson];
+      }
+      return responseJson;
     });
 
     if (metadata.error) {
@@ -101,7 +116,7 @@ export const fetchMetadata = inngest.createFunction(
     }
 
     const dbRes = await step.run(
-      "Insert Beast Metadata to Postgres",
+      "Insert Token Metadata to Postgres",
       async () => {
         const tokenKey = event.data.contract_address + ":" + event.data.tokenId;
         const query: { updatedId: string }[] = await db

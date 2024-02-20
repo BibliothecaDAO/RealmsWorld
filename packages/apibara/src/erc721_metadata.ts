@@ -37,20 +37,22 @@ export default function transform({ header, events }: Block) {
 }
 
 function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
-  const from = BigInt(event.data[0]);
-  if (from !== 0n) {
-    return [];
-  }
-  const tokenId = uint256
-    .uint256ToBN({ low: event.data[2], high: event.data[3] })
-    .toString();
-  return [
-    {
-      name: "nft/mint",
-      data: {
-        contract_address: event.fromAddress,
-        tokenId,
+  if (event.data?.[0]) {
+    const from = BigInt(event.data[0]);
+    if (from !== 0n) {
+      return [];
+    }
+    const tokenId = uint256
+      .uint256ToBN({ low: event.data[2], high: event.data[3] })
+      .toString();
+    return [
+      {
+        name: "nft/mint",
+        data: {
+          contract_address: event.fromAddress,
+          tokenId,
+        },
       },
-    },
-  ];
+    ];
+  }
 }
