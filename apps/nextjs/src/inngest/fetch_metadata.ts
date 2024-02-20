@@ -52,6 +52,7 @@ export const fetchMetadata = inngest.createFunction(
           break;
         default:
           entryPointSelector = token_uri;
+          break;
       }
       const response = await fetch(fetchUrl, {
         method: "POST",
@@ -72,14 +73,7 @@ export const fetchMetadata = inngest.createFunction(
           id: 0,
         }),
       });
-      let responseJson = await response.json();
-      if (
-        event.data.contract_address ==
-        getCollectionAddresses(Collections.BLOBERT)[SUPPORTED_L2_CHAIN_ID]!
-      ) {
-        responseJson = responseJson.data;
-        responseJson = ["", "", ',"image":"', ...responseJson];
-      }
+      const responseJson = await response.json();
       return responseJson;
     });
 
@@ -89,23 +83,36 @@ export const fetchMetadata = inngest.createFunction(
       throw new Error("Failed to fetch item from Blast API");
     }
 
-    const value: any = [];
-    for (let i = 2; i < metadata.result.length; i++) {
-      const result = shortString.decodeShortString(metadata.result[i]);
-      value.push(result);
+    let value: any = [];
+    let jsonString: string;
+    if (
+      event.data.contract_address ==
+      getCollectionAddresses(Collections.BLOBERT)[SUPPORTED_L2_CHAIN_ID]!
+    ) {
+      for (const metaResult of metadata.result.length) {
+        const result = shortString.decodeShortString(metaResult);
+        value.push(result);
+      }
+      value = ['"image":"', ...value];
+      jsonString = value.join("");
+    } else {
+      for (let i = 2; i < metadata.result.length; i++) {
+        const result = shortString.decodeShortString(metadata.result[i]);
+        value.push(result);
+      }
+      jsonString = value.join("");
+
+      // eslint-disable-next-line no-control-regex
+      const regex = new RegExp("\\u0015", "g");
+      jsonString = jsonString
+        .replace(
+          /"name":"(.*?)",/g,
+          (match: any, name: any) => `"name":"${name.replaceAll('"', '\\"')}",`,
+        )
+        .replace(regex, "");
     }
 
-    const jsonString = value.join("");
-    // eslint-disable-next-line no-control-regex
-    const regex = new RegExp("\\u0015", "g");
-    const modifiedJsonString = jsonString
-      .replace(
-        /"name":"(.*?)",/g,
-        (match: any, name: any) => `"name":"${name.replaceAll('"', '\\"')}",`,
-      )
-      .replace(regex, "");
-
-    const parsedJson = JSON.parse(modifiedJsonString);
+    const parsedJson = JSON.parse(jsonString);
 
     const flattenedAttributes: Record<string, string> = {};
 
