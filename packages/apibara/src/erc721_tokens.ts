@@ -19,7 +19,7 @@ import {
   whitelistedContracts,
 } from "./utils.ts";
 
-export const config: Config<Starknet, Console> = {
+export const config: Config<Starknet, Postgres> = {
   streamUrl: Deno.env.get("STREAM_URL"),
   startingBlock: Number(Deno.env.get("ERC721_STARTING_BLOCK")),
   network: "starknet",
@@ -30,7 +30,7 @@ export const config: Config<Starknet, Console> = {
     },
     events: [...erc721ContractEvents, ...marketplaceContractEvents],
   },
-  sinkType: "console",
+  sinkType: "postgres",
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
     tableName: "rw_erc721_tokens",
