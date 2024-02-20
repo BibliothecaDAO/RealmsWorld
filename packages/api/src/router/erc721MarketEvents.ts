@@ -37,15 +37,19 @@ export const erc721MarketEventsRouter = createTRPCRouter({
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let cursors: any[] = [
-        schema.erc721MarketEvents.id, // Column to use for cursor
-        direction ?? "desc", // Sort order ('asc' or 'desc')
-        cursor, // Cursor value
+        [
+          schema.erc721MarketEvents.id, // Column to use for cursor
+          direction ?? "desc", // Sort order ('asc' or 'desc')
+          cursor, // Cursor value
+        ],
       ];
       if (orderBy == "timestamp") {
         cursors = [
-          schema.erc721MarketEvents.updated_at, // Column to use for cursor
-          direction ?? "desc", // Sort order ('asc' or 'desc')
-          cursor, // Cursor value
+          [
+            schema.erc721MarketEvents.updated_at, // Column to use for cursor
+            direction ?? "desc", // Sort order ('asc' or 'desc')
+            cursor, // Cursor value
+          ],
         ];
       }
       /*if (direction === "asc") {

@@ -56,6 +56,7 @@ const L2TokenData = async ({
   const erc721Token = await api.erc721Tokens.byId({
     id: contractAddress + ":" + tokenId,
   });
+  console.log(erc721Token);
 
   return (
     <>

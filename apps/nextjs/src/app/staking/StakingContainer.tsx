@@ -97,7 +97,8 @@ export const StakingContainer = () => {
       address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
       abi: paymentPoolAbi,
       functionName: "balanceForProofWithAddress",
-      args: hexProof && addressL1 && [addressL1, hexProof],
+      args: hexProof &&
+        addressL1 && [addressL1.toLowerCase() as `0x${string}`, hexProof],
       // query: { enabled: !!address && !!poolTotal }
     });
   useEffect(() => {
