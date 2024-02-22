@@ -44,21 +44,9 @@ export const L2ERC721Card = ({
               />
             )}
             {isGrid && (
-              <span className="absolute bottom-3 right-3 border bg-black px-3 py-1 font-sans text-xs">
+              <span className="absolute bottom-1 right-1 bg-black px-1 py-1 text-xs">
                 #{token.token_id}
               </span>
-            )}
-
-            {isGrid && (
-              <div className="absolute left-3 top-3 border bg-black  text-xs">
-                <Button
-                  size={"xs"}
-                  variant={"ghost"}
-                  href={`/user/${token.owner ?? token.minter ?? ""}`}
-                >
-                  {useStarkDisplayName(token.owner ?? token.minter ?? "")}
-                </Button>
-              </div>
             )}
           </div>
         </Link>
