@@ -45,19 +45,19 @@ export default function transform({ header, events }: Block) {
 function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
   const isMainnet =
     Deno.env.get("STREAM_URL") == "https://mainnet.starknet.a5a.ch";
-
-  switch (event.keys[0]) {
+  const isData = event.data != undefined;
+  switch (event.keys?.[0]) {
     case TRANSFER_EVENT: {
-      const from = BigInt(isMainnet ? event.data[0] : event.keys[1]);
+      const from = BigInt(isData ? event.data[0] : event.keys[1]);
       const token_id = parseInt(
         uint256
           .uint256ToBN({
-            low: isMainnet ? event.data[2] : event.keys[3],
-            high: isMainnet ? event.data[3] : event.keys[4],
+            low: isData ? event.data[2] : event.keys[3],
+            high: isData ? event.data[3] : event.keys[4],
           })
           .toString(),
       );
-      const owner = isMainnet ? event.data[1] : event.keys[2];
+      const owner = isData ? event.data[1] : event.keys[2];
 
       if (from == 0n) {
         return {

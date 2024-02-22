@@ -1,4 +1,5 @@
 import type { Config } from "https://esm.sh/@apibara/indexer";
+import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import type { Webhook } from "https://esm.sh/@apibara/indexer/sink/webhook";
 import type {
   Block,
@@ -37,20 +38,42 @@ export default function transform({ header, events }: Block) {
 }
 
 function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
-  const from = BigInt(event.data[0]);
-  if (from !== 0n) {
-    return [];
-  }
-  const tokenId = uint256
-    .uint256ToBN({ low: event.data[2], high: event.data[3] })
-    .toString();
-  return [
-    {
-      name: "nft/mint",
-      data: {
-        contract_address: event.fromAddress,
-        tokenId,
+  if (event.data) {
+    const from = BigInt(event.data[0]);
+    if (from !== 0n) {
+      return [];
+    }
+    const tokenId = uint256
+      .uint256ToBN({ low: event.data[2], high: event.data[3] })
+      .toString();
+    return [
+      {
+        name: "nft/mint",
+        data: {
+          contract_address: event.fromAddress,
+          tokenId,
+        },
       },
-    },
-  ];
+    ];
+  } else if (event.keys?.length) {
+    const from = BigInt(event.keys[1]);
+    if (from !== 0n) {
+      return [];
+    }
+    const tokenId = uint256
+      .uint256ToBN({ low: event.keys[3], high: event.keys[4] })
+      .toString();
+
+    //if (tokenId == 6) {
+    return [
+      {
+        name: "nft/mint",
+        data: {
+          contract_address: event.fromAddress,
+          tokenId,
+        },
+      },
+    ];
+    //}
+  }
 }

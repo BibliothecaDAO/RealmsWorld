@@ -4,6 +4,7 @@ export enum Collections {
   REALMS = "realms",
   BEASTS = "beasts",
   GOLDEN_TOKEN = "goldentoken",
+  BLOBERT = "blobert",
 }
 
 export const CollectionAddresses: {
@@ -25,6 +26,12 @@ export const CollectionAddresses: {
     [ChainId.SN_SEPOLIA]:
       "0x024f21982680442892d2f7ac4cee98c7d62708b04fdf9f8a0453415baca4b16f",
   },
+  [Collections.BLOBERT]: {
+    [ChainId.SN_MAIN]:
+      "0x00539f522b29ae9251dbf7443c7a950cf260372e69efab3710a11bf17a9599f1",
+    [ChainId.SN_SEPOLIA]:
+      "0x007075083c7f643a2009cf1dfa28dfec9366f7d374743c2e378e03c01e16c3af",
+  },
 };
 export const CollectionRoyalties: {
   readonly [key in Collections]: number;
@@ -32,11 +39,13 @@ export const CollectionRoyalties: {
   [Collections.REALMS]: 0,
   [Collections.BEASTS]: 500,
   [Collections.GOLDEN_TOKEN]: 500,
+  [Collections.BLOBERT]: 500,
 };
 export const CollectionDisplayName = {
   [Collections.REALMS]: "Realms",
   [Collections.BEASTS]: "Beasts",
   [Collections.GOLDEN_TOKEN]: "Golden Token",
+  [Collections.BLOBERT]: "Blobert",
 };
 
 export function getCollectionAddresses(
