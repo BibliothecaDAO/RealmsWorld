@@ -33,6 +33,11 @@ export default async function CollectionsList() {
       link: "goldentoken",
       image: "/collections/goldentoken.svg",
     },
+    {
+      name: "Blobert",
+      link: "blobert",
+      image: "/collections/blobert.svg",
+    },
   ];
 
   return (
