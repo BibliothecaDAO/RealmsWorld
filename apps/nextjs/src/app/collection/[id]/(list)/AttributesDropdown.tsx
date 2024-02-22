@@ -42,10 +42,10 @@ export const AttributesDropdown = ({
 
   return (
     <div
-      className={` ${"hidden"} w-screen overscroll-y-none p-3 sm:block sm:w-24 sm:flex-none sm:overscroll-auto lg:w-72`}
+      className={` ${"hidden"} w-screen overscroll-y-none pr-6 sm:block sm:w-24 sm:flex-none sm:overscroll-auto lg:w-72`}
     >
-      <div className="sticky  top-0 z-[100] overflow-y-auto pt-12">
-        <ScrollArea className="border bg-dark-green px-2">
+      <div className="sticky top-10 z-[100]">
+        <ScrollArea className="h-[600px] border-2 bg-dark-green px-3">
           <Button className="sm:hidden" variant={"default"}>
             Close
           </Button>
@@ -53,8 +53,8 @@ export const AttributesDropdown = ({
             return (
               <Accordion key={index} type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-lg">
-                    {attribute.key}
+                  <AccordionTrigger className="bg-primary px-2 text-sm">
+                    {attribute.key} ({attribute.values.length})
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="pt-1">
@@ -77,7 +77,7 @@ export const AttributesDropdown = ({
                                     attribute.key == "Resource",
                                   )
                                 }
-                                className="my-1 mr-1"
+                                className="font-body my-1 mr-1"
                               >
                                 {a.value} ({a.tokenCount})
                               </Button>

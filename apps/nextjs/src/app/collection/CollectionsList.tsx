@@ -41,7 +41,7 @@ export default async function CollectionsList() {
   ];
 
   return (
-    <div className="grid w-full grid-cols-1 gap-6 ">
+    <div className="grid w-full grid-cols-1 gap-6 px-4 sm:px-0">
       {collections?.map((collection: Collection, index) => {
         return <CollectionCard collection={collection} key={index} />;
       })}

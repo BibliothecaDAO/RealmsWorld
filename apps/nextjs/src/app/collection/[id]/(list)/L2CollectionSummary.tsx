@@ -60,7 +60,7 @@ export default async function L2CollectionSummary({
   //const comptatible_games = getGamesByContract(games, collection.id);
 
   return (
-    <div className="sm:mt-10 sm:flex">
+    <div className="px-4 sm:mt-10 sm:flex">
       <div className="flex-none self-center sm:pr-10">
         <Image
           src={`/collections/${collectionId}.svg`}
