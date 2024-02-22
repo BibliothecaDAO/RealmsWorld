@@ -14,7 +14,9 @@ export default async function GoldenToken({
     <Suspense fallback={<LoadingSkeletonGrid />}>
       <L2ERC721Table
         contractAddress={
-          getCollectionAddresses(Collections.BEASTS)[SUPPORTED_L2_CHAIN_ID]!
+          getCollectionAddresses(Collections.GOLDEN_TOKEN)[
+            SUPPORTED_L2_CHAIN_ID
+          ]!
         }
         ownerAddress={params.address}
       />
