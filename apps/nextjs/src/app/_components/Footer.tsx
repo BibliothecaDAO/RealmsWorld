@@ -23,10 +23,14 @@ export const Footer = () => {
       name: "Brand Assets",
       href: "https://drive.google.com/drive/folders/17vrwIjwqifxBVTkHmxoK1VhQ31hVSbDH",
     },
+    {
+      name: "Shop",
+      href: "https://shop.realms.world",
+    },
   ];
 
   return (
-    <div className="my-24 w-full ">
+    <div className="p my-24 w-full px-4">
       <div className="pt-10 sm:pl-56">
         <div className="w-full">
           <h1>Realms.World</h1>
