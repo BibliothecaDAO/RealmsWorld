@@ -274,7 +274,7 @@ export const games: Game[] = [
     status: "beta",
     description: "Defend thine honour in a duel",
     longform:
-      "\"Thou art an offence to all that is decent, dog. I challenge you... to a duel!\". In Pistols at Ten Blocks, you face off against your opponent for honour or profit, in a pistol duel at \"10\" paces. Will you duel with honour, or turn early and shoot the wretched cur in the back? Earn yourself glory on the leaderboard, or a shallow grave behind the Fool & Flintlock tavern."
+      "\"Thou art an offence to all that is decent, dog. I challenge you... to a duel!\". In Pistols at Ten Blocks, you face off against your opponent for honour or profit, in a pistol duel at \"10\" paces. Will you duel with honour, or turn early and shoot the wretched cur in the back? Earn yourself glory on the leaderboard, or a shallow grave behind the Fool & Flintlock tavern.",
     links: {
       homepage: "https://lootunder.world/pistols",
       testnet: "https://pistols.lootunder.world/",
