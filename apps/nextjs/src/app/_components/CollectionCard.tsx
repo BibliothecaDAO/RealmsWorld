@@ -18,7 +18,7 @@ export const CollectionCard = ({ collection }: Props) => {
           alt={collection.name}
           width={50}
           height={50}
-          className="rounded-full"
+          className="w-24 rounded-full"
         />
       )}
       <div className="flex flex-grow justify-between pl-4">
