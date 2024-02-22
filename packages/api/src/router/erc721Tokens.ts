@@ -127,7 +127,12 @@ export const erc721TokensRouter = createTRPCRouter({
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
         const nextItem = items.pop();
-        nextCursor = { token_id: nextItem!.token_id, price: nextItem!.price };
+        const nextTokenId =
+          direction == "dsc" ? nextItem!.token_id + 1 : nextItem!.token_id - 1;
+        nextCursor = {
+          token_id: nextTokenId,
+          price: nextItem!.price,
+        };
       } else if (cursor?.price) {
         nextCursor = { token_id: 0, price: null };
       }
