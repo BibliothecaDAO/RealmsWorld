@@ -27,9 +27,10 @@ export const CollectionAddresses: {
       "0x024f21982680442892d2f7ac4cee98c7d62708b04fdf9f8a0453415baca4b16f",
   },
   [Collections.BLOBERT]: {
-    [ChainId.SN_MAIN]: "",
+    [ChainId.SN_MAIN]:
+      "0x00539f522b29ae9251dbf7443c7a950cf260372e69efab3710a11bf17a9599f1",
     [ChainId.SN_SEPOLIA]:
-      "0x069d6a10a83f2f84b37aa1ab140d610845c6e02c255d87ba0a5f7175a98ffcfe",
+      "0x007075083c7f643a2009cf1dfa28dfec9366f7d374743c2e378e03c01e16c3af",
   },
 };
 export const CollectionRoyalties: {

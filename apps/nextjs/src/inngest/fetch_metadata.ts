@@ -6,12 +6,20 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextResponse } from "next/server";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import { hash, shortString, uint256 } from "starknet";
+import {
+  constants,
+  Contract,
+  hash,
+  RpcProvider,
+  shortString,
+  uint256,
+} from "starknet";
 
 import type { SQL } from "@realms-world/db";
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import { and, db, eq, inArray, schema, sql } from "@realms-world/db";
 
+import blobertABI from "../abi/L2/Blobert.json";
 //import { Client } from "https://esm.sh/ts-postgres";
 
 import { inngest } from "./client";
@@ -24,6 +32,7 @@ function eventKey(name: string) {
 export const tokenURI = eventKey("tokenURI");
 export const token_uri = eventKey("token_uri");
 export const svg_image = eventKey("svg_image");
+
 export const fetchMetadata = inngest.createFunction(
   {
     name: "fetchMetadata",
@@ -31,30 +40,18 @@ export const fetchMetadata = inngest.createFunction(
     concurrency: {
       limit: 3,
     },
+    retries: 1,
   },
   { event: "nft/mint" },
   async ({ event, step }) => {
-    const metadata = await step.run("Fetch metadata", async () => {
-      const tokenId = uint256.bnToUint256(
-        BigInt(event.data.tokenId.toString()),
-      );
-      const fetchUrl = `https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;
+    const providerUrl = /*`https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;*/ `https://starknet-mainnet.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;
+    const provider = new RpcProvider({
+      nodeUrl: providerUrl,
+    });
+    const tokenId = uint256.bnToUint256(BigInt(event.data.tokenId.toString()));
 
-      let entryPointSelector: string;
-      switch (event.data.contract_address) {
-        case getCollectionAddresses(Collections.BEASTS)[SUPPORTED_L2_CHAIN_ID]!:
-          entryPointSelector = tokenURI;
-          break;
-        case getCollectionAddresses(Collections.BLOBERT)[
-          SUPPORTED_L2_CHAIN_ID
-        ]!:
-          entryPointSelector = svg_image;
-          break;
-        default:
-          entryPointSelector = token_uri;
-          break;
-      }
-      const response = await fetch(fetchUrl, {
+    const metadata = await step.run("Fetch metadata", async () => {
+      const response = await fetch(providerUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,8 +61,14 @@ export const fetchMetadata = inngest.createFunction(
           method: "starknet_call",
           params: [
             {
-              contract_address: event.data.contract_address,
-              entry_point_selector: entryPointSelector, // Token URI
+              contract_address:
+                /*"0x00539f522b29ae9251dbf7443c7a950cf260372e69efab3710a11bf17a9599f1",*/ event
+                  .data.contract_address,
+              entry_point_selector: getCollectionAddresses(Collections.BEASTS)[
+                SUPPORTED_L2_CHAIN_ID
+              ]!
+                ? tokenURI
+                : token_uri, // Token URI
               calldata: [tokenId.low, tokenId.high],
             },
             "pending",
@@ -73,8 +76,7 @@ export const fetchMetadata = inngest.createFunction(
           id: 0,
         }),
       });
-      const responseJson = await response.json();
-      return responseJson;
+      return await response.json();
     });
 
     if (metadata.error) {
@@ -82,19 +84,60 @@ export const fetchMetadata = inngest.createFunction(
       await step.sleep("fetch sleep", "20s");
       throw new Error("Failed to fetch item from Blast API");
     }
-
-    let value: any = [];
+    const value: any = [];
     let jsonString: string;
+    let parsedJson: any = {};
+    const flattenedAttributes: Record<string, string> = {};
+
     if (
       event.data.contract_address ==
       getCollectionAddresses(Collections.BLOBERT)[SUPPORTED_L2_CHAIN_ID]!
     ) {
-      for (const metaResult of metadata.result.length) {
-        const result = shortString.decodeShortString(metaResult);
-        value.push(result);
+      metadata.result.forEach((result: any) => {
+        value.push(shortString.decodeShortString(result));
+      });
+      value.push(metadata.result.pending_word);
+      jsonString = atob(value.join("").substring(29));
+      parsedJson = JSON.parse(jsonString);
+      parsedJson.attributes = parsedJson.attributes.map((attribute: any) => {
+        if (attribute.trait) {
+          return {
+            trait_type: attribute.trait,
+            value: attribute.value,
+          };
+        }
+      });
+      if (parsedJson.attributes[0] == undefined) {
+        parsedJson.attributes = [
+          { trait_type: "Honorary", value: parsedJson.name },
+        ];
       }
-      value = ['"image":"', ...value];
-      jsonString = value.join("");
+      //console.log(flattenedAttributes);
+
+      /*const blobertContract = new Contract(
+        blobertABI,
+        "0x00539f522b29ae9251dbf7443c7a950cf260372e69efab3710a11bf17a9599f1", //event.data.contract_address,
+        provider,
+      );
+
+      const traitsResponse = await blobertContract.traits(tokenId);
+      console.log(traitsResponse);
+
+      if (traitsResponse.variant.Custom != undefined) {
+        parsedJson.attributes.push({
+          trait_type: "Honorary",
+          value: traitsResponse.variant.Custom,
+        });
+      } else {
+        for (const [key, value] of Object.entries(
+          traitsResponse.variant.Regular,
+        )) {
+          parsedJson.attributes.push({
+            trait_type: Object.keys(value)[0],
+            value: value[Object.keys(value)[0]],
+          });
+        }
+      }*/
     } else {
       for (let i = 2; i < metadata.result.length; i++) {
         const result = shortString.decodeShortString(metadata.result[i]);
@@ -110,15 +153,12 @@ export const fetchMetadata = inngest.createFunction(
           (match: any, name: any) => `"name":"${name.replaceAll('"', '\\"')}",`,
         )
         .replace(regex, "");
-    }
-
-    const parsedJson = JSON.parse(jsonString);
-
-    const flattenedAttributes: Record<string, string> = {};
-
-    if (parsedJson.attributes) {
-      for (const attribute of parsedJson.attributes) {
-        flattenedAttributes[attribute.trait_type] = attribute.value;
+      //}
+      parsedJson = JSON.parse(jsonString);
+      if (parsedJson.attributes) {
+        for (const attribute of parsedJson.attributes) {
+          flattenedAttributes[attribute.trait_type] = attribute.value;
+        }
       }
     }
 
@@ -258,8 +298,6 @@ export const fetchMetadata = inngest.createFunction(
               });
             }
           }
-          console.log(addedTokenAttributes);
-          console.log(attributesCountMap);
 
           tokenAttributeResult = await db
             .insert(schema.erc721TokenAttributes)

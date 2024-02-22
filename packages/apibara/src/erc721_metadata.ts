@@ -38,25 +38,7 @@ export default function transform({ header, events }: Block) {
 }
 
 function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
-  if (event.keys.length) {
-    const from = BigInt(event.keys[1]);
-    if (from !== 0n) {
-      return [];
-    }
-    const tokenId = uint256
-      .uint256ToBN({ low: event.keys[3], high: event.keys[4] })
-      .toString();
-    return [
-      {
-        name: "nft/mint",
-        data: {
-          contract_address: event.fromAddress,
-          tokenId,
-        },
-      },
-    ];
-  }
-  if (event.data?.[0]) {
+  if (event.data) {
     const from = BigInt(event.data[0]);
     if (from !== 0n) {
       return [];
@@ -73,5 +55,25 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
         },
       },
     ];
+  } else if (event.keys?.length) {
+    const from = BigInt(event.keys[1]);
+    if (from !== 0n) {
+      return [];
+    }
+    const tokenId = uint256
+      .uint256ToBN({ low: event.keys[3], high: event.keys[4] })
+      .toString();
+
+    //if (tokenId == 6) {
+    return [
+      {
+        name: "nft/mint",
+        data: {
+          contract_address: event.fromAddress,
+          tokenId,
+        },
+      },
+    ];
+    //}
   }
 }
