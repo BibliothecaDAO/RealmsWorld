@@ -28,7 +28,10 @@ export async function generateMetadata({
     title: `${collection} #${tokenId}`,
     description: `Collection Details and Marketplace for ${collection} - Created for adventurers by Bibliotheca DAO`,
     openGraph: {
-      images: `https://realms.world/collections/${collection.toLowerCase()}.svg`,
+      images: `https://realms.world/collections/${collection.toLowerCase()}.png`,
+    },
+    twitter: {
+      images: [`https://realms.world/collections/${collection}.png`], // Must be an absolute URL
     },
   };
 }

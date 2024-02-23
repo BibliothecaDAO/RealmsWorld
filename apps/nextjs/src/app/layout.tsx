@@ -94,7 +94,7 @@ export const metadata: Metadata = {
     siteId: "1467726470533754880",
     creator: "@bibliothecadao",
     creatorId: "1467726470533754880",
-    images: ["/backgrounds/banner.png"],
+    images: ["https://realms.world/backgrounds/banner.png"],
   },
   openGraph: {
     title: "Realms.World |" + title,
