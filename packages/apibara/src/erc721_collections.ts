@@ -1,12 +1,12 @@
-import type { Config } from "https://esm.sh/@apibara/indexer";
-import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
-import type { Postgres } from "https://esm.sh/@apibara/indexer/sink/postgres";
+import type { Config } from "https://esm.sh/@apibara/indexer@0.2.2";
+import type { Postgres } from "https://esm.sh/@apibara/indexer@0.2.2/sink/postgres";
 import type {
   Block,
   BlockHeader,
   EventWithTransaction,
   Starknet,
-} from "https://esm.sh/@apibara/indexer/starknet";
+} from "https://esm.sh/@apibara/indexer@0.2.2/starknet";
+import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import { formatUnits } from "https://esm.sh/viem";
 
 import {
@@ -20,7 +20,6 @@ import {
 export const config: Config<Starknet, Postgres> = {
   streamUrl: Deno.env.get("STREAM_URL"),
   startingBlock: Number(Deno.env.get("MARKET_STARTING_BLOCK")),
-  authToken: Deno.env.get("AUTH_TOKEN"),
   network: "starknet",
   finality: "DATA_STATUS_PENDING",
   filter: {
