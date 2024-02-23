@@ -20,10 +20,11 @@ export default async function L2CollectionSummary({
   collectionId: string;
 }) {
   const tokenAddresses = getCollectionAddresses(collectionId);
-
+  console.log(tokenAddresses[SUPPORTED_L2_CHAIN_ID]!);
   const erc721Collection = await api.erc721Collections.byId({
     id: tokenAddresses[SUPPORTED_L2_CHAIN_ID]!,
   });
+  console.log(erc721Collection);
   const contract_details = [
     {
       title: "Type",

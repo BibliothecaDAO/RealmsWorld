@@ -1,3 +1,4 @@
+import { findLowestPriceActiveListing } from "@/utils/getters";
 import { useAccount } from "@starknet-react/core";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -14,14 +15,16 @@ export const CardAction = ({
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
 }) => {
   const { address } = useAccount();
+  const listing = findLowestPriceActiveListing(token.listings, token.owner);
+
   return (
     <>
-      {token?.price &&
+      {listing &&
         (token.owner !== padAddress(address?.toLowerCase()) ? (
           <BuyModal
             trigger={
               <Button className="z-20 flex w-full  justify-between" size={"lg"}>
-                Buy Now <span className="flex">{token?.price} </span>
+                Buy Now <span className="flex">{listing?.price} </span>
               </Button>
             }
             // tokenId={tokenId}

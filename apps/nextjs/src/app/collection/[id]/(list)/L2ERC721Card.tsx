@@ -132,7 +132,7 @@ const Price = ({
   token,
 }: {
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number] & {
-    listings: RouterOutputs["erc721MarketEvents"]["all"]["items"][number];
+    listings: RouterOutputs["erc721MarketEvents"]["all"]["items"];
   };
 }) => {
   const listing = findLowestPriceActiveListing(token.listings, token.owner);

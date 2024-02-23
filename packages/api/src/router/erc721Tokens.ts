@@ -113,7 +113,13 @@ export const erc721TokensRouter = createTRPCRouter({
           ),
         );
       }
-
+      /*const items = await ctx.db
+        .select({
+          id: schema.erc721Tokens.id,
+          key: schema.erc721Tokens.key,
+          kind: schema.erc721Tokens.kind,
+        })
+*/
       const items = await ctx.db.query.erc721Tokens.findMany({
         ...withCursorPagination({
           limit: limit + 1,
@@ -123,7 +129,7 @@ export const erc721TokensRouter = createTRPCRouter({
         }),
         with: {
           attributes: true,
-          listings: activeListing ?? false,
+          listings: true,
         },
       });
 
