@@ -27,3 +27,22 @@ export function findCollectionKeyByAddress(
   }
   return null; // Address not found in any collection
 }
+
+export function findLowestPriceActiveListing(
+  listings: any,
+  owner?: string | null,
+) {
+  const activeListings = listings?.filter(
+    (listing: any) => listing.active && listing.created_by === owner,
+  );
+
+  const lowestPriceActiveListing = activeListings?.reduce(
+    (minPriceListing, currentListing) =>
+      (currentListing.price ?? 0) < (minPriceListing?.price ?? 0)
+        ? currentListing
+        : minPriceListing,
+    activeListings[0],
+  );
+
+  return lowestPriceActiveListing;
+}

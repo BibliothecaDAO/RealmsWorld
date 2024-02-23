@@ -26,6 +26,7 @@ export const erc721TokensRouter = createTRPCRouter({
         block: z.number().nullish(),
         listings: z.boolean().nullish(),
         attributeFilter: z.record(z.string(), z.string()).nullish(),
+        activeListing: z.boolean().nullish(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -37,6 +38,7 @@ export const erc721TokensRouter = createTRPCRouter({
         owner,
         orderBy,
         block,
+        activeListing,
         direction,
         attributeFilter,
       } = input;
@@ -121,6 +123,7 @@ export const erc721TokensRouter = createTRPCRouter({
         }),
         with: {
           attributes: true,
+          listings: activeListing ?? false,
         },
       });
 
