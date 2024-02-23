@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
+import { findLowestPriceActiveListing } from "@/utils/getters";
 
 import type { RouterOutputs } from "@realms-world/api";
 import { getCollectionFromAddress } from "@realms-world/constants";
@@ -130,15 +131,18 @@ const GridDetails = ({
 const Price = ({
   token,
 }: {
-  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token: RouterOutputs["erc721Tokens"]["all"]["items"][number] & {
+    listings: RouterOutputs["erc721MarketEvents"]["all"]["items"][number];
+  };
 }) => {
+  const listing = findLowestPriceActiveListing(token.listings, token.owner);
   return (
     <div className="mt-3 flex justify-between font-sans">
-      {token?.price && (
+      {listing?.price && (
         <div>
           <h6 className="uppercase">Price</h6>
           <div className="flex">
-            {token?.price}
+            {listing?.price}
             <LordsIcon className="mx-auto ml-2 h-4 w-4 self-center fill-bright-yellow" />{" "}
           </div>
         </div>

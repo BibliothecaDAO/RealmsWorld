@@ -4,6 +4,7 @@ import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import { api } from "@/trpc/react";
+import { findLowestPriceActiveListing } from "@/utils/getters";
 import {
   useAccount,
   useContractWrite,
@@ -116,25 +117,11 @@ export const BuyModalRender: FC<Props> = ({
   const { data: listingsData } = api.erc721MarketEvents.all.useQuery(filters, {
     enabled: open && !token?.listings?.[0],
   });
-  function findLowestPriceActiveListing(listings: any) {
-    const activeListings = listings?.filter(
-      (listing: any) => listing.active && listing.created_by === token.owner,
-    );
 
-    const lowestPriceActiveListing = activeListings?.reduce(
-      (minPriceListing, currentListing) =>
-        (currentListing.price ?? 0) < (minPriceListing?.price ?? 0)
-          ? currentListing
-          : minPriceListing,
-      activeListings[0],
-    );
-
-    return lowestPriceActiveListing;
-  }
   const listing = useMemo(() => {
     return (
-      findLowestPriceActiveListing(token?.listings) ??
-      findLowestPriceActiveListing(listingsData?.items)
+      findLowestPriceActiveListing(token?.listings, token?.owner) ??
+      findLowestPriceActiveListing(listingsData?.items, token?.owner)
     );
   }, [token, listingsData]);
 
