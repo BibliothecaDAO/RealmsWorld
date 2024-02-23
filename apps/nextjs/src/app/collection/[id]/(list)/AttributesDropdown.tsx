@@ -54,7 +54,7 @@ export const AttributesDropdown = ({
               <Accordion key={index} type="single" collapsible>
                 <AccordionItem value="item-1">
                   <AccordionTrigger className="bg-primary px-2 text-sm">
-                    {attribute.key} ({attribute.values.length})
+                    {attribute.key} ({attribute.values?.length})
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="pt-1">
