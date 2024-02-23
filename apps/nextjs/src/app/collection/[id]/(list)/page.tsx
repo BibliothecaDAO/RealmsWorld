@@ -27,6 +27,9 @@ export async function generateMetadata({
   return {
     title: `${collection}`,
     description: `Collection Details and Marketplace for ${collection} - Created for adventurers by Bibliotheca DAO`,
+    openGraph: {
+      images: `https://realms.world/collections/${collection}.svg`,
+    },
   };
 }
 

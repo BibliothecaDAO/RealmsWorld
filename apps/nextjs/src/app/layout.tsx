@@ -103,13 +103,13 @@ export const metadata: Metadata = {
     siteName: "Realms World",
     images: [
       {
-        url: "/backgrounds/banner.png",
+        url: "https://realms.world/backgrounds/banner.png",
         width: 800,
         height: 600,
         alt: "Realms Autonomous World",
       },
       {
-        url: "/backgrounds/banner.png",
+        url: "https://realms.world/backgrounds/banner.png",
         width: 1800,
         height: 1600,
         alt: "Realms Autonomous World",

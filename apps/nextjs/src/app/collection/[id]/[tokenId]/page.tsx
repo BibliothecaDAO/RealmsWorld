@@ -6,12 +6,32 @@ import { getToken } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/server";
 import { formatEther } from "viem";
 
-import { getCollectionAddresses } from "@realms-world/constants";
+import type { Collections } from "@realms-world/constants";
+import {
+  CollectionDisplayName,
+  getCollectionAddresses,
+} from "@realms-world/constants";
 
 import { L2Token } from "./L2Token";
 import { LoadingSkeleton } from "./loading";
 import { TokenContent } from "./TokenContent";
 import { TokenInformation } from "./TokenInformation";
+
+export async function generateMetadata({
+  params,
+  tokenId,
+}: {
+  params: { id: string; tokenId: string };
+}): Promise<Metadata> {
+  const collection = CollectionDisplayName[params.id as Collections];
+  return {
+    title: `${collection} #${tokenId}`,
+    description: `Collection Details and Marketplace for ${collection} - Created for adventurers by Bibliotheca DAO`,
+    openGraph: {
+      images: `https://realms.world/collections/${collection.toLowerCase()}.svg`,
+    },
+  };
+}
 
 export default async function Page({
   params,
