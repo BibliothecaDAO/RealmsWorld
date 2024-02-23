@@ -116,9 +116,26 @@ export const BuyModalRender: FC<Props> = ({
   const { data: listingsData } = api.erc721MarketEvents.all.useQuery(filters, {
     enabled: open && !token?.listings?.[0],
   });
+  function findLowestPriceActiveListing(listings: any) {
+    const activeListings = listings?.filter(
+      (listing: any) => listing.active && listing.created_by === token.owner,
+    );
 
+    const lowestPriceActiveListing = activeListings?.reduce(
+      (minPriceListing, currentListing) =>
+        (currentListing.price ?? 0) < (minPriceListing?.price ?? 0)
+          ? currentListing
+          : minPriceListing,
+      activeListings[0],
+    );
+
+    return lowestPriceActiveListing;
+  }
   const listing = useMemo(() => {
-    return token?.listings?.[0] ?? listingsData?.items?.[0];
+    return (
+      findLowestPriceActiveListing(token?.listings) ??
+      findLowestPriceActiveListing(listingsData?.items)
+    );
   }, [token, listingsData]);
 
   const quantityRemaining = useMemo(() => {
