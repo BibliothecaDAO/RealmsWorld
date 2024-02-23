@@ -119,10 +119,10 @@ export const BuyModalRender: FC<Props> = ({
   });
 
   const listing = useMemo(() => {
-    return (
-      findLowestPriceActiveListing(token?.listings, token?.owner) ??
-      findLowestPriceActiveListing(listingsData?.items, token?.owner)
-    );
+    if (token?.listings)
+      return findLowestPriceActiveListing(token?.listings, token?.owner);
+    else if (listingsData?.items.length)
+      return findLowestPriceActiveListing(listingsData?.items, token?.owner);
   }, [token, listingsData]);
 
   const quantityRemaining = useMemo(() => {

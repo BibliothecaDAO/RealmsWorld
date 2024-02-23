@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { RouterOutputs } from "@realms-world/api";
 import type { Collections, Game } from "@realms-world/constants";
 import { CollectionAddresses } from "@realms-world/constants";
 
@@ -29,7 +30,7 @@ export function findCollectionKeyByAddress(
 }
 
 export function findLowestPriceActiveListing(
-  listings: any,
+  listings: RouterOutputs["erc721MarketEvents"]["all"]["items"],
   owner?: string | null,
 ) {
   const activeListings = listings?.filter(
