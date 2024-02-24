@@ -4,6 +4,7 @@ import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { api } from "@/trpc/react";
+import { findLowestPriceActiveListing } from "@/utils/getters";
 import {
   useAccount,
   useContractWrite,
@@ -94,7 +95,10 @@ export const ListingEditModalRender: FC<Props> = ({
   });
 
   const listing = useMemo(() => {
-    return token?.listings?.[0] ?? listingsData?.items?.[0];
+    if (token?.listings)
+      return findLowestPriceActiveListing(token?.listings, token?.owner);
+    else if (listingsData?.items.length)
+      return findLowestPriceActiveListing(listingsData?.items, token?.owner);
   }, [token, listingsData]);
 
   const contract = listing?.token_key?.split(":")[1];
