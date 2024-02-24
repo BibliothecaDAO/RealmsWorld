@@ -139,11 +139,8 @@ export default async function CollectionSummary({
           <div className="flex flex-wrap justify-start lg:space-x-2">
             {statistics.map((statistic, index) => {
               return (
-                <div
-                  key={index}
-                  className="border-black bg-black/40 px-4 py-2  lg:px-5"
-                >
-                  <div className="mb-1 font-sans-serif text-xs text-white/40">
+                <div key={index} className=" px-4 py-2  lg:px-5">
+                  <div className="mb-1 text-xs text-white/40">
                     {statistic.title}
                   </div>
                   <div className="text-sm lg:text-xl">{statistic.value}</div>

@@ -6,12 +6,17 @@ import type { RouterOutputs } from "@realms-world/api";
 import type { Collections, Game } from "@realms-world/constants";
 import { CollectionAddresses } from "@realms-world/constants";
 
-export const getGamesByContract = (games: Game[], contractAddress: string) => {
-  return games.filter((game: any) => {
-    return game.collections.some(
-      (collection: Collections) => collection === contractAddress,
-    );
-  });
+export const getGamesByContract = (
+  games: Game[],
+  contractAddress: string,
+): Game[] => {
+  return (
+    games.filter((game: Game) => {
+      return game.collections?.some(
+        (collection: Collections) => collection === contractAddress,
+      );
+    }) || []
+  );
 };
 
 export function findCollectionKeyByAddress(
