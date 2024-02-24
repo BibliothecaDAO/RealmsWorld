@@ -23,8 +23,8 @@ export const CardAction = ({
         (token.owner !== padAddress(address?.toLowerCase()) ? (
           <BuyModal
             trigger={
-              <Button className="z-20 flex w-full  justify-between" size={"lg"}>
-                Buy Now <span className="flex">{listing?.price} </span>
+              <Button className="z-20 flex w-full" size={"lg"}>
+                Buy Now
               </Button>
             }
             // tokenId={tokenId}
