@@ -35,6 +35,7 @@ export const L2ERC721Card = ({
           className={`${isGrid ? "" : "flex"}`}
         >
           <div className={` ${!isGrid && "p-1"} relative`}>
+            <div className="absolute z-0 h-full w-full from-black/50 transition-all duration-150 group-hover:bg-gradient-to-t"></div>
             {token.image && (
               <Image
                 src={token.image}
@@ -49,6 +50,14 @@ export const L2ERC721Card = ({
                 #{token.token_id}
               </span>
             )}
+
+            <div className="absolute bottom-0 left-0 w-full px-3 opacity-0 transition-all duration-300 group-hover:bottom-4 group-hover:opacity-100">
+              <TokenAttributes
+                token={token}
+                attributeKeys={["type", "tier", "level", "health"]}
+              />
+              <CardAction token={token} />
+            </div>
           </div>
         </Link>
       </div>
@@ -84,7 +93,7 @@ const TokenAttributes = ({
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   attributeKeys: string[];
 }) => (
-  <table className="min-w-full font-sans text-xs">
+  <table className="min-w-full bg-black font-sans text-xs">
     <tbody>
       {attributeKeys.map((key: string) => {
         const attribute = token.attributes?.find((trait) => trait.key === key);
@@ -107,23 +116,17 @@ const GridDetails = ({
 }) => (
   <div className=" flex h-full w-full flex-col justify-between p-3">
     <div className="flex justify-between pb-2">
-      <span className="">{decodeURIComponent(token.name ?? "")}</span>
+      <span className="truncate">{decodeURIComponent(token.name ?? "")}</span>
     </div>
-    <TokenAttributes
-      token={token}
-      attributeKeys={["type", "tier", "level", "health"]}
-    />
-    <Price token={token} />
-    {token.lastPrice && (
-      <span className="flex text-bright-yellow/50">
-        Last sale: {token.lastPrice}
-        <LordsIcon className="ml-2 h-4 w-4 self-center fill-current" />
-      </span>
-    )}
-    <div>
-      <div className="absolute bottom-0 left-0 w-full px-3 opacity-0 transition-all duration-300 group-hover:bottom-4 group-hover:opacity-100">
-        <CardAction token={token} />
-      </div>
+
+    <div className="flex justify-between  font-sans">
+      <Price token={token} />
+      {token.lastPrice && (
+        <span className="flex text-bright-yellow/50">
+          {token.lastPrice}
+          <LordsIcon className="ml-2 h-4 w-4 self-center fill-current" />
+        </span>
+      )}
     </div>
   </div>
 );
@@ -137,10 +140,9 @@ const Price = ({
 }) => {
   const listing = findLowestPriceActiveListing(token.listings, token.owner);
   return (
-    <div className="mt-3 flex justify-between font-sans">
+    <div className="flex justify-between">
       {listing?.price && (
         <div>
-          <h6 className="uppercase">Price</h6>
           <div className="flex">
             {listing?.price}
             <LordsIcon className="mx-auto ml-2 h-4 w-4 self-center fill-bright-yellow" />{" "}
