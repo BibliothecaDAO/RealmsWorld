@@ -26,12 +26,12 @@ export async function generateMetadata({
   const collection = CollectionDisplayName[params.id as Collections];
   return {
     title: `${collection}`,
-    description: `Collection Details and Marketplace for ${collection} - Created for adventurers by Bibliotheca DAO`,
+    description: `Collection Details and Marketplace for ${collection} - Created for Adventurers by Bibliotheca DAO`,
     openGraph: {
-      images: `https://realms.world/collections/${collection}.png`,
+      images: `https://realms.world/collections/${collection}.svg`,
     },
     twitter: {
-      images: [`https://realms.world/collections/${collection}.png`], // Must be an absolute URL
+      images: [`https://realms.world/collections/${collection}.svg`], // Must be an absolute URL
     },
   };
 }
