@@ -311,3 +311,8 @@ export interface ExpirationOption {
   relativeTime: number | null;
   relativeTimeUnit: ManipulateType | null;
 }
+
+export interface ContractDetails {
+  title: string;
+  value: string;
+}

@@ -1,18 +1,17 @@
+import type { ContractDetails } from "@/types";
 import Image from "next/image";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-//import Discord from "@/icons/discord.svg";
 import LordsIcon from "@/icons/lords.svg";
 import { api } from "@/trpc/server";
+import { getGamesByContract } from "@/utils/getters";
 
-/*import { getGamesByContract } from "@/utils/getters";
-import { ExternalLink, Globe, Twitter } from "lucide-react";
-import { formatEther } from "viem";*/
-
-import type { Collections } from "@realms-world/constants";
+import type { Collections, Game } from "@realms-world/constants";
 import {
   CollectionDisplayName,
+  games,
   getCollectionAddresses,
 } from "@realms-world/constants";
+import { Button } from "@realms-world/ui";
 
 export default async function L2CollectionSummary({
   collectionId,
@@ -24,8 +23,8 @@ export default async function L2CollectionSummary({
   const erc721Collection = await api.erc721Collections.byId({
     id: tokenAddresses[SUPPORTED_L2_CHAIN_ID]!,
   });
-  console.log(erc721Collection);
-  const contract_details = [
+
+  const contract_details: ContractDetails[] = [
     {
       title: "Type",
       value: "ERC721",
@@ -35,6 +34,7 @@ export default async function L2CollectionSummary({
       value: "Starknet",
     },
   ];
+
   const statistics = [
     /* {
       value: collection.floorSale?.["1day"],
@@ -48,17 +48,16 @@ export default async function L2CollectionSummary({
     },*/
     //{ value: collection.onSaleCount, title: "Listed" },
     {
-      value: (
-        <span className="flex">
-          {erc721Collection?.[0]?.volume}{" "}
-          <LordsIcon className="ml-2 w-5 fill-current" />
-        </span>
-      ),
+      value: erc721Collection?.[0]?.volume,
       title: "Total Volume",
+      icon: <LordsIcon className="w-5 fill-current" />,
     },
     //{ value: collection.tokenCount, title: "Count" },
   ];
-  //const comptatible_games = getGamesByContract(games, collection.id);
+  const compatibleGames = getGamesByContract(
+    games,
+    erc721Collection?.[0]?.marketplaceId?.toString()!,
+  );
 
   return (
     <div className="px-4 sm:mt-10 sm:flex">
@@ -66,69 +65,102 @@ export default async function L2CollectionSummary({
         <Image
           src={`/collections/${collectionId}.svg`}
           alt={collectionId}
-          width={100}
-          height={100}
-          className="mx-auto rounded-full border"
+          width={150}
+          height={150}
+          className="mx-auto rounded-full border-2"
         />
-
-        <div className="mx-auto flex justify-center space-x-2">
-          {/*links.map((social, index) => {
-            if (social.value)
-              return (
-                <Link key={index} href={`${social.value}`}>
-                  {social.icon}
-                </Link>
-              );
-          })*/}
-        </div>
       </div>
 
       <div>
-        <div className="mb-1 flex flex-wrap space-x-2 text-xs">
-          {contract_details.map((detail, index) => {
-            return (
-              <div key={index} className="uppercase">
-                <span className="opacity-50 ">{detail.title}</span>{" "}
-                {detail.value}
-              </div>
-            );
-          })}
-        </div>
         <h1>{CollectionDisplayName[collectionId as Collections]}</h1>
-        {/* <div className="flex flex-wrap mb-4 sm:space-x-2">
-          {comptatible_games.map((game: any, index: any) => {
-            return (
-              <Button
-                key={index}
-                href={`/games/${game.id}`}
-                className="text-xs font-sans-serif"
-              >
-                {game.name}
-              </Button>
-            );
-          })}
-        </div> */}
+        <ContractDetailsList contract_details={contract_details} />
+
+        {compatibleGames.length > 0 && (
+          <CompatibleGames games={compatibleGames} />
+        )}
+
         <div className="flex flex-wrap justify-start lg:space-x-2">
           {statistics.map((statistic, index) => {
             return (
-              <div
+              <StatisticsBox
                 key={index}
-                className="border-black bg-black/40 px-4 py-2  lg:px-5"
-              >
-                <div className="mb-1 font-sans-serif text-xs text-white/40">
-                  {statistic.title}
-                </div>
-                <div className="text-sm lg:text-xl">{statistic.value}</div>
-              </div>
+                value={statistic.value}
+                title={statistic.title}
+                icon={statistic.icon}
+              />
             );
           })}
         </div>
-
-        {/* <p
-              dangerouslySetInnerHTML={{ __html: collection.description }}
-              className="hidden sm:block"
-            /> */}
       </div>
     </div>
   );
 }
+
+export const DetailsBox = ({ description }: { description: string }) => {
+  return (
+    <div
+      dangerouslySetInnerHTML={{ __html: description }}
+      className="hidden sm:block"
+    />
+  );
+};
+
+export const StatisticsBox = ({
+  title,
+  value,
+  icon,
+}: {
+  title: string;
+  value?: string | null | undefined;
+  icon?: React.ReactNode;
+}) => {
+  return (
+    <div className="px-1 py-2">
+      <div className="text-sm lg:text-xl">
+        {" "}
+        <span className="flex space-x-3">
+          {value
+            ? Number(value).toLocaleString("en-US", {
+                style: "decimal",
+                maximumFractionDigits: 2,
+              })
+            : null}{" "}
+          <span className="ml-2 self-center">{icon && icon}</span>
+        </span>
+      </div>
+      <div className="mb-1 mt-1 font-sans-serif text-xs">{title}</div>
+    </div>
+  );
+};
+
+export const ContractDetailsList = ({
+  contract_details,
+}: {
+  contract_details: ContractDetails[];
+}) => {
+  return (
+    <div className="mb-3 flex flex-wrap space-x-2 text-xs">
+      {contract_details.map((detail, index) => {
+        return (
+          <div key={index} className="uppercase">
+            <span className="opacity-50 ">{detail.title}</span> {detail.value}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export const CompatibleGames = ({ games }: { games: Game[] }) => {
+  return (
+    <div className="mb-4 flex flex-wrap sm:space-x-2">
+      {games.map((game: any, index: any) => {
+        return (
+          <Button key={index} href={`/games/${game.id}`} className="text-xs">
+            {game.name}
+          </Button>
+        );
+      })}
+    </div>
+  );
+};

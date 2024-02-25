@@ -49,7 +49,7 @@ export default function RootLayout({
       <div className="relative flex h-full lg:pl-32">
         <div className="flex-grow">
           <CollectionSummary collectionId={params.id} />
-          <div className="mb-3 flex justify-center gap-4 overflow-x-auto border-b py-1  ">
+          <div className="mb-3 flex gap-4 overflow-x-auto border-b py-1  ">
             {tabs.map((tab) => (
               <NavLink
                 key={tab.name}
