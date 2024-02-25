@@ -64,11 +64,8 @@ export const CollectionActivity = ({
       ) : (
         searchAttributes.map((attribute: string, index: number) => {
           return (
-            <div
-              className="flex justify-between rounded p-1 text-xl uppercase"
-              key={index}
-            >
-              <span className="font-semibold">{attribute} </span>
+            <div className="p--1 flex justify-between rounded" key={index}>
+              <h6>{attribute} </h6>
               <Switch
                 checked={typesState[attribute]}
                 onCheckedChange={() => handleSwitchChange(attribute)}
@@ -86,11 +83,11 @@ export const CollectionActivitySkeleton = () => {
     <div className="hidden w-72 flex-col space-y-3 pr-8 sm:flex">
       {Array.from({ length: 4 }).map((_, index) => (
         <div
-          className="flex animate-pulse justify-between rounded bg-gray-300 p-1 text-xl uppercase"
+          className="flex animate-pulse justify-between rounded bg-black/20 p-1 text-xl uppercase"
           key={index}
         >
-          <span className="h-6 w-1/2 bg-gray-300 font-semibold"></span>
-          <div className="h-6 w-6 rounded-full bg-gray-300"></div>
+          <span className="h-6 w-1/2 bg-black/20 font-semibold"></span>
+          <div className="h-6 w-6 rounded-full bg-black/20"></div>
         </div>
       ))}
     </div>
