@@ -274,7 +274,7 @@ export const games: Game[] = [
     status: "beta",
     description: "Defend thine honour in a duel",
     longform:
-      "\"Thou art an offence to all that is decent, dog. I challenge you... to a duel!\". In Pistols at Ten Blocks, you face off against your opponent for honour or profit, in a pistol duel at \"10\" paces. Will you duel with honour, or turn early and shoot the wretched cur in the back? Earn yourself glory on the leaderboard, or a shallow grave behind the Fool & Flintlock tavern.",
+      '"Thou art an offence to all that is decent, dog. I challenge you... to a duel!". In Pistols at Ten Blocks, you face off against your opponent for honour or profit, in a pistol duel at "10" paces. Will you duel with honour, or turn early and shoot the wretched cur in the back? Earn yourself glory on the leaderboard, or a shallow grave behind the Fool & Flintlock tavern.',
     links: {
       homepage: "https://lootunder.world/pistols",
       testnet: "https://pistols.lootunder.world/",
@@ -286,5 +286,23 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
     screenshotLength: 6,
+  },
+  {
+    name: "zConqueror",
+    id: "zconqueror",
+    developer: "zKorp",
+    genres: ["Strategy", "PvP", "Casual"],
+    color: "#f5f5f5",
+    status: "alpha",
+    description: "Conquer the world",
+    longform:
+      "zConqueror is a strategy game based on Risk, focusing on conquest and realm defense. Players compete to dominate the map and win rewards. You can compete up to 6 players",
+    links: {
+      twitter: "https://twitter.com/zKorp",
+    },
+    chains: [ChainId.SLOT_TESTNET],
+    operatingSystems: ["Web Browser"],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 4,
   },
 ];
