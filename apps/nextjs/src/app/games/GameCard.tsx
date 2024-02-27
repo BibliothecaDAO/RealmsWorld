@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import type { Game } from "@realms-world/constants";
+import { Button } from "@realms-world/ui";
 
 interface GameCardProps {
   game: Game;
@@ -50,9 +51,9 @@ export const GameCard = async ({ game }: GameCardProps) => {
         />
         <p className="mt-2  text-lg font-semibold">{game.description}</p>
       </div>
-      {/*<div className="invisible z-10 opacity-0 duration-300 group-hover:visible group-hover:translate-y-3 group-hover:opacity-100">
+      <div className="invisible z-10 opacity-0 duration-300 group-hover:visible group-hover:-translate-y-3 group-hover:opacity-100">
         <Button variant={"default"}>Explore</Button>
-  </div>*/}
+      </div>
     </Link>
   );
 };

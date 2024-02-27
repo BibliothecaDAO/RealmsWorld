@@ -40,7 +40,7 @@ export const games: Game[] = [
     longform:
       "Eternum is a strategy game that is built on StarkNet. It is a game of management and conquest, where players must build and defend their Realm to thrive. The game is governed by a set of rules that are enforced by the game's smart contracts.",
     links: {
-      homepage: "https://eternum.realms.world/",
+      homepage: "https://next-eternum.realms.world/",
       discord: "https://discord.gg/uQnjZhZPfu",
       twitter: "https://twitter.com/LootRealms",
       whitepaper: "https://scroll.bibliothecadao.xyz/",
@@ -58,7 +58,7 @@ export const games: Game[] = [
     developer: "BiblioDAO",
     genres: ["Play to Die", "Roguelike"],
     color: "#f5f5f5",
-    status: "beta",
+    status: "Mainnet",
     description: "Play to Die",
     longform:
       "Survivors is the first Loot adventure game exploring the Play2Die mechanic. It is a game of onchain survival where you must defeat beasts and collect gear in the fight to stay alive and make it to the top of the leaderboard.",
@@ -74,6 +74,28 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
+  },
+  {
+    name: "Pistols at Ten Blocks",
+    id: "pistols",
+    developer: "Underware",
+    genres: ["Social", "Casual", "Strategy", "PVP"],
+    color: "#faffcb",
+    status: "beta",
+    description: "Defend thine honour in a duel",
+    longform:
+      '"Thou art an offence to all that is decent, dog. I challenge you... to a duel!". In Pistols at Ten Blocks, you face off against your opponent for honour or profit, in a pistol duel at "10" paces. Will you duel with honour, or turn early and shoot the wretched cur in the back? Earn yourself glory on the leaderboard, or a shallow grave behind the Fool & Flintlock tavern.',
+    links: {
+      homepage: "https://lootunder.world/pistols",
+      testnet: "https://pistols.lootunder.world/",
+      twitter: "https://x.com/LootUnderworld",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "TBD",
+    chains: [ChainId.SLOT_TESTNET],
+    collections: [Collections.GOLDEN_TOKEN],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 6,
   },
   {
     name: "Underdark",
@@ -145,7 +167,7 @@ export const games: Game[] = [
     status: "beta",
     description: "Fully on-chain PVP roguelike game",
     longform:
-      'Mississippi is a fully on-chain PVP roguelike game. We hope to create an expansive cavern space, containing abundant resources, which players need to explore and exploit as many resources from the cavern as possible within a fixed time limit. Besides, we will integrate with the Lootverse, such as by "extracting" equipment and resources from Loot Bags and Realms, which can give players specific attributes for each round.',
+      'Mississippi is a fully on-chain PvP roguelike game. We aim to create an expansive cavern space filled with abundant resources. Players are tasked with exploring the cavern and exploiting as many resources as possible within a fixed time limit. Additionally, we plan to integrate with the Lootverse, allowing for the "extraction" of equipment and resources from Loot Bags and Realms. This integration will provide players with specific attributes for each round.',
     links: {
       mainnet: "https://0xMssp.xyz/",
       testnet: "https://test.0xMssp.xyz/",
@@ -155,31 +177,9 @@ export const games: Game[] = [
     operatingSystems: ["Web Browser"],
     lords: "N/A",
     chains: [ChainId.MISSISSIPPI_TESTNET],
-    collections: [Collections.REALMS],
+    collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
-  },
-  {
-    name: "StarkLand",
-    id: "stark-land",
-    developer: "VivaLabs",
-    genres: ["SLG", "PvP"],
-    color: "#f5f5f5",
-    status: "alpha",
-    description: "Full on chain SLG",
-    longform:
-      "Realm holders can create their Realm World, where players can mine, war, explore in your world, also invade other World.",
-    links: {
-      homepage: "https://app.starkland.xyz/",
-      twitter: "https://twitter.com/starkland_xyz",
-      whitepaper: "https://starknopoly.gitbook.io/starkland/",
-    },
-    operatingSystems: ["Web Browser"],
-    lords: "Trade for resources",
-    chains: [ChainId.SN_MAIN],
-    collections: [Collections.GOLDEN_TOKEN],
-    tokens: [Tokens.LORDS],
-    screenshotLength: 3,
   },
   {
     name: "GenLoot",
@@ -266,28 +266,6 @@ export const games: Game[] = [
     screenshotLength: 1,
   },
   {
-    name: "Pistols at Ten Blocks",
-    id: "pistols",
-    developer: "Underware",
-    genres: ["Social", "Casual", "Strategy", "PVP"],
-    color: "#faffcb",
-    status: "beta",
-    description: "Defend thine honour in a duel",
-    longform:
-      '"Thou art an offence to all that is decent, dog. I challenge you... to a duel!". In Pistols at Ten Blocks, you face off against your opponent for honour or profit, in a pistol duel at "10" paces. Will you duel with honour, or turn early and shoot the wretched cur in the back? Earn yourself glory on the leaderboard, or a shallow grave behind the Fool & Flintlock tavern.',
-    links: {
-      homepage: "https://lootunder.world/pistols",
-      testnet: "https://pistols.lootunder.world/",
-      twitter: "https://x.com/LootUnderworld",
-    },
-    operatingSystems: ["Web Browser"],
-    lords: "TBD",
-    chains: [ChainId.SLOT_TESTNET],
-    collections: [Collections.GOLDEN_TOKEN],
-    tokens: [Tokens.LORDS],
-    screenshotLength: 6,
-  },
-  {
     name: "zConqueror",
     id: "zconqueror",
     developer: "zKorp",
@@ -304,5 +282,5 @@ export const games: Game[] = [
     operatingSystems: ["Web Browser"],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
-  },
+  }
 ];
