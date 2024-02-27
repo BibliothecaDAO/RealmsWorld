@@ -29,8 +29,6 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
   const lowestPriceActiveListing =
     token?.listings &&
     findLowestPriceActiveListing(token?.listings, token?.owner);
-
-        minPriceListing?.price &&
   return (
     <>
       {/*token?.listings?.map((listing) => {

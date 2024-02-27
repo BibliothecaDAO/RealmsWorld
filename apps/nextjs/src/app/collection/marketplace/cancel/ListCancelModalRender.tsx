@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
-import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 import { useContractWrite, useWaitForTransaction } from "@starknet-react/core";
 

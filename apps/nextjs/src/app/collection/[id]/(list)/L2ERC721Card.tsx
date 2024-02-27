@@ -20,8 +20,6 @@ export const L2ERC721Card = ({
   const isGrid = layout === "grid";
   const imageSize = isGrid ? 800 : 60;
 
-  const starkName = useStarkDisplayName(token.owner ?? token.minter ?? "");
-
   return (
     <div
       className={`group flex transform border-2 bg-dark-green duration-300 hover:border-bright-yellow ${

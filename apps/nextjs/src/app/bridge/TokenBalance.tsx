@@ -20,10 +20,12 @@ export const TokenBalance = ({
   useEffect(() => {
     setBalanceState(balance);
   }, [balance]);
-
   return (
     <div
       onClick={onClick}
+      onKeyDown={onClick} // Added to support keyboard interactions
+      role="button" // Added to make div function as a button
+      tabIndex={0} // Added to make the div focusable
       className="h-full cursor-pointer justify-center pb-4 text-end"
     >
       <span className="text-sm text-white/50">Available Balance</span>

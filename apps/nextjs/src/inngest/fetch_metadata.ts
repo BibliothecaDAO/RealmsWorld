@@ -7,10 +7,7 @@
 import { NextResponse } from "next/server";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
-  constants,
-  Contract,
   hash,
-  RpcProvider,
   shortString,
   uint256,
 } from "starknet";
@@ -19,7 +16,7 @@ import type { SQL } from "@realms-world/db";
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import { and, db, eq, inArray, schema, sql } from "@realms-world/db";
 
-import blobertABI from "../abi/L2/Blobert.json";
+//import blobertABI from "../abi/L2/Blobert.json";
 //import { Client } from "https://esm.sh/ts-postgres";
 
 import { inngest } from "./client";
@@ -44,10 +41,10 @@ export const fetchMetadata = inngest.createFunction(
   },
   { event: "nft/mint" },
   async ({ event, step }) => {
-    const providerUrl = /*`https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;*/ `https://starknet-mainnet.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;
-    const provider = new RpcProvider({
+    const providerUrl = `https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;/* `https://starknet-mainnet.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;*/
+    /*const provider = new RpcProvider({
       nodeUrl: providerUrl,
-    });
+    });*/
     const tokenId = uint256.bnToUint256(BigInt(event.data.tokenId.toString()));
 
     const metadata = await step.run("Fetch metadata", async () => {
@@ -98,6 +95,9 @@ export const fetchMetadata = inngest.createFunction(
       });
       value.push(metadata.result.pending_word);
       jsonString = atob(value.join("").substring(29));
+      if (jsonString.endsWith('Ó')) {
+        jsonString = jsonString.slice(0, -1); // Remove the last character if it is 'Ó'
+      }
       parsedJson = JSON.parse(jsonString);
       parsedJson.attributes = parsedJson.attributes.map((attribute: any) => {
         if (attribute.trait) {

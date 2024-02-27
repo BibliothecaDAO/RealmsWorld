@@ -7,7 +7,6 @@ import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 import {
   useAccount,
-  useContractWrite,
   useWaitForTransaction,
 } from "@starknet-react/core";
 import dayjs from "dayjs";
