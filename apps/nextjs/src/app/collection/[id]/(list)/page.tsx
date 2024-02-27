@@ -28,10 +28,10 @@ export async function generateMetadata({
     title: `${collection}`,
     description: `Collection Details and Marketplace for ${collection} - Created for Adventurers by Bibliotheca DAO`,
     openGraph: {
-      images: `https://realms.world/collections/${collection}.svg`,
+      images: `https://realms.world/collections/${collection}.png`,
     },
     twitter: {
-      images: [`https://realms.world/collections/${collection}.svg`], // Must be an absolute URL
+      images: [`https://realms.world/collections/${collection}.png`], // Must be an absolute URL
     },
   };
 }
