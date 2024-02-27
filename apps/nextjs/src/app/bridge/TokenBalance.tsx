@@ -9,10 +9,12 @@ export const TokenBalance = ({
   balance,
   symbol,
   isLoading,
+  onClick,
 }: {
   balance: any;
   symbol: string;
   isLoading?: boolean;
+  onClick?: () => void;
 }) => {
   const [balanceState, setBalanceState] = useState();
   useEffect(() => {
@@ -20,7 +22,10 @@ export const TokenBalance = ({
   }, [balance]);
 
   return (
-    <div className="h-full justify-center pb-4 text-end">
+    <div
+      onClick={onClick}
+      className="h-full cursor-pointer justify-center pb-4 text-end"
+    >
       <span className="text-sm text-white/50">Available Balance</span>
       <div className="flex justify-end">
         <div className="flex text-sm">

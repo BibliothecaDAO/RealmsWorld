@@ -14,6 +14,7 @@ import LordsIcon from "@/icons/lords.svg";
 import StarknetLogo from "@/icons/starknet.svg";
 import { useAccount } from "@starknet-react/core";
 import { ArrowUpDown } from "lucide-react";
+import { formatEther, parseEther } from "viem";
 import { useAccount as useL1Account } from "wagmi";
 
 import { Button, Input } from "@realms-world/ui";
@@ -75,6 +76,13 @@ export const Transfer = ({ action }: { action: string }) => {
             </div>
           </div>
           <TokenBalance
+            onClick={() =>
+              setAmount(
+                isL2
+                  ? formatEther(balances.l2?.lords || BigInt(0))
+                  : formatEther(balances.l1?.lords || BigInt(0)),
+              )
+            }
             balance={
               isL2
                 ? balances.l2?.lords || BigInt(0)

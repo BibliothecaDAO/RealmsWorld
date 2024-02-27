@@ -44,6 +44,7 @@
     "@trpc/client": "11.0.0-next-beta.248",
     "@trpc/react-query": "11.0.0-next-beta.248",
     "@trpc/server": "11.0.0-next-beta.248",
+    "@vercel/analytics": "^1.2.2",
     "class-variance-authority": "^0.7.0",
     "cmdk": "^0.2.1",
     "embla-carousel-autoplay": "8.0.0",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
+import { Analytics } from "@vercel/analytics/react";
 
 import { Provider } from "./providers/providers";
 
@@ -64,6 +65,7 @@ export default function Layout(props: { children: React.ReactNode }) {
             </Provider>
           </UIContextProvider>
         </TRPCReactProvider>
+        <Analytics />
       </body>
     </html>
   );
