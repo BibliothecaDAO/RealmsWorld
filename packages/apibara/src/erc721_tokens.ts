@@ -76,6 +76,8 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
           },
           update: {
             owner: owner,
+            price: null,
+            expiration: null
           },
         };
       }
