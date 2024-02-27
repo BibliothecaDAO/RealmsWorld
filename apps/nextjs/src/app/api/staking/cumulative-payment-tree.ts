@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { bufferToHex, zeros } from "ethereumjs-util";
 import _ from "lodash";
 import Web3Utils from "web3-utils";
@@ -23,9 +27,10 @@ import MerkleTree from "./merkle-tree";
  */
 
 export default class CumulativePaymentTree extends MerkleTree {
-  constructor(paymentList) {
+  paymentNodes: { payee: string; amount: number }[];
+  constructor(paymentList: any[]) {
     const filteredPaymentList = paymentList.filter(
-      (payment) => payment.payee && payment.amount,
+      (payment: { payee: any; amount: any }) => payment.payee && payment.amount,
     );
     const groupedPayees = _.groupBy(
       filteredPaymentList,
@@ -44,7 +49,7 @@ export default class CumulativePaymentTree extends MerkleTree {
     this.paymentNodes = reducedPaymentList;
   }
 
-  amountForPayee(payee) {
+  amountForPayee(payee: any) {
     const payment = _.find(this.paymentNodes, { payee });
     if (!payment) {
       return 0;
@@ -53,7 +58,7 @@ export default class CumulativePaymentTree extends MerkleTree {
     return Web3Utils.toHex(payment.amount);
   }
 
-  hexProofForPayee(payee, paymentCycle) {
+  hexProofForPayee(payee: string, paymentCycle: number) {
     const leaf = _.find(this.paymentNodes, { payee });
     if (!leaf) {
       return bufferToHex(zeros(32));

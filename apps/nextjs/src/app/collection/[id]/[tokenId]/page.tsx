@@ -1,4 +1,4 @@
-import type { Collection, Market, Token, TokenMarketData } from "@/types";
+import type { Collection, TokenMarketData } from "@/types";
 import { Suspense } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getCollections } from "@/lib/reservoir/getCollections";
@@ -79,6 +79,7 @@ const L2TokenData = async ({
   const erc721Token = await api.erc721Tokens.byId({
     id: contractAddress + ":" + tokenId,
   });
+  console.log(erc721Token);
 
   return (
     <>

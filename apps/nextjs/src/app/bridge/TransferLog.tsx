@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { DepositEvent, WithdrawalEvent } from "@/.graphclient";
 import type { ChainTypeL2 } from "@starkware-industries/commons-js-enums";
 import React, { useEffect, useState } from "react";
@@ -8,7 +12,6 @@ import {
 } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
 import LordsIcon from "@/icons/lords.svg";
-import { useNetwork } from "@starknet-react/core";
 import {
   isOnChain,
   isRejected,
@@ -16,7 +19,6 @@ import {
   TransactionHashPrefix,
   TransactionStatus,
   TransactionStatusFriendlyMessage,
-  TransactionStatusStep,
 } from "@starkware-industries/commons-js-enums";
 import {
   getFullTime,
@@ -48,28 +50,12 @@ export const TransferLog = ({
 
   const {
     status,
-    id,
     //l2Recipient,
     amount,
     finishedTxHash: l1hash,
   }: DepositEvent | WithdrawalEvent = depositEvents?.[0] ??
   withdrawalEvents?.[0] ??
   transfer;
-
-  const getl2hash = async () => {
-    const hash = depositEvents?.[0].payload
-      ? getTransactionHash(
-          TransactionHashPrefix.L1_HANDLER,
-          tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]] ?? "",
-          tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]] ?? "",
-          "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
-          depositEvents?.[0].payload,
-          ("SN_" + NETWORK_NAME) as ChainTypeL2,
-          depositEvents?.[0].nonce,
-        )
-      : transfer.hash;
-    setL2hash(hash);
-  };
 
   useEffect(() => {
     const action = isL1 ? 1 : 2;
@@ -78,8 +64,26 @@ export const TransferLog = ({
   }, [isL1, depositEvents]);
 
   useEffect(() => {
-    getl2hash();
-  }, [depositEvents?.[0].payload, transfer]);
+    const getl2hash = async () => {
+      const hash = depositEvents?.[0].payload
+        ? getTransactionHash(
+            TransactionHashPrefix.L1_HANDLER,
+            tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]] ?? "",
+            tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]] ?? "",
+            "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
+            depositEvents?.[0].payload,
+            ("SN_" + NETWORK_NAME) as ChainTypeL2,
+            depositEvents?.[0].nonce,
+          )
+        : transfer.hash;
+      setL2hash(hash);
+    };
+
+    if (depositEvents?.[0].payload) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      getl2hash();
+    }
+  }, [depositEvents, transfer]);
 
   const typedStatus = status as TransactionStatus;
 

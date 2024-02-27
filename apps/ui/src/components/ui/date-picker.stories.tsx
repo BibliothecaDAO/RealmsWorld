@@ -1,10 +1,10 @@
-import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { DateRange } from "react-day-picker";
+import * as React from "react";
 
 import { Button } from "./button";
 import { DatePicker } from "./date-picker";
-import { Popover } from "./popover";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 const meta: Meta<typeof DatePicker> = {
   title: "Components/DatePicker",
@@ -207,23 +207,22 @@ interface NestedProps {
 const Nested = ({ value, onChange }: NestedProps) => {
   return (
     <Popover>
-      <Popover.Trigger asChild>
+      <PopoverTrigger asChild>
         <Button>Open</Button>
-      </Popover.Trigger>
-      <Popover.Content>
+      </PopoverTrigger>
+      <PopoverContent>
         <div className="px-3 py-2">
           <DatePicker value={value} onChange={onChange} />
         </div>
-        <Popover.Seperator />
         <div className="px-3 py-2">
           <DatePicker value={value} onChange={onChange} />
         </div>
-        <Popover.Seperator />
+
         <div className="flex items-center justify-between gap-x-2 px-3 py-2 [&_button]:w-full">
-          <Button variant="secondary">Clear</Button>
+          <Button variant="outline">Clear</Button>
           <Button>Apply</Button>
         </div>
-      </Popover.Content>
+      </PopoverContent>
     </Popover>
   );
 };

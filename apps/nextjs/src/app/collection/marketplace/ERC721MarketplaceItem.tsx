@@ -10,7 +10,7 @@ interface Props {
   img?: string;
   name?: string;
   collection: string;
-  price?: number;
+  price?: number | string | null;
   usdPrice?: number;
   expires?: string;
   warning?: string;
@@ -78,7 +78,10 @@ const ERC721MarketplaceItem: FC<Props> = ({
             <div className="grid items-start justify-between font-sans">
               {price ? (
                 <div className="flex">
-                  {formatNumber(price, 4)}
+                  {formatNumber(
+                    typeof price == "string" ? parseInt(price) : price,
+                    4,
+                  )}
                   <Lords className="ml-2 w-5 fill-current" />
                 </div>
               ) : (

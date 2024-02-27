@@ -2,7 +2,7 @@
 import type { ExpirationOption } from "@/types";
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { useEditListing } from "@/hooks/market/useEditListing";
 import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 import {
@@ -14,7 +14,6 @@ import dayjs from "dayjs";
 import { parseUnits } from "viem";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
-import { MarketplaceContract } from "@realms-world/constants";
 
 import type { Listing } from "../list/ListModalRender";
 import expirationOptions from "../defaultExpiration";
@@ -34,8 +33,8 @@ export interface EditListingStepData {
 
 interface ChildrenProps {
   loading: boolean;
-  listing?: any;
-  tokenId?: string;
+  listing?: RouterOutputs["erc721MarketEvents"]["all"]["items"][number];
+  tokenId?: number;
   contract?: string;
   price: number;
   collection?: any;
@@ -53,15 +52,14 @@ interface ChildrenProps {
   //setQuantity: React.Dispatch<React.SetStateAction<number>>;
   setExpirationOption: React.Dispatch<React.SetStateAction<ExpirationOption>>;
   setEditListingStep: React.Dispatch<React.SetStateAction<EditListingStep>>;
-  editListing: () => void;
+  editListing: () => Promise<void>;
 }
 
 interface Props {
   open: boolean;
-  tokenId?: string;
   token?:
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
-    | RouterOutputs["erc721Tokens"]["byId"];
+    | RouterOutputs["erc721Tokens"]["byId"]
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   collectionId?: string;
   //normalizeRoyalties?: boolean;
   children: (props: ChildrenProps) => ReactNode;
@@ -69,9 +67,7 @@ interface Props {
 
 export const ListingEditModalRender: FC<Props> = ({
   open,
-  tokenId,
   token,
-  collectionId,
   //normalizeRoyalties,
   children,
 }) => {
@@ -91,7 +87,7 @@ export const ListingEditModalRender: FC<Props> = ({
     upper_inf: true,
   };
   const { data: listingsData } = api.erc721MarketEvents.all.useQuery(filters, {
-    enabled: open && !token?.listings?.[0],
+    //enabled: open && token?.kind == "withoutListings",
   });
 
   const listing = useMemo(() => {
@@ -140,41 +136,33 @@ export const ListingEditModalRender: FC<Props> = ({
 */
   let expirationTime: string | null = null;
 
-  const {
-    data,
-    writeAsync,
-    error: writeError,
-    // isLoading: isTxSubmitting,
-  } = useContractWrite({
-    calls: [
-      {
-        contractAddress: MarketplaceContract[SUPPORTED_L2_CHAIN_ID]!,
-        entrypoint: "edit",
-        calldata: [
-          listing?.id,
-          !price ? "0" : parseUnits(`${price}`, 18).toString(),
-        ],
-      },
-    ],
+  const { writeAsync, data, error } = useEditListing({
+    listingId: listing?.id,
+    price: listing?.price,
   });
+
   const { data: transactionData } = useWaitForTransaction({
     hash: data?.transaction_hash,
-    watch: true,
   });
   useEffect(() => {
-    if (data?.transaction_hash) {
-      //@ts-expect-error incorrect starknet react types
-      if (transactionData?.execution_status == "SUCCEEDED") {
-        setEditListingStep(EditListingStep.Complete);
-      }
+    //@ts-expect-error incorrect starknet react types
+    if (transactionData?.execution_status == "SUCCEEDED") {
+      setEditListingStep(EditListingStep.Complete);
     }
-  }, [data, transactionData, transactionError]);
+  }, [transactionData]);
   useEffect(() => {
-    if (writeError) {
+    if (error) {
       setEditListingStep(EditListingStep.Edit);
-      setTransactionError(writeError);
+      setTransactionError(error);
     }
-  }, [writeError]);
+  }, [error]);
+
+  if (expirationOption?.relativeTime && expirationOption?.relativeTimeUnit) {
+    expirationTime = dayjs()
+      .add(expirationOption.relativeTime, expirationOption.relativeTimeUnit)
+      .unix()
+      .toString();
+  }
 
   const editListing = useCallback(async () => {
     if (!address) {
@@ -185,15 +173,12 @@ export const ListingEditModalRender: FC<Props> = ({
 
     setTransactionError(null);
 
-    if (expirationOption?.relativeTime && expirationOption?.relativeTimeUnit) {
-      expirationTime = dayjs()
-        .add(expirationOption.relativeTime, expirationOption.relativeTimeUnit)
-        .unix()
-        .toString();
-    }
-
-    const listing: Listing = {
-      token: `${contract}:${tokenId}`,
+    const listing: Partial<Listing> & {
+      quantity?: number;
+      expirationTime?: string;
+      weiPrice?: string;
+    } = {
+      token_key: `${contract}:${token?.id}`,
       weiPrice: (parseUnits(`${price}`, 18) * BigInt(quantity)).toString(),
     };
 
@@ -207,7 +192,7 @@ export const ListingEditModalRender: FC<Props> = ({
 
     setEditListingStep(EditListingStep.Approving);
     await writeAsync();
-  }, [collectionId, tokenId, expirationOption, price, quantity, contract]);
+  }, [address, contract, token, price, quantity, expirationTime, writeAsync]);
 
   useEffect(() => {
     if (!open) {
@@ -222,7 +207,7 @@ export const ListingEditModalRender: FC<Props> = ({
       {children({
         loading: !listing,
         listing,
-        tokenId,
+        tokenId: token?.token_id,
         contract,
         price,
         //quantityAvailable,

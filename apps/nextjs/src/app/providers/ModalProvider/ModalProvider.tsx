@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
-import React, { ReactNode, useReducer } from "react";
-import { actions, initialState, reducer } from "./modal-reducer";
+import type { ReactNode } from "react";
+import React, { useReducer } from "react";
+
 import { ModalContext } from "./modal-context";
+import { actions, initialState, reducer } from "./modal-reducer";
 
 interface ModalProviderProps {
   children: ReactNode;
@@ -11,6 +14,7 @@ interface ModalProviderProps {
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const showModal = (payload: any) => {
     hideModal();
     dispatch({

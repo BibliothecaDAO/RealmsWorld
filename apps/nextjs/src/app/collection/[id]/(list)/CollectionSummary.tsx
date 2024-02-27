@@ -4,12 +4,11 @@ import Link from "next/link";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import Discord from "@/icons/discord.svg";
 import { getCollections } from "@/lib/reservoir/getCollections";
-import { getGamesByContract } from "@/utils/getters";
 import { ExternalLink, Globe, X } from "lucide-react";
 import { formatEther } from "viem";
 
 import type { Collections } from "@realms-world/constants";
-import { games, getCollectionAddresses } from "@realms-world/constants";
+import { getCollectionAddresses } from "@realms-world/constants";
 
 import L2CollectionSummary from "./L2CollectionSummary";
 
@@ -83,9 +82,9 @@ export default async function CollectionSummary({
       },
     ];
 
-    const comptatible_games = collection.id
+    /*const comptatible_games = collection.id
       ? getGamesByContract(games, collection.id)
-      : null;
+      : null;*/
 
     return (
       <div className=" pt-10 sm:flex">

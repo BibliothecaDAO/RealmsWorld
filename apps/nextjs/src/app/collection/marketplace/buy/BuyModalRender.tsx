@@ -15,8 +15,6 @@ import { formatUnits, parseUnits } from "viem";
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
 import { LORDS, MarketplaceContract } from "@realms-world/constants";
 
-type Item = any;
-
 export enum BuyStep {
   Checkout,
   Approving,
@@ -25,21 +23,9 @@ export enum BuyStep {
   SelectPayment,
 }
 
-export interface BuyModalStepData {
-  totalSteps: number;
-  stepProgress: number;
-  currentStep: any;
-  currentStepItem: any;
-}
-
 interface ChildrenProps {
   loading: boolean;
-  token?:
-    | RouterOutputs["erc721Tokens"]["byId"]
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
-  collection?: any;
-  listing?: any;
-  quantityAvailable: number;
+  listing?: RouterOutputs["erc721MarketEvents"]["all"]["items"][number];
   averageUnitPrice: number;
   totalPrice: number;
   totalIncludingFees: number;
@@ -53,17 +39,18 @@ interface ChildrenProps {
   usdPrice: number;
   balance?: bigint;
   address?: string;
-  stepData: BuyModalStepData | null;
   quantity: number;
   isOwner: boolean;
   setBuyStep: React.Dispatch<React.SetStateAction<BuyStep>>;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
-  buyToken: () => void;
+  buyToken: () => Promise<void>;
 }
 
 interface Props {
   open: boolean;
-  token: RouterOutputs["erc721Tokens"]["byId"];
+  token:
+    | RouterOutputs["erc721Tokens"]["byId"]
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   tokenId?: string;
   defaultQuantity?: number;
   collectionId?: string;
@@ -76,23 +63,17 @@ interface Props {
 export const BuyModalRender: FC<Props> = ({
   open,
   token,
-  tokenId,
-  collectionId,
   orderId,
   defaultQuantity,
-  normalizeRoyalties,
   children,
-  usePermit,
 }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalIncludingFees, setTotalIncludingFees] = useState(0);
   const [gasCost, setGasCost] = useState(0n);
   const [averageUnitPrice, setAverageUnitPrice] = useState(0);
-  const [isFetchingPath, setIsFetchingPath] = useState(false);
   const [buyStep, setBuyStep] = useState<BuyStep>(BuyStep.Checkout);
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [hasEnoughCurrency, setHasEnoughCurrency] = useState(true);
-  const [stepData, setStepData] = useState<BuyModalStepData | null>(null);
   const [quantity, setQuantity] = useState(1);
   const { lordsPrice } = useLordsPrice();
   const { balances } = useWalletsProviderContext();
@@ -115,7 +96,7 @@ export const BuyModalRender: FC<Props> = ({
   };
 
   const { data: listingsData } = api.erc721MarketEvents.all.useQuery(filters, {
-    enabled: open && !token?.listings?.[0],
+    //enabled: open && !token?.listings?.[0],
   });
 
   const listing = useMemo(() => {
@@ -124,12 +105,6 @@ export const BuyModalRender: FC<Props> = ({
     else if (listingsData?.items.length)
       return findLowestPriceActiveListing(listingsData?.items, token?.owner);
   }, [token, listingsData]);
-
-  const quantityRemaining = useMemo(() => {
-    if (orderId) {
-      return /*listing?.quantityRemaining ||*/ 1;
-    }
-  }, [listing, token, orderId]);
 
   const usdPrice = parseInt(listing?.price ?? "0") * lordsPrice;
   //const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;*/
@@ -164,7 +139,7 @@ export const BuyModalRender: FC<Props> = ({
       },
     ],
   });
-  const { data: transactionData, error: txErrror } = useWaitForTransaction({
+  const { data: transactionData } = useWaitForTransaction({
     hash: data?.transaction_hash,
     watch: true,
   });
@@ -184,46 +159,21 @@ export const BuyModalRender: FC<Props> = ({
   }, [writeError]);
 
   const buyToken = useCallback(async () => {
-    const contract = collectionId?.split(":")[0];
-
     setBuyStep(BuyStep.Approving);
-    const items: Item[] = [];
-    const item: Item = {
-      fillType: "trade",
-      quantity,
-    };
-
-    if (orderId) {
-      item.orderId = orderId;
-    } else {
-      item.token = `${contract}:${tokenId}`;
-    }
-    items.push(item);
-
     await writeAsync();
-  }, [
-    tokenId,
-    listing,
-    collectionId,
-    orderId,
-    quantity,
-    normalizeRoyalties,
-    totalPrice,
-    totalIncludingFees,
-    usePermit,
-  ]);
+  }, [writeAsync]);
 
   useEffect(() => {
-    if (!token || (orderId && !listing) || isOwner) {
+    if (!token ?? (orderId && !listing) ?? isOwner) {
       setBuyStep(BuyStep.Unavailable);
     } else {
       setBuyStep(BuyStep.Checkout);
     }
-  }, [listing, isFetchingPath, orderId, token]);
+  }, [isOwner, listing, orderId, token]);
 
   useEffect(() => {
     if (quantity === -1) return;
-    if (!token || (orderId && !listing) || isOwner) {
+    if (!token ?? (orderId && !listing) ?? isOwner) {
       setBuyStep(BuyStep.Unavailable);
       setTotalPrice(0);
       setTotalIncludingFees(0);
@@ -252,7 +202,6 @@ export const BuyModalRender: FC<Props> = ({
     }
   }, [
     listing,
-    isFetchingPath,
     orderId,
     //usdPrice,
     quantity,
@@ -275,12 +224,11 @@ export const BuyModalRender: FC<Props> = ({
     if (!open) {
       setBuyStep(BuyStep.Checkout);
       setTransactionError(null);
-      setStepData(null);
       setQuantity(1);
     } else {
       setQuantity(defaultQuantity ?? 1);
     }
-  }, [open]);
+  }, [defaultQuantity, open]);
 
   /*useEffect(() => {
     if (quantityRemaining > 0 && quantity > quantityRemaining) {
@@ -293,13 +241,11 @@ export const BuyModalRender: FC<Props> = ({
       {children({
         loading: !listing || !token,
         listing,
-        quantityAvailable: quantityRemaining ?? 1,
         totalPrice,
         totalIncludingFees,
         averageUnitPrice,
         gasCost,
         buyStep,
-        token,
         transactionError,
         hasEnoughCurrency,
         addFundsLink,
@@ -307,7 +253,6 @@ export const BuyModalRender: FC<Props> = ({
         totalUsd,
         usdPrice,
         address: address,
-        stepData,
         quantity,
         isOwner,
         setQuantity,

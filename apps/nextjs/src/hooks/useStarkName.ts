@@ -16,6 +16,7 @@ export function useStarkDisplayName(address?: string) {
 
   useEffect(() => {
     if (address !== undefined) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       refetch();
     }
   }, [address, refetch]);

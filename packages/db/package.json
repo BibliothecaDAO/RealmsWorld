@@ -20,9 +20,9 @@
     "drizzle-orm": "^0.29.4"
   },
   "devDependencies": {
-    "@realms-world/eslint-config": "workspace:*",
-    "@realms-world/prettier-config": "workspace:*",
-    "@realms-world/tsconfig": "workspace:*",
+    "@realms-world/eslint-config": "*",
+    "@realms-world/prettier-config": "*",
+    "@realms-world/tsconfig": "*",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.20.14",
     "eslint": "^8.56.0",

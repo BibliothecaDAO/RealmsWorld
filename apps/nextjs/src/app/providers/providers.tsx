@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactElement } from "react";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 //import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import {
@@ -52,7 +53,7 @@ export const config = getDefaultConfig({
   },
 });
 
-export function Provider({ children }: any) {
+export function Provider({ children }: { children: ReactElement }) {
   return (
     <StarknetConfig
       autoConnect

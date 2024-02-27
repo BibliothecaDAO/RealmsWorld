@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
@@ -12,6 +13,7 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
   const completeTransferToL1 = useCompleteTransferToL1();
 
   const onCompleteTransferClick = (transfer: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-floating-promises
     completeTransferToL1(transfer);
   };
   return (
@@ -21,6 +23,7 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
             <TransferLog
               isL1={isL1}
               key={index}
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               transfer={transfer}
               onCompleteTransferClick={() => onCompleteTransferClick(transfer)}
             />

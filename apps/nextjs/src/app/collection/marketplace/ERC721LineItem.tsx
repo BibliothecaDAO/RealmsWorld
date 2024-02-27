@@ -17,7 +17,7 @@ interface ERC721LineItemProps {
   usdPrice?: number;
   isUnavailable?: boolean;
   warning?: string;
-  price: number;
+  price: number | string | null;
   priceSubtitle?: string;
   expires?: string;
   className?: string;

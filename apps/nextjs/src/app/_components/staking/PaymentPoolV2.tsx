@@ -4,8 +4,7 @@ import Lords from "@/icons/lords.svg";
 import { Button } from "@realms-world/ui";
 
 export const PaymentPoolV2 = () => {
-  const { numTokens, alreadyClaimed, claimAirdrop, balance } =
-    useAirdropClaim();
+  const { numTokens, claimAirdrop, balance } = useAirdropClaim();
 
   return (
     <div className="flex-col border p-8 text-lg">
@@ -16,11 +15,7 @@ export const PaymentPoolV2 = () => {
             <Lords className="ml-2 h-5 w-5 self-center fill-current" />
           </div>
 
-          {numTokens && (
-            <Button onClick={claimAirdrop}>
-              {alreadyClaimed ? "claimed" : "claim lords"}
-            </Button>
-          )}
+          {numTokens && <Button onClick={claimAirdrop}>claim lords</Button>}
         </div>
       ) : (
         "No tokens to claim"

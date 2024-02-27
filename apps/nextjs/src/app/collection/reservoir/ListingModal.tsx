@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { useState } from "react";
@@ -5,6 +6,7 @@ import { ListModal } from "@reservoir0x/reservoir-kit-ui";
 
 import { Button } from "@realms-world/ui";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ListingModal = ({ address, id }: any) => {
   const [openState, setOpenState] = useState(false);
 
@@ -25,7 +27,6 @@ export const ListingModal = ({ address, id }: any) => {
         },
       ]}
       openState={[openState, setOpenState]}
-      nativeOnly={false}
       oracleEnabled={false}
       onGoToToken={() => console.log("Awesome!")}
       onListingComplete={(data) => {
@@ -34,7 +35,7 @@ export const ListingModal = ({ address, id }: any) => {
       onListingError={(error, data) => {
         console.log("Transaction Error", error, data);
       }}
-      onClose={(data, stepData, currentStep) => {
+      onClose={() => {
         console.log("ListModal Closed");
       }}
     />

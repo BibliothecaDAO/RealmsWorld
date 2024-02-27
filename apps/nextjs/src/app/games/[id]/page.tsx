@@ -35,6 +35,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   }));*/ //TODO not working in Vercel production
 
   const screenshotList = new Array(game?.screenshotLength);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const list = [...screenshotList].map((image, index) => ({
     src: `/games/${params.id}/screenshots/${index + 1}.png`,
     alt: `${game?.name} Screenshot ${index + 1}`,
