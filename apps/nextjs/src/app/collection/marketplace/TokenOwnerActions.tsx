@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { findLowestPriceActiveListing } from "@/utils/getters";
 import { RefreshCw, Trash2 } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -27,16 +28,9 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
   //const { listItem } = useBurner();
   const [isSubmitting, _] = React.useState<boolean>(false);
 
-  const activeListings = token?.listings?.filter((listing) => listing.active);
-
-  const lowestPriceActiveListing = activeListings?.reduce(
-    (minPriceListing, currentListing) => {
-      return currentListing?.price < minPriceListing?.price
-        ? currentListing
-        : minPriceListing;
-    },
-    activeListings[0],
-  );
+  const lowestPriceActiveListing =
+    token?.listings &&
+    findLowestPriceActiveListing(token?.listings, token?.owner);
 
   return (
     <>
@@ -55,7 +49,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
             </div>
           );
         })*/}
-      {activeListings?.length ? (
+      {lowestPriceActiveListing?.price ? (
         <div className="flex gap-x-3">
           <ListingEditModal
             token={token}

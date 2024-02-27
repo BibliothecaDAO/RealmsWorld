@@ -265,4 +265,22 @@ export const games: Game[] = [
     tokens: [Tokens.LORDS],
     screenshotLength: 1,
   },
+  {
+    name: "zConqueror",
+    id: "zconqueror",
+    developer: "zKorp",
+    genres: ["Strategy", "PvP", "Casual"],
+    color: "#f5f5f5",
+    status: "alpha",
+    description: "Conquer the world",
+    longform:
+      "zConqueror is a strategy game based on Risk, focusing on conquest and realm defense. Players compete to dominate the map and win rewards. You can compete up to 6 players",
+    links: {
+      twitter: "https://twitter.com/zKorp",
+    },
+    chains: [ChainId.SLOT_TESTNET],
+    operatingSystems: ["Web Browser"],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 4,
+  }
 ];

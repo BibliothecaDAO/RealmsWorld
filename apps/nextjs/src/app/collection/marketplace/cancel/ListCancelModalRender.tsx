@@ -1,6 +1,7 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
 import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { findLowestPriceActiveListing } from "@/utils/getters";
 import { useContractWrite, useWaitForTransaction } from "@starknet-react/core";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -49,7 +50,9 @@ export const ListCancelModalRender: FC<Props> = ({
 
   const blockExplorerName = "Etherscan";
 
-  const listing = token?.listings[0];
+  const listing =
+    token?.listings &&
+    findLowestPriceActiveListing(token?.listings, token?.owner);
 
   /*  const coinConversion = useCoinConversion(
     open && listing ? 'USD' : undefined,
