@@ -50,19 +50,5 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
         },
       };
     }
-    case ORDER_EVENT: {
-      const type = Number(BigInt(event.data[7]));
-      switch (type) {
-        case OrderActionType.Accept:
-          return {
-            entity: {
-              id: Number(BigInt(event.data[2])),
-            },
-            update: {
-              allTimeVolume: formatUnits(BigInt(event.data[3]).toString(), 18), // need way to increment
-            },
-          };
-      }
-    }
   }
 }
