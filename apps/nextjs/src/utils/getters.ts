@@ -38,7 +38,10 @@ export function findLowestPriceActiveListing(
   owner?: string | null,
 ) {
   const activeListings = listings?.filter(
-    (listing: any) => listing.active && listing.created_by === owner,
+    (listing: any) =>
+      listing.active &&
+      listing.created_by === owner &&
+      listing.expiration > Math.floor(Date.now() / 1000),
   );
 
   const lowestPriceActiveListing = activeListings?.reduce(
