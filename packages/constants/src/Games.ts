@@ -33,12 +33,12 @@ export const games: Game[] = [
     name: "Realms: Eternum",
     id: "realms-eternum",
     developer: "BiblioDAO",
-    genres: ["Economic Strategy", "PvP", "Raiding"],
+    genres: ["Economic Strategy", "PvP", "Raiding", "Economy"],
     color: "#f5f5f5",
     status: "alpha",
-    description: "Conquer the Realms",
+    description: "The Economic Seed of the Realms World",
     longform:
-      "Eternum is a strategy game that is built on StarkNet. It is a game of management and conquest, where players must build and defend their Realm to thrive. The game is governed by a set of rules that are enforced by the game's smart contracts.",
+      "Eternum is built on Cairo smart contracts and runs on the Dojo game engine. It's open-source, licensed under both MIT for software freedom and CC0 for public domain use, ensuring wide accessibility and community-driven development.",
     links: {
       homepage: "https://next-eternum.realms.world/",
       discord: "https://discord.gg/uQnjZhZPfu",
@@ -50,7 +50,7 @@ export const games: Game[] = [
     chains: [ChainId.SN_SEPOLIA],
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
-    screenshotLength: 1,
+    screenshotLength: 3,
   },
   {
     name: "Loot Survivor",
@@ -282,5 +282,5 @@ export const games: Game[] = [
     operatingSystems: ["Web Browser"],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
-  }
+  },
 ];

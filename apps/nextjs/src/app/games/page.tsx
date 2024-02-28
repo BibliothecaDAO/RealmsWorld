@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { GameCard } from "@/app/games/GameCard";
 
 import type { Game } from "@realms-world/constants";
@@ -5,7 +6,7 @@ import { games } from "@realms-world/constants";
 
 import { PageLayout } from "../_components/PageLayout";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Games of the Realms",
   description:
     "Fully Onchain Games in the Realms Autonomous World- Created for adventurers by Bibliotheca DAO",

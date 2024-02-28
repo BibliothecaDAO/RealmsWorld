@@ -17,8 +17,10 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
+  const name = games.find((game) => game.id === params.id)?.name ?? "Game";
+
   return {
-    title: `${params.id} Homepage`,
+    title: `${name}`,
     description: `${params.id} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
@@ -51,11 +53,20 @@ export default async function Page({ params }: { params: { id: string } }) {
       content: (
         <div>
           <div className="flex gap-x-2">
-            {game?.tokens?.map((token, index) => (
-              <Button href={`/tokens/${token}`} key={index}>
-                {token}
-              </Button>
-            ))}
+            {game?.tokens?.map((token, index) =>
+              token === "Lords" ? (
+                <Button
+                  href="https://app.avnu.fi/en?amount=100&tokenFrom=0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49&tokenTo=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7"
+                  key={index}
+                >
+                  {token}
+                </Button>
+              ) : (
+                <Button href={`/tokens/${token}`} key={index}>
+                  {token}
+                </Button>
+              ),
+            )}
             {game?.collections?.map((collection, index) => (
               <Button href={`/collection/${collection}`} key={index}>
                 {collection}
