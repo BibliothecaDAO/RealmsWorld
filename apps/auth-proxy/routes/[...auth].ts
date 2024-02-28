@@ -3,7 +3,7 @@ import Discord from "@auth/core/providers/discord";
 import { eventHandler, toWebRequest } from "h3";
 
 export default eventHandler(async (event) => {
-  if (!event.context.matchedRoute?.params.auth.endsWith("inngest")) {
+  //if (!event.context.matchedRoute?.params.auth.endsWith("inngest")) {
   return Auth(toWebRequest(event), {
     secret: process.env.AUTH_SECRET,
     trustHost: !!process.env.VERCEL,
@@ -15,5 +15,5 @@ export default eventHandler(async (event) => {
       }),
     ],
   });
-   }
+//}
 });

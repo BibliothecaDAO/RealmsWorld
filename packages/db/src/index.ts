@@ -1,6 +1,6 @@
 //import { Client } from "@planetscale/database";
 //import { drizzle } from "drizzle-orm/planetscale-serverless";
-import { neon, neonConfig } from "@neondatabase/serverless";
+import { NeonQueryFunction, neon, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 
 import * as auth from "./schema/auth";
@@ -35,9 +35,10 @@ if (!process.env.VERCEL_ENV) {
   neonConfig.pipelineConnect = false;
 }
 
-neonConfig.fetchConnectionCache = true;
-
-export const neonSql = neon(process.env.DATABASE_URL!);
+export const neonSql = neon(process.env.DATABASE_URL!) satisfies NeonQueryFunction<
+boolean,
+boolean
+>;
 //const queryClient = postgres('postgres://postgres:postgres@localhost:5432');
 
 export const db = drizzle(neonSql, { schema });
