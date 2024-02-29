@@ -14,6 +14,7 @@ import { formatUnits, parseUnits } from "viem";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
 import { LORDS, MarketplaceContract } from "@realms-world/constants";
+import { useBuyToken } from "@/hooks/market/useBuyToken";
 
 export enum BuyStep {
   Checkout,
@@ -114,31 +115,7 @@ export const BuyModalRender: FC<Props> = ({
 
   const addFundsLink = `https://app.avnu.fi/en?tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=${lordsAddress}&amount=${totalPrice}`;
 
-  const {
-    data,
-    writeAsync,
-    error: writeError,
-    // isLoading: isTxSubmitting,
-  } = useContractWrite({
-    calls: [
-      {
-        contractAddress: lordsAddress,
-        entrypoint: "approve",
-        calldata: [
-          MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`, //Marketplace address
-          parseUnits(`${listing?.price ?? 0}`, 18).toString(),
-          0,
-        ],
-      },
-      {
-        contractAddress: MarketplaceContract[
-          SUPPORTED_L2_CHAIN_ID
-        ] as `0x${string}`,
-        entrypoint: "accept",
-        calldata: [(listing?.id ?? 0).toString()],
-      },
-    ],
-  });
+  const {writeAsync, error: writeError, data} = useBuyToken({listingId: listing?.id, price: listing.price})
   const { data: transactionData } = useWaitForTransaction({
     hash: data?.transaction_hash,
     watch: true,

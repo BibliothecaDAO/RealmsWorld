@@ -17,75 +17,7 @@ import { useWriteFinalizeWithdrawLords } from "./bridge/useWriteFinalizeWithdraw
 import { useTransfer } from "./useTransfer";
 import { useTransferProgress } from "./useTransferProgress";
 
-/*export const useTransferToL1 = ({ amount }) => {
-  const { writeAsync, withdrawHash } = useWriteInitiateWithdrawLords({
-    amount,
-  });
-  const { address: l1Account } = useAccount();
-  const { address: l2Account, connector } = useL2Account();
-  const { handleProgress, handleData, handleError } =
-    useTransfer(TransferToL1Steps);
-  useEffect(() => {
-    if (withdrawHash) {
-      console.log("Done", { hash: withdrawHash?.transaction_hash });
-      handleData({
-        type: ActionType.TRANSFER_TO_L1,
-        sender: l2Account,
-        recipient: l1Account,
-        name: "Lords",
-        symbol: "LORDS",
-        amount: 420,
-        l2hash: withdrawHash?.transaction_hash,
-      });
-    }
-  }, [handleData, l1Account, l2Account, withdrawHash]);
 
-  const progressOptions = useTransferProgress();
-
-  return useCallback(
-    async (amount: string) => {
-      try {
-        console.log("TransferToL1 called");
-
-        handleProgress(
-          progressOptions.waitForConfirm(
-            connector?.id ?? "",
-            stepOf(TransferStep.CONFIRM_TX, TransferToL1Steps),
-          ),
-        );
-
-        console.log("Calling initiate withdraw");
-
-        await writeAsync();
-
-        if (withdrawHash?.transaction_hash) {
-          console.log("Tx hash received", {
-            hash: withdrawHash?.transaction_hash,
-          });
-          handleProgress(
-            progressOptions.initiateWithdraw(
-              parseInt(amount),
-              "LORDS",
-              stepOf(TransferStep.INITIATE_WITHDRAW, TransferToL1Steps),
-            ),
-          );
-          console.log("Waiting for tx to be received on L2");
-        }
-      } catch (ex: any) {
-        console.error(ex.message, ex);
-        handleError(progressOptions.error(TransferError.TRANSACTION_ERROR, ex));
-      }
-    },
-    [
-      handleProgress,
-      progressOptions,
-      connector?.id,
-      initiateWithdraw,
-      withdrawHash?.transaction_hash,
-      handleError,
-    ],
-  );
-};*/
 export const useCompleteTransferToL1 = () => {
   const { address: l1Address, connector } = useAccount();
 
