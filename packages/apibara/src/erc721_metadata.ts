@@ -23,7 +23,7 @@ export const config: Config<Starknet, Webhook> = {
   },
   sinkType: "webhook",
   sinkOptions: {
-    targetUrl: "http://localhost:8288/e/local",
+    targetUrl: "https://inn.gs/e/" + Deno.env.get("INNGEST_EVENT_KEY"), //"http://localhost:8288/e/local",
     raw: true,
     header: [
       Deno.env.get("INNGEST_ENV") == "production"
