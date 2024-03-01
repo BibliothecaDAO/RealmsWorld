@@ -44,7 +44,6 @@ export const AttributesDropdown = ({
   if (!finalAttributes?.length) {
     return null;
   }
-
   return (
     <div
       className={` ${"hidden"} w-screen overscroll-y-none pr-6 sm:block sm:w-24 sm:flex-none sm:overscroll-auto lg:w-72`}
@@ -59,7 +58,7 @@ export const AttributesDropdown = ({
               <Accordion key={index} type="single" collapsible>
                 <AccordionItem value="item-1">
                   <AccordionTrigger className="bg-primary px-2 text-sm">
-                    {attribute.key} ({attribute.values?.length})
+                    {attribute.key} ({Array.isArray(attribute.values) && attribute.values.length})
                   </AccordionTrigger>
                   <AccordionContent>
                     <div className="pt-1">
