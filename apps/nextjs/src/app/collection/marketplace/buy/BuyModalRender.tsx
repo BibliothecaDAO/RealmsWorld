@@ -114,7 +114,7 @@ export const BuyModalRender: FC<Props> = ({
 
   const addFundsLink = `https://app.avnu.fi/en?tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=${lordsAddress}&amount=${totalPrice}`;
 
-  const {writeAsync, error: writeError, data} = useBuyToken({listingId: listing?.id, price: listing.price})
+  const {writeAsync, error: writeError, data} = useBuyToken({listingId: listing?.id, price: listing?.price})
   const { data: transactionData } = useWaitForTransaction({
     hash: data?.transaction_hash,
     watch: true,
