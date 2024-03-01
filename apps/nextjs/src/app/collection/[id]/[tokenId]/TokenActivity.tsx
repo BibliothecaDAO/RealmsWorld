@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
+import type { Activity, Token } from "@/types";
 import { useMemo, useState } from "react";
 import { ActivityCard } from "@/app/collection/[id]/(list)/activity/ActivityCard";
 import { getTokenActivity } from "@/lib/reservoir/getTokenActivity";
-import type { Activity, Token } from "@/types";
 
 interface Props {
   token: Token;
@@ -26,15 +29,16 @@ export const TokenActivity = ({ token }: Props) => {
   };
 
   useMemo(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getActivity();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   return (
     <div className=" my-4 grid h-96 grid-cols-1 overflow-y-scroll rounded border">
-      {tokenActivity &&
-        tokenActivity.map((activity: Activity, index: number) => {
-          return <ActivityCard key={index} activity={activity} />;
-        })}
+      {tokenActivity?.map((activity: Activity, index: number) => {
+        return <ActivityCard key={index} activity={activity} />;
+      })}
       {loading && (
         <>
           {new Array(6).fill(0).map((index) => (

@@ -1,10 +1,9 @@
-{ "name": "@realms-world/{{name}}", "private": true, "type": "module", "version": "workspace:*",
-"exports": {     ".": "./src/index.ts"
-}, "license": "MIT", "scripts": { "clean": "rm -rf .turbo node_modules", "lint":
-"eslint .", "format": "prettier --check \"**/*.{mjs,ts,md,json}\"", "typecheck":
-"tsc --noEmit" }, "dependencies": { }, "devDependencies": {
-"@realms-world/eslint-config": "workspace:*", "@realms-world/prettier-config":
-"workspace:*", "@realms-world/tsconfig": "workspace:*", "eslint": "^8.47.0",
-"typescript": "^5.1.6" }, "eslintConfig": { "extends": [
-"@realms-world/eslint-config/base" ] }, "prettier":
-"@realms-world/prettier-config" }
+{ "name": "@realms-world/{{name}}", "private": true, "type": "module",
+"version": "*", "exports": { ".": "./src/index.ts" }, "license": "MIT",
+"scripts": { "clean": "rm -rf .turbo node_modules", "lint": "eslint .",
+"format": "prettier --check \"**/*.{mjs,ts,md,json}\"", "typecheck": "tsc
+--noEmit" }, "dependencies": { }, "devDependencies": {
+"@realms-world/eslint-config": "*", "@realms-world/prettier-config":
+"workspace:*", "@realms-world/tsconfig": "*", "eslint": "^8.47.0", "typescript":
+"^5.1.6" }, "eslintConfig": { "extends": [ "@realms-world/eslint-config/base" ]
+}, "prettier": "@realms-world/prettier-config" }

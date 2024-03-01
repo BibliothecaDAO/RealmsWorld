@@ -33,6 +33,7 @@ export const useQuery = () => {
       params.get(key) == value ? params.delete(key) : params.set(key, value);
     }
 
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     router.replace(`${pathname}?${params}`);
   };
 

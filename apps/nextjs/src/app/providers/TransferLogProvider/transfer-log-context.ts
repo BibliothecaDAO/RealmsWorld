@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 "use client";
 
 import type { DepositsQuery } from "@/.graphclient";
@@ -9,7 +10,7 @@ import { createContext } from "react";
 import type { AppRouter, RouterOutputs } from "@realms-world/api";
 
 interface TransferLogContextValue {
-  transfersQueryL1: UseInfiniteQueryResult<DepositsQuery>;
+  transfersQueryL1: UseInfiniteQueryResult<DepositsQuery["deposits"]>;
   transfersQueryL2: UseTRPCQueryResult<
     RouterOutputs["bridge"]["all"],
     TRPCClientErrorLike<AppRouter>
@@ -19,11 +20,11 @@ interface TransferLogContextValue {
 
 export const TransferLogContext = createContext<TransferLogContextValue>({
   transfersQueryL1: {
-    // @ts-ignore
+    // @ts-expect-error incorrect fetch type
     refetch: () => {},
   },
   transfersQueryL2: {
-    // @ts-ignore
+    // @ts-expect-error incorrect fetch type
     refetch: () => {},
   },
   /*pendingWithdrawalsQuery: {

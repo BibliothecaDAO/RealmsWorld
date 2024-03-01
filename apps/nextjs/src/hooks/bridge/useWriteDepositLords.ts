@@ -8,8 +8,16 @@ import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
 
 const FUNCTION = "deposit";
 
-export function useWriteDepositLords() {
-  const { writeContractAsync, ...writeReturn } = useWriteContract();
+export function useWriteDepositLords({
+  onSuccess,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSuccess?: (data: any) => Promise<void>;
+}) {
+  const { writeContractAsync, error, ...writeReturn } = useWriteContract({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mutation: { onSuccess: (data: any) => onSuccess?.(data) },
+  });
 
   // if (!l2Address) throw new Error("Missing L2 Address");
 
@@ -28,5 +36,5 @@ export function useWriteDepositLords() {
     },
     [writeContractAsync],
   );
-  return { writeAsync, ...writeReturn };
+  return { writeAsync, error, ...writeReturn };
 }

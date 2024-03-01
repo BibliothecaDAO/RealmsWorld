@@ -1,11 +1,10 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
-import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { findLowestPriceActiveListing } from "@/utils/getters";
-import { useContractWrite, useWaitForTransaction } from "@starknet-react/core";
+import { useWaitForTransaction } from "@starknet-react/core";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { MarketplaceContract } from "@realms-world/constants";
+import { useCancelListing } from "@/hooks/market/useCancelListing";
 
 //import { useCoinConversion } from "../../hooks";
 
@@ -16,30 +15,25 @@ export enum CancelStep {
 }
 
 interface ChildrenProps {
-  //loading: boolean;
-  listing?: any;
+  listing?: RouterOutputs["erc721MarketEvents"]["all"]["items"][number];
   tokenId?: string;
   contract?: string;
   cancelStep: CancelStep;
   transactionError?: Error | null;
-  /*totalUsd: number
-  usdPrice: number*/
   blockExplorerBaseUrl: string;
   blockExplorerName: string;
   setCancelStep: React.Dispatch<React.SetStateAction<CancelStep>>;
-  cancelOrder: () => void;
+  cancelOrder: () => Promise<void>;
 }
 
 interface Props {
   open: boolean;
-  //listingId?: string;
   token: RouterOutputs["erc721Tokens"]["byId"];
   children: (props: ChildrenProps) => ReactNode;
 }
 
 export const ListCancelModalRender: FC<Props> = ({
   open,
-  //listingId,
   children,
   token,
 }) => {
@@ -54,29 +48,14 @@ export const ListCancelModalRender: FC<Props> = ({
     token?.listings &&
     findLowestPriceActiveListing(token?.listings, token?.owner);
 
-  /*  const coinConversion = useCoinConversion(
-    open && listing ? 'USD' : undefined,
-    currency?.symbol
-  )
-  const usdPrice = coinConversion.length > 0 ? coinConversion[0].price : 0
-  const totalUsd = usdPrice * (listing?.price?.amount?.decimal || 0)*/
 
   const {
     data,
     writeAsync,
     error: writeError,
     // isLoading: isTxSubmitting,
-  } = useContractWrite({
-    calls: [
-      {
-        contractAddress: MarketplaceContract[
-          SUPPORTED_L2_CHAIN_ID
-        ] as `0x${string}`,
-        entrypoint: "cancel",
-        calldata: [listing?.id],
-      },
-    ],
-  });
+  } = useCancelListing({listingId: listing?.id})
+  
   const { data: transactionData } = useWaitForTransaction({
     hash: data?.transaction_hash,
     watch: true,
@@ -89,6 +68,7 @@ export const ListCancelModalRender: FC<Props> = ({
       }
     }
   }, [data, transactionData, transactionError]);
+
   useEffect(() => {
     if (writeError) {
       console.log(writeError);
@@ -96,6 +76,7 @@ export const ListCancelModalRender: FC<Props> = ({
       setTransactionError(writeError);
     }
   }, [writeError]);
+
   const cancelOrder = useCallback(async () => {
     if (!listing) {
       const error = new Error("Missing list id to cancel");
@@ -106,7 +87,7 @@ export const ListCancelModalRender: FC<Props> = ({
     setCancelStep(CancelStep.Approving);
 
     await writeAsync();
-  }, [listing]);
+  }, [listing, writeAsync]);
 
   useEffect(() => {
     if (!open) {

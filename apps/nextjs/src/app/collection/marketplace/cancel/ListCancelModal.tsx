@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTimeDiff } from "@/hooks/useTimeDiff";
 import { Loader } from "lucide-react";
 
@@ -29,54 +29,28 @@ interface Props {
   token?: RouterOutputs["erc721Tokens"]["byId"];
   trigger?: React.ReactNode;
   copyOverrides?: Partial<typeof ModalCopy>;
-  onClose?: (data: any, currentStep: CancelStep) => void;
-  onCancelComplete?: (data: any) => void;
-  onCancelError?: (error: Error, data: any) => void;
 }
 
 export function ListCancelModal({
-  listingId,
   trigger,
   copyOverrides,
   token,
-  onClose,
-  onCancelComplete,
-  onCancelError,
 }: Props): ReactElement {
   const copy: typeof ModalCopy = { ...ModalCopy, ...copyOverrides };
   const [open, setOpen] = useState(false);
 
   return (
-    <ListCancelModalRender token={token} listingId={listingId} open={open}>
+    <ListCancelModalRender token={token} open={open}>
       {({
         listing,
         cancelStep,
         transactionError,
-        stepData,
+        //stepData,
         //totalUsd,
         cancelOrder,
       }) => {
-        const expires = useTimeDiff(listing?.expiration);
-
-        useEffect(() => {
-          if (cancelStep === CancelStep.Complete && onCancelComplete) {
-            const data = {
-              listing,
-              stepData: stepData,
-            };
-            onCancelComplete(data);
-          }
-        }, [cancelStep]);
-
-        useEffect(() => {
-          if (transactionError && onCancelError) {
-            const data = {
-              listing,
-              stepData: stepData,
-            };
-            onCancelError(transactionError, data);
-          }
-        }, [transactionError]);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const expires = useTimeDiff(listing?.expiration ?? Date.now());
 
         const isListingAvailable = listing?.active;
 
@@ -84,13 +58,6 @@ export function ListCancelModal({
           <Dialog
             open={open}
             onOpenChange={(open) => {
-              if (!open && onClose) {
-                const data = {
-                  listing,
-                  stepData: stepData,
-                };
-                onClose(data, cancelStep);
-              }
               setOpen(open);
             }}
           >
@@ -119,11 +86,11 @@ export function ListCancelModal({
                       price={listing?.price}
                       // priceSubtitle="Price"
                       //usdPrice={totalUsd.toString()}
-                      collection={
+                      /* collection={
                         listing.criteria?.data?.collection?.name ?? ""
-                      }
+                      }*/
                       expires={expires}
-                      quantity={listing?.quantityRemaining}
+                      quantity={1 /*listing?.quantityRemaining*/}
                     />
                   </div>
                   <span className="mx-1.5 mt-1.5 text-center">
@@ -139,14 +106,16 @@ export function ListCancelModal({
               {cancelStep === CancelStep.Approving && (
                 <div className="flex flex-col gap-1">
                   <div className="border-b p-2">
-                    <ERC721LineItem
-                      tokenDetails={token}
-                      price={listing?.price}
-                      //usdPrice={totalUsd}
-                      //collection={collection?.name || ""}
-                      expires={expires}
-                      quantity={1}
-                    />
+                    {listing?.price && (
+                      <ERC721LineItem
+                        tokenDetails={token}
+                        price={listing?.price}
+                        //usdPrice={totalUsd}
+                        //collection={collection?.name || ""}
+                        expires={expires}
+                        quantity={1}
+                      />
+                    )}
                   </div>
                   {/* {!stepData && (
                     <Loader className="mx-auto h-24 animate-spin" />
@@ -165,9 +134,8 @@ export function ListCancelModal({
                     )*/}
                   <Button disabled={true} className="m-2">
                     <Loader className="animate-spin" />
-                    {stepData?.currentStepItem.txHashes
-                      ? copy.ctaAwaitingValidation
-                      : copy.ctaAwaitingApproval}
+
+                    {copy.ctaAwaitingApproval}
                   </Button>
                 </div>
               )}

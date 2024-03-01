@@ -15,21 +15,21 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@realms-world/db": "workspace:*",
     "@auth/core": "^0.27.0",
     "@auth/drizzle-adapter": "^0.7.0",
+    "@realms-world/db": "*",
     "@t3-oss/env-nextjs": "^0.9.2",
     "next": "^14.1.0",
-    "next-auth": "5.0.0-beta.3",
+    "next-auth": "5.0.0-beta.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@realms-world/eslint-config": "workspace:*",
-    "@realms-world/prettier-config": "workspace:*",
-    "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^8.56.0",
+    "@realms-world/eslint-config": "*",
+    "@realms-world/prettier-config": "*",
+    "@realms-world/tsconfig": "*",
+    "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },

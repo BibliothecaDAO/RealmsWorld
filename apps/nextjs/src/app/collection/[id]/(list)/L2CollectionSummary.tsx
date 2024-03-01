@@ -54,10 +54,11 @@ export default async function L2CollectionSummary({
     },
     //{ value: collection.tokenCount, title: "Count" },
   ];
-  const compatibleGames = getGamesByContract(
+  const marketplaceId = erc721Collection?.[0]?.marketplaceId?.toString();
+  const compatibleGames = marketplaceId ? getGamesByContract(
     games,
-    erc721Collection?.[0]?.marketplaceId?.toString()!,
-  );
+   marketplaceId
+  ) : [];
 
   return (
     <div className="px-4 sm:mt-10 sm:flex">
@@ -154,7 +155,7 @@ export const ContractDetailsList = ({
 export const CompatibleGames = ({ games }: { games: Game[] }) => {
   return (
     <div className="mb-4 flex flex-wrap sm:space-x-2">
-      {games.map((game: any, index: any) => {
+      {games.map((game, index) => {
         return (
           <Button key={index} href={`/games/${game.id}`} className="text-xs">
             {game.name}

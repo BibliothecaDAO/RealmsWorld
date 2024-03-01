@@ -1,0 +1,283 @@
+[
+  {
+    "name": "Market",
+    "type": "impl",
+    "interface_name": "marketplace::IMarket"
+  },
+  {
+    "name": "core::bool",
+    "type": "enum",
+    "variants": [
+      {
+        "name": "False",
+        "type": "()"
+      },
+      {
+        "name": "True",
+        "type": "()"
+      }
+    ]
+  },
+  {
+    "name": "marketplace::packing::MarketOrder",
+    "type": "struct",
+    "members": [
+      {
+        "name": "owner",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "token_id",
+        "type": "core::integer::u32"
+      },
+      {
+        "name": "collection_id",
+        "type": "core::integer::u16"
+      },
+      {
+        "name": "price",
+        "type": "core::integer::u128"
+      },
+      {
+        "name": "expiration",
+        "type": "core::integer::u64"
+      },
+      {
+        "name": "active",
+        "type": "core::bool"
+      }
+    ]
+  },
+  {
+    "name": "marketplace::IMarket",
+    "type": "interface",
+    "items": [
+      {
+        "name": "create",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "token_id",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "collection_id",
+            "type": "core::integer::u16"
+          },
+          {
+            "name": "price",
+            "type": "core::integer::u128"
+          },
+          {
+            "name": "expiration",
+            "type": "core::integer::u64"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "name": "accept",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "order_id",
+            "type": "core::felt252"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "name": "cancel",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "order_id",
+            "type": "core::felt252"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "name": "edit",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "order_id",
+            "type": "core::felt252"
+          },
+          {
+            "name": "new_price",
+            "type": "core::integer::u128"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "name": "whitelist_collection",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "collection_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "name": "update_market_fee",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "fee",
+            "type": "core::felt252"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "name": "update_market_owner_address",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "new_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "name": "view_order",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "order_id",
+            "type": "core::felt252"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "marketplace::packing::MarketOrder"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "name": "pause",
+        "type": "function",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "name": "unpause",
+        "type": "function",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "external"
+      }
+    ]
+  },
+  {
+    "name": "constructor",
+    "type": "constructor",
+    "inputs": [
+      {
+        "name": "fee_token_address",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "name": "fee",
+        "type": "core::felt252"
+      },
+      {
+        "name": "market_owner_address",
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ]
+  },
+  {
+    "name": "marketplace::Market::OrderState",
+    "type": "enum",
+    "variants": [
+      {
+        "name": "Created",
+        "type": "()"
+      },
+      {
+        "name": "Edited",
+        "type": "()"
+      },
+      {
+        "name": "Cancelled",
+        "type": "()"
+      },
+      {
+        "name": "Accepted",
+        "type": "()"
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "name": "marketplace::Market::OrderEvent",
+    "type": "event",
+    "members": [
+      {
+        "kind": "data",
+        "name": "market_order",
+        "type": "marketplace::packing::MarketOrder"
+      },
+      {
+        "kind": "data",
+        "name": "order_id",
+        "type": "core::felt252"
+      },
+      {
+        "kind": "data",
+        "name": "state",
+        "type": "marketplace::Market::OrderState"
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "name": "marketplace::Market::WhiteListEvent",
+    "type": "event",
+    "members": [
+      {
+        "kind": "data",
+        "name": "collection_address",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "kind": "data",
+        "name": "collection_id",
+        "type": "core::integer::u16"
+      }
+    ]
+  },
+  {
+    "kind": "enum",
+    "name": "marketplace::Market::Event",
+    "type": "event",
+    "variants": [
+      {
+        "kind": "nested",
+        "name": "OrderEvent",
+        "type": "marketplace::Market::OrderEvent"
+      },
+      {
+        "kind": "nested",
+        "name": "WhiteListEvent",
+        "type": "marketplace::Market::WhiteListEvent"
+      }
+    ]
+  }
+]

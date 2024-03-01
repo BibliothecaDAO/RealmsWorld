@@ -38,12 +38,12 @@ export const erc721TokensRouter = createTRPCRouter({
         owner,
         orderBy,
         block,
-        activeListing,
         direction,
         attributeFilter,
       } = input;
       const whereFilter: SQL[] = [];
       const cursors = [];
+      console.log(cursor)
       if (orderBy == "tokenId") {
         cursors.push([
           schema.erc721Tokens.token_id, // Column to use for cursor

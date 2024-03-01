@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -32,18 +35,22 @@ export const ContractImage = ({
     watch: true,
   });
   const tokenUriData = useMemo(() => {
+    //@ts-expect-error data does have length
     if (data?.length) {
       const value = [];
+      //@ts-expect-error data does have length
       for (let i = 1; i < data?.length; i++) {
+        //@ts-expect-error data does have length
         const result = shortString.decodeShortString(data[i]);
         value.push(result);
       }
 
       const jsonString = value.join("");
+      // eslint-disable-next-line no-control-regex
       const regex = new RegExp("\\u0015", "g");
       const modifiedJsonString = jsonString
         .replace(
-          /"name":"(.*?)"\,/g,
+          /"name":"(.*?)",/g,
           (match: any, name: any) => `"name":"${name.replaceAll('"', '\\"')}",`,
         )
         .replace(regex, "");
@@ -74,7 +81,8 @@ export const ContractImage = ({
             <span className="text-xl">
               {
                 tokenUriData.attributes.find(
-                  (trait) => trait.trait_type === "type",
+                  (trait: { trait_type: string; value: string | number }) =>
+                    trait.trait_type === "type",
                 )?.value
               }
             </span>
@@ -84,7 +92,8 @@ export const ContractImage = ({
             <span className="text-xl">
               {
                 tokenUriData.attributes.find(
-                  (trait) => trait.trait_type === "tier",
+                  (trait: { trait_type: string; value: string | number }) =>
+                    trait.trait_type === "tier",
                 )?.value
               }
             </span>
@@ -95,7 +104,8 @@ export const ContractImage = ({
             <span className="text-xl">
               {
                 tokenUriData.attributes.find(
-                  (trait) => trait.trait_type === "level",
+                  (trait: { trait_type: string; value: string | number }) =>
+                    trait.trait_type === "level",
                 )?.value
               }
             </span>
@@ -105,7 +115,8 @@ export const ContractImage = ({
             <span className="text-xl">
               {
                 tokenUriData.attributes.find(
-                  (trait) => trait.trait_type === "health",
+                  (trait: { trait_type: string; value: string | number }) =>
+                    trait.trait_type === "health",
                 )?.value
               }
             </span>

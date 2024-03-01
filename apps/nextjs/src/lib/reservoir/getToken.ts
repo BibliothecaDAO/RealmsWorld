@@ -35,7 +35,9 @@ function buildQueryString(queryObject: any) {
   return queryParams;
 }
 
-export function cleanQuery(query: any) {
+export function cleanQuery(
+  query: Record<string, string>,
+): Record<string, string> {
   const cleanQuery = { ...query };
   delete cleanQuery.id;
   delete cleanQuery.sortBy;

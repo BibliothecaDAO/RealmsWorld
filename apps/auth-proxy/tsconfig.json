@@ -1,6 +1,4 @@
 {
   "extends": "@realms-world/tsconfig/base.json",
-  "include": [
-    "routes"
-  ]
+  "include": ["routes"]
 }

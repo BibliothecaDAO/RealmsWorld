@@ -8,7 +8,6 @@ import type { RouterOutputs } from "@realms-world/api";
 import { getCollectionFromAddress } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
-import { BuyModal } from "../../marketplace/buy/BuyModal";
 import { CardAction } from "./CardAction";
 
 export const L2ERC721Card = ({

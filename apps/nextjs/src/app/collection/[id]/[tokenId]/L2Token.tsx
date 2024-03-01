@@ -20,7 +20,7 @@ import {
 import { BuyModal } from "../../marketplace/buy/BuyModal";
 import TokenOwnerActions from "../../marketplace/TokenOwnerActions";
 import { L2ActivityCard } from "../(list)/activity/L2ActivityCard";
-import { ListingCard } from "../(list)/LIstingCard";
+import { ListingCard } from "../(list)/ListingCard";
 
 export const L2Token = ({
   contractAddress,
@@ -43,7 +43,11 @@ export const L2Token = ({
   if (!erc721Token) return <div>Token Information Loading</div>;
 
   const activeListings = erc721Token.listings?.filter(
-    (listing) => listing.active && listing.created_by == erc721Token.owner,
+    (
+      listing: NonNullable<
+        RouterOutputs["erc721Tokens"]["byId"]
+      >["listings"][number],
+    ) => listing.active && listing.created_by == erc721Token.owner,
   );
 
   const lowestPriceActiveListing = activeListings?.reduce(
@@ -55,7 +59,8 @@ export const L2Token = ({
   );
 
   const collectionId = getCollectionFromAddress(contractAddress);
-  const expiryDiff = useTimeDiff(lowestPriceActiveListing?.expiration || 0);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const expiryDiff = useTimeDiff(lowestPriceActiveListing?.expiration ?? 0);
 
   const price = lowestPriceActiveListing?.price
     ? BigInt(parseInt(lowestPriceActiveListing?.price || "0")).toString()
@@ -86,7 +91,7 @@ export const L2Token = ({
             "Not listed"
           )}{" "}
           {erc721Token.owner == padAddress(address) ? (
-            <TokenOwnerActions token={token} tokenId={tokenId} />
+            <TokenOwnerActions token={token} />
           ) : (
             <div>
               {lowestPriceActiveListing && (

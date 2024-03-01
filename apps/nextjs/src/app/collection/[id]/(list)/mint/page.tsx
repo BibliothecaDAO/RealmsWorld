@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { useMemo, useState } from "react";
@@ -32,7 +35,6 @@ export default function Mint() {
   const tokenAddress = getCollectionAddresses(Collections.GOLDEN_TOKEN)[
     SUPPORTED_L2_CHAIN_ID
   ];
-  const [hash, setHash] = useState(undefined);
   const [mintQty, setMintQty] = useState(1);
 
   const calls = useMemo(() => {
@@ -41,8 +43,9 @@ export default function Mint() {
       entrypoint: "mint",
       calldata: [],
     };
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return Array(mintQty).fill(tx);
-  }, [mintQty]);
+  }, [mintQty, tokenAddress]);
 
   const {
     data: mintData,
@@ -57,6 +60,7 @@ export default function Mint() {
         entrypoint: "approve",
         calldata: [tokenAddress as `0x${string}`, MINT_COST * mintQty, 0],
       },
+
       ...calls,
     ],
   });
@@ -110,7 +114,8 @@ export default function Mint() {
         <div className="mt-12 w-full rounded-xl border p-6">
           <h1 className="flex">
             You have minted Golden Token #
-            {(submittedData as any)?.events[1].data ? (
+            {/* @ts-expect-error starknet-react types return */}
+            {submittedData?.events[1].data ? (
               <>
                 {uint256
                   .uint256ToBN({

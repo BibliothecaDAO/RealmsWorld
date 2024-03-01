@@ -5,10 +5,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useCallback, useEffect, useState } from "react";
-import { StarknetBridgeLords as L1_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeLords";
 import { useTransferLog } from "@/app/providers/TransferLogProvider";
-import { NETWORK_NAME, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
-import { ChainType, tokens } from "@/constants/tokens";
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import {
   ActionType,
   TransferStep,
@@ -40,7 +38,6 @@ export const stepOf = (step: any, steps: any) => {
 export const useTransferToL2 = () => {
   const [amount, setAmount] = useState("");
   //onst [trackInitiated, trackSuccess, trackError, trackReject] = useTransferToL2Tracking();
-  const { writeAsync, ...writeReturn } = useWriteDepositLords();
 
   const { allowance, approve, approveHash, l1ERC20Contract } =
     useTokenContractAPI("LORDS", true);
@@ -60,23 +57,6 @@ export const useTransferToL2 = () => {
     SUPPORTED_L1_CHAIN_ID
   ] as `0x${string}`;
 
-  const onTransactionHash = (
-    error: any,
-    transactionHash: string,
-    amount: string,
-  ) => {
-    if (!error) {
-      console.log("Tx signed", { transactionHash, amount });
-      handleProgress(
-        progressOptions.deposit(
-          amount,
-          "Lords",
-          stepOf(TransferStep.DEPOSIT, TransferToL2Steps),
-        ),
-      );
-    }
-  };
-
   const onDeposit = async (event: any) => {
     console.log("Deposit event dispatched", event);
     //trackSuccess(event.transactionHash);
@@ -93,20 +73,35 @@ export const useTransferToL2 = () => {
     await refetch();
     handleData(transferData);
   };
+  const { writeAsync, error, ...writeReturn } = useWriteDepositLords({
+    onSuccess: (data) => onDeposit(data),
+  });
+
   useEffect(() => {
-    if (writeReturn.error) {
-      handleError(
-        progressOptions.error(
-          TransferError.TRANSACTION_ERROR,
-          writeReturn.error,
-        ),
-      );
+    if (error) {
+      handleError(progressOptions.error(TransferError.TRANSACTION_ERROR));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [writeReturn.isError]);
+  }, [writeReturn.writeContract]);
 
   const sendDeposit = useCallback(
     async ({ amount, l2Address }: { amount: string; l2Address: string }) => {
+      const onTransactionHash = (
+        error: any,
+        transactionHash: string,
+        amount: string,
+      ) => {
+        if (!error) {
+          console.log("Tx signed", { transactionHash, amount });
+          handleProgress(
+            progressOptions.deposit(
+              amount,
+              "Lords",
+              stepOf(TransferStep.DEPOSIT, TransferToL2Steps),
+            ),
+          );
+        }
+      };
       handleProgress(
         progressOptions.waitForConfirm(
           connector?.name ?? "Wallet",
@@ -120,9 +115,9 @@ export const useTransferToL2 = () => {
           })
         : null;
 
-      hash && onTransactionHash(writeReturn.error, hash, amount);
+      hash && onTransactionHash(error, hash, amount);
     },
-    [],
+    [connector?.name, handleProgress, progressOptions, writeAsync, error],
   );
 
   useEffect(() => {
@@ -134,12 +129,13 @@ export const useTransferToL2 = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [approveIsSuccess, l2Address]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (writeReturn.isSuccess) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       onDeposit(writeReturn.data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [writeReturn.isSuccess]);
+  }, [writeReturn.isSuccess]);*/
 
   return useCallback(
     async ({ amount, l2Address }: { amount: string; l2Address: string }) => {
@@ -174,7 +170,7 @@ export const useTransferToL2 = () => {
       } catch (ex: any) {
         //trackError(ex);
         console.error(ex?.message, ex);
-        handleError(progressOptions.error(TransferError.TRANSACTION_ERROR, ex));
+        handleError(progressOptions.error(TransferError.TRANSACTION_ERROR));
       }
     },
     [
