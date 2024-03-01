@@ -7,13 +7,12 @@ import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 import {
   useAccount,
-  useContractWrite,
   useWaitForTransaction,
 } from "@starknet-react/core";
-import { formatUnits, parseUnits } from "viem";
+import { formatUnits } from "viem";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
-import { LORDS, MarketplaceContract } from "@realms-world/constants";
+import { LORDS } from "@realms-world/constants";
 import { useBuyToken } from "@/hooks/market/useBuyToken";
 
 export enum BuyStep {

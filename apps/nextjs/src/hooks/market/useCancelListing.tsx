@@ -6,16 +6,13 @@ import {
   useContract,
   useContractWrite as useL2ContractWrite,
 } from "@starknet-react/core";
-import { parseUnits } from "viem";
 
 import { MarketplaceContract } from "@realms-world/constants";
 
 export const useCancelListing = ({
   listingId,
-  price,
 }: {
   listingId?: number;
-  price?: string | null;
 }) => {
   const { contract } = useContract({
     abi: MarketplaceABI,
@@ -24,7 +21,7 @@ export const useCancelListing = ({
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const calls: Call[] = useMemo(() => {
-    if (!listingId || !price) return [];
+    if (!listingId) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
       contract?.populateTransaction.cancel!(

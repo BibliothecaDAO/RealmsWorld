@@ -137,7 +137,7 @@ export const ListingEditModalRender: FC<Props> = ({
 
   const { writeAsync, data, error } = useEditListing({
     listingId: listing?.id,
-    price: listing?.price,
+    price: price.toString(),
   });
 
   const { data: transactionData } = useWaitForTransaction({
