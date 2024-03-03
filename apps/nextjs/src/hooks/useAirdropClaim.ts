@@ -25,7 +25,7 @@ function generateLeaf(address: string, value: string): Buffer {
 // Setup merkle tree
 const merkleTree = new MerkleTree(
   // Generate leafs
-  Object.entries(airdrop.airdrop).map(([address, tokens]: any) =>
+  Object.entries(airdrop.airdrop).map(([address, tokens]) =>
     generateLeaf(
       getAddress(address),
       parseUnits(tokens.toString(), airdrop.decimals).toString(),
@@ -39,13 +39,12 @@ const merkleTree = new MerkleTree(
 export function useAirdropClaim() {
   const { address: addressL1 } = useL1Account();
 
-  const { data: hash, writeContract } = useWriteContract();
+  const { writeContract } = useWriteContract();
 
   const [dataLoading, setDataLoading] = useState<boolean>(true); // Data retrieval status
   const [numTokens, setNumTokens] = useState<number>(0); // Number of claimable tokens
-  const [alreadyClaimed, setAlreadyClaimed] = useState<boolean>(false); // Claim status
 
-  const claim = async (amount: any, proof: any) => {
+  const claim = async (amount: string, proof: string[]) => {
     return writeContract({
       address: stakingAddresses[NETWORK_NAME].paymentPoolV2 as `0x${string}`,
       abi: abi.abi,
@@ -57,18 +56,14 @@ export function useAirdropClaim() {
   const getAirdropAmount = (address: string): number => {
     if (address in airdrop.airdrop) {
       // Return number of tokens available
-      return airdrop.airdrop[address];
+      return airdrop.airdrop[address as keyof typeof airdrop.airdrop];
     }
 
     // Else, return 0 tokens
     return 0;
   };
 
-  const {
-    data: balance,
-    error,
-    isPending,
-  } = useReadContract({
+  const { data: balance } = useReadContract({
     address: stakingAddresses[NETWORK_NAME].paymentPoolV2 as `0x${string}`,
     abi: abi.abi,
     functionName: "hasClaimed",
@@ -80,13 +75,15 @@ export function useAirdropClaim() {
       throw new Error("Not Authenticated");
     }
 
-    const formattedAddress: string = getAddress(addressL1).toLowerCase();
+    const formattedAddress = getAddress(addressL1).toLowerCase();
 
     console.log(formattedAddress);
 
     // Get tokens for address
     const numTokens: string = parseUnits(
-      airdrop.airdrop[formattedAddress].toString(),
+      airdrop.airdrop[
+        formattedAddress as keyof typeof airdrop.airdrop
+      ].toString(),
       airdrop.decimals,
     ).toString();
 
@@ -102,6 +99,7 @@ export function useAirdropClaim() {
 
       //   await syncStatus();
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       console.error(`Error when claiming tokens: ${e}`);
     }
   };
@@ -125,13 +123,14 @@ export function useAirdropClaim() {
       await syncStatus();
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     sync();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressL1]);
 
   return {
     dataLoading,
     numTokens,
-    alreadyClaimed,
     claimAirdrop,
     balance,
   };

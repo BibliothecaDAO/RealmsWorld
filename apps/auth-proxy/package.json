@@ -11,15 +11,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@auth/core": "^0.26.3"
+    "@auth/core": "^0.27.0"
   },
   "devDependencies": {
-    "@realms-world/eslint-config": "workspace:*",
-    "@realms-world/prettier-config": "workspace:*",
-    "@realms-world/tailwind-config": "workspace:*",
-    "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^8.56.0",
-    "nitropack": "^2.8.1",
+    "@realms-world/eslint-config": "*",
+    "@realms-world/prettier-config": "*",
+    "@realms-world/tailwind-config": "*",
+    "@realms-world/tsconfig": "*",
+    "eslint": "^8.57.0",
+    "nitropack": "^2.9.1",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },

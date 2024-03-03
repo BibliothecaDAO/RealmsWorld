@@ -21,10 +21,10 @@
     "dotenv": "^16.4.5"
   },
   "devDependencies": {
-    "@realms-world/eslint-config": "workspace:*",
-    "@realms-world/prettier-config": "workspace:*",
-    "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^8.56.0",
+    "@realms-world/eslint-config": "*",
+    "@realms-world/prettier-config": "*",
+    "@realms-world/tsconfig": "*",
+    "eslint": "^8.57.0",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {

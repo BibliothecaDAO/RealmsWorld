@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import NumberSelect from "@/app/_components/NumberSelect";
+//import NumberSelect from "@/app/_components/NumberSelect";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
 //import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import Lords from "@/icons/lords.svg";
@@ -22,15 +22,8 @@ import {
 } from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
-import type { BuyModalStepData } from "./BuyModalRender";
 import ERC721LineItem from "../ERC721LineItem";
 import { BuyModalRender, BuyStep } from "./BuyModalRender";
-
-interface PurchaseData {
-  tokenId?: number;
-  collectionId?: string;
-  maker?: string;
-}
 
 const ModalCopy = {
   titleInsufficientFunds: "Add Funds",
@@ -58,18 +51,6 @@ interface Props {
   copyOverrides?: Partial<typeof ModalCopy>;
   usePermit?: boolean;
   trigger?: React.ReactNode;
-  /*onConnectWallet: () => void;
-  onGoToToken?: () => any;*/
-  onPurchaseComplete?: (data: PurchaseData) => void;
-  onPurchaseError?: (error: Error, data: PurchaseData) => void;
-  onClose?: (
-    data: PurchaseData,
-    stepData: BuyModalStepData | null,
-    currentStep: BuyStep,
-  ) => void;
-  /*onPointerDownOutside?: ComponentPropsWithoutRef<
-    typeof Dialog
-  >["onPointerDownOutside"];*/
 }
 
 function titleForStep(
@@ -99,9 +80,6 @@ export function BuyModal({
   defaultQuantity,
   copyOverrides,
   usePermit,
-  onPurchaseComplete,
-  onPurchaseError,
-  onClose,
 }: Props): ReactElement {
   const copy: typeof ModalCopy = { ...ModalCopy, ...copyOverrides };
   const [open, setOpen] = useState(false);
@@ -122,47 +100,19 @@ export function BuyModal({
       {({
         loading,
         listing,
-        token,
-        collection,
-        quantityAvailable,
         quantity,
         averageUnitPrice,
         buyStep,
         transactionError,
         hasEnoughCurrency,
         addFundsLink,
-        stepData,
         //feeUsd,
         gasCost,
         usdPrice,
         isOwner,
-        setQuantity,
         buyToken,
       }) => {
         const title = titleForStep(buyStep, copy, loading, isOwner);
-
-        useEffect(() => {
-          if (buyStep === BuyStep.Complete && onPurchaseComplete) {
-            const data: PurchaseData = {
-              tokenId: token?.token_id,
-              collectionId: collectionId,
-              maker: address,
-            };
-
-            onPurchaseComplete(data);
-          }
-        }, [buyStep]);
-
-        useEffect(() => {
-          if (transactionError && onPurchaseError) {
-            const data: PurchaseData = {
-              tokenId: token?.token_id,
-              collectionId: collectionId,
-              maker: address,
-            };
-            onPurchaseError(transactionError, data);
-          }
-        }, [transactionError]);
 
         const price = listing?.price ?? 0;
 
@@ -171,14 +121,6 @@ export function BuyModal({
             //title={title}
             open={open}
             onOpenChange={(open) => {
-              if (!open && onClose) {
-                const data: PurchaseData = {
-                  tokenId: token?.token_id,
-                  collectionId: collectionId,
-                  maker: address,
-                };
-                onClose(data, stepData, buyStep);
-              }
               setOpen(open);
             }}
           >
@@ -189,7 +131,6 @@ export function BuyModal({
                 <div className="flex flex-col">
                   <ERC721LineItem
                     tokenDetails={token}
-                    collection={collection}
                     usdPrice={usdPrice}
                     isUnavailable={true}
                     price={/*quantity > 1 ? averageUnitPrice :*/ price}
@@ -219,14 +160,13 @@ export function BuyModal({
                   )}
                   <ERC721LineItem
                     tokenDetails={token}
-                    collection={collection}
                     usdPrice={usdPrice}
                     price={quantity > 1 ? averageUnitPrice : price}
                     className="border-0"
                     priceSubtitle={quantity > 1 ? "Average Price" : undefined}
                     showRoyalties={true}
                   />
-                  {quantityAvailable > 1 && (
+                  {/*quantityAvailable > 1 && (
                     <div className="flex justify-between border-b p-2">
                       <div className="flex flex-col gap-0.5">
                         <span>Quantity</span>
@@ -237,13 +177,15 @@ export function BuyModal({
                         max={quantityAvailable}
                         onChange={(value) => setQuantity(Number(value))}
                       />
-                    </div>
-                  )}
+                    
+                      </div>
+                  )*/}
                   <div className="mt-4 flex items-start justify-between border-2 p-2 font-sans">
                     <div className="self-center">You Pay</div>
                     <div className="flex space-x-3">
                       <span>
-                        {listing.price && formatNumber(listing.price)}
+                        {listing?.price &&
+                          formatNumber(parseInt(listing?.price))}
                       </span>
 
                       <Lords className="h-6 w-6 fill-current" />
@@ -311,7 +253,6 @@ export function BuyModal({
                 <div className="flex flex-col">
                   <ERC721LineItem
                     tokenDetails={token}
-                    collection={collection}
                     //usdPrice={paymentCurrency?.usdTotalFormatted}
                     price={quantity > 1 ? averageUnitPrice : price}
                     priceSubtitle={quantity > 1 ? "Average Price" : undefined}
@@ -319,9 +260,7 @@ export function BuyModal({
                   />
                   <Button disabled={true}>
                     <Loader className="mr-2 animate-spin" />
-                    {stepData?.currentStepItem?.txHashes
-                      ? copy.ctaAwaitingValidation
-                      : copy.ctaAwaitingApproval}
+                    {copy.ctaAwaitingApproval}
                   </Button>
                 </div>
               )}

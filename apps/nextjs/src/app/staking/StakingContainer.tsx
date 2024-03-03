@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import type { Realm } from "@/.graphclient";
@@ -94,7 +97,8 @@ export const StakingContainer = () => {
       address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
       abi: paymentPoolAbi,
       functionName: "balanceForProofWithAddress",
-      args: hexProof && addressL1 && [addressL1, hexProof],
+      args: hexProof &&
+        addressL1 && [addressL1.toLowerCase() as `0x${string}`, hexProof],
       // query: { enabled: !!address && !!poolTotal }
     });
   useEffect(() => {
@@ -102,7 +106,8 @@ export const StakingContainer = () => {
       if (addressL1) {
         try {
           const response = await fetch(`/api/staking/${addressL1}`);
-          const data = await response.json();
+          const data: { proof: `0x${string}`; amount: number } =
+            await response.json();
           setHexProof(data.proof);
           if (data.amount) {
             setPoolTotal(parseEther(data.amount.toString()));
@@ -115,6 +120,7 @@ export const StakingContainer = () => {
       }
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchStakingData();
   }, [addressL1]);
 
@@ -122,7 +128,10 @@ export const StakingContainer = () => {
     return (
       <div className="text-center">
         {poolClaimError && (
-          <Alert message={poolClaimError.toString()} variant="warning" />
+          <Alert
+            message={poolClaimError.message.toString()}
+            variant="warning"
+          />
         )}
         <div className="col-span-2 flex flex-col ">
           <h3>Your Realms</h3>
@@ -377,7 +386,9 @@ const StakingModal = ({
   });
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     refetchGalleonApprovedData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   const isApproved = isGalleonApprovedData;
@@ -425,7 +436,7 @@ const StakingModal = ({
     isExitCarrackPending ||
     isBoardGalleonPending;
 
-  const onSelectRealms = (realms: any) => {
+  const onSelectRealms = (realms: readonly string[]) => {
     setSelectedRealms(realms);
   };
   useEffect(() => {

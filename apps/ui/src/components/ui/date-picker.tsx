@@ -1,7 +1,7 @@
 "use client";
 
 import type { TimeValue } from "@react-aria/datepicker";
-import type { DateRange } from "types/date";
+import type { DateRange } from "react-day-picker";
 import * as React from "react";
 import { Time } from "@internationalized/date";
 import * as Primitives from "@radix-ui/react-popover";

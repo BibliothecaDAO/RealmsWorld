@@ -1,7 +1,6 @@
 import type { UserTokenData } from "@/types";
 import { Suspense } from "react";
 import { LoadingSkeletonGrid } from "@/app/_components/LoadingSkeletonGrid";
-import { TokenCardSkeleton } from "@/app/collection/TokenCardSkeleton";
 import { getUser } from "@/lib/reservoir/getUser";
 
 import UserTokenCard from "./UserTokenCard";
@@ -13,6 +12,7 @@ async function UserTokenGrid({
   address: string;
   continuation: string | undefined;
 }) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const {
     tokens,
     continuation: dataContinuation,

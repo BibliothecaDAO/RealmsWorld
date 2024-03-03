@@ -30,15 +30,12 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
-interface DialogContentProps
-  extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
-  close?: boolean;
-}
-
 const DialogContent = React.forwardRef<
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,
-  DialogContentProps
->(({ close, className, children, ...props }, ref) => (
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    close?: boolean;
+  }
+>(({ className, children, close, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <motion.div

@@ -8,12 +8,17 @@ import type { RouterOutputs } from "@realms-world/api";
 import { getCollectionFromId } from "@realms-world/constants/src/Marketplace";
 
 interface ActivityCardProps {
-  activity: RouterOutputs["erc721MarketEvents"]["all"]["items"][number];
+  activity: RouterOutputs["erc721MarketEvents"]["all"]["items"][number] & {
+    token?: RouterOutputs["erc721Tokens"]["byId"];
+  };
 }
 
 export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
   // convert unix to time
-  const date = activity.updated_at ? new Date(activity.updated_at) : null;
+  const date =
+    "updated_at" in activity && activity.updated_at
+      ? new Date(activity.updated_at)
+      : null;
 
   function getElapsedTime() {
     // get time difference from now

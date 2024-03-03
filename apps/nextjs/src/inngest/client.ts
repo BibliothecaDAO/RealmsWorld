@@ -7,6 +7,10 @@ interface Events {
       tokenId: string;
     };
   };
+  [eventName: string]: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: Record<string, any>;
+  };
 }
 export const inngest = new Inngest({
   id: "ERC721",

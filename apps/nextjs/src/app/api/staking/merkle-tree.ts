@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import type { ToBufferInputTypes } from "ethereumjs-util";
 import {
   bufferToHex,
   keccak256,
@@ -7,20 +13,25 @@ import {
 import Web3Utils from "web3-utils";
 
 export default class MerkleTree {
-  constructor(elements) {
+  layers: any;
+  elements: Buffer[];
+  constructor(elements: any[]) {
     // Filter empty strings and hash elements
-    this.elements = elements.filter((el) => el).map((el) => this.sha3(el));
+    this.elements = elements
+      .filter((el: any) => el)
+      .map((el: any) => this.sha3(el));
 
     // Deduplicate elements
     this.elements = this.bufDedup(this.elements);
     // Sort elements
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     this.elements.sort(Buffer.compare);
 
     // Create layers
     this.layers = this.getLayers(this.elements);
   }
 
-  getLayers(elements) {
+  getLayers(elements: string | any[]) {
     if (elements.length === 0) {
       return [[""]];
     }
@@ -29,24 +40,29 @@ export default class MerkleTree {
     layers.push(elements);
 
     // Get next layer until we reach the root
+    //@ts-expect-error works
     while (layers[layers.length - 1].length > 1) {
+      //@ts-expect-error works
       layers.push(this.getNextLayer(layers[layers.length - 1]));
     }
 
     return layers;
   }
-  getNextLayer(elements) {
-    return elements.reduce((layer, el, idx, arr) => {
-      if (idx % 2 === 0) {
-        // Hash the current element with its pair element
-        layer.push(this.combinedHash(el, arr[idx + 1]));
-      }
+  getNextLayer(elements: any[]) {
+    return elements.reduce(
+      (layer: any[], el: any, idx: number, arr: Record<string, any>) => {
+        if (idx % 2 === 0) {
+          // Hash the current element with its pair element
+          layer.push(this.combinedHash(el, arr[idx + 1]));
+        }
 
-      return layer;
-    }, []);
+        return layer;
+      },
+      [],
+    );
   }
 
-  combinedHash(first, second) {
+  combinedHash(first: any, second: any) {
     if (!first) {
       return second;
     }
@@ -64,14 +80,15 @@ export default class MerkleTree {
     return bufferToHex(this.getRoot());
   }
 
-  getProof(el, prefix) {
+  getProof(el: any, prefix: any[]) {
     let idx = this.bufIndexOf(el, this.elements);
 
     if (idx === -1) {
       throw new Error("Element does not exist in Merkle tree");
     }
 
-    let proof = this.layers.reduce((proof, layer) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    let proof = this.layers.reduce((proof: any[], layer: any) => {
       const pairElement = this.getPairElement(idx, layer);
 
       if (pairElement) {
@@ -88,20 +105,29 @@ export default class MerkleTree {
         prefix = [prefix];
       }
 
-      prefix = prefix.map((item) => setLengthLeft(toBuffer(item), 32));
+      prefix = prefix.map((item: ToBufferInputTypes) =>
+        setLengthLeft(toBuffer(item), 32),
+      );
       proof = prefix.concat(proof);
     }
 
     return proof;
   }
 
-  getHexProof(el, prefix) {
+  getHexProof(
+    el: {
+      payee: string;
+      // Hash the current element with its pair element
+      amount: number;
+    },
+    prefix: (string | number)[],
+  ) {
     const proof = this.getProof(el, prefix);
 
     return this.bufArrToHex(proof);
   }
 
-  getPairElement(idx, layer) {
+  getPairElement(idx: number, layer: string | any[]) {
     const pairIdx = idx % 2 === 0 ? idx + 1 : idx - 1;
 
     if (pairIdx < layer.length) {
@@ -111,7 +137,7 @@ export default class MerkleTree {
     }
   }
 
-  bufIndexOf(el, arr) {
+  bufIndexOf(el: any, arr: string | any[]) {
     let hash;
 
     // Convert element to 32 byte hash if it is not one already
@@ -130,31 +156,37 @@ export default class MerkleTree {
     return -1;
   }
 
-  bufDedup(elements) {
-    return elements.filter((el, idx) => {
+  bufDedup(elements: any[]) {
+    return elements.filter((el: any, idx: number) => {
       return this.bufIndexOf(el, elements) === idx;
     });
   }
 
-  bufArrToHex(arr) {
-    if (arr.some((el) => !Buffer.isBuffer(el))) {
+  bufArrToHex(arr: any[]) {
+    if (arr.some((el: any) => !Buffer.isBuffer(el))) {
       throw new Error("Array is not an array of buffers");
     }
 
-    return "0x" + arr.map((el) => el.toString("hex")).join("");
+    return (
+      "0x" +
+      arr
+        .map((el: { toString: (arg0: string) => any }) => el.toString("hex"))
+        .join("")
+    );
   }
 
-  sortAndConcat(...args) {
+  sortAndConcat(...args: any[]) {
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     return Buffer.concat([...args].sort(Buffer.compare));
   }
 
-  sha3(node) {
+  sha3(node: { payee: string; amount: number }) {
     return Buffer.from(
       Web3Utils.hexToBytes(
         Web3Utils.soliditySha3(
           { t: "address", v: node.payee },
           { t: "uint256", v: node.amount },
-        ),
+        )!,
       ),
     );
   }

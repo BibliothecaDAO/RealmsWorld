@@ -1,7 +1,6 @@
 {
   "name": "@realms-world/graphql-server",
-  "private": true,
-  "version": "workspace:*",
+  "version": "0.1.0",
   "exports": {
     ".": "./index.ts"
   },
@@ -20,16 +19,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "garph": "^0.6.6",
-    "graphql-yoga": "^5.1.1",
+    "@realms-world/db": "*",
+    "garph": "^0.6.8",
     "graphql": "^16.8.1",
-    "@realms-world/db": "workspace:*"
+    "graphql-yoga": "^5.1.1"
   },
   "devDependencies": {
-    "@realms-world/eslint-config": "workspace:*",
-    "@realms-world/prettier-config": "workspace:*",
-    "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^8.56.0",
+    "@realms-world/eslint-config": "*",
+    "@realms-world/prettier-config": "*",
+    "@realms-world/tsconfig": "*",
+    "eslint": "^8.57.0",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {

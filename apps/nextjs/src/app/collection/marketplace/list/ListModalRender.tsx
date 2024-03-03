@@ -2,21 +2,11 @@
 import type { ExpirationOption } from "@/types";
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
-import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import { findCollectionKeyByAddress } from "@/utils/getters";
-import {
-  //useAccount,
-  useContractWrite,
-  useWaitForTransaction,
-} from "@starknet-react/core";
+import { useListToken } from "@/hooks/market/useListToken";
+import { useWaitForTransaction } from "@starknet-react/core";
 import dayjs from "dayjs";
-import { parseUnits } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
-import {
-  MarketplaceCollectionIds,
-  MarketplaceContract,
-} from "@realms-world/constants";
 
 import defaultExpirationOptions from "../defaultExpiration";
 
@@ -27,7 +17,8 @@ export enum ListStep {
   Complete,
 }
 
-export type Listing = any;
+export type Listing =
+  RouterOutputs["erc721MarketEvents"]["all"]["items"][number];
 
 export interface ListingData {
   listing: Listing;
@@ -42,13 +33,11 @@ export interface ListModalStepData {
 
 interface ChildrenProps {
   loading: boolean;
-  token?: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   collection?: any;
   listStep: ListStep;
   //usdPrice: number;
   expirationOptions: ExpirationOption[];
   expirationOption: ExpirationOption;
-  listingData: ListingData[];
   transactionError?: Error | null;
   stepData: ListModalStepData | null;
   price: number;
@@ -56,13 +45,13 @@ interface ChildrenProps {
   setListStep: React.Dispatch<React.SetStateAction<ListStep>>;
   setExpirationOption: React.Dispatch<React.SetStateAction<ExpirationOption>>;
   setPrice: React.Dispatch<React.SetStateAction<number>>;
-  listToken: () => void;
+  listToken: () => Promise<void>;
 }
 
 interface Props {
   open: boolean;
   tokenId?: number;
-  collectionId?: string | undefined | null;
+  collectionId: string;
   children: (props: ChildrenProps) => ReactNode;
 }
 
@@ -85,12 +74,11 @@ export const ListModalRenderer: FC<Props> = ({
   //const { address } = useAccount();
 
   const [listStep, setListStep] = useState<ListStep>(ListStep.SetPrice);
-  const [listingData, setListingData] = useState<ListingData[]>([]);
+  //const [listingData, setListingData] = useState<ListingData[]>([]);
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [stepData, setStepData] = useState<ListModalStepData | null>(null);
   const [price, setPrice] = useState<number>(0);
   //const [quantity, setQuantity] = useState(1);
-  const contract = collectionId ? collectionId?.split(":")[0] : undefined;
   const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
     expirationOptions[5]!,
   );
@@ -127,7 +115,7 @@ export const ListModalRenderer: FC<Props> = ({
     }, [marketplace, exchange])*/
 
   //TODO usememo
-  let expirationTime: string | null = null;
+  let expirationTime: string | undefined = undefined;
 
   if (expirationOption.relativeTime) {
     if (expirationOption.relativeTimeUnit) {
@@ -139,35 +127,18 @@ export const ListModalRenderer: FC<Props> = ({
       expirationTime = `${expirationOption.relativeTime}`;
     }
   }
+
   const {
-    data,
     writeAsync,
+    data,
     error: writeError,
-    // isLoading: isTxSubmitting,
-  } = useContractWrite({
-    calls: [
-      {
-        contractAddress: collectionId as `0x${string}`,
-        entrypoint: "set_approval_for_all",
-        calldata: [
-          MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`, //Marketplace address
-          1,
-        ],
-      },
-      {
-        contractAddress: MarketplaceContract[
-          SUPPORTED_L2_CHAIN_ID
-        ] as `0x${string}`,
-        entrypoint: "create",
-        calldata: [
-          tokenId,
-          MarketplaceCollectionIds[findCollectionKeyByAddress(collectionId!)],
-          !price ? "0" : parseUnits(`${price}`, 18).toString(),
-          expirationTime,
-        ],
-      },
-    ],
+  } = useListToken({
+    price,
+    tokenId,
+    expirationTime,
+    collectionId,
   });
+
   const { data: transactionData, error: txErrror } = useWaitForTransaction({
     hash: data?.transaction_hash,
     watch: true,
@@ -181,47 +152,23 @@ export const ListModalRenderer: FC<Props> = ({
     }
   }, [data, transactionData, transactionError]);
   useEffect(() => {
-    if (writeError) {
+    if (writeError ?? txErrror) {
       setListStep(ListStep.SetPrice);
-      setTransactionError(writeError);
+      setTransactionError(writeError ?? txErrror);
     }
-  }, [writeError]);
+  }, [writeError, txErrror]);
 
   const listToken = useCallback(async () => {
     setTransactionError(null);
-
-    let expirationTime: string | null = null;
-
-    if (expirationOption.relativeTime) {
-      if (expirationOption.relativeTimeUnit) {
-        expirationTime = dayjs()
-          .add(expirationOption.relativeTime, expirationOption.relativeTimeUnit)
-          .unix()
-          .toString();
-      } else {
-        expirationTime = `${expirationOption.relativeTime}`;
-      }
-    }
-
-    const listing: Listing = {
-      token: `${contract}:${tokenId}`,
-      weiPrice: parseUnits(`${+price}`, 18).toString(),
-    };
 
     /*const fees = feesBps || client.marketplaceFees;
     if (fees) {
       listing.marketplaceFees = fees;
     }*/
-
-    if (expirationTime) {
-      listing.expirationTime = expirationTime;
-    }
-
-    setListingData([{ listing }]);
     setListStep(ListStep.Listing);
 
     await writeAsync();
-  }, [collectionId, tokenId, expirationOption, price]);
+  }, [writeAsync]);
 
   return (
     <>
@@ -234,7 +181,6 @@ export const ListModalRenderer: FC<Props> = ({
         //usdPrice,
         expirationOption,
         expirationOptions,
-        listingData,
         transactionError,
         stepData,
         price,

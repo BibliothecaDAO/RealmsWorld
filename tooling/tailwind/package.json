@@ -14,15 +14,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.17",
-    "postcss": "8.4.35",
+    "postcss": "^8.4.35",
     "tailwindcss": "3.4.1"
   },
   "devDependencies": {
-    "@realms-world/eslint-config": "workspace:*",
-    "@realms-world/prettier-config": "workspace:*",
-    "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^8.56.0",
+    "@realms-world/eslint-config": "*",
+    "@realms-world/prettier-config": "*",
+    "@realms-world/tsconfig": "*",
+    "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useCallback, useContext } from "react";
@@ -93,6 +96,7 @@ export const useProgressModal = (steps = []) => {
         containerStyle,
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [showModal],
   );
 };
@@ -144,6 +148,7 @@ export const useTransactionSubmittedModal = (steps: any) => {
         containerStyle,
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [showModal],
   );
 };
@@ -184,6 +189,7 @@ export const useErrorModal = () => {
         type: ModalType.ERROR,
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [showModal],
   );
 };

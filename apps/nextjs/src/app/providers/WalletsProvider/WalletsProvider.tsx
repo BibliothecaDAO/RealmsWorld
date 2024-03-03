@@ -5,19 +5,13 @@ import React, {
   createContext,
   useContext,
   useEffect,
-  useMemo,
   useReducer,
   useState,
 } from "react";
 import { ERC20 as L1_ERC20_ABI } from "@/abi/L1/ERC20";
 import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
 import L2_ERC20 from "@/abi/L2/ERC20.json";
-import {
-  NETWORK_NAME,
-  SUPPORTED_L1_CHAIN_ID,
-  SUPPORTED_L2_CHAIN_ID,
-} from "@/constants/env";
-import { ChainType, tokens as tokensConst } from "@/constants/tokens";
+import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
   useContractRead,
   useAccount as useL2Account,
@@ -82,9 +76,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     isFetching: l2LordsIsLoading,
     refetch: l2LordsRefetch,
   } = useContractRead({
-    address:
-      LORDS[SUPPORTED_L2_CHAIN_ID]
-        ?.address /*tokensConst.L2.LORDS.tokenAddress[ChainType.L2[NETWORK_NAME]]!,*/,
+    address: LORDS[SUPPORTED_L2_CHAIN_ID]?.address,
     abi: L2_C1ERC20,
     functionName: "balance_of",
     enabled: !!l2Account,
@@ -122,6 +114,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     } else if (accountHash) {
       setAccountHash("");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [l1Account, l2Account]);
 
   const refetch = async () => {
@@ -141,9 +134,10 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
         lords: l1LordsBalance?.value,
       },
       l2: {
-        //@ts-ignore
+        //@ts-expect-error incorrect SN react types
         eth: l2EthBalance?.balance
-          ? //@ts-ignore
+          ? //@ts-expect-error incorrect SN react types
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             uint256.uint256ToBN(l2EthBalance?.balance)
           : 0n,
         lords: l2LordsBalance as bigint,

@@ -1,6 +1,5 @@
 {
   "name": "@realms-world/monorepo",
-  "private": true,
   "engines": {
     "node": ">=20.10"
   },
@@ -23,10 +22,10 @@
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
-    "lint:ws": "bunx sherif@latest",
+    "lint:ws": "bunx sherif@latest -r root-package-private-field",
     "typecheck": "turbo typecheck"
   },
-  "devDependencies": {
+  "dependencies": {
     "@manypkg/cli": "^0.21.2",
     "@turbo/gen": "^1.12.4",
     "npm-check-updates": "^16.14.15",
@@ -35,9 +34,5 @@
     "turbo": "^1.12.4",
     "typescript": "^5.3.3"
   },
-  "prettier": "@realms-world/prettier-config",
-  "dependencies": {
-    "keccak256": "^1.0.6",
-    "merkletreejs": "^0.3.11"
-  }
+  "prettier": "@realms-world/prettier-config"
 }

@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 import { useMemo } from "react";
 
 const evaluate = (template: any, model: any) => {
@@ -6,6 +13,7 @@ const evaluate = (template: any, model: any) => {
     let res_1 = template;
     Object.keys(model).forEach(function (key) {
       let value =
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         model[key] !== undefined && model[key] !== null ? model[key] : "";
       if (typeof value === "string" && value.indexOf('"') > -1) {
         value = value.replace(/"/g, '\\"');
@@ -97,7 +105,7 @@ export const useTransferProgress = () => {
           activeStep,
         };
       },
-      error: (type: any, err: any, data?: any) => {
+      error: (err: any) => {
         /*if (type === TransferError.MAX_TOTAL_BALANCE_ERROR) {
                   const {limitationErrorTitle, maxTotalBalanceErrorMsg} = transferProgressStrings;
                   return {

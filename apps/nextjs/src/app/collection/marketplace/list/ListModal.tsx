@@ -27,16 +27,9 @@ import {
 } from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
-import type { ListingData } from "./ListModalRender";
 import Earnings from "./Earnings";
 import ListItem from "./ListItem";
 import { ListModalRenderer, ListStep } from "./ListModalRender";
-
-interface ListingCallbackData {
-  listings?: ListingData[];
-  tokenId?: string;
-  collectionId?: string | undefined;
-}
 
 const ModalCopy = {
   title: "List Item for sale",
@@ -51,26 +44,27 @@ interface Props {
   token:
     | RouterOutputs["erc721Tokens"]["all"]["items"][number]
     | RouterOutputs["erc721Tokens"]["byId"];
-  tokenId?: number;
   trigger?: React.ReactNode;
 }
 
 const MINIMUM_AMOUNT = 0.000000000000001;
 const MAXIMUM_AMOUNT = Infinity;
 
-export function ListModal({ token, trigger, tokenId }: Props): ReactElement {
+export function ListModal({ token, trigger }: Props): ReactElement {
   const copy: typeof ModalCopy = { ...ModalCopy /*, ...copyOverrides*/ };
   const [open, setOpen] = useState(false);
+
+  if (!token?.contract_address) return <>Contract Not Found</>;
 
   return (
     <ListModalRenderer
       open={open} //TODO
-      tokenId={tokenId}
+      tokenId={token.token_id}
       collectionId={token?.contract_address}
     >
       {({
         loading,
-        collection,
+        //collection,
         //usdPrice,
         listStep,
         expirationOption,
@@ -88,8 +82,9 @@ export function ListModal({ token, trigger, tokenId }: Props): ReactElement {
           return dayjs().add(1, "h").format("MM/DD/YYYY h:mm A");
         }, [open]);*/
 
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const expirationDate = useMemo(() => {
-          if (expirationOption && expirationOption.relativeTime) {
+          if (expirationOption?.relativeTime) {
             const newExpirationTime = expirationOption.relativeTimeUnit
               ? dayjs().add(
                   expirationOption.relativeTime,
@@ -99,17 +94,6 @@ export function ListModal({ token, trigger, tokenId }: Props): ReactElement {
             return newExpirationTime.toDate();
           }
         }, [expirationOption]);
-
-        /*useEffect(() => {
-          if (listStep === ListStep.Complete && onListingComplete) {
-            const data: ListingCallbackData = {
-              tokenId: tokenId,
-              collectionId: collectionId,
-              listings: listingData,
-            }
-            onListingComplete(data)
-          }
-        }, [listStep]) */
 
         /* useEffect(() => {
           if (transactionError && onListingError) {
@@ -194,7 +178,7 @@ export function ListModal({ token, trigger, tokenId }: Props): ReactElement {
                       message={transactionError.message}
                     />
                   )}
-                  <ListItem collection={collection} token={token} />
+                  <ListItem token={token} />
                   <div className="flex flex-col items-center">
                     <div className="flex w-full flex-col">
                       <span className="mb-1 text-lg">Lords listing price</span>
@@ -316,14 +300,15 @@ export function ListModal({ token, trigger, tokenId }: Props): ReactElement {
                           //ref={datetimeElement}
                           value={expirationDate}
                           defaultValue={expirationDate}
-                          onChange={(e: any) => {
+                          onChange={(e: Date | undefined) => {
                             if (e) {
                               const customOption = expirationOptions.find(
                                 (option) => option.value === "custom",
                               );
-                              if (customOption) {
+                              if (customOption && e) {
                                 setExpirationOption({
                                   ...customOption,
+                                  //@ts-expect-error datepicker wrong type
                                   relativeTime: e[0] / 1000,
                                 });
                               }
@@ -338,7 +323,6 @@ export function ListModal({ token, trigger, tokenId }: Props): ReactElement {
                       //usdPrice={usdPrice}
                       royaltiesBps={500} //TODO make dynamic
                       quantity={1}
-                      collection={collection}
                     />
                   </div>
                   <div className="mt-2 w-full">
@@ -356,7 +340,6 @@ export function ListModal({ token, trigger, tokenId }: Props): ReactElement {
               {!loading && listStep == ListStep.Listing && (
                 <div className="flex flex-col">
                   <ListItem
-                    collection={collection}
                     token={token}
                     price={price}
                     quantity={1}
@@ -387,18 +370,20 @@ export function ListModal({ token, trigger, tokenId }: Props): ReactElement {
                 <div className="flex flex-col items-center">
                   <div className="flex w-full flex-col items-center gap-6 px-2 pt-2">
                     <div className="flex w-full flex-col items-center gap-6 overflow-hidden">
-                      <Image
-                        src={token?.image ?? collection?.image}
-                        alt={token?.name ?? token?.token_id.toString() ?? ""}
-                        width={120}
-                        height={120}
-                      />
+                      {token.image && (
+                        <Image
+                          src={token?.image /*?? collection?.image*/}
+                          alt={token?.name ?? token?.token_id.toString() ?? ""}
+                          width={120}
+                          height={120}
+                        />
+                      )}
                       <h6 className="h6 text-ellipsis">
                         {token?.token_id ? `#${token?.token_id}` : token?.name}
                       </h6>
-                      <span className="text-ellipsis text-medium-dark-green">
+                      {/*<span className="text-ellipsis text-medium-dark-green">
                         {collection?.name}
-                      </span>
+                      </span>*/}
                     </div>
                     <h5>Your item has been listed!</h5>
                   </div>
