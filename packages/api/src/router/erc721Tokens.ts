@@ -43,21 +43,24 @@ export const erc721TokensRouter = createTRPCRouter({
       } = input;
       const whereFilter: SQL[] = [];
       const cursors = [];
-      console.log(cursor)
+
+      // Order By tokenId
       if (orderBy == "tokenId") {
         cursors.push([
           schema.erc721Tokens.token_id, // Column to use for cursor
-          direction ?? "desc", // Sort order ('asc' or 'desc')
+          direction ?? "asc", // Sort order ('asc' or 'desc')
           cursor?.token_id, // Cursor value
         ]);
-      } else {
+      }
+      // Order By price
+      else {
         if (
           cursor == undefined ||
           (cursor?.token_id != 0 && cursor?.price != null)
         ) {
           cursors.push(
             [
-              schema.erc721Tokens.price, // Column to use for cursor
+              sql`case when EXTRACT(EPOCH FROM now()) < ${schema.erc721Tokens.expiration} then ${schema.erc721Tokens.price} else ${direction === "dsc" ? "0" : null} end`,
               direction ?? "asc", // Sort order ('asc' or 'desc')
               cursor?.price, // Cursor value
             ],
