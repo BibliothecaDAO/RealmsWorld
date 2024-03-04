@@ -100,21 +100,21 @@ export const erc721TokensRouter = createTRPCRouter({
         const attributesObject: SQL[] = [];
         for (const [key, value] of Object.entries(attributeFilter)) {
           attributesObject.push(
-            eq(schema.erc721TokenAttributes.value, value),
-            eq(schema.erc721TokenAttributes.key, key),
+            inArray(
+              schema.erc721Tokens.id,
+              ctx.db
+                .select({ id: schema.erc721TokenAttributes.token_key })
+                .from(schema.erc721TokenAttributes)
+                .where(
+                  and(
+                    eq(schema.erc721TokenAttributes.value, value),
+                    eq(schema.erc721TokenAttributes.key, key),
+                  ),
+                ),
+            ),
           );
         }
-        whereFilter.push(
-          inArray(
-            schema.erc721Tokens.id,
-            ctx.db
-              .select({ id: schema.erc721TokenAttributes.token_key })
-              .from(schema.erc721TokenAttributes)
-              .where(and(...attributesObject)),
-
-            //.where(and(...attributesObject)),
-          ),
-        );
+        whereFilter.push(...attributesObject);
       }
       /*const items = await ctx.db
         .select({
