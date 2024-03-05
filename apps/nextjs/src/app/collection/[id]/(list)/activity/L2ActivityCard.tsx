@@ -67,7 +67,7 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
       break;
   }
   return (
-    <div className=" flex w-full flex-wrap border-b p-2">
+    <div className="flex w-full flex-wrap border-b p-2 ">
       <div className="mr-6 w-full flex-none self-center rounded px-4 py-1 font-semibold sm:w-1/12">
         {eventType === "Sale" && <Gavel />}
         {eventType === "Listing" && <NotebookPen />}

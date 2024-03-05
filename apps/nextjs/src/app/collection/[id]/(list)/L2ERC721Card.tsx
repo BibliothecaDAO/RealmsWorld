@@ -113,12 +113,12 @@ const GridDetails = ({
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   address?: string;
 }) => (
-  <div className=" flex h-full w-full flex-col justify-between p-3">
+  <div className="flex h-full w-full flex-col justify-between p-3 ">
     <div className="flex justify-between pb-2">
       <span className="truncate">{decodeURIComponent(token.name ?? "")}</span>
     </div>
 
-    <div className="flex justify-between  font-sans">
+    <div className="flex justify-between font-sans">
       <Price token={token} />
       {token.lastPrice && (
         <span className="flex text-bright-yellow/50">
@@ -173,7 +173,7 @@ const ListDetails = ({
           {useStarkDisplayName(address)}
         </Button>
       </div>
-      <div className="absolute bottom-0 right-0 w-full  px-3 opacity-0 transition-all duration-300 group-hover:bottom-2 group-hover:opacity-100">
+      <div className="absolute bottom-0 right-0 w-full px-3 opacity-0 transition-all duration-300 group-hover:bottom-2 group-hover:opacity-100">
         <CardAction token={token} />
       </div>
     </div>
