@@ -2,7 +2,7 @@
 import path from "path";*/
 import type { Metadata } from "next";
 
-import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
+import { CHAIN_IDS_TO_NAMES, Tokens, games } from "@realms-world/constants";
 import {
   Button,
   Carousel,
@@ -55,7 +55,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div>
           <div className="flex gap-x-2">
             {game?.tokens?.map((token, index) =>
-              token === "Lords" ? (
+              token === Tokens.LORDS ? (
                 <Button
                   href="https://app.avnu.fi/en?amount=100&tokenFrom=0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49&tokenTo=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7"
                   key={index}
@@ -63,6 +63,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                   {token}
                 </Button>
               ) : (
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                 <Button href={`/tokens/${token}`} key={index}>
                   {token}
                 </Button>
