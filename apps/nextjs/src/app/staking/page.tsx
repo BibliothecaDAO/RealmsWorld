@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { Metadata } from "next";
 import { NETWORK_NAME } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
@@ -16,7 +20,7 @@ export default async function Page() {
     addresses: [galleonAddress, carrackAddress],
   });
   const totalStakedRealms = totalStakedRealmsData?.wallets?.reduce(
-    (total: number, wallet: any) => {
+    (total: number, wallet: { realmsHeld: string }) => {
       return total + parseInt(wallet.realmsHeld, 10);
     },
     0,

@@ -1,17 +1,7 @@
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import {
-  and,
-  asc,
-  desc,
-  eq,
-  gte,
-  inArray,
-  lte,
-  schema,
-  sql,
-} from "@realms-world/db";
+import { and, eq, inArray, schema, sql } from "@realms-world/db";
 
 import { withCursorPagination } from "../cursorPagination";
 import { createTRPCRouter, publicProcedure } from "../trpc";
@@ -45,19 +35,22 @@ export const erc721MarketEventsRouter = createTRPCRouter({
       } = input;
       const whereFilter: SQL[] = [];
 
-      const cursors = [];
-      if (orderBy == "timestamp") {
-        cursors.push([
-          schema.erc721MarketEvents.updated_at, // Column to use for cursor
-          direction ?? "desc", // Sort order ('asc' or 'desc')
-          cursor, // Cursor value
-        ]);
-      } else {
-        cursors.push([
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let cursors: any[] = [
+        [
           schema.erc721MarketEvents.id, // Column to use for cursor
           direction ?? "desc", // Sort order ('asc' or 'desc')
           cursor, // Cursor value
-        ]);
+        ],
+      ];
+      if (orderBy == "timestamp") {
+        cursors = [
+          [
+            schema.erc721MarketEvents.updated_at, // Column to use for cursor
+            direction ?? "desc", // Sort order ('asc' or 'desc')
+            cursor, // Cursor value
+          ],
+        ];
       }
       /*if (direction === "asc") {
         orderByFilter.push(asc(schema.erc721MarketEvents.token_id));
@@ -93,6 +86,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
         ...withCursorPagination({
           limit: limit + 1,
           where: and(...whereFilter),
+          //@ts-expect-error incorrect cursors
           cursors: cursors,
         }),
         with: {

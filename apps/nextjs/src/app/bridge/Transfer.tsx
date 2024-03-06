@@ -14,7 +14,7 @@ import LordsIcon from "@/icons/lords.svg";
 import StarknetLogo from "@/icons/starknet.svg";
 import { useAccount } from "@starknet-react/core";
 import { ArrowUpDown } from "lucide-react";
-import { formatEther, parseEther } from "viem";
+import { formatEther } from "viem";
 import { useAccount as useL1Account } from "wagmi";
 
 import { Button, Input } from "@realms-world/ui";
@@ -31,8 +31,7 @@ export const Transfer = ({ action }: { action: string }) => {
   const { writeAsync: iniateWithdrawal } = useWriteInitiateWithdrawLords({
     amount,
   });
-  const { handleProgress, handleData, handleError } =
-    useTransfer(TransferToL1Steps);
+  const { handleData } = useTransfer(TransferToL1Steps);
 
   const transferToL2 = useTransferToL2();
 
@@ -51,7 +50,10 @@ export const Transfer = ({ action }: { action: string }) => {
         });
       }
     } else {
-      transferToL2({ amount, l2Address });
+      if (l2Address) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        transferToL2({ amount, l2Address });
+      }
     }
   };
 
@@ -79,14 +81,14 @@ export const Transfer = ({ action }: { action: string }) => {
             onClick={() =>
               setAmount(
                 isL2
-                  ? formatEther(balances.l2?.lords || BigInt(0))
-                  : formatEther(balances.l1?.lords || BigInt(0)),
+                  ? formatEther(balances.l2?.lords ?? BigInt(0))
+                  : formatEther(balances.l1?.lords ?? BigInt(0)),
               )
             }
             balance={
               isL2
-                ? balances.l2?.lords || BigInt(0)
-                : balances.l1?.lords || BigInt(0)
+                ? balances.l2?.lords ?? BigInt(0)
+                : balances.l1?.lords ?? BigInt(0)
             }
             symbol="Lords"
             isLoading={isL2 ? l2loading && !balances.l2?.lords : false}
@@ -96,7 +98,7 @@ export const Transfer = ({ action }: { action: string }) => {
     );
   };
 
-  const renderL1Network = (action) => {
+  const renderL1Network = (action: string) => {
     return renderNetwork(
       "Ethereum",
       <EthereumLogo className="m-auto mt-1 h-6 w-6" />,
@@ -104,7 +106,7 @@ export const Transfer = ({ action }: { action: string }) => {
     );
   };
 
-  const renderL2Network = (action) => {
+  const renderL2Network = (action: string) => {
     return renderNetwork(
       "Starknet",
       <StarknetLogo className="m-auto mt-1 h-6 w-6" />,

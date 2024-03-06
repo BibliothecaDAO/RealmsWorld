@@ -3,6 +3,7 @@
 import { useTimeDiff } from "@/hooks/useTimeDiff";
 import Lords from "@/icons/lords.svg";
 import { api } from "@/trpc/react";
+import { findLowestPriceActiveListing } from "@/utils/getters";
 import { padAddress } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 import { Clock } from "lucide-react";
@@ -20,7 +21,7 @@ import {
 import { BuyModal } from "../../marketplace/buy/BuyModal";
 import TokenOwnerActions from "../../marketplace/TokenOwnerActions";
 import { L2ActivityCard } from "../(list)/activity/L2ActivityCard";
-import { ListingCard } from "../(list)/LIstingCard";
+import { ListingCard } from "../(list)/ListingCard";
 
 export const L2Token = ({
   contractAddress,
@@ -43,28 +44,28 @@ export const L2Token = ({
   if (!erc721Token) return <div>Token Information Loading</div>;
 
   const activeListings = erc721Token.listings?.filter(
-    (listing) => listing.active && listing.created_by == erc721Token.owner,
+    (
+      listing: NonNullable<
+        RouterOutputs["erc721Tokens"]["byId"]
+      >["listings"][number],
+    ) => listing.active && listing.created_by == erc721Token.owner,
   );
 
-  const lowestPriceActiveListing = activeListings?.reduce(
-    (minPriceListing, currentListing) =>
-      (currentListing.price ?? 0) < (minPriceListing?.price ?? 0)
-        ? currentListing
-        : minPriceListing,
-    activeListings[0],
+  const lowestPriceActiveListing = findLowestPriceActiveListing(
+    erc721Token?.listings,
+    erc721Token?.owner,
   );
 
   const collectionId = getCollectionFromAddress(contractAddress);
-  const expiryDiff = useTimeDiff(lowestPriceActiveListing?.expiration || 0);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const expiryDiff = useTimeDiff(lowestPriceActiveListing?.expiration ?? 0);
 
-  const price = lowestPriceActiveListing?.price
-    ? BigInt(parseInt(lowestPriceActiveListing?.price || "0")).toString()
-    : null;
+  const price = lowestPriceActiveListing?.price;
 
   return (
     <>
       {lowestPriceActiveListing?.expiration && (
-        <div className="my-2 flex items-center  py-4 text-xs opacity-60">
+        <div className="my-2 flex items-center py-4 text-xs opacity-60">
           <Clock className="mr-2 w-6" />
           <span>Listing ends in {expiryDiff}</span>
         </div>
@@ -86,10 +87,10 @@ export const L2Token = ({
             "Not listed"
           )}{" "}
           {erc721Token.owner == padAddress(address) ? (
-            <TokenOwnerActions token={token} tokenId={tokenId} />
+            <TokenOwnerActions token={token} />
           ) : (
             <div>
-              {lowestPriceActiveListing && (
+              {price && (
                 <BuyModal
                   trigger={
                     <Button className="w-full" size={"lg"}>

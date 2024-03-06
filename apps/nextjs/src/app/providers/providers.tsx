@@ -1,7 +1,8 @@
 "use client";
 
+import type { ReactElement } from "react";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-//import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
+import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import {
   mainnet as starkMainnet,
   sepolia as starkSepolia,
@@ -34,12 +35,12 @@ const starkConnectors = [
 ];
 const isTestnet = process.env.NEXT_PUBLIC_IS_TESTNET === "true";
 
-/*const theme = darkTheme({
+const theme = darkTheme({
   headlineFont: "Sans Serif",
   font: "Serif",
   primaryColor: "#323aa8",
   primaryHoverColor: "#252ea5",
-});*/
+});
 
 export const config = getDefaultConfig({
   appName: "Realms.World",
@@ -52,7 +53,7 @@ export const config = getDefaultConfig({
   },
 });
 
-export function Provider({ children }: any) {
+export function Provider({ children }: { children: ReactElement }) {
   return (
     <StarknetConfig
       autoConnect
@@ -67,7 +68,7 @@ export function Provider({ children }: any) {
       <WagmiProvider config={config}>
         <RainbowKitProvider>
           <TransferLogProvider>
-            {/*<ReservoirKitProvider
+            <ReservoirKitProvider
               options={{
                 apiKey: process.env.RESERVOIR_API_KEY,
                 chains: [
@@ -86,9 +87,9 @@ export function Provider({ children }: any) {
                 ],
               }}
               theme={theme}
-            >*/}
+            >
             {children}
-            {/*</ReservoirKitProvider>*/}
+            </ReservoirKitProvider>
           </TransferLogProvider>
         </RainbowKitProvider>
       </WagmiProvider>

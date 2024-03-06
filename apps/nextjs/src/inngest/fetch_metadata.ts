@@ -7,10 +7,7 @@
 import { NextResponse } from "next/server";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
-  constants,
-  Contract,
   hash,
-  RpcProvider,
   shortString,
   uint256,
 } from "starknet";
@@ -19,7 +16,7 @@ import type { SQL } from "@realms-world/db";
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import { and, db, eq, inArray, schema, sql } from "@realms-world/db";
 
-import blobertABI from "../abi/L2/Blobert.json";
+//import blobertABI from "../abi/L2/Blobert.json";
 //import { Client } from "https://esm.sh/ts-postgres";
 
 import { inngest } from "./client";
@@ -44,10 +41,10 @@ export const fetchMetadata = inngest.createFunction(
   },
   { event: "nft/mint" },
   async ({ event, step }) => {
-    const providerUrl = /*`https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;*/ `https://starknet-mainnet.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;
-    const provider = new RpcProvider({
+    const providerUrl = `https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;/* `https://starknet-mainnet.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;*/
+    /*const provider = new RpcProvider({
       nodeUrl: providerUrl,
-    });
+    });*/
     const tokenId = uint256.bnToUint256(BigInt(event.data.tokenId.toString()));
 
     const metadata = await step.run("Fetch metadata", async () => {
@@ -66,7 +63,8 @@ export const fetchMetadata = inngest.createFunction(
                   .data.contract_address,
               entry_point_selector: getCollectionAddresses(Collections.BEASTS)[
                 SUPPORTED_L2_CHAIN_ID
-              ]!
+              ] == event
+              .data.contract_address
                 ? tokenURI
                 : token_uri, // Token URI
               calldata: [tokenId.low, tokenId.high],
@@ -78,11 +76,42 @@ export const fetchMetadata = inngest.createFunction(
       });
       return await response.json();
     });
+    let svgImage: any = {};
 
     if (metadata.error) {
-      console.log(metadata.error);
-      await step.sleep("fetch sleep", "20s");
-      throw new Error("Failed to fetch item from Blast API");
+      if (
+        event.data.contract_address ==
+        getCollectionAddresses(Collections.BLOBERT)[SUPPORTED_L2_CHAIN_ID]!
+      ) {
+        console.log("fetch svg image");
+        const response = await fetch(providerUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            method: "starknet_call",
+            params: [
+              {
+                contract_address:
+                  /*"0x00539f522b29ae9251dbf7443c7a950cf260372e69efab3710a11bf17a9599f1",*/ event
+                    .data.contract_address,
+                entry_point_selector: svg_image, // Token URI
+                calldata: [tokenId.low, tokenId.high],
+              },
+              "pending",
+            ],
+            id: 0,
+          }),
+        });
+        const responseJson = await response.json();
+        svgImage = responseJson;
+      } else {
+        console.log(metadata.error);
+        await step.sleep("fetch sleep", "20s");
+        throw new Error("Failed to fetch item from Blast API");
+      }
     }
     const value: any = [];
     let jsonString: string;
@@ -93,13 +122,26 @@ export const fetchMetadata = inngest.createFunction(
       event.data.contract_address ==
       getCollectionAddresses(Collections.BLOBERT)[SUPPORTED_L2_CHAIN_ID]!
     ) {
-      metadata.result.forEach((result: any) => {
-        value.push(shortString.decodeShortString(result));
-      });
-      value.push(metadata.result.pending_word);
-      jsonString = atob(value.join("").substring(29));
-      parsedJson = JSON.parse(jsonString);
-      parsedJson.attributes = parsedJson.attributes.map((attribute: any) => {
+
+      const metaFetched = svgImage.result ?? metadata.result;
+
+      if (svgImage.result) {
+        for (let i = 1; i < metaFetched.length - 1; i++) {
+          value.push(shortString.decodeShortString(metaFetched[i]));
+        }
+        parsedJson.image = "data:image/svg+xml;utf8," + value.join("");
+      } else {
+        metadata.result.forEach((result: any) => {
+          value.push(shortString.decodeShortString(result));
+        });
+        value.push(metaFetched.pending_word);
+        jsonString = atob(value.join("").substring(29));
+        if (jsonString.endsWith('Ó')) {
+          jsonString = jsonString.slice(0, -1);
+      }
+        parsedJson = JSON.parse(jsonString);
+      }
+      parsedJson.attributes = parsedJson.attributes?.map((attribute: any) => {
         if (attribute.trait) {
           return {
             trait_type: attribute.trait,
@@ -107,7 +149,7 @@ export const fetchMetadata = inngest.createFunction(
           };
         }
       });
-      if (parsedJson.attributes[0] == undefined) {
+      if (metadata.result && parsedJson.attributes?.[0] == undefined) {
         parsedJson.attributes = [
           { trait_type: "Honorary", value: parsedJson.name },
         ];

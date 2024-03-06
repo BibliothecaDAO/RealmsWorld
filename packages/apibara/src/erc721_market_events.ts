@@ -15,7 +15,6 @@ import {
 export const config: Config<Starknet, Postgres> = {
   streamUrl: Deno.env.get("STREAM_URL"),
   startingBlock: Number(Deno.env.get("MARKET_STARTING_BLOCK")),
-  authToken: Deno.env.get("AUTH_TOKEN"),
   network: "starknet",
   finality: "DATA_STATUS_PENDING",
   filter: {

@@ -1,12 +1,12 @@
 "use client";
 
 import type { Collection, Token } from "@/types";
-//import { BuyButton } from "@/app/collection/BuyModal";
-//import { ListingModal } from "@/app/collection/ListingModal";
+import { BuyButton } from "@/app/collection/reservoir/BuyModal";
+import { ListingModal } from "@/app/collection/reservoir/ListingModal";
 import { GameCard } from "@/app/games/GameCard";
 import { getGamesByContract } from "@/utils/getters";
 
-//import { useAccount } from "wagmi";
+import { useAccount } from "wagmi";
 
 import { games } from "@realms-world/constants";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@realms-world/ui";
@@ -20,13 +20,13 @@ interface Props {
 }
 
 export const TokenContent = ({ token, collection }: Props) => {
-  //const { address} = useAccount();
+const { address} = useAccount();
 
   const comptatible_games = getGamesByContract(games, collection.id);
 
-  /*const owner = address
+  const owner = address
     ? token.owner.toUpperCase() === address.toUpperCase()
-    : false;*/
+    : false;
 
   const tabs = [
     {
@@ -55,8 +55,8 @@ export const TokenContent = ({ token, collection }: Props) => {
 
   return (
     <div className="my-8 flex-grow">
-      {/*<BuyButton size={"lg"} address={token.contract} id={token.tokenId} />
-      {owner && <ListingModal address={token.contract} id={token.tokenId} />*/}
+      <BuyButton size={"lg"} address={token.contract} id={token.tokenId} />
+      {owner && (<ListingModal address={token.contract} id={token.tokenId} />)}
       <Tabs className="mt-12" defaultValue={tabs[0]?.name}>
         <TabsList>
           {tabs.map((tab, index) => (

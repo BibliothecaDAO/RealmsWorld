@@ -11,7 +11,6 @@ import type { RouterOutputs } from "@realms-world/api";
 import { formatBN } from "@realms-world/utils";
 
 interface ListItemProps {
-  collection?: any;
   token:
     | RouterOutputs["erc721Tokens"]["all"]["items"][number]
     | RouterOutputs["erc721Tokens"]["byId"];
@@ -23,7 +22,6 @@ interface ListItemProps {
 }
 
 const ListIem: FC<ListItemProps> = ({
-  collection,
   token,
   price,
   chain,
@@ -32,25 +30,29 @@ const ListIem: FC<ListItemProps> = ({
 }) => {
   const expirationDisplay =
     expirationOption?.value === "custom" && expirationOption.relativeTime
-      ? useTimeDiff(expirationOption.relativeTime)
+      ? // eslint-disable-next-line react-hooks/rules-of-hooks
+        useTimeDiff(expirationOption.relativeTime)
       : `in ${expirationOption?.text.toLowerCase()}`;
 
   return (
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     <div className={"flex items-center justify-between p-4 " + containerCss}>
       <div className="flex items-center gap-3 overflow-hidden">
-        <Image
-          src={token?.image || collection?.image}
-          alt={token?.name || collection?.name}
-          height={56}
-          width={56}
-          className="aspect-square"
-        />
+        {token?.image && (
+          <Image
+            src={token?.image}
+            alt={token?.name ?? "token"}
+            height={56}
+            width={56}
+            className="aspect-square"
+          />
+        )}
         <div className="flex flex-col gap-1 overflow-hidden">
           <h6 className="text-ellipsify">
             {token?.token_id ? `#${token?.token_id}` : token?.name}
           </h6>
           <div className="flex items-center gap-1">
-            <span className="text-ellipsify">{collection?.name}</span>
+            {/*<span className="text-ellipsify">{collection?.name}</span>*/}
             {chain && !expirationOption ? (
               <>
                 <Starknet />

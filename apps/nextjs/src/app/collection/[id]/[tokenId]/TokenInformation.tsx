@@ -27,8 +27,8 @@ export const TokenInformation = ({
   owner: string | null;
   image: string | null;
   attributes?:
-    | RouterOutputs["erc721Tokens"]["byId"]["attributes"]
-    | Attributes[];
+    | Attributes[]
+    | NonNullable<RouterOutputs["erc721Tokens"]["byId"]>["attributes"];
   tokenId: number;
 }) => {
   return (
@@ -47,17 +47,39 @@ export const TokenInformation = ({
         )}
         {attributes?.length ? (
           <div className="my-4 grid grid-cols-3 gap-4">
-            {attributes.map((attribute: Attributes, index) => (
-              <TokenAttribute
-                key={index}
-                attributeTokenCount={attribute.tokenCount ?? undefined}
-                collectionTokenCount={parseInt(collection?.tokenCount ?? null)}
-                contractId={collectionId}
-                floorAskPrice={attribute.floorAskPrice}
-                title={attribute.key ?? attribute.trait_type}
-                value={attribute.value}
-              />
-            ))}
+            {attributes.map((attribute, index) => {
+              if ("tokenCount" in attribute) {
+                return (
+                  <TokenAttribute
+                    key={index}
+                    attributeTokenCount={attribute.tokenCount}
+                    collectionTokenCount={
+                      collection?.tokenCount
+                        ? parseInt(collection?.tokenCount)
+                        : undefined
+                    }
+                    contractId={collectionId}
+                    floorAskPrice={attribute.floorAskPrice}
+                    title={attribute.key ?? attribute.key}
+                    value={attribute.value}
+                  />
+                );
+              } else {
+                return (
+                  <TokenAttribute
+                    key={index}
+                    collectionTokenCount={
+                      collection?.tokenCount
+                        ? parseInt(collection?.tokenCount)
+                        : undefined
+                    }
+                    contractId={collectionId}
+                    title={attribute.key ?? attribute.key}
+                    value={attribute.value}
+                  />
+                );
+              }
+            })}
           </div>
         ) : (
           ""

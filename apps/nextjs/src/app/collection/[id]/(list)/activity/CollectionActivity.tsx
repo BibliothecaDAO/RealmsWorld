@@ -21,7 +21,7 @@ export const CollectionActivity = ({
   });
   const [loading, setLoading] = useState(false);
 
-  const handleSwitchChange = (value: any) => {
+  const handleSwitchChange = (value: string) => {
     setLoading(true);
     document
       .getElementById("activity-container")
@@ -40,6 +40,7 @@ export const CollectionActivity = ({
       params.delete("types");
       for (const type of types) params.append("types", type);
     }
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     router.replace(`${pathname}?${params}`);
   };
 
@@ -55,6 +56,7 @@ export const CollectionActivity = ({
       .getElementById("activity-container")
       ?.classList.remove("opacity-30", "pointer-events-none");
     setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   return (

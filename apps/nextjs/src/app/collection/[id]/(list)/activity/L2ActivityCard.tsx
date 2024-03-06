@@ -8,12 +8,17 @@ import type { RouterOutputs } from "@realms-world/api";
 import { getCollectionFromId } from "@realms-world/constants/src/Marketplace";
 
 interface ActivityCardProps {
-  activity: RouterOutputs["erc721MarketEvents"]["all"]["items"][number];
+  activity: RouterOutputs["erc721MarketEvents"]["all"]["items"][number] & {
+    token?: RouterOutputs["erc721Tokens"]["byId"];
+  };
 }
 
 export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
   // convert unix to time
-  const date = activity.updated_at ? new Date(activity.updated_at) : null;
+  const date =
+    "updated_at" in activity && activity.updated_at
+      ? new Date(activity.updated_at)
+      : null;
 
   function getElapsedTime() {
     // get time difference from now
@@ -62,7 +67,7 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
       break;
   }
   return (
-    <div className=" flex w-full flex-wrap border-b p-2">
+    <div className="flex w-full flex-wrap border-b p-2 ">
       <div className="mr-6 w-full flex-none self-center rounded px-4 py-1 font-semibold sm:w-1/12">
         {eventType === "Sale" && <Gavel />}
         {eventType === "Listing" && <NotebookPen />}

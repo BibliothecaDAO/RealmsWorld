@@ -1,6 +1,6 @@
 "use client";
 
-import type { Attributes, Collection, Token } from "@/types";
+import type { Collection, Token } from "@/types";
 import Link from "next/link";
 
 export const TokenAttributes = ({

@@ -38,26 +38,29 @@ export const erc721TokensRouter = createTRPCRouter({
         owner,
         orderBy,
         block,
-        activeListing,
         direction,
         attributeFilter,
       } = input;
       const whereFilter: SQL[] = [];
       const cursors = [];
+
+      // Order By tokenId
       if (orderBy == "tokenId") {
         cursors.push([
           schema.erc721Tokens.token_id, // Column to use for cursor
-          direction ?? "desc", // Sort order ('asc' or 'desc')
+          direction ?? "asc", // Sort order ('asc' or 'desc')
           cursor?.token_id, // Cursor value
         ]);
-      } else {
+      }
+      // Order By price
+      else {
         if (
           cursor == undefined ||
           (cursor?.token_id != 0 && cursor?.price != null)
         ) {
           cursors.push(
             [
-              schema.erc721Tokens.price, // Column to use for cursor
+              sql`case when EXTRACT(EPOCH FROM now()) < ${schema.erc721Tokens.expiration} then ${schema.erc721Tokens.price} else ${direction === "dsc" ? "0" : null} end`,
               direction ?? "asc", // Sort order ('asc' or 'desc')
               cursor?.price, // Cursor value
             ],
@@ -97,21 +100,21 @@ export const erc721TokensRouter = createTRPCRouter({
         const attributesObject: SQL[] = [];
         for (const [key, value] of Object.entries(attributeFilter)) {
           attributesObject.push(
-            eq(schema.erc721TokenAttributes.value, value),
-            eq(schema.erc721TokenAttributes.key, key),
+            inArray(
+              schema.erc721Tokens.id,
+              ctx.db
+                .select({ id: schema.erc721TokenAttributes.token_key })
+                .from(schema.erc721TokenAttributes)
+                .where(
+                  and(
+                    eq(schema.erc721TokenAttributes.value, value),
+                    eq(schema.erc721TokenAttributes.key, key),
+                  ),
+                ),
+            ),
           );
         }
-        whereFilter.push(
-          inArray(
-            schema.erc721Tokens.id,
-            ctx.db
-              .select({ id: schema.erc721TokenAttributes.token_key })
-              .from(schema.erc721TokenAttributes)
-              .where(and(...attributesObject)),
-
-            //.where(and(...attributesObject)),
-          ),
-        );
+        whereFilter.push(...attributesObject);
       }
       /*const items = await ctx.db
         .select({
