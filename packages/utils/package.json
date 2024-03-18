@@ -14,15 +14,15 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@types/firefox-webext-browser": "^120.0.2",
+    "@types/firefox-webext-browser": "^120.0.3",
     "clsx": "^2.1.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
-    "tailwind-merge": "^2.2.1"
+    "tailwind-merge": "^2.2.2"
   },
   "devDependencies": {
     "@realms-world/tsconfig": "*",
-    "@types/node": "^20.11.25",
+    "@types/node": "^20.11.28",
     "typescript": "^5.4.2"
   },
   "publishConfig": {

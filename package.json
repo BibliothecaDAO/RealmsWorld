@@ -26,9 +26,9 @@
     "typecheck": "turbo typecheck"
   },
   "dependencies": {
-    "@manypkg/cli": "^0.21.2",
+    "@manypkg/cli": "^0.21.3",
     "@turbo/gen": "^1.12.5",
-    "npm-check-updates": "^16.14.15",
+    "npm-check-updates": "^16.14.17",
     "prettier": "^3.2.5",
     "tsup": "^8.0.2",
     "turbo": "^1.12.5",
