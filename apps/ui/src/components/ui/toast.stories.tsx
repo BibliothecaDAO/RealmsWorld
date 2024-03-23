@@ -15,10 +15,10 @@
 
 import type { Meta, StoryObj } from "@storybook/react";
 
+import type { Toast as ToastProps } from "./use-toast";
 import { Button } from "./button";
 import { ToastAction } from "./toast";
 import { useToast } from "./use-toast";
-import type { Toast as ToastProps } from "./use-toast";
 
 const ToastDemo = (props: ToastProps) => {
   const { toast } = useToast();

@@ -22,8 +22,8 @@
   },
   "devDependencies": {
     "@realms-world/tsconfig": "*",
-    "@types/node": "^20.11.28",
-    "typescript": "^5.4.2"
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.3"
   },
   "publishConfig": {
     "access": "restricted"

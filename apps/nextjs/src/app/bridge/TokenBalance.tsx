@@ -26,11 +26,12 @@ export const TokenBalance = ({
       onKeyDown={onClick} // Added to support keyboard interactions
       role="button" // Added to make div function as a button
       tabIndex={0} // Added to make the div focusable
-      className="h-full cursor-pointer justify-center pb-4 text-end"
+      className="h-full cursor-pointer justify-center text-end"
     >
-      <span className="text-sm text-white/50">Available Balance</span>
       <div className="flex justify-end">
         <div className="flex text-sm">
+        <span className="text-sm text-white/50 pr-1">Balance:</span>
+
           {isLoading ?? typeof balanceState != "bigint" ? (
             <Loader2 className="h-5 w-5 animate-spin" />
           ) : balanceState ? (
