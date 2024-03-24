@@ -10,6 +10,7 @@ import Crown from "@/icons/crown.svg";
 import Discord from "@/icons/discord.svg";
 import Gamepad from "@/icons/gamepad.svg";
 import LordsIcon from "@/icons/lords.svg";
+import PieChart from "@/icons/pie-chart.svg";
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
 import { Github, Twitter } from "lucide-react";
@@ -35,6 +36,11 @@ const Sidebar = () => {
       name: "Collections",
       href: "/collection",
       icon: <Album className="w-[25px]" />,
+    },
+    {
+      name: "Tokenomics",
+      href: "/tokenomics",
+      icon: <PieChart className="w-[25px]" />,
     },
     {
       name: "Bridge",
@@ -119,10 +125,10 @@ const Sidebar = () => {
             </div>
             <div className="mt-3 font-sans">
               <LordsIcon className="mx-auto h-6 w-6 fill-bright-yellow pb-1" />
-              {lordsPrice}
+              {lordsPrice.usdPrice}
             </div>
 
-            <div className=" flex flex-col space-y-2 sm:mt-auto">
+            <div className=" flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
               {social.map((item, index) => {
                 return (
                   <Button
@@ -135,17 +141,6 @@ const Sidebar = () => {
                   </Button>
                 );
               })}
-            </div>
-            <div className="my-4 w-full px-2">
-              <hr className="border-b-[3px]" />
-            </div>
-            <div className="w-full content-center items-center px-2">
-              <div className="absolute -ml-2 w-full text-center text-sm">
-                Connect Wallet
-              </div>
-              <div className="pt-8">
-                <WalletSheet />
-              </div>
             </div>
           </div>
         </div>

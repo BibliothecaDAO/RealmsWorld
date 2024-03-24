@@ -14,7 +14,7 @@ import CollectionsList from "./collection/CollectionsList";
 
 export default async function Home() {
   return (
-    <div className="container mx-auto mt-12 px-4 md:pl-24 lg:mt-12">
+    <div className="container mx-auto mt-12 px-4 md:pl-24 lg:mt-24">
       <h1 className="mb-8 flex justify-center font-sans text-4xl md:text-6xl">
         <RWLogo className="h-24 md:h-32" />
       </h1>
@@ -52,8 +52,8 @@ export default async function Home() {
           ))}
         </div>
       </div>
-      <hr className="my-8 border" />
-      <h3 className="mb-8">Blog</h3>
+
+      {/* <h3 className="mb-8">Blog</h3>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         <div className="border">
           <Link href={"/blog/loot-survivor"}>
@@ -65,7 +65,7 @@ export default async function Home() {
             ></Image>
           </Link>
         </div>
-      </div>
+      </div> */}
       <hr className="my-8 border" />
       <div className="my-20 ">
         <h3 className="mb-8">Featured Collections</h3>
