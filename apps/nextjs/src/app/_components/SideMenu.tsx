@@ -12,6 +12,7 @@ import Discord from "@/icons/discord.svg";
 import Gamepad from "@/icons/gamepad.svg";
 import LordsIcon from "@/icons/lords.svg";
 import PieChart from "@/icons/pie-chart.svg";
+import RealmsL3 from "@/icons/realms_l3.svg";
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
 import { Github, Twitter } from "lucide-react";
@@ -42,6 +43,11 @@ const Sidebar = () => {
       name: "Tokenomics",
       href: "/tokenomics",
       icon: <PieChart className="w-[25px]" />,
+    },
+    {
+      name: "Realms L3",
+      href: "/network",
+      icon: <RealmsL3 className="w-[25px] fill-current" />,
     },
     {
       name: "Events",
