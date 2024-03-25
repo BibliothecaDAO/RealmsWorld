@@ -27,9 +27,9 @@ export default async function Home() {
 
   return (
     <div className="container mx-auto mt-12 px-4 md:pl-24 lg:mt-24">
-      <h1 className="mb-8 flex justify-center font-sans text-4xl md:text-6xl">
+      {/* <h1 className="mb-8 flex justify-center font-sans text-4xl md:text-6xl">
         <RWLogo className="h-24 md:h-32" />
-      </h1>
+      </h1> */}
       <div className="my-4 flex w-fit flex-wrap bg-dark-green p-1 text-xl">
         <span className="align-center">Powered by </span>
         <Link href={"https://dojoengine.org/"}>
@@ -41,26 +41,30 @@ export default async function Home() {
         </Link>
         Realms.World is a fantasy multiverse filled with fully onchain games
       </div>
-      <h2>Live onchain games</h2>
-      <div className="my-10 ">
-        <Carousel
-          className="left-0 top-0 h-[700px] pb-8  sm:w-full"
-          showPreview
-          images={carouselImages}
-          cover
-          options={{
-            loop: true,
-          }}
-          autoPlay
-        />
-        <h2>Events</h2>
+
+      <Carousel
+        className="left-0 top-0 h-[700px] sm:w-full"
+        // showPreview
+        images={carouselImages}
+        cover
+        options={{
+          loop: true,
+        }}
+        autoPlay
+      />
+
+      <div className="my-24">
+        <hr />
+        <h3>Events</h3>
         <EventGrid />
-        <h2>All Games</h2>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {games.map((game: Game, index) => (
-            <GameCard key={index} game={game} />
-          ))}
-        </div>
+      </div>
+      <hr />
+
+      <h3>All Games</h3>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {games.map((game: Game, index) => (
+          <GameCard key={index} game={game} />
+        ))}
       </div>
 
       {/* <h3 className="mb-8">Blog</h3>

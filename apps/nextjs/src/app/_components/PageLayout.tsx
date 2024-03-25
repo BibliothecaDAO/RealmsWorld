@@ -1,6 +1,6 @@
 interface PageLayoutProps {
   children: React.ReactNode;
-  title: string;
+  title?: string;
 }
 
 export const PageLayout = ({ title, children }: PageLayoutProps) => {

@@ -45,8 +45,8 @@ export const GameCard = async ({ game }: GameCardProps) => {
         <Image
           src={imageName}
           alt={game.name}
-          width={300}
-          height={150}
+          width={80}
+          height={80}
           className="max-h-[180px] w-auto max-w-[75%] object-contain"
         />
         <p className="mt-2  text-lg font-semibold">{game.description}</p>
