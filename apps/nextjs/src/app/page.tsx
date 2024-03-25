@@ -12,8 +12,19 @@ import { Carousel } from "@realms-world/ui";
 //import { Carousel } from "@realms-world/ui";
 
 import CollectionsList from "./collection/CollectionsList";
+import { EventGrid } from "./events/EventGrid";
 
 export default async function Home() {
+  const carouselImages = games
+    .filter((a) => a.status === "beta" || a.status === "mainnet")
+    .map((game: Game, index) => ({
+      alt: game.name,
+      src: `/games/${game.id}/cover.webp`,
+      description: game.description,
+      href: `/games/${game.id}`,
+      title: game.name,
+    }));
+
   return (
     <div className="container mx-auto mt-12 px-4 md:pl-24 lg:mt-24">
       <h1 className="mb-8 flex justify-center font-sans text-4xl md:text-6xl">
@@ -30,23 +41,21 @@ export default async function Home() {
         </Link>
         Realms.World is a fantasy multiverse filled with fully onchain games
       </div>
-
-      <hr className="border" />
-
+      <h2>Live onchain games</h2>
       <div className="my-10 ">
-        <h3 className="mb-8">Games</h3>
-        {/* <Carousel
-          className="left-0 top-0 h-[600px] w-4/5 bg-dark-green"
-          images={games.map((game: Game, index) => ({
-            alt: game.name,
-            src: `/games/${game.id}/cover.webp`,
-          }))}
+        <Carousel
+          className="left-0 top-0 h-[700px] pb-8  sm:w-full"
+          showPreview
+          images={carouselImages}
           cover
           options={{
             loop: true,
           }}
           autoPlay
-        /> */}
+        />
+        <h2>Events</h2>
+        <EventGrid />
+        <h2>All Games</h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {games.map((game: Game, index) => (
             <GameCard key={index} game={game} />

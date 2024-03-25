@@ -2,7 +2,7 @@
 import path from "path";*/
 import type { Metadata } from "next";
 
-import { CHAIN_IDS_TO_NAMES, Tokens, games } from "@realms-world/constants";
+import { CHAIN_IDS_TO_NAMES, games, Tokens } from "@realms-world/constants";
 import {
   Button,
   Carousel,
@@ -91,6 +91,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 images={list}
                 autoPlay
                 showPreview
+                cover
               />
             )}
             <div>
@@ -118,11 +119,11 @@ export default async function Page({ params }: { params: { id: string } }) {
                 {game?.links.homepage && (
                   <Button
                     size={"xs"}
-                    variant={"outline"}
+                    variant={"default"}
                     href={game?.links.homepage}
                     className="mr-2"
                   >
-                    Website
+                    Play
                   </Button>
                 )}
                 {game?.links.mainnet && (
