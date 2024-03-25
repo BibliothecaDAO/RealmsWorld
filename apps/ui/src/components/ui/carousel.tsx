@@ -7,7 +7,6 @@ import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import type { Game } from "@realms-world/constants";
 import { cn } from "@realms-world/utils";
 
 import { Button } from "./button";
