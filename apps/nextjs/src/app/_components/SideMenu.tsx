@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import Album from "@/icons/album.svg";
 import Bridge from "@/icons/bridge.svg";
+import Calender from "@/icons/calendar.svg";
 import Coins from "@/icons/coins.svg";
 import Crown from "@/icons/crown.svg";
 import Discord from "@/icons/discord.svg";
@@ -41,6 +42,11 @@ const Sidebar = () => {
       name: "Tokenomics",
       href: "/tokenomics",
       icon: <PieChart className="w-[25px]" />,
+    },
+    {
+      name: "Events",
+      href: "/events",
+      icon: <Calender className="w-[25px]" />,
     },
     {
       name: "Bridge",

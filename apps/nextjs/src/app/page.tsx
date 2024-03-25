@@ -7,6 +7,7 @@ import Starknet from "@/icons/starknet.svg";
 
 import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
+import { Carousel } from "@realms-world/ui";
 
 //import { Carousel } from "@realms-world/ui";
 
@@ -34,8 +35,8 @@ export default async function Home() {
 
       <div className="my-10 ">
         <h3 className="mb-8">Games</h3>
-        {/*<Carousel
-          className="bg-dark-green left-0 top-0 h-[600px] w-4/5"
+        {/* <Carousel
+          className="left-0 top-0 h-[600px] w-4/5 bg-dark-green"
           images={games.map((game: Game, index) => ({
             alt: game.name,
             src: `/games/${game.id}/cover.webp`,
@@ -45,7 +46,7 @@ export default async function Home() {
             loop: true,
           }}
           autoPlay
-        />*/}
+        /> */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {games.map((game: Game, index) => (
             <GameCard key={index} game={game} />
