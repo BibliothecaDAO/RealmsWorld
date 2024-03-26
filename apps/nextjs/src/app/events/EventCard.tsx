@@ -17,7 +17,7 @@ export const EventCard = ({ event }: { event: Event }) => {
 
   return (
     <div className="border">
-      <Image src={event.image} alt="" />
+      <Image width={600} height={400} src={event.image} alt="" />
       <div className="bg-theme-gray-light p-4">
         <span className={`flex flex-shrink  px-2 py-1`}>
           <div

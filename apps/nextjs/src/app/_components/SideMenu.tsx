@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import Album from "@/icons/album.svg";
+import Bookmark from "@/icons/bookmark.svg";
 import Bridge from "@/icons/bridge.svg";
 import Calender from "@/icons/calendar.svg";
 import Coins from "@/icons/coins.svg";
@@ -52,6 +53,11 @@ const Sidebar = () => {
       name: "Events",
       href: "/events",
       icon: <Calender className="w-[25px]" />,
+    },
+    {
+      name: "Notes",
+      href: "/blog",
+      icon: <Bookmark className="w-[25px]" />,
     },
     {
       name: "Bridge",

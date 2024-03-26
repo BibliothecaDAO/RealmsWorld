@@ -21,7 +21,7 @@ export const Footer = () => {
   ];
 
   return (
-    <div className="w-full py-24 sm:pl-36 sm:pt-24">
+    <div className="w-full px-4 py-24 sm:pl-36 sm:pt-24">
       <div className="w-full">
         <h1>Realms.World</h1>
       </div>

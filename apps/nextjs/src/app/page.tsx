@@ -7,6 +7,7 @@ import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
 import { Carousel } from "@realms-world/ui";
 
+import PostGrid from "./blog/PostGrid";
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
 
@@ -63,19 +64,12 @@ export default async function Home() {
         ))}
       </div>
 
-      {/* <h3 className="mb-8">Blog</h3>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <div className="border">
-          <Link href={"/blog/loot-survivor"}>
-            <Image
-              src="/blog/loot-survivor/Realms.World_LS_article_modal.png"
-              width={600}
-              height={900}
-              alt="LS Blog"
-            ></Image>
-          </Link>
-        </div>
-      </div> */}
+      <hr />
+      <div className="my-24">
+        <h3>News</h3>
+        <PostGrid />
+      </div>
+
       <hr className="my-8 border" />
       <div className="my-20 ">
         <h3 className="mb-8">Featured Collections</h3>
