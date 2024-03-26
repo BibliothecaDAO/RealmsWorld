@@ -20,7 +20,6 @@ import { Github, Twitter } from "lucide-react";
 import { Button, ScrollArea } from "@realms-world/ui";
 
 import { useUIContext } from "../providers/UIProvider";
-import { WalletSheet } from "./wallet/WalletSheet";
 
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useUIContext();

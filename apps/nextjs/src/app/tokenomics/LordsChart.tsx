@@ -1,7 +1,9 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { PureComponent } from "react";
-import { Cell, Pie, PieChart, ResponsiveContainer, Sector } from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 export const data = [
   {
@@ -37,8 +39,6 @@ const renderCustomizedLabel = ({
   outerRadius,
   percent,
   name,
-
-  index,
 }: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);

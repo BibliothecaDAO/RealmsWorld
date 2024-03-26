@@ -39,11 +39,7 @@ export const EthereumLoginButton = ({
         const connected = mounted && account && chain;
         return (
           <Button
-            // className={
-            //   buttonClass +
-            //   " outline  " +
-            //   (connected && "!shadow-[0_0_10px_rgb(74,222,128)] ")
-            // }
+            className={buttonClass}
             variant={variant ?? "outline"}
             size="sm"
             onClick={connected ? toggleAccount : openConnectModal}

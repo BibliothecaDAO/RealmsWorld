@@ -22,10 +22,9 @@ export default async function Page({ params }: { params: { id: string } }) {
   const event = events.find((event) => event.slug === params.id);
 
   return (
-    <PageLayout title={event?.name || ""}>
+    <PageLayout title={event?.name ?? ""}>
       <img className="w-96" src={event?.image} alt="" />
       <div className="py-4">
-        {" "}
         <span className={`rounded border px-2 py-1 `}>
           {event?.startDate} to {event?.endDate}
         </span>

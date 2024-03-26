@@ -1,15 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 import { GameCard } from "@/app/games/GameCard";
 import DojoDark from "@/icons/mark-dark.svg";
-import RWLogo from "@/icons/rw-logo.svg";
 import Starknet from "@/icons/starknet.svg";
 
 import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
 import { Carousel } from "@realms-world/ui";
-
-//import { Carousel } from "@realms-world/ui";
 
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
@@ -17,7 +13,7 @@ import { EventGrid } from "./events/EventGrid";
 export default async function Home() {
   const carouselImages = games
     .filter((a) => a.status === "beta" || a.status === "mainnet")
-    .map((game: Game, index) => ({
+    .map((game: Game) => ({
       alt: game.name,
       src: `/games/${game.id}/cover.webp`,
       description: game.description,

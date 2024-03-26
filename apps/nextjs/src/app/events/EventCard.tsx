@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Event } from "@/types";
 
 import { Button } from "@realms-world/ui";
@@ -16,7 +17,7 @@ export const EventCard = ({ event }: { event: Event }) => {
 
   return (
     <div className="border">
-      <img src={event.image} alt="" />
+      <Image src={event.image} alt="" />
       <div className="bg-theme-gray-light p-4">
         <span className={`flex flex-shrink  px-2 py-1`}>
           <div
