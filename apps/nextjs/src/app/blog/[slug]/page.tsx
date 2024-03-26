@@ -9,7 +9,6 @@
 //   getPreviousFrame,
 //   useFramesReducer,
 // } from "frames.js/next/server";
-import Link from "next/link";
 
 import { Button } from "@realms-world/ui";
 
