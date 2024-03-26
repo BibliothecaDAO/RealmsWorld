@@ -33,9 +33,7 @@ export const useLordsPrice = () => {
         console.log(error);
       })
       .then((data) => {
-        console.log(data);
         // setLordsPrice(Number(data.price?.rate.toFixed(2)));
-        // @ts-ignore
         setLordsPrice({
           holderCount: data.holdersCount,
           usdPrice: Number(data.price.rate.toFixed(2)),
