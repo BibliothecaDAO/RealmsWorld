@@ -10,11 +10,14 @@ interface Link {
   whitepaper?: string;
   homepage?: string;
 }
+
+type Status = "alpha" | "beta" | "development" | "mainnet";
+
 export interface Game {
   name: string; // Display name of the game
   id: string; // Game ID (used for URL must be kebab-case)
   color: string;
-  status: string;
+  status: Status;
   developer: string;
   genres?: string[];
   description: string;
@@ -35,7 +38,7 @@ export const games: Game[] = [
     developer: "BiblioDAO",
     genres: ["Economic Strategy", "PvP", "Raiding", "Economy"],
     color: "#f5f5f5",
-    status: "alpha",
+    status: "development",
     description: "The Economic Seed of the Realms World",
     longform:
       "Eternum is built on Cairo smart contracts and runs on the Dojo game engine. It's open-source, licensed under both MIT for software freedom and CC0 for public domain use, ensuring wide accessibility and community-driven development.",
@@ -43,14 +46,35 @@ export const games: Game[] = [
       homepage: "https://next-eternum.realms.world/",
       discord: "https://discord.gg/uQnjZhZPfu",
       twitter: "https://twitter.com/LootRealms",
-      whitepaper: "https://scroll.bibliothecadao.xyz/",
     },
     operatingSystems: ["Web Browser"],
     lords: "Trade for resources",
-    chains: [ChainId.SN_SEPOLIA],
+    chains: [ChainId.REALMS_L3],
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
+  },
+  {
+    name: "Paved",
+    id: "paved",
+    developer: "Paved Studio",
+    genres: ["tile-matching", "puzzle", "strategy"],
+    color: "#f5f5f5",
+    status: "beta",
+    description: "A strategic tile-matching game",
+    longform:
+      "In PAVED, players compete for high scores and rewards by laying tiles to form an expanding medieval landscape. Inspired by the board game Carcassonne, solo and multiplayer modes offer unique, strategic experiences that test both planning and decisiveness. Think you’ve got what it takes? Pave your way to victory in a fully onchain strategy game like no other.",
+    links: {
+      homepage: "https://paved.gg",
+      discord: "https://discord.gg/uQnjZhZPfu",
+      twitter: "https://twitter.com/pavedgame",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "Trade for resources",
+    chains: [ChainId.REALMS_L3],
+    collections: [Collections.GOLDEN_TOKEN],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 1,
   },
   {
     name: "Loot Survivor",
@@ -58,7 +82,7 @@ export const games: Game[] = [
     developer: "BiblioDAO",
     genres: ["Play to Die", "Roguelike"],
     color: "#f5f5f5",
-    status: "Mainnet",
+    status: "mainnet",
     description: "Play to Die",
     longform:
       "Survivors is the first Loot adventure game exploring the Play2Die mechanic. It is a game of onchain survival where you must defeat beasts and collect gear in the fight to stay alive and make it to the top of the leaderboard.",
@@ -70,7 +94,7 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "25 Per Adventurer",
-    chains: [ChainId.SN_MAIN],
+    chains: [ChainId.SN_MAIN, ChainId.REALMS_L3],
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
@@ -92,7 +116,7 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "TBD",
-    chains: [ChainId.SLOT_TESTNET],
+    chains: [ChainId.SLOT_TESTNET, ChainId.REALMS_L3],
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
     screenshotLength: 6,
@@ -114,7 +138,7 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "TBD",
-    chains: [ChainId.SLOT_TESTNET],
+    chains: [ChainId.SLOT_TESTNET, ChainId.REALMS_L3],
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 6,
@@ -125,7 +149,7 @@ export const games: Game[] = [
     developer: "Underware",
     genres: ["Play to Die", "Roguelike", "RPG", "Dungeon Crawler"],
     color: "#fbf6c0",
-    status: "In Development",
+    status: "development",
     description: "The Mysteries Below the Realms",
     longform:
       "Explore the endless mysteries of the The Underworld. A living autonomous (under)world of drama, story and danger, waiting to be explored and shaped by its inhabitants, and occupying the liminal space between and underneath. Underworld is an extension to Realms built on Starknet and Dojo, adding composable building blocks, and enabling a range of interoperable game experiences. The flagship game will be a retro narrative dungeon crawler.",
@@ -135,28 +159,10 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "TBD",
-    chains: [ChainId.SLOT_TESTNET],
+    chains: [ChainId.SLOT_TESTNET, ChainId.REALMS_L3],
     collections: [Collections.REALMS, Collections.BEASTS],
     tokens: [Tokens.LORDS],
     screenshotLength: 6,
-  },
-  {
-    name: "Loot Auto Chess",
-    id: "loot-auto-chess",
-    developer: "HelheimLabs",
-    genres: ["PvP", "Auto Battle"],
-    color: "#f5f5f8",
-    status: "In development",
-    description: "Auto Chess Battle",
-    longform:
-      "Players can strategically select and upgrade heroes to form powerful combinations, manage their in-game economy wisely to optimize their team, and position their heroes effectively on the board to outlast their opponents in automated battles.",
-    links: {},
-    operatingSystems: ["Web Browser"],
-    lords: "For ticket",
-    chains: [],
-    collections: [Collections.GOLDEN_TOKEN, Collections.BEASTS],
-    tokens: [Tokens.LORDS],
-    screenshotLength: 1,
   },
   {
     name: "Mississippi",
@@ -164,7 +170,7 @@ export const games: Game[] = [
     developer: "Mississippi Team",
     genres: ["SLG", "PVP", "Roguelike"],
     color: "#6F391E",
-    status: "beta",
+    status: "development",
     description: "Fully on-chain PVP roguelike game",
     longform:
       'Mississippi is a fully on-chain PvP roguelike game. We aim to create an expansive cavern space filled with abundant resources. Players are tasked with exploring the cavern and exploiting as many resources as possible within a fixed time limit. Additionally, we plan to integrate with the Lootverse, allowing for the "extraction" of equipment and resources from Loot Bags and Realms. This integration will provide players with specific attributes for each round.',
@@ -176,7 +182,7 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "N/A",
-    chains: [ChainId.MISSISSIPPI_TESTNET],
+    chains: [ChainId.MISSISSIPPI_TESTNET, ChainId.REALMS_L3],
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
@@ -187,10 +193,10 @@ export const games: Game[] = [
     developer: "Crazy_Diamond",
     genres: ["Strategy Card Games", "RPG"],
     color: "#00FF63",
-    status: "In development",
+    status: "development",
     description: "Full on chain Role-playing adventure card game",
     longform:
-      "Combining the mechanics of Loot Survivor contracts with the interactive style of the Reigns game, GenLoot offers a novel fully on-chain gaming experience. Players can explore endless possibilities in this world built on blockchain smart contracts and decentralized storage, simply by swiping cards left or right",
+      "Combining the mechanics of Loot Survivor contracts with the interactive style of the Reigns game, GenLoot offers a novel fully on-chain gaming experience. Players can explore endless possibilities in this world built on blockchain smart contracts and decentralized storage, simply by swiping cards left or right.",
     links: {},
     operatingSystems: ["Web Browser"],
     lords: "As a game ticket",
@@ -216,7 +222,7 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "Trade for resources",
-    chains: [ChainId.SN_MAIN],
+    chains: [ChainId.SN_MAIN, ChainId.REALMS_L3],
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
@@ -238,7 +244,7 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "TBD",
-    chains: [ChainId.SN_SEPOLIA],
+    chains: [ChainId.SN_SEPOLIA, ChainId.REALMS_L3],
     collections: [],
     tokens: [],
     screenshotLength: 4,
@@ -271,14 +277,14 @@ export const games: Game[] = [
     developer: "zKorp",
     genres: ["Strategy", "PvP", "Casual"],
     color: "#f5f5f5",
-    status: "alpha",
+    status: "beta",
     description: "Conquer the world",
     longform:
       "zConqueror is a strategy game based on Risk, focusing on conquest and realm defense. Players compete to dominate the map and win rewards. You can compete up to 6 players",
     links: {
       twitter: "https://twitter.com/zKorp",
     },
-    chains: [ChainId.SLOT_TESTNET],
+    chains: [ChainId.SLOT_TESTNET, ChainId.REALMS_L3],
     operatingSystems: ["Web Browser"],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
