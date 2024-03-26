@@ -14,7 +14,7 @@ import { Button } from "@realms-world/ui";
 
 import { getArticleData } from "../getArticles";
 
-async function getData({ id }: any) {
+async function getData({ id }: { id: string }) {
   return {
     article: await getArticleData(id),
   };
