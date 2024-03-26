@@ -30,7 +30,7 @@
     "@realms-world/tsconfig": "*",
     "@types/eslint": "^8.56.6",
     "eslint": "^8.57.0",
-    "typescript": "^5.4.3"
+    "typescript": "^5.3.3"
   },
   "eslintConfig": {
     "root": true,
