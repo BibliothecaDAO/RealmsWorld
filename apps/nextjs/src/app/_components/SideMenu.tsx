@@ -4,12 +4,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import Album from "@/icons/album.svg";
+import Bookmark from "@/icons/bookmark.svg";
 import Bridge from "@/icons/bridge.svg";
+import Calender from "@/icons/calendar.svg";
 import Coins from "@/icons/coins.svg";
 import Crown from "@/icons/crown.svg";
 import Discord from "@/icons/discord.svg";
 import Gamepad from "@/icons/gamepad.svg";
 import LordsIcon from "@/icons/lords.svg";
+import PieChart from "@/icons/pie-chart.svg";
+import RealmsL3 from "@/icons/realms_l3.svg";
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
 import { Github, Twitter } from "lucide-react";
@@ -17,7 +21,6 @@ import { Github, Twitter } from "lucide-react";
 import { Button, ScrollArea } from "@realms-world/ui";
 
 import { useUIContext } from "../providers/UIProvider";
-import { WalletSheet } from "./wallet/WalletSheet";
 
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useUIContext();
@@ -35,6 +38,26 @@ const Sidebar = () => {
       name: "Collections",
       href: "/collection",
       icon: <Album className="w-[25px]" />,
+    },
+    {
+      name: "Tokenomics",
+      href: "/tokenomics",
+      icon: <PieChart className="w-[25px]" />,
+    },
+    {
+      name: "Realms L3",
+      href: "/network",
+      icon: <RealmsL3 className="w-[25px] fill-current" />,
+    },
+    {
+      name: "Events",
+      href: "/events",
+      icon: <Calender className="w-[25px]" />,
+    },
+    {
+      name: "Notes",
+      href: "/blog",
+      icon: <Bookmark className="w-[25px]" />,
     },
     {
       name: "Bridge",
@@ -119,10 +142,10 @@ const Sidebar = () => {
             </div>
             <div className="mt-3 font-sans">
               <LordsIcon className="mx-auto h-6 w-6 fill-bright-yellow pb-1" />
-              {lordsPrice}
+              {lordsPrice.usdPrice}
             </div>
 
-            <div className=" flex flex-col space-y-2 sm:mt-auto">
+            <div className=" flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
               {social.map((item, index) => {
                 return (
                   <Button
@@ -135,17 +158,6 @@ const Sidebar = () => {
                   </Button>
                 );
               })}
-            </div>
-            <div className="my-4 w-full px-2">
-              <hr className="border-b-[3px]" />
-            </div>
-            <div className="w-full content-center items-center px-2">
-              <div className="absolute -ml-2 w-full text-center text-sm">
-                Connect Wallet
-              </div>
-              <div className="pt-8">
-                <WalletSheet />
-              </div>
             </div>
           </div>
         </div>

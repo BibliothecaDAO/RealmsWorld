@@ -14,6 +14,9 @@ import { Button } from "./button";
 export interface StoredFile {
   alt: string;
   src: string;
+  description?: string;
+  href?: string;
+  title?: string;
 }
 
 interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -95,7 +98,10 @@ export function Carousel({
 
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
-      <div ref={emblaRef} className="h-full overflow-hidden">
+      <div
+        ref={emblaRef}
+        className="h-full overflow-hidden rounded border-4 shadow-lg"
+      >
         <div
           className="-ml-4 flex h-full touch-pan-y"
           style={{
@@ -116,9 +122,18 @@ export function Carousel({
                 alt={image.alt}
                 fill
                 sizes="100vw"
-                className={cover ? "object-cover" : "object-contain"}
+                className={`${cover ? "object-cover" : "object-contain"}`}
                 priority={index === 0}
               />
+              {image.title && (
+                <div className="z-100 absolute  bottom-0 w-full px-12 pb-8 backdrop-blur">
+                  <h4>{image.title}</h4>
+                  <p className="mb-8">{image.description}</p>
+                  <Button href={`${image.href}`} variant={"default"}>
+                    Play
+                  </Button>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -141,7 +156,7 @@ export function Carousel({
               variant="outline"
               //size="icon"
               className={cn(
-                "focus-visible:ring-foreground group relative aspect-square h-full w-full max-w-[100px] rounded-none shadow-sm hover:bg-transparent",
+                "focus-visible:ring-foreground group relative aspect-square h-full w-full max-w-[100px] rounded-none border-4 shadow-sm hover:bg-transparent",
                 i === selectedIndex && "ring-foreground ring-1",
               )}
               onClick={() => scrollTo(i)}
@@ -151,6 +166,7 @@ export function Carousel({
               <Image
                 src={image.src}
                 alt={image.alt}
+                className="object-cover"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 fill
               />

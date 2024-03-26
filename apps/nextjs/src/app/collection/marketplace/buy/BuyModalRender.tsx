@@ -2,18 +2,15 @@ import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { useBuyToken } from "@/hooks/market/useBuyToken";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
-import {
-  useAccount,
-  useWaitForTransaction,
-} from "@starknet-react/core";
+import { useAccount, useWaitForTransaction } from "@starknet-react/core";
 import { formatUnits } from "viem";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
 import { LORDS } from "@realms-world/constants";
-import { useBuyToken } from "@/hooks/market/useBuyToken";
 
 export enum BuyStep {
   Checkout,
@@ -106,15 +103,19 @@ export const BuyModalRender: FC<Props> = ({
       return findLowestPriceActiveListing(listingsData?.items, token?.owner);
   }, [token, listingsData]);
 
-  const usdPrice = parseInt(listing?.price ?? "0") * lordsPrice;
+  const usdPrice = parseInt(listing?.price ?? "0") * lordsPrice.usdPrice;
   //const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;*/
-  const totalUsd = totalIncludingFees * lordsPrice;
+  const totalUsd = totalIncludingFees * lordsPrice.usdPrice;
 
   const lordsAddress = LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`;
 
   const addFundsLink = `https://app.avnu.fi/en?tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=${lordsAddress}&amount=${totalPrice}`;
 
-  const {writeAsync, error: writeError, data} = useBuyToken({listingId: listing?.id, price: listing?.price})
+  const {
+    writeAsync,
+    error: writeError,
+    data,
+  } = useBuyToken({ listingId: listing?.id, price: listing?.price });
   const { data: transactionData } = useWaitForTransaction({
     hash: data?.transaction_hash,
     watch: true,

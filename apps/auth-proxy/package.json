@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@auth/core": "^0.28.0"
+    "@auth/core": "^0.28.1"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "*",
@@ -19,7 +19,7 @@
     "@realms-world/tailwind-config": "*",
     "@realms-world/tsconfig": "*",
     "eslint": "^8.57.0",
-    "nitropack": "^2.9.1",
+    "nitropack": "^2.9.5",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
   },
