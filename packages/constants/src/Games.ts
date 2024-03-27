@@ -52,7 +52,7 @@ export const games: Game[] = [
     chains: [ChainId.REALMS_L3],
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
-    screenshotLength: 3,
+    screenshotLength: 2,
   },
   {
     name: "Paved",
