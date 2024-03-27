@@ -11,4 +11,14 @@ export const events: Event[] = [
     website: "https://paved.gg",
     slug: "paved",
   },
+  {
+    name: "Pixel Banners Mint",
+    description: "Generative Pixel Banners on Starknet.",
+    startDate: "2024-03-28",
+    endDate: "2024-04-04",
+    location: "Realms",
+    image: "/events/banners.png",
+    website: "https://banners.realms.world",
+    slug: "paved",
+  },
 ];
