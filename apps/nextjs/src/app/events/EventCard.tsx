@@ -16,7 +16,7 @@ export const EventCard = ({ event }: { event: Event }) => {
   }, [event.startDate, event.endDate]);
 
   return (
-    <div className="border">
+    <div className="border-4">
       <Image width={600} height={400} src={event.image} alt="" />
       <div className="bg-theme-gray-light p-4">
         <span className={`flex flex-shrink  px-2 py-1`}>
