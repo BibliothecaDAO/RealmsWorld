@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import type { PostMetadata } from "./getArticles";
 import { BaseCard } from "../_components/BaseCard";
-import { PostMetadata } from "./getArticles";
 
 const PostPreview = (props: PostMetadata) => {
   return (

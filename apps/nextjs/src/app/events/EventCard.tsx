@@ -1,6 +1,6 @@
+import type { Event } from "@/types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Event } from "@/types";
 
 import { Button } from "@realms-world/ui";
 
