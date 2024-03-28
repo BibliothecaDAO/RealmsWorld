@@ -1,11 +1,11 @@
 import type { Event } from "@/types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { Button } from "@realms-world/ui";
 
 import { BaseCard } from "../_components/BaseCard";
-import Link from "next/link";
 
 export const EventCard = ({ event }: { event: Event }) => {
   const [isToday, setIsToday] = useState(false);
@@ -20,14 +20,15 @@ export const EventCard = ({ event }: { event: Event }) => {
 
   return (
     <BaseCard>
-    <Link href={"/events/" + event.slug}>
-      <Image
-        width={600}
-        height={400}
-        className="min-h-[400px] object-cover"
-        src={event.image}
-        alt=""
-      /></Link>
+      <Link href={"/events/" + event.slug}>
+        <Image
+          width={600}
+          height={400}
+          className="min-h-[400px] object-cover"
+          src={event.image}
+          alt=""
+        />
+      </Link>
       <div className="flex h-56  flex-col bg-theme-gray-light p-4">
         <span className={`flex flex-shrink  px-2 py-1`}>
           <div
@@ -41,7 +42,7 @@ export const EventCard = ({ event }: { event: Event }) => {
         <p>{event.description}</p>
         <div className="mt-auto flex w-full justify-between self-end">
           <Button href={event.website} size={"xs"} variant="default">
-            {event.type =='play' ? 'Play Game' : 'Mint'}
+            {event.type == "play" ? "Play Game" : "Mint"}
           </Button>
           <Button href={"/events/" + event.slug} size={"xs"} variant="outline">
             More info
