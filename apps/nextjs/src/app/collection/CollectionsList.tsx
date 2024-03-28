@@ -2,7 +2,7 @@ import type { Collection, L2Collection } from "@/types";
 import { CollectionCard } from "@/app/_components/CollectionCard";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 
-import { Collections, getCollectionAddresses } from "@realms-world/constants";
+import { Collections, getCollectionAddresses, CollectionDisplayName } from "@realms-world/constants";
 
 import { getCollections } from "../../lib/reservoir/getCollections";
 
@@ -37,6 +37,11 @@ export default async function CollectionsList() {
       name: "Blobert",
       link: "blobert",
       image: "/collections/blobert.svg",
+    },
+    {
+      name: "Pixel Banners (for Adventurers)",
+      link: "banners",
+      image: "/collections/banners.svg",
     },
   ];
 
