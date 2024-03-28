@@ -33,7 +33,7 @@ export const TokenInformation = ({
 }) => {
   return (
     <>
-      <div className="flex w-full flex-none flex-col md:w-1/3">
+      <div className="mt-8 flex w-full flex-none flex-col sm:mt-16 md:w-1/3">
         {image ? (
           <Image
             src={image}

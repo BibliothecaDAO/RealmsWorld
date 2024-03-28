@@ -41,9 +41,9 @@ export const games: Game[] = [
     status: "development",
     description: "The Economic Seed of the Realms World",
     longform:
-      "Eternum is built on Cairo smart contracts and runs on the Dojo game engine. It's open-source, licensed under both MIT for software freedom and CC0 for public domain use, ensuring wide accessibility and community-driven development.",
+      "Eternum represents the culmination of two years of dedicated effort, aimed at crafting a world that transcends the bounds of its creators. It's not just a game; it's a sophisticated fusion of economic and social frameworks, forming the backbone of a burgeoning digital society. Eternum is designed to evolve and grow, offering a dynamic experience far removed from the conventional notion of a 'finished game' like Civilization 6. Think of it as a living, breathing digital ecosystem, constantly evolving and inviting endless exploration.",
     links: {
-      homepage: "https://next-eternum.realms.world/",
+      homepage: "https://eternum.realms.world/",
       discord: "https://discord.gg/uQnjZhZPfu",
       twitter: "https://twitter.com/LootRealms",
     },
@@ -61,7 +61,7 @@ export const games: Game[] = [
     genres: ["tile-matching", "puzzle", "strategy"],
     color: "#f5f5f5",
     status: "beta",
-    description: "A strategic tile-matching game",
+    description: "Pave your way to victory",
     longform:
       "In PAVED, players compete for high scores and rewards by laying tiles to form an expanding medieval landscape. Inspired by the board game Carcassonne, solo and multiplayer modes offer unique, strategic experiences that test both planning and decisiveness. Think you’ve got what it takes? Pave your way to victory in a fully onchain strategy game like no other.",
     links: {
@@ -74,7 +74,7 @@ export const games: Game[] = [
     chains: [ChainId.REALMS_L3],
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
-    screenshotLength: 1,
+    screenshotLength: 2,
   },
   {
     name: "Loot Survivor",
@@ -87,6 +87,7 @@ export const games: Game[] = [
     longform:
       "Survivors is the first Loot adventure game exploring the Play2Die mechanic. It is a game of onchain survival where you must defeat beasts and collect gear in the fight to stay alive and make it to the top of the leaderboard.",
     links: {
+      homepage: "https://survivor.realms.world/",
       mainnet: "https://survivor.realms.world/",
       testnet: "https://beta-survivor.realms.world/",
       discord: "https://discord.gg/realmsworld",
@@ -95,7 +96,7 @@ export const games: Game[] = [
     operatingSystems: ["Web Browser"],
     lords: "25 Per Adventurer",
     chains: [ChainId.SN_MAIN, ChainId.REALMS_L3],
-    collections: [Collections.GOLDEN_TOKEN],
+    collections: [Collections.GOLDEN_TOKEN, Collections.BEASTS],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
   },
