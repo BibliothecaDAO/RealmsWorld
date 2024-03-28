@@ -10,6 +10,7 @@ export const events: Event[] = [
     image: "/events/paved2.png",
     website: "https://paved.gg",
     slug: "paved",
+    type: "play"
   },
   {
     name: "Pixel Banners Mint",
@@ -19,6 +20,7 @@ export const events: Event[] = [
     location: "Realms",
     image: "/events/banners.png",
     website: "https://banners.realms.world",
-    slug: "paved",
+    slug: "banners-mint",
+    type:  "mint"
   },
 ];
