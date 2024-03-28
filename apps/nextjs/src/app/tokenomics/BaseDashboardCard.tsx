@@ -1,5 +1,7 @@
 "use client";
 
+import { BaseCard } from "../_components/BaseCard";
+
 interface BaseDashboardCardProps {
   title: string;
   dataTitle?: string;
@@ -16,11 +18,11 @@ export const BaseDashboardCard = ({
   className,
 }: BaseDashboardCardProps) => {
   return (
-    <div className={`h-full border bg-theme-gray-light p-4 ${className}`}>
-      <h6>{title}</h6>
+    <BaseCard className={`${className} h-full p-4`}>
+      <h6 className="font-sans font-bold tracking-wide">{title}</h6>
       <h5>{subtitle}</h5>
       <h3>{dataTitle}</h3>
       {children}
-    </div>
+    </BaseCard>
   );
 };

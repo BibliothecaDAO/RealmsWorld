@@ -327,4 +327,5 @@ export interface Event {
   image: string;
   slug: string;
   website: string;
+  type: string;
 }
