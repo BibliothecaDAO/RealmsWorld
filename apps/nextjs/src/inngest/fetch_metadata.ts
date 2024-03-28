@@ -6,11 +6,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextResponse } from "next/server";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import {
-  hash,
-  shortString,
-  uint256,
-} from "starknet";
+import { hash, shortString, uint256 } from "starknet";
 
 import type { SQL } from "@realms-world/db";
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
@@ -41,7 +37,7 @@ export const fetchMetadata = inngest.createFunction(
   },
   { event: "nft/mint" },
   async ({ event, step }) => {
-    const providerUrl = `https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;/* `https://starknet-mainnet.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;*/
+    const providerUrl = `https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`; /* `https://starknet-mainnet.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;*/
     /*const provider = new RpcProvider({
       nodeUrl: providerUrl,
     });*/
@@ -61,12 +57,12 @@ export const fetchMetadata = inngest.createFunction(
               contract_address:
                 /*"0x00539f522b29ae9251dbf7443c7a950cf260372e69efab3710a11bf17a9599f1",*/ event
                   .data.contract_address,
-              entry_point_selector: getCollectionAddresses(Collections.BEASTS)[
-                SUPPORTED_L2_CHAIN_ID
-              ] == event
-              .data.contract_address
-                ? tokenURI
-                : token_uri, // Token URI
+              entry_point_selector:
+                getCollectionAddresses(Collections.BEASTS)[
+                  SUPPORTED_L2_CHAIN_ID
+                ] == event.data.contract_address
+                  ? tokenURI
+                  : token_uri, // Token URI
               calldata: [tokenId.low, tokenId.high],
             },
             "pending",
@@ -119,10 +115,11 @@ export const fetchMetadata = inngest.createFunction(
     const flattenedAttributes: Record<string, string> = {};
 
     if (
-      event.data.contract_address ==
-      getCollectionAddresses(Collections.BLOBERT)[SUPPORTED_L2_CHAIN_ID]!
+      [
+        getCollectionAddresses(Collections.BLOBERT)[SUPPORTED_L2_CHAIN_ID]!,
+        getCollectionAddresses(Collections.BANNERS)[SUPPORTED_L2_CHAIN_ID]!,
+      ].includes(event.data.contract_address)
     ) {
-
       const metaFetched = svgImage.result ?? metadata.result;
 
       if (svgImage.result) {
@@ -136,9 +133,9 @@ export const fetchMetadata = inngest.createFunction(
         });
         value.push(metaFetched.pending_word);
         jsonString = atob(value.join("").substring(29));
-        if (jsonString.endsWith('Ó')) {
+        if (jsonString.endsWith("Ó")) {
           jsonString = jsonString.slice(0, -1);
-      }
+        }
         parsedJson = JSON.parse(jsonString);
       }
       parsedJson.attributes = parsedJson.attributes?.map((attribute: any) => {

@@ -38,6 +38,11 @@ export default async function CollectionsList() {
       link: "blobert",
       image: "/collections/blobert.svg",
     },
+    {
+      name: "Pixel Banners (for Adventurers)",
+      link: "banners",
+      image: "/collections/banners.svg",
+    },
   ];
 
   return (

@@ -71,6 +71,7 @@ const config = {
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
       { protocol: "https", hostname: "magically.gg" },
       { protocol: "https", hostname: "pro.opensea.io" },
+      { protocol: "https", hostname: "*.ipfs.nftstorage.link"}
     ],
   },
   async headers() {
