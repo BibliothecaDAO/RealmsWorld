@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 
 import { Button } from "@realms-world/ui";
@@ -68,7 +69,7 @@ export default async function Article({ params: { slug } }: ArticlePageProps) {
         </div>
         <Image
           alt={article.title}
-          src={article.image}
+          src={article.image as string | StaticImport}
           width={900}
           className="w-full object-cover"
           height={600}

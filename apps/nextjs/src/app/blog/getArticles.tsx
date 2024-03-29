@@ -75,10 +75,10 @@ export async function getArticleData(id: any) {
   return {
     id,
     contentHtml: processedContent,
-    title: data.title,
-    date: data.date,
-    image: data.image,
-    subtitle: data.subtitle,
-    author: data.author,
+    title: data.title as string,
+    date: data.date as string,
+    image: data.image as string | URL,
+    subtitle: data.subtitle as string,
+    author: data.author as string,
   };
 }
