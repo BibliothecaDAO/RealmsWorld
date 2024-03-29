@@ -42,7 +42,7 @@ export default async function CollectionSummary({
         value: `https://etherscan.io/address/${collection.id}`,
       },
       {
-        icon: <Discord className="h-[28px] w-[28px] fill-white" />,
+        icon: <Discord className="h-[28px] w-[28px] fill-current" />,
         value: collection.discordUrl,
       },
       {
@@ -87,7 +87,7 @@ export default async function CollectionSummary({
       : null;*/
 
     return (
-      <div className=" pt-10 sm:flex">
+      <div className=" px-2 pt-10 sm:flex sm:px-0">
         <div className="flex-none self-center sm:pr-10">
           {collection.image && (
             <Image

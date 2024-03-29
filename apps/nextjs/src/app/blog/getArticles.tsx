@@ -15,6 +15,7 @@ export interface PostMetadata {
   subtitle: string;
   slug: string;
   image: string;
+  author: string;
 }
 
 export default async function markdownToHtml(markdown: any) {
@@ -39,6 +40,7 @@ export function getSortedArticlesData() {
       date: data.date,
       image: data.image,
       subtitle: data.subtitle,
+      author: data.author,
     };
   });
 
@@ -73,9 +75,10 @@ export async function getArticleData(id: any) {
   return {
     id,
     contentHtml: processedContent,
-    title: data.title,
-    date: data.date,
-    image: data.image,
-    subtitle: data.subtitle,
+    title: data.title as string,
+    date: data.date as string,
+    image: data.image as string | URL,
+    subtitle: data.subtitle as string,
+    author: data.author as string,
   };
 }
