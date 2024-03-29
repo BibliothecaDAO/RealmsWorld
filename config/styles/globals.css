@@ -134,6 +134,6 @@ body::-webkit-scrollbar-thumb,
   position: relative;
 }
 
-img {
+svg image {
   image-rendering: pixelated;
 }
