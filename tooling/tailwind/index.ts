@@ -43,5 +43,5 @@ module.exports = {
       variants: ["hover", "ui-selected"],
     },
   ],
-  //plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography")],
 };

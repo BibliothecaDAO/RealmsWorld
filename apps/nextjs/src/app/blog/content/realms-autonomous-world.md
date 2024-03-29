@@ -1,6 +1,6 @@
 ---
 title: "Realms - The Autonomous World"
-subtitle: "It's all lead to this."
+subtitle: "Bibliotheca DAO has been building an eternal and ever-expanding onchain game world called the Realms. "
 date: "2023-03-01"
 tags: ["zk", "autonomous worlds", "starks"]
 author: 🍞

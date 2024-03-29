@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import type { Game } from "@realms-world/constants";
-import { Button } from "@realms-world/ui";
+import { Badge, Button } from "@realms-world/ui";
 
 import { BaseCard } from "../_components/BaseCard";
+import { StatusDot } from "../_components/StatusDot";
 
 interface GameCardProps {
   game: Game;
@@ -37,6 +38,16 @@ export const GameCard = async ({ game }: GameCardProps) => {
         className="group relative flex h-80 flex-col items-center justify-center  text-center  "
         href={`/games/${game.id}`} // navigate to a custom game homepage if one is specified, default page otherwise
       >
+        <div className="absolute left-4 top-4 z-10 font-sans">
+          <Badge
+            className="bg-bright-yellow text-theme-gray"
+            variant={"default"}
+          >
+            {StatusDot(game?.status)}
+            {game?.status}
+          </Badge>
+        </div>
+
         <Image
           src={`/games/${game.id}/cover.webp`}
           alt={game.name}

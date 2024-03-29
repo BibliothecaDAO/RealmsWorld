@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Link as ChainIcon, ChevronLeft } from "lucide-react";
+import { StatusDot } from "@/app/_components/StatusDot";
+import { ChevronLeft } from "lucide-react";
 
 import { CHAIN_IDS_TO_NAMES, games, Tokens } from "@realms-world/constants";
 import {
@@ -96,26 +97,123 @@ export default async function Page({ params }: { params: { id: string } }) {
     imageName = `/games/${game?.id}/icon.svg`;
   }
 
-  const StatusDot = (status: string | undefined) => {
-    let color = "";
-    switch (status) {
-      case "beta":
-      case "alpha":
-      case "mainnet":
-        color = "bg-green-500"; // Green for beta, alpha, and mainnet
-        break;
-      case "development":
-        color = "bg-red-500"; // Red for development
-        break;
-      default:
-        color = "bg-gray-500"; // Default color for unspecified statuses
-    }
-    return (
-      <span
-        className={`h-2 w-2 ${color} mr-2 inline-block animate-pulse rounded-full`}
-      ></span>
-    );
-  };
+  const tableData = [
+    { key: "Studio", value: game?.developer },
+    { key: "Status", value: game?.status },
+    {
+      key: "Chain",
+      value: (
+        <div className="flex justify-end">
+          {" "}
+          {game?.chains.map((a, i) =>
+            String(a) === "420" ? (
+              <Link key={i} href="/network" className=" h-full self-center">
+                {" "}
+                <Badge
+                  key={i}
+                  variant={"outline"}
+                  className="h-full hover:bg-bright-yellow hover:text-theme-gray"
+                >
+                  {CHAIN_IDS_TO_NAMES[a].replace(/_/g, " ")}
+                </Badge>
+              </Link>
+            ) : (
+              <Badge key={i} variant={"outline"}>
+                {CHAIN_IDS_TO_NAMES[a].replace(/_/g, " ")}
+              </Badge>
+            ),
+          )}
+        </div>
+      ),
+    },
+    {
+      key: "Category",
+      value: (
+        <div className="flex flex-wrap justify-end">
+          {game?.genres?.map((a, i) => (
+            <Badge key={i} variant={"outline"}>
+              {a}
+            </Badge>
+          ))}
+        </div>
+      ),
+    },
+    { key: "Token", value: game?.tokens },
+    {
+      key: "White Paper",
+      value: (
+        <>
+          {" "}
+          {game?.links.whitepaper ? (
+            <Button
+              size={"xs"}
+              variant={"outline"}
+              className="w-full"
+              href={game?.links.whitepaper}
+            >
+              White paper
+            </Button>
+          ) : (
+            "No whitepaper available"
+          )}
+        </>
+      ),
+    },
+    {
+      key: "Mainnet",
+      value: (
+        <>
+          {" "}
+          {game?.links.mainnet && (
+            <Button
+              size={"xs"}
+              variant={"outline"}
+              href={game?.links.mainnet}
+              className="w-full"
+            >
+              Mainnet build
+            </Button>
+          )}
+        </>
+      ),
+    },
+    {
+      key: "Testnet",
+      value: (
+        <>
+          {" "}
+          {game?.links.testnet && (
+            <Button
+              size={"xs"}
+              variant={"outline"}
+              href={game?.links.testnet}
+              className="w-full"
+            >
+              Testnet Build
+            </Button>
+          )}
+        </>
+      ),
+    },
+    {
+      key: "Homepage",
+      value: (
+        <>
+          {" "}
+          {game?.links.homepage && (
+            <Button
+              size={"xs"}
+              variant={"outline"}
+              href={game?.links.homepage}
+              className="w-full"
+            >
+              {game?.name}
+            </Button>
+          )}
+        </>
+      ),
+    },
+  ];
 
   return (
     <main className="container mx-auto px-4 ">
@@ -140,26 +238,6 @@ export default async function Page({ params }: { params: { id: string } }) {
             {StatusDot(game?.status)}
             {game?.status}
           </Badge>
-          {game?.chains.map((a, i) =>
-            a === "420" ? (
-              <Link href="/network" className="mr-2 h-full self-center">
-                {" "}
-                <Badge
-                  key={i}
-                  variant={"outline"}
-                  className="h-full hover:bg-bright-yellow hover:text-theme-gray"
-                >
-                  <ChainIcon className="mr-2 w-4 self-center" />{" "}
-                  {CHAIN_IDS_TO_NAMES[a].replace(/_/g, " ")}
-                </Badge>
-              </Link>
-            ) : (
-              <Badge key={i} variant={"outline"}>
-                <ChainIcon className="mr-2 w-4 self-center" />{" "}
-                {CHAIN_IDS_TO_NAMES[a].replace(/_/g, " ")}
-              </Badge>
-            ),
-          )}
         </div>
 
         {game && (
@@ -192,44 +270,19 @@ export default async function Page({ params }: { params: { id: string } }) {
                     Play {game?.name}
                   </Button>
                 )}
-                <div>
-                  {game?.genres?.map((a, i) => (
-                    <Badge key={i} variant={"outline"}>
-                      {a}
-                    </Badge>
-                  ))}
-                </div>
-                {game?.links.whitepaper && (
-                  <Button
-                    size={"lg"}
-                    variant={"outline"}
-                    className="w-full"
-                    href={game?.links.whitepaper}
-                  >
-                    White paper
-                  </Button>
-                )}
 
-                {game?.links.mainnet && (
-                  <Button
-                    size={"xs"}
-                    variant={"outline"}
-                    href={game?.links.mainnet}
-                    className="w-full"
-                  >
-                    Mainnet
-                  </Button>
-                )}
-                {game?.links.testnet && (
-                  <Button
-                    size={"xs"}
-                    variant={"outline"}
-                    href={game?.links.testnet}
-                    className="w-full"
-                  >
-                    Testnet
-                  </Button>
-                )}
+                <table className="w-full divide-y py-8 text-sm capitalize">
+                  {tableData.map((data, index) => (
+                    <tr key={index}>
+                      <td className="whitespace-nowrap px-2 py-2 font-sans text-bright-yellow/70">
+                        {data.key}
+                      </td>
+                      <td className=" whitespace-nowrap px-2 py-2 text-right ">
+                        {data.value}
+                      </td>
+                    </tr>
+                  ))}
+                </table>
               </div>
 
               <Tabs defaultValue={tabs[0]?.name}>
