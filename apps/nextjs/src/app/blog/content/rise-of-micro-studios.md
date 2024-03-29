@@ -1,7 +1,9 @@
 ---
 title: "The Micro Studios"
-subtitle: "Ultra efficient businesses"
+subtitle: "Can we do better than past business models? How can we enable humans to build ultra-efficient businesses that scale, require minimal resources to run, and provide interesting experiences for consumers? We can. Welcome to the rise of the micro onchain gaming studios."
 date: "2024-01-29"
+tags: ["zk", "autonomous worlds", "starks"]
+author: 🍞
 image: "/blog/studios.png"
 ---
 
@@ -38,8 +40,6 @@ However, we're now in 2024, in an era where information moves at the speed of li
 
 With the advent of EIP4844 and the scalability of Layer 2 solutions, we can cost effectively implement split payments through contracts, enabling intriguing new payment mechanisms. These can be executed atomically at the point of play, using the blockchain as escrow, or we can immediately distribute payments to multiple entities upon playing. This capability bundled up with Account Abstraction opens up a design space that encourages game growth beyond what the original developers envisioned, providing a viable funding mechanism for those who choose to pursue this path.
 
-![split](/images/split.png)
-
 ### Ultra-Efficiency in Action: Loot Survivor's Case Study
 
 The future of gaming is already here, though its distribution is still evolving. Take [Loot Survivor](https://survivor.realms.world/) as a prime example of an ultra-efficient business model, aside from its unique framework. The game boasts an open-source client that encourages distribution, paired with fully onchain logic. This design has led to the emergence of two alternative clients, ensuring the game's survival even if the original client fails, much like the resilience seen in Uniswap. Yet, unlike Uniswap, the gaming market has a much broader appeal than Automated Market Makers (AMMs).
@@ -62,4 +62,4 @@ _thanks to [Lord Secretive](https://twitter.com/LordSecretive) for some thoughts
 
 ##### Refs
 
-- 1.  One of the works discussing micropayments is Ted Nelson's 1960s concept of "Project Xanadu," which envisioned a system where users would pay small amounts for accessing portions of text.
+- One of the works discussing micropayments is Ted Nelson's 1960s concept of "Project Xanadu," which envisioned a system where users would pay small amounts for accessing portions of text.

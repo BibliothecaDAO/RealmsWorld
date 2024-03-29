@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   return (
-    <PageLayout title="Games">
+    <PageLayout title="Onchain Games">
       <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {games.map((game: Game, index) => (
           <GameCard key={index} game={game} />
