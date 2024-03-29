@@ -133,3 +133,7 @@ body::-webkit-scrollbar-thumb,
 .mask-transparent {
   position: relative;
 }
+
+img {
+  image-rendering: pixelated;
+}

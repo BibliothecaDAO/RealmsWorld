@@ -24,13 +24,15 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <PageLayout title={event?.name ?? ""}>
-      {event?.image && <Image
-        className="w-96"
-        width={350}
-        height={350}
-        src={event?.image}
-        alt=""
-      />}
+      {event?.image && (
+        <Image
+          className="w-96"
+          width={350}
+          height={350}
+          src={event?.image}
+          alt=""
+        />
+      )}
       <div className="py-4">
         <span className={`rounded border px-2 py-1 `}>
           {event?.startDate} to {event?.endDate}
@@ -38,10 +40,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       </div>
 
       {event?.slug == "paved" ? (
-        <div className="prose prose-lg mt-6 max-w-5xl pb-6 text-xl leading-loose md:mt-12">
+        <div className="prose prose-lg prose-p:text-bright-yellow prose-headings:text-bright-yellow prose-a:text-flamingo prose-p:font-thin prose-strong:text-bright-yellow prose-ul:text-bright-yellow mx-auto mt-6 max-w-5xl px-6 pb-6 text-xl md:mt-12">
           <p>
-            In Realms World&apos;s Paved game, players compete for high scores by
-            laying tiles to form an expanding medieval landscape.
+            In Realms World&apos;s Paved game, players compete for high scores
+            by laying tiles to form an expanding medieval landscape.
           </p>
           <p>
             Built on Starknet and powered by Dojo - pave your way to victory in
@@ -49,8 +51,8 @@ export default async function Page({ params }: { params: { id: string } }) {
           </p>
           <h3>There is a 2,500 $Lords tournament</h3>
           <p>
-            The player with the best score will be the tournament&apos;s Lord of the
-            Board. There are nine prizes to be won by players.
+            The player with the best score will be the tournament&apos;s Lord of
+            the Board. There are nine prizes to be won by players.
           </p>
           <ul>
             <li>⚒️ First place: 1000 $Lords - aka Lord of the Board</li>
@@ -78,7 +80,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             Game guide - for detail and tips:{" "}
             <a href="https://docs.paved.gg/">https://docs.paved.gg/</a>{" "}
           </p>
-          Will you be Lord of the Board? Pave now.
+          <p>Will you be Lord of the Board? Pave now.</p>
         </div>
       ) : (
         <div className="text-lg">{event?.description}</div>
