@@ -1,8 +1,0 @@
-title: Realms World
-description: Documentation for the Realms.World website, the portal to the Realms Autonomous World
-theme: just-the-docs
-logo: "/assets/images/logo.png"
-url: https://docs.realms.world
-color_scheme: dark
-aux_links: # remove if you don't want this link to appear on your pages
-  Github Repo: https://github.com/BibliothecaDAO/RealmsWorld

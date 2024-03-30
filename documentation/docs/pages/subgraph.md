@@ -1,8 +1,3 @@
----
-title: Subgraph
-layout: default
----
-
 # L1 Bridge Transaction Indexer
 
 ## Subgraph Overview
