@@ -39,7 +39,7 @@ export const L2ERC721Card = ({
               <Image
                 src={token.image}
                 alt={token.name ?? `beasts-${token.token_id}`}
-                className={'disable-blur ' + isGrid ? "mx-auto disable-blur" : ""}
+                className={isGrid ? "mx-auto" : ""}
                 width={imageSize}
                 height={imageSize}
               />
