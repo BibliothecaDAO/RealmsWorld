@@ -30,18 +30,14 @@ export const StarknetLoginButton = ({
 
   return (
     <Button
-      className={
-        buttonClass +
-        " rounded-none px-3 outline outline-2 outline-offset-[3px] outline-bright-yellow " +
-        (address && "!shadow-[0_0_10px_rgb(74,222,128)] ")
-      }
+      className={buttonClass}
       variant={variant ?? "outline"}
-      size="lg"
+      size="sm"
       onClick={onConnectClick}
     >
       <span className="flex items-center font-sans normal-case">
         <StarknetLogo className="h-6 w-6" />
-        <span className={`hidden pl-2 ${textClass ?? "sm:block"}`}>
+        <span className={` pl-2 ${textClass ?? "sm:block"}`}>
           {address && isConnected ? <>{shortenHex(address, 8)}</> : "Starknet"}
         </span>
       </span>

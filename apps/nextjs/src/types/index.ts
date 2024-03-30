@@ -317,3 +317,15 @@ export interface ContractDetails {
   title: string;
   value: string;
 }
+
+export interface Event {
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  image: string;
+  slug: string;
+  website: string;
+  type: string;
+}

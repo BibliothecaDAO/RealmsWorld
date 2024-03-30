@@ -3,11 +3,7 @@
 @tailwind utilities;
 
 h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h2 {
   @apply font-sans;
 }
 
@@ -20,7 +16,7 @@ h2 {
 }
 
 h3 {
-  @apply my-0 text-2xl font-bold sm:my-1 sm:text-3xl md:my-2  md:text-4xl;
+  @apply my-2 text-2xl font-bold sm:my-1 sm:text-3xl md:my-4 md:mt-8  md:text-3xl;
 }
 
 h4 {
@@ -137,3 +133,4 @@ body::-webkit-scrollbar-thumb,
 .mask-transparent {
   position: relative;
 }
+

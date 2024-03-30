@@ -109,16 +109,14 @@ export const WalletSheet = () => {
   ];
   return (
     <>
-      <div className="my-4 flex w-full flex-col space-y-4 px-1">
+      <div className="flex flex-col space-y-4 px-1 md:flex-row md:space-x-2 md:space-y-0">
         <EthereumLoginButton
           variant={"default"}
           textClass="group-hover:block"
-          //openAccount
         />
         <StarknetLoginButton
           textClass="group-hover:block"
           variant={"default"}
-          buttonClass="w-full"
           openAccount
         />
         <StarknetLoginModal />

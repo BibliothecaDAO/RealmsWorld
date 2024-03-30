@@ -10,7 +10,6 @@ import "@rainbow-me/rainbowkit/styles.css";
 
 import { cache } from "react";
 import { headers } from "next/headers";
-import { env } from "@/env";
 import { TRPCReactProvider } from "@/trpc/react";
 
 import { Footer } from "./_components/Footer";
@@ -77,7 +76,7 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    env.VERCEL_ENV === "production"
+    process.env.VERCEL_ENV === "production"
       ? "https://realms.world"
       : "http://localhost:3000",
   ),

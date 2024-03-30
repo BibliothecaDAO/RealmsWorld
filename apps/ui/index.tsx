@@ -201,3 +201,5 @@ export {
   TooltipProvider,
 } from "./src/components/ui/tooltip";
 export { useToast, toast } from "./src/components/ui/use-toast";
+
+export { Badge } from "./src/components/ui/badge";

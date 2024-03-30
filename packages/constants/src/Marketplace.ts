@@ -2,6 +2,7 @@ import { ChainId } from "./Chains";
 import { Collections } from "./Collections";
 
 export interface MarketplaceCollectionIdsType {
+  [Collections.BANNERS]: number;
   [Collections.BEASTS]: number;
   [Collections.BLOBERT]: number;
   [Collections.GOLDEN_TOKEN]: number;
@@ -11,6 +12,7 @@ export interface MarketplaceCollectionIdsType {
 export const MarketplaceCollectionIds: MarketplaceCollectionIdsType = {
   [Collections.BEASTS]: 2,
   [Collections.BLOBERT]: 3,
+  [Collections.BANNERS]: 4,
   [Collections.GOLDEN_TOKEN]: 1,
 };
 
