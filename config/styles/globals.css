@@ -134,11 +134,3 @@ body::-webkit-scrollbar-thumb,
   position: relative;
 }
 
-svg image {
-  image-rendering: pixelated;
-}
-@layer components {
-  .disable-blur{
-    image-rendering: pixelated;
-  }
-}
