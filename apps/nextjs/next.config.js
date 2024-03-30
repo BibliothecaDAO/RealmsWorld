@@ -1,6 +1,8 @@
-// Importing env files here to validate on build
-import "./src/env.js";
-import "@realms-world/auth/env.js";
+import { fileURLToPath } from "url";
+import createJiti from "jiti";
+
+// Import env files to validate at build time. Use jiti so we can load .ts files in here.
+createJiti(fileURLToPath(import.meta.url))("./src/env");
 
 import createMDX from "@next/mdx";
 
@@ -12,6 +14,7 @@ const config = {
     "@realms-world/api",
     "@realms-world/auth",
     "@realms-world/db",
+    "@realms-world/ui"
   ],
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
