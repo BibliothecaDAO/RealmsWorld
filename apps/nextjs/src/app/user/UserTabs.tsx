@@ -26,6 +26,7 @@ export const UserTabs = ({ address }: { address: string }) => {
       { name: "Golden Token", link: "" },
       { name: "Beasts", link: "beasts" },
       { name: "Blobert", link: "blobert" },
+      { name: "Banners", link: "banners" },
     );
   }
   return (
