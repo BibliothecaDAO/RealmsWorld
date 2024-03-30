@@ -80,6 +80,15 @@ export const SwapTokens = () => {
     return <button onClick={handleConnect}>Connect Wallet</button>
   }*/
 
+  const supportedTokens = [{
+    ETH: {
+      decimals: 18
+    },
+    USDC: { 
+      decimals: 6
+    }
+  }]
+
   return (
     <div className="container mx-auto mt-24 max-w-[460px]">
       <div className="rounded border bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
@@ -98,7 +107,10 @@ export const SwapTokens = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem defaultValue={'ETH'}>ETH</DropdownMenuItem>
+            {supportedTokens.map((token)=> 
+            <DropdownMenuItem key={keyof token} defaultValue={'ETH'}>ETH</DropdownMenuItem>
+
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
         </div>
