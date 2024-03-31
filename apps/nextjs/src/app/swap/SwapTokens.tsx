@@ -107,8 +107,8 @@ export const SwapTokens = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {supportedTokens.map((token)=> 
-            <DropdownMenuItem key={keyof token} defaultValue={'ETH'}>ETH</DropdownMenuItem>
+            {supportedTokens.map((token, index)=> 
+            <DropdownMenuItem key={index} defaultValue={'ETH'}>{token.ETH.decimals}</DropdownMenuItem>
 
             )}
           </DropdownMenuContent>
