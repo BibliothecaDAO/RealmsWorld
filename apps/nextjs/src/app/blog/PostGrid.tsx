@@ -10,7 +10,6 @@ async function getData() {
 const PostGrid = async () => {
   const { articles } = await getData();
 
-  console.log(articles);
   const postPreviews = articles.map((post, index) => (
     <PostPreview key={index} {...post} />
   ));
