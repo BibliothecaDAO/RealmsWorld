@@ -1,6 +1,5 @@
 import Cartridge from "@/icons/Cartridge.svg";
 import Dojo from "@/icons/Dojo.svg";
-import RealmsWorld from "@/icons/RealmsWorld.svg";
 import Starknet from "@/icons/Starknet-full.svg";
 import Starkware from "@/icons/Starkware.svg";
 
