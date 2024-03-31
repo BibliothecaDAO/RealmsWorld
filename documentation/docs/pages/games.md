@@ -1,15 +1,10 @@
----
-title: Data
-layout: default
-nav_order: 2
-has_children: true
----
+## Add a Game to Realms.World
 
-# Realms.World Data
-
-## Add a Game
+![Game Preview](/games.png)
 
 To add a game to the frontend - make a fork of [Realms.World Github](https://github.com/BibliothecaDAO/realmsworld) and then:
+
+### Steps
 
 1. In `packages/constants/src/Games.ts` add a new object to the end of the `const games: Game[]`. You can find values for the Collection, Chain and Token typescript enums in the relevant files in the same directory.
 
@@ -29,5 +24,3 @@ To add a game to the frontend - make a fork of [Realms.World Github](https://git
 ```
 
 3. Submit a PR to the main branch of the repo
-
-![Game Preview](/assets/images/games.png)
