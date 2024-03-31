@@ -40,6 +40,7 @@ export const Partners = () => {
         {partners.map((partner, index) => (
           <a
             target="_blank"
+            rel="noreferrer"
             href={partner.link}
             className="self-center p-3"
             key={index}
