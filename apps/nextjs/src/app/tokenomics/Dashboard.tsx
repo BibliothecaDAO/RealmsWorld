@@ -2,6 +2,8 @@
 
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 
+import { Button } from "@realms-world/ui";
+
 import { BaseDashboardCard } from "./BaseDashboardCard";
 import LordsChart, { data } from "./LordsChart";
 
@@ -15,7 +17,15 @@ export const DashBoard = () => {
       <BaseDashboardCard
         title="USD Price"
         dataTitle={`$${lordsPrice.usdPrice.toLocaleString()}`}
-      />
+      >
+        <Button
+          href="https://coinmarketcap.com/currencies/lords/"
+          size={"xs"}
+          variant={"outline"}
+        >
+          Coin Gecko
+        </Button>
+      </BaseDashboardCard>
       <BaseDashboardCard
         title="Holders ETH + Starknet"
         dataTitle={(lordsPrice.holderCount + 85571).toLocaleString()}
@@ -24,6 +34,7 @@ export const DashBoard = () => {
         title="Volume 24hrs"
         dataTitle={`$${lordsPrice.volume24hr.toLocaleString()}`}
       />
+      <BaseDashboardCard title="Max Supply" dataTitle={`500,000,000`} />
       <BaseDashboardCard
         title="Market Cap"
         dataTitle={`$${lordsPrice.marketCap.toLocaleString()}`}
