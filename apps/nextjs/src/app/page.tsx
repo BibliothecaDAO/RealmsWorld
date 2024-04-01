@@ -7,6 +7,7 @@ import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
 import { Carousel } from "@realms-world/ui";
 
+import { Partners } from "./_components/Partners";
 import PostGrid from "./blog/PostGrid";
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
@@ -24,9 +25,6 @@ export default async function Home() {
 
   return (
     <div className="container mx-auto mt-24 px-4 md:pl-24 lg:mt-24">
-      {/* <h1 className="mb-8 flex justify-center font-sans text-4xl md:text-6xl">
-        <RWLogo className="h-24 md:h-32" />
-      </h1> */}
       <div className="my-4 flex w-fit flex-wrap bg-dark-green p-1 text-xl">
         <span className="align-center">Powered by </span>
         <Link href={"https://dojoengine.org/"}>
@@ -49,6 +47,8 @@ export default async function Home() {
         }}
         autoPlay
       />
+
+      <Partners />
 
       <div className="my-24">
         <hr />
