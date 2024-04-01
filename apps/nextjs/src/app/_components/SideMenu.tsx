@@ -140,10 +140,16 @@ const Sidebar = () => {
             <div className="w-full px-2">
               <hr className="mb-4 border-b-[3px]" />
             </div>
-            <div className="mt-3 font-sans">
-              <LordsIcon className="mx-auto h-6 w-6 fill-bright-yellow pb-1" />
+            <Button
+              href="/swap"
+              variant={"outline"}
+              className="mt-3 flex h-16 flex-col rounded p-2 pt-3 font-sans"
+            >
+              <div className="h-8">
+                <LordsIcon className="mx-auto h-6 w-6 fill-bright-yellow pb-1" />
+              </div>
               {lordsPrice.usdPrice}
-            </div>
+            </Button>
 
             <div className=" flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
               {social.map((item, index) => {

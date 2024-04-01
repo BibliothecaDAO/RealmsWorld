@@ -2,23 +2,30 @@
 
 import type { Quote } from "@avnu/avnu-sdk";
 import type { ChangeEvent } from "react";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import useDebounce from "@/hooks/useDebounce";
+import LordsIcon from "@/icons/lords.svg";
 import { executeSwap, fetchQuotes } from "@avnu/avnu-sdk";
 import { useAccount } from "@starknet-react/core";
 import { parseUnits } from "ethers";
-import { formatEther } from "viem";
+import { ArrowUpDown } from "lucide-react";
+import { formatEther, formatUnits } from "viem";
 
-import { LORDS } from "@realms-world/constants";
+import { ChainId, LORDS } from "@realms-world/constants";
+import { SUPPORTED_TOKENS } from "@realms-world/constants/src/Tokens";
 import {
   Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
   Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@realms-world/ui";
 
+import { StarknetLoginButton } from "../_components/wallet/StarknetLoginButton";
 import { TokenBalance } from "../bridge/TokenBalance";
 import { useWalletsProviderContext } from "../providers/WalletsProvider";
 
@@ -26,10 +33,8 @@ const AVNU_OPTIONS = {
   baseUrl: `https://${NETWORK_NAME == "MAIN" ? "starknet" : "goerli"}.api.avnu.fi`,
 };
 
-const ethAddress =
-  "0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7";
-
 export const SwapTokens = () => {
+  const [isBuyLords, setIsBuyLords] = useState(true);
   const [sellAmount, setSellAmount] = useState<string>();
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,17 +42,32 @@ export const SwapTokens = () => {
   const [successMessage, setSuccessMessage] = useState<string>();
   const { account } = useAccount();
   const { balances, l2loading } = useWalletsProviderContext();
+  const [selectedToken, setSelectedToken] = useState("ETH");
 
-  const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+  const getTokenBySymbol = (symbol: string) => {
+    const token = SUPPORTED_TOKENS[ChainId.SN_MAIN].find(
+      (token) => token.symbol === symbol,
+    );
+    return token;
+  };
+  const selectedTokenObj = useMemo(() => {
+    return getTokenBySymbol(selectedToken);
+  }, [selectedToken]);
+
+  const isDebouncing = useDebounce(sellAmount, 350) !== sellAmount;
+
+  const fetchAvnuQuotes = useCallback(() => {
     if (!account) return;
-    setErrorMessage("");
-    setQuotes([]);
-    setSellAmount(event.target.value);
-    setLoading(true);
+    if (!selectedTokenObj || !sellAmount || isDebouncing) return;
+
     const params = {
-      sellTokenAddress: ethAddress,
-      buyTokenAddress: LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x",
-      sellAmount: parseUnits(event.target.value, 18),
+      sellTokenAddress: isBuyLords
+        ? selectedTokenObj.address
+        : LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x",
+      buyTokenAddress: isBuyLords
+        ? LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x"
+        : selectedTokenObj.address,
+      sellAmount: parseUnits(sellAmount, selectedTokenObj.decimals),
       takerAddress: account.address,
       size: 1,
     };
@@ -57,7 +77,26 @@ export const SwapTokens = () => {
         setQuotes(quotes);
       })
       .catch(() => setLoading(false));
+  }, [account, isBuyLords, isDebouncing, selectedTokenObj, sellAmount]);
+  const sellBalance = !isBuyLords ? balances.l2.lords ?? 0 : balances.l2?.eth ?? 0
+
+  const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setErrorMessage("");
+    setQuotes([]);
+    setSellAmount(event.target.value);
+    setLoading(true);
   };
+  const handleSwitch = () => {
+    setQuotes([]);
+    setIsBuyLords((prevIsBuyLords) => !prevIsBuyLords);
+  };
+
+ useEffect(() => {
+    if (sellAmount && selectedTokenObj && !isDebouncing) {
+      fetchAvnuQuotes();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBuyLords, selectedTokenObj, isDebouncing, sellAmount]);
 
   const handleSwap = async () => {
     if (!account || !sellAmount || !quotes?.[0]) return;
@@ -80,63 +119,133 @@ export const SwapTokens = () => {
     return <button onClick={handleConnect}>Connect Wallet</button>
   }*/
 
-  const supportedTokens = [{
-    ETH: {
-      decimals: 18
-    },
-    USDC: { 
-      decimals: 6
-    }
-  }]
+  const renderTokensInput = () => {
+    return (
+      <div className="flex pb-2">
+        {isBuyLords ? (
+          <Input
+            className="flex-grow-1 mb-0 !bg-transparent text-xl focus:ring-0"
+            onChange={handleChangeInput}
+            value={sellAmount}
+            //disabled={loading}
+            placeholder="0"
+          />
+        ) : (
+          <Input
+            readOnly
+            placeholder="0"
+            type="text"
+            className="!bg-transparent text-xl focus:ring-0 placeholder:text-slate-400 "
+            disabled={loading}
+            id="buy-amount"
+            value={
+              quotes?.[0]
+                ? formatUnits(
+                    quotes[0].buyAmount,
+                    selectedTokenObj?.decimals ?? 18,
+                  )
+                : ""
+            }
+          />
+        )}
+        <div className="grow-0">
+          <Select value={selectedToken} onValueChange={setSelectedToken}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select Token" />
+            </SelectTrigger>
+            <SelectContent>
+              {SUPPORTED_TOKENS[ChainId.SN_MAIN]
+                .filter((token) => token.symbol !== "LORDS")
+                .map((token, index) => (
+                  <SelectItem key={index} value={token.symbol ?? ""}>
+                    <span className="flex pr-6 text-lg">
+                      <Image
+                        className="mr-2"
+                        src={`/tokens/${token.symbol}.svg`}
+                        width={20}
+                        height={20}
+                        alt={token.name ?? ""}
+                      />
+                      {token?.symbol}
+                    </span>
+                  </SelectItem>
+                ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+    );
+  };
+
+  const renderLordsInput = () => {
+    return (
+      <div className="relative w-full">
+        {isBuyLords ? (
+          <Input
+            readOnly
+            placeholder="0"
+            type="text"
+            className="!bg-transparent text-xl focus:ring-0 placeholder:text-slate-400 "
+            disabled={loading}
+            id="buy-amount"
+            value={quotes?.[0] ? formatEther(quotes[0].buyAmount) : ""}
+          />
+        ) : (
+          <Input
+            className="flex-grow-1 mb-0 !bg-transparent text-xl focus:ring-0"
+            onChange={handleChangeInput}
+            value={sellAmount}
+            //disabled={loading}
+            placeholder="0"
+          />
+        )}
+        <div className="absolute right-0 top-0 flex pr-4 pt-2">
+          <LordsIcon className="mr-3 h-6 w-6 fill-white" />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="container mx-auto mt-24 max-w-[460px]">
       <div className="rounded border bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
         <p className="text-sm">You pay</p>
-        <div className="flex">
-        <Input
-          className="mb-0 flex-grow-1 !bg-transparent text-3xl focus:ring-0"
-          onChange={handleChangeInput}
-          //disabled={loading}
-          placeholder="0"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button className="rounded" variant={"outline"}>
-              Direction
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {supportedTokens.map((token, index)=> 
-            <DropdownMenuItem key={index} defaultValue={'ETH'}>{token.ETH.decimals}</DropdownMenuItem>
-
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        </div>
+        {isBuyLords ? renderTokensInput() : renderLordsInput()}
         <TokenBalance
-          onClick={() => setSellAmount(balances.l2?.eth?.toString() ?? "0")}
-          balance={balances.l2?.eth ?? BigInt(0)}
-          symbol="Lords"
+          onClick={() => setSellAmount(formatEther(BigInt(sellBalance) ?? 0n))}
+          balance={sellBalance}
+          symbol="ETH"
           isLoading={l2loading && !balances.l2?.lords}
         />
       </div>
-      <div>&darr;</div>
-      <div className="rounded border p-4">
-        <p className="text-xl">You receive</p>
-        <Input
-          readOnly
-          placeholder="0"
-          type="text"
-          disabled={loading}
-          id="buy-amount"
-          value={quotes?.[0] ? formatEther(quotes[0].buyAmount) : ""}
+      <button
+        className="absolute left-1/2 z-10 -ml-4 flex h-8 w-8 rounded-2xl border border-white/5 bg-bright-yellow/60 stroke-black hover:bg-white/90"
+        onClick={() => handleSwitch()}
+        tabIndex={0}
+      >
+        <ArrowUpDown
+          className={`${
+            isBuyLords ? "rotate-180" : ""
+          } m-auto h-4 w-4 transform self-center stroke-inherit duration-300`}
         />
+      </button>
+
+      <div className="mt-8 rounded border  bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
+        <p className="text-sm">You receive</p>
+        {isBuyLords ? renderLordsInput() : renderTokensInput()}
       </div>
-      {loading ? (
-        <p>Loading...</p>
+      {!account ? (
+        <StarknetLoginButton  buttonClass="w-full mt-2"/>
       ) : (
-        quotes?.[0] && <button onClick={handleSwap}>Swap</button>
+        <Button onClick={handleSwap} className="mt-2 w-full">
+          {sellAmount == "0" || !sellAmount ? (
+            "Enter amount"
+          ) : loading ? (
+            <p>Loading...</p>
+          ) : (
+            quotes?.[0] && "Swap"
+          )}
+        </Button>
       )}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       {successMessage && <p style={{ color: "green" }}>Success</p>}

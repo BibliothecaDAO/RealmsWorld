@@ -1,5 +1,6 @@
 import { Input } from "@realms-world/ui";
 import React from "react";
+import LordsIcon from "@/icons/lords.svg";
 
 export const TokenInput = ({
   onChange,
