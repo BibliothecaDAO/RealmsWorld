@@ -52,7 +52,7 @@ export const STRK: Record<number | string, Token> = {
   ),
   [ChainId.SN_SEPOLIA]: new Token(
     ChainId.SN_SEPOLIA,
-    "",
+    "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d",
     18,
     "STRK",
     "Starknet Token",
@@ -68,7 +68,7 @@ export const USDC: Record<number | string, Token> = {
   ),
   [ChainId.SN_SEPOLIA]: new Token(
     ChainId.SN_SEPOLIA,
-    "",
+    "0x053b40a647cedfca6ca84f542a0fe36736031905a9639a7f19a3c1e66bfd5080",
     6,
     "USDC",
     "USD Coin",
@@ -107,7 +107,7 @@ export const LORDS: Record<number | string, Token> = {
 
 export const SUPPORTED_TOKENS: { [chainId in ChainId]: Token[] } = {
   [ChainId.SN_MAIN]: [LORDS[ChainId.SN_MAIN]!, USDC[ChainId.SN_MAIN]!, ETH[ChainId.SN_MAIN]!, STRK[ChainId.SN_MAIN]!],
-  [ChainId.SN_SEPOLIA]: [LORDS[ChainId.SN_SEPOLIA]!],
+  [ChainId.SN_SEPOLIA]: [LORDS[ChainId.SN_SEPOLIA]!, USDC[ChainId.SN_SEPOLIA]!, ETH[ChainId.SN_SEPOLIA]!, STRK[ChainId.SN_SEPOLIA]!],
   [ChainId.MAINNET]: [LORDS.MAINNET!],
   [ChainId.SEPOLIA]: [LORDS.SEPOLIA!],
   [ChainId.MISSISSIPPI_TESTNET]: [],

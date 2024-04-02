@@ -8,12 +8,12 @@ import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import useDebounce from "@/hooks/useDebounce";
 import LordsIcon from "@/icons/lords.svg";
 import { executeSwap, fetchQuotes } from "@avnu/avnu-sdk";
-import { useAccount } from "@starknet-react/core";
+import { useAccount, useBalance } from "@starknet-react/core";
 import { parseUnits } from "ethers";
 import { ArrowUpDown } from "lucide-react";
-import { formatEther, formatUnits } from "viem";
+import { formatEther, formatUnits, parseEther } from "viem";
 
-import { ChainId, LORDS } from "@realms-world/constants";
+import { LORDS } from "@realms-world/constants";
 import { SUPPORTED_TOKENS } from "@realms-world/constants/src/Tokens";
 import {
   Button,
@@ -30,7 +30,7 @@ import { TokenBalance } from "../bridge/TokenBalance";
 import { useWalletsProviderContext } from "../providers/WalletsProvider";
 
 const AVNU_OPTIONS = {
-  baseUrl: `https://${NETWORK_NAME == "MAIN" ? "starknet" : "goerli"}.api.avnu.fi`,
+  baseUrl: `https://${NETWORK_NAME == "MAIN" ? "starknet" : "sepolia"}.api.avnu.fi`,
 };
 
 export const SwapTokens = () => {
@@ -40,12 +40,12 @@ export const SwapTokens = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
-  const { account } = useAccount();
+  const { address, account } = useAccount();
   const { balances, l2loading } = useWalletsProviderContext();
   const [selectedToken, setSelectedToken] = useState("ETH");
 
   const getTokenBySymbol = (symbol: string) => {
-    const token = SUPPORTED_TOKENS[ChainId.SN_MAIN].find(
+    const token = SUPPORTED_TOKENS[SUPPORTED_L2_CHAIN_ID].find(
       (token) => token.symbol === symbol,
     );
     return token;
@@ -54,12 +54,15 @@ export const SwapTokens = () => {
     return getTokenBySymbol(selectedToken);
   }, [selectedToken]);
 
+  const { data } = useBalance({
+    address,
+    token: selectedTokenObj?.address,
+    watch: false,
+  });
   const isDebouncing = useDebounce(sellAmount, 350) !== sellAmount;
 
   const fetchAvnuQuotes = useCallback(() => {
-    if (!account) return;
     if (!selectedTokenObj || !sellAmount || isDebouncing) return;
-
     const params = {
       sellTokenAddress: isBuyLords
         ? selectedTokenObj.address
@@ -67,8 +70,11 @@ export const SwapTokens = () => {
       buyTokenAddress: isBuyLords
         ? LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x"
         : selectedTokenObj.address,
-      sellAmount: parseUnits(sellAmount, selectedTokenObj.decimals),
-      takerAddress: account.address,
+      sellAmount: parseUnits(
+        sellAmount,
+        !isBuyLords ? 18 : selectedTokenObj.decimals,
+      ),
+      takerAddress: address,
       size: 1,
     };
     fetchQuotes(params, AVNU_OPTIONS)
@@ -77,8 +83,9 @@ export const SwapTokens = () => {
         setQuotes(quotes);
       })
       .catch(() => setLoading(false));
-  }, [account, isBuyLords, isDebouncing, selectedTokenObj, sellAmount]);
-  const sellBalance = !isBuyLords ? balances.l2.lords ?? 0 : balances.l2?.eth ?? 0
+  }, [address, isBuyLords, isDebouncing, selectedTokenObj, sellAmount]);
+
+  const sellBalance = !isBuyLords ? balances.l2.lords ?? 0 : data?.value ?? 0;
 
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     setErrorMessage("");
@@ -86,12 +93,22 @@ export const SwapTokens = () => {
     setSellAmount(event.target.value);
     setLoading(true);
   };
+  const handleTokenSelect = (event: string) => {
+    setLoading(true);
+    setQuotes([]);
+    console.log(parseInt(sellAmount))
+    if(event == 'USDC'){
+      setSellAmount(parseFloat(sellAmount ?? '0').toFixed(6));
+    }
+    setSelectedToken(event)
+
+  };
   const handleSwitch = () => {
     setQuotes([]);
     setIsBuyLords((prevIsBuyLords) => !prevIsBuyLords);
   };
 
- useEffect(() => {
+  useEffect(() => {
     if (sellAmount && selectedTokenObj && !isDebouncing) {
       fetchAvnuQuotes();
     }
@@ -135,7 +152,7 @@ export const SwapTokens = () => {
             readOnly
             placeholder="0"
             type="text"
-            className="!bg-transparent text-xl focus:ring-0 placeholder:text-slate-400 "
+            className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0 "
             disabled={loading}
             id="buy-amount"
             value={
@@ -149,27 +166,27 @@ export const SwapTokens = () => {
           />
         )}
         <div className="grow-0">
-          <Select value={selectedToken} onValueChange={setSelectedToken}>
+          <Select value={selectedToken} onValueChange={handleTokenSelect}>
             <SelectTrigger>
               <SelectValue placeholder="Select Token" />
             </SelectTrigger>
             <SelectContent>
-              {SUPPORTED_TOKENS[ChainId.SN_MAIN]
-                .filter((token) => token.symbol !== "LORDS")
-                .map((token, index) => (
-                  <SelectItem key={index} value={token.symbol ?? ""}>
-                    <span className="flex pr-6 text-lg">
-                      <Image
-                        className="mr-2"
-                        src={`/tokens/${token.symbol}.svg`}
-                        width={20}
-                        height={20}
-                        alt={token.name ?? ""}
-                      />
-                      {token?.symbol}
-                    </span>
-                  </SelectItem>
-                ))}
+              {SUPPORTED_TOKENS[SUPPORTED_L2_CHAIN_ID].filter(
+                (token) => token.symbol !== "LORDS",
+              ).map((token, index) => (
+                <SelectItem key={index} value={token.symbol ?? ""}>
+                  <span className="flex pr-6 text-lg">
+                    <Image
+                      className="mr-2"
+                      src={`/tokens/${token.symbol}.svg`}
+                      width={20}
+                      height={20}
+                      alt={token.name ?? ""}
+                    />
+                    {token?.symbol}
+                  </span>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -185,7 +202,7 @@ export const SwapTokens = () => {
             readOnly
             placeholder="0"
             type="text"
-            className="!bg-transparent text-xl focus:ring-0 placeholder:text-slate-400 "
+            className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0 "
             disabled={loading}
             id="buy-amount"
             value={quotes?.[0] ? formatEther(quotes[0].buyAmount) : ""}
@@ -206,6 +223,23 @@ export const SwapTokens = () => {
     );
   };
 
+  const buttonContent = () => {
+    
+  switch (true) {
+    case sellAmount === "0" || !sellAmount:
+      return "Enter amount";
+    case loading:
+      return <p>Loading...</p>;
+    case parseEther(sellAmount ?? "0") > sellBalance:
+     return "Insufficient Balance";
+    case !!quotes?.[0]:
+      return "Swap";
+      
+    default:
+      return null; // Or any default case you'd like to handle
+  }
+}
+
   return (
     <div className="container mx-auto mt-24 max-w-[460px]">
       <div className="rounded border bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
@@ -214,7 +248,7 @@ export const SwapTokens = () => {
         <TokenBalance
           onClick={() => setSellAmount(formatEther(BigInt(sellBalance) ?? 0n))}
           balance={sellBalance}
-          symbol="ETH"
+          symbol=""
           isLoading={l2loading && !balances.l2?.lords}
         />
       </div>
@@ -229,22 +263,23 @@ export const SwapTokens = () => {
           } m-auto h-4 w-4 transform self-center stroke-inherit duration-300`}
         />
       </button>
-
       <div className="mt-8 rounded border  bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
         <p className="text-sm">You receive</p>
         {isBuyLords ? renderLordsInput() : renderTokensInput()}
       </div>
       {!account ? (
-        <StarknetLoginButton  buttonClass="w-full mt-2"/>
+        <StarknetLoginButton buttonClass="w-full mt-2" />
       ) : (
-        <Button onClick={handleSwap} className="mt-2 w-full">
-          {sellAmount == "0" || !sellAmount ? (
-            "Enter amount"
-          ) : loading ? (
-            <p>Loading...</p>
-          ) : (
-            quotes?.[0] && "Swap"
-          )}
+        <Button
+          disabled={
+            loading ||
+            !sellAmount ||
+            parseEther(sellAmount ?? "0") > sellBalance
+          }
+          onClick={handleSwap}
+          className="mt-2 w-full"
+        >
+          {buttonContent()}
         </Button>
       )}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
