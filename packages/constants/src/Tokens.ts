@@ -32,7 +32,7 @@ export const ETH: Record<number | string, Token> = {
     "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
     18,
     "ETH",
-    "Ether",
+    "Ethereum",
   ),
   [ChainId.SN_SEPOLIA]: new Token(
     ChainId.SN_SEPOLIA,
@@ -40,6 +40,38 @@ export const ETH: Record<number | string, Token> = {
     18,
     "ETH",
     "Ether",
+  ),
+};
+export const STRK: Record<number | string, Token> = {
+  [ChainId.SN_MAIN]: new Token(
+    ChainId.SN_MAIN,
+    "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d",
+    18,
+    "STRK",
+    "Starknet Token",
+  ),
+  [ChainId.SN_SEPOLIA]: new Token(
+    ChainId.SN_SEPOLIA,
+    "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d",
+    18,
+    "STRK",
+    "Starknet Token",
+  ),
+};
+export const USDC: Record<number | string, Token> = {
+  [ChainId.SN_MAIN]: new Token(
+    ChainId.SN_MAIN,
+    "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8",
+    6,
+    "USDC",
+    "USD Coin",
+  ),
+  [ChainId.SN_SEPOLIA]: new Token(
+    ChainId.SN_SEPOLIA,
+    "0x053b40a647cedfca6ca84f542a0fe36736031905a9639a7f19a3c1e66bfd5080",
+    6,
+    "USDC",
+    "USD Coin",
   ),
 };
 export const LORDS: Record<number | string, Token> = {
@@ -72,6 +104,16 @@ export const LORDS: Record<number | string, Token> = {
     "Lords",
   ),
 };
+
+export const SUPPORTED_TOKENS: { [chainId in ChainId]: Token[] } = {
+  [ChainId.SN_MAIN]: [LORDS[ChainId.SN_MAIN]!, USDC[ChainId.SN_MAIN]!, ETH[ChainId.SN_MAIN]!, STRK[ChainId.SN_MAIN]!],
+  [ChainId.SN_SEPOLIA]: [LORDS[ChainId.SN_SEPOLIA]!, USDC[ChainId.SN_SEPOLIA]!, ETH[ChainId.SN_SEPOLIA]!, STRK[ChainId.SN_SEPOLIA]!],
+  [ChainId.MAINNET]: [LORDS.MAINNET!],
+  [ChainId.SEPOLIA]: [LORDS.SEPOLIA!],
+  [ChainId.MISSISSIPPI_TESTNET]: [],
+  [ChainId.REALMS_L3]: [],
+  [ChainId.SLOT_TESTNET]: [],
+}
 
 export const LORDS_BRIDGE_ADDRESS: Record<number | string, string> = {
   [ChainId.MAINNET]: "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
