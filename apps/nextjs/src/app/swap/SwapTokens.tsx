@@ -96,7 +96,6 @@ export const SwapTokens = () => {
   const handleTokenSelect = (event: string) => {
     setLoading(true);
     setQuotes([]);
-    console.log(parseInt(sellAmount))
     if(event == 'USDC'){
       setSellAmount(parseFloat(sellAmount ?? '0').toFixed(6));
     }
@@ -245,12 +244,14 @@ export const SwapTokens = () => {
       <div className="rounded border bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
         <p className="text-sm">You pay</p>
         {isBuyLords ? renderTokensInput() : renderLordsInput()}
+        <div className="flex justify-between">
+        <span className="text-sm text-bright-yellow/50">{`≈ $${quotes[0]?.buyAmountInUsd.toFixed(2)}`}</span>
         <TokenBalance
           onClick={() => setSellAmount(formatEther(BigInt(sellBalance) ?? 0n))}
           balance={sellBalance}
           symbol=""
           isLoading={l2loading && !balances.l2?.lords}
-        />
+        /></div>
       </div>
       <button
         className="absolute left-1/2 z-10 -ml-4 flex h-8 w-8 rounded-2xl border border-white/5 bg-bright-yellow/60 stroke-black hover:bg-white/90"
@@ -266,6 +267,7 @@ export const SwapTokens = () => {
       <div className="mt-8 rounded border  bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
         <p className="text-sm">You receive</p>
         {isBuyLords ? renderLordsInput() : renderTokensInput()}
+        <span className="text-sm text-bright-yellow/50">{`≈ $${quotes[0]?.sellAmountInUsd.toFixed(2)}`}</span>
       </div>
       {!account ? (
         <StarknetLoginButton buttonClass="w-full mt-2" />
