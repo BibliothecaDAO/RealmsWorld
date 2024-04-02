@@ -16,6 +16,7 @@ import { Footer } from "./_components/Footer";
 import { TopNav } from "./_components/TopNav";
 import { UIContextProvider } from "./providers/UIProvider";
 import { WalletsProvider } from "./providers/WalletsProvider";
+import { Toaster } from "@realms-world/ui";
 
 const baiJamjuree = Silkscreen({
   subsets: ["latin"],
@@ -60,6 +61,7 @@ export default function Layout(props: { children: React.ReactNode }) {
                   </div>
                 </main>
                 <Footer />
+                <Toaster />
               </WalletsProvider>
             </Provider>
           </UIContextProvider>

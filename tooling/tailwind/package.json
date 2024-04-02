@@ -16,7 +16,7 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.12",
     "postcss": "^8.4.38",
-    "tailwindcss": "3.4.1"
+    "tailwindcss": "3.4.3"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "*",
@@ -24,7 +24,7 @@
     "@realms-world/tsconfig": "*",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.3"
   },
   "eslintConfig": {
     "root": true,

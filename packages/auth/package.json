@@ -18,8 +18,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@auth/core": "^0.28.1",
-    "@auth/drizzle-adapter": "^0.8.1",
+    "@auth/core": "^0.28.2",
+    "@auth/drizzle-adapter": "^0.8.2",
     "@realms-world/db": "*",
     "@t3-oss/env-nextjs": "^0.9.2",
     "next": "^14.1.4",
@@ -34,7 +34,7 @@
     "@realms-world/tsconfig": "*",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.3"
   },
   "eslintConfig": {
     "root": true,
