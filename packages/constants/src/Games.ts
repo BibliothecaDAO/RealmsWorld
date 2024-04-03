@@ -207,6 +207,28 @@ export const games: Game[] = [
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
   },
+   {
+    name: "Kingdom-of-Lords",
+    id: "Kingdom-of-Lords",
+    developer: "Mississippi Team",
+    genres: ["SLG", "PVP", "MMO Strategy Game"],
+    color: "#6F391E",
+    status: "beta",
+    description: "Fully on-chain MMO Strategy Game",
+    longform:
+      'The kindom of Lords is a fully on-chain SLG game designed specifically for the Starknet\n\nIn the world of "Kingdom&Lords", you embark on an epic journey, where strategy and wisdom go hand in hand, and alliances are forged to conquer new territories. Build your village, develop agriculture and economy, muster a mighty army, and erect invincible walls. \n\nBut "Kingdom of Lords" is more than this, its a realm of social strategy where no hero stands alone, only with brave and wise allies. Every decision you make can alter the course of battle, and your alliance is your unbreakable shield. Send envoys, make allies with heroes from all corners of the world, and fight side by side with players globally to witness the rise of a dynasty.',
+    links: {
+      mainnet: "https://kingdom.0xmssp.xyz/",
+      discord: "https://discord.gg/XKqfEcHaUh",
+      twitter: "https://twitter.com/0xMississippi",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "As the main token of the game",
+    chains: [ ChainId.REALMS_L3],
+    collections: [],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 3,
+  },
   {
     name: "GenLoot",
     id: "gen-loot",
