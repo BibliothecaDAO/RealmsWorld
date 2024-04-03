@@ -109,7 +109,7 @@ export const BuyModalRender: FC<Props> = ({
 
   const lordsAddress = LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`;
 
-  const addFundsLink = `https://app.avnu.fi/en?tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=${lordsAddress}&amount=${totalPrice}`;
+  const addFundsLink = `https://app.avnu.fi/en?referral=0x049FB4281D13E1f5f488540Cd051e1507149E99CC2E22635101041Ec5E4e4557&tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=${lordsAddress}&amount=${totalPrice}`;
 
   const {
     writeAsync,
