@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@realms-world/tsconfig": "*",
-    "@types/node": "^20.12.2",
+    "@types/node": "^20.12.3",
     "typescript": "^5.4.3"
   },
   "publishConfig": {
