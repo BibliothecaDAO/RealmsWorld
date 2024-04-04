@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 
 import { Button } from "@realms-world/ui";
