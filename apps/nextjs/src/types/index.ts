@@ -85,6 +85,7 @@ export interface UserTokenData {
 export interface L2Collection {
   name: string;
   link: string;
+  floorPrice?: string | number;
   floorAsk?: {
     id: string;
     sourceDomain: string;
