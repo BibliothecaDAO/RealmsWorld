@@ -79,7 +79,6 @@ export const erc721CollectionsRouter = createTRPCRouter({
         .select({
           marketplaceId: schema.erc721Collections.marketplaceId,
           volume: sum(schema.erc721MarketEvents.price),
-          lowestPrice: min(schema.erc721MarketEvents.price), // Add the lowest price for each collection
         })
         .from(schema.erc721Collections)
         .where(
