@@ -11,3 +11,4 @@ export {
   getCollectionFromAddress,
   CollectionDisplayName,
 } from "./Collections";
+export {DaoAccounts, DaoAddresses, getDaoAccountByAddress, getDaoAddressesArrayByChain} from './DAO'

@@ -1,5 +1,3 @@
-"use client";
-
 import { BaseCard } from "../_components/BaseCard";
 
 interface BaseDashboardCardProps {
