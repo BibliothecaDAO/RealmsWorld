@@ -39,9 +39,7 @@ export function getDaoAddressesArrayByChain(chainId: ChainId): { account: string
 
 export function getDaoAccountByAddress(address: string): DaoAccounts | undefined {
     for (const [account, chains] of Object.entries(DaoAddresses)) {
-      console.log(Object.values(chains).map(addr => addr.toLowerCase()), ": ", address.toLowerCase())
       if (Object.values(chains).map(addr => addr.toLowerCase()).includes(address.toLowerCase())) {
-        console.log('matcvh' + DaoAccounts[account])
         return DaoAccounts[account as keyof typeof DaoAccounts];
       }
     }
