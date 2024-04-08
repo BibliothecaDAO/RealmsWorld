@@ -5,30 +5,7 @@
 import React, { PureComponent } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
-export const data = [
-  {
-    name: "Development",
-    value: 119940000,
-    description: "Development account to be used over the next 7 years.",
-  },
-  {
-    name: "Frontinus House",
-    value: 39649999,
-    description: "DAO Prop house allocation.",
-  },
-  {
-    name: "Emmissions",
-    value: 158863701,
-    description: "Game emmissions to be distributed over next 7 years.",
-  },
-  {
-    name: "DAO Locked",
-    value: 10000000,
-    description: "Reserved for OTC raise.",
-  },
-];
-
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["rgb(42, 43, 36)", "rgb(251, 225, 187, 0.3)", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -48,7 +25,7 @@ const renderCustomizedLabel = ({
     <text
       x={x}
       y={y}
-      fill="white"
+      fill="#fbe1bb"
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
     >
@@ -58,16 +35,21 @@ const renderCustomizedLabel = ({
   );
 };
 
-export default class LordsChart extends PureComponent {
-  static demoUrl =
-    "https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj";
-
+interface LordsChartProps {
+  accounts: Record<string, {
+    name: string;
+    address: string;
+    value: number;
+}>;
+}
+export default class LordsChart extends PureComponent<LordsChartProps> {
   render() {
+    const {accounts} = this.props
     return (
       <ResponsiveContainer width="100%" height="100%" maxHeight={500}>
         <PieChart width={400} height={400}>
           <Pie
-            data={data}
+            data={Object.values(accounts)}
             cx="50%"
             cy="50%"
             labelLine={false}
@@ -76,7 +58,7 @@ export default class LordsChart extends PureComponent {
             fill="#8884d8"
             dataKey="value"
           >
-            {data.map((entry, index) => (
+            {Object.values(accounts).map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 name={entry.name}
