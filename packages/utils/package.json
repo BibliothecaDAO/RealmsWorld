@@ -9,6 +9,7 @@
   "scripts": {
     "build": "tsup",
     "clean": "rimraf -rf dist",
+    "lint": "eslint",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
     "tsc": "tsc --noEmit"
@@ -22,7 +23,7 @@
   },
   "devDependencies": {
     "@realms-world/tsconfig": "*",
-    "@types/node": "^20.12.4",
+    "@types/node": "^20.12.5",
     "typescript": "^5.4.4"
   },
   "publishConfig": {

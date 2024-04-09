@@ -1,7 +1,7 @@
 {
   "name": "@realms-world/monorepo",
   "engines": {
-    "node": ">=20.10"
+    "node": ">=20.12.0"
   },
   "packageManager": "bun@1.0.6",
   "workspaces": [
@@ -20,7 +20,7 @@
     "dev": "turbo dev --parallel",
     "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
-    "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
+    "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg ch eck",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
     "lint:ws": "bunx sherif@latest -r root-package-private-field",
     "typecheck": "turbo typecheck"

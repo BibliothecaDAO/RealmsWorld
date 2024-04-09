@@ -5,6 +5,7 @@
   "eslint.runtime": "/opt/homebrew/bin/node",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
+  "eslint.experimental.useFlatConfig": true,
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
   "eslint.workingDirectories": [
     { "pattern": "apps/*/" },

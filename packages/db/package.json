@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint .",
+    "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "push": "drizzle-kit push:pg",
     "studio": "drizzle-kit studio",
@@ -25,16 +25,10 @@
     "@realms-world/tsconfig": "*",
     "dotenv-cli": "^7.4.1",
     "drizzle-kit": "^0.20.14",
-    "eslint": "^8.57.0",
+    "eslint": "^9.0.0",
     "postgres-range": "^1.1.4",
     "prettier": "^3.2.5",
     "typescript": "^5.4.4"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@realms-world/eslint-config/base"
-    ]
   },
   "prettier": "@realms-world/prettier-config"
 }
