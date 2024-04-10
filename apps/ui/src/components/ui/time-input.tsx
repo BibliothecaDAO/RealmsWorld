@@ -71,14 +71,14 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
 
     React.useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
       ref,
-      () => innerRef?.current,
+      () => innerRef.current,
     );
 
-    const locale = window !== undefined ? window.navigator.language : "en-US";
+    const locale = window.navigator.language || "en-US";
 
     const state = useTimeFieldState({
-      hourCycle: hourCycle,
-      locale: locale,
+      hourCycle,
+      locale,
       shouldForceLeadingZeros: true,
       autoFocus: true,
       ...props,

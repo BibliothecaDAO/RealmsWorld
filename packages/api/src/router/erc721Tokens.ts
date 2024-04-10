@@ -56,7 +56,7 @@ export const erc721TokensRouter = createTRPCRouter({
       else {
         if (
           cursor == undefined ||
-          (cursor?.token_id != 0 && cursor?.price != null)
+          (cursor.token_id != 0 && cursor.price != null)
         ) {
           cursors.push(
             [
@@ -74,7 +74,7 @@ export const erc721TokensRouter = createTRPCRouter({
           cursors.push([
             schema.erc721Tokens.token_id, // Column to use for cursor
             direction ?? "asc", // Sort order ('asc' or 'desc')
-            cursor?.token_id, // Cursor value
+            cursor.token_id, // Cursor value
           ]);
           whereFilter.push(isNull(schema.erc721Tokens.price));
         }
@@ -139,12 +139,14 @@ export const erc721TokensRouter = createTRPCRouter({
       let nextCursor: typeof cursor | undefined = undefined;
       if (items.length > limit) {
         const nextItem = items.pop();
-        const nextTokenId =
-          direction == "dsc" ? nextItem!.token_id + 1 : nextItem!.token_id - 1;
-        nextCursor = {
-          token_id: nextTokenId,
-          price: nextItem!.price,
-        };
+        if (nextItem) {
+          const nextTokenId =
+            direction == "dsc" ? nextItem.token_id + 1 : nextItem.token_id - 1;
+          nextCursor = {
+            token_id: nextTokenId,
+            price: nextItem.price,
+          };
+        }
       } else if (cursor?.price) {
         nextCursor = { token_id: 0, price: null };
       }

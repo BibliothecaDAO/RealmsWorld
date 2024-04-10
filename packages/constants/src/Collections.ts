@@ -59,7 +59,7 @@ export const CollectionDisplayName = {
 
 export function getCollectionAddresses(
   collectionName: string,
-): Partial<{ [key in ChainId]: string }> {
+): Partial<{ [key in ChainId]: string } | undefined> {
   const normalizedCollectionName = collectionName as Collections;
   return CollectionAddresses[normalizedCollectionName];
 }

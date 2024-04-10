@@ -25,7 +25,7 @@ import { useUIContext } from "../providers/UIProvider";
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useUIContext();
 
-  const { lordsPrice } = useLordsPrice();
+  const lordsPrice = useLordsPrice();
 
   const router = useRouter();
   const menu = [

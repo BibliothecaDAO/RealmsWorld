@@ -72,7 +72,7 @@ export const BuyModalRender: FC<Props> = ({
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [hasEnoughCurrency, setHasEnoughCurrency] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const { lordsPrice } = useLordsPrice();
+  const lordsPrice  = {usdPrice: 0.11}
   const { balances } = useWalletsProviderContext();
 
   /*  const blockExplorerBaseUrl =
@@ -98,9 +98,9 @@ export const BuyModalRender: FC<Props> = ({
 
   const listing = useMemo(() => {
     if (token?.listings)
-      return findLowestPriceActiveListing(token?.listings, token?.owner);
+      return findLowestPriceActiveListing(token.listings, token.owner);
     else if (listingsData?.items.length)
-      return findLowestPriceActiveListing(listingsData?.items, token?.owner);
+      return findLowestPriceActiveListing(listingsData.items, token?.owner);
   }, [token, listingsData]);
 
   const usdPrice = parseInt(listing?.price ?? "0") * lordsPrice.usdPrice;

@@ -18,11 +18,11 @@ import { TradeLayout } from "./Trade";
 
 //export const runtime = "edge";
 
-export async function generateMetadata({
+export function generateMetadata({
   params,
 }: {
   params: { id: string };
-}): Promise<Metadata> {
+}): Metadata {
   const collection = CollectionDisplayName[params.id as Collections];
   return {
     title: `${collection}`,
@@ -36,7 +36,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
+export default function Page({
   params,
   searchParams,
 }: {
@@ -58,21 +58,25 @@ export default async function Page({
     return <Mint contractId={params.id} />;
   }*/
   if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
-    return (
-      <L2TokenData tokenAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID]!} />
-    );
+    const l2TokenAddress = tokenAddresses[SUPPORTED_L2_CHAIN_ID];
+    if (typeof l2TokenAddress === "string") {
+      return <L2TokenData tokenAddress={l2TokenAddress} />;
+    }
   }
   if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
-    return (
-      <L1TokenData
-        tokenAddress={tokenAddresses[SUPPORTED_L1_CHAIN_ID]!}
-        searchParams={searchParams}
-      />
-    );
+    const l1TokenAddress = tokenAddresses[SUPPORTED_L1_CHAIN_ID];
+    if (typeof l1TokenAddress === "string") {
+      return (
+        <L1TokenData
+          tokenAddress={l1TokenAddress}
+          searchParams={searchParams}
+        />
+      );
+    }
   }
 }
 
-const L2TokenData = async ({ tokenAddress }: { tokenAddress: string }) => {
+const L2TokenData = ({ tokenAddress }: { tokenAddress: string }) => {
   const erc721Attributes = api.erc721Attributes.all({
     contractAddress: tokenAddress,
   });
@@ -111,7 +115,7 @@ const L1TokenData = async ({
     attributesData,
   ]);
 
-  if (!tokens) {
+  if (!tokens.length) {
     return <div>Collection Not Found</div>;
   }
   return (

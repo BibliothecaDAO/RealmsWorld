@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { useUIContext } from "@/app/providers/UIProvider";
@@ -69,7 +68,7 @@ const L2ERC721Table = ({
     <>
       <div className={isGrid ? grid : list}>
         {erc721Tokens.pages[0]?.items.length
-          ? erc721Tokens?.pages?.map((page) =>
+          ? erc721Tokens.pages.map((page) =>
               page.items.map((token, index) => {
                 return (
                   <L2ERC721Card

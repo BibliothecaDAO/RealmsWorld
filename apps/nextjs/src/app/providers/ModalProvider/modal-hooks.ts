@@ -96,7 +96,6 @@ export const useProgressModal = (steps = []) => {
         containerStyle,
       });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [showModal],
   );
 };

@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useLordsPrice } from "@/hooks/useLordsPrice";
+import { getLordsPrice } from "@/hooks/useLordsPrice";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
+import { getTokenPrices } from "@/lib/coingecko";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -131,14 +132,16 @@ const GridDetails = ({
   </div>
 );
 
-const Price = ({
+const Price = async ({
   token,
 }: {
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number] & {
     listings: RouterOutputs["erc721MarketEvents"]["all"]["items"];
   };
 }) => {
-  const { lordsPrice } = useLordsPrice();
+  const lordsPrice = await getTokenPrices({
+    addresses: ["0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0"],
+  });
 
   const listing = findLowestPriceActiveListing(token.listings, token.owner);
   return (
@@ -146,11 +149,12 @@ const Price = ({
       {listing?.price && (
         <div>
           <div className="flex text-lg">
-            {listing?.price}
+            {listing.price}
             <LordsIcon className="mx-auto ml-2 h-4 w-4 self-center fill-bright-yellow" />
           </div>
-          <div className="text-xs text-bright-yellow/60 -mt-0.5">
-            {(lordsPrice.usdPrice * parseFloat(listing?.price)).toFixed(2)} USD
+          <div className="-mt-0.5 text-xs text-bright-yellow/60">
+            {((lordsPrice.usdPrice ?? 0) * parseFloat(listing.price)).toFixed(2)}
+            USD
           </div>
         </div>
       )}
