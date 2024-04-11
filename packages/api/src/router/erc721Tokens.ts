@@ -22,7 +22,7 @@ export const erc721TokensRouter = createTRPCRouter({
         contractAddress: z.string().nullish(),
         owner: z.string().nullish(),
         orderBy: z.string().nullish(),
-        direction: z.string().nullish(),
+        sortDirection: z.string().nullish(),
         block: z.number().nullish(),
         listings: z.boolean().nullish(),
         attributeFilter: z.record(z.string(), z.string()).nullish(),
@@ -31,14 +31,13 @@ export const erc721TokensRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 50;
-      //TODO add orderBy conditions
       const {
         cursor,
         contractAddress,
         owner,
         orderBy,
         block,
-        direction,
+        sortDirection = "asc",
         attributeFilter,
       } = input;
       const whereFilter: SQL[] = [];
@@ -48,7 +47,7 @@ export const erc721TokensRouter = createTRPCRouter({
       if (orderBy == "tokenId") {
         cursors.push([
           schema.erc721Tokens.token_id, // Column to use for cursor
-          direction ?? "asc", // Sort order ('asc' or 'desc')
+          sortDirection ?? "asc", // Sort order ('asc' or 'desc')
           cursor?.token_id, // Cursor value
         ]);
       }
@@ -60,20 +59,20 @@ export const erc721TokensRouter = createTRPCRouter({
         ) {
           cursors.push(
             [
-              sql`case when EXTRACT(EPOCH FROM now()) < ${schema.erc721Tokens.expiration} then ${schema.erc721Tokens.price} else ${direction === "dsc" ? "0" : null} end`,
-              direction ?? "asc", // Sort order ('asc' or 'desc')
+              sql`case when EXTRACT(EPOCH FROM now()) < ${schema.erc721Tokens.expiration} then ${schema.erc721Tokens.price} else ${sortDirection === "dsc" ? "0" : null} end`,
+              sortDirection ?? "asc", // Sort order ('asc' or 'desc')
               cursor?.price, // Cursor value
             ],
             [
               schema.erc721Tokens.token_id, // Column to use for cursor
-              direction ?? "asc", // Sort order ('asc' or 'desc')
+              sortDirection ?? "asc", // Sort order ('asc' or 'desc')
               cursor?.token_id, // Cursor value
             ],
           );
         } else {
           cursors.push([
             schema.erc721Tokens.token_id, // Column to use for cursor
-            direction ?? "asc", // Sort order ('asc' or 'desc')
+            sortDirection ?? "asc", // Sort order ('asc' or 'desc')
             cursor?.token_id, // Cursor value
           ]);
           whereFilter.push(isNull(schema.erc721Tokens.price));
@@ -140,7 +139,9 @@ export const erc721TokensRouter = createTRPCRouter({
       if (items.length > limit) {
         const nextItem = items.pop();
         const nextTokenId =
-          direction == "dsc" ? nextItem!.token_id + 1 : nextItem!.token_id - 1;
+          sortDirection == "dsc"
+            ? nextItem!.token_id + 1
+            : nextItem!.token_id - 1;
         nextCursor = {
           token_id: nextTokenId,
           price: nextItem!.price,

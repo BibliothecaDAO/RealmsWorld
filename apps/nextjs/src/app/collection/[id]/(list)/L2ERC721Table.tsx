@@ -42,7 +42,7 @@ const L2ERC721Table = ({
     limit: 24,
     contractAddress,
     attributeFilter: attributeFilter,
-    direction: sortDirection,
+    sortDirection: sortDirection,
     orderBy: sortBy,
   };
 
