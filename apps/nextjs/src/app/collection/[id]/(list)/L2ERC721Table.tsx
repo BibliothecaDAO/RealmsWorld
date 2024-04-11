@@ -31,6 +31,7 @@ const L2ERC721Table = ({
 
   const sortDirection = searchParams.get("sortDirection");
   const sortBy = searchParams.get("sortBy");
+  const buyNowOnly = searchParams.get("Status")
 
   const attributesObject: Record<string, string> = {};
   for (const [key, value] of searchParams.entries()) {
@@ -44,6 +45,7 @@ const L2ERC721Table = ({
     attributeFilter: attributeFilter,
     sortDirection: sortDirection,
     orderBy: sortBy,
+    buyNowOnly: buyNowOnly == 'Buy Now Only'
   };
 
   if (ownerAddress) {

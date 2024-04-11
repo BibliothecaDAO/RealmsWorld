@@ -43,6 +43,7 @@ export function cleanQuery(
   delete cleanQuery.sortBy;
   delete cleanQuery.sortDirection;
   delete cleanQuery.collection;
+  delete cleanQuery.Status;
   delete cleanQuery.includeAttributes;
   delete cleanQuery.includeQuantity;
   delete cleanQuery.tokens;

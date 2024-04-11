@@ -2,7 +2,7 @@ import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import { and, eq, inArray, isNull, schema } from "@realms-world/db";
+import { and, eq, inArray, isNotNull, isNull, schema } from "@realms-world/db";
 import { padAddress } from "@realms-world/utils";
 
 import { withCursorPagination } from "../cursorPagination";
@@ -23,6 +23,7 @@ export const erc721TokensRouter = createTRPCRouter({
         owner: z.string().nullish(),
         orderBy: z.string().nullish(),
         sortDirection: z.string().nullish(),
+        buyNowOnly: z.boolean().nullish(),
         block: z.number().nullish(),
         listings: z.boolean().nullish(),
         attributeFilter: z.record(z.string(), z.string()).nullish(),
@@ -39,6 +40,7 @@ export const erc721TokensRouter = createTRPCRouter({
         block,
         sortDirection = "asc",
         attributeFilter,
+        buyNowOnly
       } = input;
       const whereFilter: SQL[] = [];
       const cursors = [];
@@ -114,6 +116,9 @@ export const erc721TokensRouter = createTRPCRouter({
           );
         }
         whereFilter.push(...attributesObject);
+      }
+      if (buyNowOnly) {
+        whereFilter.push(isNotNull(schema.erc721Tokens.price))
       }
       /*const items = await ctx.db
         .select({
