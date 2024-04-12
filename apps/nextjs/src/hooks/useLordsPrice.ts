@@ -3,9 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 
-interface LordsInformation {
+/*interface LordsInformation {
   holderCount: number;
   usdPrice: number;
   marketCap: number;
@@ -13,7 +12,7 @@ interface LordsInformation {
   diff7d: number;
   diff30d: number;
   volume24hr: number;
-}
+}*/
 
 export async function getLordsPrice() {
   const url = `https://api.ethplorer.io/getTokenInfo/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0?apiKey=${process.env.NEXT_PUBLIC_ETHPLORER_APIKEY}`;
@@ -33,8 +32,8 @@ export async function getLordsPrice() {
 }
 
 export const useLordsPrice = () => {
-  const { data, error, isLoading } = useQuery({queryKey: ['lordsPrice'], queryFn: getLordsPrice});
+  const { data/* error, isLoading */} = useQuery({queryKey: ['lordsPrice'], queryFn: getLordsPrice});
   
 
-  return { lordsPrice: data ?? 0 };
+  return { lordsPrice: data };
 };

@@ -103,9 +103,9 @@ export const BuyModalRender: FC<Props> = ({
       return findLowestPriceActiveListing(listingsData?.items, token?.owner);
   }, [token, listingsData]);
 
-  const usdPrice = parseInt(listing?.price ?? "0") * lordsPrice.usdPrice;
+  const usdPrice = parseInt(listing?.price ?? "0") * (lordsPrice?.usdPrice ?? 0);
   //const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;*/
-  const totalUsd = totalIncludingFees * lordsPrice.usdPrice;
+  const totalUsd = totalIncludingFees * (lordsPrice?.usdPrice ?? 0);
 
   const lordsAddress = LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`;
 

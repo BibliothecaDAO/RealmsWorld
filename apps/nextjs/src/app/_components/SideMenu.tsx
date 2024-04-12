@@ -55,7 +55,7 @@ const Sidebar = () => {
       icon: <Calender className="w-[25px]" />,
     },
     {
-      name: "Notes",
+      name: "Blog",
       href: "/blog",
       icon: <Bookmark className="w-[25px]" />,
     },
@@ -148,7 +148,7 @@ const Sidebar = () => {
               <div className="h-8">
                 <LordsIcon className="mx-auto h-6 w-6 fill-bright-yellow pb-1" />
               </div>
-              {lordsPrice.usdPrice}
+              {lordsPrice?.usdPrice}
             </Button>
 
             <div className=" flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
