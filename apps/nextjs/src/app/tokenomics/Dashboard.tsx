@@ -94,7 +94,7 @@ export const DashBoard = ({
         dataTitle={`$${lords?.tokenInfo.price?.rate.toLocaleString()}`}
       >
         <Button
-          href="https://coinmarketcap.com/currencies/lords/"
+          href="https://www.coingecko.com/en/coins/lords"
           size={"xs"}
           variant={"outline"}
         >
