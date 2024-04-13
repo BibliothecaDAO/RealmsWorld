@@ -1,5 +1,6 @@
 import { ChainId } from "./Chains";
 import { Collections } from "./Collections";
+import { Studios } from "./Studios";
 import { Tokens } from "./Tokens";
 
 interface Link {
@@ -18,7 +19,7 @@ export interface Game {
   id: string; // Game ID (used for URL must be kebab-case)
   color: string;
   status: Status;
-  developer: string;
+  developer: Studios;
   genres?: string[];
   description: string;
   longform: string;
@@ -35,7 +36,7 @@ export const games: Game[] = [
   {
     name: "Realms: Eternum",
     id: "realms-eternum",
-    developer: "BiblioDAO",
+    developer: Studios.BIBLIO_DAO,
     genres: ["Economic Strategy", "PvP", "Raiding", "Economy"],
     color: "#f5f5f5",
     status: "development",
@@ -57,7 +58,7 @@ export const games: Game[] = [
   {
     name: "Paved",
     id: "paved",
-    developer: "Paved Studio",
+    developer: Studios.PAVED_STUDIO,
     genres: ["tile-matching", "puzzle", "strategy"],
     color: "#f5f5f5",
     status: "beta",
@@ -79,7 +80,7 @@ export const games: Game[] = [
   {
     name: "Loot Survivor",
     id: "loot-survivor",
-    developer: "BiblioDAO",
+    developer: Studios.BIBLIO_DAO,
     genres: ["Play to Die", "Roguelike"],
     color: "#f5f5f5",
     status: "mainnet",
@@ -103,7 +104,7 @@ export const games: Game[] = [
   {
     name: "Pistols at Ten Blocks",
     id: "pistols",
-    developer: "Underware",
+    developer: Studios.UNDERWARE,
     genres: ["Social", "Casual", "Strategy", "PVP"],
     color: "#faffcb",
     status: "beta",
@@ -125,7 +126,7 @@ export const games: Game[] = [
   {
     name: "zConqueror",
     id: "zconqueror",
-    developer: "zKorp",
+    developer: Studios.ZKORP,
     genres: ["Strategy", "PvP", "Casual"],
     color: "#f5f5f5",
     status: "beta",
@@ -144,7 +145,7 @@ export const games: Game[] = [
   {
     name: "Underdark",
     id: "underdark",
-    developer: "Underware",
+    developer: Studios.UNDERWARE,
     genres: ["Play to Die", "Roguelike", "Horror", "PVE"],
     color: "#faffcb",
     status: "alpha",
@@ -166,7 +167,7 @@ export const games: Game[] = [
   {
     name: "Loot Underworld",
     id: "loot-underworld",
-    developer: "Underware",
+    developer: Studios.UNDERWARE,
     genres: ["Play to Die", "Roguelike", "RPG", "Dungeon Crawler"],
     color: "#fbf6c0",
     status: "development",
@@ -187,7 +188,7 @@ export const games: Game[] = [
   {
     name: "Mississippi",
     id: "mississippi",
-    developer: "Mississippi Team",
+    developer: Studios.MISSISSIPPI_TEAM,
     genres: ["SLG", "PVP", "Roguelike"],
     color: "#6F391E",
     status: "development",
@@ -210,7 +211,7 @@ export const games: Game[] = [
    {
     name: "Kingdom-of-Lords",
     id: "Kingdom-of-Lords",
-    developer: "Mississippi Team",
+    developer: Studios.MISSISSIPPI_TEAM,
     genres: ["SLG", "PVP", "MMO Strategy Game"],
     color: "#6F391E",
     status: "beta",
@@ -232,7 +233,7 @@ export const games: Game[] = [
   {
     name: "GenLoot",
     id: "gen-loot",
-    developer: "Crazy_Diamond",
+    developer: Studios.CRAZY_DIAMOND,
     genres: ["Strategy Card Games", "RPG"],
     color: "#00FF63",
     status: "development",
@@ -250,7 +251,7 @@ export const games: Game[] = [
   {
     name: "Rising Revenant",
     id: "rising-revenant",
-    developer: "Grug's Lair",
+    developer: Studios.GRUGS_LAIR,
     genres: ["Last Man Standing", "Strategy"],
     color: "#f5f5f5",
     status: "development",
@@ -272,7 +273,7 @@ export const games: Game[] = [
   {
     name: "Arcane Assembler",
     id: "arcane-assembler",
-    developer: "Arcane Assemblers",
+    developer: Studios.ARCANE_ASSEMBLERS,
     genres: ["Play to Die", "Card Game"],
     color: "#f5f5f5",
     status: "development",
@@ -294,7 +295,7 @@ export const games: Game[] = [
   {
     name: "Call the Banners",
     id: "call-the-banners",
-    developer: "Banners (for Adventurers)",
+    developer: Studios.BANNERS_FOR_ADVENTURERS,
     genres: ["Social", "Strategy", "PvP"],
     color: "#f5f5f5",
     status: "development",

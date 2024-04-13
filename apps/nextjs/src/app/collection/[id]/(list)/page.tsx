@@ -8,7 +8,7 @@ import { api } from "@/trpc/server";
 
 import type { Collections } from "@realms-world/constants";
 import {
-  CollectionDisplayName,
+  CollectionDetails,
   getCollectionAddresses,
 } from "@realms-world/constants";
 
@@ -23,7 +23,7 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const collection = CollectionDisplayName[params.id as Collections];
+  const collection = CollectionDetails[params.id as Collections].displayName;
   return {
     title: `${collection}`,
     description: `Collection Details and Marketplace for ${collection} - Created for Adventurers by Bibliotheca DAO`,
