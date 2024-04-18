@@ -11,6 +11,7 @@ import type { Collections } from "@realms-world/constants";
 import { getCollectionAddresses } from "@realms-world/constants";
 
 import L2CollectionSummary from "./L2CollectionSummary";
+import { SocialIcons } from "@/app/_components/SocialIcons";
 
 export default async function CollectionSummary({
   collectionId,
@@ -98,16 +99,8 @@ export default async function CollectionSummary({
               className="mx-auto border"
             />
           )}
-          <div className="mx-auto my-4 flex justify-center space-x-2">
-            {links.map((social, index) => {
-              if (social.value)
-                return (
-                  <Link key={index} href={`${social.value}`}>
-                    {social.icon}
-                  </Link>
-                );
-            })}
-          </div>
+          <SocialIcons x={collection.twitterUsername} external={`https://etherscan.io/address/${collection.id}`} discord={collection.discordUrl} website={collection.externalUrl} />
+         
         </div>
 
         <div>

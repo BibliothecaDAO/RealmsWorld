@@ -18,6 +18,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@realms-world/ui";
+import { SocialIcons } from "@/app/_components/SocialIcons";
 
 export async function generateMetadata({
   params,
@@ -86,6 +87,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="flex flex-wrap gap-x-10">
         <div className="mb-4 w-full">
           <h1 className="h3">{studio?.name}</h1>
+          <hr />
         </div>
 
         {studio && (
@@ -99,6 +101,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                   height={100}
                 />
               </div>
+              <SocialIcons website={studio.links.homepage} x={studio.links.twitter} />
 
               <div className="flex-col space-y-2 mb-2">
                 <table className="w-full divide-y py-8 text-sm capitalize">
@@ -108,7 +111,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <td className="whitespace-nowrap px-2 py-2 font-sans text-bright-yellow/70">
                           {data.key}
                         </td>
-                        <td className=" whitespace-nowrap px-2 py-2 text-right ">
+                        <td className="px-2 py-2 text-right ">
                           {data.value}
                         </td>
                       </tr>

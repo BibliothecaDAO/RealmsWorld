@@ -1,10 +1,12 @@
 import type { Collections } from "./Collections";
-import { Game, games } from "./Games";
+import type { Game} from "./Games";
+import { games } from "./Games";
 
 interface Link {
   discord?: string;
   twitter?: string;
   telegram?: string;
+  github?: string
   homepage?: string;
 }
 export enum Studios {
@@ -43,7 +45,7 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     links: {
       homepage: "https://realms.world/",
       discord: "https://discord.gg/uQnjZhZPfu",
-      twitter: "https://twitter.com/LootRealms",
+      twitter: "LootRealms",
     },
   },
   [Studios.PAVED_STUDIO]: {
@@ -55,18 +57,20 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     logoFormat: "png",
     links: {
       homepage: "https://paved.gg/",
+      twitter: 'pavedgame'
     },
   },
   [Studios.UNDERWARE]: {
     name: "Underware",
     id: "underware",
     color: "#f5f5f5",
-    description: "",
-    longform: "",
-    logoFormat: null,
+    description: "Realmsverse Game Studio & Knights of the Realm",
+    longform: "Underware is a fully on-chain game studio of veteran technologists, committed to building on and contributing to the Realms Network. We are extending the Realmsverse with an expansive autonomous (under)world, and building various related games and novel mechanics, including an narrative dungeon crawler.\n\n We consider ourselves long-term aligned with the Realmsverse, with a focus upon crafting meaningful, engaging, and open technology & game experiences at the frontier of autonomous worlds.",
+    logoFormat: 'jpg',
     links: {
       homepage: "https://underware.gg/",
-      twitter: "https://x.com/underware_gg",
+      twitter: "underware_gg",
+      github: "funDAOmental"
     },
     screenshotLength: 2,
   },
@@ -78,7 +82,7 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     longform: "",
     logoFormat: "jpg",
     links: {
-      twitter: "https://twitter.com/zKorp_",
+      twitter: "zKorp_",
     },
     screenshotLength: 2,
   },
@@ -113,6 +117,7 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     logoFormat: "png",
     links: {
       homepage: "https://www.grugslair.xyz/",
+      twitter: 'GrugsLair'
     },
   },
   [Studios.ARCANE_ASSEMBLERS]: {
@@ -135,6 +140,7 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     logoFormat: null,
     links: {
       homepage: "",
+      twitter: "BannersNft"
     },
   },
   // Continue for each developer listed in the games array
