@@ -101,7 +101,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                   height={100}
                 />
               </div>
-              <SocialIcons website={studio.links.homepage} x={studio.links.twitter} />
+              <SocialIcons github={studio.links.github} telegram={studio.links.telegram} website={studio.links.homepage} x={studio.links.twitter} discord={studio.links.discord} />
 
               <div className="flex-col space-y-2 mb-2">
                 <table className="w-full divide-y py-8 text-sm capitalize">

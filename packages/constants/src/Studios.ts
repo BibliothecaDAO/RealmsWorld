@@ -46,6 +46,8 @@ export const studios: { [key in Studios]?: StudioInterface } = {
       homepage: "https://realms.world/",
       discord: "https://discord.gg/uQnjZhZPfu",
       twitter: "LootRealms",
+      telegram: "https://t.me/+UpfCtj7qEO9hZjU1",
+      github: "https://github.com/BibliothecaDAO/"
     },
   },
   [Studios.PAVED_STUDIO]: {
@@ -74,6 +76,18 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     },
     screenshotLength: 2,
   },
+  [Studios.GRUGS_LAIR]: {
+    name: "Grug's Lair",
+    id: "grugs-lair",
+    color: "#f5f5f5",
+    description: "",
+    longform: "",
+    logoFormat: "png",
+    links: {
+      homepage: "https://www.grugslair.xyz/",
+      twitter: 'GrugsLair'
+    },
+  },
   [Studios.ZKORP]: {
     name: "zKorp",
     id: "zkorp",
@@ -85,6 +99,18 @@ export const studios: { [key in Studios]?: StudioInterface } = {
       twitter: "zKorp_",
     },
     screenshotLength: 2,
+  },
+  [Studios.BANNERS_FOR_ADVENTURERS]: {
+    name: "Banners (for Adventurers)",
+    id: "banners",
+    color: "#f5f5f5",
+    description: "",
+    longform: "",
+    logoFormat: null,
+    links: {
+      homepage: "",
+      twitter: "BannersNft"
+    },
   },
   [Studios.MISSISSIPPI_TEAM]: {
     name: "Mississippi Team",
@@ -108,18 +134,6 @@ export const studios: { [key in Studios]?: StudioInterface } = {
       homepage: "",
     },
   },
-  [Studios.GRUGS_LAIR]: {
-    name: "Grug's Lair",
-    id: "grugs-lair",
-    color: "#f5f5f5",
-    description: "",
-    longform: "",
-    logoFormat: "png",
-    links: {
-      homepage: "https://www.grugslair.xyz/",
-      twitter: 'GrugsLair'
-    },
-  },
   [Studios.ARCANE_ASSEMBLERS]: {
     name: "Arcane Assemblers",
     id: "arcane-assemblers",
@@ -129,18 +143,6 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     logoFormat: null,
     links: {
       homepage: "",
-    },
-  },
-  [Studios.BANNERS_FOR_ADVENTURERS]: {
-    name: "Banners (for Adventurers)",
-    id: "banners",
-    color: "#f5f5f5",
-    description: "",
-    longform: "",
-    logoFormat: null,
-    links: {
-      homepage: "",
-      twitter: "BannersNft"
     },
   },
   // Continue for each developer listed in the games array

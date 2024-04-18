@@ -1,17 +1,23 @@
 import Link from "next/link";
 import Discord from "@/icons/discord.svg";
-import { ExternalLink, Globe, X } from "lucide-react";
+import X from "@/icons/x.svg";
+import Telegram from "@/icons/telegram.svg";
+import { ExternalLink, GithubIcon, Globe } from "lucide-react";
 
 export const SocialIcons = ({
   x,
   website,
   discord,
   external,
+  github,
+  telegram
 }: {
   x?: string;
   website?: string;
   discord?: string;
   external?: string;
+  github?: string;
+  telegram?: string;
 }) => {
   const links = [
     {
@@ -23,10 +29,12 @@ export const SocialIcons = ({
       value: discord,
     },
     {
-      icon: <X />,
+      icon: <X className="h-[26px] w-[26px] "/>,
       value: "https://x.com/" + x,
     },
     { icon: <Globe />, value: website },
+    {icon: <GithubIcon />, value: github},
+    {icon: <Telegram className="h-6 w-6" />, value: telegram }
   ];
 
   return (
