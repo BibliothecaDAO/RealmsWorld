@@ -31,10 +31,10 @@ export async function generateMetadata({
 
   return {
     title: `${name}`,
-    description: `${name} Profile - Created for Adventurers by Bibliotheca DAO`,
+    description: `${name} Profile - A game studio of the Realms Autonomous World`,
     openGraph: {
       title: `${name}`,
-      description: `${name} Profile - Created for Adventurers by Bibliotheca DAO`,
+      description: `${name} Profile - A studio of the Realms Autonomous World`,
     }
   };
 }
@@ -96,7 +96,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
         {studio && (
           <>
-            <div className="pl-4 sm:w-3/12">
+            <div className="pl-4 sm:w-3/12 mb-6">
               <div className="flex justify-center py-8">
                 <Image
                   alt=""
