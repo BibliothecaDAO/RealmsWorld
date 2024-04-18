@@ -24,7 +24,6 @@ export enum Studios {
 export interface StudioInterface {
   name: string; // Display name of the Studio
   id: string; // Studio ID (used for URL must be kebab-case)
-  color: string;
   logoFormat: "png" | "svg" | 'jpg' | 'webp' | null; 
   description: string;
   longform: string;
@@ -37,7 +36,6 @@ export const studios: { [key in Studios]?: StudioInterface } = {
   [Studios.BIBLIO_DAO]: {
     name: "BiblioDAO",
     id: "biblio-dao",
-    color: "#f5f5f5",
     description: "Guardians of Realms.World",
     longform:
       "The BiblioDAO is steered by 8000 unique Realms NFTs, entrusted to a diverse community of players, developers, and stakeholders. Together, they guide the evolution and expansion of the Realms Autonomous World.",
@@ -53,7 +51,6 @@ export const studios: { [key in Studios]?: StudioInterface } = {
   [Studios.PAVED_STUDIO]: {
     name: "Paved Studios",
     id: "paved-studios",
-    color: "#f5f5f5",
     description: "",
     longform: "",
     logoFormat: "png",
@@ -65,7 +62,6 @@ export const studios: { [key in Studios]?: StudioInterface } = {
   [Studios.UNDERWARE]: {
     name: "Underware",
     id: "underware",
-    color: "#f5f5f5",
     description: "Realmsverse Game Studio & Knights of the Realm",
     longform: "Underware is a fully on-chain game studio of veteran technologists, committed to building on and contributing to the Realms Network. We are extending the Realmsverse with an expansive autonomous (under)world, and building various related games and novel mechanics, including an narrative dungeon crawler.\n\n We consider ourselves long-term aligned with the Realmsverse, with a focus upon crafting meaningful, engaging, and open technology & game experiences at the frontier of autonomous worlds.",
     logoFormat: 'jpg',
@@ -79,7 +75,6 @@ export const studios: { [key in Studios]?: StudioInterface } = {
   [Studios.GRUGS_LAIR]: {
     name: "Grug's Lair",
     id: "grugs-lair",
-    color: "#f5f5f5",
     description: "",
     longform: "",
     logoFormat: "png",
@@ -91,7 +86,6 @@ export const studios: { [key in Studios]?: StudioInterface } = {
   [Studios.ZKORP]: {
     name: "zKorp",
     id: "zkorp",
-    color: "#f5f5f5",
     description: "",
     longform: "",
     logoFormat: "jpg",
@@ -103,30 +97,32 @@ export const studios: { [key in Studios]?: StudioInterface } = {
   [Studios.BANNERS_FOR_ADVENTURERS]: {
     name: "Banners (for Adventurers)",
     id: "banners",
-    color: "#f5f5f5",
     description: "",
     longform: "",
     logoFormat: null,
     links: {
       homepage: "",
+      discord: "https://discord.gg/NkHnWCPc6D",
+      telegram: "",
+      github: "",
       twitter: "BannersNft"
     },
   },
   [Studios.MISSISSIPPI_TEAM]: {
     name: "Mississippi Team",
     id: "mississippi-team",
-    color: "#f5f5f5",
     description: "",
     longform: "",
-    logoFormat: null,
+    logoFormat: 'svg',
     links: {
-      homepage: "",
+      discord: "https://discord.gg/XKqfEcHaUh",
+      twitter: "0xMississippi",
+      homepage: "https://0xmssp.xyz/"
     },
   },
   [Studios.CRAZY_DIAMOND]: {
     name: "Crazy Diamond",
     id: "crazy-diamond",
-    color: "#f5f5f5",
     description: "",
     longform: "",
     logoFormat: null,
@@ -137,12 +133,12 @@ export const studios: { [key in Studios]?: StudioInterface } = {
   [Studios.ARCANE_ASSEMBLERS]: {
     name: "Arcane Assemblers",
     id: "arcane-assemblers",
-    color: "#f5f5f5",
     description: "",
     longform: "",
     logoFormat: null,
     links: {
-      homepage: "",
+      twitter: "ArcaneAssembler",
+      github: "ArcaneAssemblers"
     },
   },
   // Continue for each developer listed in the games array

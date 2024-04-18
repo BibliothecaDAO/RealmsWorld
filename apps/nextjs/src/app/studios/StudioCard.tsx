@@ -25,7 +25,7 @@ export const StudioCard = async ({
         <Image
           src={`/studios/${studio.id}/logo.${studio.logoFormat}`}
           alt={studio.name}
-          width={800}
+          width={400}
           height={400}
           className="absolute bottom-0 top-0 h-full w-full brightness-50 transition-all duration-300 group-hover:filter-none"
         />

@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   title: "Games of the Realms",
   description:
     "Game Studios contributing to the Realms.World- Created for adventurers by BiblioDAO",
+  openGraph: {
+    title: "Games of the Realms",
+    description:
+      "Game Studios contributing to the Realms.World- Created for adventurers by BiblioDAO",
+  },
 };
 
 export default async function Page() {

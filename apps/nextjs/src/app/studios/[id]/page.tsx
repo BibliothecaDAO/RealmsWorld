@@ -31,7 +31,11 @@ export async function generateMetadata({
 
   return {
     title: `${name}`,
-    description: `${params.id} Profile - Created for Adventurers by Bibliotheca DAO`,
+    description: `${name} Profile - Created for Adventurers by Bibliotheca DAO`,
+    openGraph: {
+      title: `${name}`,
+      description: `${name} Profile - Created for Adventurers by Bibliotheca DAO`,
+    }
   };
 }
 
