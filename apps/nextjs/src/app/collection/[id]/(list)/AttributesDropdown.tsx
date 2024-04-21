@@ -7,7 +7,7 @@
 import type { getAttributes } from "@/lib/reservoir/getAttributes";
 import { use } from "react";
 import NumberSelect from "@/app/_components/NumberSelect";
-import { useQuery } from "@/hooks/useQuery";
+import { useQueryParams } from "@/hooks/useQueryParams";
 import { api } from "@/trpc/react";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -29,7 +29,7 @@ export const AttributesDropdown = ({
   attributes?: Awaited<ReturnType<typeof getAttributes>>["attributes"];
   attributesPromise?: Promise<RouterOutputs["erc721Attributes"]["all"]>;
 }) => {
-  const { handleAttributeClick, isAttributeInQuery, isKeyInQuery } = useQuery();
+  const { handleAttributeClick, isAttributeInQuery, isKeyInQuery } = useQueryParams();
   const { data: attributesFetched } = api.erc721Attributes.all.useQuery(
     {
       contractAddress: address,

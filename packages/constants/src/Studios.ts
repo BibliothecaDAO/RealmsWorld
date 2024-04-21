@@ -56,7 +56,10 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     logoFormat: "png",
     links: {
       homepage: "https://paved.gg/",
-      twitter: 'pavedgame'
+      twitter: 'pavedgame',
+      discord: "",
+      telegram: "",
+      github: ""
     },
   },
   [Studios.UNDERWARE]: {

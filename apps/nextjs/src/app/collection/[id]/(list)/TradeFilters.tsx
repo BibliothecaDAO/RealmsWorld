@@ -2,7 +2,7 @@
 
 import { useUIContext } from "@/app/providers/UIProvider";
 import { sortDirection, sortOptions } from "@/constants";
-import { useQuery } from "@/hooks/useQuery";
+import { useQueryParams } from "@/hooks/useQueryParams";
 import { Filter, Grid, List } from "lucide-react";
 
 import {
@@ -14,7 +14,7 @@ import {
 } from "@realms-world/ui";
 
 export const TradeFilters = () => {
-  const { handleAttributeClick } = useQuery();
+  const { handleAttributeClick } = useQueryParams();
   const { isGrid, toggleFilter, toggleGrid } = useUIContext();
   return (
     <div className="ml-auto flex space-x-2">
