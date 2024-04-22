@@ -17,14 +17,14 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "0.9.1",
-    "drizzle-orm": "^0.30.8"
+    "drizzle-orm": "^0.30.9"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "*",
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
     "dotenv-cli": "^7.4.1",
-    "drizzle-kit": "^0.20.14",
+    "drizzle-kit": "^0.20.17",
     "eslint": "^8.57.0",
     "postgres-range": "^1.1.4",
     "prettier": "^3.2.5",
