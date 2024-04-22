@@ -3,6 +3,10 @@
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { formatUnits } from "viem";
 
+import { NETWORK_NAME } from "@/constants/env";
+import { stakingAddresses } from "@/constants/staking";
+import { getWalletRealmsHeld } from "@/lib/subgraph/getWalletRealmsHeld";
+
 import { DaoAddresses } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
@@ -10,7 +14,7 @@ import type { EthplorerAddressInfoResponse, EthplorerToken } from "./page";
 import { BaseDashboardCard } from "./BaseDashboardCard";
 import { Treasury } from "./Treasury";
 
-export const DashBoard = ({
+export const DashBoard = async ({
   tokenInfo,
 }: {
   tokenInfo: EthplorerAddressInfoResponse[];
@@ -26,27 +30,27 @@ export const DashBoard = ({
 
   const sums = tokenInfo
     ? Object.values(tokenInfo).reduce(
-        (acc, account) => {
-          let sum = 0;
-          account.tokens.forEach((token) => {
-            const value =
-              parseFloat(
-                formatUnits(
-                  BigInt(token.rawBalance),
-                  parseInt(token.tokenInfo.decimals),
-                ),
-              ) * token.tokenInfo.price.rate;
-            sum += value;
-          });
-          sum +=
-            parseFloat(formatUnits(BigInt(account.ETH.rawBalance), 18)) *
-            parseFloat(account.ETH.price.rate);
+      (acc, account) => {
+        let sum = 0;
+        account.tokens.forEach((token) => {
+          const value =
+            parseFloat(
+              formatUnits(
+                BigInt(token.rawBalance),
+                parseInt(token.tokenInfo.decimals),
+              ),
+            ) * token.tokenInfo.price.rate;
+          sum += value;
+        });
+        sum +=
+          parseFloat(formatUnits(BigInt(account.ETH.rawBalance), 18)) *
+          parseFloat(account.ETH.price.rate);
 
-          acc[account.address.toLowerCase()] = sum; // Convert to lowercase once here
-          return acc;
-        },
-        {} as Record<string, number>,
-      )
+        acc[account.address.toLowerCase()] = sum; // Convert to lowercase once here
+        return acc;
+      },
+      {} as Record<string, number>,
+    )
     : {};
 
   const accountsWithBalance = Array.from(DaoAddresses).reduce(
@@ -89,6 +93,19 @@ export const DashBoard = ({
     {},
   );
 
+  const galleonAddress = stakingAddresses[NETWORK_NAME].v1Galleon;
+  const carrackAddress = stakingAddresses[NETWORK_NAME].v2Carrack;
+
+  const totalStakedRealmsData = await getWalletRealmsHeld({
+    addresses: [galleonAddress, carrackAddress],
+  });
+  const totalStakedRealms = totalStakedRealmsData?.wallets?.reduce(
+    (total: number, wallet: { realmsHeld: string }) => {
+      return total + parseInt(wallet.realmsHeld, 10);
+    },
+    0,
+  );
+
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       <BaseDashboardCard
@@ -118,10 +135,22 @@ export const DashBoard = ({
         title="Market Cap"
         dataTitle={`$${lords?.tokenInfo.price.marketCapUsd.toLocaleString()}`}
       />
+      <BaseDashboardCard
+        title="Unique holders"
+        dataTitle={`${lords?.tokenInfo.holdersCount.toLocaleString()}`}
+      />
+      <BaseDashboardCard
+        title="Staked realms"
+        dataTitle={`${totalStakedRealms}`}
+      />
+      <BaseDashboardCard
+        title="Total Volume of L2 Market including fees taken"
+        dataTitle={`$${lords?.tokenInfo.price.volume24h.toLocaleString()}`}
+      />
       {/*<BaseDashboardCard
         title="Total DAO Treasury"
         dataTitle={`$${(accountsWithBalance?.reduce((acc, item) => acc + item.value, 0) * (lords?.tokenInfo?.price?.rate ?? 0)).toLocaleString()}`}
-  />*/}
+      />*/}
       <BaseDashboardCard
         className="sm:col-span-3 sm:row-span-3"
         title="DAO Controlled Accounts"
