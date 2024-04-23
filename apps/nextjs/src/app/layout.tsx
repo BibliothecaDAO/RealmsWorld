@@ -7,6 +7,7 @@ import { Provider } from "./providers/providers";
 
 import "@realms-world/styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import { env } from "@/env";
 
 import { cache } from "react";
 import { headers } from "next/headers";
@@ -78,7 +79,7 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.VERCEL_ENV === "production"
+    env.VERCEL_ENV === "production"
       ? "https://realms.world"
       : "http://localhost:3000",
   ),
