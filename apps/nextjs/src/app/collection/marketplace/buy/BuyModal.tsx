@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 //import NumberSelect from "@/app/_components/NumberSelect";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
+import { SwapTokens } from "@/app/swap/SwapTokens";
 //import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
 import Lords from "@/icons/lords.svg";
 // import Progress from '../Progress'
@@ -105,6 +106,7 @@ export function BuyModal({
         buyStep,
         transactionError,
         hasEnoughCurrency,
+        missingAmount,
         addFundsLink,
         //feeUsd,
         gasCost,
@@ -232,15 +234,18 @@ export function BuyModal({
                               </div>
                             )}
 
-                            <Button
-                              onClick={() => {
-                                window.open(addFundsLink, "_blank");
-                              }}
-                              variant={"outline"}
-                              className="w-full"
-                            >
-                              {copy.ctaInsufficientFunds}
-                            </Button>
+                            <Dialog>
+                              <DialogTrigger>
+                                <Button variant={"outline"} className="w-full">
+                                  {copy.ctaInsufficientFunds}
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="h-[404px]">
+                                <SwapTokens
+                                  initialLordsSupply={missingAmount.toString()}
+                                />
+                              </DialogContent>
+                            </Dialog>
                           </div>
                         )}
                       </>

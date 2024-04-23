@@ -33,7 +33,11 @@ const AVNU_OPTIONS = {
   baseUrl: `https://${NETWORK_NAME == "MAIN" ? "starknet" : "sepolia"}.api.avnu.fi`,
 };
 
-export const SwapTokens = () => {
+export const SwapTokens = ({
+  initialLordsSupply,
+}: {
+  initialLordsSupply?: string | null;
+}) => {
   const [isBuyLords, setIsBuyLords] = useState(true);
   const [sellAmount, setSellAmount] = useState<string>();
   const [quotes, setQuotes] = useState<Quote[]>([]);
@@ -60,6 +64,34 @@ export const SwapTokens = () => {
     watch: false,
   });
   const isDebouncing = useDebounce(sellAmount, 350) !== sellAmount;
+
+  useEffect(() => {
+    if (!selectedTokenObj) return;
+    if (initialLordsSupply && isBuyLords) {
+      const params = {
+        sellTokenAddress: LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x",
+        buyTokenAddress: selectedTokenObj.address,
+        sellAmount: parseUnits(initialLordsSupply, 18),
+        takerAddress: address,
+        size: 1,
+      };
+
+      fetchQuotes(params, AVNU_OPTIONS)
+        .then((quotes) => {
+          setLoading(false);
+
+          setSellAmount(
+            quotes?.[0]
+              ? formatUnits(
+                  quotes[0].buyAmount,
+                  selectedTokenObj?.decimals ?? 18,
+                )
+              : "",
+          );
+        })
+        .catch(() => setLoading(false));
+    }
+  }, []);
 
   const fetchAvnuQuotes = useCallback(() => {
     if (!selectedTokenObj || !sellAmount || isDebouncing) return;

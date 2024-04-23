@@ -29,6 +29,7 @@ interface ChildrenProps {
   buyStep: BuyStep;
   transactionError?: Error | null;
   hasEnoughCurrency: boolean;
+  missingAmount: number;
   addFundsLink: string;
   gasCost: bigint;
   //feeUsd: string;
@@ -71,6 +72,7 @@ export const BuyModalRender: FC<Props> = ({
   const [buyStep, setBuyStep] = useState<BuyStep>(BuyStep.Checkout);
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [hasEnoughCurrency, setHasEnoughCurrency] = useState(true);
+  const [missingAmount, setMissingAmount] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const { lordsPrice } = useLordsPrice();
   const { balances } = useWalletsProviderContext();
@@ -103,7 +105,8 @@ export const BuyModalRender: FC<Props> = ({
       return findLowestPriceActiveListing(listingsData?.items, token?.owner);
   }, [token, listingsData]);
 
-  const usdPrice = parseInt(listing?.price ?? "0") * (lordsPrice?.usdPrice ?? 0);
+  const usdPrice =
+    parseInt(listing?.price ?? "0") * (lordsPrice?.usdPrice ?? 0);
   //const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;*/
   const totalUsd = totalIncludingFees * (lordsPrice?.usdPrice ?? 0);
 
@@ -191,6 +194,9 @@ export const BuyModalRender: FC<Props> = ({
       // !lords or lords  balance < item total + gas
       parseInt(formatUnits(balances.l2.lords ?? 0n, 18)) < totalIncludingFees
     ) {
+      const missingAmountToBuyAsset =
+        totalIncludingFees - parseInt(formatUnits(balances.l2.lords ?? 0n, 18));
+      setMissingAmount(missingAmountToBuyAsset);
       setHasEnoughCurrency(false);
     } else {
       setHasEnoughCurrency(true);
@@ -225,6 +231,7 @@ export const BuyModalRender: FC<Props> = ({
         buyStep,
         transactionError,
         hasEnoughCurrency,
+        missingAmount,
         addFundsLink,
         //feeUsd,
         totalUsd,
