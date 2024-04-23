@@ -14,7 +14,7 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@avnu/avnu-sdk": "^1.2.4",
+    "@avnu/avnu-sdk": "^2.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mdx-js/loader": "^3.0.1",
