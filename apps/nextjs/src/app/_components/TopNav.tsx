@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { HammerIcon, Menu, ShieldQuestion } from "lucide-react";
+import Bookmark from "@/icons/bookmark.svg";
 import PieChart from "@/icons/pie-chart.svg";
 import RealmsL3 from "@/icons/realms_l3.svg";
-import Bookmark from "@/icons/bookmark.svg";
+import { HammerIcon, Menu, ShieldQuestion } from "lucide-react";
+
 import {
   Button,
   NavigationMenu,
@@ -24,7 +24,6 @@ export const TopNav = () => {
   //const [isScrolled, setIsScrolled] = useState(false);
 
   const { toggleSidebar } = useUIContext();
-  const [aboutOpen, setAboutOpen] = useState<boolean>();
 
   /*useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 0);
@@ -80,16 +79,25 @@ export const TopNav = () => {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="font-semibold tracking-wider">About</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="font-semibold tracking-wider">
+                  About
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="w-[250px] flex-col py-1.5">
                     {aboutLinks.map((link, index) => {
                       return (
-                        <li>
-                          <NavigationMenuLink className="hover:bg-bright-yellow/10 transition-all" asChild key={index}>
-                            <Link href={link.href} className="block px-4 py-2 font-semibold tracking-wide">
+                        <li key={index}>
+                          <NavigationMenuLink
+                            className="transition-all hover:bg-bright-yellow/10"
+                            asChild
+                          >
+                            <Link
+                              href={link.href}
+                              className="block px-4 py-2 font-semibold tracking-wide"
+                            >
                               <div className="flex">
-                               {link.icon} <span className="ml-3">{link.title}</span>
+                                {link.icon}{" "}
+                                <span className="ml-3">{link.title}</span>
                               </div>
                             </Link>
                           </NavigationMenuLink>
@@ -100,16 +108,25 @@ export const TopNav = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="font-semibold tracking-wider">Community</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="font-semibold tracking-wider">
+                  Community
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="w-[250px] flex-col py-1.5">
                     {communityLinks.map((link, index) => {
                       return (
-                        <li>
-                          <NavigationMenuLink className="hover:bg-bright-yellow/10 transition-all" asChild key={index}>
-                            <Link href={link.href} className="block px-4 py-2 font-semibold tracking-wide">
+                        <li key={index}>
+                          <NavigationMenuLink
+                            className="transition-all hover:bg-bright-yellow/10"
+                            asChild
+                          >
+                            <Link
+                              href={link.href}
+                              className="block px-4 py-2 font-semibold tracking-wide"
+                            >
                               <div className="flex">
-                               {link.icon} <span className="ml-3">{link.title}</span>
+                                {link.icon}{" "}
+                                <span className="ml-3">{link.title}</span>
                               </div>
                             </Link>
                           </NavigationMenuLink>
