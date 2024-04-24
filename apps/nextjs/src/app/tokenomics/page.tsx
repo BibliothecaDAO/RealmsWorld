@@ -91,7 +91,6 @@ export default async function Page() {
         The Lords token is the native token of the Realms Autonomous World. It
         is governed by BibliothecaDAO who controls the issuance of the token.
       </div>
-      {/* <DashBoard tokenInfo={tokenData} /> */}
       <DashBoard tokenInfo={tokenData} totalValueLocked={totalValueLocked} exchangesVolume={exchangesVolume} />
     </PageLayout>
   );
