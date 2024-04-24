@@ -4,7 +4,7 @@ import { getTokenName } from "@/utils/utils";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
-  CollectionDisplayName,
+  CollectionDetails,
   getCollectionFromAddress,
 } from "@realms-world/constants";
 
@@ -50,9 +50,9 @@ const ERC721LineItem: FC<ERC721LineItemProps> = ({
       warning={warning}
       collection={
         tokenDetails.contract_address
-          ? CollectionDisplayName[
+          ? CollectionDetails[
               getCollectionFromAddress(tokenDetails.contract_address)!
-            ]
+            ].displayName
           : ""
       }
       isUnavailable={isUnavailable}

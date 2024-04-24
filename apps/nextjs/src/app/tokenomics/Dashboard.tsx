@@ -49,7 +49,7 @@ export const DashBoard = ({
       )
     : {};
 
-  const accountsWithBalance = Object.entries(DaoAddresses).reduce(
+  const accountsWithBalance = Array.from(DaoAddresses).reduce(
     (
       acc: Record<
         string,
@@ -57,15 +57,17 @@ export const DashBoard = ({
           name: string;
           address: string;
           value: number;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ETH: any;
+          //eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ETH: any; 
           tokens: EthplorerToken[];
         }
       >,
-      [accountName, addressesByChain],
+      [accountName, addressesByChainMap],
     ) => {
-      const address = addressesByChain[SUPPORTED_L1_CHAIN_ID]?.toLowerCase(); // Use optional chaining and ensure lowercase
-      if (Object.prototype.hasOwnProperty.call(sums, address)) {
+      const address = addressesByChainMap
+        .get(SUPPORTED_L1_CHAIN_ID)
+        ?.toLowerCase(); // Adjusted for Map access
+      if (address && Object.prototype.hasOwnProperty.call(sums, address)) {
         // Check if the address exists in sums using a safer approach
         const totalUSDValue = sums[address];
         // Find the original tokenInfo for the current address

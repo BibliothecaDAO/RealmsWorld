@@ -1,4 +1,5 @@
 import { ChainId } from "./Chains";
+import { Studios } from "./Studios";
 
 export enum Collections {
   REALMS = "realms",
@@ -40,23 +41,39 @@ export const CollectionAddresses: {
       "",
   },
 };
-export const CollectionRoyalties: {
-  readonly [key in Collections]: number;
+export const CollectionDetails: {
+  readonly [key in Collections]: {
+    royalties: number;
+    displayName: string;
+    developer: Studios;
+  };
 } = {
-  [Collections.REALMS]: 0,
-  [Collections.BEASTS]: 500,
-  [Collections.GOLDEN_TOKEN]: 500,
-  [Collections.BLOBERT]: 500,
-  [Collections.BANNERS]: 500
+  [Collections.REALMS]: {
+    royalties: 0,
+    displayName: "Realms",
+    developer: Studios.BIBLIO_DAO,
+  },
+  [Collections.BEASTS]: {
+    royalties: 500,
+    displayName: "Beasts",
+    developer: Studios.BIBLIO_DAO,
+  },
+  [Collections.GOLDEN_TOKEN]: {
+    royalties: 500,
+    displayName: "Golden Token",
+    developer: Studios.BIBLIO_DAO,
+  },
+  [Collections.BLOBERT]: {
+    royalties: 500,
+    displayName: "Blobert",
+    developer: Studios.BIBLIO_DAO,
+  },
+  [Collections.BANNERS]: {
+    royalties: 500,
+    displayName: "Pixel Banners (for Adventurers)",
+    developer: Studios.BANNERS_FOR_ADVENTURERS,
+  },
 };
-export const CollectionDisplayName = {
-  [Collections.REALMS]: "Realms",
-  [Collections.BEASTS]: "Beasts",
-  [Collections.GOLDEN_TOKEN]: "Golden Token",
-  [Collections.BLOBERT]: "Blobert",
-  [Collections.BANNERS]: "Pixel Banners (for Adventurers)"
-};
-
 export function getCollectionAddresses(
   collectionName: string,
 ): Partial<{ [key in ChainId]: string }> {

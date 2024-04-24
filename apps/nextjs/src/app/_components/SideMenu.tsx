@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import Album from "@/icons/album.svg";
-import Bookmark from "@/icons/bookmark.svg";
 import Bridge from "@/icons/bridge.svg";
 import Calender from "@/icons/calendar.svg";
 import Coins from "@/icons/coins.svg";
@@ -12,8 +11,7 @@ import Crown from "@/icons/crown.svg";
 import Discord from "@/icons/discord.svg";
 import Gamepad from "@/icons/gamepad.svg";
 import LordsIcon from "@/icons/lords.svg";
-import PieChart from "@/icons/pie-chart.svg";
-import RealmsL3 from "@/icons/realms_l3.svg";
+
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
 import { Github, Twitter } from "lucide-react";
@@ -40,24 +38,9 @@ const Sidebar = () => {
       icon: <Album className="w-[25px]" />,
     },
     {
-      name: "Tokenomics",
-      href: "/tokenomics",
-      icon: <PieChart className="w-[25px]" />,
-    },
-    {
-      name: "Realms L3",
-      href: "/network",
-      icon: <RealmsL3 className="w-[25px] fill-current" />,
-    },
-    {
       name: "Events",
       href: "/events",
       icon: <Calender className="w-[25px]" />,
-    },
-    {
-      name: "Blog",
-      href: "/blog",
-      icon: <Bookmark className="w-[25px]" />,
     },
     {
       name: "Bridge",
@@ -110,7 +93,7 @@ const Sidebar = () => {
         <Crown className="absolute w-14 group-hover:opacity-0" />
         <RWLogo className="absolute w-[152px] fill-white opacity-0 transition-all duration-500 group-hover:opacity-100" />
       </Link>
-      <div className="mt-16 h-full w-full border-t-[3px] pb-3">
+      <div className="mt-[60px] h-full w-full border-t-[3px] pb-3">
         <div className="relative z-10 m-2 mt-0 h-full border-[3px] border-t-0 border-solid border-transparent group-hover:!border-medium-dark-green">
           <div className="relative flex h-full flex-col items-center">
             <ScrollArea className="w-full">
