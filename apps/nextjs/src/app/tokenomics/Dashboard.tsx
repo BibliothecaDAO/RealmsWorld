@@ -13,11 +13,24 @@ import { Button } from "@realms-world/ui";
 import type { EthplorerAddressInfoResponse, EthplorerToken } from "./page";
 import { BaseDashboardCard } from "./BaseDashboardCard";
 import { Treasury } from "./Treasury";
+import { ExchagesVolume } from "./ExchagesVolume";
+import { TotalValueLocked } from "./TotalValueLocked";
+
 
 export const DashBoard = async ({
   tokenInfo,
+  totalValueLocked,
+  exchangesVolume
 }: {
-  tokenInfo: EthplorerAddressInfoResponse[];
+  tokenInfo: EthplorerAddressInfoResponse[]
+  totalValueLocked: Array<{
+    exchange: string;
+    valueUsd: number;
+  }>
+  exchangesVolume: Array<{
+    exchange: string;
+    value: number;
+  }>
 }) => {
   /* const url = `https://api.ethplorer.io/getTokenInfo/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0?apiKey=${process.env.NEXT_PUBLIC_ETHPLORER_APIKEY}`;
   const lordsResult = await fetch(url)
@@ -136,16 +149,8 @@ export const DashBoard = async ({
         dataTitle={`$${lords?.tokenInfo.price.marketCapUsd.toLocaleString()}`}
       />
       <BaseDashboardCard
-        title="Unique holders"
-        dataTitle={`${lords?.tokenInfo.holdersCount.toLocaleString()}`}
-      />
-      <BaseDashboardCard
         title="Staked realms"
         dataTitle={`${totalStakedRealms}`}
-      />
-      <BaseDashboardCard
-        title="Total Volume of L2 Market including fees taken"
-        dataTitle={`$${lords?.tokenInfo.price.volume24h.toLocaleString()}`}
       />
       {/*<BaseDashboardCard
         title="Total DAO Treasury"
@@ -157,6 +162,18 @@ export const DashBoard = async ({
         subtitle="Treasury"
       >
         <Treasury accounts={accountsWithBalance} />
+      </BaseDashboardCard>
+      <BaseDashboardCard
+        className="sm:col-span-3 sm:row-span-3"
+        title="Total Volume of L2 Market including fees taken"
+        subtitle="Exchanges Volume">
+        <ExchagesVolume exchangesVolume={exchangesVolume} />
+      </BaseDashboardCard>
+      <BaseDashboardCard
+        className="sm:col-span-3 sm:row-span-3"
+        title="Realms value in USD"
+        subtitle="Total Value Locked">
+        <TotalValueLocked totalValueLocked={totalValueLocked} />
       </BaseDashboardCard>
     </div>
   );
