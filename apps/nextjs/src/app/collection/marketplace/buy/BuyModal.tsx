@@ -242,6 +242,7 @@ export function BuyModal({
                               </DialogTrigger>
                               <DialogContent className="h-[404px]">
                                 <SwapTokens
+                                  showSwitchButton={false}
                                   initialLordsSupply={missingAmount.toString()}
                                 />
                               </DialogContent>
