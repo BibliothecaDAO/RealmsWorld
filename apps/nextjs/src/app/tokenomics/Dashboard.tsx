@@ -6,6 +6,7 @@ import { formatUnits } from "viem";
 import { NETWORK_NAME } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
 import { getWalletRealmsHeld } from "@/lib/subgraph/getWalletRealmsHeld";
+import { getRealmNFTHolders } from "@/lib/subgraph/getRealmNFTHolders";
 
 import { DaoAddresses } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
@@ -119,6 +120,8 @@ export const DashBoard = async ({
     0,
   );
 
+  const realmNFTHolders = await getRealmNFTHolders();
+
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       <BaseDashboardCard
@@ -151,6 +154,10 @@ export const DashBoard = async ({
       <BaseDashboardCard
         title="Staked realms"
         dataTitle={`${totalStakedRealms}`}
+      />
+      <BaseDashboardCard
+        title="Realms NFT holders"
+        dataTitle={`${realmNFTHolders.length}`}
       />
       {/*<BaseDashboardCard
         title="Total DAO Treasury"

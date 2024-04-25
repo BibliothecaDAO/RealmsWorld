@@ -46,8 +46,6 @@ export default class TotalValueLockedChart extends PureComponent<TotalValueLocke
   render() {
     const {totalValueLocked} = this.props
 
-    console.log(totalValueLocked)
-
     return (
       <ResponsiveContainer width="100%" height="100%" maxHeight={500}>
         <PieChart width={400} height={400}>

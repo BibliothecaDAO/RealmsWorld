@@ -45,9 +45,7 @@ interface ExchagesVolumeChartProps {
 export default class ExchagesVolumeChart extends PureComponent<ExchagesVolumeChartProps> {
   render() {
     const {exchangesVolume} = this.props
-
-    console.log(exchangesVolume)
-
+    
     return (
       <ResponsiveContainer width="100%" height="100%" maxHeight={500}>
         <PieChart width={400} height={400}>
