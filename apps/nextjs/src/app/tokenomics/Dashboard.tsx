@@ -3,11 +3,6 @@
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { formatUnits } from "viem";
 
-import { NETWORK_NAME } from "@/constants/env";
-import { stakingAddresses } from "@/constants/staking";
-import { getWalletRealmsHeld } from "@/lib/subgraph/getWalletRealmsHeld";
-import { getRealmNFTHolders } from "@/lib/subgraph/getRealmNFTHolders";
-
 import { DaoAddresses } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
@@ -18,10 +13,12 @@ import { ExchagesVolume } from "./ExchagesVolume";
 import { TotalValueLocked } from "./TotalValueLocked";
 
 
-export const DashBoard = async ({
+export const DashBoard = ({
   tokenInfo,
   totalValueLocked,
-  exchangesVolume
+  exchangesVolume,
+  totalStakedRealms,
+  realmNFTHolders
 }: {
   tokenInfo: EthplorerAddressInfoResponse[]
   totalValueLocked: Array<{
@@ -32,6 +29,8 @@ export const DashBoard = async ({
     exchange: string;
     value: number;
   }>
+  totalStakedRealms: number
+  realmNFTHolders: number
 }) => {
   /* const url = `https://api.ethplorer.io/getTokenInfo/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0?apiKey=${process.env.NEXT_PUBLIC_ETHPLORER_APIKEY}`;
   const lordsResult = await fetch(url)
@@ -44,27 +43,27 @@ export const DashBoard = async ({
 
   const sums = tokenInfo
     ? Object.values(tokenInfo).reduce(
-      (acc, account) => {
-        let sum = 0;
-        account.tokens.forEach((token) => {
-          const value =
-            parseFloat(
-              formatUnits(
-                BigInt(token.rawBalance),
-                parseInt(token.tokenInfo.decimals),
-              ),
-            ) * token.tokenInfo.price.rate;
-          sum += value;
-        });
-        sum +=
-          parseFloat(formatUnits(BigInt(account.ETH.rawBalance), 18)) *
-          parseFloat(account.ETH.price.rate);
+        (acc, account) => {
+          let sum = 0;
+          account.tokens.forEach((token) => {
+            const value =
+              parseFloat(
+                formatUnits(
+                  BigInt(token.rawBalance),
+                  parseInt(token.tokenInfo.decimals),
+                ),
+              ) * token.tokenInfo.price.rate;
+            sum += value;
+          });
+          sum +=
+            parseFloat(formatUnits(BigInt(account.ETH.rawBalance), 18)) *
+            parseFloat(account.ETH.price.rate);
 
-        acc[account.address.toLowerCase()] = sum; // Convert to lowercase once here
-        return acc;
-      },
-      {} as Record<string, number>,
-    )
+          acc[account.address.toLowerCase()] = sum; // Convert to lowercase once here
+          return acc;
+        },
+        {} as Record<string, number>,
+      )
     : {};
 
   const accountsWithBalance = Array.from(DaoAddresses).reduce(
@@ -107,21 +106,6 @@ export const DashBoard = async ({
     {},
   );
 
-  const galleonAddress = stakingAddresses[NETWORK_NAME].v1Galleon;
-  const carrackAddress = stakingAddresses[NETWORK_NAME].v2Carrack;
-
-  const totalStakedRealmsData = await getWalletRealmsHeld({
-    addresses: [galleonAddress, carrackAddress],
-  });
-  const totalStakedRealms = totalStakedRealmsData?.wallets?.reduce(
-    (total: number, wallet: { realmsHeld: string }) => {
-      return total + parseInt(wallet.realmsHeld, 10);
-    },
-    0,
-  );
-
-  const realmNFTHolders = await getRealmNFTHolders();
-
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       <BaseDashboardCard
@@ -157,7 +141,7 @@ export const DashBoard = async ({
       />
       <BaseDashboardCard
         title="Realms NFT holders"
-        dataTitle={`${realmNFTHolders.length}`}
+        dataTitle={`${realmNFTHolders}`}
       />
       {/*<BaseDashboardCard
         title="Total DAO Treasury"

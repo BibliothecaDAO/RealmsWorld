@@ -27,7 +27,7 @@ export const ExchagesVolume = ({
               {Object.entries(exchangesVolume)?.map(([key, exchange], index) => (
                 <div
                   className={`table-row`}
-                  tabIndex={0}
+                  key={key}
                 >
                   <div className="table-cell flex-grow whitespace-nowrap px-6 py-4">
                     <span className="text-lg">{exchange.exchange}</span>
