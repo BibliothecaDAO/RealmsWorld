@@ -73,6 +73,7 @@ const carrackAddress = stakingAddresses[NETWORK_NAME].v2Carrack;
 const totalStakedRealmsData = await getWalletRealmsHeld({
   addresses: [galleonAddress, carrackAddress],
 });
+
 const totalStakedRealms = totalStakedRealmsData?.wallets?.reduce(
   (total: number, wallet: { realmsHeld: string }) => {
     return total + parseInt(wallet.realmsHeld, 10);
@@ -84,7 +85,7 @@ async function fetchTotalValueLocked() {
   const url = `https://starknet.impulse.avnu.fi/v1/tokens/0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49/exchange-tvl?resolution=1M`
 
   const response = await fetch(url);
-  const totalValueLocked = response.json();
+  const totalValueLocked = await response.json();
   
   return totalValueLocked;
 }
@@ -93,7 +94,7 @@ async function fetchExchangesVolume() {
   const url = `https://starknet.impulse.avnu.fi/v1/tokens/0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49/exchange-volumes?resolution=1W&startDate=2023-04-23&endDate=2024-04-23`
 
   const response = await fetch(url);
-  const exchangesVolume = response.json();
+  const exchangesVolume = await response.json();
   
   return exchangesVolume;
 }

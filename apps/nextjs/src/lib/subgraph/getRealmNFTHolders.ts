@@ -32,12 +32,14 @@ const query = `query RealmNFTHolders($pageSize: Int, $skip: Int) {
 `;
 
 export const getRealmNFTHolders = async (): Promise<Wallet[]> => {
-  const pageSize: number = 1000;
+  const pageSize = 1000;
   let allData: Wallet[] = [];
-  let skip: number = 0;
+  let skip = 0;
 
   try {
-    while (true) {
+    let continueFetching = true;
+    
+    do {
       const response = await fetch(
         "https://api.thegraph.com/subgraphs/name/" +
           process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
@@ -59,12 +61,12 @@ export const getRealmNFTHolders = async (): Promise<Wallet[]> => {
       const responseData: QueryResponse = await response.json();
       
       if (!responseData.data.wallets || responseData.data.wallets.length === 0) {
-        break;
+        continueFetching = false;
       }
 
       allData = allData.concat(responseData.data.wallets);
       skip = skip + pageSize;
-    }
+    } while (continueFetching);
     return allData;
 
   } catch (error) {
