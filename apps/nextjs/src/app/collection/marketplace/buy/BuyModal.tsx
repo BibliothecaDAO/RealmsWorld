@@ -107,7 +107,6 @@ export function BuyModal({
         transactionError,
         hasEnoughCurrency,
         missingAmount,
-        addFundsLink,
         //feeUsd,
         gasCost,
         usdPrice,

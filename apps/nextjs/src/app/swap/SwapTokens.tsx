@@ -71,7 +71,7 @@ export const SwapTokens = ({
 
   useEffect(() => {
     if (initialLordsSupply) setBuyAmount(initialLordsSupply);
-  }, []);
+  }, [initialLordsSupply]);
 
   const fetchSellAmountFromBuyAmount = useCallback(() => {
     if (!selectedTokenObj || !buyAmount || isBuyInputDebouncing) return;

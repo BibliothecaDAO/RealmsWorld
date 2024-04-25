@@ -1,7 +1,6 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
-import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useBuyToken } from "@/hooks/market/useBuyToken";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import { api } from "@/trpc/react";
@@ -10,7 +9,6 @@ import { useAccount, useWaitForTransaction } from "@starknet-react/core";
 import { formatUnits } from "viem";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
-import { LORDS } from "@realms-world/constants";
 
 export enum BuyStep {
   Checkout,
@@ -30,7 +28,6 @@ interface ChildrenProps {
   transactionError?: Error | null;
   hasEnoughCurrency: boolean;
   missingAmount: number;
-  addFundsLink: string;
   gasCost: bigint;
   //feeUsd: string;
   totalUsd: number;
@@ -109,10 +106,6 @@ export const BuyModalRender: FC<Props> = ({
     parseInt(listing?.price ?? "0") * (lordsPrice?.usdPrice ?? 0);
   //const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;*/
   const totalUsd = totalIncludingFees * (lordsPrice?.usdPrice ?? 0);
-
-  const lordsAddress = LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`;
-
-  const addFundsLink = `https://app.avnu.fi/en?referral=0x049FB4281D13E1f5f488540Cd051e1507149E99CC2E22635101041Ec5E4e4557&tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=${lordsAddress}&amount=${totalPrice}`;
 
   const {
     writeAsync,
@@ -232,7 +225,6 @@ export const BuyModalRender: FC<Props> = ({
         transactionError,
         hasEnoughCurrency,
         missingAmount,
-        addFundsLink,
         //feeUsd,
         totalUsd,
         usdPrice,
