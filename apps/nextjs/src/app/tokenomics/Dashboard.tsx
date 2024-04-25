@@ -157,13 +157,15 @@ export const DashBoard = ({
       <BaseDashboardCard
         className="sm:col-span-3 sm:row-span-3"
         title="Total Volume of L2 Market including fees taken"
-        subtitle="Exchanges Volume">
+        subtitle="Exchanges Volume"
+      >
         <ExchagesVolume exchangesVolume={exchangesVolume} />
       </BaseDashboardCard>
       <BaseDashboardCard
         className="sm:col-span-3 sm:row-span-3"
         title="Realms value in USD"
-        subtitle="Total Value Locked">
+        subtitle="Total Value Locked"
+      >
         <TotalValueLocked totalValueLocked={totalValueLocked} />
       </BaseDashboardCard>
     </div>
