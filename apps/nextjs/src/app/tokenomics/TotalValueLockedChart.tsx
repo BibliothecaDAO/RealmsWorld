@@ -36,10 +36,10 @@ const renderCustomizedLabel = ({
 };
 
 interface TotalValueLockedChartProps {
-  totalValueLocked: Array<{
+  totalValueLocked: {
     exchange: string;
     valueUsd: number;
-  }>
+  }[]
 }
 
 export default class TotalValueLockedChart extends PureComponent<TotalValueLockedChartProps> {

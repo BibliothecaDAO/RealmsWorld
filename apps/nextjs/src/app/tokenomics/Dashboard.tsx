@@ -21,14 +21,14 @@ export const DashBoard = ({
   realmNFTHolders
 }: {
   tokenInfo: EthplorerAddressInfoResponse[]
-  totalValueLocked: Array<{
+  totalValueLocked: {
     exchange: string;
     valueUsd: number;
-  }>
-  exchangesVolume: Array<{
+  }[]
+  exchangesVolume: {
     exchange: string;
     value: number;
-  }>
+  }[]
   totalStakedRealms: number
   realmNFTHolders: number
 }) => {

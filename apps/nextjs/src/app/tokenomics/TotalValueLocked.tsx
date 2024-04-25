@@ -4,10 +4,10 @@ import TotalValueLockedChart from "./TotalValueLockedChart";
 export const TotalValueLocked = ({
   totalValueLocked,
 }: {
-  totalValueLocked: Array<{
+  totalValueLocked: {
     exchange: string;
     valueUsd: number;
-  }>
+  }[]
 }) => {
 
   return (
@@ -24,7 +24,7 @@ export const TotalValueLocked = ({
                   Total USD Value
                 </div>
               </div>
-              {Object.entries(totalValueLocked)?.map(([key, exchange], index) => (
+              {Object.entries(totalValueLocked)?.map(([key, exchange]) => (
                 <div
                   className={`table-row`}
                   key={key}

@@ -4,10 +4,10 @@ import ExchagesVolumeChart from "./ExchagesVolumeChart";
 export const ExchagesVolume = ({
   exchangesVolume,
 }: {
-  exchangesVolume: Array<{
+  exchangesVolume: {
     exchange: string;
     value: number;
-  }>
+  }[]
 }) => {
 
   return (
@@ -24,7 +24,7 @@ export const ExchagesVolume = ({
                   Total USD Value
                 </div>
               </div>
-              {Object.entries(exchangesVolume)?.map(([key, exchange], index) => (
+              {Object.entries(exchangesVolume)?.map(([key, exchange]) => (
                 <div
                   className={`table-row`}
                   key={key}

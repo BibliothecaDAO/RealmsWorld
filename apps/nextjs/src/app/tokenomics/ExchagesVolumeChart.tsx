@@ -36,10 +36,10 @@ const renderCustomizedLabel = ({
 };
 
 interface ExchagesVolumeChartProps {
-  exchangesVolume: Array<{
+  exchangesVolume: {
     exchange: string;
     value: number;
-  }>
+  }[]
 }
 
 export default class ExchagesVolumeChart extends PureComponent<ExchagesVolumeChartProps> {
