@@ -2,7 +2,7 @@
 
 import type { EmblaCarouselType, EmblaOptionsType } from "embla-carousel";
 import * as React from "react";
-import Image from "next/image";
+//import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -113,7 +113,7 @@ export function Carousel({
               className="relative h-full w-full min-w-0 flex-[0_0_100%]"
               key={index}
             >
-              <Image
+              <img
                 aria-label={`Slide ${index + 1} of ${images.length}`}
                 role="group"
                 key={index}
@@ -163,7 +163,7 @@ export function Carousel({
               onKeyDown={handleKeyDown}
             >
               <div className="absolute inset-0 z-10 bg-zinc-950/20 group-hover:bg-zinc-950/40" />
-              <Image
+              <img
                 src={image.src}
                 alt={image.alt}
                 className="object-cover"

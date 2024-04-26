@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
+//import Link from "next/link";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 
@@ -47,17 +47,7 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, className, variant, size, href, disabled, ...props }, ref) => {
-    if (!disabled && href) {
-      return (
-        <Link
-          className={cn(buttonVariants({ variant, size, className }))}
-          href={href}
-          target={props.external ? "_blank" : ""}
-        >
-          {children}
-        </Link>
-      );
-    }
+
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
