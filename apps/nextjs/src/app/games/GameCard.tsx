@@ -53,7 +53,7 @@ export const GameCard = async ({ game }: GameCardProps) => {
           alt={game.name}
           width={800}
           height={400}
-          className="absolute bottom-0 top-0 h-full w-full object-cover brightness-75 transition-all duration-300 hover:filter-none"
+          className="absolute bottom-0 top-0 h-full w-full object-cover brightness-75 transition-all duration-300 group-hover:filter-none"
         />
         <div className="relative flex h-full max-w-full flex-col items-center justify-center  object-contain">
           <Image

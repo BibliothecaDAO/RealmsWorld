@@ -1,10 +1,8 @@
 import type { Collection } from "@reservoir0x/reservoir-kit-ui";
 import Image from "next/image";
-import Link from "next/link";
+import { SocialIcons } from "@/app/_components/SocialIcons";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import Discord from "@/icons/discord.svg";
 import { getCollections } from "@/lib/reservoir/getCollections";
-import { ExternalLink, Globe, X } from "lucide-react";
 import { formatEther } from "viem";
 
 import type { Collections } from "@realms-world/constants";
@@ -35,22 +33,6 @@ export default async function CollectionSummary({
     if (!collection) {
       return <div>Collection Not Found</div>;
     }
-
-    const links = [
-      {
-        icon: <ExternalLink />,
-        value: `https://etherscan.io/address/${collection.id}`,
-      },
-      {
-        icon: <Discord className="h-[28px] w-[28px] fill-current" />,
-        value: collection.discordUrl,
-      },
-      {
-        icon: <X />,
-        value: "https://twitter.com/" + collection.twitterUsername,
-      },
-      { icon: <Globe />, value: collection.externalUrl },
-    ];
 
     const statistics = [
       {
@@ -98,16 +80,12 @@ export default async function CollectionSummary({
               className="mx-auto border"
             />
           )}
-          <div className="mx-auto my-4 flex justify-center space-x-2">
-            {links.map((social, index) => {
-              if (social.value)
-                return (
-                  <Link key={index} href={`${social.value}`}>
-                    {social.icon}
-                  </Link>
-                );
-            })}
-          </div>
+          <SocialIcons
+            x={collection.twitterUsername}
+            external={`https://etherscan.io/address/${collection.id}`}
+            discord={collection.discordUrl}
+            website={collection.externalUrl}
+          />
         </div>
 
         <div>

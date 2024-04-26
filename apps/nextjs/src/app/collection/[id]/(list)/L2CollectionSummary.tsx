@@ -7,7 +7,7 @@ import { getGamesByContract } from "@/utils/getters";
 
 import type { Collections, Game } from "@realms-world/constants";
 import {
-  CollectionDisplayName,
+  CollectionDetails,
   games,
   getCollectionAddresses,
 } from "@realms-world/constants";
@@ -73,7 +73,7 @@ export default async function L2CollectionSummary({
       </div>
 
       <div>
-        <h1>{CollectionDisplayName[collectionId as Collections]}</h1>
+        <h1>{CollectionDetails[collectionId as Collections].displayName}</h1>
         <ContractDetailsList contract_details={contract_details} />
 
         {compatibleGames.length > 0 && (
