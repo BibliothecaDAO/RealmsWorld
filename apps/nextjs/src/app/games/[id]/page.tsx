@@ -98,7 +98,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   const tableData = [
-    { key: "Studio", value: game?.developer },
+    { key: "Studio", value: (<Link href={`/studios/${game?.developer ?? ""}`}> {game?.developer}</Link>) },
     { key: "Status", value: game?.status },
     {
       key: "Chain",

@@ -9,7 +9,7 @@ import { formatEther } from "viem";
 
 import type { Collections } from "@realms-world/constants";
 import {
-  CollectionDisplayName,
+  CollectionDetails,
   getCollectionAddresses,
 } from "@realms-world/constants";
 
@@ -23,7 +23,7 @@ export async function generateMetadata({
 }: {
   params: { id: string; tokenId: string };
 }): Promise<Metadata> {
-  const collection = CollectionDisplayName[id as Collections];
+  const collection = CollectionDetails[id as Collections].displayName;
   return {
     title: `${collection} #${tokenId}`,
     description: `Collection Details and Marketplace for ${collection} - Created for adventurers by Bibliotheca DAO`,
