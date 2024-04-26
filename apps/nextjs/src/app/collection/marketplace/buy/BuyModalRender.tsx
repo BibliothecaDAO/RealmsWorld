@@ -1,7 +1,6 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
-import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useBuyToken } from "@/hooks/market/useBuyToken";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import { api } from "@/trpc/react";
@@ -10,7 +9,6 @@ import { useAccount, useWaitForTransaction } from "@starknet-react/core";
 import { formatUnits } from "viem";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
-import { LORDS } from "@realms-world/constants";
 
 export enum BuyStep {
   Checkout,
@@ -29,7 +27,7 @@ interface ChildrenProps {
   buyStep: BuyStep;
   transactionError?: Error | null;
   hasEnoughCurrency: boolean;
-  addFundsLink: string;
+  missingAmount: number;
   gasCost: bigint;
   //feeUsd: string;
   totalUsd: number;
@@ -71,6 +69,7 @@ export const BuyModalRender: FC<Props> = ({
   const [buyStep, setBuyStep] = useState<BuyStep>(BuyStep.Checkout);
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [hasEnoughCurrency, setHasEnoughCurrency] = useState(true);
+  const [missingAmount, setMissingAmount] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const { lordsPrice } = useLordsPrice();
   const { balances } = useWalletsProviderContext();
@@ -103,13 +102,10 @@ export const BuyModalRender: FC<Props> = ({
       return findLowestPriceActiveListing(listingsData?.items, token?.owner);
   }, [token, listingsData]);
 
-  const usdPrice = parseInt(listing?.price ?? "0") * (lordsPrice?.usdPrice ?? 0);
+  const usdPrice =
+    parseInt(listing?.price ?? "0") * (lordsPrice?.usdPrice ?? 0);
   //const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;*/
   const totalUsd = totalIncludingFees * (lordsPrice?.usdPrice ?? 0);
-
-  const lordsAddress = LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`;
-
-  const addFundsLink = `https://app.avnu.fi/en?referral=0x049FB4281D13E1f5f488540Cd051e1507149E99CC2E22635101041Ec5E4e4557&tokenFrom=0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7&tokenTo=${lordsAddress}&amount=${totalPrice}`;
 
   const {
     writeAsync,
@@ -191,6 +187,9 @@ export const BuyModalRender: FC<Props> = ({
       // !lords or lords  balance < item total + gas
       parseInt(formatUnits(balances.l2.lords ?? 0n, 18)) < totalIncludingFees
     ) {
+      const missingAmountToBuyAsset =
+        totalIncludingFees - parseInt(formatUnits(balances.l2.lords ?? 0n, 18));
+      setMissingAmount(missingAmountToBuyAsset);
       setHasEnoughCurrency(false);
     } else {
       setHasEnoughCurrency(true);
@@ -225,7 +224,7 @@ export const BuyModalRender: FC<Props> = ({
         buyStep,
         transactionError,
         hasEnoughCurrency,
-        addFundsLink,
+        missingAmount,
         //feeUsd,
         totalUsd,
         usdPrice,
