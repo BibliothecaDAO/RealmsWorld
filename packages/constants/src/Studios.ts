@@ -87,20 +87,20 @@ export const studios: { [key in Studios]?: StudioInterface } = {
   [Studios.ZKORP]: {
     name: "zKorp",
     id: "zkorp",
-    description: "",
-    longform: "",
+    description: "zKorp is a multiple award winner on chain game studio",
+    longform: "zKorp is a dynamic game studio formed by a group of prolific winners from various dojo game jams. The team members first connected during these hackathons and have consistently secured top prizes in every edition since. Known for their productivity, they excel at rapidly developing and releasing a multitude of demo games, each designed to explore and innovate within the gaming space.",
     logoFormat: "jpg",
     links: {
       twitter: "zKorp_",
+      github: "https://github.com/z-korp"
     },
-    screenshotLength: 2,
   },
   [Studios.BANNERS_FOR_ADVENTURERS]: {
     name: "Banners (for Adventurers)",
     id: "banners",
     description: "",
     longform: "",
-    logoFormat: null,
+    logoFormat: 'webp',
     links: {
       homepage: "https://linktr.ee/bannersNFT",
       discord: "https://discord.gg/NkHnWCPc6D",
