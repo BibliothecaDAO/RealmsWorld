@@ -48,6 +48,22 @@ export interface EthplorerAddressInfoResponse {
   tokens: EthplorerToken[];
 }
 
+interface TotalStakedRealmsData {
+  wallets: {
+    realmsHeld: string;
+  }[];
+}
+
+interface TotalValueLocked {
+  exchange: string;
+  valueUsd: number;
+}
+
+interface ExchangeValue {
+  exchange: string;
+  value: number;
+}
+
 async function fetchTokenData(): Promise<EthplorerAddressInfoResponse[]> {
   function getAddressUrl(address: string) {
     return `https://api.ethplorer.io/getAddressInfo/${address}?apiKey=${process.env.NEXT_PUBLIC_ETHPLORER_APIKEY}&chainId=1`;
@@ -70,31 +86,31 @@ async function fetchTokenData(): Promise<EthplorerAddressInfoResponse[]> {
 const galleonAddress = stakingAddresses[NETWORK_NAME].v1Galleon;
 const carrackAddress = stakingAddresses[NETWORK_NAME].v2Carrack;
 
-const totalStakedRealmsData = await getWalletRealmsHeld({
+const totalStakedRealmsData:TotalStakedRealmsData = await getWalletRealmsHeld({
   addresses: [galleonAddress, carrackAddress],
 });
 
-const totalStakedRealms = totalStakedRealmsData?.wallets?.reduce(
+const totalStakedRealms:number = totalStakedRealmsData.wallets.reduce(
   (total: number, wallet: { realmsHeld: string }) => {
     return total + parseInt(wallet.realmsHeld, 10);
   },
   0,
-);
+) ?? 0;
 
 async function fetchTotalValueLocked() {
-  const url = `https://starknet.impulse.avnu.fi/v1/tokens/0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49/exchange-tvl?resolution=1M`
+  const url:string = "https://starknet.impulse.avnu.fi/v1/tokens/0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49/exchange-tvl?resolution=1M"
 
   const response = await fetch(url);
-  const totalValueLocked = await response.json();
+  const totalValueLocked:TotalValueLocked[] = await response.json();
   
   return totalValueLocked;
 }
 
 async function fetchExchangesVolume() {
-  const url = `https://starknet.impulse.avnu.fi/v1/tokens/0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49/exchange-volumes?resolution=1W&startDate=2023-04-23&endDate=2024-04-23`
+  const url:string = "https://starknet.impulse.avnu.fi/v1/tokens/0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49/exchange-volumes?resolution=1W&startDate=2023-04-23&endDate=2024-04-23"
 
   const response = await fetch(url);
-  const exchangesVolume = await response.json();
+  const exchangesVolume:ExchangeValue[] = await response.json();
   
   return exchangesVolume;
 }
@@ -104,6 +120,7 @@ export default async function Page() {
   const totalValueLocked = await fetchTotalValueLocked();
   const exchangesVolume = await fetchExchangesVolume();
   const realmNFTHolders = await getRealmNFTHolders();
+
   return (
     <PageLayout title="Lords Tokenomics">
       <div className="pb-8 md:text-2xl">
@@ -115,7 +132,7 @@ export default async function Page() {
         totalValueLocked={totalValueLocked}
         exchangesVolume={exchangesVolume}
         totalStakedRealms={totalStakedRealms}
-        realmNFTHolders={realmNFTHolders.length}
+        realmNFTHolders={realmNFTHolders.length} 
       />
     </PageLayout>
   );
