@@ -11,7 +11,7 @@ interface QueryResponse {
   };
 }
 
-const query = `query RealmNFTHolders($pageSize: Int, $skip: Int) {
+const query: string = `query RealmNFTHolders($pageSize: Int, $skip: Int) {
     wallets(
       first: $pageSize
       skip: $skip
@@ -37,7 +37,7 @@ export const getRealmNFTHolders = async (): Promise<Wallet[]> => {
   let skip = 0;
 
   try {
-    let continueFetching = true;
+    let continueFetching:boolean = true;
     
     do {
       const response = await fetch(
@@ -70,7 +70,7 @@ export const getRealmNFTHolders = async (): Promise<Wallet[]> => {
     return allData;
 
   } catch (error) {
-    console.error('Error al recuperar los datos:', error);
+    console.error('Error catching the data:', error);
     throw error;
   }
 };
