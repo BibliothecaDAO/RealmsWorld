@@ -11,7 +11,7 @@ interface QueryResponse {
   };
 }
 
-const query: string = `query RealmNFTHolders($pageSize: Int, $skip: Int) {
+const query = `query RealmNFTHolders($pageSize: Int, $skip: Int) {
     wallets(
       first: $pageSize
       skip: $skip
@@ -37,7 +37,7 @@ export const getRealmNFTHolders = async (): Promise<Wallet[]> => {
   let skip = 0;
 
   try {
-    let continueFetching:boolean = true;
+    let continueFetching = true;
     
     do {
       const response = await fetch(

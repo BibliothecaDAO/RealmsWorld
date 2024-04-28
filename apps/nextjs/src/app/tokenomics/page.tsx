@@ -98,7 +98,7 @@ const totalStakedRealms:number = totalStakedRealmsData.wallets.reduce(
 ) ?? 0;
 
 async function fetchTotalValueLocked() {
-  const url:string = "https://starknet.impulse.avnu.fi/v1/tokens/0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49/exchange-tvl?resolution=1M"
+  const url = "https://starknet.impulse.avnu.fi/v1/tokens/0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49/exchange-tvl?resolution=1M"
 
   const response = await fetch(url);
   const totalValueLocked:TotalValueLocked[] = await response.json();
@@ -107,7 +107,7 @@ async function fetchTotalValueLocked() {
 }
 
 async function fetchExchangesVolume() {
-  const url:string = "https://starknet.impulse.avnu.fi/v1/tokens/0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49/exchange-volumes?resolution=1W&startDate=2023-04-23&endDate=2024-04-23"
+  const url = "https://starknet.impulse.avnu.fi/v1/tokens/0x124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49/exchange-volumes?resolution=1W&startDate=2023-04-23&endDate=2024-04-23"
 
   const response = await fetch(url);
   const exchangesVolume:ExchangeValue[] = await response.json();
