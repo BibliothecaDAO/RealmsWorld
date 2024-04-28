@@ -58,7 +58,7 @@ export const getRealmNFTHolders = async (): Promise<Wallet[]> => {
         },
       );
 
-      const responseData: QueryResponse = await response.json();
+      const responseData: QueryResponse = await response.json() as QueryResponse;
       
       if (!responseData.data.wallets || responseData.data.wallets.length === 0) {
         continueFetching = false;
