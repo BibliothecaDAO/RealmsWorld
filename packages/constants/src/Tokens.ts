@@ -84,7 +84,7 @@ export const LORDS: Record<number | string, Token> = {
   ),
   [ChainId.SEPOLIA]: new Token(
     ChainId.SEPOLIA,
-    "0x7543919933eef56f754daf6835fa97f6dfd785d8",
+    "0x9f091D72A7E9677272A502fb6b3e8A7755F50224",
     18,
     "LORDS",
     "Lords",
