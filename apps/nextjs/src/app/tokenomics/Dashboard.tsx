@@ -9,11 +9,28 @@ import { Button } from "@realms-world/ui";
 import type { EthplorerAddressInfoResponse, EthplorerToken } from "./page";
 import { BaseDashboardCard } from "./BaseDashboardCard";
 import { Treasury } from "./Treasury";
+import { ExchagesVolume } from "./ExchagesVolume";
+import { TotalValueLocked } from "./TotalValueLocked";
+
 
 export const DashBoard = ({
   tokenInfo,
+  totalValueLocked,
+  exchangesVolume,
+  totalStakedRealms,
+  realmNFTHolders
 }: {
-  tokenInfo: EthplorerAddressInfoResponse[];
+  tokenInfo: EthplorerAddressInfoResponse[]
+  totalValueLocked: {
+    exchange: string;
+    valueUsd: number;
+  }[]
+  exchangesVolume: {
+    exchange: string;
+    value: number;
+  }[]
+  totalStakedRealms: number
+  realmNFTHolders: number
 }) => {
   /* const url = `https://api.ethplorer.io/getTokenInfo/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0?apiKey=${process.env.NEXT_PUBLIC_ETHPLORER_APIKEY}`;
   const lordsResult = await fetch(url)
@@ -49,7 +66,7 @@ export const DashBoard = ({
       )
     : {};
 
-  const accountsWithBalance = Object.entries(DaoAddresses).reduce(
+  const accountsWithBalance = Array.from(DaoAddresses).reduce(
     (
       acc: Record<
         string,
@@ -57,15 +74,17 @@ export const DashBoard = ({
           name: string;
           address: string;
           value: number;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ETH: any;
+          //eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ETH: any; 
           tokens: EthplorerToken[];
         }
       >,
-      [accountName, addressesByChain],
+      [accountName, addressesByChainMap],
     ) => {
-      const address = addressesByChain[SUPPORTED_L1_CHAIN_ID]?.toLowerCase(); // Use optional chaining and ensure lowercase
-      if (Object.prototype.hasOwnProperty.call(sums, address)) {
+      const address = addressesByChainMap
+        .get(SUPPORTED_L1_CHAIN_ID)
+        ?.toLowerCase(); // Adjusted for Map access
+      if (address && Object.prototype.hasOwnProperty.call(sums, address)) {
         // Check if the address exists in sums using a safer approach
         const totalUSDValue = sums[address];
         // Find the original tokenInfo for the current address
@@ -116,16 +135,38 @@ export const DashBoard = ({
         title="Market Cap"
         dataTitle={`$${lords?.tokenInfo.price.marketCapUsd.toLocaleString()}`}
       />
+      <BaseDashboardCard
+        title="Staked realms"
+        dataTitle={`${totalStakedRealms}`}
+      />
+      <BaseDashboardCard
+        title="Realms NFT holders"
+        dataTitle={`${realmNFTHolders}`}
+      />
       {/*<BaseDashboardCard
         title="Total DAO Treasury"
         dataTitle={`$${(accountsWithBalance?.reduce((acc, item) => acc + item.value, 0) * (lords?.tokenInfo?.price?.rate ?? 0)).toLocaleString()}`}
-  />*/}
+      />*/}
       <BaseDashboardCard
         className="sm:col-span-3 sm:row-span-3"
         title="DAO Controlled Accounts"
         subtitle="Treasury"
       >
         <Treasury accounts={accountsWithBalance} />
+      </BaseDashboardCard>
+      <BaseDashboardCard
+        className="sm:col-span-3 sm:row-span-3"
+        title="Total Volume of L2 Market including fees taken"
+        subtitle="Exchanges Volume"
+      >
+        <ExchagesVolume exchangesVolume={exchangesVolume} />
+      </BaseDashboardCard>
+      <BaseDashboardCard
+        className="sm:col-span-3 sm:row-span-3"
+        title="Realms value in USD"
+        subtitle="Total Value Locked"
+      >
+        <TotalValueLocked totalValueLocked={totalValueLocked} />
       </BaseDashboardCard>
     </div>
   );

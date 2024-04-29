@@ -50,8 +50,8 @@
     "@storybook/test": "^8.0.8",
     "class-variance-authority": "^0.7.0",
     "date-fns": "^3.6.0",
-    "lucide-react": "^0.367.0",
-    "react-day-picker": "^8.10.0"
+    "lucide-react": "^0.368.0",
+    "react-day-picker": "^8.10.1"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "*",
@@ -78,10 +78,10 @@
     "@storybook/theming": "^8.0.8",
     "@testing-library/dom": "^10.0.0",
     "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^15.0.1",
+    "@testing-library/react": "^15.0.2",
     "@testing-library/user-event": "^14.5.2",
     "@types/jsdom": "^21.1.6",
-    "@types/react": "^18.2.77",
+    "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "^1.5.0",
@@ -100,7 +100,7 @@
     "tailwindcss": "3.4.3",
     "tsc-alias": "^1.8.8",
     "typescript": "^5.4.5",
-    "vite": "^5.2.8",
+    "vite": "^5.2.9",
     "vite-plugin-turbosnap": "^1.0.3",
     "vitest": "^1.5.0"
   },
