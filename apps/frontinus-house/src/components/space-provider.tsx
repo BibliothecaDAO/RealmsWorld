@@ -25,8 +25,8 @@ export function SpaceProvider({
 
   useEffect(() => {
     const fetchProposals = async () => {
-        const spaceData = await getNetwork("sn").api.loadSpace(
-          "0x0041ada9121061198b52ae28edeec8ace7c23f2ba8d66938c129af1a2245701c"
+        const spaceData = await getNetwork("sn-sep").api.loadSpace(
+          "0x0664207ee8c8687c58a4a72f07152e1e612d5107df894c60501e75a665915bf4"
         );
         spaceData && setSpace(spaceData);
       };

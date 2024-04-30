@@ -31,10 +31,11 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@realms-world/ui"; 
+import { sidelinks } from "@/data/menuLinks";
 
 export default function Header() {
   return (
-    <header className="bg-muted/40 flex h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
+    <header className="bg-muted/40 flex items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" className="shrink-0 md:hidden">
@@ -44,51 +45,21 @@ export default function Header() {
         </SheetTrigger>
         <SheetContent className="flex flex-col">
           <nav className="grid gap-2 text-lg font-medium">
-            <Link
-              to="#"
-              className="flex items-center gap-2 text-lg font-semibold"
-            >
-              <Package2 className="h-6 w-6" />
-              <span className="sr-only">Frontinus House</span>
-            </Link>
-            <Link
-              to="#"
-              className="text-muted-foreground hover:text-foreground mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
-            >
-              <Home className="h-5 w-5" />
-              Dashboard
-            </Link>
-            <Link
-              to="#"
-              className="bg-muted text-foreground hover:text-foreground mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
-            >
-              <ShoppingCart className="h-5 w-5" />
-              Orders
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                6
-              </Badge>
-            </Link>
-            <Link
-              to="#"
-              className="text-muted-foreground hover:text-foreground mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
-            >
-              <Package className="h-5 w-5" />
-              Products
-            </Link>
-            <Link
-              to="#"
-              className="text-muted-foreground hover:text-foreground mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
-            >
-              <Users className="h-5 w-5" />
-              Customers
-            </Link>
-            <Link
-              to="#"
-              className="text-muted-foreground hover:text-foreground mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
-            >
-              <LineChart className="h-5 w-5" />
-              Analytics
-            </Link>
+
+          {sidelinks.map((link) => (
+              <Link
+                to={link.href}
+                className="bg-muted text-bright-yellow hover:text-foreground mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
+              >
+                {link.icon}
+               {link.title}
+                {/*link.badge && (
+                  <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                    {link.badge}
+                  </Badge>
+                )*/}
+              </Link>
+            ))}
           </nav>
           <div className="mt-auto">
             <Card>
@@ -110,12 +81,12 @@ export default function Header() {
       </Sheet>
       <div className="w-full flex-1">
         <form>
-          <div className="relative">
-            <Search className="text-muted-foreground absolute left-2.5 top-2.5 h-4 w-4" />
+          <div className="relative h-[3.7rem]">
+            <Search className="text-muted-foreground absolute left-2.5 top-[20px] h-4 w-4" />
             <Input
               type="search"
               placeholder="Search..."
-              className="bg-dark-green w-full appearance-none pl-8 shadow-none md:w-2/3 lg:w-1/3"
+              className="bg-dark-green border-0 w-full appearance-none pl-8 shadow-none md:w-2/3 lg:w-1/3 focus:ring-0 h-full"
             />
           </div>
         </form>

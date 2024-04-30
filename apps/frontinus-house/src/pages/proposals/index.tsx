@@ -9,8 +9,8 @@ export default function Proposals() {
   console.log("got here");
   useEffect(() => {
     const fetchProposals = async () => {
-      const proposalsData = await getNetwork("sn").api.loadProposals(
-        ["0x0041ada9121061198b52ae28edeec8ace7c23f2ba8d66938c129af1a2245701c"],
+      const proposalsData = await getNetwork("sn-sep").api.loadProposals(
+        ["0x0664207ee8c8687c58a4a72f07152e1e612d5107df894c60501e75a665915bf4"],
         {
           limit: 20,
         },
@@ -26,7 +26,7 @@ export default function Proposals() {
   return (
     <Layout>
       <LayoutBody className="flex flex-col" fixedHeight>
-        <h1>Proposals</h1>
+        <div className="px-4"><h1 className="text-lg uppercase text-muted">Proposals</h1></div>
         <hr />
         {proposals
           ? proposals.map((proposal) => {
@@ -36,7 +36,7 @@ export default function Proposals() {
                     <div className="mr-4 w-0 flex-auto">
                       <div className="flex space-x-2">
                         <div className="my-1 items-center leading-6 md:flex md:min-w-0">
-                          <h4 className="mt-0">
+                          <h4 className="my-0">
                             {proposal.title ?? `Proposal #${proposal.id}`}
                           </h4>
                         </div>
