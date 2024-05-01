@@ -6,8 +6,8 @@ import { NETWORK_NAME } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
 import { useAccount, useReadContract } from "wagmi";
 
-import { useStakedRealmsData } from "./useStakedRealmsData";
 import { useAirdropClaim } from "../useAirdropClaim";
+import { useStakedRealmsData } from "./useStakedRealmsData";
 
 export const useStaking = () => {
   const [paymentPoolV1, setPaymentPoolv1] = useState<{
@@ -33,16 +33,19 @@ export const useStaking = () => {
       args: [l1Address!],
     });
 
-  const { data: poolV1BalanceData, isLoading: poolBalanceLoading } =
+  const { data: poolV1Balance, isLoading: poolBalanceLoading } =
     useReadContract({
       address: stakingAddresses[NETWORK_NAME].paymentPool as `0x${string}`,
       abi: paymentPoolAbi,
       functionName: "balanceForProofWithAddress",
       args: paymentPoolV1?.proof &&
-        l1Address && [l1Address.toLowerCase() as `0x${string}`, paymentPoolV1?.proof],
+        l1Address && [
+          l1Address.toLowerCase() as `0x${string}`,
+          paymentPoolV1?.proof,
+        ],
       // query: { enabled: !!address && !!poolTotal }
     });
-    const { numTokens, claimAirdrop, balance } = useAirdropClaim();
+  const { numTokens, claimAirdrop, balance } = useAirdropClaim();
 
   useEffect(() => {
     const fetchStakingData = async () => {
@@ -62,15 +65,19 @@ export const useStaking = () => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     fetchStakingData();
   }, [l1Address]);
- 
 
   return {
     data,
-    loading: isGalleonLordsLoading && isCarrackLordsLoading && poolBalanceLoading,
+    loading:
+      isGalleonLordsLoading && isCarrackLordsLoading && poolBalanceLoading,
     galleonLordsAvailable,
-    carrackLordsAvailable,
+    carrackLordsAvailable: carrackLordsAvailable?.[0],
     paymentPoolV1,
-    poolV1BalanceData,
-    totalClaimable: parseInt((galleonLordsAvailable??0n).toString()) + parseInt((carrackLordsAvailable ?? 0n).toString())
+    poolV1Balance,
+    poolV2Balance: balance ? 0 : numTokens,
+    totalClaimable:
+      parseInt((galleonLordsAvailable ?? 0n).toString()) +
+      parseInt((carrackLordsAvailable ?? 0n).toString()) +
+      (balance ? 0 : numTokens),
   };
 };

@@ -37,7 +37,7 @@ export default function RootLayout({
           </NavLink>
         ))}
       </div>
-      <BaseCard>{children}</BaseCard>
+      {children}
     </PageLayout>
   );
 }
