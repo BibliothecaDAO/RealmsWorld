@@ -1,0 +1,58 @@
+type TokenHolder @entity {
+  "A TokenHolder is any address that holds any amount of Compound Tokens, the id used is the blockchain address."
+  id: ID!
+
+  "Delegate address of the token holder which will participate in votings. Delegates don't need to hold any tokens and can even be the token holder itself."
+  delegate: Delegate
+
+  "Compound Token balance of this address expressed in the smallest unit of the CompoundToken"
+  tokenBalanceRaw: BigInt!
+
+  "Compound Token balance of this address expressed as a BigDecimal normalized value for the Compound Token"
+  tokenBalance: BigInt!
+
+  "Total amount of Compound Token ever held by this address expressed in the smallest unit of the CompoundToken"
+  totalTokensHeldRaw: BigInt!
+
+  "Total amount of Compound Token ever held by this address expressed as a BigDecimal normalized value for the Compound Token"
+  totalTokensHeld: BigInt!
+}
+
+type Delegate @entity {
+  "A Delegate is any address that has been delegated with voting tokens by a token holder, id is the blockchain address of said delegate"
+  id: ID!
+
+  "Amount of votes delegated to this delegate to be used on proposal votings expressed in the smallest unit of the CompoundToken"
+  delegatedVotesRaw: BigInt!
+
+  "Amount of votes delegated to this delegate to be used on proposal votings expressed as a BigDecimal normalized value for the Compound Token"
+  delegatedVotes: BigInt!
+
+  tokenHoldersRepresentedAmount: Int!
+
+  "Token holders that this delegate represents"
+  tokenHoldersRepresented: [TokenHolder!]! @derivedFrom(field: "delegate")
+}
+
+type Governance @entity {
+  "Unique entity used to keep track of common aggregated data"
+  id: ID!
+
+  "Total number of token holders currently"
+  currentTokenHolders: Int!
+
+  "Total number of delegates participating on the governance currently"
+  currentDelegates: Int!
+
+  "Total number of token holders"
+  totalTokenHolders: Int!
+
+  "Total number of delegates that held delegated votes"
+  totalDelegates: Int!
+
+  "Total number of votes delegated expressed in the smallest unit of the Compound Token"
+  delegatedVotesRaw: BigInt!
+
+  "Total number of votes delegated expressed as a BigDecimal normalized value for the Compound Token"
+  delegatedVotes: BigInt!
+}

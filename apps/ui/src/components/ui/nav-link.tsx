@@ -8,7 +8,7 @@ Use the exact property to change it to an exact match with the whole URL pathnam
 */
 import type { VariantProps } from "class-variance-authority";
 import React from "react";
-import Link from "next/link";
+//import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@realms-world/utils";
@@ -36,7 +36,7 @@ export const NavLink = ({
 
   variant = "ghost";
   return (
-    <Link
+    <a
       className={cn(
         buttonVariants({ variant, size, className }),
         isActive && "!text-flamingo",
@@ -44,6 +44,6 @@ export const NavLink = ({
       href={href}
     >
       {children}
-    </Link>
+    </a>
   );
 };

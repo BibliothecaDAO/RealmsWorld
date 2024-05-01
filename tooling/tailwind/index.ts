@@ -6,6 +6,7 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx}",
     "./src/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
+    "./index.html",
     "../../apps/ui/src/components/**/*.{ts,tsx}",
     "../../apps/ui/.storybook/**/*.{ts,tsx}",
     "../../apps/ui/stories/**/*.{ts,tsx}",
@@ -26,8 +27,8 @@ module.exports = {
         DEFAULT: theme("colors.medium-dark-green"),
       }),
       fontFamily: {
-        sans: ["var(--font-bai-jamjuree)", ...fontFamily.sans],
-        "sans-serif": ["var(--font-karla)", ...fontFamily.serif],
+        sans: ["var(--font-bai-jamjuree)", "Bai Jamjuree", ...fontFamily.sans],
+        "sans-serif": ["var(--font-karla)", "Karla", ...fontFamily.serif],
       },
     },
   },

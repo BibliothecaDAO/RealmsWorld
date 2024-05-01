@@ -51,15 +51,13 @@ export const studios: { [key in Studios]?: StudioInterface } = {
   [Studios.PAVED_STUDIO]: {
     name: "Paved Studios",
     id: "paved-studios",
-    description: "",
-    longform: "",
+    description: "Building onchain puzzles since 2024",
+    longform: "Building onchain puzzles since 2024",
     logoFormat: "png",
     links: {
       homepage: "https://paved.gg/",
       twitter: 'pavedgame',
-      discord: "",
-      telegram: "",
-      github: ""
+      github: "https://github.com/stolslilabs/paved"
     },
   },
   [Studios.UNDERWARE]: {
@@ -104,7 +102,7 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     longform: "",
     logoFormat: null,
     links: {
-      homepage: "",
+      homepage: "https://linktr.ee/bannersNFT",
       discord: "https://discord.gg/NkHnWCPc6D",
       telegram: "",
       github: "",

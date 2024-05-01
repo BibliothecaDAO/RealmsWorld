@@ -26,14 +26,14 @@ export { Button, buttonVariants } from "./src/components/ui/button";
 export { Calendar } from "./src/components/ui/calendar";
 export { Carousel } from "./src/components/ui/carousel";
 
-/* export {
+export {
     Card,
     CardHeader,
     CardFooter,
     CardTitle,
     CardDescription,
     CardContent,
-  } from "./src/components/ui/card";*/
+  } from "./src/components/ui/card";
 export {
   Collapsible,
   CollapsibleTrigger,
@@ -165,7 +165,7 @@ export {
 export { Skeleton } from "./src/components/ui/skeleton";
 export { Slider } from "./src/components/ui/slider";
 export { Switch } from "./src/components/ui/switch";
-/*export {
+export {
     Table,
     TableHeader,
     TableBody,
@@ -174,7 +174,7 @@ export { Switch } from "./src/components/ui/switch";
     TableRow,
     TableCell,
     TableCaption,
-  } from "./src/components/ui/table";*/
+  } from "./src/components/ui/table";
 export {
   Tabs,
   TabsList,

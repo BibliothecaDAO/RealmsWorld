@@ -1,11 +1,8 @@
 import type { Collection } from "@reservoir0x/reservoir-kit-ui";
 import Image from "next/image";
-import Link from "next/link";
 import { SocialIcons } from "@/app/_components/SocialIcons";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import Discord from "@/icons/discord.svg";
 import { getCollections } from "@/lib/reservoir/getCollections";
-import { ExternalLink, Globe, X } from "lucide-react";
 import { formatEther } from "viem";
 
 import type { Collections } from "@realms-world/constants";
