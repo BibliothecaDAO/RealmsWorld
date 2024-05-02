@@ -15,7 +15,7 @@ import {
   DialogTitle,
 } from "@realms-world/ui";
 
-import { useHideModal, useModal } from "../providers/ModalProvider";
+import { useHideModal, useModal } from "../../providers/ModalProvider";
 
 export interface Component {
   component: LazyExoticComponent<ComponentType<any>>;

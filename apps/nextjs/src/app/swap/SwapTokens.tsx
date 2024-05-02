@@ -27,7 +27,7 @@ import {
 
 import { StarknetLoginButton } from "../_components/wallet/StarknetLoginButton";
 import { TokenBalance } from "../bridge/TokenBalance";
-import { useWalletsProviderContext } from "../providers/WalletsProvider";
+import { useWalletsProviderContext } from "../../providers/WalletsProvider";
 
 const AVNU_OPTIONS = {
   baseUrl: `https://${NETWORK_NAME == "MAIN" ? "starknet" : "sepolia"}.api.avnu.fi`,

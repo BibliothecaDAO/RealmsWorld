@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import { useUIContext } from "@/app/providers/UIProvider";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { cleanQuery } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/react";
 import { useInView } from "framer-motion";
@@ -20,7 +20,7 @@ const L2ERC721Table = ({
   contractAddress: string;
   ownerAddress?: string;
 }) => {
-  const { isGrid } = useUIContext();
+  const { isGrid } = useUIStore((state) => state,);
   const grid =
     "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
   const list = "grid grid-cols-1 w-full";

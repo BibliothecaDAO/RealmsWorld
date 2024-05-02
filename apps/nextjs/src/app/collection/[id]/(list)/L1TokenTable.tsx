@@ -5,7 +5,7 @@ import { L1TokenCard } from "@/app/collection/[id]/(list)/L1TokenCard";
 
 import { getCollectionFromAddress } from "@realms-world/constants";
 
-import { useUIContext } from "../../../providers/UIProvider";
+import { useUIStore } from "@/providers/UIStoreProvider";
 
 export const L1TokenTable = ({
   address,
@@ -14,7 +14,7 @@ export const L1TokenTable = ({
   address: string;
   tokens: TokenMarketData[];
 }) => {
-  const { isGrid } = useUIContext();
+  const { isGrid } = useUIStore((state) => state,);
 
   const grid =
     "grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";

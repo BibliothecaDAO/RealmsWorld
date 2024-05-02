@@ -128,10 +128,7 @@ export const StakingContainer = () => {
     return (
       <div className="text-center">
         {poolClaimError && (
-          <Alert
-            message={poolClaimError.message.toString()}
-            variant="warning"
-          />
+          <Alert variant="warning">{poolClaimError.message.toString()}</Alert>
         )}
         <div className="col-span-2 flex flex-col ">
           <h3>Your Realms</h3>
@@ -487,12 +484,10 @@ const StakingModal = ({
           <div className="flex flex-col self-center">
             <h5>The Galleon</h5>
             <div className="pb-2 text-lg">Rewards: 49x $LORDS per epoch.</div>
-            <Alert
-              message={
-                "Lords earnt after epoch 35 are locked until the DAO approves the migration to Starknet."
-              }
-              variant="warning"
-            />
+            <Alert variant="warning">
+              Lords earnt after epoch 35 are locked until the DAO approves the
+              migration to Starknet.
+            </Alert>
             <Button
               className="my-3"
               onClick={() => setShipType("galleon")}

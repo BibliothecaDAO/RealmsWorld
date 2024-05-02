@@ -1,7 +1,7 @@
 import { NavLink } from "@realms-world/ui";
 
-import { BaseCard } from "../_components/BaseCard";
-import { PageLayout } from "../_components/PageLayout";
+import { PageLayout } from "@/app/_components/PageLayout";
+import { StakingMigrationModal } from "@/app/_components/modal/StakingMigrationModal";
 
 export default function RootLayout({
   children,
@@ -25,7 +25,7 @@ export default function RootLayout({
     },
   ];
   return (
-    <PageLayout size={"sm"} title="Account">
+    <PageLayout size={"sm"}>
       <div className=" mb-4 flex w-full space-x-4 border-b py-3 text-xl">
         {tabs.map((tab) => (
           <NavLink
@@ -38,6 +38,7 @@ export default function RootLayout({
         ))}
       </div>
       {children}
+      <StakingMigrationModal />
     </PageLayout>
   );
 }

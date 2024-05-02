@@ -3,7 +3,7 @@ import { Inconsolata, Silkscreen } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
 import { Analytics } from "@vercel/analytics/react";
 
-import { Provider } from "./providers/providers";
+import { Provider } from "@/providers/Web3Providers";
 
 import "@realms-world/styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
@@ -15,8 +15,8 @@ import { TRPCReactProvider } from "@/trpc/react";
 
 import { Footer } from "./_components/Footer";
 import { TopNav } from "./_components/TopNav";
-import { UIContextProvider } from "./providers/UIProvider";
-import { WalletsProvider } from "./providers/WalletsProvider";
+import { UIStoreProvider } from "../providers/UIStoreProvider";
+import { WalletsProvider } from "../providers/WalletsProvider";
 import { Toaster } from "@realms-world/ui";
 
 const baiJamjuree = Silkscreen({
@@ -51,7 +51,7 @@ export default function Layout(props: { children: React.ReactNode }) {
         className={`bg-dark-green ${baiJamjuree.variable} ${karla.variable} text-bright-yellow`}
       >
         <TRPCReactProvider headersPromise={getHeaders()}>
-          <UIContextProvider>
+          <UIStoreProvider>
             <Provider>
               <WalletsProvider>
                 <main className="flex-wrap md:flex">
@@ -65,7 +65,7 @@ export default function Layout(props: { children: React.ReactNode }) {
                 <Toaster />
               </WalletsProvider>
             </Provider>
-          </UIContextProvider>
+          </UIStoreProvider>
         </TRPCReactProvider>
         <Analytics />
       </body>

@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useCallback, useEffect, useState } from "react";
-import { useTransferLog } from "@/app/providers/TransferLogProvider";
+import { useTransferLog } from "@/providers/TransferLogProvider";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import {
   ActionType,

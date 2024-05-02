@@ -4,7 +4,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useTransferLog } from "@/app/providers/TransferLogProvider";
+import { useTransferLog } from "@/providers/TransferLogProvider";
 import {
   CompleteTransferToL1Steps,
   stepOf,

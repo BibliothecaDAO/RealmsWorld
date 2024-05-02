@@ -16,14 +16,14 @@ import {
   NavigationMenuTrigger,
 } from "@realms-world/ui";
 
-import { useUIContext } from "../providers/UIProvider";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { WalletSheet } from "./wallet/WalletSheet";
 
 export const TopNav = () => {
   //{ scrollY } = useScroll();
   //const [isScrolled, setIsScrolled] = useState(false);
 
-  const { toggleSidebar } = useUIContext();
+  const { toggleSidebar } = useUIStore((state) => state,);
 
   /*useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 0);

@@ -1,7 +1,7 @@
 //import { Mail } from "lucide-react";
 import type { WalletProvider } from "get-starknet-core";
 import { useEffect, useState } from "react";
-import { useUIContext } from "@/app/providers/UIProvider";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount, useConnect } from "@starknet-react/core";
 import { motion } from "framer-motion";
 import getDiscoveryWallets from "get-starknet-core";
@@ -17,7 +17,7 @@ export const StarknetLoginModal = () => {
     toggleStarknetLogin,
     toggleAccount,
     isAccountOpen,
-  } = useUIContext();
+  } = useUIStore((state) => state,);
   const { isConnected } = useAccount();
 
   const [braavos, setBraavos] = useState<string>("");

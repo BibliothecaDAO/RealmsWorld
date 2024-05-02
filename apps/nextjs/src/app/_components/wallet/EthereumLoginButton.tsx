@@ -2,7 +2,7 @@
 
 import type { VariantProps } from "class-variance-authority";
 import React from "react";
-import { useUIContext } from "@/app/providers/UIProvider";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import EthereumLogo from "@/icons/ethereum.svg";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useConnect } from "wagmi";
@@ -27,7 +27,7 @@ export const EthereumLoginButton = ({
       !isAccountOpen && openAccount && toggleAccount();
     },
   });*/
-  const { /*isAccountOpen,*/ toggleAccount } = useUIContext();
+  const { /*isAccountOpen,*/ toggleAccount } = useUIStore((state) => state,);
 
   if (!connectors) {
     return null;

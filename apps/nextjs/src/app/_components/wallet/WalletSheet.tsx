@@ -1,7 +1,7 @@
 //import { shortenHex } from "@/utils/utils";
 import { Suspense, useEffect, useState } from "react";
 import { Account } from "@/app/bridge/Account";
-import { useUIContext } from "@/app/providers/UIProvider";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { NETWORK_NAME } from "@/constants/env";
 import Bridge from "@/icons/bridge.svg";
 import {
@@ -86,7 +86,7 @@ export const WalletSheet = () => {
     NETWORK_ID.mainnet,
   ]);
 
-  const { isAccountOpen, toggleAccount } = useUIContext();
+  const { isAccountOpen, toggleAccount } = useUIStore((state) => state,);
 
   const tabs = [
     {

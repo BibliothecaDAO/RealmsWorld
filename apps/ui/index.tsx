@@ -15,7 +15,7 @@ export {
   AlertDialogAction,
   AlertDialogCancel,
 } from "./src/components/ui/alert-dialog";
-export { Alert } from "./src/components/ui/alert";
+export { Alert, AlertTitle, AlertDescription } from "./src/components/ui/alert";
 export { AspectRatio } from "./src/components/ui/aspect-ratio";
 export {
   Avatar,

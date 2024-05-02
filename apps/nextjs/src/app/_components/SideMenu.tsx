@@ -11,17 +11,16 @@ import Crown from "@/icons/crown.svg";
 import Discord from "@/icons/discord.svg";
 import Gamepad from "@/icons/gamepad.svg";
 import LordsIcon from "@/icons/lords.svg";
-
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
 import { Github, Twitter } from "lucide-react";
 
 import { Button, ScrollArea } from "@realms-world/ui";
 
-import { useUIContext } from "../providers/UIProvider";
+import { useUIStore } from "../../providers/UIStoreProvider";
 
 const Sidebar = () => {
-  const { isSidebarOpen, toggleSidebar } = useUIContext();
+  const { isSidebarOpen, toggleSidebar } = useUIStore((state) => state);
 
   const { lordsPrice } = useLordsPrice();
 

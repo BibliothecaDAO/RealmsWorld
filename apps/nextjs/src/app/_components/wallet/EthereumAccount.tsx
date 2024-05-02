@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useUIContext } from "@/app/providers/UIProvider";
-import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
+import { useUIStore } from "@/providers/UIStoreProvider";
+import { useWalletsProviderContext } from "@/providers/WalletsProvider";
 import Album from "@/icons/album.svg";
 import EthereumLogo from "@/icons/ethereum.svg";
 import Lords from "@/icons/lords.svg";
@@ -21,7 +21,7 @@ function EthereumAccount() {
   const { disconnect } = useDisconnect();
   const { balances } = useWalletsProviderContext();
 
-  const { toggleAccount } = useUIContext();
+  const { toggleAccount } = useUIStore((state) => state,);
 
   const DisplayChainInfo = () => (
     <div className="flex">

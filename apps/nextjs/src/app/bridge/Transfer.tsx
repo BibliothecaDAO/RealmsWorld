@@ -19,7 +19,7 @@ import { useAccount as useL1Account } from "wagmi";
 
 import { Button, Input } from "@realms-world/ui";
 
-import { useWalletsProviderContext } from "../providers/WalletsProvider";
+import { useWalletsProviderContext } from "../../providers/WalletsProvider";
 import { TokenBalance } from "./TokenBalance";
 
 export const Transfer = ({ action }: { action: string }) => {

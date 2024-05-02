@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
+import { useWalletsProviderContext } from "@/providers/WalletsProvider";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useBuyToken } from "@/hooks/market/useBuyToken";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
