@@ -12,6 +12,6 @@
   },
   "aliases": {
     "components": "@realms-world/ui/components",
-    "utils": "@realms-world/ui/lib/utils"
+    "utils": "@realms-world/utils"
   }
 }

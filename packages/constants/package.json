@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5"
   },

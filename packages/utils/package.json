@@ -15,14 +15,14 @@
   },
   "dependencies": {
     "@types/firefox-webext-browser": "^120.0.3",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
     "@realms-world/tsconfig": "*",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.12.8",
     "typescript": "^5.4.5"
   },
   "publishConfig": {
