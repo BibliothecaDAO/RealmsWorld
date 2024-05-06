@@ -9,6 +9,8 @@ export enum ChainId {
   REALMS_L3 = "420",
 
   SLOT_TESTNET = 555, // TODO: update with the real value
+
+  SN_DEVNET = 556, // TODO: update with the real value
 }
 
 export const CHAIN_IDS_TO_NAMES = {
@@ -19,6 +21,7 @@ export const CHAIN_IDS_TO_NAMES = {
   [ChainId.SN_SEPOLIA]: "starknet_sepolia",
   [ChainId.SLOT_TESTNET]: "Slot Testnet",
   [ChainId.REALMS_L3]: "Realms L3",
+  [ChainId.SN_DEVNET]: "starknet_devnet",
 } as const;
 
 export const L1_CHAIN_IDS = [ChainId.MAINNET, ChainId.SEPOLIA] as const;

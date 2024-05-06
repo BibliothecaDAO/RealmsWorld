@@ -19,6 +19,7 @@ export enum Studios {
   GRUGS_LAIR = "grugs-lair",
   ARCANE_ASSEMBLERS = "arcane-assemblers",
   BANNERS_FOR_ADVENTURERS = "banners",
+  FORCE_PRIME_STUDIO = "force-prime",
 }
 
 export interface StudioInterface {
@@ -140,6 +141,18 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     links: {
       twitter: "ArcaneAssembler",
       github: "ArcaneAssemblers"
+    },
+  },
+  [Studios.FORCE_PRIME_STUDIO]: {
+    name: "Force Prime",
+    id: "force-prime",
+    description: "",
+    longform: "",
+    logoFormat: null,
+    links: {
+      discord: "https://discord.gg/8SFzxSgbq3",
+      twitter: "ForcePrime_io",
+      homepage: "https://forceprime.io/"
     },
   },
   // Continue for each developer listed in the games array

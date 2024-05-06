@@ -314,4 +314,25 @@ export const games: Game[] = [
     tokens: [Tokens.LORDS],
     screenshotLength: 1,
   },
+  {
+    name: "Force Prime Heroes",
+    id: "force-prime-heroes",
+    developer: Studios.FORCE_PRIME_STUDIO,
+    genres: ["strategy", "RPG"],
+    color: "#f5f5f5",
+    status: "alpha",
+    description: "Classic Turn Based Strategy",
+    longform:
+        "Force Prime Heroes is a fully on-chain game inspired by the Heroes of Might and Magic series. You need to explore the map with your hero, grow your army, defeat enemies and kill the Bone Dragon to win. Find your best strategy and become a true hero of on-chain worlds!",
+    links: {
+      homepage: "https://forceprime.io",
+      discord: "https://discord.gg/8SFzxSgbq3",
+      twitter: "https://twitter.com/ForcePrime_io",
+    },
+    operatingSystems: ["Web Browser"],
+    chains: [ChainId.SN_DEVNET],
+    collections: [],
+    tokens: [],
+    screenshotLength: 4,
+  }
 ];
