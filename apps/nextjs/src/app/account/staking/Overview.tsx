@@ -1,14 +1,20 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { LoadingSkeletonGrid } from "@/app/_components/LoadingSkeletonGrid";
 import { useLordship } from "@/hooks/staking/useLordship";
 import { useStaking } from "@/hooks/staking/useStaking";
+import LordsIcon from "@/icons/lords.svg";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount as useL2Account } from "@starknet-react/core";
-import { InfoIcon } from "lucide-react";
+import { AlertTriangleIcon, InfoIcon } from "lucide-react";
 import { useAccount } from "wagmi";
 
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
   Alert,
   AlertDescription,
   AlertTitle,
@@ -17,13 +23,20 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
+  Label,
+  RadioGroup,
+  RadioGroupItem,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@realms-world/ui";
-import { AlertTriangleIcon } from "lucide-react";
-import { useUIStore } from "@/providers/UIStoreProvider";
+
+import { RealmStakingTabs } from "./RealmStakingTabs";
 
 export const Overview = () => {
   const { address: l1Address } = useAccount();
@@ -39,62 +52,34 @@ export const Overview = () => {
   } = useStaking();
   const delegateData = useLordship(l1Address);
 
-  const totalLegacyStaked =
-    +data?.wallet?.bridgedRealmsHeld ?? 0 +
-    +data?.wallet?.bridgedV2RealmsHeld ?? 0;
-
-  const {toggleStakingMigration} = useUIStore((state) => state)
-
   return (
     <div className="w-full px-4">
       {l1Address && (
-        <div className="grid grid-cols-2 gap-x-8">
+        <div className="grid gap-8 md:grid-cols-2">
           <div>
             <h2 className="mb-2 text-3xl">Realms</h2>
-            <Alert variant={"warning"}>
-              <AlertTriangleIcon className="w-5 h-5" />
-              <AlertTitle>Migrate to new contract</AlertTitle>{" "}
-              <AlertDescription>
-                You have {totalLegacyStaked} Realms staked in legacy contracts
-                that are no longer earning $LORDS.{" "}
-                <Button size={"xs"} variant={"outline"} onClick={toggleStakingMigration}>
-                  Migrate Now
-                </Button>
-              </AlertDescription>
-            </Alert>
-            <Card className="w-full">
-              <CardContent>{totalLegacyStaked}</CardContent>
-              <CardFooter>Legacy Staked Realms</CardFooter>
-            </Card>
-            <div>Unstaked Realms: {data?.wallet?.realmsHeld}</div>
+            <RealmStakingTabs data={data} />
           </div>
-          <div>
-            <h2 className="mb-2 text-3xl">LORDS</h2>
-            <span className="flex">
-              {" "}
-              Claimable Lords: {totalClaimable.toString()}
-              <TooltipProvider>
-                <Tooltip side="right" width={200}>
-                  <TooltipTrigger>
-                    <InfoIcon className="ml-3 w-4" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <>
-                      <span className="text-base font-semibold">Galleon:</span>
-                      <p>
-                        Epoch 0-10: {galleonLordsAvailable?.toLocaleString()}
-                      </p>
-                      <p>Epoch 11-35: {poolV1Balance?.toLocaleString()}</p>
-                      <p>Epoch 36-109: {poolV2Balance?.toLocaleString()}</p>
-                      <span className="text-base font-semibold">Carrack:</span>
-                      <p>
-                        Epoch 11-109: {carrackLordsAvailable?.toLocaleString()}
-                      </p>
-                    </>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+          <div className="w-full">
+            <span className="mb-2 flex w-fit items-center pb-4 font-sans text-3xl">
+              <LordsIcon className="mx-auto mr-2 h-7 w-7 fill-bright-yellow" />
+              LORDS
             </span>
+            <Accordion type="multiple">
+              <AccordionItem value={"lords"} className="mb-2">
+                <AccordionTrigger className="w-full border p-4">
+                  Legacy Claimable Lords: {totalClaimable.toString()}
+                </AccordionTrigger>
+                <AccordionContent className="border border-t-0 bg-dark-green p-4">
+                  <span className="text-base font-semibold">Galleon:</span>
+                  <p>Epoch 0-10: {galleonLordsAvailable?.toLocaleString()}</p>
+                  <p>Epoch 11-35: {poolV1Balance?.toLocaleString()}</p>
+                  <p>Epoch 36-109: {poolV2Balance?.toLocaleString()}</p>
+                  <span className="text-base font-semibold">Carrack:</span>
+                  <p>Epoch 11-109: {carrackLordsAvailable?.toLocaleString()}</p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       )}

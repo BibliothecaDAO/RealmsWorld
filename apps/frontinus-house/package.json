@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@apollo/client": "^3.10.1",
+    "@apollo/client": "^3.10.2",
     "@argent/get-starknet": "^6.4.7",
     "@realms-world/ui": "*",
     "@snapshot-labs/sx": "^0.1.2",
