@@ -65,12 +65,12 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     name: "Underware",
     id: "underware",
     description: "Realmsverse Game Studio & Knights of the Realm",
-    longform: "Underware is a fully on-chain game studio of veteran technologists, committed to building on and contributing to the Realms Network. We are extending the Realmsverse with an expansive autonomous (under)world, and building various related games and novel mechanics, including an narrative dungeon crawler.\n\n We consider ourselves long-term aligned with the Realmsverse, with a focus upon crafting meaningful, engaging, and open technology & game experiences at the frontier of autonomous worlds.",
+    longform: "Underware is a fully onchain game studio of veteran technologists, committed to building on and contributing to the Realms Network. We are extending the Realmsverse with an expansive autonomous (under)world, and building various related games and novel mechanics, including a narrative dungeon crawler.\n\n We consider ourselves long-term aligned with the Realmsverse, with a focus upon crafting meaningful, engaging, and open technology & game experiences at the frontier of autonomous worlds.",
     logoFormat: 'jpg',
     links: {
       homepage: "https://underware.gg/",
       twitter: "underware_gg",
-      github: "funDAOmental"
+      github: "underware-gg"
     },
     screenshotLength: 2,
   },
