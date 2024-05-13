@@ -7,11 +7,11 @@ import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
 import { Carousel } from "@realms-world/ui";
 
+import { PageLayout } from "./_components/PageLayout";
 import { Partners } from "./_components/Partners";
 import PostGrid from "./blog/PostGrid";
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
-import { PageLayout } from "./_components/PageLayout";
 
 export default async function Home() {
   const carouselImages = games
@@ -26,7 +26,7 @@ export default async function Home() {
 
   return (
     <PageLayout>
-      <div className="my-4 flex w-fit flex-wrap bg-dark-green p-1 text-xl">
+      <div className="my-4 flex w-fit flex-wrap p-1 text-xl">
         <span className="align-center">Powered by </span>
         <Link href={"https://dojoengine.org/"}>
           <DojoDark className="mx-2 w-12" />

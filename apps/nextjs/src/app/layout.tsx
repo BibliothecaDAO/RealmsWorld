@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
-import { Analytics } from "@vercel/analytics/react";
-
 import { Provider } from "@/providers/Web3Providers";
+import { Analytics } from "@vercel/analytics/react";
 
 import "@realms-world/styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import { env } from "@/env";
 
 import { cache } from "react";
 import { headers } from "next/headers";
+import { env } from "@/env";
 import { TRPCReactProvider } from "@/trpc/react";
 
-import { Footer } from "./_components/Footer";
-import { TopNav } from "./_components/TopNav";
+import { Toaster } from "@realms-world/ui";
+
 import { UIStoreProvider } from "../providers/UIStoreProvider";
 import { WalletsProvider } from "../providers/WalletsProvider";
-import { Toaster } from "@realms-world/ui";
+import { Footer } from "./_components/Footer";
+import { TopNav } from "./_components/TopNav";
 
 const baiJamjuree = Silkscreen({
   subsets: ["latin"],
@@ -48,7 +48,7 @@ export default function Layout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body
         style={backgroundImageStyle}
-        className={`bg-dark-green ${baiJamjuree.variable} ${karla.variable} text-bright-yellow`}
+        className={`bg-background ${baiJamjuree.variable} ${karla.variable} dark text-bright-yellow`}
       >
         <TRPCReactProvider headersPromise={getHeaders()}>
           <UIStoreProvider>

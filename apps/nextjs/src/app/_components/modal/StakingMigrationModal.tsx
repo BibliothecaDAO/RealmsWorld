@@ -8,6 +8,7 @@ import {
   DialogContent,
   DialogOverlay,
   DialogTitle,
+  ScrollArea,
 } from "@realms-world/ui";
 
 export const StakingMigrationModal = () => {
@@ -17,9 +18,11 @@ export const StakingMigrationModal = () => {
   if (isStakingMigrationOpen) {
     return (
       <Dialog open onOpenChange={toggleStakingMigration}>
-        <DialogContent className="sm:max-w-[700px]">
+        <DialogContent className="sm:max-w-[600px]">
           <DialogTitle>Migrate Realms</DialogTitle>
+          <ScrollArea className="-mr-6 max-h-[600px] pr-6">
             <StakingMigration />
+          </ScrollArea>
         </DialogContent>
       </Dialog>
     );

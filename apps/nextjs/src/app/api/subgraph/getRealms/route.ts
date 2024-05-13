@@ -16,6 +16,7 @@ const query = `query UsersRealms(
   ) {
     id
     name
+    order
   }
   bridgedRealms: realms(
     first: $first

@@ -2,21 +2,30 @@ import { useState } from "react";
 import { Realm } from "@/.graphclient";
 import { RealmsTable } from "@/app/_components/RealmsTable";
 import { columns } from "@/app/_components/RealmsTableColumns";
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
+import { useERC721SetApprovalForAll } from "@/hooks/token/useERC721SetApprovalForAll";
 import { useQuery } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
 
+import {
+  Collections,
+  getCollectionAddresses,
+  StakingAddresses,
+} from "@realms-world/constants";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  Button,
 } from "@realms-world/ui";
 
 export const StakingMigration = () => {
   const { address } = useAccount();
-  const [selectedRealms, setSelectedRealms] = useState<readonly string[]>([]);
-  const onSelectRealms = (realms: readonly string[]) => {
-    setSelectedRealms(realms);
+  const [selectedRows, setSelectedRows] = useState({});
+
+  const handleRowSelection = (newSelection: any) => {
+    setSelectedRows(newSelection);
   };
   const { data: realmsData, isLoading: realmsDataIsLoading } = useQuery({
     queryKey: ["UsersRealms" + address],
@@ -31,31 +40,92 @@ export const StakingMigration = () => {
     enabled: !!address,
     //refetchInterval: 10000,
   });
+  const { writeAsync: setApproval } = useERC721SetApprovalForAll({
+    onSuccess: (data) => console.log("sucess" + data),
+  });
 
   const steps = [
+    ...(realmsData?.wallet.bridgedRealmsHeld > 0
+      ? [
+          {
+            title: `Unstake ${realmsData.wallet.bridgedRealmsHeld} Realms from Galleon`,
+            content: (
+              <div className="mt-4">
+                <RealmsTable
+                  data={realmsData?.bridgedRealms as Realm[]}
+                  columns={columns}
+                />
+                <Button className="w-full">Unstake Realms</Button>
+              </div>
+            ),
+          },
+        ]
+      : []),
+    ...(realmsData?.wallet.bridgedV2RealmsHeld > 0
+      ? [
+          {
+            title: `Unstake ${realmsData?.wallet?.bridgedV2RealmsHeld} Realms from Carrack`,
+            content: (
+              <div className="mt-4">
+                <RealmsTable
+                  data={realmsData?.bridgedV2Realms as Realm[]}
+                  columns={columns}
+                />
+                <Button className="w-full">Unstake Realms</Button>
+              </div>
+            ),
+          },
+        ]
+      : []),
     {
-      id: "1",
-      title: "1. Unstake Realms from Galleon",
+      title: "Approve Realms Transfer",
       content: (
-        <RealmsTable
-          data={realmsData?.bridgedRealms as Realm[]}
-          columns={columns}
-        />
+        <div>
+          <p>Approve the vRealms staking contract to transfer your NFTs</p>
+          <Button
+            className="mt-4"
+            onClick={() =>
+              setApproval({
+                contractAddress: getCollectionAddresses(Collections.REALMS)[
+                  SUPPORTED_L1_CHAIN_ID
+                ] as `0x${string}`,
+                operator: StakingAddresses.vlords[
+                  SUPPORTED_L1_CHAIN_ID
+                ] as `0x${string}`,
+              })
+            }
+          >
+            Approve Realms
+          </Button>
+        </div>
       ),
     },
-    { id: "2", title: "2. Approve Realms Transfer" },
-    { id: "3", title: "3. Deposit Realms for vRealms" },
-    { id: "4", title: "4. Delegate voting power (optional)" },
+    {
+      title: "Stake Realms for vRealms",
+      content: (
+        <div className="mt-4">
+          <RealmsTable
+            data={realmsData?.realms as Realm[]}
+            columns={columns}
+            onRowSelectionChange={handleRowSelection}
+          />
+          <Button className="w-full">Stake Realms</Button>
+        </div>
+      ),
+    },
+    { title: "Delegate voting power (optional)" },
   ];
   return (
     <div className="w-full">
       <Accordion type="multiple">
-        {steps.map((step) => (
-          <AccordionItem className="mb-2" key={step.id} value={step.id}>
+        {steps.map((step, index) => (
+          <AccordionItem className="mb-2" key={step.title} value={step.title}>
             <AccordionTrigger className="border p-4">
-              {step.title}
+              {index + 1}. {step.title}
             </AccordionTrigger>
-            <AccordionContent>{step.content}</AccordionContent>
+            <AccordionContent className="border border-t-0 p-4">
+              {step.content}
+            </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>
