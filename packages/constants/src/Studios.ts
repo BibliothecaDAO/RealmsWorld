@@ -1,12 +1,12 @@
 import type { Collections } from "./Collections";
-import type { Game} from "./Games";
+import type { Game } from "./Games";
 import { games } from "./Games";
 
 interface Link {
   discord?: string;
   twitter?: string;
   telegram?: string;
-  github?: string
+  github?: string;
   homepage?: string;
 }
 export enum Studios {
@@ -25,7 +25,7 @@ export enum Studios {
 export interface StudioInterface {
   name: string; // Display name of the Studio
   id: string; // Studio ID (used for URL must be kebab-case)
-  logoFormat: "png" | "svg" | 'jpg' | 'webp' | null; 
+  logoFormat: "png" | "svg" | "jpg" | "webp" | null;
   description: string;
   longform: string;
   links: Link;
@@ -46,7 +46,7 @@ export const studios: { [key in Studios]?: StudioInterface } = {
       discord: "https://discord.gg/uQnjZhZPfu",
       twitter: "LootRealms",
       telegram: "https://t.me/+UpfCtj7qEO9hZjU1",
-      github: "https://github.com/BibliothecaDAO/"
+      github: "https://github.com/BibliothecaDAO/",
     },
   },
   [Studios.PAVED_STUDIO]: {
@@ -57,20 +57,21 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     logoFormat: "png",
     links: {
       homepage: "https://paved.gg/",
-      twitter: 'pavedgame',
-      github: "https://github.com/stolslilabs/paved"
+      twitter: "pavedgame",
+      github: "https://github.com/stolslilabs/paved",
     },
   },
   [Studios.UNDERWARE]: {
     name: "Underware",
     id: "underware",
     description: "Realmsverse Game Studio & Knights of the Realm",
-    longform: "Underware is a fully onchain game studio of veteran technologists, committed to building on and contributing to the Realms Network. We are extending the Realmsverse with an expansive autonomous (under)world, and building various related games and novel mechanics, including a narrative dungeon crawler.\n\n We consider ourselves long-term aligned with the Realmsverse, with a focus upon crafting meaningful, engaging, and open technology & game experiences at the frontier of autonomous worlds.",
-    logoFormat: 'jpg',
+    longform:
+      "Underware is a fully onchain game studio of veteran technologists, committed to building on and contributing to the Realms Network. We are extending the Realmsverse with an expansive autonomous (under)world, and building various related games and novel mechanics, including a narrative dungeon crawler.\n\n We consider ourselves long-term aligned with the Realmsverse, with a focus upon crafting meaningful, engaging, and open technology & game experiences at the frontier of autonomous worlds.",
+    logoFormat: "jpg",
     links: {
       homepage: "https://underware.gg/",
       twitter: "underware_gg",
-      github: "underware-gg"
+      github: "underware-gg",
     },
     screenshotLength: 2,
   },
@@ -82,18 +83,19 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     logoFormat: "png",
     links: {
       homepage: "https://www.grugslair.xyz/",
-      twitter: 'GrugsLair'
+      twitter: "GrugsLair",
     },
   },
   [Studios.ZKORP]: {
     name: "zKorp",
     id: "zkorp",
     description: "zKorp is a multiple award winner on chain game studio",
-    longform: "zKorp is a dynamic game studio formed by a group of prolific winners from various dojo game jams. The team members first connected during these hackathons and have consistently secured top prizes in every edition since. Known for their productivity, they excel at rapidly developing and releasing a multitude of demo games, each designed to explore and innovate within the gaming space.",
+    longform:
+      "zKorp is a dynamic game studio formed by a group of prolific winners from various dojo game jams. The team members first connected during these hackathons and have consistently secured top prizes in every edition since. Known for their productivity, they excel at rapidly developing and releasing a multitude of demo games, each designed to explore and innovate within the gaming space.",
     logoFormat: "jpg",
     links: {
       twitter: "zKorp_",
-      github: "https://github.com/z-korp"
+      github: "https://github.com/z-korp",
     },
   },
   [Studios.BANNERS_FOR_ADVENTURERS]: {
@@ -101,13 +103,13 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     id: "banners",
     description: "",
     longform: "",
-    logoFormat: 'webp',
+    logoFormat: "webp",
     links: {
       homepage: "https://linktr.ee/bannersNFT",
       discord: "https://discord.gg/NkHnWCPc6D",
       telegram: "",
       github: "",
-      twitter: "BannersNft"
+      twitter: "BannersNft",
     },
   },
   [Studios.MISSISSIPPI_TEAM]: {
@@ -115,11 +117,11 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     id: "mississippi-team",
     description: "",
     longform: "",
-    logoFormat: 'svg',
+    logoFormat: "svg",
     links: {
       discord: "https://discord.gg/XKqfEcHaUh",
       twitter: "0xMississippi",
-      homepage: "https://0xmssp.xyz/"
+      homepage: "https://0xmssp.xyz/",
     },
   },
   [Studios.CRAZY_DIAMOND]: {
@@ -140,7 +142,7 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     logoFormat: null,
     links: {
       twitter: "ArcaneAssembler",
-      github: "ArcaneAssemblers"
+      github: "ArcaneAssemblers",
     },
   },
   [Studios.FORCE_PRIME_STUDIO]: {
@@ -148,11 +150,11 @@ export const studios: { [key in Studios]?: StudioInterface } = {
     id: "force-prime",
     description: "",
     longform: "",
-    logoFormat: null,
+    logoFormat: "jpg",
     links: {
       discord: "https://discord.gg/8SFzxSgbq3",
       twitter: "ForcePrime_io",
-      homepage: "https://forceprime.io/"
+      homepage: "https://forceprime.io/",
     },
   },
   // Continue for each developer listed in the games array

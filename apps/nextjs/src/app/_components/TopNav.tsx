@@ -30,11 +30,11 @@ export const TopNav = () => {
   });*/
 
   const aboutLinks = [
-    {
+    /*{
       title: "What is Realms.World",
       href: "info",
       icon: <ShieldQuestion className="w-5" />,
-    },
+    },*/
     {
       title: "Tokenomics",
       href: "tokenomics",
