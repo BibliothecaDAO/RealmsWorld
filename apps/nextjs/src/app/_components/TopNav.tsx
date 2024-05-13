@@ -4,7 +4,7 @@ import Link from "next/link";
 import Bookmark from "@/icons/bookmark.svg";
 import PieChart from "@/icons/pie-chart.svg";
 import RealmsL3 from "@/icons/realms_l3.svg";
-import { HammerIcon, Menu, ShieldQuestion } from "lucide-react";
+import { HammerIcon, Menu /*, ShieldQuestion*/ } from "lucide-react";
 
 import {
   Button,
