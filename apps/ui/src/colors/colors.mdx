@@ -1,0 +1,65 @@
+import { ColorItem, ColorPalette, Meta } from "@storybook/blocks";
+
+<Meta title="Colors" />
+
+<ColorPalette>
+  <ColorItem
+    title="theme.color.primary"
+    subtitle="Primary"
+    colors={{
+      Primary: "hsl(var(--primary))",
+      Foreground: "hsl(var(--primary-foreground))",
+    }}
+  />
+  <ColorItem
+    title="theme.color.secondary"
+    subtitle="Secondary"
+    colors={{
+      Secondary: "hsl(var(--secondary))",
+      Foreground: "hsl(var(--secondary-foreground))",
+    }}
+  />
+  <ColorItem
+    title="theme.color.background"
+    subtitle="Background"
+    colors={{ Background: "hsl(var(--background))" }}
+  />
+  <ColorItem
+    title="theme.color.foreground"
+    subtitle="foreground"
+    colors={{ foreground: "hsl(var(--foreground))" }}
+  />
+  <ColorItem
+    title="theme.color.accent"
+    subtitle="Accent"
+    colors={{
+      Accent: "hsl(var(--accent))",
+      Foreground: "hsl(var(--accent-foreground))",
+    }}
+  />
+  <ColorItem
+    title="theme.color.muted"
+    subtitle="Muted"
+    colors={{
+      Accent: "hsl(var(--muted))",
+      Foreground: "hsl(var(--muted-foreground))",
+    }}
+  />
+  <ColorItem
+    title="theme.color.destructive"
+    subtitle="destructive"
+    colors={{
+      Accent: "hsl(var(--destructive))",
+      Foreground: "hsl(var(--destructive-foreground))",
+    }}
+  />
+  <ColorItem
+    title="theme.colors"
+    subtitle="Others"
+    colors={{
+      Border: "hsl(var(--border))",
+      Input: "hsl(var(--input))",
+      Ring: "hsl(var(--ring))",
+    }}
+  />
+</ColorPalette>

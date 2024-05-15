@@ -9,6 +9,8 @@ import { ThemeProvider } from "@storybook/theming";
 import { ToastProvider } from "../src/components/ui/toast";
 import { Toaster } from "../src/components/ui/toaster";
 
+import "./globals.css";
+
 export const decorators = [
   (Story) => (
     <ToastProvider>
@@ -27,7 +29,6 @@ const THEME = {
 };
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -35,6 +36,7 @@ const preview: Preview = {
       },
     },
     darkMode: {
+      current: "dark",
       darkClass: "dark",
       lightClass: "light",
       stylePreview: true,
@@ -51,6 +53,8 @@ const preview: Preview = {
       Provider: ThemeProvider,
     }),
   ],
+
+  tags: ["autodocs"],
 };
 
 export default preview;
