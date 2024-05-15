@@ -1,7 +1,7 @@
 ---
 title: "Discover Force Prime Heroes in the Realms"
-subtitle: "Step onto the blood soaked "
-date: "2023-03-01"
+subtitle: "Slay your way to the top, Adventurer"
+date: "2023-05-16"
 tags: ["strategy", "puzzle", "tournament"]
 author: SECRETIVE
 image: "/blog/Force Prime x Realms banner brand colours.png"
