@@ -2,7 +2,7 @@
 title: "Discover Force Prime Heroes in the Realms"
 subtitle: "Step onto the blood soaked "
 date: "2023-03-01"
-tags: ["zk", "autonomous worlds", "starks"]
+tags: ["strategy", "puzzle", "tournament"]
 author: SECRETIVE
 image: "/blog/Force Prime x Realms banner brand colours.png"
 ---
