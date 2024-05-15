@@ -29,7 +29,7 @@ export default async function Page({
   return (
     <div className="relative z-10 p-2">
       <h2 className="mx-auto mb-6 text-center">The Lords Bridge</h2>
-      <div className=" bg-dark-green container mx-auto w-full flex-col rounded-lg border p-2 md:w-[500px]">
+      <div className=" container mx-auto w-full flex-col rounded-lg border bg-background p-2 md:w-[500px]">
         <div className="mb-2 flex w-full justify-center space-x-2 rounded text-xl">
           {tabs.map((tab) => (
             <NavLink

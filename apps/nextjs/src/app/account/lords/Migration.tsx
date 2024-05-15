@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useAccount } from "wagmi";
 
 import {
+  CollectionAddresses,
   Collections,
   getCollectionAddresses,
   StakingAddresses,
@@ -44,6 +45,7 @@ export const StakingMigration = () => {
     onSuccess: (data) => console.log("sucess" + data),
   });
 
+  CollectionAddresses.realms[SUPPORTED_L1_CHAIN_ID];
   const steps = [
     ...(realmsData?.wallet.bridgedRealmsHeld > 0
       ? [

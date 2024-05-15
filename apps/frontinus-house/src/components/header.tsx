@@ -1,3 +1,4 @@
+import { sidelinks } from "@/data/menuLinks";
 import {
   Bell,
   CircleUser,
@@ -30,12 +31,11 @@ import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "@realms-world/ui"; 
-import { sidelinks } from "@/data/menuLinks";
+} from "@realms-world/ui";
 
 export default function Header() {
   return (
-    <header className="bg-muted/40 flex items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6">
+    <header className="flex items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" className="shrink-0 md:hidden">
@@ -45,14 +45,13 @@ export default function Header() {
         </SheetTrigger>
         <SheetContent className="flex flex-col">
           <nav className="grid gap-2 text-lg font-medium">
-
-          {sidelinks.map((link) => (
+            {sidelinks.map((link) => (
               <Link
                 to={link.href}
-                className="bg-muted text-bright-yellow hover:text-foreground mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2"
+                className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-bright-yellow hover:text-foreground"
               >
                 {link.icon}
-               {link.title}
+                {link.title}
                 {/*link.badge && (
                   <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                     {link.badge}
@@ -82,11 +81,11 @@ export default function Header() {
       <div className="w-full flex-1">
         <form>
           <div className="relative h-[3.7rem]">
-            <Search className="text-muted-foreground absolute left-2.5 top-[20px] h-4 w-4" />
+            <Search className="absolute left-2.5 top-[20px] h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
               placeholder="Search..."
-              className="bg-dark-green border-0 w-full appearance-none pl-8 shadow-none md:w-2/3 lg:w-1/3 focus:ring-0 h-full"
+              className="h-full w-full appearance-none border-0 bg-background pl-8 shadow-none focus:ring-0 md:w-2/3 lg:w-1/3"
             />
           </div>
         </form>

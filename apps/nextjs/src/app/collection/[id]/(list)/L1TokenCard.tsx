@@ -1,12 +1,12 @@
 import type { TokenMarketData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-
 import { formatEther } from "viem";
 
 import { Button } from "@realms-world/ui";
 
 import { BuyButton } from "../../reservoir/BuyModal";
+
 //import { BuyButton } from "./BuyModal";
 
 interface TokenCardProps {
@@ -21,10 +21,10 @@ export const L1TokenCard = (props: TokenCardProps) => {
   const isGrid = layout == "grid";
 
   const grid =
-    "bg-dark-green duration-300 transform border hover:-translate-y-1";
+    "bg-background duration-300 transform border hover:-translate-y-1";
 
   const list =
-    "bg-dark-green duration-300 transform border-t hover:-translate-y-1 flex w-full";
+    "bg-background duration-300 transform border-t hover:-translate-y-1 flex w-full";
 
   const imageSize = isGrid ? 800 : 60;
 
@@ -120,11 +120,12 @@ export const L1TokenCard = (props: TokenCardProps) => {
               view
             </Button>
             {
-            <BuyButton
-              size='default'
-              address={token.token.contract}
-              id={token.token.tokenId}
-            />}
+              <BuyButton
+                size="default"
+                address={token.token.contract}
+                id={token.token.tokenId}
+              />
+            }
           </div>
         </div>
       )}

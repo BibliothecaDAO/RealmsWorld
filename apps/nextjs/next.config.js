@@ -1,5 +1,4 @@
 import { fileURLToPath } from "url";
-import MillionLint from "@million/lint";
 import createMDX from "@next/mdx";
 import createJiti from "jiti";
 
@@ -105,4 +104,4 @@ const withMDX = createMDX({
   extension: /\.mdx?$/,
 });
 
-export default MillionLint.next(withMDX(config), { rsc: true });
+export default withMDX(config);

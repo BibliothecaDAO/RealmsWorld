@@ -78,8 +78,8 @@ const Sidebar = () => {
   return (
     <div
       className={`${
-        isSidebarOpen ? "bg-dark-green" : "hidden"
-      } z-100 group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col border-r-[3px] bg-dark-green transition-all duration-500 md:flex md:w-[102px] md:hover:w-60`}
+        isSidebarOpen ? "bg-background" : "hidden"
+      } z-100 group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col border-r-[3px] bg-background transition-all duration-500 md:flex md:w-[102px] md:hover:w-60`}
     >
       <div className="absolute mx-4">
         <SideHeaderImg className="w-full opacity-0 group-hover:opacity-100" />

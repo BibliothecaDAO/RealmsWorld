@@ -16,8 +16,8 @@ export default function RootLayout({
       link: "assets",
     },
     {
-      name: "Staking",
-      link: "staking",
+      name: "Lords",
+      link: "lords",
     },
     {
       name: "Activity",

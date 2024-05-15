@@ -5,7 +5,7 @@ export default function MdxLayout({ children }: { children: React.ReactNode }) {
   return (
     <PageLayout title="Realms World Blog">{children}</PageLayout>
     // <div className="container mx-auto max-w-4xl">
-    //   <div className="[p>a]:text-flamingo mx-2 mt-20 space-y-6 overflow-y-auto text-ellipsis border bg-dark-green px-6 py-6 leading-relaxed sm:px-10 [&>*]:list-inside [&>*]:list-disc">
+    //   <div className="[p>a]:text-flamingo mx-2 mt-20 space-y-6 overflow-y-auto text-ellipsis border bg-background px-6 py-6 leading-relaxed sm:px-10 [&>*]:list-inside [&>*]:list-disc">
     //     {children}
     //   </div>
     // </div>

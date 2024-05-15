@@ -76,8 +76,8 @@ export const useTransfers = () => {
 const flattenPages = (data: any) => {
   return data?.pages.length
     ? [
-        ...(data?.pages?.[0]?.data.withdrawals ?? []),
-        ...(data?.pages?.[0]?.data.deposits ?? []),
+        ...(data?.pages?.[0]?.data?.withdrawals ?? []),
+        ...(data?.pages?.[0]?.data?.deposits ?? []),
       ]
     : []; /*&& Array.isArray(data?.pages) && data?.pages.length ? data?.pages?.reduce((prev: any, curr: any) => { return [...prev, ...curr] }, []) : []*/
 };

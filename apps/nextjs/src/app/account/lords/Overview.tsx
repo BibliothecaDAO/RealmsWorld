@@ -36,6 +36,7 @@ import {
   TooltipTrigger,
 } from "@realms-world/ui";
 
+import { FloatAnimation } from "./FloatAnimation";
 import { RealmStakingTabs } from "./RealmStakingTabs";
 
 export const Overview = () => {
@@ -55,10 +56,11 @@ export const Overview = () => {
   return (
     <div className="w-full px-4">
       {l1Address && (
-        <div className="grid gap-8 md:grid-cols-2">
-          <div>
-            <h2 className="mb-2 text-3xl">Realms</h2>
-            <RealmStakingTabs data={data} />
+        <div className="flex gap-8">
+          <div className="h-[400px]b mt-8 w-1/3 px-12">
+            {/*<h2 className="mb-2 text-3xl">Realms</h2>
+            <RealmStakingTabs data={data} />*/}
+            <FloatAnimation />
           </div>
           <div className="w-full">
             <span className="mb-2 flex w-fit items-center pb-4 font-sans text-3xl">
@@ -67,10 +69,10 @@ export const Overview = () => {
             </span>
             <Accordion type="multiple">
               <AccordionItem value={"lords"} className="mb-2">
-                <AccordionTrigger className="w-full border p-4">
+                <AccordionTrigger className="w-full border bg-muted-foreground p-4">
                   Legacy Claimable Lords: {totalClaimable.toString()}
                 </AccordionTrigger>
-                <AccordionContent className="border border-t-0 bg-dark-green p-4">
+                <AccordionContent className="border border-y-0 bg-background p-4">
                   <span className="text-base font-semibold">Galleon:</span>
                   <p>Epoch 0-10: {galleonLordsAvailable?.toLocaleString()}</p>
                   <p>Epoch 11-35: {poolV1Balance?.toLocaleString()}</p>

@@ -132,7 +132,7 @@ export const StakingContainer = () => {
         )}
         <div className="col-span-2 flex flex-col ">
           <h3>Your Realms</h3>
-          <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
+          <div className="flex flex-col rounded border bg-background pb-8 pt-6">
             {realmsDataIsLoading ? (
               "Loading"
             ) : (
@@ -150,16 +150,16 @@ export const StakingContainer = () => {
         <PaymentPoolV2 />
         <h3 className="mt-10">Galleon</h3>
         <div className="flex-col pb-2 text-lg">
-          <span className="bg-dark-green px-2 py-1">
+          <span className="bg-background px-2 py-1">
             Rewards: 49x $LORDS per epoch
           </span>
           <br />
-          <span className="bg-dark-green px-2 py-1">
+          <span className="bg-background px-2 py-1">
             Redemption: Claimable after each fully staked epoch (1 week)
           </span>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
-          <div className="flex flex-col justify-center rounded border bg-dark-green pb-8 pt-6">
+          <div className="flex flex-col justify-center rounded border bg-background pb-8 pt-6">
             {realmsDataIsLoading ? (
               "Loading"
             ) : (
@@ -176,7 +176,7 @@ export const StakingContainer = () => {
               </>
             )}
           </div>
-          <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
+          <div className="flex flex-col rounded border bg-background pb-8 pt-6">
             <span className="pb-4 text-lg">Lords Available</span>
 
             {!isGalleonLordsLoading && typeof lordsAvailableData == "bigint" ? (
@@ -270,7 +270,7 @@ export const StakingContainer = () => {
           <div className="mt-10 flex flex-col">
             <h3>Carrack</h3>
             <div className="pb-2 text-lg">
-              <span className="bg-dark-green px-2 py-1">
+              <span className="bg-background px-2 py-1">
                 Rewards: 49x $LORDS per epoch
               </span>
               <br />
@@ -278,7 +278,7 @@ export const StakingContainer = () => {
 
             <div className="mt-10 flex flex-col">
               <div className="grid grid-cols-2 gap-4 sm:gap-6">
-                <div className="flex flex-col justify-center rounded border bg-dark-green pb-8 pt-6">
+                <div className="flex flex-col justify-center rounded border bg-background pb-8 pt-6">
                   {realmsDataIsLoading ? (
                     "Loading"
                   ) : (
@@ -295,7 +295,7 @@ export const StakingContainer = () => {
                     </>
                   )}
                 </div>
-                <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
+                <div className="flex flex-col rounded border bg-background pb-8 pt-6">
                   <span className="pb-4 text-lg">Lords Available</span>
 
                   {isCarrackLordsLoading ? (

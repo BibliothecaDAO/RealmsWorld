@@ -73,7 +73,7 @@ export default function Mint() {
   const isLoading = isTxSubmitting || (mintData && isTxLoading);
   return (
     <div className="mx-auto mt-12 sm:mt-36 md:w-[750px]">
-      <div className="w-full rounded-xl border bg-dark-green sm:flex">
+      <div className="w-full rounded-xl border bg-background sm:flex">
         <Image
           src="/collections/goldenToken.svg"
           alt="Golden Token"

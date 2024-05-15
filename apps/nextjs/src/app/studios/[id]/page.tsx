@@ -1,24 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { PageLayout } from "@/app/_components/PageLayout";
+import { SocialIcons } from "@/app/_components/SocialIcons";
 import { GameCard } from "@/app/games/GameCard";
 import { ChevronLeft } from "lucide-react";
 
-import type {
-  Game} from "@realms-world/constants";
+import type { Game } from "@realms-world/constants";
+import { getGamesByStudio, studios } from "@realms-world/constants";
 import {
-  getGamesByStudio,
-  studios,
-} from "@realms-world/constants";
-import {
-   Button,
-  
+  Button,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@realms-world/ui";
-import { SocialIcons } from "@/app/_components/SocialIcons";
 
 export async function generateMetadata({
   params,
@@ -35,7 +30,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${name}`,
       description: `${name} Profile - A studio of the Realms Autonomous World`,
-    }
+    },
   };
 }
 
@@ -96,7 +91,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
         {studio && (
           <>
-            <div className="pl-4 sm:w-3/12 mb-6">
+            <div className="mb-6 pl-4 sm:w-3/12">
               <div className="flex justify-center py-8">
                 <Image
                   alt=""
@@ -105,9 +100,15 @@ export default async function Page({ params }: { params: { id: string } }) {
                   height={100}
                 />
               </div>
-              <SocialIcons github={studio.links.github} telegram={studio.links.telegram} website={studio.links.homepage} x={studio.links.twitter} discord={studio.links.discord} />
+              <SocialIcons
+                github={studio.links.github}
+                telegram={studio.links.telegram}
+                website={studio.links.homepage}
+                x={studio.links.twitter}
+                discord={studio.links.discord}
+              />
 
-              <div className="flex-col space-y-2 mb-2">
+              <div className="mb-2 flex-col space-y-2">
                 <table className="w-full divide-y py-8 text-sm capitalize">
                   <tbody>
                     {tableData.map((data, index) => (
@@ -115,9 +116,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         <td className="whitespace-nowrap px-2 py-2 font-sans text-bright-yellow/70">
                           {data.key}
                         </td>
-                        <td className="px-2 py-2 text-right ">
-                          {data.value}
-                        </td>
+                        <td className="px-2 py-2 text-right ">{data.value}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -135,7 +134,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
                 {tabs.map((tab, index) => (
                   <TabsContent
-                    className="rounded border bg-dark-green p-4"
+                    className="rounded border bg-background p-4"
                     value={tab.name}
                     key={index}
                   >

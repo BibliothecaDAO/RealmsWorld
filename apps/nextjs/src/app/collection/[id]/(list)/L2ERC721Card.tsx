@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AnimatedMap } from "@/app/_components/AnimatedMap";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
@@ -10,7 +11,6 @@ import { getCollectionFromAddress } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
 import { CardAction } from "./CardAction";
-import { AnimatedMap } from "@/app/_components/AnimatedMap";
 
 export const L2ERC721Card = ({
   token,
@@ -24,7 +24,7 @@ export const L2ERC721Card = ({
 
   return (
     <div
-      className={`group flex transform border-2 bg-dark-green duration-300 hover:border-bright-yellow ${
+      className={`group flex transform border-2 bg-background duration-300 hover:border-bright-yellow ${
         isGrid ? "w-full flex-col" : "justify-between"
       }`}
     >
@@ -141,7 +141,7 @@ const Price = ({
     listings: RouterOutputs["erc721MarketEvents"]["all"]["items"];
   };
 }) => {
-  const { lordsPrice } = useLordsPrice()
+  const { lordsPrice } = useLordsPrice();
   const listing = findLowestPriceActiveListing(token.listings, token.owner);
   return (
     <div className="flex justify-between">
@@ -152,7 +152,10 @@ const Price = ({
             <LordsIcon className="mx-auto ml-2 h-4 w-4 self-center fill-bright-yellow" />
           </div>
           <div className="-mt-0.5 text-xs text-bright-yellow/60">
-            {((lordsPrice?.usdPrice ?? 0) * parseFloat(listing?.price)).toFixed(2)} USD
+            {((lordsPrice?.usdPrice ?? 0) * parseFloat(listing?.price)).toFixed(
+              2,
+            )}{" "}
+            USD
           </div>
         </div>
       )}

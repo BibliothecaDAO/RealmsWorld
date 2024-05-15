@@ -5,7 +5,6 @@ import { BuyButton } from "@/app/collection/reservoir/BuyModal";
 import { ListingModal } from "@/app/collection/reservoir/ListingModal";
 import { GameCard } from "@/app/games/GameCard";
 import { getGamesByContract } from "@/utils/getters";
-
 import { useAccount } from "wagmi";
 
 import { games } from "@realms-world/constants";
@@ -20,7 +19,7 @@ interface Props {
 }
 
 export const TokenContent = ({ token, collection }: Props) => {
-const { address} = useAccount();
+  const { address } = useAccount();
 
   const comptatible_games = getGamesByContract(games, collection.id);
 
@@ -56,7 +55,7 @@ const { address} = useAccount();
   return (
     <div className="my-8 flex-grow">
       <BuyButton size={"lg"} address={token.contract} id={token.tokenId} />
-      {owner && (<ListingModal address={token.contract} id={token.tokenId} />)}
+      {owner && <ListingModal address={token.contract} id={token.tokenId} />}
       <Tabs className="mt-12" defaultValue={tabs[0]?.name}>
         <TabsList>
           {tabs.map((tab, index) => (
@@ -70,7 +69,7 @@ const { address} = useAccount();
           <TabsContent
             value={tab.name}
             key={index}
-            className="rounded border bg-dark-green px-5 py-2"
+            className="rounded border bg-background px-5 py-2"
           >
             {tab.content}
           </TabsContent>

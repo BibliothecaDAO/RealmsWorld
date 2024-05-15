@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       {cards.map((card, index) => (
         <div
           key={index}
-          className="rounded-xl border-2 bg-dark-green px-8 py-2"
+          className="rounded-xl border-2 bg-background px-8 py-2"
         >
           {card.component}
         </div>

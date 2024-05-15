@@ -75,7 +75,7 @@ export const ContractImage = ({
       )}
 
       {collectionId == "beasts" && tokenUriData?.attributes?.length && (
-        <div className="mt-4 rounded border bg-dark-green">
+        <div className="mt-4 rounded border bg-background">
           <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
             <h5>Type:</h5>
             <span className="text-xl">

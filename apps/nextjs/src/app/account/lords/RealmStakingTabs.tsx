@@ -35,7 +35,7 @@ export const RealmStakingTabs = ({
             label: "Legacy Staked Realms",
             value: totalLegacyStaked,
             content: (
-              <Card className="mt-4 bg-dark-green">
+              <Card className="mt-4 bg-background">
                 <CardHeader className="font-semibold">
                   Migrate your Realms to keep earning Lords and to vote in
                   governance
@@ -53,7 +53,7 @@ export const RealmStakingTabs = ({
       label: "Unstaked Realms",
       value: data?.wallet?.realmsHeld,
       content: (
-        <Card className="mt-4 bg-dark-green">
+        <Card className="mt-4 bg-background">
           <CardHeader>
             You have {data?.wallet?.realmsHeld} Unstaked Realms
           </CardHeader>
@@ -66,7 +66,7 @@ export const RealmStakingTabs = ({
       label: "vRealms",
       value: 0, // Assuming this needs to be dynamically calculated or fetched
       content: (
-        <Card className="mt-4 bg-dark-green">
+        <Card className="mt-4 bg-background">
           <CardHeader>You have X vRealms</CardHeader>
           <CardContent>
             Your Realms are earning 49 Lords per week <Button>Unstake</Button>
@@ -101,7 +101,7 @@ export const RealmStakingTabs = ({
             <TabsTrigger asChild value={tab.id}>
               <Label
                 htmlFor={tab.id}
-                className="border-muted bg-popover hover:bg-accent hover:text-accent-foreground flex cursor-pointer flex-col items-center justify-between rounded-md border-2 bg-dark-green p-4 data-[state=active]:border-bright-yellow peer-data-[state=active]:border-bright-yellow"
+                className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-background bg-popover p-4 hover:bg-accent hover:text-accent-foreground data-[state=active]:border-bright-yellow peer-data-[state=active]:border-bright-yellow"
               >
                 <span className="mb-2 block text-2xl">{tab.value}</span>
                 {tab.label}

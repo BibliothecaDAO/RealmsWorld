@@ -32,7 +32,7 @@
     --popover: 69 9% 15%;
     --popover-foreground: 36 88.9% 85.9%;
     --primary: 36 88.9% 85.9%;
-    --primary-foreground: 0 0% 0%;
+    --primary-foreground: 67.5 5.41% 29.02%;
     --secondary: 36 30% 20%;
     --secondary-foreground: 0 0% 100%;
     --muted: -2 30% 25%;
@@ -42,15 +42,67 @@
     --destructive: 0 100% 30%;
     --destructive-foreground: 36 5% 90%;
     --border: 68 5% 29%;
-    --input: 36 30% 26%;
+    --input: 68 5% 29%;
     --ring: 36 88.9% 85.9%;
     --radius: 0.5rem;
+    --speed: 3;
+    --radius: 20;
+    --power4: linear(
+      0 0%,
+      0.0012 14.95%,
+      0.0089 22.36%,
+      0.0297 28.43%,
+      0.0668 33.43%,
+      0.0979 36.08%,
+      0.1363 38.55%,
+      0.2373 43.07%,
+      0.3675 47.01%,
+      0.5984 52.15%,
+      0.7121 55.23%,
+      0.8192 59.21%,
+      0.898 63.62%,
+      0.9297 66.23%,
+      0.9546 69.06%,
+      0.9733 72.17%,
+      0.9864 75.67%,
+      0.9982 83.73%,
+      1 100%
+    );
+    --power2: linear(
+      0 0%,
+      0.0036 9.62%,
+      0.0185 16.66%,
+      0.0489 23.03%,
+      0.0962 28.86%,
+      0.1705 34.93%,
+      0.269 40.66%,
+      0.3867 45.89%,
+      0.5833 52.95%,
+      0.683 57.05%,
+      0.7829 62.14%,
+      0.8621 67.46%,
+      0.8991 70.68%,
+      0.9299 74.03%,
+      0.9545 77.52%,
+      0.9735 81.21%,
+      0.9865 85%,
+      0.9949 89.15%,
+      1 100%
+    );
+    --ease: var(--power2);
+    --base: 180;
+    --chroma: 2;
+    --lightness: 0.26;
+    --limit: 320;
+    --distance: 10;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+    transform-style: preserve-3d;
   }
   html {
     @apply scroll-smooth;
@@ -169,4 +221,77 @@ body::-webkit-scrollbar-thumb,
 }
 .mask-transparent {
   position: relative;
+}
+
+.rings {
+  width: 50vmin;
+  max-width: 300px;
+  aspect-ratio: 1;
+  position: relative;
+  transform: translate3d(0, 0, 100vmin) rotateX(-32deg) rotateY(-32deg)
+    rotateX(90deg);
+}
+
+.ringAnimation {
+  --scale-base: calc(((100 / var(--count)) * var(--index)) * 1%);
+  --scale-top: calc(((100 / var(--count)) * var(--index)) * 1%);
+  width: calc(((100 / var(--count)) * var(--index)) * 1%);
+  aspect-ratio: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  transform: translate3d(0, 0, calc(var(--distance) * -1vmin));
+  animation: float calc(var(--speed) * 1s) infinite var(--ease);
+  animation-delay: calc(
+    sin((var(--index) / var(--count)) * 45deg) * var(--speed) * -1s
+  );
+}
+
+.ringAnimation::after {
+  content: "";
+  border: 2px solid
+    oklch(var(--lightness, 0.5) var(--chroma, 0.25) var(--base, 8));
+  border-radius: calc(var(--radius) * 1%);
+  position: absolute;
+  inset: 0;
+}
+
+.ringAnimation::after {
+  animation: hue calc(var(--speed) * 1s) infinite var(--ease);
+  animation-delay: calc(
+    sin((var(--index) / var(--count)) * 45deg) * var(--speed) * -1s
+  );
+}
+
+@keyframes hue {
+  50% {
+    filter: hue-rotate(calc((var(--limit) - var(--base)) * 1deg));
+  }
+}
+
+@keyframes float {
+  50% {
+    transform: translate3d(0, 0, calc(var(--distance) * 1vmin));
+  }
+  0%,
+  45% {
+    width: var(--scale-base);
+  }
+  75% {
+    width: var(--scale-top);
+  }
+}
+
+@keyframes float-alternate {
+  100% {
+    transform: translate3d(0, 0, calc(var(--distance) * 1vmin));
+  }
+  0%,
+  45% {
+    width: var(--scale-base);
+  }
+  75% {
+    width: var(--scale-top);
+  }
 }

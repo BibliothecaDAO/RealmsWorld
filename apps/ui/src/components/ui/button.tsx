@@ -1,27 +1,28 @@
 "use client";
 
-import * as React from "react";
 //import Link from "next/link";
 import type { VariantProps } from "class-variance-authority";
+import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
 
 import { cn } from "@realms-world/utils";
 
 const buttonVariants = cva(
-  "active:scale-95 inline-flex items-center justify-center transition-colors  disabled:opacity-50  dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:text-bright-yellow/60 data-[state=open]:bg-medium-dark-green uppercase border border-transparent font-sans ",
+  "inline-flex whitespace-nowrap active:scale-95 inline-flex items-center justify-center transition-colors  disabled:opacity-50 disabled:pointer-events-none uppercase font-sans focus-visible:ring-1 focus-visible:ring-ring",
   {
     variants: {
       variant: {
         default:
-          "text-medium-dark-green hover:bg-medium-dark-green bg-bright-yellow hover:text-bright-yellow shadow-inner border",
+          "bg-primary text-primary-foreground hover:bg-primary-foreground hover:text-primary shadow-inner border-primary",
         destructive:
-          "bg-red-500 text-white hover:bg-red-600 dark:hover:bg-red-600 border",
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "bg-transparent border hover:bg-bright-yellow/50 border-medium-dark-green",
-        subtle:
-          "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-gray-700 dark:text-slate-100 border",
-        ghost: "bg-transparent hover:text-flamingo hover:border",
-        link: "bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-slate-900 dark:text-slate-100 hover:bg-transparent dark:hover:bg-transparent",
+          "bg-background border hover:bg-bright-yellow/50 border-input shadow-sm hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+        ghost: "hover:text-accent-foreground",
+        link: "underline-offset-4 hover:underline text-primary",
       },
       size: {
         default: "h-10 py-2 px-4",
@@ -41,22 +42,19 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   children: React.ReactNode;
-  href?: string;
-  external?: boolean;
+  asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, className, variant, size, href, disabled, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
 
     return (
-      <button
+      <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        disabled={disabled}
         {...props}
-      >
-        {children}
-      </button>
+      />
     );
   },
 );
