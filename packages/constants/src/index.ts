@@ -18,3 +18,4 @@ export {
 } from "./DAO";
 export { studios, getGamesByStudio } from "./Studios";
 export type { Studios } from "./Studios";
+export { StakingAddresses, StakingContracts } from "./Staking";

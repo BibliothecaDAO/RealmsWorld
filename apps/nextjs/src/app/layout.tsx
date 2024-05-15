@@ -19,16 +19,16 @@ import { WalletsProvider } from "../providers/WalletsProvider";
 import { Footer } from "./_components/Footer";
 import { TopNav } from "./_components/TopNav";
 
-const baiJamjuree = Silkscreen({
+const silkscreen = Silkscreen({
   subsets: ["latin"],
-  variable: "--font-bai-jamjuree",
+  variable: "--font-silkscreen",
   weight: ["400"],
   display: "swap",
 });
 
-const karla = Inconsolata({
+const inconsolata = Inconsolata({
   subsets: ["latin"],
-  variable: "--font-karla",
+  variable: "--font-inconsolata",
   weight: "400",
   display: "swap",
 });
@@ -48,7 +48,7 @@ export default function Layout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body
         style={backgroundImageStyle}
-        className={`bg-background ${baiJamjuree.variable} ${karla.variable} dark text-bright-yellow`}
+        className={`${silkscreen.variable} ${inconsolata.variable} dark`}
       >
         <TRPCReactProvider headersPromise={getHeaders()}>
           <UIStoreProvider>

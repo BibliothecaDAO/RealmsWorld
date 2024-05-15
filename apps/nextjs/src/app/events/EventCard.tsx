@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "@realms-world/ui";
-
-import { BaseCard } from "../_components/BaseCard";
+import { Button, Card } from "@realms-world/ui";
 
 export const EventCard = ({ event }: { event: Event }) => {
   const [isToday, setIsToday] = useState(false);
@@ -19,7 +17,7 @@ export const EventCard = ({ event }: { event: Event }) => {
   }, [event.startDate, event.endDate]);
 
   return (
-    <BaseCard>
+    <Card>
       <Link href={"/events/" + event.slug}>
         <Image
           width={600}
@@ -49,6 +47,6 @@ export const EventCard = ({ event }: { event: Event }) => {
           </Button>
         </div>
       </div>
-    </BaseCard>
+    </Card>
   );
 };

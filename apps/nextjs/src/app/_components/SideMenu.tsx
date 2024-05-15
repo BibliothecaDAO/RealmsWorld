@@ -136,14 +136,9 @@ const Sidebar = () => {
             <div className=" flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
               {social.map((item, index) => {
                 return (
-                  <Button
-                    external
-                    variant={"ghost"}
-                    href={item.href}
-                    key={index}
-                  >
+                  <Link href={item.href} target="_blank" key={index}>
                     {item.icon}
-                  </Button>
+                  </Link>
                 );
               })}
             </div>
