@@ -10,7 +10,7 @@ export default function Proposals() {
   useEffect(() => {
     const fetchProposals = async () => {
       const proposalsData = await getNetwork("sn-sep").api.loadProposals(
-        ["0x0664207ee8c8687c58a4a72f07152e1e612d5107df894c60501e75a665915bf4"],
+        ["0x00f6fefea3affabce38a3734fb1a9c235dd80243cfca52529545a439d7462cdd"],
         {
           limit: 20,
         },
@@ -26,7 +26,9 @@ export default function Proposals() {
   return (
     <Layout>
       <LayoutBody className="flex flex-col" fixedHeight>
-        <div className="px-4"><h1 className="text-lg uppercase text-muted">Proposals</h1></div>
+        <div className="px-4">
+          <h1 className="text-lg uppercase text-muted">Proposals</h1>
+        </div>
         <hr />
         {proposals
           ? proposals.map((proposal) => {
@@ -41,7 +43,7 @@ export default function Proposals() {
                           </h4>
                         </div>
                       </div>
-                      <div className="inline mr-4">
+                      <div className="mr-4 inline">
                         {getProposalId(proposal)} by{" "}
                         {proposal.author.name || proposal.author.id}
                       </div>
