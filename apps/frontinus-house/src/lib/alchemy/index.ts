@@ -1,33 +1,41 @@
-import { ETH_CONTRACT } from '@/lib/constants';
-import { GetTokenBalancesResponse, GetTokensMetadataResponse, GetBalancesResponse } from './types';
-export * from './types';
+import { ETH_CONTRACT } from "@/data/constants";
+
+import {
+  GetBalancesResponse,
+  GetTokenBalancesResponse,
+  GetTokensMetadataResponse,
+} from "./types";
+
+export * from "./types";
 
 const apiKey = import.meta.env.VITE_ALCHEMY_API_KEY;
 
 const NETWORKS = {
-  1: 'eth-mainnet',
-  5: 'eth-goerli',
-  11155111: 'eth-sepolia',
-  10: 'opt-mainnet',
-  137: 'polygon-mainnet',
-  42161: 'arb-mainnet'
+  1: "eth-mainnet",
+  5: "eth-goerli",
+  11155111: "eth-sepolia",
+  10: "opt-mainnet",
+  137: "polygon-mainnet",
+  42161: "arb-mainnet",
 };
-
 function getApiUrl(networkId: number) {
-  const network = NETWORKS[networkId] ?? 'mainnet';
+  const network = NETWORKS[networkId as keyof typeof NETWORKS] ?? "mainnet";
 
   return `https://${network}.g.alchemy.com/v2/${apiKey}`;
 }
-
-export async function request(method: string, params: any[], networkId: number) {
+export async function request(
+  method: string,
+  params: any[],
+  networkId: number,
+) {
   const res = await fetch(getApiUrl(networkId), {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({
       id: 1,
-      jsonrpc: '2.0',
+      jsonrpc: "2.0",
       method,
-      params
-    })
+      params,
+    }),
   });
 
   const { result } = await res.json();
@@ -37,23 +45,23 @@ export async function request(method: string, params: any[], networkId: number) 
 
 export async function batchRequest(
   requests: { method: string; params: any[] }[],
-  networkId: number
+  networkId: number,
 ) {
   const res = await fetch(getApiUrl(networkId), {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify(
       requests.map((request, i) => ({
         id: i,
-        jsonrpc: '2.0',
+        jsonrpc: "2.0",
         method: request.method,
-        params: request.params
-      }))
-    )
+        params: request.params,
+      })),
+    ),
   });
 
   const response = await res.json();
 
-  return response.map(entry => entry.result);
+  return response.map((entry: { result: any }) => entry.result);
 }
 
 /**
@@ -62,8 +70,11 @@ export async function batchRequest(
  * @param networkId Network ID
  * @returns Hex encoded ETH balance
  */
-export async function getBalance(address: string, networkId: number): Promise<string> {
-  return request('eth_getBalance', [address], networkId);
+export async function getBalance(
+  address: string,
+  networkId: number,
+): Promise<string> {
+  return request("eth_getBalance", [address], networkId);
 }
 
 /**
@@ -75,9 +86,9 @@ export async function getBalance(address: string, networkId: number): Promise<st
  */
 export async function getTokenBalances(
   address: string,
-  networkId: number
+  networkId: number,
 ): Promise<GetTokenBalancesResponse> {
-  return request('alchemy_getTokenBalances', [address], networkId);
+  return request("alchemy_getTokenBalances", [address], networkId);
 }
 
 /**
@@ -88,14 +99,14 @@ export async function getTokenBalances(
  */
 export async function getTokensMetadata(
   addresses: string[],
-  networkId: number
+  networkId: number,
 ): Promise<GetTokensMetadataResponse> {
   return batchRequest(
-    addresses.map(address => ({
-      method: 'alchemy_getTokenMetadata',
-      params: [address]
+    addresses.map((address) => ({
+      method: "alchemy_getTokenMetadata",
+      params: [address],
     })),
-    networkId
+    networkId,
   );
 }
 
@@ -108,14 +119,16 @@ export async function getTokensMetadata(
 export async function getBalances(
   address: string,
   networkId: number,
-  baseToken: { name: string; symbol: string; logo?: string }
+  baseToken: { name: string; symbol: string; logo?: string },
 ): Promise<GetBalancesResponse> {
   const [ethBalance, { tokenBalances }] = await Promise.all([
     getBalance(address, networkId),
-    getTokenBalances(address, networkId)
+    getTokenBalances(address, networkId),
   ]);
 
-  const contractAddresses = tokenBalances.map(balance => balance.contractAddress);
+  const contractAddresses = tokenBalances.map(
+    (balance) => balance.contractAddress,
+  );
   const metadata = await getTokensMetadata(contractAddresses, networkId);
 
   return [
@@ -128,16 +141,17 @@ export async function getBalances(
       tokenBalance: ethBalance,
       price: 0,
       value: 0,
-      change: 0
+      change: 0,
     },
+    //@ts-expect-error missing data
     ...tokenBalances
       .map((balance, i) => ({
         ...balance,
         ...metadata[i],
         price: 0,
         value: 0,
-        change: 0
+        change: 0,
       }))
-      .filter(token => !token.symbol.includes('.'))
+      .filter((token) => token.symbol && !token.symbol.includes(".")),
   ];
 }

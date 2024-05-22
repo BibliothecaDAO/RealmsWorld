@@ -63,6 +63,7 @@ export async function verifyNetwork(
       params: [{ chainId: encodedChainId }],
     });
   } catch (err) {
+    //@ts-expect-error
     if (err.code !== 4902) throw new Error(err.message);
 
     const network = await web3Provider.getNetwork();

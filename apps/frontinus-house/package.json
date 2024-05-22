@@ -1,5 +1,5 @@
 {
-  "name": "frontinus-house",
+  "name": "@realms-world/frontinus-house",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -35,9 +35,5 @@
     "eslint-plugin-react-refresh": "^0.4.7",
     "typescript": "^5.4.5",
     "vite": "^5.2.11"
-  },
-  "resolutions": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
   }
 }

@@ -1,41 +1,49 @@
-import { getExecutionData as _getExecutionData, Choice as SdkChoice } from '@snapshot-labs/sx';
-import { MetaTransaction } from '@snapshot-labs/sx/dist/utils/encoding/execution-hash';
-import { EVM_CONNECTORS, STARKNET_CONNECTORS } from './constants';
-import { getUrl } from '@/lib/utils';
-import { Connector, NetworkHelpers, StrategyConfig } from '@/lib/network/types';
-import { Choice, Space } from '@/types';
+import { Connector, NetworkHelpers, StrategyConfig } from "@/lib/network/types";
+import { getUrl } from "@/lib/utils";
+import { Choice, MetaTransaction, Space } from "@/types";
+import {
+  getExecutionData as _getExecutionData,
+  Choice as SdkChoice,
+} from "@snapshot-labs/sx";
 
-type SpaceExecutionData = Pick<Space, 'executors' | 'executors_types'>;
+//import { MetaTransaction } from '@snapshot-labs/sx/dist/utils/encoding/execution-hash';
+import { EVM_CONNECTORS, STARKNET_CONNECTORS } from "./constants";
+
+type SpaceExecutionData = Pick<Space, "executors" | "executors_types">;
 type ExecutorType = Parameters<typeof _getExecutionData>[0];
 
 export function getSdkChoice(choice: Choice): SdkChoice {
-  if (choice === 'for') return SdkChoice.For;
-  if (choice === 'against') return SdkChoice.Against;
+  if (choice === "for") return SdkChoice.For;
+  if (choice === "against") return SdkChoice.Against;
   return SdkChoice.Abstain;
 }
 
 export function getExecutionData(
   space: SpaceExecutionData,
   executionStrategy: string,
-  transactions: MetaTransaction[]
+  destinationAddress: string | null,
+  transactions: MetaTransaction[],
 ) {
   const supportedExecutionIndex = space.executors.findIndex(
-    executor => executor === executionStrategy
+    (executor) => executor === executionStrategy,
   );
 
   if (supportedExecutionIndex === -1) {
-    throw new Error('No supported executor configured for this space');
+    throw new Error("No supported executor configured for this space");
   }
 
-  const executorType = space.executors_types[supportedExecutionIndex] as ExecutorType;
+  const executorType = space.executors_types[
+    supportedExecutionIndex
+  ] as ExecutorType;
   return _getExecutionData(executorType, executionStrategy, {
-    transactions
+    transactions,
+    destination: destinationAddress || undefined,
   });
 }
 
 export async function parseStrategyMetadata(metadata: string | null) {
   if (metadata === null) return null;
-  if (!metadata.startsWith('ipfs://')) return JSON.parse(metadata);
+  if (!metadata.startsWith("ipfs://")) return JSON.parse(metadata);
 
   const strategyUrl = getUrl(metadata);
   if (!strategyUrl) return null;
@@ -44,8 +52,11 @@ export async function parseStrategyMetadata(metadata: string | null) {
   return res.json();
 }
 
-export async function buildMetadata(helpers: NetworkHelpers, config: StrategyConfig) {
-  if (!config.generateMetadata) return '';
+export async function buildMetadata(
+  helpers: NetworkHelpers,
+  config: StrategyConfig,
+) {
+  if (!config.generateMetadata) return "";
 
   const metadata = await config.generateMetadata(config.params);
   const pinned = await helpers.pin(metadata);
@@ -56,18 +67,18 @@ export async function buildMetadata(helpers: NetworkHelpers, config: StrategyCon
 export function createStrategyPicker({
   helpers,
   managerConnectors,
-  lowPriorityAuthenticators = []
+  lowPriorityAuthenticators = [],
 }: {
   helpers: NetworkHelpers;
   managerConnectors: Connector[];
-  lowPriorityAuthenticators?: ('evm' | 'evm-tx' | 'starknet')[];
+  lowPriorityAuthenticators?: ("evm" | "evm-tx" | "starknet")[];
 }) {
   return function pick({
     authenticators,
     strategies,
     strategiesIndicies,
     isContract,
-    connectorType
+    connectorType,
   }: {
     authenticators: string[];
     strategies: string[];
@@ -76,16 +87,18 @@ export function createStrategyPicker({
     connectorType: Connector;
   }) {
     const authenticatorsInfo = [...authenticators]
-      .filter(authenticator =>
+      .filter((authenticator) =>
         isContract
           ? helpers.isAuthenticatorContractSupported(authenticator)
-          : helpers.isAuthenticatorSupported(authenticator)
+          : helpers.isAuthenticatorSupported(authenticator),
       )
       .sort((a, b) => {
         const aRelayer = helpers.getRelayerAuthenticatorType(a);
         const bRelayer = helpers.getRelayerAuthenticatorType(b);
-        const aLowPriority = aRelayer && lowPriorityAuthenticators.includes(aRelayer);
-        const bLowPriority = bRelayer && lowPriorityAuthenticators.includes(bRelayer);
+        const aLowPriority =
+          aRelayer && lowPriorityAuthenticators.includes(aRelayer);
+        const bLowPriority =
+          bRelayer && lowPriorityAuthenticators.includes(bRelayer);
 
         if (aLowPriority && !bLowPriority) {
           return 1;
@@ -109,37 +122,44 @@ export function createStrategyPicker({
 
         return 0;
       })
-      .map(authenticator => {
+      .map((authenticator) => {
         const relayerType = helpers.getRelayerAuthenticatorType(authenticator);
 
         let connectors: Connector[] = [];
-        if (relayerType && ['evm', 'evm-tx'].includes(relayerType)) connectors = EVM_CONNECTORS;
-        else if (relayerType === 'starknet') connectors = STARKNET_CONNECTORS;
+        if (relayerType && ["evm", "evm-tx"].includes(relayerType))
+          connectors = EVM_CONNECTORS;
+        else if (relayerType === "starknet") connectors = STARKNET_CONNECTORS;
         else connectors = managerConnectors;
 
         return {
           authenticator,
           relayerType,
-          connectors
+          connectors,
         };
       });
 
     const authenticatorInfo = authenticatorsInfo.find(({ connectors }) =>
-      connectors.includes(connectorType)
+      connectors.includes(connectorType),
     );
 
     const selectedStrategies = strategies
-      .map((strategy, index) => ({ address: strategy, index: strategiesIndicies[index] }) as const)
+      .map(
+        (strategy, index) =>
+          ({ address: strategy, index: strategiesIndicies[index] }) as const,
+      )
       .filter(({ address }) => helpers.isStrategySupported(address));
 
-    if (!authenticatorInfo || (strategies.length !== 0 && selectedStrategies.length === 0)) {
-      throw new Error('Unsupported space');
+    if (
+      !authenticatorInfo ||
+      (strategies.length !== 0 && selectedStrategies.length === 0)
+    ) {
+      throw new Error("Unsupported space");
     }
 
     return {
       relayerType: authenticatorInfo.relayerType,
       authenticator: authenticatorInfo.authenticator,
-      strategies: selectedStrategies
+      strategies: selectedStrategies,
     };
   };
 }

@@ -1,6 +1,7 @@
-import gql from 'graphql-tag';
-import { ApiSpace, ApiProposal } from './types';
-import { User, Vote } from '@/types';
+import { User, Vote } from "@/types";
+import gql from "graphql-tag";
+
+import { ApiProposal, ApiSpace } from "./types";
 
 type HighlightSpace = {
   id: string;
@@ -101,61 +102,75 @@ export const USER_QUERY = gql`
 
 export function joinHighlightSpace(
   space: ApiSpace,
-  highlightSpace: HighlightSpace | null
+  highlightSpace: HighlightSpace | null,
 ): ApiSpace {
   if (!highlightSpace) return space;
 
   return {
     ...space,
-    vote_count: space.vote_count + highlightSpace.vote_count
+    vote_count: space.vote_count + highlightSpace.vote_count,
   };
 }
 
 export function joinHighlightProposal(
   proposal: ApiProposal,
-  highlightProposal: HighlightProposal | null
+  highlightProposal: HighlightProposal | null,
 ): ApiProposal {
   if (!highlightProposal) return proposal;
 
   return {
     ...proposal,
-    scores_1: Number(BigInt(proposal.scores_1) + BigInt(highlightProposal.scores_1)),
-    scores_2: Number(BigInt(proposal.scores_2) + BigInt(highlightProposal.scores_2)),
-    scores_3: Number(BigInt(proposal.scores_3) + BigInt(highlightProposal.scores_3)),
-    scores_total: Number(BigInt(proposal.scores_total) + BigInt(highlightProposal.scores_total)),
-    vote_count: proposal.vote_count + highlightProposal.vote_count
+    scores_1: Number(
+      BigInt(proposal.scores_1) + BigInt(highlightProposal.scores_1),
+    ),
+    scores_2: Number(
+      BigInt(proposal.scores_2) + BigInt(highlightProposal.scores_2),
+    ),
+    scores_3: Number(
+      BigInt(proposal.scores_3) + BigInt(highlightProposal.scores_3),
+    ),
+    scores_total: Number(
+      BigInt(proposal.scores_total) + BigInt(highlightProposal.scores_total),
+    ),
+    vote_count: proposal.vote_count + highlightProposal.vote_count,
   };
 }
 
-export function joinHighlightUser(user: User | null, highlightUser: User | null): User | null {
+export function joinHighlightUser(
+  user: User | null,
+  highlightUser: User | null,
+): User | null {
   if (!highlightUser) return user;
 
   return {
     ...user,
     ...highlightUser,
-    vote_count: user ? user.vote_count + highlightUser.vote_count : highlightUser.vote_count
+    vote_count: user
+      ? user.vote_count + highlightUser.vote_count
+      : highlightUser.vote_count,
   };
 }
 
 export function mixinHighlightVotes(
   votes: Vote[],
   highlightVotes: Vote[],
-  filter: 'any' | 'for' | 'against' | 'abstain',
-  orderBy: 'created' | 'vp',
-  orderDirection: 'desc' | 'asc',
-  limit: number
+  filter: "any" | "for" | "against" | "abstain",
+  orderBy: "created" | "vp",
+  orderDirection: "desc" | "asc",
+  limit: number,
 ): { result: Vote[]; remaining: Vote[] } {
   if (!highlightVotes.length) return { result: votes, remaining: [] };
 
-  const filteredHighlightVotes = highlightVotes.filter(vote => {
-    if (filter === 'for') return vote.choice === 1;
-    if (filter === 'against') return vote.choice === 2;
-    if (filter === 'abstain') return vote.choice === 3;
+  const filteredHighlightVotes = highlightVotes.filter((vote) => {
+    if (filter === "for") return vote.choice === 1;
+    if (filter === "against") return vote.choice === 2;
+    if (filter === "abstain") return vote.choice === 3;
     return true;
   });
 
   const hasMore = votes.length === limit;
-  const thresholdValue = votes.length > 0 ? votes[votes.length - 1][orderBy] : null;
+  const thresholdValue =
+    votes.length > 0 ? votes[votes.length - 1]?.[orderBy] : null;
 
   const mixins =
     !hasMore || thresholdValue === null
@@ -163,20 +178,22 @@ export function mixinHighlightVotes(
       : filteredHighlightVotes.reduce(
           (res, vote) => {
             const valid =
-              orderDirection === 'desc'
-                ? vote[orderBy] >= thresholdValue
-                : vote[orderBy] < thresholdValue;
+              orderDirection === "desc"
+                ? vote[orderBy] >= (thresholdValue ?? 0)
+                : vote[orderBy] < (thresholdValue ?? 0);
 
             if (valid) res.added.push(vote);
             else res.remaining.push(vote);
 
             return res;
           },
-          { added: [] as Vote[], remaining: [] as Vote[] }
+          { added: [] as Vote[], remaining: [] as Vote[] },
         );
 
   const result = [...votes, ...mixins.added].sort((a, b) =>
-    orderDirection === 'desc' ? b[orderBy] - a[orderBy] : a[orderBy] - b[orderBy]
+    orderDirection === "desc"
+      ? b[orderBy] - a[orderBy]
+      : a[orderBy] - b[orderBy],
   );
 
   return { result, remaining: mixins.remaining };

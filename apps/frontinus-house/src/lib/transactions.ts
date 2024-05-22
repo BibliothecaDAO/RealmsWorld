@@ -2,15 +2,16 @@
 import { parseUnits } from '@ethersproject/units';
 import { abis } from '@/helpers/abis';
 import { getSalt } from '@/helpers/utils';*/
-import { MetaTransaction } from '@snapshot-labs/sx/dist/utils/encoding/execution-hash';
 /*import { Token } from '@/lib/alchemy';
 import { resolver } from '@/helpers/resolver';*/
 import {
- /* SendTokenTransaction,
-  SendNftTransaction,
-  ContractCallTransaction,*/
-  Transaction
-} from '@/types';
+  MetaTransaction,
+  /* SendTokenTransaction,
+ SendNftTransaction,
+ ContractCallTransaction,*/
+  Transaction,
+} from "@/types";
+
 /*
 export async function createSendTokenTransaction({
   token,
@@ -144,10 +145,12 @@ export async function createContractCallTransaction({ form }): Promise<ContractC
   };
 }
 */
-export function convertToMetaTransactions(transactions: Transaction[]): MetaTransaction[] {
+export function convertToMetaTransactions(
+  transactions: Transaction[],
+): MetaTransaction[] {
   return transactions.map((tx: Transaction) => ({
     ...tx,
     operation: 0,
-    salt: BigInt(tx.salt)
+    salt: BigInt(tx.salt),
   }));
 }

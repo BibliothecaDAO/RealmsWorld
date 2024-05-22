@@ -1,34 +1,45 @@
 // UI
-export type NotificationType = 'error' | 'warning' | 'success';
+export type NotificationType = "error" | "warning" | "success";
 
-export type ProposalState = 'pending' | 'active' | 'passed' | 'rejected' | 'executed';
+export type ProposalState =
+  | "pending"
+  | "active"
+  | "passed"
+  | "rejected"
+  | "executed";
 
 export type NetworkID =
-  | 's'
-  | 's-tn'
-  | 'eth'
-  | 'matic'
-  | 'arb1'
-  | 'oeth'
-  | 'gor'
-  | 'sep'
-  | 'linea-testnet'
-  | 'sn'
-  | 'sn-tn'
-  | 'sn-sep';
+  | "s"
+  | "s-tn"
+  | "eth"
+  | "matic"
+  | "arb1"
+  | "oeth"
+  | "gor"
+  | "sep"
+  | "linea-testnet"
+  | "sn"
+  | "sn-tn"
+  | "sn-sep";
 
-export type Choice = 'for' | 'against' | 'abstain' | number | number[] | Record<string, number>;
+export type Choice =
+  | "for"
+  | "against"
+  | "abstain"
+  | number
+  | number[]
+  | Record<string, number>;
 
-export type Privacy = 'shutter' | null;
+export type Privacy = "shutter" | null;
 
 export type VoteType =
-  | 'basic'
-  | 'single-choice'
-  | 'approval'
-  | 'ranked-choice'
-  | 'quadratic'
-  | 'weighted'
-  | 'custom';
+  | "basic"
+  | "single-choice"
+  | "approval"
+  | "ranked-choice"
+  | "quadratic"
+  | "weighted"
+  | "custom";
 
 export type SelectedStrategy = {
   address: string;
@@ -115,6 +126,7 @@ export type Space = {
   executors_types: string[];
   executors_strategies: {
     id: string;
+    destination_address: string | null;
     type: string;
     treasury: string | null;
     treasury_chain: number | null;
@@ -131,7 +143,7 @@ export type Proposal = {
   network: NetworkID;
   type: VoteType;
   quorum: number;
-  quorum_type?: 'default' | 'rejection';
+  quorum_type?: "default" | "rejection";
   space: {
     id: string;
     name: string;
@@ -166,6 +178,7 @@ export type Proposal = {
   execution_time: number;
   execution_strategy: string;
   execution_strategy_type: string;
+  execution_destination: string | null;
   timelock_veto_guardian: string | null;
   strategies_indicies: number[];
   strategies: string[];
@@ -250,7 +263,7 @@ export type BaseTransaction = {
 };
 
 export type SendTokenTransaction = BaseTransaction & {
-  _type: 'sendToken';
+  _type: "sendToken";
   _form: {
     recipient: string;
     amount: string;
@@ -264,7 +277,7 @@ export type SendTokenTransaction = BaseTransaction & {
 };
 
 export type SendNftTransaction = BaseTransaction & {
-  _type: 'sendNft';
+  _type: "sendNft";
   _form: {
     recipient: string;
     amount: string;
@@ -278,7 +291,7 @@ export type SendNftTransaction = BaseTransaction & {
 };
 
 export type ContractCallTransaction = BaseTransaction & {
-  _type: 'contractCall';
+  _type: "contractCall";
   _form: {
     abi: any[];
     recipient: string;
@@ -288,7 +301,20 @@ export type ContractCallTransaction = BaseTransaction & {
   };
 };
 
-export type Transaction = SendTokenTransaction | SendNftTransaction | ContractCallTransaction;
+export type Transaction =
+  | SendTokenTransaction
+  | SendNftTransaction
+  | ContractCallTransaction;
 
 // Utils
-export type RequiredProperty<T> = { [P in keyof T]: Required<NonNullable<T[P]>> };
+export type RequiredProperty<T> = {
+  [P in keyof T]: Required<NonNullable<T[P]>>;
+};
+
+export interface MetaTransaction {
+  to: string;
+  value: string | number;
+  data: string;
+  operation: number;
+  salt: bigint;
+}
