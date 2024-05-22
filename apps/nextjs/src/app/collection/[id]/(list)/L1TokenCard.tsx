@@ -1,12 +1,12 @@
 import type { TokenMarketData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-
 import { formatEther } from "viem";
 
 import { Button } from "@realms-world/ui";
 
 import { BuyButton } from "../../reservoir/BuyModal";
+
 //import { BuyButton } from "./BuyModal";
 
 interface TokenCardProps {
@@ -120,11 +120,12 @@ export const L1TokenCard = (props: TokenCardProps) => {
               view
             </Button>
             {
-            <BuyButton
-              size='default'
-              address={token.token.contract}
-              id={token.token.tokenId}
-            />}
+              <BuyButton
+                size="default"
+                address={token.token.contract}
+                id={token.token.tokenId}
+              />
+            }
           </div>
         </div>
       )}

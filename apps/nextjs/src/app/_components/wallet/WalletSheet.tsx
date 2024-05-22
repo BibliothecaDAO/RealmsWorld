@@ -1,9 +1,11 @@
+"use client";
+
 //import { shortenHex } from "@/utils/utils";
 import { Suspense, useEffect, useState } from "react";
 import { Account } from "@/app/bridge/Account";
-import { useUIStore } from "@/providers/UIStoreProvider";
 import { NETWORK_NAME } from "@/constants/env";
 import Bridge from "@/icons/bridge.svg";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import {
   useDisconnect,
   useAccount as useL2Account,
@@ -44,7 +46,13 @@ import { StarknetLoginModal } from "./StarknetLoginModal";
     content: <Account isL1={false} />,
   },
 ];*/
-export const WalletSheet = () => {
+export const WalletSheet = ({
+  showEthereumLoginButton = true,
+  showStarknetLoginButton = true,
+}: {
+  showEthereumLoginButton?: boolean;
+  showStarknetLoginButton?: boolean;
+}) => {
   const {
     address: l2Address,
     isConnected: isL2Connected,
@@ -86,7 +94,7 @@ export const WalletSheet = () => {
     NETWORK_ID.mainnet,
   ]);
 
-  const { isAccountOpen, toggleAccount } = useUIStore((state) => state,);
+  const { isAccountOpen, toggleAccount } = useUIStore((state) => state);
 
   const tabs = [
     {
@@ -110,15 +118,19 @@ export const WalletSheet = () => {
   return (
     <>
       <div className="flex flex-col space-y-4 px-1 md:flex-row md:space-x-2 md:space-y-0">
-        <EthereumLoginButton
-          variant={"default"}
-          textClass="group-hover:block"
-        />
-        <StarknetLoginButton
-          textClass="group-hover:block"
-          variant={"default"}
-          openAccount
-        />
+        {showEthereumLoginButton && (
+          <EthereumLoginButton
+            variant={"default"}
+            textClass="group-hover:block"
+          />
+        )}
+        {showStarknetLoginButton && (
+          <StarknetLoginButton
+            textClass="group-hover:block"
+            variant={"default"}
+            openAccount
+          />
+        )}
         <StarknetLoginModal />
       </div>
       <Sheet open={isAccountOpen} onOpenChange={toggleAccount}>

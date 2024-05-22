@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useUIStore } from "@/providers/UIStoreProvider";
 import { cleanQuery } from "@/lib/reservoir/getToken";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { api } from "@/trpc/react";
 import { useInView } from "framer-motion";
 
@@ -16,11 +17,17 @@ import { L2ERC721Card } from "./L2ERC721Card";
 const L2ERC721Table = ({
   contractAddress,
   ownerAddress,
+  infiniteScroll = true,
+  loadMoreAssetName = "",
+  limit = 24,
 }: {
   contractAddress: string;
   ownerAddress?: string;
+  infiniteScroll?: boolean;
+  loadMoreAssetName?: string;
+  limit?: number;
 }) => {
-  const { isGrid } = useUIStore((state) => state,);
+  const { isGrid } = useUIStore((state) => state);
   const grid =
     "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
   const list = "grid grid-cols-1 w-full";
@@ -31,7 +38,7 @@ const L2ERC721Table = ({
 
   const sortDirection = searchParams.get("sortDirection");
   const sortBy = searchParams.get("sortBy");
-  const buyNowOnly = searchParams.get("Status")
+  const buyNowOnly = searchParams.get("Status");
 
   const attributesObject: Record<string, string> = {};
   for (const [key, value] of searchParams.entries()) {
@@ -40,12 +47,12 @@ const L2ERC721Table = ({
   const attributeFilter = cleanQuery(attributesObject);
 
   const filters: RouterInputs["erc721Tokens"]["all"] = {
-    limit: 24,
+    limit,
     contractAddress,
     attributeFilter: attributeFilter,
     sortDirection: sortDirection,
     orderBy: sortBy,
-    buyNowOnly: buyNowOnly == 'Buy Now Only'
+    buyNowOnly: buyNowOnly == "Buy Now Only",
   };
 
   if (ownerAddress) {
@@ -61,10 +68,9 @@ const L2ERC721Table = ({
     });
 
   const isInView = useInView(ref, { once: false });
-
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    if (isInView) fetchNextPage();
+    if (isInView && infiniteScroll) fetchNextPage();
   }, [fetchNextPage, isInView]);
 
   return (
@@ -83,14 +89,26 @@ const L2ERC721Table = ({
               }),
             )
           : "No Assets Found"}
+        {!infiniteScroll &&
+          erc721Tokens.pages[0]?.items.length !== undefined &&
+          erc721Tokens.pages[0]?.items.length > 9 && (
+            <Link href={`/user/${ownerAddress}/${loadMoreAssetName}`}>
+              <div
+                className={`group flex min-h-[454px] transform cursor-pointer items-center justify-center border-2 bg-dark-green duration-300 hover:border-bright-yellow`}
+              >
+                <h2>View more</h2>
+              </div>
+            </Link>
+          )}
 
-        {isFetching &&
+        {infiniteScroll &&
+          isFetching &&
           hasNextPage &&
           Array.from({ length: 3 }).map((_, index) => (
             <TokenCardSkeleton key={index} />
           ))}
       </div>
-      <div className="col-span-12 mt-6" ref={ref} />
+      {infiniteScroll && <div className="col-span-12 mt-6" ref={ref} />}
     </>
   );
 };
