@@ -89,7 +89,7 @@ export function Carousel({
         aria-label="Placeholder"
         role="img"
         aria-roledescription="placeholder"
-        className="bg-secondary flex aspect-square h-full w-full flex-1 items-center justify-center"
+        className="flex aspect-square h-full w-full flex-1 items-center justify-center bg-secondary"
       >
         Placeholder Image
       </div>
@@ -120,18 +120,18 @@ export function Carousel({
                 aria-roledescription="slide"
                 src={image.src}
                 alt={image.alt}
-                fill
+                //fill
                 sizes="100vw"
                 className={`${cover ? "object-cover" : "object-contain"}`}
-                priority={index === 0}
+                //priority={index === 0}
               />
               {image.title && (
                 <div className="z-100 absolute  bottom-0 w-full px-12 pb-8 backdrop-blur">
                   <h4>{image.title}</h4>
                   <p className="mb-8">{image.description}</p>
-                  <Button href={`${image.href}`} variant={"default"}>
-                    Play
-                  </Button>
+                  <a href={`${image.href}`}>
+                    <Button variant={"default"}>Play</Button>
+                  </a>
                 </div>
               )}
             </div>
@@ -156,8 +156,8 @@ export function Carousel({
               variant="outline"
               //size="icon"
               className={cn(
-                "focus-visible:ring-foreground group relative aspect-square h-full w-full max-w-[100px] rounded-none border-4 shadow-sm hover:bg-transparent",
-                i === selectedIndex && "ring-foreground ring-1",
+                "group relative aspect-square h-full w-full max-w-[100px] rounded-none border-4 shadow-sm hover:bg-transparent focus-visible:ring-foreground",
+                i === selectedIndex && "ring-1 ring-foreground",
               )}
               onClick={() => scrollTo(i)}
               onKeyDown={handleKeyDown}
@@ -168,7 +168,7 @@ export function Carousel({
                 alt={image.alt}
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                fill
+                //fill
               />
               <span className="sr-only">
                 Slide {i + 1} of {images.length}
