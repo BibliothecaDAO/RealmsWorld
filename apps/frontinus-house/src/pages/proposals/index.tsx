@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Layout, LayoutBody } from "@/components/layout";
 import { getNetwork } from "@/lib/network";
-import { getProposalId } from "@/lib/utils";
+import { getProposalId, shorten } from "@/lib/utils";
 import { Proposal } from "@/types";
+import { Link } from "react-router-dom";
 
 export default function Proposals() {
   const [proposals, setProposals] = useState<Proposal[]>();
@@ -34,22 +35,24 @@ export default function Proposals() {
           ? proposals.map((proposal) => {
               return (
                 <div>
-                  <div className="mx-4 flex border-b py-[14px]">
-                    <div className="mr-4 w-0 flex-auto">
-                      <div className="flex space-x-2">
-                        <div className="my-1 items-center leading-6 md:flex md:min-w-0">
-                          <h4 className="my-0">
-                            {proposal.title ?? `Proposal #${proposal.id}`}
-                          </h4>
+                  <Link to={`/proposals/${proposal.proposal_id}`}>
+                    <div className="mx-4 flex border-b py-[14px]">
+                      <div className="mr-4 w-0 flex-auto">
+                        <div className="flex space-x-2">
+                          <div className="my-1 items-center leading-6 md:flex md:min-w-0">
+                            <h4 className="my-0">
+                              {proposal.title ?? `Proposal #${proposal.id}`}
+                            </h4>
+                          </div>
                         </div>
+                        <div className="mr-4 inline">
+                          {getProposalId(proposal)} by{" "}
+                          {proposal.author.name || shorten(proposal.author.id)}
+                        </div>
+                        <span>{proposal.vote_count} votes</span>
                       </div>
-                      <div className="mr-4 inline">
-                        {getProposalId(proposal)} by{" "}
-                        {proposal.author.name || proposal.author.id}
-                      </div>
-                      <span>{proposal.vote_count} votes</span>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               );
             })

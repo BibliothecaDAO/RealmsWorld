@@ -1,4 +1,5 @@
 import type { Web3Provider } from "@ethersproject/providers";
+import { MAX_SYMBOL_LENGTH } from "@/data/constants";
 import { Proposal } from "@/types";
 import { getAddress } from "@ethersproject/address";
 import { validateAndParseAddress } from "starknet";
@@ -6,6 +7,26 @@ import { validateAndParseAddress } from "starknet";
 const IPFS_GATEWAY: string =
   import.meta.env.VITE_IPFS_GATEWAY || "https://cloudflare-ipfs.com";
 
+export function shorten(
+  str: string,
+  key?: number | "symbol" | "name" | "choice",
+): string {
+  if (!str) return str;
+  let limit;
+  if (typeof key === "number") limit = key;
+  if (key === "symbol") limit = MAX_SYMBOL_LENGTH;
+  if (key === "name") limit = 64;
+  if (key === "choice") limit = 12;
+  if (limit)
+    return str.length > limit ? `${str.slice(0, limit).trim()}...` : str;
+  return shortenAddress(str);
+}
+
+export function shortenAddress(str = "") {
+  const formatted = formatAddress(str);
+
+  return `${formatted.slice(0, 6)}...${formatted.slice(formatted.length - 4)}`;
+}
 export function formatAddress(address: string) {
   if (address.length === 42) return getAddress(address);
   try {
@@ -74,5 +95,50 @@ export async function verifyNetwork(
       (error as any).code = 4001;
       throw error;
     }
+  }
+}
+export function _rt(date: number) {
+  var seconds = Math.floor(new Date().getTime() / 1000 - date);
+  var years = Math.floor(seconds / 31536000);
+  var months = Math.floor(seconds / 2592000);
+  var days = Math.floor(seconds / 86400);
+  if (days > 548) {
+    return years + " years ago";
+  }
+  if (days >= 320 && days <= 547) {
+    return "a year ago";
+  }
+  if (days >= 45 && days <= 319) {
+    return months + " months ago";
+  }
+  if (days >= 26 && days <= 45) {
+    return "a month ago";
+  }
+
+  var hours = Math.floor(seconds / 3600);
+
+  if (hours >= 36 && days <= 25) {
+    return days + " days ago";
+  }
+  if (hours >= 22 && hours <= 35) {
+    return "a day ago";
+  }
+
+  var minutes = Math.floor(seconds / 60);
+
+  if (minutes >= 90 && hours <= 21) {
+    return hours + " hours ago";
+  }
+  if (minutes >= 45 && minutes <= 89) {
+    return "an hour ago";
+  }
+  if (seconds >= 90 && minutes <= 44) {
+    return minutes + " minutes ago";
+  }
+  if (seconds >= 45 && seconds <= 89) {
+    return "a minute ago";
+  }
+  if (seconds >= 0 && seconds <= 45) {
+    return "a few seconds ago";
   }
 }

@@ -79,13 +79,10 @@ export function createActions(
     const code = await l1Provider.getCode(address);
     return code !== "0x";
   };
-  //@ts-expect-error
+
   const client = new clients.StarknetTx(clientConfig);
-  //@ts-expect-error
   const starkSigClient = new clients.StarknetSig(clientConfig);
-  //@ts-expect-error
   const ethSigClient = new clients.EthereumSig(clientConfig);
-  //@ts-expect-error
   const ethTxClient = new clients.EthereumTx(clientConfig);
   const l1ExecutorClient = new clients.L1Executor();
 
@@ -554,7 +551,6 @@ export function createActions(
             strategyMetadata,
             snapshotInfo.at,
             strategiesParams[i].split(","),
-            //@ts-expect-error incompatible SN versions
             {
               ...clientConfig,
               networkConfig,

@@ -1,52 +1,60 @@
-import { createBrowserRouter } from 'react-router-dom'
-import GeneralError from '@/pages/error/general-error'
-import NotFoundError from '@/pages/error/not-found-error'
+import GeneralError from "@/pages/error/general-error";
+import NotFoundError from "@/pages/error/not-found-error";
+import { createBrowserRouter } from "react-router-dom";
+
 //import MaintenanceError from './pages/errors/maintenance-error'
 
 const router = createBrowserRouter([
   // Main routes
   {
-    path: '/',
+    path: "/",
     lazy: async () => {
-      const AppShell = await import('@/components/app-shell')
-      return { Component: AppShell.default }
+      const AppShell = await import("@/components/app-shell");
+      return { Component: AppShell.default };
     },
     errorElement: <GeneralError />,
     children: [
       {
         index: true,
         lazy: async () => ({
-          Component: (await import('@/pages/overview')).default,
+          Component: (await import("@/pages/overview")).default,
         }),
       },
       {
-        path: 'proposals',
+        path: "proposals",
         lazy: async () => ({
-          Component: (await import('@/pages/proposals')).default,
+          Component: (await import("@/pages/proposals")).default,
+        }),
+        children: [],
+      },
+      {
+        path: "proposals/:id",
+        lazy: async () => ({
+          Component: (await import("@/pages/proposals/[id]")).default,
         }),
       },
       {
-        path: 'rounds',
+        path: "rounds",
         lazy: async () => ({
-          Component: (await import('@/pages/rounds')).default,
+          Component: (await import("@/pages/rounds")).default,
         }),
       },
       {
-        path: 'delegates',
+        path: "delegates",
         lazy: async () => ({
-          Component: (await import('@/pages/delegates')).default,
+          Component: (await import("@/pages/delegates")).default,
         }),
       },
     ],
   },
 
   // Error routes
-  { path: '/500', Component: GeneralError },
-  { path: '/404', Component: NotFoundError },
-//{ path: '/503', Component: MaintenanceError },
+  { path: "/500", Component: GeneralError },
+  { path: "/404", Component: NotFoundError },
+  //{ path: '/503', Component: MaintenanceError },
 
   // Fallback 404 route
-  { path: '*', Component: NotFoundError },
-])
+  { path: "*", Component: NotFoundError },
+]);
 
-export default router
+export default router;

@@ -36,7 +36,7 @@ export const METADATA: Partial<Record<NetworkID, Metadata>> = {
   },
   "sn-sep": {
     name: "Starknet (Sepolia)",
-    //@ts-expect-error incorrect SN version
+
     chainId: starknetConstants.StarknetChainId.SN_SEPOLIA,
     baseChainId: 11155111,
     baseNetworkId: "sep",

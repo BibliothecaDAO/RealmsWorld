@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDelegates } from "@/hooks/use-delegates";
-import { formatAddress } from "@/lib/utils";
+import { formatAddress, shorten } from "@/lib/utils";
 import { SpaceMetadataDelegation } from "@/types";
 
 export const SpaceDelegates = ({
@@ -76,10 +76,10 @@ export const SpaceDelegates = ({
                   >
                     <div className="leading-[22px]">
                       <h4 className="text-skin-link mb-0 truncate">
-                        {delegate.name || formatAddress(delegate.id)}
+                        {delegate.name || shorten(delegate.id)}
                       </h4>
                       <div className="text-skin-text truncate text-[17px]">
-                        {formatAddress(delegate.id)}
+                        {shorten(delegate.id)}
                       </div>
                     </div>
                   </a>
