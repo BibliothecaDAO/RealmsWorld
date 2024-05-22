@@ -8,7 +8,7 @@ export default function AppShell() {
   const [isCollapsed, setIsCollapsed] = useIsCollapsed();
   return (
     <div
-      className={`--font-bai-jamjuree --font-karla grid min-h-screen w-full bg-background text-bright-yellow md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]`}
+      className={`--font-silkscreen --font-inconsolata dark grid min-h-screen w-full bg-background md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]`}
     >
       <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       <div className="flex flex-col">

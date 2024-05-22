@@ -30,7 +30,7 @@ export const SpaceDelegates = ({
         <col className="w-auto md:w-[120px]" />
         <col className="w-0 md:w-[240px]" />
       </colgroup>
-      <thead className="bg-skin-bg sticky top-[84px] z-40 after:absolute after:w-full after:border-b lg:top-[85px]">
+      <thead className="bg-skin-bg sticky z-40 after:absolute after:w-full after:border-b">
         <tr>
           <th className="pl-4 font-medium">
             <span className="relative bottom-[1px]">Delegatee</span>
@@ -75,12 +75,12 @@ export const SpaceDelegates = ({
                     target="_blank"
                   >
                     <div className="leading-[22px]">
-                      <h4 className="text-skin-link truncate mb-0">
+                      <h4 className="text-skin-link mb-0 truncate">
                         {delegate.name || formatAddress(delegate.id)}
                       </h4>
-                      <div
-                        className="text-skin-text truncate text-[17px]"
-                      >{formatAddress(delegate.id)}</div>
+                      <div className="text-skin-text truncate text-[17px]">
+                        {formatAddress(delegate.id)}
+                      </div>
                     </div>
                   </a>
                 </div>
@@ -89,18 +89,17 @@ export const SpaceDelegates = ({
                 <h4 className="text-skin-link mb-0">
                   {delegate.tokenHoldersRepresentedAmount}
                 </h4>
-                <div
-                  className="text-[17px]"
-            >{delegate.delegatorsPercentage.toFixed(3)}%</div>
+                <div className="text-[17px]">
+                  {delegate.delegatorsPercentage.toFixed(3)}%
+                </div>
               </td>
               <td className="pr-4 text-right align-middle">
-                <h4
-                  className="text-skin-link mb-0"
-                >{delegate.delegatedVotes}</h4>
-                <div
-                  className="text-[17px]"
-                  
-                >{delegate.votesPercentage.toFixed(3)}%</div>
+                <h4 className="text-skin-link mb-0">
+                  {parseInt(delegate.delegatedVotes)}
+                </h4>
+                <div className="text-[17px]">
+                  {delegate.votesPercentage.toFixed(3)}%
+                </div>
               </td>
             </tr>
           );
