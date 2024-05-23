@@ -9,6 +9,7 @@ export {
   getCollectionAddresses,
   getCollectionFromAddress,
   CollectionDetails,
+  REALMS_BRIDGE_ADDRESS,
 } from "./Collections";
 export {
   DaoAccounts,

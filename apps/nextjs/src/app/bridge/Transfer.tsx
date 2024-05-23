@@ -17,7 +17,7 @@ import { ArrowUpDown } from "lucide-react";
 import { formatEther } from "viem";
 import { useAccount as useL1Account } from "wagmi";
 
-import { Button, Input } from "@realms-world/ui";
+import { Badge, Button, Input } from "@realms-world/ui";
 
 import { useWalletsProviderContext } from "../../providers/WalletsProvider";
 import { TokenBalance } from "./TokenBalance";
@@ -65,13 +65,13 @@ export const Transfer = ({ action }: { action: string }) => {
   ) => {
     return (
       <>
-        <div className="relative flex items-center justify-between">
+        <div className="relative -mt-1 flex items-center justify-between">
           <div className="flex-col">
-            <span className="rounded border border-bright-yellow/40 bg-medium-dark-green px-2 text-xs font-bold uppercase tracking-wide text-bright-yellow/60">
-              {isWithdraw ? "from" : "to"}
-            </span>
-            <div className="my-1 flex text-lg ">
-              <div className="mr-2 h-[32px] w-[32px] self-center rounded-full bg-bright-yellow/60">
+            <Badge variant={"secondary"} className="bg-background">
+              {isWithdraw ? "From" : "To"}
+            </Badge>
+            <div className="mb-4 mt-1 flex text-lg ">
+              <div className="mr-2 h-[36px] w-[36px] self-center rounded-full bg-background">
                 {networkLogo}
               </div>
               <h5 className="self-center">{networkName}</h5>
@@ -101,7 +101,7 @@ export const Transfer = ({ action }: { action: string }) => {
   const renderL1Network = (action: string) => {
     return renderNetwork(
       "Ethereum",
-      <EthereumLogo className="m-auto mt-1 h-6 w-6" />,
+      <EthereumLogo className="m-auto mt-1 h-7 w-7" />,
       action != "withdraw",
     );
   };
@@ -109,7 +109,7 @@ export const Transfer = ({ action }: { action: string }) => {
   const renderL2Network = (action: string) => {
     return renderNetwork(
       "Starknet",
-      <StarknetLogo className="m-auto mt-1 h-6 w-6" />,
+      <StarknetLogo className="m-auto mt-1 h-7 w-7" />,
       action == "withdraw",
       true,
     );

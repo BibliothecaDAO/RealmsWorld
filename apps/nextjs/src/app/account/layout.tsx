@@ -26,8 +26,8 @@ export default function RootLayout({
   ];
   return (
     <>
-      <PageLayout size={"sm"}>
-        <div className=" mb-4 flex w-full space-x-4 border-b py-3 text-xl">
+      <PageLayout size={"sm"} title="Account">
+        <div className=" mb-4 flex w-full space-x-4 border-b text-xl">
           {tabs.map((tab) => (
             <NavLink
               key={tab.name}

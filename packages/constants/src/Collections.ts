@@ -6,7 +6,7 @@ export enum Collections {
   BEASTS = "beasts",
   GOLDEN_TOKEN = "goldentoken",
   BLOBERT = "blobert",
-  BANNERS = 'banners'
+  BANNERS = "banners",
 }
 
 export const CollectionAddresses: {
@@ -15,6 +15,8 @@ export const CollectionAddresses: {
   [Collections.REALMS]: {
     [ChainId.MAINNET]: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
     [ChainId.SEPOLIA]: "0x86A65f65172DE02276A044BFC7bDF5B11d7e9eb1",
+    [ChainId.SN_SEPOLIA]:
+      "0x2b80629170ef5d194b661bc2a2cec1ec24acc47d36a40a1f88bf6aee3f986e5",
   },
   [Collections.BEASTS]: {
     [ChainId.SN_MAIN]:
@@ -37,8 +39,7 @@ export const CollectionAddresses: {
   [Collections.BANNERS]: {
     [ChainId.SN_MAIN]:
       "0x02d66679de61a5c6d57afd21e005a8c96118bd60315fd79a4521d68f5e5430d1",
-    [ChainId.SN_SEPOLIA]:
-      "",
+    [ChainId.SN_SEPOLIA]: "",
   },
 };
 export const CollectionDetails: {
@@ -94,3 +95,10 @@ export function getCollectionFromAddress(
   }
   return undefined;
 }
+
+export const REALMS_BRIDGE_ADDRESS: Record<number | string, string> = {
+  [ChainId.MAINNET]: "",
+  [ChainId.SEPOLIA]: "",
+  [ChainId.SN_MAIN]: "",
+  [ChainId.SN_SEPOLIA]: "",
+};

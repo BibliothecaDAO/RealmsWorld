@@ -80,38 +80,19 @@ export const StakingMigration = () => {
         ]
       : []),
     {
-      title: "Approve Realms Transfer",
-      content: (
-        <div>
-          <p>Approve the vRealms staking contract to transfer your NFTs</p>
-          <Button
-            className="mt-4"
-            onClick={() =>
-              setApproval({
-                contractAddress: getCollectionAddresses(Collections.REALMS)[
-                  SUPPORTED_L1_CHAIN_ID
-                ] as `0x${string}`,
-                operator: StakingAddresses.vlords[
-                  SUPPORTED_L1_CHAIN_ID
-                ] as `0x${string}`,
-              })
-            }
-          >
-            Approve Realms
-          </Button>
-        </div>
-      ),
-    },
-    {
-      title: "Stake Realms for vRealms",
+      title: "Bridge your Realms to Starknet",
       content: (
         <div className="mt-4">
-          <RealmsTable
+          <p className="text-xl">
+            You are ready to discover your Realms on the Starknet L2
+          </p>
+          <Button>Go To Bridge</Button>
+          {/*<RealmsTable
             data={realmsData?.realms as Realm[]}
             columns={columns}
             onRowSelectionChange={handleRowSelection}
           />
-          <Button className="w-full">Stake Realms</Button>
+      <Button className="w-full">Stake Realms</Button>*/}
         </div>
       ),
     },

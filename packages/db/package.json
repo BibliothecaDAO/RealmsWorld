@@ -24,7 +24,7 @@
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
     "dotenv-cli": "^7.4.2",
-    "drizzle-kit": "^0.21.1",
+    "drizzle-kit": "^0.21.4",
     "eslint": "^8.57.0",
     "postgres-range": "^1.1.4",
     "prettier": "^3.2.5",
