@@ -8,24 +8,28 @@ import { useAccount as useL2Account } from "@starknet-react/core";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
-import { WalletSheet } from "../_components/wallet/WalletSheet";
+import { WalletSheet } from "../../_components/wallet/WalletSheet";
 
 function AssetL2CollectionPreview({
   collectionName,
+  hideTitle,
 }: {
   collectionName: string;
+  hideTitle?: boolean;
 }) {
   const { address: l2address } = useL2Account();
   return (
     <div>
-      <div className="mb-4 flex flex-col items-center justify-center space-x-4 border-b pb-3 text-4xl md:flex-row md:justify-start">
-        <h2>
-          {collectionName === Collections.GOLDEN_TOKEN
-            ? "Golden Token"
-            : collectionName}
-        </h2>
-        <WalletSheet showEthereumLoginButton={false} />
-      </div>
+      {!hideTitle && (
+        <div className="mb-4 flex flex-col items-center justify-center space-x-4 border-b pb-3 text-4xl md:flex-row md:justify-start">
+          <h2>
+            {collectionName === Collections.GOLDEN_TOKEN
+              ? "Golden Token"
+              : collectionName}
+          </h2>
+          <WalletSheet showEthereumLoginButton={false} />
+        </div>
+      )}
       <div className="min-h-24">
         {!l2address ? (
           <h3>Please connect your starknet wallet</h3>

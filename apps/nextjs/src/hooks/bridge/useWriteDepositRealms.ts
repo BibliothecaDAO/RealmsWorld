@@ -1,18 +1,18 @@
 import { useCallback } from "react";
 import { StarknetBridgeRealms as L1_REALMS_BRIDGE_ABI } from "@/abi/L1/StarknetBridgeRealms";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
-import { parseEther } from "viem";
+import { parseGwei } from "viem";
 import { useWriteContract } from "wagmi";
 
 import { REALMS_BRIDGE_ADDRESS } from "@realms-world/constants";
 
 const FUNCTION = "depositTokens";
 
-export function useWriteDepositLords({
+export function useWriteDepositRealms({
   onSuccess,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSuccess?: (data: any) => Promise<void>;
+  onSuccess?: (data: any) => void;
 }) {
   const { writeContractAsync, error, ...writeReturn } = useWriteContract({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,8 +36,7 @@ export function useWriteDepositLords({
         abi: L1_REALMS_BRIDGE_ABI,
         functionName: FUNCTION,
         args: [BigInt(Date.now()), BigInt(l2Address), tokenIds],
-        //@ts-expect-error should accept value
-        value: parseGwei((40000 * selectedTokenIds.length).toString()),
+        value: parseGwei((40000 * tokenIds.length).toString()),
       });
     },
     [writeContractAsync],

@@ -98,7 +98,8 @@ export function getCollectionFromAddress(
 
 export const REALMS_BRIDGE_ADDRESS: Record<number | string, string> = {
   [ChainId.MAINNET]: "",
-  [ChainId.SEPOLIA]: "",
+  [ChainId.SEPOLIA]: "0xdE90b081fFb4E788F1d932E0B7a9fb394257C024",
   [ChainId.SN_MAIN]: "",
-  [ChainId.SN_SEPOLIA]: "",
+  [ChainId.SN_SEPOLIA]:
+    "0x29da64a300ace487cb10134be6d22a4d3e6b36add1306a409f2f7ca6ea03fa0",
 };

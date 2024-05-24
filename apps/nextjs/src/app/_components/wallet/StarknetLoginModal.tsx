@@ -1,3 +1,5 @@
+"use client";
+
 //import { Mail } from "lucide-react";
 import type { WalletProvider } from "get-starknet-core";
 import { useEffect, useState } from "react";
@@ -17,7 +19,7 @@ export const StarknetLoginModal = () => {
     toggleStarknetLogin,
     toggleAccount,
     isAccountOpen,
-  } = useUIStore((state) => state,);
+  } = useUIStore((state) => state);
   const { isConnected } = useAccount();
 
   const [braavos, setBraavos] = useState<string>("");
