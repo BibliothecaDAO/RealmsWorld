@@ -1,4 +1,4 @@
-FROM quay.io/apibara/sink-postgres:0.5.1
+FROM quay.io/apibara/sink-postgres:0.7.0
 
 ARG NETWORK_NAME
 ARG POSTGRES_CONNECTION_STRING
