@@ -13,6 +13,7 @@ export interface UIState {
   isAccountOpen: boolean;
   isStarknetLoginOpen: boolean;
   isStakingMigrationOpen: boolean;
+  isNftBridgeOpen: boolean;
 }
 
 export interface UIActions {
@@ -22,6 +23,7 @@ export interface UIActions {
   toggleAccount: () => void;
   toggleStarknetLogin: () => void;
   toggleStakingMigration: () => void;
+  toggleNftBridge: () => void;
 }
 
 export type UIStore = UIActions & UIState;
@@ -33,6 +35,7 @@ export const initialState: UIState = {
   isAccountOpen: false,
   isStarknetLoginOpen: false,
   isStakingMigrationOpen: false,
+  isNftBridgeOpen: false,
 };
 // Create the store using zustand
 export const createUIStore = (initState: UIState = initialState) => {
@@ -47,7 +50,13 @@ export const createUIStore = (initState: UIState = initialState) => {
     toggleStarknetLogin: () =>
       set((state) => ({ isStarknetLoginOpen: !state.isStarknetLoginOpen })),
     toggleStakingMigration: () =>
-      set((state) => ({ isStakingMigrationOpen: !state.isStakingMigrationOpen })),
+      set((state) => ({
+        isStakingMigrationOpen: !state.isStakingMigrationOpen,
+      })),
+    toggleNftBridge: () =>
+      set((state) => ({
+        isNftBridgeOpen: !state.isNftBridgeOpen,
+      })),
   }));
 };
 

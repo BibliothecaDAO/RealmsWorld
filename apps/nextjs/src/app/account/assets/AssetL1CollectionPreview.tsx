@@ -4,6 +4,7 @@ import React from "react";
 import { useWriteDepositRealms } from "@/hooks/bridge/useWriteDepositRealms";
 import { useUserTokens } from "@/hooks/reservoir/useUserTokens";
 import useNftSelection, { MAX_SELECTED_ITEMS } from "@/hooks/useNftSelection";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { XIcon } from "lucide-react";
 import { useAccount } from "wagmi";
@@ -33,6 +34,7 @@ function AssetL1CollectionPreview() {
   const { writeAsync } = useWriteDepositRealms({
     onSuccess: () => console.log("success"),
   });
+  const { toggleNftBridge } = useUIStore((state) => state);
 
   const isAllSelected =
     totalSelectedNfts === MAX_SELECTED_ITEMS ||
@@ -51,12 +53,12 @@ function AssetL1CollectionPreview() {
                 <div className="flex items-center gap-x-4">
                   <span className="text-lg">Actions:</span>
                   <Button
-                    onClick={() =>
-                      l2Address &&
-                      writeAsync({
+                    onClick={
+                      toggleNftBridge
+                      /*writeAsync({
                         tokenIds: selectedTokenIds.map((id) => BigInt(id)),
                         l2Address,
-                      })
+                      })*/
                     }
                     disabled={totalSelectedNfts < 1}
                   >

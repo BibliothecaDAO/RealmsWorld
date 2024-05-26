@@ -3,6 +3,8 @@ import { PageLayout } from "@/app/_components/PageLayout";
 
 import { NavLink } from "@realms-world/ui";
 
+import { NftBridgeModal } from "../_components/modal/NftBridgeModal";
+
 export default function RootLayout({
   children,
   params,
@@ -41,6 +43,7 @@ export default function RootLayout({
         {children}
       </PageLayout>
       <StakingMigrationModal />
+      <NftBridgeModal />
     </>
   );
 }
