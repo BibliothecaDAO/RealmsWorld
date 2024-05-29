@@ -9,7 +9,16 @@ import { env } from "@/env";
 
 import type { AppRouter } from "@realms-world/api";
 
-const createQueryClient = () => new QueryClient();
+const createQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        // With SSR, we usually want to set some default staleTime
+        // above 0 to avoid refetching immediately on the client
+        staleTime: 30 * 1000,
+      },
+    },
+  });
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined;
 const getQueryClient = () => {
@@ -41,7 +50,7 @@ export function TRPCReactProvider(props: {
         unstable_httpBatchStreamLink({
           transformer: SuperJSON,
           url: getBaseUrl() + "/api/trpc",
-          async headers() {
+          headers() {
             const headers = new Headers();
             headers.set("x-trpc-source", "nextjs-react");
             return headers;

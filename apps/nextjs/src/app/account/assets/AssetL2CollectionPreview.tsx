@@ -18,7 +18,8 @@ function AssetL2CollectionPreview({
   hideTitle?: boolean;
 }) {
   const { address: l2address } = useL2Account();
-
+  const collectionAddress =
+    getCollectionAddresses(collectionName)?.[SUPPORTED_L2_CHAIN_ID];
   return (
     <div>
       {!hideTitle && (
@@ -34,16 +35,16 @@ function AssetL2CollectionPreview({
           <h3>Please connect your starknet wallet</h3>
         ) : (
           <Suspense fallback={<LoadingSkeletonGrid />}>
-            <L2ERC721Table
-              contractAddress={
-                getCollectionAddresses(collectionName)[SUPPORTED_L2_CHAIN_ID]!
-              }
-              infiniteScroll={false}
-              limit={10}
-              ownerAddress={l2address}
-              loadMoreAssetName={collectionName}
-              selectable
-            />
+            {collectionAddress && (
+              <L2ERC721Table
+                contractAddress={collectionAddress}
+                infiniteScroll={false}
+                limit={10}
+                ownerAddress={l2address}
+                loadMoreAssetName={collectionName}
+                selectable
+              />
+            )}
           </Suspense>
         )}
       </div>

@@ -9,13 +9,11 @@ export const getGamesByContract = (
   games: Game[],
   contractAddress: string,
 ): Game[] => {
-  return (
-    games.filter((game: Game) => {
-      return game.collections?.some(
-        (collection: Collections) => collection === contractAddress,
-      );
-    }) || []
-  );
+  return games.filter((game: Game) => {
+    return game.collections?.some(
+      (collection: Collections) => collection === contractAddress,
+    );
+  });
 };
 
 export function findCollectionKeyByAddress(
@@ -37,14 +35,14 @@ export function findLowestPriceActiveListing(
   listings: RouterOutputs["erc721MarketEvents"]["all"]["items"],
   owner?: string | null,
 ) {
-  const activeListings = listings?.filter(
+  const activeListings = listings.filter(
     (listing: any) =>
       listing.active &&
       listing.created_by === owner &&
       listing.expiration > Math.floor(Date.now() / 1000),
   );
 
-  const lowestPriceActiveListing = activeListings?.reduce(
+  const lowestPriceActiveListing = activeListings.reduce(
     (minPriceListing, currentListing) =>
       (currentListing.price ?? 0) < (minPriceListing?.price ?? 0)
         ? currentListing

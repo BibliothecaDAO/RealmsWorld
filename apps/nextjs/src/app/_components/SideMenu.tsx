@@ -22,7 +22,7 @@ import { useUIStore } from "../../providers/UIStoreProvider";
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useUIStore((state) => state);
 
-  const { lordsPrice } = useLordsPrice();
+  const lordsPrice = useLordsPrice();
 
   const router = useRouter();
   const menu = [

@@ -104,12 +104,11 @@ export const LORDS: Record<number | string, Token> = {
     "Lords",
   ),
 };
-
 export const SUPPORTED_TOKENS: { [chainId in ChainId]: Token[] } = {
-  [ChainId.SN_MAIN]: [LORDS[ChainId.SN_MAIN]!, USDC[ChainId.SN_MAIN]!, ETH[ChainId.SN_MAIN]!, STRK[ChainId.SN_MAIN]!],
-  [ChainId.SN_SEPOLIA]: [LORDS[ChainId.SN_SEPOLIA]!, USDC[ChainId.SN_SEPOLIA]!, ETH[ChainId.SN_SEPOLIA]!, STRK[ChainId.SN_SEPOLIA]!],
-  [ChainId.MAINNET]: [LORDS.MAINNET!],
-  [ChainId.SEPOLIA]: [LORDS.SEPOLIA!],
+  [ChainId.SN_MAIN]: [LORDS[ChainId.SN_MAIN], USDC[ChainId.SN_MAIN], ETH[ChainId.SN_MAIN], STRK[ChainId.SN_MAIN]].filter(token => token !== undefined) as Token[],
+  [ChainId.SN_SEPOLIA]: [LORDS[ChainId.SN_SEPOLIA], USDC[ChainId.SN_SEPOLIA], ETH[ChainId.SN_SEPOLIA], STRK[ChainId.SN_SEPOLIA]].filter(token => token !== undefined) as Token[],
+  [ChainId.MAINNET]: [LORDS[ChainId.MAINNET]].filter(token => token !== undefined) as Token[],
+  [ChainId.SEPOLIA]: [LORDS[ChainId.SEPOLIA]].filter(token => token !== undefined) as Token[],
   [ChainId.MISSISSIPPI_TESTNET]: [],
   [ChainId.REALMS_L3]: [],
   [ChainId.SLOT_TESTNET]: [],

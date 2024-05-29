@@ -2,6 +2,7 @@
   "name": "@realms-world/utils",
   "version": "0.1.0",
   "main": "./src/index.ts",
+  "type": "module",
   "files": [
     "dist/**",
     "src/**"
@@ -9,6 +10,7 @@
   "scripts": {
     "build": "tsup",
     "clean": "rimraf -rf dist",
+    "lint": "eslint",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
     "tsc": "tsc --noEmit"
@@ -22,7 +24,7 @@
   },
   "devDependencies": {
     "@realms-world/tsconfig": "*",
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.12.13",
     "typescript": "^5.4.5"
   },
   "publishConfig": {

@@ -4,6 +4,7 @@
   "exports": {
     ".": "./index.ts"
   },
+  "type": "module",
   "typesVersions": {
     "*": {
       "*": [
@@ -14,7 +15,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint .",
+    "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
@@ -28,13 +29,8 @@
     "@realms-world/eslint-config": "*",
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
-    "eslint": "^8.57.0",
+    "eslint": "^9.3.0",
     "typescript": "^5.4.5"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@realms-world/eslint-config/base"
-    ]
   },
   "prettier": "@realms-world/prettier-config"
 }

@@ -101,7 +101,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
       if (items.length > limit) {
         const nextItem = items.pop();
         nextCursor =
-          orderBy == "timestamp" ? nextItem!.updated_at : nextItem!.id;
+          orderBy == "timestamp" ? nextItem?.updated_at : nextItem?.id;
       }
       return {
         items,

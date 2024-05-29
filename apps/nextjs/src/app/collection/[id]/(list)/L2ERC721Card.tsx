@@ -4,6 +4,7 @@ import { AnimatedMap } from "@/app/_components/AnimatedMap";
 import { useLordsPrice } from "@/hooks/useLordsPrice";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
+import { getTokenPrices } from "@/lib/coingecko";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -134,7 +135,7 @@ const GridDetails = ({
   </div>
 );
 
-const Price = ({
+const Price = async ({
   token,
 }: {
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number] & {
@@ -148,7 +149,7 @@ const Price = ({
       {listing?.price && (
         <div>
           <div className="flex text-lg">
-            {listing?.price}
+            {listing.price}
             <LordsIcon className="mx-auto ml-2 h-4 w-4 self-center fill-bright-yellow" />
           </div>
           <div className="-mt-0.5 text-xs text-bright-yellow/60">

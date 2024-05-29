@@ -32,7 +32,6 @@ export const useEditListing = ({
         parseUnits(`${price}`, 18).toString(),
       ),
     ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listingId, price]);
 
   const { writeAsync, data, error } = useL2ContractWrite({ calls });

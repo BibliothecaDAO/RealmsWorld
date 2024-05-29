@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -99,7 +98,7 @@ const L2ERC721Table = ({
       )}
       <div className={isGrid ? grid : list}>
         {erc721Tokens.pages[0]?.items.length
-          ? erc721Tokens?.pages?.map((page) =>
+          ? erc721Tokens.pages.map((page) =>
               page.items.map((token, index) => {
                 const isSelected = isNftSelected(
                   token.token_id.toString() ?? "0",

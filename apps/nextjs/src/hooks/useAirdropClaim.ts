@@ -122,10 +122,7 @@ export function useAirdropClaim() {
     const sync = async () => {
       await syncStatus();
     };
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     sync();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressL1]);
 
   return {

@@ -278,8 +278,10 @@ const SingleDatePicker = ({
   );
 
   const initialDate = React.useMemo(() => {
-    return date;
-  }, [open]);
+    if (open) {
+      return date;
+    }
+  }, [open, date]);
 
   /**
    * Update the date when the value changes.
@@ -298,7 +300,7 @@ const SingleDatePicker = ({
     if (!open) {
       setMonth(date);
     }
-  }, [open]);
+  }, [open, date]);
 
   const onCancel = () => {
     setDate(initialDate);
@@ -326,16 +328,14 @@ const SingleDatePicker = ({
        * If the time is cleared, and the date is
        * changed then we want to reset the time.
        */
-      if (newDate && !time) {
-        setTime(new Time(0, 0));
-      }
+
 
       /**
        * If the time is set, and the date is changed
        * then we want to update the date with the
        * time.
        */
-      if (newDate && time) {
+      if (newDate) {
         newDate.setHours(time.hour);
         newDate.setMinutes(time.minute);
       }
@@ -344,8 +344,8 @@ const SingleDatePicker = ({
     setDate(newDate);
   };
 
-  const onTimeChange = (time: TimeValue) => {
-    setTime(time);
+  const onTimeChange = (time?: TimeValue) => {
+    time && setTime(time);
 
     if (!date) {
       return;
@@ -499,8 +499,10 @@ const RangeDatePicker = ({
   );
 
   const initialRange = React.useMemo(() => {
-    return range;
-  }, [open]);
+    if (open) {
+      return range;
+    }
+  }, [open, range]);
 
   /**
    * Update the range when the value changes.
@@ -519,26 +521,26 @@ const RangeDatePicker = ({
     if (!open) {
       setMonth(range?.from);
     }
-  }, [open]);
+  }, [open, range?.from]);
 
   const onRangeChange = (range: DateRange | undefined) => {
     const newRange = range;
 
     if (showTimePicker) {
-      if (newRange?.from && !startTime) {
+      if (newRange?.from) {
         setStartTime(new Time(0, 0));
       }
 
-      if (newRange?.to && !endTime) {
+      if (newRange?.to ) {
         setEndTime(new Time(0, 0));
       }
 
-      if (newRange?.from && startTime) {
+      if (newRange?.from) {
         newRange.from.setHours(startTime.hour);
         newRange.from.setMinutes(startTime.minute);
       }
 
-      if (newRange?.to && endTime) {
+      if (newRange?.to) {
         newRange.to.setHours(endTime.hour);
         newRange.to.setMinutes(endTime.minute);
       }
@@ -591,13 +593,10 @@ const RangeDatePicker = ({
 
       const newDate = new Date(range.from.getTime());
 
-      if (!time) {
-        newDate.setHours(0);
-        newDate.setMinutes(0);
-      } else {
+
         newDate.setHours(time.hour);
         newDate.setMinutes(time.minute);
-      }
+      
 
       setRange({
         ...range,
@@ -612,13 +611,10 @@ const RangeDatePicker = ({
 
       const newDate = new Date(range.to.getTime());
 
-      if (!time) {
-        newDate.setHours(0);
-        newDate.setMinutes(0);
-      } else {
+   
         newDate.setHours(time.hour);
         newDate.setMinutes(time.minute);
-      }
+      
 
       setRange({
         ...range,
@@ -755,7 +751,7 @@ const validatePresets = (
 ) => {
   const { toYear, fromYear, fromMonth, toMonth, fromDay, toDay } = rules;
 
-  if (presets && presets.length > 0) {
+  if (presets.length > 0) {
     const fromYearToUse = fromYear;
     const toYearToUse = toYear;
 

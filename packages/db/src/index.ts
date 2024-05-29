@@ -3,6 +3,7 @@
 import type { NeonQueryFunction } from "@neondatabase/serverless";
 import { neon, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
+import { connectionStr } from "./config";
 
 import * as auth from "./schema/auth";
 import * as bridge from "./schema/bridge";
@@ -37,7 +38,7 @@ if (!process.env.VERCEL_ENV) {
 }
 
 export const neonSql = neon(
-  process.env.DATABASE_URL!,
+  connectionStr.href,
 ) satisfies NeonQueryFunction<boolean, boolean>;
 //const queryClient = postgres('postgres://postgres:postgres@localhost:5432');
 

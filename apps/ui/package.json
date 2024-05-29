@@ -6,12 +6,13 @@
   "files": [
     "types/*"
   ],
+  "type": "module",
   "license": "MIT",
   "scripts": {
     "build": "storybook build -o dist",
     "clean": "rm -rf .turbo node_modules",
     "dev": "storybook dev -p 6006",
-    "lint": "eslint .",
+    "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
@@ -93,7 +94,7 @@
     "@vitejs/plugin-react": "^4.3.0",
     "@vitest/coverage-v8": "^1.6.0",
     "chromatic": "^11.4.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.3.0",
     "eslint-plugin-storybook": "^0.8.0",
     "jsdom": "^24.0.0",
     "postcss": "^8.4.38",
@@ -115,11 +116,6 @@
   "peerDependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@realms-world/eslint-config/base"
-    ]
   },
   "prettier": "@realms-world/prettier-config"
 }

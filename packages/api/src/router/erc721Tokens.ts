@@ -57,7 +57,7 @@ export const erc721TokensRouter = createTRPCRouter({
       else {
         if (
           cursor == undefined ||
-          (cursor?.token_id != 0 && cursor?.price != null)
+          (cursor.token_id != 0 && cursor.price != null)
         ) {
           cursors.push(
             [
