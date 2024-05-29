@@ -1,18 +1,14 @@
 import { useState } from "react";
 import { Realm } from "@/.graphclient";
+import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
+import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
 import { RealmsTable } from "@/app/_components/RealmsTable";
 import { columns } from "@/app/_components/RealmsTableColumns";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
-import { useERC721SetApprovalForAll } from "@/hooks/token/useERC721SetApprovalForAll";
 import { useQuery } from "@tanstack/react-query";
-import { useAccount } from "wagmi";
+import { useAccount, useWriteContract } from "wagmi";
 
-import {
-  CollectionAddresses,
-  Collections,
-  getCollectionAddresses,
-  StakingAddresses,
-} from "@realms-world/constants";
+import { StakingAddresses, StakingContracts } from "@realms-world/constants";
 import {
   Accordion,
   AccordionContent,
@@ -23,12 +19,15 @@ import {
 
 export const StakingMigration = () => {
   const { address } = useAccount();
-  const [selectedRows, setSelectedRows] = useState({});
-
-  const handleRowSelection = (newSelection: any) => {
+  const [selectedRows, setSelectedRows] = useState<Realm[]>();
+  const { writeContractAsync: exitGalleon, isPending: isExitGalleonPending } =
+    useWriteContract();
+  const { writeContractAsync: exitCarrack, isPending: isExitCarrackPending } =
+    useWriteContract();
+  const handleRowSelection = (newSelection: Realm[]) => {
     setSelectedRows(newSelection);
   };
-  const { data: realmsData, isLoading: realmsDataIsLoading } = useQuery({
+  const { data: realmsData /*, isLoading: realmsDataIsLoading*/ } = useQuery({
     queryKey: ["UsersRealms" + address],
     queryFn: async () =>
       await fetch(`/api/subgraph/getRealms?address=${address}`, {
@@ -41,11 +40,13 @@ export const StakingMigration = () => {
     enabled: !!address,
     //refetchInterval: 10000,
   });
-  const { writeAsync: setApproval } = useERC721SetApprovalForAll({
-    onSuccess: (data) => console.log("sucess" + data),
-  });
+  const galleonAddress = StakingAddresses[StakingContracts.GALLEON][
+    SUPPORTED_L1_CHAIN_ID
+  ] as `0x${string}`;
+  const carrackAddress = StakingAddresses[StakingContracts.CARRACK][
+    SUPPORTED_L1_CHAIN_ID
+  ] as `0x${string}`;
 
-  CollectionAddresses.realms[SUPPORTED_L1_CHAIN_ID];
   const steps = [
     ...(realmsData?.wallet.bridgedRealmsHeld > 0
       ? [
@@ -56,8 +57,25 @@ export const StakingMigration = () => {
                 <RealmsTable
                   data={realmsData?.bridgedRealms as Realm[]}
                   columns={columns}
+                  onRowSelectionChange={handleRowSelection}
                 />
-                <Button className="w-full">Unstake Realms</Button>
+                <Button
+                  onClick={() =>
+                    selectedRows &&
+                    exitGalleon({
+                      address: galleonAddress,
+                      abi: GalleonStaking,
+                      functionName: "exitShip",
+                      args: [
+                        selectedRows?.map((realm) => BigInt(realm.tokenId)),
+                      ],
+                    })
+                  }
+                  disabled={!selectedRows?.length}
+                  className="w-full"
+                >
+                  Unstake Realms
+                </Button>
               </div>
             ),
           },
@@ -72,8 +90,25 @@ export const StakingMigration = () => {
                 <RealmsTable
                   data={realmsData?.bridgedV2Realms as Realm[]}
                   columns={columns}
+                  onRowSelectionChange={handleRowSelection}
                 />
-                <Button className="w-full">Unstake Realms</Button>
+                <Button
+                  onClick={() =>
+                    selectedRows &&
+                    exitCarrack({
+                      address: carrackAddress,
+                      abi: CarrackStaking,
+                      functionName: "exitShip",
+                      args: [
+                        selectedRows?.map((realm) => BigInt(realm.tokenId)),
+                      ],
+                    })
+                  }
+                  disabled={!selectedRows?.length}
+                  className="w-full"
+                >
+                  Unstake Realms
+                </Button>
               </div>
             ),
           },
@@ -87,12 +122,6 @@ export const StakingMigration = () => {
             You are ready to discover your Realms on the Starknet L2
           </p>
           <Button>Go To Bridge</Button>
-          {/*<RealmsTable
-            data={realmsData?.realms as Realm[]}
-            columns={columns}
-            onRowSelectionChange={handleRowSelection}
-          />
-      <Button className="w-full">Stake Realms</Button>*/}
         </div>
       ),
     },

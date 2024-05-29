@@ -7,10 +7,8 @@ import { NftBridgeModal } from "../_components/modal/NftBridgeModal";
 
 export default function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { id: string };
 }) {
   const tabs = [
     {

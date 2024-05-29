@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Realm } from "@/types";
+import { Realm } from "@/.graphclient";
 import {
   ColumnDef,
   flexRender,
@@ -22,7 +22,7 @@ import {
 
 interface DataTableProps<TData, TValue> {
   data: Realm[];
-  columns: ColumnDef<TData, TValue>[];
+  columns: ColumnDef<Realm, TValue>[];
   onRowSelectionChange: (rows: any) => void;
 }
 

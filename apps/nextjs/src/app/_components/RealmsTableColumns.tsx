@@ -41,6 +41,6 @@ export const columns: ColumnDef<Realm>[] = [
   },
   {
     accessorKey: "name",
-    header: ({ column }) => <span className="font-sans">Name</span>,
+    header: () => <span className="font-sans">Name</span>,
   },
 ];

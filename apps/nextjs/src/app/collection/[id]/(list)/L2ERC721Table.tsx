@@ -3,29 +3,33 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { NftActions } from "@/app/account/assets/NftActions";
+import useNftSelection from "@/hooks/useNftSelection";
 import { cleanQuery } from "@/lib/reservoir/getToken";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { api } from "@/trpc/react";
 import { useInView } from "framer-motion";
 
 import type { RouterInputs } from "@realms-world/api";
+import { getCollectionFromAddress } from "@realms-world/constants";
 
 import { TokenCardSkeleton } from "../../TokenCardSkeleton";
 import { L2ERC721Card } from "./L2ERC721Card";
 
-//import { SweepModal } from '@reservoir0x/reservoir-kit-ui'
 const L2ERC721Table = ({
   contractAddress,
   ownerAddress,
   infiniteScroll = true,
   loadMoreAssetName = "",
   limit = 24,
+  selectable = false,
 }: {
   contractAddress: string;
   ownerAddress?: string;
   infiniteScroll?: boolean;
   loadMoreAssetName?: string;
   limit?: number;
+  selectable?: boolean;
 }) => {
   const { isGrid } = useUIStore((state) => state);
   const grid =
@@ -72,19 +76,69 @@ const L2ERC721Table = ({
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     if (isInView && infiniteScroll) fetchNextPage();
   }, [fetchNextPage, isInView]);
+  const {
+    deselectAllNfts,
+    isNftSelected,
+    selectBatchNfts,
+    selectedCollectionAddress,
+    toggleNftSelection,
+    totalSelectedNfts,
+    selectedTokenIds,
+  } = useNftSelection({ userAddress: ownerAddress as `0x${string}` });
 
   return (
     <>
+      {selectable && erc721Tokens.pages[0]?.items.length && (
+        <NftActions
+          selectedTokenIds={selectedTokenIds}
+          totalSelectedNfts={totalSelectedNfts}
+          selectBatchNfts={selectBatchNfts}
+          tokens={erc721Tokens.pages[0]?.items}
+          deselectAllNfts={deselectAllNfts}
+        />
+      )}
       <div className={isGrid ? grid : list}>
         {erc721Tokens.pages[0]?.items.length
           ? erc721Tokens?.pages?.map((page) =>
               page.items.map((token, index) => {
+                const isSelected = isNftSelected(
+                  token.token_id.toString() ?? "0",
+                  token.contract_address ?? "0x",
+                );
                 return (
-                  <L2ERC721Card
-                    key={index}
-                    token={token}
-                    layout={isGrid ? "grid" : "list"}
-                  />
+                  <>
+                    {selectable ? (
+                      <button
+                        onClick={() =>
+                          toggleNftSelection(
+                            token.token_id.toString() ?? "0",
+                            token.contract_address ?? "0x",
+                          )
+                        }
+                      >
+                        <L2ERC721Card
+                          selectable
+                          isSelected={isSelected}
+                          key={index}
+                          token={token}
+                          layout={isGrid ? "grid" : "list"}
+                        />
+                      </button>
+                    ) : (
+                      <Link
+                        href={`/collection/${token.contract_address && getCollectionFromAddress(token.contract_address)}/${
+                          token.token_id
+                        }`}
+                        className={`${isGrid ? "" : "flex"}`}
+                      >
+                        <L2ERC721Card
+                          key={index}
+                          token={token}
+                          layout={isGrid ? "grid" : "list"}
+                        />
+                      </Link>
+                    )}
+                  </>
                 );
               }),
             )

@@ -15,17 +15,19 @@ export const TokenInput = React.forwardRef<HTMLInputElement, TokenInputProps>(
     return (
       <div className="relative w-full">
         <Input
+          ref={ref}
           min={0}
           max={1000}
           value={amount}
           placeholder="0.00"
           className="h-14 p-4 text-lg leading-6 placeholder:text-white/30 hover:bg-black/30"
-          {...props}
+          {...rest}
         />
         <div className="absolute right-0 top-0 flex pr-4 pt-4">
-          <LordsIcon className="mr-3 h-6 w-6 fill-white" />
+          {icon ?? <LordsIcon className="mr-3 h-6 w-6 fill-white" />}
         </div>
       </div>
     );
   },
 );
+TokenInput.displayName = "TokenInput";

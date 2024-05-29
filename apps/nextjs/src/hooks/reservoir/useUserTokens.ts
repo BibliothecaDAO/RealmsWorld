@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import type { paths } from "@reservoir0x/reservoir-sdk";
-import { getUser } from "@/lib/reservoir/getUser";
 import { useQuery } from "@tanstack/react-query";
 
 export const useUserTokens = ({ address }: { address: string }) => {

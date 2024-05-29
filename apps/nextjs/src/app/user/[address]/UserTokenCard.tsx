@@ -1,4 +1,3 @@
-import type { UserTokenData } from "@/types";
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import Image from "next/image";
 import Link from "next/link";

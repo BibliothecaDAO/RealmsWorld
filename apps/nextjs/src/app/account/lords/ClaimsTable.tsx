@@ -1,6 +1,6 @@
 "use client";
 
-import { Realm } from "@/types";
+import { ReactNode } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -10,7 +10,6 @@ import {
 
 import {
   Button,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -29,25 +28,24 @@ type Claim = {
 export const columns: ColumnDef<Claim>[] = [
   {
     accessorKey: "start_date",
-    header: ({ column }) => <span className="font-sans">Starting</span>,
+    header: () => <span className="font-sans">Starting</span>,
   },
   {
     accessorKey: "realms",
-    header: ({ column }) => <span className="font-sans">Realms Staked</span>,
+    header: () => <span className="font-sans">Realms Staked</span>,
   },
   {
     accessorKey: "lords_rewards",
-    header: ({ column }) => <span className="font-sans">Lords Rewards</span>,
+    header: () => <span className="font-sans">Lords Rewards</span>,
   },
   {
     accessorKey: "claim",
-    header: ({ column }) => <span className="font-sans">Claim</span>,
+    header: () => <span className="font-sans">Claim</span>,
     cell: (cell) => {
-      console.log(cell.getValue());
       if (!cell.getValue()) {
         return <Button size={"xs"}>Claim</Button>;
       } else {
-        return <span>Claimed: {cell.getValue()}</span>;
+        return <span>Claimed: {cell.getValue() as ReactNode}</span>;
       }
     },
   },
@@ -63,7 +61,7 @@ export function ClaimsTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getRowId: (row) => row.id,
+    getRowId: (row) => row.start_date,
   });
 
   return (

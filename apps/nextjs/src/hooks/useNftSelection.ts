@@ -2,6 +2,8 @@
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { useCallback, useMemo, useState } from "react";
 
+import { RouterOutputs } from "@realms-world/api";
+
 export const MAX_SELECTED_ITEMS = 30;
 
 export default function useNftSelection({
@@ -16,7 +18,7 @@ export default function useNftSelection({
     useState<
       Record<
         `0x${string}`,
-        { collectionAddress: string; tokenIds: Array<string> } | null
+        { collectionAddress: string; tokenIds: string[] } | null
       >
     >();
 
@@ -119,9 +121,11 @@ export default function useNftSelection({
   );
 
   function selectBatchNfts(
-    nfts: NonNullable<
-      paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
-    >,
+    nfts:
+      | NonNullable<
+          paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
+        >
+      | RouterOutputs["erc721Tokens"]["all"]["items"],
   ) {
     if (nfts.length === 0 || userAddress === undefined) {
       return;

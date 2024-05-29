@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import RealmsABI from "@/abi/L2/Realms.json";
-import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import { stakingAddresses } from "@/constants/staking";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
   useAccount,
   useContract,
@@ -9,24 +8,15 @@ import {
   useContractWrite,
 } from "@starknet-react/core";
 import { Call } from "starknet";
-import { parseEther } from "viem";
 
-import {
-  Collections,
-  getCollectionAddresses,
-  LORDS_BRIDGE_ADDRESS,
-} from "@realms-world/constants";
+import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
 export const useL2LordsRewards = () => {
   const { address: l2Address } = useAccount();
   const l2RealmsAddress = getCollectionAddresses(Collections.REALMS)[
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;
-  const {
-    data: balance,
-    isFetching: l2LordsIsLoading,
-    refetch: l2LordsRefetch,
-  } = useContractRead({
+  const { data: balance, isFetching: l2LordsIsLoading } = useContractRead({
     address: l2RealmsAddress,
     abi: RealmsABI,
     functionName: "get_reward_balance_for",
@@ -44,14 +34,15 @@ export const useL2LordsRewards = () => {
   const calls: Call[] = useMemo(() => {
     if (!l2Address) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [contract?.populateTransaction["reward_claim"]!()];
-  }, [l2Address, contract?.populateTransaction.initiate_withdrawal]);
+    return [contract?.populateTransaction.reward_claim!()];
+  }, [l2Address, contract?.populateTransaction.reward_claim]);
 
   const { writeAsync, data: claimHash } = useContractWrite({ calls });
 
   return {
     balance,
     calls,
+    loading: l2LordsIsLoading,
     writeAsync,
     claimHash,
   };

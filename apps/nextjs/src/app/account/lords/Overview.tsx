@@ -1,9 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
 import RealmsABI from "@/abi/L2/Realms.json";
-import { LoadingSkeletonGrid } from "@/app/_components/LoadingSkeletonGrid";
-import { TokenInput } from "@/app/_components/TokenInput";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useL2LordsRewards } from "@/hooks/staking/useL2LordsRewards";
 import { useLordship } from "@/hooks/staking/useLordship";
@@ -14,7 +11,6 @@ import {
   useContractRead,
   useAccount as useL2Account,
 } from "@starknet-react/core";
-import { AlertTriangleIcon, InfoIcon } from "lucide-react";
 import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 
@@ -24,9 +20,6 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  Alert,
-  AlertDescription,
-  AlertTitle,
   Button,
   Card,
   CardContent,
@@ -34,19 +27,6 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-  Input,
-  Label,
-  RadioGroup,
-  RadioGroupItem,
-  Table,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
 } from "@realms-world/ui";
 
 import { ClaimsTable } from "./ClaimsTable";
@@ -68,7 +48,7 @@ export const Overview = () => {
     poolV1Balance,
     poolV2Balance,
   } = useStaking();
-  const delegateData = useLordship(l1Address);
+  //const delegateData = useLordship(l1Address);
   const { toggleStakingMigration } = useUIStore((state: any) => state);
 
   const totalL1Realms =

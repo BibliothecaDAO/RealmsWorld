@@ -45,7 +45,7 @@ export const useStaking = () => {
         ],
       // query: { enabled: !!address && !!poolTotal }
     });
-  const { numTokens, claimAirdrop, balance } = useAirdropClaim();
+  const { numTokens, balance } = useAirdropClaim();
 
   useEffect(() => {
     const fetchStakingData = async () => {

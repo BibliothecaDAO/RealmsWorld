@@ -1,4 +1,3 @@
-import type { UsersRealmsQuery } from "@/.graphclient";
 import { useQuery } from "@tanstack/react-query";
 
 export const useLordship = (address?: string) => {
@@ -9,7 +8,7 @@ export const useLordship = (address?: string) => {
         method: "POST",
       })
         .then((res) => res.json())
-        .then((res) => {
+        .then((res: { data: any }) => {
           return res.data;
         }),
     enabled: !!address,

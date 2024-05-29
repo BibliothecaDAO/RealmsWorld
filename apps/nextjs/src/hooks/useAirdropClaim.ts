@@ -70,8 +70,6 @@ export function useAirdropClaim() {
     args: [addressL1?.toLowerCase()],
   });
 
-  console.log('has claimed ' + balance)
-
   const claimAirdrop = async (): Promise<void> => {
     if (!addressL1) {
       throw new Error("Not Authenticated");

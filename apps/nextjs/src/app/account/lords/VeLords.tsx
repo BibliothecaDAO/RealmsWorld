@@ -27,7 +27,7 @@ import {
 
 export const VeLords = () => {
   const { address } = useAccount();
-  const { isLoading, isError, error, data } = useBalance({
+  const { isLoading, data } = useBalance({
     address,
     token: LORDS[SUPPORTED_L2_CHAIN_ID]?.address,
     watch: true,

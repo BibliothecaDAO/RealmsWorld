@@ -6,7 +6,6 @@ import { useUIStore } from "@/providers/UIStoreProvider";
 import {
   Dialog,
   DialogContent,
-  DialogOverlay,
   DialogTitle,
   ScrollArea,
 } from "@realms-world/ui";

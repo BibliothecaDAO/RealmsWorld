@@ -1,4 +1,4 @@
-import { UsersRealmsQuery } from "@/.graphclient";
+import type { UsersRealmsQuery } from "@/.graphclient";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { AlertTriangleIcon } from "lucide-react";
 
@@ -97,8 +97,8 @@ export const RealmStakingTabs = ({
       )}
       <Tabs defaultValue={tabsData[0]?.id}>
         <TabsList className="grid grid-cols-3 border-0">
-          {tabsData.map((tab) => (
-            <TabsTrigger asChild value={tab.id}>
+          {tabsData.map((tab, index) => (
+            <TabsTrigger asChild value={tab.id} key={index}>
               <Label
                 htmlFor={tab.id}
                 className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-background bg-popover p-4 hover:bg-accent hover:text-accent-foreground data-[state=active]:border-bright-yellow peer-data-[state=active]:border-bright-yellow"
@@ -109,8 +109,8 @@ export const RealmStakingTabs = ({
             </TabsTrigger>
           ))}
         </TabsList>
-        {tabsData.map((tab) => (
-          <TabsContent value={tab.id} className="h-full">
+        {tabsData.map((tab, index) => (
+          <TabsContent value={tab.id} className="h-full" key={index}>
             {tab.content}
           </TabsContent>
         ))}

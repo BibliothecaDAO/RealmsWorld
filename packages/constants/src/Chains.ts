@@ -12,11 +12,11 @@ export enum ChainId {
 }
 
 export const CHAIN_IDS_TO_NAMES = {
-  [ChainId.MAINNET]: "mainnet",
-  [ChainId.SEPOLIA]: "sepolia",
+  [ChainId.MAINNET]: "Ethereum",
+  [ChainId.SEPOLIA]: "Sepolia",
   [ChainId.MISSISSIPPI_TESTNET]: "Mississippi Testnet",
-  [ChainId.SN_MAIN]: "starknet_mainnet",
-  [ChainId.SN_SEPOLIA]: "starknet_sepolia",
+  [ChainId.SN_MAIN]: "Starknet Mainnet",
+  [ChainId.SN_SEPOLIA]: "Starknet Sepolia",
   [ChainId.SLOT_TESTNET]: "Slot Testnet",
   [ChainId.REALMS_L3]: "Realms L3",
 } as const;

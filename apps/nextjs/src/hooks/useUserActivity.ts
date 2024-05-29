@@ -1,6 +1,5 @@
 import { RESERVOIR_API_URL, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { useQuery } from "@tanstack/react-query";
-import { method } from "lodash";
 
 import { CollectionAddresses } from "@realms-world/constants";
 
@@ -20,7 +19,7 @@ export const useUserActivity = (address?: string) => {
         },
       )
         .then((res) => res.json())
-        .then((res) => {
+        .then((res: { data: any }) => {
           return res.data;
         })
         .catch((err) => console.log("err", err)),

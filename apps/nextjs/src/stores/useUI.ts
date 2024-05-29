@@ -1,9 +1,16 @@
 "use client";
 
-import type { ReactNode } from "react";
-import React from "react";
-import { ModalProvider } from "@/providers/ModalProvider";
 import { createStore } from "zustand/vanilla";
+
+import type { ChainId } from "@realms-world/constants";
+
+export interface NftBridgeModalProps {
+  selectedTokenIds: string[];
+  sourceChain: ChainId;
+  //isTestnet?: boolean;
+  onClose?: () => void;
+  // onNftSelect: (nft: NftData) => void;
+}
 
 // Define the store's shape
 export interface UIState {
@@ -14,6 +21,7 @@ export interface UIState {
   isStarknetLoginOpen: boolean;
   isStakingMigrationOpen: boolean;
   isNftBridgeOpen: boolean;
+  nftBridgeModalProps: NftBridgeModalProps;
 }
 
 export interface UIActions {
@@ -24,6 +32,7 @@ export interface UIActions {
   toggleStarknetLogin: () => void;
   toggleStakingMigration: () => void;
   toggleNftBridge: () => void;
+  setNftBridgeModalProps: (props: NftBridgeModalProps) => void;
 }
 
 export type UIStore = UIActions & UIState;
@@ -36,6 +45,9 @@ export const initialState: UIState = {
   isStarknetLoginOpen: false,
   isStakingMigrationOpen: false,
   isNftBridgeOpen: false,
+  nftBridgeModalProps: {
+    selectedTokenIds: [],
+  },
 };
 // Create the store using zustand
 export const createUIStore = (initState: UIState = initialState) => {
@@ -57,7 +69,7 @@ export const createUIStore = (initState: UIState = initialState) => {
       set((state) => ({
         isNftBridgeOpen: !state.isNftBridgeOpen,
       })),
+    setNftBridgeModalProps: (props: NftBridgeModalProps) =>
+      set({ nftBridgeModalProps: props }),
   }));
 };
-
-// Export the useUIStore hook for components to access the store

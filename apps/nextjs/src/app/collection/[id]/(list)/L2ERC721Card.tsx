@@ -9,60 +9,60 @@ import { findLowestPriceActiveListing } from "@/utils/getters";
 import type { RouterOutputs } from "@realms-world/api";
 import { getCollectionFromAddress } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
+import { cn } from "@realms-world/utils";
 
 import { CardAction } from "./CardAction";
 
 export const L2ERC721Card = ({
   token,
   layout = "grid",
+  selectable = false,
+  isSelected = false,
 }: {
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   layout?: "grid" | "list";
+  selectable?: boolean;
+  isSelected?: boolean;
 }) => {
   const isGrid = layout === "grid";
   const imageSize = isGrid ? 800 : 60;
 
   return (
     <div
-      className={`group flex transform border-2 bg-background duration-300 hover:border-bright-yellow ${
-        isGrid ? "w-full flex-col" : "justify-between"
-      }`}
+      className={cn(
+        "group flex transform border-2 bg-background duration-300 hover:border-bright-yellow",
+        isGrid ? "w-full flex-col" : "justify-between",
+        isSelected && "border-[5px] border-primary bg-accent-foreground",
+      )}
     >
       <div>
-        <Link
-          href={`/collection/${token.contract_address && getCollectionFromAddress(token.contract_address)}/${
-            token.token_id
-          }`}
-          className={`${isGrid ? "" : "flex"}`}
-        >
-          <div className={` ${!isGrid && "p-1"} relative`}>
-            <div className="absolute z-0 h-full w-full from-black/50 transition-all duration-150 group-hover:bg-gradient-to-t"></div>
-            {token.image ? (
-              <Image
-                src={token.image}
-                alt={token.name ?? `beasts-${token.token_id}`}
-                className={isGrid ? "mx-auto" : ""}
-                width={imageSize}
-                height={imageSize}
-              />
-            ) : (
-              <AnimatedMap />
-            )}
-            {isGrid && (
-              <span className="absolute bottom-1 right-1 bg-black px-1 py-1 text-xs">
-                #{token.token_id}
-              </span>
-            )}
+        <div className={` ${!isGrid && "p-1"} relative`}>
+          <div className="absolute z-0 h-full w-full from-black/50 transition-all duration-150 group-hover:bg-gradient-to-t"></div>
+          {token.image ? (
+            <Image
+              src={token.image}
+              alt={token.name ?? `beasts-${token.token_id}`}
+              className={isGrid ? "mx-auto" : ""}
+              width={imageSize}
+              height={imageSize}
+            />
+          ) : (
+            <AnimatedMap />
+          )}
+          {isGrid && (
+            <span className="absolute bottom-1 right-1 bg-black px-1 py-1 text-xs">
+              #{token.token_id}
+            </span>
+          )}
 
-            <div className="absolute bottom-0 left-0 w-full px-3 opacity-0 transition-all duration-300 group-hover:bottom-4 group-hover:opacity-100">
-              <TokenAttributes
-                token={token}
-                attributeKeys={["type", "tier", "level", "health"]}
-              />
-              <CardAction token={token} />
-            </div>
+          <div className="absolute bottom-0 left-0 w-full px-3 opacity-0 transition-all duration-300 group-hover:bottom-4 group-hover:opacity-100">
+            <TokenAttributes
+              token={token}
+              attributeKeys={["type", "tier", "level", "health"]}
+            />
+            <CardAction token={token} />
           </div>
-        </Link>
+        </div>
       </div>
 
       <TokenDetails
@@ -180,9 +180,9 @@ const ListDetails = ({
         <LordsIcon className="mx-auto ml-3 h-6 w-6 fill-bright-yellow pb-1" />
       </div>
       <div className="fonts-sans ml-auto self-center text-xs">
-        <Button variant={"ghost"} href={`/user/${address}`}>
-          {useStarkDisplayName(address)}
-        </Button>
+        <Link href={`/user/${address}`}>
+          <Button variant={"ghost"}>{useStarkDisplayName(address)}</Button>
+        </Link>
       </div>
       <div className="absolute bottom-0 right-0 w-full px-3 opacity-0 transition-all duration-300 group-hover:bottom-2 group-hover:opacity-100">
         <CardAction token={token} />
