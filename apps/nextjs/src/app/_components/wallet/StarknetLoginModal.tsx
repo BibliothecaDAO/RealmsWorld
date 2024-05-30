@@ -3,10 +3,12 @@
 //import { Mail } from "lucide-react";
 import type { WalletProvider } from "get-starknet-core";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount, useConnect } from "@starknet-react/core";
 import { motion } from "framer-motion";
-import getDiscoveryWallets from "get-starknet-core";
+
+//import getDiscoveryWallets from "get-starknet-core";
 
 import { Button, Dialog, DialogContent, DialogHeader } from "@realms-world/ui";
 
@@ -22,47 +24,62 @@ export const StarknetLoginModal = () => {
   } = useUIStore((state) => state);
   const { isConnected } = useAccount();
 
-  const [braavos, setBraavos] = useState<string>("");
-  const [argent, setArgent] = useState<string>("");
+  const wallets = [
+    {
+      id: "argentX",
+      name: "Argent X",
+      downloads: {
+        chrome:
+          "https://chrome.google.com/webstore/detail/argent-x-starknet-wallet/dlcobpjiigpikoobohmabehhmhfoodbb",
+        firefox: "https://addons.mozilla.org/en-US/firefox/addon/argent-x",
+        edge: "https://microsoftedge.microsoft.com/addons/detail/argent-x/ajcicjlkibolbeaaagejfhnofogocgcj",
+      },
+      website: "https://www.argent.xyz/argent-x/",
+    },
+    {
+      id: "argentMobile",
+      name: "Argent (mobile)",
+      website: "https://www.argent.xyz/argent-x/",
+    },
+    {
+      id: "argentWebWallet",
+      name: "Email",
+      website: "https://www.argent.xyz/argent-x/",
+    },
+    {
+      id: "braavos",
+      name: "Braavos",
+      downloads: {
+        chrome:
+          "https://chrome.google.com/webstore/detail/braavos-wallet/jnlgamecbpmbajjfhmmmlhejkemejdma",
+        firefox:
+          "https://addons.mozilla.org/en-US/firefox/addon/braavos-wallet",
+        edge: "https://microsoftedge.microsoft.com/addons/detail/braavos-wallet/hkkpjehhcnhgefhbdcgfkeegglpjchdc",
+      },
+      website: "https://braavos.app/",
+    },
+  ];
+  function getBrowser(userAgent: string): string | undefined {
+    if (userAgent.includes("Chrome")) {
+      return "chrome";
+    } else if (userAgent.includes("Firefox")) {
+      return "firefox";
+    } else {
+      return undefined;
+    }
+  }
+  const getConnectorDiscovery = (id: string) => {
+    const walletData = wallets.find((wallet) => wallet.id === id);
 
-  useEffect(() => {
-    // get wallets download links from get-starknet-core
-    // if browser is not recognized, it will default to their download pages
-    function getBrowser(): string | undefined {
-      const userAgent = navigator.userAgent;
-      if (userAgent.includes("Chrome")) {
-        return "chrome";
-      } else if (userAgent.includes("Firefox")) {
-        return "firefox";
-      } else {
-        return undefined;
-      }
+    if (!walletData?.website) return "https://www.starknet-ecosystem.com"; // if no website is found, return the ecosystem website
+
+    if (walletData.downloads && typeof navigator !== "undefined") {
+      const browser = getBrowser(navigator.userAgent);
+      return walletData.downloads[browser as keyof typeof walletData.downloads];
     }
 
-    const getWallets = async () =>
-      getDiscoveryWallets.getDiscoveryWallets().then((wallets) => {
-        const browser = getBrowser();
-
-        wallets.map((wallet) => {
-          if (wallet.id === "argentX") {
-            setArgent(
-              browser
-                ? wallet.downloads[browser as keyof WalletProvider["downloads"]]
-                : "https://www.argent.xyz/argent-x/",
-            );
-          } else if (wallet.id === "braavos") {
-            setBraavos(
-              browser
-                ? wallet.downloads[browser as keyof WalletProvider["downloads"]]
-                : "https://braavos.app/download-braavos-wallet/",
-            );
-          }
-        });
-      });
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    getWallets();
-  }, []);
+    return walletData.website;
+  };
 
   useEffect(() => {
     if (isConnected && isStarknetLoginOpen) {
@@ -88,48 +105,31 @@ export const StarknetLoginModal = () => {
           </DialogHeader>
           <div className="flex flex-col space-y-2 self-center">
             {connectors.map((connector) => {
-              if (connector.available()) {
-                return (
-                  <div className="mt-5 flex justify-center" key={connector.id}>
-                    <Button
-                      className="w-full justify-between self-center px-4 py-6 font-sans text-lg font-light capitalize"
-                      variant={"outline"}
-                      onClick={() => connect({ connector })}
-                    >
-                      <div className="flex items-center justify-center">
-                        <WalletIcons id={connector.id} />
-                        {connector.name
-                          ? `Connect ${connector.name}`
-                          : "Login with Email"}
-                      </div>
-                    </Button>
-                  </div>
-                );
-              } else {
-                if (connector.id === "braavos" || connector.id === "argentX") {
-                  return (
-                    <div
-                      className="mt-5 flex justify-center"
-                      key={connector.id}
-                    >
-                      <Button
-                        className="w-full justify-between self-center px-4 py-6 font-sans text-lg font-light capitalize"
-                        variant={"outline"}
-                        onClick={() =>
-                          open(
-                            `${connector.id === "braavos" ? braavos : argent}`,
-                          )
-                        }
-                      >
-                        <div className="flex items-center justify-center">
-                          <WalletIcons id={connector.id} />
-                          Install {connector.id}
-                        </div>
-                      </Button>
+              const connectorInfo = wallets.find(
+                (wallet) => wallet.id === connector.id,
+              );
+              return (
+                <div className="mt-5 flex justify-center" key={connector.id}>
+                  <Button
+                    className="w-full justify-between self-center px-4 py-6 font-sans text-lg font-light capitalize"
+                    variant={"outline"}
+                    onClick={() =>
+                      connector.available()
+                        ? connect({ connector })
+                        : window.open(getConnectorDiscovery(connector.id))
+                    }
+                  >
+                    <div className="flex items-center justify-center">
+                      <WalletIcons id={connector.id} />
+
+                      {!connector.available() ? "Install " : ""}
+                      {connectorInfo?.name
+                        ? `${connectorInfo.name}`
+                        : "Login with Email"}
                     </div>
-                  );
-                }
-              }
+                  </Button>
+                </div>
+              );
             })}
           </div>
         </motion.div>
