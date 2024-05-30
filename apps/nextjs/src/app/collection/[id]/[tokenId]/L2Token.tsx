@@ -56,7 +56,6 @@ export const L2Token = ({
     erc721Token.owner,
   );
 
-  const collectionId = getCollectionFromAddress(contractAddress);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const expiryDiff = useTimeDiff(lowestPriceActiveListing?.expiration ?? 0);
 

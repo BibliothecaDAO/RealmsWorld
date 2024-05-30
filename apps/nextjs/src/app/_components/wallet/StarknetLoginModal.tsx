@@ -1,9 +1,7 @@
 "use client";
 
 //import { Mail } from "lucide-react";
-import type { WalletProvider } from "get-starknet-core";
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect } from "react";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount, useConnect } from "@starknet-react/core";
 import { motion } from "framer-motion";
