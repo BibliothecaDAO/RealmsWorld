@@ -29,12 +29,12 @@ export const useWriteInitiateWithdrawLords = ({
     if (!amount || !addressL1) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
-      contract?.populateTransaction.initiate_withdrawal!(addressL1, {
+      contract?.populateTransaction.initiate_withdrawal?.(addressL1, {
         low: parseEther(amount),
         high: 0,
       }),
     ];
-  }, [addressL1, amount, contract?.populateTransaction.initiate_withdrawal]);
+  }, [addressL1, amount, contract?.populateTransaction]);
 
   const { writeAsync, data: withdrawHash } = useL2ContractWrite({ calls });
 

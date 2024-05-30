@@ -1,4 +1,3 @@
-import type { Collection } from "@/types";
 import { CollectionCard } from "@/app/_components/CollectionCard";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { api } from "@/trpc/server";
@@ -14,13 +13,13 @@ export const metadata = {
 };
 
 export default async function CollectionsList() {
-  const { collections } = (await getCollections([
+  const { collections } = await getCollections([
     {
       contract: CollectionAddresses.realms[
         SUPPORTED_L1_CHAIN_ID
       ] as `0x${string}`,
     },
-  ])) as { collections: Collection[] };
+  ]);
   const erc721Collections = await api.erc721Collections.all({});
 
   const l2Collections = [
@@ -52,11 +51,11 @@ export default async function CollectionsList() {
 
   return (
     <div className="grid w-full grid-cols-1 gap-6 px-4 sm:px-0">
-      {collections.map((collection: Collection, index) => {
+      {collections?.map((collection, index) => {
         return (
           <CollectionCard
-            price={collection.floorAsk?.price.amount.native}
-            symbol={collection.floorAsk?.price.currency.symbol}
+            price={collection.floorAsk?.price?.amount?.native}
+            symbol={collection.floorAsk?.price?.currency?.symbol}
             name={collection.name}
             link={"/realms"}
             image={collection.image}

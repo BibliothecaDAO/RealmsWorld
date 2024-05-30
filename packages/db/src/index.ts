@@ -3,8 +3,8 @@
 import type { NeonQueryFunction } from "@neondatabase/serverless";
 import { neon, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
-import { connectionStr } from "./config";
 
+import config from "../drizzle.config";
 import * as auth from "./schema/auth";
 import * as bridge from "./schema/bridge";
 import * as erc721AttributeKeys from "./schema/erc721_attribute_keys";
@@ -30,15 +30,15 @@ export { pgSqlTable as tableCreator } from "./schema/_table";
 export * from "drizzle-orm";
 export { Int8Range } from "./int8range";
 
-if (!process.env.VERCEL_ENV) {
-  neonConfig.wsProxy = (/*host*/) => `127.0.0.1/v1`;
+/*if (!env.VERCEL_ENV) {
+  neonConfig.wsProxy = (/*host*/ /*) => `127.0.0.1/v1`;
   neonConfig.useSecureWebSocket = false;
   neonConfig.pipelineTLS = false;
   neonConfig.pipelineConnect = false;
-}
+}*/
 
 export const neonSql = neon(
-  connectionStr.href,
+  config.dbCredentials.url,
 ) satisfies NeonQueryFunction<boolean, boolean>;
 //const queryClient = postgres('postgres://postgres:postgres@localhost:5432');
 

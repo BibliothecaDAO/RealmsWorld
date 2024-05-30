@@ -48,7 +48,7 @@ export const Overview = () => {
     poolV2Balance,
   } = useStaking();
   //const delegateData = useLordship(l1Address);
-  const { toggleStakingMigration } = useUIStore((state: any) => state);
+  const { toggleStakingMigration } = useUIStore((state) => state);
 
   const totalL1Realms =
     +data?.wallet?.realmsHeld +

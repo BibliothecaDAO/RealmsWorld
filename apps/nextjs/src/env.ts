@@ -27,6 +27,7 @@ export const env = createEnv({
    * For them to be exposed to the client, prefix them with `NEXT_PUBLIC_`.
    */
   client: {
+    NEXT_PUBLIC_RESERVOIR_API_KEY: z.string(),
     NEXT_PUBLIC_IS_TESTNET: z.enum(["true", "false"]).default("false"),
     NEXT_PUBLIC_ETHERSCAN_URL: z.string().url(),
     NEXT_PUBLIC_VOYAGER_URL: z.string().url(),
@@ -45,7 +46,20 @@ export const env = createEnv({
    */
   experimental__runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-
+    NEXT_PUBLIC_IS_TESTNET: process.env.NEXT_PUBLIC_IS_TESTNET,
+    NEXT_PUBLIC_ETHERSCAN_URL: process.env.NEXT_PUBLIC_ETHERSCAN_URL,
+    NEXT_PUBLIC_VOYAGER_URL: process.env.NEXT_PUBLIC_VOYAGER_URL,
+    NEXT_PUBLIC_STARKSCAN_URL: process.env.NEXT_PUBLIC_STARKSCAN_URL,
+    NEXT_PUBLIC_SUBGRAPH_NAME: process.env.NEXT_PUBLIC_SUBGRAPH_NAME,
+    NEXT_PUBLIC_APIBARA_HANDLE: process.env.NEXT_PUBLIC_APIBARA_HANDLE,
+    NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID:
+      process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+    NEXT_PUBLIC_BLAST_API: process.env.NEXT_PUBLIC_BLAST_API,
+    NEXT_PUBLIC_REALMS_SUBGRAPH_NAME:
+      process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
+    NEXT_PUBLIC_ALCHEMY_API: process.env.NEXT_PUBLIC_ALCHEMY_API,
+    NEXT_PUBLIC_ETHPLORER_APIKEY: process.env.NEXT_PUBLIC_ETHPLORER_APIKEY,
+    NEXT_PUBLIC_RESERVOIR_API_KEY: process.env.NEXT_PUBLIC_RESERVOIR_API_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   skipValidation:

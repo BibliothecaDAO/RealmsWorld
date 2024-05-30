@@ -89,7 +89,7 @@ const L2ERC721Table = ({
 
   return (
     <>
-      {selectable && erc721Tokens.pages[0]?.items.length && (
+      {selectable && erc721Tokens.pages[0]?.items.length ? (
         <NftActions
           selectedTokenIds={selectedTokenIds}
           totalSelectedNfts={totalSelectedNfts}
@@ -97,7 +97,7 @@ const L2ERC721Table = ({
           tokens={erc721Tokens.pages[0]?.items}
           deselectAllNfts={deselectAllNfts}
         />
-      )}
+      ) : null}
       <div className={isGrid ? grid : list}>
         {erc721Tokens.pages[0]?.items.length
           ? erc721Tokens.pages.map((page) =>

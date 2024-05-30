@@ -25,20 +25,20 @@ export const StarknetLoginModal = () => {
   const [braavos, setBraavos] = useState<string>("");
   const [argent, setArgent] = useState<string>("");
 
-  function getBrowser(): string | undefined {
-    const userAgent = navigator.userAgent;
-    if (userAgent.includes("Chrome")) {
-      return "chrome";
-    } else if (userAgent.includes("Firefox")) {
-      return "firefox";
-    } else {
-      return undefined;
-    }
-  }
-
   useEffect(() => {
     // get wallets download links from get-starknet-core
     // if browser is not recognized, it will default to their download pages
+    function getBrowser(): string | undefined {
+      const userAgent = navigator.userAgent;
+      if (userAgent.includes("Chrome")) {
+        return "chrome";
+      } else if (userAgent.includes("Firefox")) {
+        return "firefox";
+      } else {
+        return undefined;
+      }
+    }
+
     const getWallets = async () =>
       getDiscoveryWallets.getDiscoveryWallets().then((wallets) => {
         const browser = getBrowser();
@@ -106,10 +106,7 @@ export const StarknetLoginModal = () => {
                   </div>
                 );
               } else {
-                if (
-                  connector.id === "braavos" ||
-                  connector.id === "argentX"
-                ) {
+                if (connector.id === "braavos" || connector.id === "argentX") {
                   return (
                     <div
                       className="mt-5 flex justify-center"

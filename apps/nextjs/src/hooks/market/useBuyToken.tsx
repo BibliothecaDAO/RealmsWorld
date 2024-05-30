@@ -32,19 +32,23 @@ export const useBuyToken = ({
     if (!listingId || !price) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
-      lordsContract?.populateTransaction.approve!(
+      lordsContract?.populateTransaction.approve?.(
         MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`, //Marketplace address
         parseUnits(`${price}`, 18).toString(),
         0,
       ),
 
-      contract?.populateTransaction.accept!(
+      contract?.populateTransaction.accept?.(
         listingId,
         parseUnits(`${price}`, 18).toString(),
       ),
     ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listingId, price]);
+  }, [
+    contract?.populateTransaction,
+    listingId,
+    lordsContract?.populateTransaction,
+    price,
+  ]);
 
   const { writeAsync, data, error } = useL2ContractWrite({ calls });
 

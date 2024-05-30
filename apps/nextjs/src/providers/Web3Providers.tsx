@@ -48,10 +48,7 @@ export const config = getDefaultConfig({
   projectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
   chains: [isTestnet ? sepolia : mainnet],
   ssr: true,
-  transports: {
-    [sepolia.id]: http(),
-    [mainnet.id]: http(),
-  },
+  transports: isTestnet ? { [sepolia.id]: http() } : { [mainnet.id]: http() },
 });
 
 export function Provider({ children }: { children: ReactElement }) {
@@ -71,7 +68,7 @@ export function Provider({ children }: { children: ReactElement }) {
           <TransferLogProvider>
             <ReservoirKitProvider
               options={{
-                apiKey: env.RESERVOIR_API_KEY,
+                apiKey: env.NEXT_PUBLIC_RESERVOIR_API_KEY,
                 chains: [
                   {
                     id: 1,

@@ -122,7 +122,6 @@ export default function useNftSelection({
     if (nfts.length === 0) {
       return;
     }
-
     setSelectedTokensByUserAddress((previousValue) => ({
       ...previousValue,
       [userAddress]: {
