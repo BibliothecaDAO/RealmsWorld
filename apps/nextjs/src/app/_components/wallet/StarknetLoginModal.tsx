@@ -116,7 +116,7 @@ export const StarknetLoginModal = () => {
                         className="w-full justify-between self-center px-4 py-6 font-sans text-lg font-light capitalize"
                         variant={"outline"}
                         onClick={() =>
-                          window.open(
+                          open(
                             `${connector.id === "braavos" ? braavos : argent}`,
                           )
                         }
