@@ -1,7 +1,9 @@
+"use client";
+
 import type { VariantProps } from "class-variance-authority";
 import React from "react";
-import { useUIStore } from "@/providers/UIStoreProvider";
 import StarknetLogo from "@/icons/starknet.svg";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { shortenHex } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
 
@@ -20,7 +22,7 @@ export const StarknetLoginButton = ({
   buttonClass?: string;
 }) => {
   const { address, isConnected } = useL2Account();
-  const { toggleAccount, toggleStarknetLogin } = useUIStore((state) => state,);
+  const { toggleAccount, toggleStarknetLogin } = useUIStore((state) => state);
 
   const onConnectClick = () => {
     return !isConnected

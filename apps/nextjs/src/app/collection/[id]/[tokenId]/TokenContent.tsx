@@ -1,6 +1,7 @@
 "use client";
 
-import type { Collection, Token } from "@/types";
+import type { Token } from "@/types";
+import type { paths } from "@reservoir0x/reservoir-sdk";
 import { BuyButton } from "@/app/collection/reservoir/BuyModal";
 import { ListingModal } from "@/app/collection/reservoir/ListingModal";
 import { GameCard } from "@/app/games/GameCard";
@@ -13,7 +14,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@realms-world/ui";
 import { TokenActivity } from "./TokenActivity";
 
 interface Props {
-  collection: Collection;
+  collection: NonNullable<
+    paths["/collections/v5"]["get"]["responses"]["200"]["schema"]["collections"]
+  >[0];
   token: Token;
   //   attributes: any;
 }
@@ -21,7 +24,9 @@ interface Props {
 export const TokenContent = ({ token, collection }: Props) => {
   const { address } = useAccount();
 
-  const comptatible_games = getGamesByContract(games, collection.id);
+  const comptatible_games = collection.id
+    ? getGamesByContract(games, collection.id)
+    : undefined;
 
   const owner = address
     ? token.owner.toUpperCase() === address.toUpperCase()
@@ -36,7 +41,7 @@ export const TokenContent = ({ token, collection }: Props) => {
       name: "Games",
       content: (
         <div className="grid gap-4 sm:grid-cols-2">
-          {comptatible_games.map((game, index) => {
+          {comptatible_games?.map((game, index) => {
             return <GameCard key={index} game={game} />;
           })}
         </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { createStore } from "zustand/vanilla";
 
 import type { ChainId } from "@realms-world/constants";
@@ -47,6 +48,7 @@ export const initialState: UIState = {
   isNftBridgeOpen: false,
   nftBridgeModalProps: {
     selectedTokenIds: [],
+    sourceChain: SUPPORTED_L1_CHAIN_ID,
   },
 };
 // Create the store using zustand

@@ -39,11 +39,14 @@ export const EventCard = ({ event }: { event: Event }) => {
         <h5>{event.name}</h5>
         <p>{event.description}</p>
         <div className="mt-auto flex w-full justify-between self-end">
-          <Button href={event.website} size={"xs"} variant="default">
-            {event.type == "play" ? "Play Game" : "Mint"}
+          <Button asChild size={"xs"} variant="default">
+            <Link href={event.website}>
+              {" "}
+              {event.type == "play" ? "Play Game" : "Mint"}
+            </Link>
           </Button>
-          <Button href={"/events/" + event.slug} size={"xs"} variant="outline">
-            More info
+          <Button asChild size={"xs"} variant="outline">
+            <Link href={"/events/" + event.slug}>More info</Link>
           </Button>
         </div>
       </div>

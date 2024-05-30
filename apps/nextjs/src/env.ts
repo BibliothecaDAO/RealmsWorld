@@ -32,7 +32,7 @@ export const env = createEnv({
     NEXT_PUBLIC_ETHERSCAN_URL: z.string().url(),
     NEXT_PUBLIC_VOYAGER_URL: z.string().url(),
     NEXT_PUBLIC_STARKSCAN_URL: z.string().url(),
-    NEXT_PUBLIC_SUBGRAPH_NAME: z.string(),
+    NEXT_PUBLIC_SUBGRAPH_NAME: z.string().url(),
     NEXT_PUBLIC_APIBARA_HANDLE: z.string(),
     NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z.string(),
     NEXT_PUBLIC_BLAST_API: z.string().optional(),

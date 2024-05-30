@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { PageLayout } from "@/app/_components/PageLayout";
 import { events } from "@/constants/events";
 
@@ -87,7 +88,9 @@ export default function Page({ params }: { params: { id: string } }) {
       )}
 
       <hr className="my-8" />
-      <Button href="/events">Back to events</Button>
+      <Button asChild>
+        <Link href="/events">Back to events</Link>
+      </Button>
     </PageLayout>
   );
 }
