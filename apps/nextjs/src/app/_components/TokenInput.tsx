@@ -6,7 +6,7 @@ import { Input } from "@realms-world/ui";
 export interface TokenInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   amount?: number | string;
-  icon: React.ReactElement;
+  icon?: React.ReactElement;
 }
 
 export const TokenInput = React.forwardRef<HTMLInputElement, TokenInputProps>(

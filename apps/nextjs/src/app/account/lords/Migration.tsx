@@ -1,5 +1,5 @@
+import type { Realm, UsersRealmsQuery } from "@/types/subgraph";
 import { useState } from "react";
-import { Realm } from "@/.graphclient";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
 import { RealmsTable } from "@/app/_components/RealmsTable";
@@ -20,10 +20,12 @@ import {
 export const StakingMigration = () => {
   const { address } = useAccount();
   const [selectedRows, setSelectedRows] = useState<Realm[]>();
-  const { writeContractAsync: exitGalleon, isPending: isExitGalleonPending } =
-    useWriteContract();
-  const { writeContractAsync: exitCarrack, isPending: isExitCarrackPending } =
-    useWriteContract();
+  const {
+    writeContractAsync: exitGalleon /*, isPending: isExitGalleonPending */,
+  } = useWriteContract();
+  const {
+    writeContractAsync: exitCarrack /*, isPending: isExitCarrackPending*/,
+  } = useWriteContract();
   const handleRowSelection = (newSelection: Realm[]) => {
     setSelectedRows(newSelection);
   };
@@ -34,7 +36,7 @@ export const StakingMigration = () => {
         method: "POST",
       })
         .then((res) => res.json())
-        .then((res) => {
+        .then((res: { data: UsersRealmsQuery }) => {
           return res.data;
         }),
     enabled: !!address,
@@ -48,10 +50,10 @@ export const StakingMigration = () => {
   ] as `0x${string}`;
 
   const steps = [
-    ...(realmsData?.wallet.bridgedRealmsHeld > 0
+    ...(realmsData?.wallet?.bridgedRealmsHeld > 0
       ? [
           {
-            title: `Unstake ${realmsData.wallet.bridgedRealmsHeld} Realms from Galleon`,
+            title: `Unstake ${realmsData?.wallet?.bridgedRealmsHeld} Realms from Galleon`,
             content: (
               <div className="mt-4">
                 <RealmsTable
@@ -67,7 +69,7 @@ export const StakingMigration = () => {
                       abi: GalleonStaking,
                       functionName: "exitShip",
                       args: [
-                        selectedRows?.map((realm) => BigInt(realm.tokenId)),
+                        selectedRows.map((realm) => BigInt(realm.tokenId)),
                       ],
                     })
                   }
@@ -81,7 +83,7 @@ export const StakingMigration = () => {
           },
         ]
       : []),
-    ...(realmsData?.wallet.bridgedV2RealmsHeld > 0
+    ...(realmsData?.wallet?.bridgedV2RealmsHeld > 0
       ? [
           {
             title: `Unstake ${realmsData?.wallet?.bridgedV2RealmsHeld} Realms from Carrack`,
@@ -100,7 +102,7 @@ export const StakingMigration = () => {
                       abi: CarrackStaking,
                       functionName: "exitShip",
                       args: [
-                        selectedRows?.map((realm) => BigInt(realm.tokenId)),
+                        selectedRows.map((realm) => BigInt(realm.tokenId)),
                       ],
                     })
                   }

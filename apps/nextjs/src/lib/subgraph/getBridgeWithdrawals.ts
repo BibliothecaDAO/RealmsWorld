@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { env } from "@/env";
+
 const query = `query Deposits(
   $depositsWhere: Deposit_filter
   $withdrawalsWhere: Withdrawal_filter
@@ -56,7 +58,7 @@ export const getBridgeWithdrawals = async ({
   skip: number;*/
 }) => {
   try {
-    const res = await fetch(process.env.NEXT_PUBLIC_SUBGRAPH_NAME, {
+    const res = await fetch(env.NEXT_PUBLIC_SUBGRAPH_NAME, {
       method: "POST",
       headers: {
         "content-type": "application/json",

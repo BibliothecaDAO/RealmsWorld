@@ -3,7 +3,7 @@
 import RealmsABI from "@/abi/L2/Realms.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useL2LordsRewards } from "@/hooks/staking/useL2LordsRewards";
-import { useLordship } from "@/hooks/staking/useLordship";
+//import { useLordship } from "@/hooks/staking/useLordship";
 import { useStaking } from "@/hooks/staking/useStaking";
 import LordsIcon from "@/icons/lords.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
@@ -31,7 +31,6 @@ import {
 
 import { ClaimsTable } from "./ClaimsTable";
 import { FloatAnimation } from "./FloatAnimation";
-import { RealmStakingTabs } from "./RealmStakingTabs";
 import { VeLords } from "./VeLords";
 
 export const Overview = () => {
@@ -52,12 +51,12 @@ export const Overview = () => {
   const { toggleStakingMigration } = useUIStore((state: any) => state);
 
   const totalL1Realms =
-    (+data?.wallet?.realmsHeld ?? 0) +
-    (+data?.wallet?.bridgedRealmsHeld ?? 0) +
-    (+data?.wallet?.bridgedV2RealmsHeld ?? 0);
+    +data?.wallet?.realmsHeld +
+    +data?.wallet?.bridgedRealmsHeld +
+    +data?.wallet?.bridgedV2RealmsHeld;
 
   const { data: realmsBalance } = useContractRead({
-    address: getCollectionAddresses(Collections.REALMS)[
+    address: getCollectionAddresses(Collections.REALMS)?.[
       SUPPORTED_L2_CHAIN_ID
     ] as `0x${string}`,
     abi: RealmsABI,
@@ -161,7 +160,7 @@ export const Overview = () => {
                                 <dt className="text-muted-foreground">
                                   Epoch 36-109:
                                 </dt>
-                                <dd>{poolV2Balance?.toLocaleString()}</dd>
+                                <dd>{poolV2Balance.toLocaleString()}</dd>
                               </div>
                             </dl>
                             <div className="mt-4 font-sans text-xl font-semibold">
@@ -190,7 +189,7 @@ export const Overview = () => {
                       <CardHeader>
                         <CardDescription>Claimable Lords</CardDescription>
                         <CardTitle className="flex items-center text-4xl">
-                          {balance && formatEther(balance)}
+                          {balance && formatEther(BigInt(balance))}
                           <LordsIcon className="ml-3 h-7 w-7 fill-current" />
                         </CardTitle>
                       </CardHeader>

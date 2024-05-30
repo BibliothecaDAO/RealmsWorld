@@ -14,9 +14,9 @@ export default function UserLayout({
   children: React.ReactNode;
   params: { address: string };
 }) {
-  const isL2 = isStarknetAddress(params?.address);
+  const isL2 = isStarknetAddress(params.address);
 
-  const isL1 = isAddress(params?.address);
+  const isL1 = isAddress(params.address);
 
   //const isUserAddress = [l1Account, l2Account].includes(params?.address);
 

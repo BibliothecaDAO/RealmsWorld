@@ -22,18 +22,16 @@ export const L1TokenTable = ({
 
   return (
     <div className={isGrid ? grid : list}>
-      {tokens
-        ? tokens.map((token, index) => {
-            return (
-              <L1TokenCard
-                key={index}
-                collectionName={collectionName ?? ""}
-                token={token}
-                layout={isGrid ? "grid" : "list"}
-              />
-            );
-          })
-        : "No Assets Found"}
+      {tokens.map((token, index) => {
+        return (
+          <L1TokenCard
+            key={index}
+            collectionName={collectionName ?? ""}
+            token={token}
+            layout={isGrid ? "grid" : "list"}
+          />
+        );
+      })}
     </div>
   );
 };

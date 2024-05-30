@@ -18,11 +18,11 @@ import { LoadingSkeleton } from "./loading";
 import { TokenContent } from "./TokenContent";
 import { TokenInformation } from "./TokenInformation";
 
-export async function generateMetadata({
+export function generateMetadata({
   params: { tokenId, id },
 }: {
   params: { id: string; tokenId: string };
-}): Promise<Metadata> {
+}): Metadata {
   const collection = CollectionDetails[id as Collections].displayName;
   return {
     title: `${collection} #${tokenId}`,
@@ -36,7 +36,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
+export default function Page({
   params,
 }: {
   params: { id: string; tokenId: string };
@@ -49,7 +49,7 @@ export default async function Page({
     return (
       <Suspense fallback={<LoadingSkeleton />}>
         <L2TokenData
-          contractAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID]!}
+          contractAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID] ?? ""}
           tokenId={params.tokenId}
           collectionId={params.id}
         />
@@ -59,7 +59,7 @@ export default async function Page({
     return (
       <L1TokenData
         collectionId={params.id}
-        contractAddress={tokenAddresses[SUPPORTED_L1_CHAIN_ID]!}
+        contractAddress={tokenAddresses[SUPPORTED_L1_CHAIN_ID] ?? ""}
         tokenId={params.tokenId}
       />
     );
@@ -130,13 +130,9 @@ const L1TokenData = async ({
     tokensData,
     collectionData,
   ]);
-  const token = tokens?.[0]?.token;
-  const market = tokens?.[0]?.market;
-  const collection = collections?.[0];
-
-  if (!tokens) {
-    return <div>Collection Not Found</div>;
-  }
+  const token = tokens[0]?.token;
+  const market = tokens[0]?.market;
+  const collection = collections[0];
 
   return (
     <>

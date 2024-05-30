@@ -2,6 +2,7 @@ import "server-only";
 
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { RESERVOIR_API_URL, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
+import { env } from "@/env";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
@@ -21,7 +22,7 @@ export const getUser = async ({
     const res = await fetch(url, {
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
+        "x-api-key": env.RESERVOIR_API_KEY,
         "Access-Control-Allow-Origin": "*",
       },
       next: { revalidate: 10 },

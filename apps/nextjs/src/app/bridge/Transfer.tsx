@@ -37,8 +37,8 @@ export const Transfer = ({ action }: { action: string }) => {
 
   const onTransferClick = async () => {
     if (action == "withdraw") {
-      const withdrawHash = await iniateWithdrawal();
-      if (withdrawHash) {
+      const data = await iniateWithdrawal();
+      if (data.transaction_hash) {
         handleData({
           type: ActionType.TRANSFER_TO_L1,
           sender: l2Address,
@@ -46,7 +46,7 @@ export const Transfer = ({ action }: { action: string }) => {
           name: "Lords",
           symbol: "LORDS",
           amount: amount,
-          l2hash: withdrawHash?.transaction_hash,
+          l2hash: data.transaction_hash,
         });
       }
     } else {
@@ -81,17 +81,17 @@ export const Transfer = ({ action }: { action: string }) => {
             onClick={() =>
               setAmount(
                 isL2
-                  ? formatEther(balances.l2?.lords ?? BigInt(0))
-                  : formatEther(balances.l1?.lords ?? BigInt(0)),
+                  ? formatEther(balances.l2.lords ?? BigInt(0))
+                  : formatEther(balances.l1.lords ?? BigInt(0)),
               )
             }
             balance={
               isL2
-                ? balances.l2?.lords ?? BigInt(0)
-                : balances.l1?.lords ?? BigInt(0)
+                ? balances.l2.lords ?? BigInt(0)
+                : balances.l1.lords ?? BigInt(0)
             }
             symbol="Lords"
-            isLoading={isL2 ? l2loading && !balances.l2?.lords : false}
+            isLoading={isL2 ? l2loading && !balances.l2.lords : false}
           />
         </div>
       </>

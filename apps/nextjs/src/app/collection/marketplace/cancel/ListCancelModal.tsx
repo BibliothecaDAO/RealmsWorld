@@ -83,7 +83,7 @@ export function ListCancelModal({
                   <div className="border-b p-2">
                     <ERC721LineItem
                       tokenDetails={token}
-                      price={listing?.price}
+                      price={listing.price}
                       // priceSubtitle="Price"
                       //usdPrice={totalUsd.toString()}
                       /* collection={
@@ -109,7 +109,7 @@ export function ListCancelModal({
                     {listing?.price && (
                       <ERC721LineItem
                         tokenDetails={token}
-                        price={listing?.price}
+                        price={listing.price}
                         //usdPrice={totalUsd}
                         //collection={collection?.name || ""}
                         expires={expires}

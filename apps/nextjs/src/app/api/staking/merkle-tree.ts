@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import type { ToBufferInputTypes } from "ethereumjs-util";
+import type { Hex } from "viem";
 import {
   bufferToHex,
   keccak256,
@@ -80,7 +81,7 @@ export default class MerkleTree {
     return bufferToHex(this.getRoot());
   }
 
-  getProof(el: any, prefix: any[]) {
+  getProof(el: any, prefix?: any[]) {
     let idx = this.bufIndexOf(el, this.elements);
 
     if (idx === -1) {
@@ -186,7 +187,7 @@ export default class MerkleTree {
         Web3Utils.soliditySha3(
           { t: "address", v: node.payee },
           { t: "uint256", v: node.amount },
-        )!,
+        ) as Hex,
       ),
     );
   }

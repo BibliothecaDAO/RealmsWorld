@@ -43,7 +43,7 @@ export const L2Token = ({
   //if (isLoading) return <LoadingSkeleton />;
   if (!erc721Token) return <div>Token Information Loading</div>;
 
-  const activeListings = erc721Token.listings?.filter(
+  const activeListings = erc721Token.listings.filter(
     (
       listing: NonNullable<
         RouterOutputs["erc721Tokens"]["byId"]
@@ -52,8 +52,8 @@ export const L2Token = ({
   );
 
   const lowestPriceActiveListing = findLowestPriceActiveListing(
-    erc721Token?.listings,
-    erc721Token?.owner,
+    erc721Token.listings,
+    erc721Token.owner,
   );
 
   const collectionId = getCollectionFromAddress(contractAddress);

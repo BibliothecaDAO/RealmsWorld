@@ -1,13 +1,12 @@
 "use client";
 
+//import type { Realm } from "@/types/subgraph";
+import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import { Realm } from "@/.graphclient";
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
-  SortingState,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -21,9 +20,9 @@ import {
 } from "@realms-world/ui";
 
 interface DataTableProps<TData, TValue> {
-  data: Realm[];
-  columns: ColumnDef<Realm, TValue>[];
-  onRowSelectionChange: (rows: any) => void;
+  data: TData[];
+  columns: ColumnDef<TData, TValue>[];
+  onRowSelectionChange?: (row) => void;
 }
 
 export function RealmsTable<TData, TValue>({
@@ -43,10 +42,12 @@ export function RealmsTable<TData, TValue>({
   const table = useReactTable({
     data,
     columns,
+    enableRowSelection: true,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onRowSelectionChange: setRowSelection,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     getRowId: (row) => row.id,
     state: {
       sorting,
@@ -77,8 +78,8 @@ export function RealmsTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows?.map((row) => (
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
@@ -107,8 +108,8 @@ export function RealmsTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex-1 py-3 text-sm text-bright-yellow/60">
-        {table.getSelectedRowModel().rows?.length} of{" "}
-        {table.getRowModel().rows?.length} row(s) selected.
+        {table.getSelectedRowModel().rows.length} of{" "}
+        {table.getRowModel().rows.length} row(s) selected.
       </div>
     </>
   );

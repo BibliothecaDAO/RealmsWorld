@@ -1,4 +1,5 @@
-'use client'
+"use client";
+
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -74,12 +75,13 @@ const L2ERC721Table = ({
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     if (isInView && infiniteScroll) fetchNextPage();
-  }, [fetchNextPage, isInView]);
+  }, [fetchNextPage, infiniteScroll, isInView]);
+
   const {
     deselectAllNfts,
     isNftSelected,
     selectBatchNfts,
-    selectedCollectionAddress,
+    //selectedCollectionAddress,
     toggleNftSelection,
     totalSelectedNfts,
     selectedTokenIds,
@@ -101,7 +103,7 @@ const L2ERC721Table = ({
           ? erc721Tokens.pages.map((page) =>
               page.items.map((token, index) => {
                 const isSelected = isNftSelected(
-                  token.token_id.toString() ?? "0",
+                  token.token_id.toString(),
                   token.contract_address ?? "0x",
                 );
                 return (
@@ -110,7 +112,7 @@ const L2ERC721Table = ({
                       <button
                         onClick={() =>
                           toggleNftSelection(
-                            token.token_id.toString() ?? "0",
+                            token.token_id.toString(),
                             token.contract_address ?? "0x",
                           )
                         }

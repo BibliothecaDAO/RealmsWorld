@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+//import { useQuery } from "@tanstack/react-query";
 
-export const useLordship = (address?: string) => {
+/*export const useLordship = (address?: string) => {
   return useQuery({
     queryKey: ["Lordship" + address],
     queryFn: async () =>
@@ -15,3 +15,4 @@ export const useLordship = (address?: string) => {
     //refetchInterval: 10000,
   });
 };
+*/

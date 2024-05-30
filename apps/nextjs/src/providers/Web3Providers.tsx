@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
+import { env } from "@/env";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import {
@@ -20,9 +21,9 @@ import { mainnet, sepolia } from "wagmi/chains";
 
 import { TransferLogProvider } from "./TransferLogProvider";
 
-const starkProvider = process.env.NEXT_PUBLIC_BLAST_API
+const starkProvider = env.NEXT_PUBLIC_BLAST_API
   ? blastProvider({
-      apiKey: process.env.NEXT_PUBLIC_BLAST_API,
+      apiKey: env.NEXT_PUBLIC_BLAST_API,
     })
   : starkPublicProvider();
 const starkConnectors = [
@@ -33,7 +34,7 @@ const starkConnectors = [
   }),
   new ArgentMobileConnector(),
 ];
-const isTestnet = process.env.NEXT_PUBLIC_IS_TESTNET === "true";
+const isTestnet = env.NEXT_PUBLIC_IS_TESTNET === "true";
 
 const theme = darkTheme({
   headlineFont: "Sans Serif",
@@ -44,7 +45,7 @@ const theme = darkTheme({
 
 export const config = getDefaultConfig({
   appName: "Realms.World",
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+  projectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
   chains: [isTestnet ? sepolia : mainnet],
   ssr: true,
   transports: {
@@ -58,7 +59,7 @@ export function Provider({ children }: { children: ReactElement }) {
     <StarknetConfig
       autoConnect
       chains={[
-        ...(process.env.NEXT_PUBLIC_IS_TESTNET === "true"
+        ...(env.NEXT_PUBLIC_IS_TESTNET === "true"
           ? [starkSepolia]
           : [starkMainnet]),
       ]}
@@ -70,7 +71,7 @@ export function Provider({ children }: { children: ReactElement }) {
           <TransferLogProvider>
             <ReservoirKitProvider
               options={{
-                apiKey: process.env.RESERVOIR_API_KEY,
+                apiKey: env.RESERVOIR_API_KEY,
                 chains: [
                   {
                     id: 1,
@@ -88,7 +89,7 @@ export function Provider({ children }: { children: ReactElement }) {
               }}
               theme={theme}
             >
-            {children}
+              {children}
             </ReservoirKitProvider>
           </TransferLogProvider>
         </RainbowKitProvider>

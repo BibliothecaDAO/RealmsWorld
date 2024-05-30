@@ -5,6 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { RESERVOIR_API_URL } from "@/constants/env";
+import { env } from "@/env";
 
 function buildQueryString(queryObject: any) {
   const queryParams = Object.entries(queryObject)
@@ -94,7 +95,7 @@ export const getToken = async ({
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
+          "x-api-key": env.RESERVOIR_API_KEY,
         },
         next: { revalidate: 60 },
       },

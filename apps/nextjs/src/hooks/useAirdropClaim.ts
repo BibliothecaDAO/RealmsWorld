@@ -44,7 +44,7 @@ export function useAirdropClaim() {
   const [dataLoading, setDataLoading] = useState<boolean>(true); // Data retrieval status
   const [numTokens, setNumTokens] = useState<number>(0); // Number of claimable tokens
 
-  const claim = async (amount: string, proof: string[]) => {
+  const claim = (amount: string, proof: string[]) => {
     return writeContract({
       address: stakingAddresses[NETWORK_NAME].paymentPoolV2 as `0x${string}`,
       abi: abi.abi,
@@ -70,7 +70,7 @@ export function useAirdropClaim() {
     args: [addressL1?.toLowerCase()],
   });
 
-  const claimAirdrop = async (): Promise<void> => {
+  const claimAirdrop = (): void => {
     if (!addressL1) {
       throw new Error("Not Authenticated");
     }
@@ -95,7 +95,7 @@ export function useAirdropClaim() {
 
     // Try to claim airdrop and refresh sync status
     try {
-      await claim(numTokens, proof);
+      claim(numTokens, proof);
 
       //   await syncStatus();
     } catch (e) {
@@ -106,8 +106,7 @@ export function useAirdropClaim() {
 
   console.log(balance);
 
-  const syncStatus = async () => {
-    // Toggle loading
+  useEffect(() => {
     setDataLoading(true);
 
     if (addressL1) {
@@ -116,13 +115,6 @@ export function useAirdropClaim() {
     }
 
     setDataLoading(false);
-  };
-
-  useEffect(() => {
-    const sync = async () => {
-      await syncStatus();
-    };
-    sync();
   }, [addressL1]);
 
   return {

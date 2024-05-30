@@ -1,4 +1,6 @@
+import type { paths } from "@reservoir0x/reservoir-sdk";
 import { RESERVOIR_API_URL, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
+import { env } from "@/env";
 import { useQuery } from "@tanstack/react-query";
 
 import { CollectionAddresses } from "@realms-world/constants";
@@ -13,15 +15,15 @@ export const useUserActivity = (address?: string) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
+            "x-api-key": env.RESERVOIR_API_KEY,
             "Access-Control-Allow-Origin": "*",
           },
         },
       )
         .then((res) => res.json())
-        .then((res: { data: any }) => {
-          return res.data;
-        })
-        .catch((err) => console.log("err", err)),
+        .then((res) => {
+          console.log(res);
+          return res as paths["/users/activity/v6"]["get"]["responses"]["200"]["schema"];
+        }),
   });
 };

@@ -27,15 +27,12 @@ export const CardAction = ({
                 Buy Now
               </Button>
             }
-            // tokenId={tokenId}
             token={token}
-            collectionId={token.contract_address!}
             orderId={0}
           />
         ) : (
           <ListingEditModal
             token={token}
-            //listingId={token?.id}
             collectionId={"test"}
             trigger={
               <Button size={"lg"} className="w-full">
@@ -44,7 +41,7 @@ export const CardAction = ({
             }
           />
         ))}
-      {!token?.price && token.owner == padAddress(address?.toLowerCase()) && (
+      {!token.price && token.owner == padAddress(address?.toLowerCase()) && (
         <ListModal
           token={token}
           trigger={

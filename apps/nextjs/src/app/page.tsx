@@ -13,7 +13,7 @@ import PostGrid from "./blog/PostGrid";
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
 
-export default async function Home() {
+export default function Home() {
   const carouselImages = games
     .filter((a) => a.status === "beta" || a.status === "mainnet")
     .map((game: Game) => ({

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 "use client";
 
-import type { DepositsQuery } from "@/.graphclient";
+import type { DepositsQuery } from "@/types/subgraph";
 import type { UseInfiniteQueryResult } from "@tanstack/react-query";
 import type { TRPCClientErrorLike } from "@trpc/react-query";
 import type { UseTRPCQueryResult } from "@trpc/react-query/shared";

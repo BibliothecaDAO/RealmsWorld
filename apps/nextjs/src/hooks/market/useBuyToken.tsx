@@ -34,7 +34,7 @@ export const useBuyToken = ({
     return [
       lordsContract?.populateTransaction.approve!(
         MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`, //Marketplace address
-        parseUnits(`${price ?? 0}`, 18).toString(),
+        parseUnits(`${price}`, 18).toString(),
         0,
       ),
 

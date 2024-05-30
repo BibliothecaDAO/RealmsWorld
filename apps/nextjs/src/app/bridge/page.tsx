@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "...",
 };
 
-export default async function Page({
+export default function Page({
   searchParams: { action = "deposit" },
 }: {
   searchParams: { action?: string };

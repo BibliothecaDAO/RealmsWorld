@@ -2,18 +2,17 @@ import type { Metadata } from "next";
 
 import { Overview } from "./Overview";
 
-export async function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Metadata {
   return {
     title: `RAW Account`,
     description: `Raw Account - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
-export default async function Page() {
-
+export default function Page() {
   return (
-      <>
-        <Overview />
-      </>
+    <>
+      <Overview />
+    </>
   );
 }

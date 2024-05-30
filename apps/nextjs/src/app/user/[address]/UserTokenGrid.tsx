@@ -12,7 +12,7 @@ async function UserTokenGrid({
   address: string;
   continuation: string | undefined;
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+   
   const {
     tokens,
     continuation: dataContinuation,
@@ -24,7 +24,7 @@ async function UserTokenGrid({
   return (
     <>
       <div className="my-3 grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {tokens?.map((token) => (
+        {tokens.map((token) => (
           <UserTokenCard key={token.token.tokenId} token={token} />
         ))}
       </div>

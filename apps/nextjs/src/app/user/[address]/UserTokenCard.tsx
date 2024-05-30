@@ -24,10 +24,10 @@ function UserTokenCard({
           selected && "border-bright-yellow ring ring-bright-yellow",
         )}
       >
-        {token?.token?.image && (
+        {token.token?.image && (
           <Image
-            src={token?.token?.image}
-            alt={"Image for: " + token?.token?.name}
+            src={token.token.image}
+            alt={"Image for: " + token.token.name}
             className="mx-auto "
             width={400}
             height={400}
@@ -45,12 +45,12 @@ function UserTokenCard({
         )}
 
         <div className="flex h-auto flex-col px-3 pb-4 pt-4">
-          <div className="truncate text-sm">#{token?.token?.tokenId}</div>
-          <h6>{token?.token?.name}</h6>
+          <div className="truncate text-sm">#{token.token?.tokenId}</div>
+          <h6>{token.token?.name}</h6>
 
           <div className="mt-auto flex justify-between">
             <Link
-              href={`/collection/${token?.token?.contract}/${token?.token?.tokenId}`}
+              href={`/collection/${token.token?.contract}/${token.token?.tokenId}`}
             >
               <Button size={"xs"}>details</Button>
             </Link>

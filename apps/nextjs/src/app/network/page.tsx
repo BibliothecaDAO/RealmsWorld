@@ -10,12 +10,12 @@ export const metadata: Metadata = {
     "Fully Onchain Games in the Realms Autonomous World L3 - Created for adventurers by Bibliotheca DAO",
 };
 
-export default async function Page() {
+export default function Page() {
   return (
     <PageLayout title="Realms L3 - Powered by $lords">
       <div className="pb-8 md:text-2xl">
-        The high-performance zkVm L3 for the Realms World of onchain gaming powered
-        by $Lords.
+        The high-performance zkVm L3 for the Realms World of onchain gaming
+        powered by $Lords.
       </div>
 
       <div className="mb-10 sm:w-1/2">

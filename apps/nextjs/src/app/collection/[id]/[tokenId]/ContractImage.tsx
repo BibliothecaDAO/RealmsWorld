@@ -39,7 +39,7 @@ export const ContractImage = ({
     if (data?.length) {
       const value = [];
       //@ts-expect-error data does have length
-      for (let i = 1; i < data?.length; i++) {
+      for (let i = 1; i < data.length; i++) {
         //@ts-expect-error data does have length
         const result = shortString.decodeShortString(data[i]);
         value.push(result);

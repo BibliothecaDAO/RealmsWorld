@@ -87,8 +87,8 @@ export const StarknetLoginModal = () => {
             <h6 className="-mt-3 mb-6 text-base">Connect Starknet Wallet</h6>
           </DialogHeader>
           <div className="flex flex-col space-y-2 self-center">
-            {connectors?.map((connector) => {
-              if (connector?.available()) {
+            {connectors.map((connector) => {
+              if (connector.available()) {
                 return (
                   <div className="mt-5 flex justify-center" key={connector.id}>
                     <Button
@@ -107,8 +107,8 @@ export const StarknetLoginModal = () => {
                 );
               } else {
                 if (
-                  connector?.id === "braavos" ||
-                  connector?.id === "argentX"
+                  connector.id === "braavos" ||
+                  connector.id === "argentX"
                 ) {
                   return (
                     <div

@@ -1,5 +1,7 @@
-import { Realm } from "@/types";
-import { ColumnDef } from "@tanstack/react-table";
+"use client";
+
+import type { Realm } from "@/types";
+import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
 import { Button, Checkbox } from "@realms-world/ui";
@@ -7,6 +9,7 @@ import { Button, Checkbox } from "@realms-world/ui";
 export const columns: ColumnDef<Realm>[] = [
   {
     id: "select",
+    accessorKey: "select",
     header: ({ table }) => (
       <Checkbox
         checked={

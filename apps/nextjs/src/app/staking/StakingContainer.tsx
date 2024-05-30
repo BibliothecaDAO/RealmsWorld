@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
-import type { Realm } from "@/.graphclient";
+import type { Realm } from "@/types/subgraph";
 import { useEffect, useState } from "react";
 import { ERC721 } from "@/abi/L1/ERC721";
 import { paymentPoolAbi } from "@/abi/L1/PaymentPool";
@@ -40,7 +40,7 @@ const galleonAddress = stakingAddresses[NETWORK_NAME]
   .v1Galleon as `0x${string}`;
 const carrackAddress = stakingAddresses[NETWORK_NAME]
   .v2Carrack as `0x${string}`;
-const realmsAddress = getCollectionAddresses(Collections.REALMS)[
+const realmsAddress = getCollectionAddresses(Collections.REALMS)?.[
   SUPPORTED_L1_CHAIN_ID
 ];
 
@@ -217,56 +217,53 @@ export const StakingContainer = () => {
             ) : (
               "Loading"
             )}
-            {!poolBalanceLoading ? (
-              <div className="mt-2 flex items-center justify-center">
-                <span className="mr-6 text-sm">Epoch 11-35:</span>
-                <span className="mr-3 flex">
-                  <Lords className="mr-2 h-5 w-5 fill-current" />
-                  {poolBalanceLoading ? (
-                    <Loader className="h-5 w-5" />
-                  ) : poolBalanceData != undefined && poolTotal ? (
+
+            <div className="mt-2 flex items-center justify-center">
+              <span className="mr-6 text-sm">Epoch 11-35:</span>
+              <span className="mr-3 flex">
+                <Lords className="mr-2 h-5 w-5 fill-current" />
+                {poolBalanceLoading ? (
+                  <Loader className="h-5 w-5" />
+                ) : poolBalanceData != undefined && poolTotal ? (
+                  <>
+                    {formatEther(poolBalanceData).toLocaleString()} /{" "}
+                    {formatEther(poolTotal).toLocaleString()}
+                  </>
+                ) : (
+                  0
+                )}
+              </span>
+              {poolBalanceData != undefined && hexProof && (
+                <Button
+                  disabled={!poolBalanceData || poolBalanceData == 0n}
+                  size={"sm"}
+                  className="self-center"
+                  variant={"outline"}
+                  onClick={() => {
+                    claimPoolLords({
+                      address: stakingAddresses[NETWORK_NAME]
+                        .paymentPool as `0x${string}`,
+                      abi: paymentPoolAbi,
+                      functionName: "withdraw",
+                      args: [poolBalanceData, hexProof],
+                    });
+                  }}
+                >
+                  {isPoolClaimLoading ? (
                     <>
-                      {formatEther(poolBalanceData).toLocaleString()} /{" "}
-                      {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Claiming
                     </>
                   ) : (
-                    0
+                    "Claim"
                   )}
-                </span>
-                {poolBalanceData != undefined && (
-                  <Button
-                    disabled={!poolBalanceData || poolBalanceData == 0n}
-                    size={"sm"}
-                    className="self-center"
-                    variant={"outline"}
-                    onClick={() => {
-                      claimPoolLords({
-                        address: stakingAddresses[NETWORK_NAME]
-                          .paymentPool as `0x${string}`,
-                        abi: paymentPoolAbi,
-                        functionName: "withdraw",
-                        args: [poolBalanceData, hexProof!],
-                      });
-                    }}
-                  >
-                    {isPoolClaimLoading ? (
-                      <>
-                        <Loader2 className="h-5 w-5 animate-spin" />
-                        Claiming
-                      </>
-                    ) : (
-                      "Claim"
-                    )}
-                  </Button>
-                )}
-              </div>
-            ) : (
-              "Loading"
-            )}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
         {realmsData?.bridgedV2Realms.length ??
-        (carrackLordsAvailableData && carrackLordsAvailableData?.[0] > 0n) ? (
+        (carrackLordsAvailableData && carrackLordsAvailableData[0] > 0n) ? (
           <div className="mt-10 flex flex-col">
             <h3>Carrack</h3>
             <div className="pb-2 text-lg">
@@ -312,7 +309,7 @@ export const StakingContainer = () => {
                         size={"lg"}
                         disabled={
                           !carrackLordsAvailableData?.[0] ||
-                          carrackLordsAvailableData?.[0] == 0n
+                          carrackLordsAvailableData[0] == 0n
                         }
                         className="self-center"
                         variant={"outline"}
@@ -375,7 +372,7 @@ const StakingModal = ({
       address: realmsAddress as `0x${string}`,
       abi: ERC721,
       functionName: "isApprovedForAll",
-      args: [address!, galleonAddress],
+      args: address && [address, galleonAddress],
     });
 
   const { isSuccess } = useWaitForTransactionReceipt({

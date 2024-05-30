@@ -31,8 +31,8 @@ export const NftActions = ({
   );
   const isAllSelected =
     totalSelectedNfts === MAX_SELECTED_ITEMS ||
-    totalSelectedNfts === tokens?.length;
-  const hasMoreThanMaxSelectNfts = (tokens?.length ?? 0) > MAX_SELECTED_ITEMS;
+    totalSelectedNfts === tokens.length;
+  const hasMoreThanMaxSelectNfts = tokens.length > MAX_SELECTED_ITEMS;
   return (
     <div className="my-2 flex w-full justify-between">
       <div className="flex items-center gap-x-4">
@@ -72,7 +72,7 @@ export const NftActions = ({
         ) : (
           <Button
             onClick={() => {
-              selectBatchNfts(tokens ?? []);
+              selectBatchNfts(tokens);
             }}
             color="default"
             size="sm"

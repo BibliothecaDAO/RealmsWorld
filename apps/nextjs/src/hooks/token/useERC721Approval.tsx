@@ -25,14 +25,14 @@ export default function useERC721Approval() {
   const { data: isApprovedForAll, refetch } = useReadContract({
     abi: erc721Abi,
     address: CollectionAddresses.realms[SUPPORTED_L1_CHAIN_ID] as `0x${string}`,
-    args: [
-      address ?? "0xa",
+    args: address && [
+      address,
       REALMS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] as `0x${string}`,
     ],
     functionName: "isApprovedForAll",
-    /*query: {
-      enabled:  0,
-    },*/
+    query: {
+      enabled: !!address,
+    },
   });
 
   const { data: blockNumber } = useBlockNumber({ watch: true });

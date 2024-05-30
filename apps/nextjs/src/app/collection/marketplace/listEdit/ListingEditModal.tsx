@@ -186,15 +186,14 @@ export function ListingEditModal({
                 editListingStep === EditListingStep.Edit && (
                   <div className="flex flex-col">
                     {transactionError && (
-                      <Alert
-                        variant={"warning"}
-                        message={transactionError.message}
-                      />
+                      <Alert variant={"warning"}>
+                        {transactionError.message}
+                      </Alert>
                     )}
                     <div className="border-b">
                       <ERC721LineItem
                         tokenDetails={token}
-                        price={listing?.price}
+                        price={listing.price}
                         // priceSubtitle="Price"
                         //usdPrice={totalUsd.toString()}
                         expires={expires}
@@ -233,7 +232,7 @@ export function ListingEditModal({
                             }}
                             className={"h-12 w-full"}
                             onBlur={() => {
-                              if (price === undefined) {
+                              if (!price) {
                                 setPrice(0);
                               }
                             }}
@@ -316,7 +315,7 @@ export function ListingEditModal({
                     <>
                       <Progress
                         title={
-                          stepData?.currentStepItem.txHashes &&
+                          stepData.currentStepItem.txHashes &&
                           "Finalizing on blockchain"
                         }
                       />

@@ -2,8 +2,8 @@
 
 import type { VariantProps } from "class-variance-authority";
 import React from "react";
-import { useUIStore } from "@/providers/UIStoreProvider";
 import EthereumLogo from "@/icons/ethereum.svg";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useConnect } from "wagmi";
 
@@ -21,17 +21,13 @@ export const EthereumLoginButton = ({
   textClass?: string;
   buttonClass?: string;
 }) => {
-  const { connectors, isPending } = useConnect();
+  const { isPending } = useConnect();
   /*const modal = useModal({
     onConnect() {
       !isAccountOpen && openAccount && toggleAccount();
     },
   });*/
-  const { /*isAccountOpen,*/ toggleAccount } = useUIStore((state) => state,);
-
-  if (!connectors) {
-    return null;
-  }
+  const { /*isAccountOpen,*/ toggleAccount } = useUIStore((state) => state);
 
   return (
     <ConnectButton.Custom>
@@ -48,7 +44,7 @@ export const EthereumLoginButton = ({
               <EthereumLogo className="w-6" />
               <span className={` pl-2 ${textClass ?? "sm:block"}`}>
                 {connected ? (
-                  account?.displayName
+                  account.displayName
                 ) : (
                   <>
                     Ethereum

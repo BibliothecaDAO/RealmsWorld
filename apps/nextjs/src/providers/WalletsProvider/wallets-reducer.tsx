@@ -12,14 +12,14 @@ const tokenList = [
   ...Object.values(tokens.L1).map((t) => ({
     ...t,
     isL1: true,
-    bridgeAddress: t.bridgeAddress?.[ChainType.L1[NETWORK_NAME]],
-    tokenAddress: t.tokenAddress?.[ChainType.L1[NETWORK_NAME]],
+    bridgeAddress: t.bridgeAddress[ChainType.L1[NETWORK_NAME]],
+    tokenAddress: t.tokenAddress[ChainType.L1[NETWORK_NAME]],
   })),
   ...Object.values(tokens.L2).map((t) => ({
     ...t,
     isL2: true,
-    bridgeAddress: t.bridgeAddress?.[ChainType.L2[NETWORK_NAME]],
-    tokenAddress: t.tokenAddress?.[ChainType.L2[NETWORK_NAME]],
+    bridgeAddress: t.bridgeAddress[ChainType.L2[NETWORK_NAME]],
+    tokenAddress: t.tokenAddress[ChainType.L2[NETWORK_NAME]],
   })),
 ].map((t, index) => ({ ...t, index }));
 

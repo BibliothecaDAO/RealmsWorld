@@ -22,7 +22,7 @@ export const useStaking = () => {
       address: stakingAddresses[NETWORK_NAME].v1Galleon as `0x${string}`,
       abi: GalleonStaking,
       functionName: "lordsAvailable",
-      args: [l1Address!],
+      args: l1Address && [l1Address],
     });
 
   const { data: carrackLordsAvailable, isLoading: isCarrackLordsLoading } =
@@ -30,7 +30,7 @@ export const useStaking = () => {
       address: stakingAddresses[NETWORK_NAME].v2Carrack as `0x${string}`,
       abi: CarrackStaking,
       functionName: "lordsAvailable",
-      args: [l1Address!],
+      args: l1Address && [l1Address],
     });
 
   const { data: poolV1Balance, isLoading: poolBalanceLoading } =
@@ -41,7 +41,7 @@ export const useStaking = () => {
       args: paymentPoolV1?.proof &&
         l1Address && [
           l1Address.toLowerCase() as `0x${string}`,
-          paymentPoolV1?.proof,
+          paymentPoolV1.proof,
         ],
       // query: { enabled: !!address && !!poolTotal }
     });

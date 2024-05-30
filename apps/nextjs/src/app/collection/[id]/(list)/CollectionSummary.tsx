@@ -25,10 +25,10 @@ export default async function CollectionSummary({
   } else if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { collections }: { collections: Collection[] } = await getCollections(
-      [{ contract: tokenAddresses[SUPPORTED_L1_CHAIN_ID]! }],
+      [{ contract: tokenAddresses[SUPPORTED_L1_CHAIN_ID] ?? "0x" }],
     );
 
-    const collection = collections?.[0];
+    const collection = collections[0];
 
     if (!collection) {
       return <div>Collection Not Found</div>;
@@ -42,7 +42,7 @@ export default async function CollectionSummary({
       {
         value:
           collection.floorAsk?.price?.amount?.raw &&
-          formatEther(BigInt(collection?.floorAsk?.price?.amount?.raw)),
+          formatEther(BigInt(collection.floorAsk.price.amount.raw)),
         title: "Floor",
       },
       { value: collection.onSaleCount, title: "Listed" },

@@ -44,7 +44,6 @@ interface Props {
   token?:
     | RouterOutputs["erc721Tokens"]["byId"]
     | RouterOutputs["erc721Tokens"]["all"]["items"][number];
-  collectionId?: string;
   defaultQuantity?: number;
   orderId?: number;
   normalizeRoyalties?: boolean;
@@ -74,7 +73,6 @@ function titleForStep(
 export function BuyModal({
   trigger,
   token,
-  collectionId,
   orderId,
   normalizeRoyalties,
   defaultQuantity,
@@ -92,7 +90,6 @@ export function BuyModal({
       token={token}
       open={open}
       defaultQuantity={defaultQuantity}
-      collectionId={collectionId}
       orderId={orderId}
       normalizeRoyalties={normalizeRoyalties}
       usePermit={usePermit}
@@ -153,10 +150,9 @@ export function BuyModal({
               {buyStep === BuyStep.Checkout && !loading && (
                 <div className="flex flex-col">
                   {transactionError && (
-                    <Alert
-                      variant={"warning"}
-                      message={transactionError.message}
-                    />
+                    <Alert variant={"warning"}>
+                      {transactionError.message}
+                    </Alert>
                   )}
                   <ERC721LineItem
                     tokenDetails={token}
@@ -185,7 +181,7 @@ export function BuyModal({
                     <div className="flex space-x-3">
                       <span>
                         {listing?.price &&
-                          formatNumber(parseInt(listing?.price))}
+                          formatNumber(parseInt(listing.price))}
                       </span>
 
                       <Lords className="h-6 w-6 fill-current" />
@@ -269,9 +265,9 @@ export function BuyModal({
                 <div className="flex flex-col">
                   <div className="flex flex-col items-center text-center">
                     <h5 className="my-8 text-center">Congratulations!</h5>
-                    {token?.image && (
+                    {token.image && (
                       <Image
-                        src={token?.image}
+                        src={token.image}
                         alt="token image"
                         width={100}
                         height={100}
@@ -292,9 +288,9 @@ export function BuyModal({
                         </div>
                           )*/}
                       <span className="text-ellipsify max-w-full">
-                        {token?.name
-                          ? decodeURI(token?.name)
-                          : `#${token?.token_id}`}
+                        {token.name
+                          ? decodeURI(token.name)
+                          : `#${token.token_id}`}
                       </span>
                     </div>
                     <div className="mb-1 flex items-center">

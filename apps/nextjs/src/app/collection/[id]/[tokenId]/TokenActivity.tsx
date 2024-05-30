@@ -36,7 +36,7 @@ export const TokenActivity = ({ token }: Props) => {
 
   return (
     <div className=" my-4 grid h-96 grid-cols-1 overflow-y-scroll rounded border">
-      {tokenActivity?.map((activity: Activity, index: number) => {
+      {tokenActivity.map((activity: Activity, index: number) => {
         return <ActivityCard key={index} activity={activity} />;
       })}
       {loading && (

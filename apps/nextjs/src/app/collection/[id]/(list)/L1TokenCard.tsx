@@ -43,7 +43,7 @@ export const L1TokenCard = (props: TokenCardProps) => {
         <div className={`w-full px-3 pb-2 pt-4`}>
           <div className="flex w-full justify-between text-sm">
             <span className="font-semibold">#{token.token.tokenId} </span>
-            {token.market.floorAsk.source?.icon && (
+            {token.market.floorAsk.source.icon && (
               <Image
                 src={token.market.floorAsk.source.icon}
                 alt="An example image"
@@ -56,20 +56,18 @@ export const L1TokenCard = (props: TokenCardProps) => {
           <h6>{token.token.name}</h6>
 
           <div className="my-3 h-6 text-sm">
-            {token.market.floorAsk.price &&
-              formatEther(
-                BigInt(token.market.floorAsk.price.amount.raw),
-              ).toLocaleLowerCase() + " ETH"}
+            {formatEther(
+              BigInt(token.market.floorAsk.price.amount.raw),
+            ).toLocaleLowerCase() + " ETH"}
           </div>
 
           <div className="flex justify-between space-x-2">
-            <Button
-              href={`/collection/${collectionName}/${token.token.tokenId}`}
-              variant={"ghost"}
-              size={"xs"}
-              className="w-full"
-            >
-              view
+            <Button asChild variant={"ghost"} size={"xs"} className="w-full">
+              <Link
+                href={`/collection/${collectionName}/${token.token.tokenId}`}
+              >
+                view
+              </Link>
             </Button>
             {token.market.floorAsk.id && (
               <BuyButton
@@ -89,11 +87,9 @@ export const L1TokenCard = (props: TokenCardProps) => {
             </div>
 
             <h6 className="ml-auto self-center">
-              {token.market.floorAsk.price
-                ? formatEther(
-                    BigInt(token.market.floorAsk.price.amount.raw),
-                  ).toLocaleLowerCase()
-                : ""}{" "}
+              {formatEther(
+                BigInt(token.market.floorAsk.price.amount.raw),
+              ).toLocaleLowerCase()}
               ETH
             </h6>
             <div className="justify-between self-center px-3 text-sm">
@@ -110,14 +106,12 @@ export const L1TokenCard = (props: TokenCardProps) => {
           </div>
 
           <div className="flex justify-between space-x-2 self-center">
-            <Button
-              href={`/collection/${collectionName ?? token.token.contract}/${
-                token.token.tokenId
-              }`}
-              variant={"outline"}
-              className="w-full"
-            >
-              view
+            <Button asChild variant={"outline"} className="w-full">
+              <Link
+                href={`/collection/${collectionName}/${token.token.tokenId}`}
+              >
+                view
+              </Link>
             </Button>
             {
               <BuyButton

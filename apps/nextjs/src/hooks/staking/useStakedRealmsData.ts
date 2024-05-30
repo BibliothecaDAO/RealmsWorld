@@ -1,4 +1,4 @@
-import type { UsersRealmsQuery } from "@/.graphclient";
+import type { UsersRealmsQuery } from "@/types/subgraph";
 import { useQuery } from "@tanstack/react-query";
 
 export const useStakedRealmsData = (address?: string) => {
@@ -9,8 +9,8 @@ export const useStakedRealmsData = (address?: string) => {
         method: "POST",
       })
         .then((res) => res.json())
-        .then((res) => {
-          return res.data as UsersRealmsQuery;
+        .then((res: { data: UsersRealmsQuery }) => {
+          return res.data;
         }),
     enabled: !!address,
     //refetchInterval: 10000,

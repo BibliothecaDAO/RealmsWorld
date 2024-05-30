@@ -20,7 +20,7 @@ export const useTokenContractAPI = (
     const l2BridgeAddress = tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[network]]
     const l2LordsAddress = tokens.L2.LORDS.tokenAddress?.[ChainType.L2[network]]*/
 
-  const { address: l1Account } = useL1Account();
+  const { address } = useL1Account();
 
   const l1ERC20Contract = {
     address: isEth(symbol)
@@ -38,13 +38,13 @@ export const useTokenContractAPI = (
   const { data: allowance /*, isError, isLoading */ } = useReadContract({
     ...l1ERC20Contract,
     functionName: "allowance",
-    args: [
-      l1Account!,
+    args: address && [
+      address,
       (spender == true
         ? LORDS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID]
         : spender) as `0x${string}`,
     ],
-    //enabled: !!(l1Account && spender),
+    query: { enabled: !!(address && spender) },
   });
   return {
     l1ERC20Contract,

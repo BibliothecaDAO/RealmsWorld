@@ -60,7 +60,7 @@ export function ListModal({ token, trigger }: Props): ReactElement {
     <ListModalRenderer
       open={open} //TODO
       tokenId={token.token_id}
-      collectionId={token?.contract_address}
+      collectionId={token.contract_address}
     >
       {({
         loading,
@@ -84,7 +84,7 @@ export function ListModal({ token, trigger }: Props): ReactElement {
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const expirationDate = useMemo(() => {
-          if (expirationOption?.relativeTime) {
+          if (expirationOption.relativeTime) {
             const newExpirationTime = expirationOption.relativeTimeUnit
               ? dayjs().add(
                   expirationOption.relativeTime,
@@ -111,7 +111,7 @@ export function ListModal({ token, trigger }: Props): ReactElement {
         const nativeFloorPrice = collection?.floorAsk?.price?.amount?.native;
         const usdFloorPrice = collection?.floorAsk?.price?.amount?.usd;*/
 
-        const floorButtonEnabled = true;
+        //const floorButtonEnabled = false;
 
         const minimumAmount = MINIMUM_AMOUNT;
         const maximumAmount = MAXIMUM_AMOUNT;
@@ -124,12 +124,12 @@ export function ListModal({ token, trigger }: Props): ReactElement {
 
         const canPurchase = price !== 0 && withinPricingBounds;
 
-        const handleSetFloor = () => {
+        /*const handleSetFloor = () => {
           // If currency matches floor ask currency, use decimal floor price
-          /*if (decimalFloorPrice) {
+          if (decimalFloorPrice) {
             setPrice(decimalFloorPrice.toString());
-          }*/
-        };
+          }
+        };*/
 
         return (
           <Dialog
@@ -173,10 +173,9 @@ export function ListModal({ token, trigger }: Props): ReactElement {
               {!loading && listStep == ListStep.SetPrice && (
                 <div className="flex flex-col">
                   {transactionError && (
-                    <Alert
-                      variant={"warning"}
-                      message={transactionError.message}
-                    />
+                    <Alert variant={"warning"}>
+                      {transactionError.message}
+                    </Alert>
                   )}
                   <ListItem token={token} />
                   <div className="flex flex-col items-center">
@@ -199,7 +198,7 @@ export function ListModal({ token, trigger }: Props): ReactElement {
                           </div>
                         </div>
 
-                        {floorButtonEnabled ? (
+                        {/*floorButtonEnabled ? (
                           <Button
                             color="secondary"
                             variant={"outline"}
@@ -210,7 +209,7 @@ export function ListModal({ token, trigger }: Props): ReactElement {
                           >
                             +Floor
                           </Button>
-                        ) : null}
+                        ) : null*/}
                         {/*TODO <FloorDropdown
                         token={token}
                         currency={currency}
@@ -261,7 +260,7 @@ export function ListModal({ token, trigger }: Props): ReactElement {
                       <span className="mb-1 text-lg">Expiration Date</span>
                       <div className="align-items-center flex w-full gap-x-4">
                         <Select
-                          value={expirationOption?.text || ""}
+                          value={expirationOption.text || ""}
                           onValueChange={(value: string) => {
                             const option = expirationOptions.find(
                               (option) => option.value == value,
@@ -305,7 +304,7 @@ export function ListModal({ token, trigger }: Props): ReactElement {
                               const customOption = expirationOptions.find(
                                 (option) => option.value === "custom",
                               );
-                              if (customOption && e) {
+                              if (customOption) {
                                 setExpirationOption({
                                   ...customOption,
                                   //@ts-expect-error datepicker wrong type
@@ -372,14 +371,14 @@ export function ListModal({ token, trigger }: Props): ReactElement {
                     <div className="flex w-full flex-col items-center gap-6 overflow-hidden">
                       {token.image && (
                         <Image
-                          src={token?.image /*?? collection?.image*/}
-                          alt={token?.name ?? token?.token_id.toString() ?? ""}
+                          src={token.image /*?? collection?.image*/}
+                          alt={token.token_id.toString()}
                           width={120}
                           height={120}
                         />
                       )}
                       <h6 className="h6 text-ellipsis">
-                        {token?.token_id ? `#${token?.token_id}` : token?.name}
+                        {token.token_id ? `#${token.token_id}` : token.name}
                       </h6>
                       {/*<span className="text-ellipsis text-medium-dark-green">
                         {collection?.name}

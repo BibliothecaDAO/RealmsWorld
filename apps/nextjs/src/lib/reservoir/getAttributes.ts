@@ -1,5 +1,6 @@
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { RESERVOIR_API_URL } from "@/constants/env";
+import { env } from "@/env";
 
 export const getAttributes = async ({
   collection,
@@ -14,7 +15,7 @@ export const getAttributes = async ({
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
+          "x-api-key": env.RESERVOIR_API_KEY,
           "Access-Control-Allow-Origin": "*",
         },
         next: { revalidate: 1000 },

@@ -1,9 +1,8 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useWalletsProviderContext } from "@/providers/WalletsProvider";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useBuyToken } from "@/hooks/market/useBuyToken";
-import { useLordsPrice } from "@/hooks/useLordsPrice";
+import { useWalletsProviderContext } from "@/providers/WalletsProvider";
 import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 import { useAccount, useWaitForTransaction } from "@starknet-react/core";
@@ -50,7 +49,6 @@ interface Props {
     | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   tokenId?: string;
   defaultQuantity?: number;
-  collectionId?: string;
   orderId?: number;
   normalizeRoyalties?: boolean;
   children: (props: ChildrenProps) => ReactNode;
@@ -72,7 +70,7 @@ export const BuyModalRender: FC<Props> = ({
   const [transactionError, setTransactionError] = useState<Error | null>();
   const [hasEnoughCurrency, setHasEnoughCurrency] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const lordsPrice  = {usdPrice: 0.11}
+  const lordsPrice = { usdPrice: 0.11 };
   const { balances } = useWalletsProviderContext();
 
   /*  const blockExplorerBaseUrl =
@@ -103,9 +101,9 @@ export const BuyModalRender: FC<Props> = ({
       return findLowestPriceActiveListing(listingsData.items, token?.owner);
   }, [token, listingsData]);
 
-  const usdPrice = parseInt(listing?.price ?? "0") * (lordsPrice?.usdPrice ?? 0);
+  const usdPrice = parseInt(listing?.price ?? "0") * lordsPrice.usdPrice;
   //const usdPriceRaw = paymentCurrency?.usdPriceRaw || 0n;*/
-  const totalUsd = totalIncludingFees * (lordsPrice?.usdPrice ?? 0);
+  const totalUsd = totalIncludingFees * lordsPrice.usdPrice;
 
   const lordsAddress = LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`;
 
@@ -141,7 +139,7 @@ export const BuyModalRender: FC<Props> = ({
   }, [writeAsync]);
 
   useEffect(() => {
-    if (!token ?? (orderId && !listing) ?? isOwner) {
+    if ((orderId && !listing) ?? isOwner) {
       setBuyStep(BuyStep.Unavailable);
     } else {
       setBuyStep(BuyStep.Checkout);
@@ -150,7 +148,7 @@ export const BuyModalRender: FC<Props> = ({
 
   useEffect(() => {
     if (quantity === -1) return;
-    if (!token ?? (orderId && !listing) ?? isOwner) {
+    if ((orderId && !listing) ?? isOwner) {
       setBuyStep(BuyStep.Unavailable);
       setTotalPrice(0);
       setTotalIncludingFees(0);
@@ -164,7 +162,7 @@ export const BuyModalRender: FC<Props> = ({
     if (orderId) {
       total = parseInt(listing?.price ?? "0") * quantity;
     } else if (listing?.price) {
-      total = parseInt(listing?.price ?? 0);
+      total = parseInt(listing.price);
     }
 
     if (total > 0) {

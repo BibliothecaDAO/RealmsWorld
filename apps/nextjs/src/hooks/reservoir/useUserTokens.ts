@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { useQuery } from "@tanstack/react-query";
 
-export const useUserTokens = ({ address }: { address: string }) => {
+export const useUserTokens = ({ address }: { address?: string }) => {
   const { data /* error, isLoading */ } = useQuery({
     queryKey: ["userTokens" + address],
     queryFn: async () =>

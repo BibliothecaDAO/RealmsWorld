@@ -5,14 +5,14 @@ import { Collections } from "@realms-world/constants";
 
 import { BridgeNftWrapper } from "./BridgeNftWrapper";
 
-export async function generateMetadata(): Promise<Metadata> {
+export function generateMetadata(): Metadata {
   return {
     title: `RAW Account`,
     description: `Raw Account - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
-export default async function Page() {
+export default function Page() {
   return (
     <>
       <div className="mt-8 h-full w-full space-y-20">

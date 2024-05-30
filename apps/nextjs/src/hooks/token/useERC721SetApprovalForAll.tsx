@@ -7,10 +7,10 @@ const FUNCTION = "setApprovalForAll";
 export function useERC721SetApprovalForAll({
   onSuccess,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSuccess?: (data: any) => void;
 }) {
   const { writeContractAsync, error, ...writeReturn } = useWriteContract({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mutation: { onSuccess: (data) => onSuccess?.(data) },
   });
 

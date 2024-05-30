@@ -1,3 +1,4 @@
+import type { Call } from "starknet";
 import { useMemo } from "react";
 import RealmsABI from "@/abi/L2/Realms.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
@@ -7,13 +8,12 @@ import {
   useContractRead,
   useContractWrite,
 } from "@starknet-react/core";
-import { Call } from "starknet";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
 export const useL2LordsRewards = () => {
   const { address: l2Address } = useAccount();
-  const l2RealmsAddress = getCollectionAddresses(Collections.REALMS)[
+  const l2RealmsAddress = getCollectionAddresses(Collections.REALMS)?.[
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;
   const { data: balance, isFetching: l2LordsIsLoading } = useContractRead({
@@ -34,8 +34,8 @@ export const useL2LordsRewards = () => {
   const calls: Call[] = useMemo(() => {
     if (!l2Address) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [contract?.populateTransaction.reward_claim!()];
-  }, [l2Address, contract?.populateTransaction.reward_claim]);
+    return [contract?.populateTransaction.reward_claim?.()];
+  }, [l2Address, contract?.populateTransaction]);
 
   const { writeAsync, data: claimHash } = useContractWrite({ calls });
 

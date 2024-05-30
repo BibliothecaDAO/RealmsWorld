@@ -1,4 +1,5 @@
 import { RESERVOIR_API_URL } from "@/constants/env";
+import { env } from "@/env";
 import { formatQueryString } from "@/utils/utils";
 
 export const getActivity = async ({
@@ -18,7 +19,7 @@ export const getActivity = async ({
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
+          "x-api-key": env.RESERVOIR_API_KEY,
           "Access-Control-Allow-Origin": "*",
         },
       },

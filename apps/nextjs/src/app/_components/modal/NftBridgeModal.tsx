@@ -81,7 +81,7 @@ export const NftBridgeModal = () => {
                   Transferring {selectedTokenIds.length} Realms:{" "}
                 </span>
                 <br />
-                {selectedTokenIds?.map(
+                {selectedTokenIds.map(
                   (id: string, index: number) =>
                     "#" +
                     id +

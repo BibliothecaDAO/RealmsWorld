@@ -12,8 +12,9 @@ import { NftActions } from "./NftActions";
 
 function AssetL1CollectionPreview() {
   const { address: l1Address } = useAccount();
+
   const { tokens } = useUserTokens({
-    address: l1Address!,
+    address: l1Address,
     //continuation: "",
   });
   // const { data: realmsData, isLoading: realmsDataIsLoading } = useUserActivity(address);
@@ -25,7 +26,7 @@ function AssetL1CollectionPreview() {
     toggleNftSelection,
     totalSelectedNfts,
     selectedTokenIds,
-  } = useNftSelection({ userAddress: l1Address! });
+  } = useNftSelection({ userAddress: l1Address ?? "0x" });
 
   return (
     <div className="min-h-24">
@@ -44,7 +45,7 @@ function AssetL1CollectionPreview() {
               />
               <ScrollArea>
                 <div className="my-3 grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-                  {tokens?.tokens?.map((token) => {
+                  {tokens.tokens.map((token) => {
                     const isSelected = isNftSelected(
                       token.token?.tokenId ?? "0",
                       token.token?.contract ?? "0x",

@@ -1,8 +1,8 @@
 "use client";
 
-import { ReactNode } from "react";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { ReactNode } from "react";
 import {
-  ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -18,12 +18,12 @@ import {
   TableRow,
 } from "@realms-world/ui";
 
-type Claim = {
+interface Claim {
   start_date: string;
   realms: number;
   lords_rewards: bigint;
   claim: string | null;
-};
+}
 
 export const columns: ColumnDef<Claim>[] = [
   {
@@ -50,20 +50,18 @@ export const columns: ColumnDef<Claim>[] = [
     },
   },
 ];
-interface DataTableProps<TData, TValue> {
-  data: Claim[];
+interface DataTableProps<TData> {
+  data: TData[];
+  //columns: ColumnDef<TData, TValue>[];
 }
 
-export function ClaimsTable<TData, TValue>({
-  data,
-}: DataTableProps<TData, TValue>) {
-  const table = useReactTable({
+export function ClaimsTable({ data }: DataTableProps<Claim>) {
+  const table = useReactTable<Claim>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getRowId: (row) => row.start_date,
+    //getRowId: (row) => row.start_date,
   });
-
   return (
     <>
       <div className="rounded-md border">
@@ -87,8 +85,8 @@ export function ClaimsTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows?.map((row) => (
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}

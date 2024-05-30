@@ -36,7 +36,7 @@ export const TokenContent = ({ token, collection }: Props) => {
       name: "Games",
       content: (
         <div className="grid gap-4 sm:grid-cols-2">
-          {comptatible_games?.map((game, index) => {
+          {comptatible_games.map((game, index) => {
             return <GameCard key={index} game={game} />;
           })}
         </div>

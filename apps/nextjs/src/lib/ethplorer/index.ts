@@ -4,37 +4,37 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 //import { ETH_CONTRACT } from '@/helpers/constants';
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
+import { env } from "@/env";
+
 import type {
+  GetBalancesResponse,
   GetTokenBalancesResponse,
   GetTokensMetadataResponse,
-  GetBalancesResponse
-} from './types';
-import { SUPPORTED_L1_CHAIN_ID } from '@/constants/env';
-export * from './types';
+} from "./types";
+
+export * from "./types";
 
 const NETWORKS = {
-  1: 'eth-mainnet',
-  11155111: 'eth-sepolia',
+  1: "eth-mainnet",
+  11155111: "eth-sepolia",
 };
 
 function getApiUrl() {
-  const network = NETWORKS[SUPPORTED_L1_CHAIN_ID] ?? 'mainnet';
+  const network = NETWORKS[SUPPORTED_L1_CHAIN_ID];
 
-  return `https://${network}.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API}`;
+  return `https://${network}.g.alchemy.com/v2/${env.NEXT_PUBLIC_ALCHEMY_API}`;
 }
 
-export async function request(
-  method: string,
-  params: any[]
-) {
+export async function request(method: string, params: any[]) {
   const res = await fetch(getApiUrl(), {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify({
       id: 1,
-      jsonrpc: '2.0',
+      jsonrpc: "2.0",
       method,
-      params
-    })
+      params,
+    }),
   });
 
   const { result } = await res.json();
@@ -46,20 +46,20 @@ export async function batchRequest(
   requests: { method: string; params: any[] }[],
 ) {
   const res = await fetch(getApiUrl(), {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify(
       requests.map((request, i) => ({
         id: i,
-        jsonrpc: '2.0',
+        jsonrpc: "2.0",
         method: request.method,
-        params: request.params
-      }))
-    )
+        params: request.params,
+      })),
+    ),
   });
 
   const response = await res.json();
 
-  return response.map((entry: { result: any; }) => entry.result);
+  return response.map((entry: { result: any }) => entry.result);
 }
 
 /**
@@ -68,11 +68,8 @@ export async function batchRequest(
  * @param networkId Network ID
  * @returns Hex encoded ETH balance
  */
-export async function getBalance(
-  address: string,
-  
-): Promise<string> {
-  return request('eth_getBalance', [address]);
+export async function getBalance(address: string): Promise<string> {
+  return request("eth_getBalance", [address]);
 }
 
 /**
@@ -85,7 +82,7 @@ export async function getBalance(
 export async function getTokenBalances(
   address: string,
 ): Promise<GetTokenBalancesResponse> {
-  return request('alchemy_getTokenBalances', [address]);
+  return request("alchemy_getTokenBalances", [address]);
 }
 
 /**
@@ -98,9 +95,9 @@ export async function getTokensMetadata(
   addresses: string[],
 ): Promise<GetTokensMetadataResponse> {
   return batchRequest(
-    addresses.map(address => ({
-      method: 'alchemy_getTokenMetadata',
-      params: [address]
+    addresses.map((address) => ({
+      method: "alchemy_getTokenMetadata",
+      params: [address],
     })),
   );
 }
@@ -113,43 +110,43 @@ export async function getTokensMetadata(
  */
 export async function getBalances(
   address: string,
-  baseToken?: { name: string; symbol: string; logo?: string }
+  //baseToken?: { name: string; symbol: string; logo?: string }
 ): Promise<GetBalancesResponse> {
   if (!address) {
     return [
       {
-        name: 'ETH',
-        symbol: 'ETH',
+        name: "ETH",
+        symbol: "ETH",
         decimals: 18,
-        contractAddress: '0x0000000000000000000000000000000000000000',
-        tokenBalance: '0x0',
+        contractAddress: "0x0000000000000000000000000000000000000000",
+        tokenBalance: "0x0",
         price: 0,
         value: 0,
-        change: 0
-      }
+        change: 0,
+      },
     ];
   }
 
   const [ethBalance, { tokenBalances }] = await Promise.all([
     getBalance(address),
-    getTokenBalances(address)
+    getTokenBalances(address),
   ]);
 
   const contractAddresses = tokenBalances.map(
-    balance => balance.contractAddress
+    (balance) => balance.contractAddress,
   );
   const metadata = await getTokensMetadata(contractAddresses);
 
   return [
     {
-      name: 'ETH',
-      symbol: 'ETH',
+      name: "ETH",
+      symbol: "ETH",
       decimals: 18,
-      contractAddress: '0x0000000000000000000000000000000000000000',
+      contractAddress: "0x0000000000000000000000000000000000000000",
       tokenBalance: ethBalance,
       price: 0,
       value: 0,
-      change: 0
+      change: 0,
     },
     ...tokenBalances
       .map((balance, i) => ({
@@ -158,7 +155,10 @@ export async function getBalances(
         price: 0,
         value: 0,
         change: 0,
+        decimals: metadata[i]?.decimals ?? 18, // Ensure decimals is always a number
+        name: metadata[i]?.name ?? "", // Ensure name is always a string
+        symbol: metadata[i]?.symbol ?? "", // Ensure symbol is always a string
       }))
-      .filter(token => !token.symbol?.includes('.'))
+      .filter((token) => token.symbol && !token.symbol.includes(".")),
   ];
 }

@@ -100,12 +100,12 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
 
   const { data: l1LordsBalance, refetch: l1LordsRefetch } = useBalance({
     ...l1ERC20Contract,
-    address: l1Account!,
+    address: l1Account,
     token: LORDS[SUPPORTED_L1_CHAIN_ID]?.address as `0x${string}`,
   });
 
   const { data: l1EthBalance } = useBalance({
-    address: l1Account!,
+    address: l1Account,
   });
 
   useEffect(() => {
@@ -138,7 +138,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
         eth: l2EthBalance?.balance
           ? //@ts-expect-error incorrect SN react types
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            uint256.uint256ToBN(l2EthBalance?.balance)
+            uint256.uint256ToBN(l2EthBalance.balance)
           : 0n,
         lords: l2LordsBalance as bigint,
       },

@@ -2,7 +2,7 @@
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { useCallback, useMemo, useState } from "react";
 
-import { RouterOutputs } from "@realms-world/api";
+import type { RouterOutputs } from "@realms-world/api";
 
 export const MAX_SELECTED_ITEMS = 30;
 
@@ -24,12 +24,10 @@ export default function useNftSelection({
 
   const { selectedCollectionAddress, selectedTokenIds } = useMemo(
     () => ({
-      selectedCollectionAddress: userAddress
-        ? selectedTokensByUserAddress?.[userAddress]?.collectionAddress
-        : undefined,
-      selectedTokenIds: userAddress
-        ? selectedTokensByUserAddress?.[userAddress]?.tokenIds ?? []
-        : [],
+      selectedCollectionAddress:
+        selectedTokensByUserAddress?.[userAddress]?.collectionAddress,
+      selectedTokenIds:
+        selectedTokensByUserAddress?.[userAddress]?.tokenIds ?? [],
     }),
     [selectedTokensByUserAddress, userAddress],
   );
@@ -50,10 +48,7 @@ export default function useNftSelection({
   );
 
   function selectNft(tokenId: string, collectionAddress: string) {
-    if (
-      isNftSelected(tokenId, collectionAddress) ||
-      userAddress === undefined
-    ) {
+    if (isNftSelected(tokenId, collectionAddress)) {
       return;
     }
 
@@ -87,10 +82,7 @@ export default function useNftSelection({
 
   const deselectNft = useCallback(
     (tokenId: string, collectionAddress: string) => {
-      if (
-        !isNftSelected(tokenId, collectionAddress) ||
-        userAddress === undefined
-      ) {
+      if (!isNftSelected(tokenId, collectionAddress)) {
         return;
       }
 
@@ -127,7 +119,7 @@ export default function useNftSelection({
         >
       | RouterOutputs["erc721Tokens"]["all"]["items"],
   ) {
-    if (nfts.length === 0 || userAddress === undefined) {
+    if (nfts.length === 0) {
       return;
     }
 
@@ -143,10 +135,6 @@ export default function useNftSelection({
   }
 
   const deselectAllNfts = useCallback(() => {
-    if (userAddress === undefined) {
-      return;
-    }
-
     setSelectedTokensByUserAddress((previousValue) => ({
       ...previousValue,
       [userAddress]: undefined,
@@ -154,10 +142,6 @@ export default function useNftSelection({
   }, [setSelectedTokensByUserAddress, userAddress]);
 
   function toggleNftSelection(tokenId: string, collectionAddress: string) {
-    if (userAddress === undefined) {
-      return;
-    }
-
     if (isNftSelected(tokenId, collectionAddress)) {
       deselectNft(tokenId, collectionAddress);
       return;

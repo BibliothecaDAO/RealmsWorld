@@ -49,7 +49,7 @@ export const AttributesDropdown = ({
     },
     ...(attributesFetched?.items ?? attributes ?? []),
   ];
-  if (finalAttributes?.length < 2) {
+  if (finalAttributes.length < 2) {
     return null;
   }
 
@@ -62,7 +62,7 @@ export const AttributesDropdown = ({
           <Button className="sm:hidden" variant={"default"}>
             Close
           </Button>
-          {finalAttributes?.map((attribute, index: number) => {
+          {finalAttributes.map((attribute, index: number) => {
             return (
               <Accordion key={index} type="single" collapsible>
                 <AccordionItem value="item-1">

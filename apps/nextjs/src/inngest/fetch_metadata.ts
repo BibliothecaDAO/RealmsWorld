@@ -6,6 +6,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextResponse } from "next/server";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { env } from "@/env";
 import { hash, shortString, uint256 } from "starknet";
 
 import type { SQL } from "@realms-world/db";
@@ -37,7 +38,7 @@ export const fetchMetadata = inngest.createFunction(
   },
   { event: "nft/mint" },
   async ({ event, step }) => {
-    const providerUrl = `https://starknet-${!process.env.NEXT_PUBLIC_IS_TESTNET || process.env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`; /* `https://starknet-mainnet.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;*/
+    const providerUrl = `https://starknet-${env.NEXT_PUBLIC_IS_TESTNET == "false" ? "mainnet" : "sepolia"}.blastapi.io/${env.NEXT_PUBLIC_BLAST_API}`; /* `https://starknet-mainnet.blastapi.io/${process.env.NEXT_PUBLIC_BLAST_API}`;*/
     /*const provider = new RpcProvider({
       nodeUrl: providerUrl,
     });*/
@@ -58,7 +59,7 @@ export const fetchMetadata = inngest.createFunction(
                 /*"0x00539f522b29ae9251dbf7443c7a950cf260372e69efab3710a11bf17a9599f1",*/ event
                   .data.contract_address,
               entry_point_selector:
-                getCollectionAddresses(Collections.BEASTS)[
+                getCollectionAddresses(Collections.BEASTS)?.[
                   SUPPORTED_L2_CHAIN_ID
                 ] == event.data.contract_address
                   ? tokenURI
@@ -77,7 +78,7 @@ export const fetchMetadata = inngest.createFunction(
     if (metadata.error) {
       if (
         event.data.contract_address ==
-        getCollectionAddresses(Collections.BLOBERT)[SUPPORTED_L2_CHAIN_ID]!
+        getCollectionAddresses(Collections.BLOBERT)?.[SUPPORTED_L2_CHAIN_ID]
       ) {
         console.log("fetch svg image");
         const response = await fetch(providerUrl, {
@@ -116,8 +117,8 @@ export const fetchMetadata = inngest.createFunction(
 
     if (
       [
-        getCollectionAddresses(Collections.BLOBERT)[SUPPORTED_L2_CHAIN_ID]!,
-        getCollectionAddresses(Collections.BANNERS)[SUPPORTED_L2_CHAIN_ID]!,
+        getCollectionAddresses(Collections.BLOBERT)?.[SUPPORTED_L2_CHAIN_ID],
+        getCollectionAddresses(Collections.BANNERS)?.[SUPPORTED_L2_CHAIN_ID],
       ].includes(event.data.contract_address)
     ) {
       const metaFetched = svgImage.result ?? metadata.result;
@@ -314,7 +315,7 @@ export const fetchMetadata = inngest.createFunction(
                 await db
                   .update(schema.erc721AttributeKeys)
                   .set({
-                    attributeCount: attributeKey?.attributeCount + 1,
+                    attributeCount: attributeKey.attributeCount + 1,
                   })
                   .where(eq(schema.erc721AttributeKeys.id, attributeKey.id))
                   .returning({ updatedId: schema.erc721AttributeKeys.id });
@@ -354,27 +355,27 @@ export const fetchMetadata = inngest.createFunction(
               count: 1,
             });
           }
-          if (Object.keys(attributesCountMap)) {
-            const sqlChunks: SQL[] = [];
-            const ids: number[] = [];
-            sqlChunks.push(sql`(case`);
-            for (const key in attributesCountMap) {
-              sqlChunks.push(
-                sql.raw(
-                  `when id = ${key} then ${
-                    (attributesCountMap[key]?.tokenCount ?? 0) + 1
-                  }`,
-                ),
-              );
-              ids.push(parseInt(key));
-            }
-            sqlChunks.push(sql`end)`);
-            const finalSql: SQL = sql.join(sqlChunks, sql.raw(" "));
-            await db
-              .update(schema.erc721Attributes)
-              .set({ tokenCount: finalSql })
-              .where(inArray(schema.erc721Attributes.id, ids));
+          //if (Object.keys(attributesCountMap)) {
+          const sqlChunks: SQL[] = [];
+          const ids: number[] = [];
+          sqlChunks.push(sql`(case`);
+          for (const key in attributesCountMap) {
+            sqlChunks.push(
+              sql.raw(
+                `when id = ${key} then ${
+                  (attributesCountMap[key]?.tokenCount ?? 0) + 1
+                }`,
+              ),
+            );
+            ids.push(parseInt(key));
           }
+          sqlChunks.push(sql`end)`);
+          const finalSql: SQL = sql.join(sqlChunks, sql.raw(" "));
+          await db
+            .update(schema.erc721Attributes)
+            .set({ tokenCount: finalSql })
+            .where(inArray(schema.erc721Attributes.id, ids));
+          //}
         }
         return {
           token: query[0]?.updatedId,
@@ -383,6 +384,7 @@ export const fetchMetadata = inngest.createFunction(
         };
       },
     );
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!dbRes) {
       await step.sleep("fetch sleep", "30s");
       throw new Error("Failed to update item in Postgres");

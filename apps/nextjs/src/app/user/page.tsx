@@ -3,7 +3,7 @@ import { Collections } from "@realms-world/constants";
 import AssetL1CollectionPreview from "../account/assets/AssetL1CollectionPreview";
 import AssetL2CollectionPreview from "../account/assets/AssetL2CollectionPreview";
 
-export default async function Page() {
+export default function Page() {
   return (
     <div className="h-full w-full space-y-16 sm:mt-6">
       <AssetL1CollectionPreview />
