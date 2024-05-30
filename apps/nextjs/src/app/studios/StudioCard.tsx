@@ -31,7 +31,7 @@ export const StudioCard = ({
           />
         )}
         <div className="relative flex h-full max-w-full flex-col items-center justify-end object-contain">
-          <h3 className="text-4xl">{studio.name}</h3>
+          <h3 className="text-2xl">{studio.name}</h3>
         </div>
         <div className="invisible z-10 opacity-0 duration-300 group-hover:visible group-hover:-translate-y-3 group-hover:opacity-100">
           <Button variant={"default"}>Explore</Button>

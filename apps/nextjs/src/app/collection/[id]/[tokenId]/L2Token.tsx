@@ -9,7 +9,6 @@ import { useAccount } from "@starknet-react/core";
 import { Clock } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { getCollectionFromAddress } from "@realms-world/constants";
 import {
   Accordion,
   AccordionContent,

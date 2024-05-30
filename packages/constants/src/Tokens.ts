@@ -112,6 +112,7 @@ export const SUPPORTED_TOKENS: { [chainId in ChainId]: Token[] } = {
   [ChainId.MISSISSIPPI_TESTNET]: [],
   [ChainId.REALMS_L3]: [],
   [ChainId.SLOT_TESTNET]: [],
+  [ChainId.SN_DEVNET]: [],
 }
 
 export const LORDS_BRIDGE_ADDRESS: Record<number | string, string> = {
