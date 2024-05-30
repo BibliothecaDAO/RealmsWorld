@@ -1,6 +1,5 @@
 "use client";
 
-//import type { Realm } from "@/types/subgraph";
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import {
@@ -19,17 +18,18 @@ import {
   TableRow,
 } from "@realms-world/ui";
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData> {
   data: TData[];
-  columns: ColumnDef<TData, TValue>[];
-  onRowSelectionChange?: (row) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  columns: ColumnDef<TData, any>[];
+  onRowSelectionChange?: (rows) => void;
 }
 
-export function RealmsTable<TData, TValue>({
+export function RealmsTable<TData>({
   data,
   columns,
   onRowSelectionChange,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
@@ -47,8 +47,8 @@ export function RealmsTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onRowSelectionChange: setRowSelection,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    getRowId: (row) => row.id,
+
+    //getRowId: (row) => row.id,
     state: {
       sorting,
       rowSelection,

@@ -23,12 +23,11 @@ export default async function CollectionSummary({
   if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
     return <L2CollectionSummary collectionId={collectionId as Collections} />;
   } else if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { collections }: { collections: Collection[] } = await getCollections(
-      [{ contract: tokenAddresses[SUPPORTED_L1_CHAIN_ID] ?? "0x" }],
-    );
+    const { collections } = await getCollections([
+      { contract: tokenAddresses[SUPPORTED_L1_CHAIN_ID] ?? "0x" },
+    ]);
 
-    const collection = collections[0];
+    const collection = collections?.[0];
 
     if (!collection) {
       return <div>Collection Not Found</div>;

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ETHERSCAN_ACCOUNT_URL, STARKSCAN_ACCOUNT_URL } from "@/constants/env";
 import { useAccount as useL2Account, useStarkName } from "@starknet-react/core";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
@@ -33,13 +34,14 @@ export const AccountLink = ({ isL1 = false }: { isL1: boolean }) => {
           className="justify-between normal-case"
           key={text}
           variant={"outline"}
-          href={url}
-          external
+          asChild
         >
-          <span className="hidden sm:block">
-            {isL1 ? displayEthAddress : displayStarkAddress}
-          </span>
-          <ExternalLinkIcon className="ml-4 h-3 w-3" />
+          <Link href={url} target="_blank">
+            <span className="hidden sm:block">
+              {isL1 ? displayEthAddress : displayStarkAddress}
+            </span>
+            <ExternalLinkIcon className="ml-4 h-3 w-3" />
+          </Link>
         </Button>
       ))}
     </div>

@@ -1,4 +1,5 @@
 import type { Realm, UsersRealmsQuery } from "@/types/subgraph";
+import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
@@ -73,7 +74,7 @@ export const StakingMigration = () => {
                       ],
                     })
                   }
-                  disabled={!selectedRows?.length}
+                  disabled={!selectedRows}
                   className="w-full"
                 >
                   Unstake Realms
@@ -89,11 +90,13 @@ export const StakingMigration = () => {
             title: `Unstake ${realmsData?.wallet?.bridgedV2RealmsHeld} Realms from Carrack`,
             content: (
               <div className="mt-4">
-                <RealmsTable
-                  data={realmsData?.bridgedV2Realms as Realm[]}
-                  columns={columns}
-                  onRowSelectionChange={handleRowSelection}
-                />
+                {realmsData?.bridgedV2Realms.length && (
+                  <RealmsTable
+                    data={realmsData.bridgedV2Realms}
+                    columns={columns as ColumnDef<unknown>[]}
+                    onRowSelectionChange={handleRowSelection}
+                  />
+                )}
                 <Button
                   onClick={() =>
                     selectedRows &&

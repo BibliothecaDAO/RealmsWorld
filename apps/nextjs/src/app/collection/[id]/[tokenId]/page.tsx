@@ -1,4 +1,4 @@
-import type { Collection, TokenMarketData } from "@/types";
+import type { TokenMarketData } from "@/types";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
@@ -123,16 +123,14 @@ const L1TokenData = async ({
       includeQuantity: true,
     },
   }) as Promise<{ tokens: TokenMarketData[] }>;
-  const collectionData = getCollections([
-    { contract: contractAddress },
-  ]) as Promise<{ collections: Collection[] }>;
+  const collectionData = getCollections([{ contract: contractAddress }]);
   const [{ tokens }, { collections }] = await Promise.all([
     tokensData,
     collectionData,
   ]);
   const token = tokens[0]?.token;
   const market = tokens[0]?.market;
-  const collection = collections[0];
+  const collection = collections?.[0];
 
   return (
     <>

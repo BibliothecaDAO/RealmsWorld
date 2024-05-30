@@ -1,6 +1,6 @@
 "use client";
 
-import type { Realm } from "@/types";
+import type { Realm } from "@/types/subgraph";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
@@ -9,7 +9,7 @@ import { Button, Checkbox } from "@realms-world/ui";
 export const columns: ColumnDef<Realm>[] = [
   {
     id: "select",
-    accessorKey: "select",
+    accessorFn: (row) => row.id,
     header: ({ table }) => (
       <Checkbox
         checked={

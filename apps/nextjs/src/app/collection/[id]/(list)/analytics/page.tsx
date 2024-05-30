@@ -10,7 +10,7 @@ import { TopOwners } from "./TopOwners";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const tokenAddresses = getCollectionAddresses(params.id);
-  if (!tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
+  if (!tokenAddresses?.[SUPPORTED_L1_CHAIN_ID]) {
     return <h3 className="mt-8 text-center">Coming Soon</h3>;
   }
   const ownersDistributionData = getOwnersDistribution({

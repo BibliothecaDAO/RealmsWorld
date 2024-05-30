@@ -99,7 +99,6 @@ export const L2Token = ({
                   }
                   // tokenId={tokenId}
                   token={token}
-                  collectionId={collectionId}
                   orderId={0}
                 />
               )}

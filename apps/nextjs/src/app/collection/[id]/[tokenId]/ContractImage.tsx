@@ -25,7 +25,7 @@ export const ContractImage = ({
 }) => {
   const isBeasts = collectionId == "beasts";
   const tokenAddress =
-    getCollectionAddresses(collectionId)[SUPPORTED_L2_CHAIN_ID];
+    getCollectionAddresses(collectionId)?.[SUPPORTED_L2_CHAIN_ID];
 
   const { data } = useContractRead({
     functionName: "token_uri",

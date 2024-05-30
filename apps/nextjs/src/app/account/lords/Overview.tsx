@@ -189,7 +189,7 @@ export const Overview = () => {
                       <CardHeader>
                         <CardDescription>Claimable Lords</CardDescription>
                         <CardTitle className="flex items-center text-4xl">
-                          {balance && formatEther(BigInt(balance))}
+                          {balance && formatEther(balance as bigint)}
                           <LordsIcon className="ml-3 h-7 w-7 fill-current" />
                         </CardTitle>
                       </CardHeader>

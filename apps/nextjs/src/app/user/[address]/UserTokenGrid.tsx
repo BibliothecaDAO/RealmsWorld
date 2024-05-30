@@ -1,4 +1,3 @@
-import type { UserTokenData } from "@/types";
 import { Suspense } from "react";
 import { LoadingSkeletonGrid } from "@/app/_components/LoadingSkeletonGrid";
 import { getUser } from "@/lib/reservoir/getUser";
@@ -12,11 +11,7 @@ async function UserTokenGrid({
   address: string;
   continuation: string | undefined;
 }) {
-   
-  const {
-    tokens,
-    continuation: dataContinuation,
-  }: { tokens: UserTokenData[]; continuation: string } = await getUser({
+  const { tokens, continuation: dataContinuation } = await getUser({
     address,
     continuation,
   });
@@ -24,8 +19,8 @@ async function UserTokenGrid({
   return (
     <>
       <div className="my-3 grid grid-cols-1 gap-4 sm:pl-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {tokens.map((token) => (
-          <UserTokenCard key={token.token.tokenId} token={token} />
+        {tokens?.map((token) => (
+          <UserTokenCard key={token.token?.tokenId} token={token} />
         ))}
       </div>
       {dataContinuation && (

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { Button } from "@realms-world/ui";
 
@@ -43,8 +44,8 @@ export default function Page() {
       </div>
 
       <div className="mt-8">
-        <Button href="https://dev.realms.world/">
-          Developer Documentation
+        <Button asChild>
+          <Link href="https://dev.realms.world/">Developer Documentation</Link>
         </Button>
       </div>
     </PageLayout>

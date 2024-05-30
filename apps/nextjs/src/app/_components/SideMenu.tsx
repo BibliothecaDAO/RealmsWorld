@@ -22,7 +22,7 @@ import { useUIStore } from "../../providers/UIStoreProvider";
 const Sidebar = () => {
   const { isSidebarOpen, toggleSidebar } = useUIStore((state) => state);
 
-  const lordsPrice = useLordsPrice();
+  const { lordsPrice } = useLordsPrice();
 
   const router = useRouter();
   const menu = [
@@ -123,14 +123,16 @@ const Sidebar = () => {
               <hr className="mb-4 border-b-[3px]" />
             </div>
             <Button
-              href="/swap"
+              asChild
               variant={"outline"}
               className="mt-3 flex h-16 flex-col rounded p-2 pt-3 font-sans"
             >
-              <div className="h-8">
-                <LordsIcon className="mx-auto h-6 w-6 fill-bright-yellow pb-1" />
-              </div>
-              {lordsPrice.usdPrice}
+              <Link href="/swap">
+                <div className="h-8">
+                  <LordsIcon className="mx-auto h-6 w-6 fill-bright-yellow pb-1" />
+                </div>
+                {lordsPrice?.usdPrice}
+              </Link>
             </Button>
 
             <div className=" flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">

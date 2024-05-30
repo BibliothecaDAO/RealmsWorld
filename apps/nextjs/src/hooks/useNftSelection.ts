@@ -113,11 +113,10 @@ export default function useNftSelection({
   );
 
   function selectBatchNfts(
-    nfts:
-      | NonNullable<
-          paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
-        >
-      | RouterOutputs["erc721Tokens"]["all"]["items"],
+    nfts: NonNullable<
+      paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
+    >,
+    // | RouterOutputs["erc721Tokens"]["all"]["items"],
   ) {
     if (nfts.length === 0) {
       return;

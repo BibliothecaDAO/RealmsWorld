@@ -1,4 +1,5 @@
-import type { Attributes, Collection } from "@/types";
+import type { Attributes } from "@/types";
+import type { paths } from "@reservoir0x/reservoir-sdk";
 import Image from "next/image";
 import Link from "next/link";
 import { erc721Tokens } from "@/constants/erc721Tokens";
@@ -21,7 +22,9 @@ export const TokenInformation = ({
   image,
   attributes,
 }: {
-  collection?: Collection;
+  collection?: NonNullable<
+    paths["/collections/v5"]["get"]["responses"]["200"]["schema"]["collections"]
+  >[number];
   collectionId: string;
   children?: React.ReactNode;
   name: string | null;
