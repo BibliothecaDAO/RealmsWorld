@@ -2,13 +2,12 @@
 
 import { Suspense } from "react";
 import { LoadingSkeletonGrid } from "@/app/_components/LoadingSkeletonGrid";
+import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
 import L2ERC721Table from "@/app/collection/[id]/(list)/L2ERC721Table";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useAccount as useL2Account } from "@starknet-react/core";
 
 import { getCollectionAddresses } from "@realms-world/constants";
-
-import { WalletSheet } from "../../_components/wallet/WalletSheet";
 
 function AssetL2CollectionPreview({
   collectionName,
@@ -27,7 +26,7 @@ function AssetL2CollectionPreview({
           <h2>
             {collectionName === "goldentoken" ? "Golden Token" : collectionName}
           </h2>
-          <WalletSheet showEthereumLoginButton={false} />
+          <StarknetLoginButton />
         </div>
       )}
       <div className="min-h-24">

@@ -1,6 +1,7 @@
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { MAX_SELECTED_ITEMS } from "@/hooks/useNftSelection";
+import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { XIcon } from "lucide-react";
 
@@ -51,6 +52,7 @@ export const NftActions = ({
           }}
           disabled={totalSelectedNfts < 1}
         >
+          <Bridge className="mr-2 w-6" />
           Bridge
         </Button>
       </div>

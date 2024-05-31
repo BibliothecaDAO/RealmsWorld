@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useWriteDepositRealms } from "@/hooks/bridge/useWriteDepositRealms";
 import useERC721Approval from "@/hooks/token/useERC721Approval";
@@ -34,16 +35,25 @@ export const NftBridgeModal = () => {
   const { address: l1Address } = useAccount();
   const { address: l2Address } = useL2Account();
 
-  const { writeAsync: depositRealms, isPending: isDepositPending } =
-    useWriteDepositRealms({
-      onSuccess: () => console.log("success"),
-    });
+  const {
+    writeAsync: depositRealms,
+    isPending: isDepositPending,
+    data,
+  } = useWriteDepositRealms({
+    onSuccess: (data) => console.log("success" + data),
+  });
   const {
     isApprovedForAll,
     approveForAll,
     isPending: isApprovePending,
     approveForAllLoading,
   } = useERC721Approval();
+
+  useEffect(() => {
+    if (data !== undefined) {
+      console.log("useEffect" + data);
+    }
+  }, [data]);
 
   const renderBadge = (isL1: boolean, address: string) => (
     <Badge className="rounded-2xl pr-4">
@@ -69,29 +79,43 @@ export const NftBridgeModal = () => {
     return (
       <Dialog open onOpenChange={toggleNftBridge}>
         <DialogContent className="sm:max-w-[600px]">
-          <DialogTitle className="text-2xl">Bridge Realms</DialogTitle>
+          <DialogTitle className="text-2xl">
+            Bridge {selectedTokenIds.length} Realms
+          </DialogTitle>
 
           {!l1Address || !l2Address ? (
             <StarknetLoginButton />
           ) : (
             <ScrollArea className="-mr-6 max-h-[600px] pr-6">
-              <div className="space-y-3">
+              <div className="space-y-6">
                 <div>
-                  <span className="text-lg">
-                    Transferring {selectedTokenIds.length} Realms:{" "}
-                  </span>
-                  <br />
-                  {selectedTokenIds.map(
-                    (id: string, index: number) =>
-                      "#" +
-                      id +
-                      (index === selectedTokenIds.length - 1 ? "" : ", "),
-                  )}
+                  <hr />
+                  <div className="my-2">
+                    {selectedTokenIds.map(
+                      (id: string, index: number) =>
+                        "#" +
+                        id +
+                        (index === selectedTokenIds.length - 1 ? "" : ", "),
+                    )}
+                  </div>
+                  <hr />
                 </div>
-                <div className="flex items-center">
-                  {renderBadge(isSourceL1, isSourceL1 ? l1Address : l2Address)}
+                <div className="mb-4 flex items-center">
+                  <div className="flex flex-col">
+                    <span className="pb-1 text-sm uppercase">From</span>
+                    {renderBadge(
+                      isSourceL1,
+                      isSourceL1 ? l1Address : l2Address,
+                    )}
+                  </div>
                   <MoveRightIcon className="w-10" />
-                  {renderBadge(!isSourceL1, isSourceL1 ? l2Address : l1Address)}
+                  <div className="flex flex-col">
+                    <span className="pb-1 text-sm uppercase">To</span>
+                    {renderBadge(
+                      !isSourceL1,
+                      isSourceL1 ? l2Address : l1Address,
+                    )}
+                  </div>
                 </div>
 
                 {isApprovedForAll ? (
@@ -105,7 +129,14 @@ export const NftBridgeModal = () => {
                     }
                     disabled={isDepositPending}
                   >
-                    {isDepositPending ? "Confirm in Wallet" : "Bridge Realms"}
+                    {isDepositPending ? (
+                      <>
+                        <Loader className="mr-2 animate-spin" />
+                        Confirm in Wallet
+                      </>
+                    ) : (
+                      "Bridge Realms"
+                    )}
                   </Button>
                 ) : (
                   <>
