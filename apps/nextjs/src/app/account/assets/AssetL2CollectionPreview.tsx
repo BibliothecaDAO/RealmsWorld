@@ -8,6 +8,7 @@ import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useAccount as useL2Account } from "@starknet-react/core";
 
 import { getCollectionAddresses } from "@realms-world/constants";
+import { ScrollArea } from "@realms-world/ui";
 
 function AssetL2CollectionPreview({
   collectionName,
@@ -33,18 +34,20 @@ function AssetL2CollectionPreview({
         {!l2address ? (
           <h3>Please connect your starknet wallet</h3>
         ) : (
-          <Suspense fallback={<LoadingSkeletonGrid />}>
-            {collectionAddress && (
-              <L2ERC721Table
-                contractAddress={collectionAddress}
-                infiniteScroll={false}
-                limit={10}
-                ownerAddress={l2address}
-                loadMoreAssetName={collectionName}
-                selectable
-              />
-            )}
-          </Suspense>
+          <ScrollArea>
+            <Suspense fallback={<LoadingSkeletonGrid />}>
+              {collectionAddress && (
+                <L2ERC721Table
+                  contractAddress={collectionAddress}
+                  infiniteScroll={false}
+                  limit={10}
+                  ownerAddress={l2address}
+                  loadMoreAssetName={collectionName}
+                  selectable
+                />
+              )}
+            </Suspense>
+          </ScrollArea>
         )}
       </div>
     </div>

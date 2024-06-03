@@ -110,6 +110,7 @@ const L2ERC721Table = ({
                   <>
                     {selectable ? (
                       <button
+                        key={index}
                         onClick={() =>
                           toggleNftSelection(
                             token.token_id.toString(),
@@ -120,7 +121,6 @@ const L2ERC721Table = ({
                         <L2ERC721Card
                           selectable
                           isSelected={isSelected}
-                          key={index}
                           token={token}
                           layout={isGrid ? "grid" : "list"}
                         />

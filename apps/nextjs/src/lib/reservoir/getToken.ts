@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+import type { paths } from "@reservoir0x/reservoir-sdk";
 import { RESERVOIR_API_URL } from "@/constants/env";
 import { env } from "@/env";
 
@@ -57,7 +58,7 @@ export const getToken = async ({
 }: {
   collection?: string;
   query: any;
-}) => {
+}): Promise<paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]> => {
   if (collection) query.collection = collection;
   const queryString = buildQueryString({ attributes: cleanQuery(query) });
 
@@ -91,7 +92,7 @@ export const getToken = async ({
     );*/
     const res = await fetch(
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      `${RESERVOIR_API_URL}/tokens/v6?${queryString}&${check()}`,
+      `${RESERVOIR_API_URL}/tokens/v7?${queryString}&${check()}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -105,6 +106,6 @@ export const getToken = async ({
 
     return data;
   } catch (error) {
-    return error;
+    throw new Error("Couldnt fetch tokens");
   }
 };

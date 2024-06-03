@@ -1,6 +1,7 @@
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import Image from "next/image";
 import Link from "next/link";
+import { AnimatedMap } from "@/app/_components/AnimatedMap";
 
 import { Button } from "@realms-world/ui";
 import { cn } from "@realms-world/utils";
@@ -20,11 +21,11 @@ function UserTokenCard({
     <button onClick={onClick}>
       <div
         className={cn(
-          "flex transform flex-col border duration-300 hover:-translate-y-1",
+          "flex transform flex-col border bg-background  duration-300 hover:-translate-y-1",
           selected && "border-bright-yellow ring ring-bright-yellow",
         )}
       >
-        {token.token?.image && (
+        {token.token?.image ? (
           <Image
             src={token.token.image}
             alt={"Image for: " + token.token.name}
@@ -32,6 +33,8 @@ function UserTokenCard({
             width={400}
             height={400}
           />
+        ) : (
+          <AnimatedMap />
         )}
         {onClick !== undefined && (
           <div

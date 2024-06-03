@@ -29,9 +29,9 @@ export const L2ERC721Card = ({
   return (
     <div
       className={cn(
-        "group flex transform border-2 bg-background duration-300 hover:border-bright-yellow",
+        "group flex transform border bg-background duration-300 hover:border-bright-yellow",
         isGrid ? "w-full flex-col" : "justify-between",
-        isSelected && "border-[5px] border-primary bg-accent-foreground",
+        isSelected && "border-2 border-accent-foreground ",
       )}
     >
       <div>
@@ -59,7 +59,7 @@ export const L2ERC721Card = ({
               token={token}
               attributeKeys={["type", "tier", "level", "health"]}
             />
-            <CardAction token={token} />
+            {!selectable && <CardAction token={token} />}
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import type { paths } from "@reservoir0x/reservoir-sdk";
 import { useQuery } from "@tanstack/react-query";
 
 export const useUserTokens = ({ address }: { address?: string }) => {
-  const { data /* error, isLoading */ } = useQuery({
+  const { data, /* error,*/ isLoading } = useQuery({
     queryKey: ["userTokens" + address],
     queryFn: async () =>
       await fetch(`/api/reservoir?address=${address}`, {
@@ -16,5 +16,5 @@ export const useUserTokens = ({ address }: { address?: string }) => {
     enabled: !!address,
   });
 
-  return { tokens: data };
+  return { tokens: data, isLoading };
 };
