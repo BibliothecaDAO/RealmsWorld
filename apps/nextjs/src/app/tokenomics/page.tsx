@@ -50,7 +50,7 @@ export interface EthplorerAddressInfoResponse {
 }
 
 interface TotalStakedRealmsData {
-  wallets: {
+  wallets?: {
     realmsHeld: string;
   }[];
 }
@@ -91,12 +91,13 @@ const totalStakedRealmsData: TotalStakedRealmsData = (await getWalletRealmsHeld(
   },
 )) as TotalStakedRealmsData;
 
-const totalStakedRealms: number = totalStakedRealmsData.wallets.reduce(
-  (total: number, wallet: { realmsHeld: string }) => {
-    return total + parseInt(wallet.realmsHeld, 10);
-  },
-  0,
-);
+const totalStakedRealms: number =
+  totalStakedRealmsData.wallets?.reduce(
+    (total: number, wallet: { realmsHeld: string }) => {
+      return total + parseInt(wallet.realmsHeld, 10);
+    },
+    0,
+  ) ?? 0;
 
 async function fetchTotalValueLocked() {
   const url =

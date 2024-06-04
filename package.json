@@ -3,7 +3,7 @@
   "engines": {
     "node": ">=20.12.0"
   },
-  "packageManager": "bun@1.0.6",
+  "packageManager": "bun@1.1.12",
   "workspaces": [
     "apps/*",
     "config/*",
@@ -11,7 +11,7 @@
     "tooling/*"
   ],
   "scripts": {
-    "build": "turbo build --filter=!lords-bridge-subgraph",
+    "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
     "db:push": "bun --cwd packages/db push",
