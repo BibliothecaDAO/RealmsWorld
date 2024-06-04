@@ -15,11 +15,13 @@ export const EthereumLoginButton = ({
   variant,
   textClass,
   buttonClass,
+  children,
 }: {
   //openAccount?: boolean;
   variant?: VariantProps<typeof buttonVariants>["variant"];
   textClass?: string;
   buttonClass?: string;
+  children?: React.ReactNode;
 }) => {
   const { isPending } = useConnect();
   /*const modal = useModal({
@@ -42,12 +44,12 @@ export const EthereumLoginButton = ({
           >
             <span className="flex items-center font-sans normal-case">
               <EthereumLogo className="w-6" />
-              <span className={` pl-2 ${textClass ?? "sm:block"}`}>
+              <span className={`pl-2 ${textClass ?? "sm:block"}`}>
                 {connected ? (
                   account.displayName
                 ) : (
                   <>
-                    Ethereum
+                    {children ?? "Ethereum"}
                     {isPending && (
                       <div className="absolute right-0">
                         <svg

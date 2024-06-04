@@ -34,7 +34,9 @@ function AssetL1CollectionPreview() {
                   <LoadingSkeletonGrid />
                 ) : (
                   <L1ERC721Table
-                    address={CollectionAddresses.realms[SUPPORTED_L1_CHAIN_ID]}
+                    address={
+                      CollectionAddresses.realms[SUPPORTED_L1_CHAIN_ID] ?? "0x"
+                    }
                     tokens={tokens.tokens}
                     selectable
                   />

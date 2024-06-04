@@ -31,7 +31,7 @@ export const BridgeNftWrapper = () => {
         className="col-span-full"
       >
         <TabsList className="justify-center sm:space-x-1">
-          <TabsTrigger asChild value="l1">
+          <TabsTrigger value="l1">
             <Badge
               variant={activeChain == "l1" ? "default" : "outline"}
               className="mr-2"
@@ -42,7 +42,7 @@ export const BridgeNftWrapper = () => {
               </div>
             </Badge>
           </TabsTrigger>
-          <TabsTrigger asChild value="l2">
+          <TabsTrigger value="l2">
             <Badge variant={activeChain == "l2" ? "default" : "outline"}>
               <div className="flex p-1">
                 <StarknetLogo className="mr-3 w-8" />{" "}

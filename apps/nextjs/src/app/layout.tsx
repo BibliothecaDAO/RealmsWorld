@@ -9,6 +9,10 @@ import "@rainbow-me/rainbowkit/styles.css";
 
 import { cache } from "react";
 import { headers } from "next/headers";
+import { Footer } from "@/app/_components/Footer";
+import { StarknetLoginModal } from "@/app/_components/modal/StarknetLoginModal";
+import { TopNav } from "@/app/_components/TopNav";
+import { WalletSheet } from "@/app/_components/wallet/WalletSheet";
 import { env } from "@/env";
 import { TRPCReactProvider } from "@/trpc/react";
 
@@ -16,8 +20,6 @@ import { Toaster } from "@realms-world/ui";
 
 import { UIStoreProvider } from "../providers/UIStoreProvider";
 import { WalletsProvider } from "../providers/WalletsProvider";
-import { Footer } from "./_components/Footer";
-import { TopNav } from "./_components/TopNav";
 
 const silkscreen = Silkscreen({
   subsets: ["latin"],
@@ -63,6 +65,8 @@ export default function Layout(props: { children: React.ReactNode }) {
                 </main>
                 <Footer />
                 <Toaster />
+                <StarknetLoginModal />
+                <WalletSheet />
               </WalletsProvider>
             </Provider>
           </UIStoreProvider>

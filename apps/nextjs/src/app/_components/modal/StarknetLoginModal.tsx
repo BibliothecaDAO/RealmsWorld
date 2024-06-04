@@ -4,13 +4,14 @@
 import { useEffect } from "react";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount, useConnect } from "@starknet-react/core";
-import { motion } from "framer-motion";
+
+//import { motion } from "framer-motion";
 
 //import getDiscoveryWallets from "get-starknet-core";
 
 import { Button, Dialog, DialogContent, DialogHeader } from "@realms-world/ui";
 
-import WalletIcons from "./WalletIcons";
+import WalletIcons from "../wallet/WalletIcons";
 
 export const StarknetLoginModal = () => {
   const { connect, connectors } = useConnect();
@@ -90,47 +91,47 @@ export const StarknetLoginModal = () => {
   return (
     <Dialog open={isStarknetLoginOpen} onOpenChange={toggleStarknetLogin}>
       <DialogContent className="w-full min-w-[350px] !pt-8">
-        <motion.div
+        {/*<motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
             delay: 0.4,
           }}
           //className="fixed top-0 left-0 z-50 h-full w-72 bg-grey-11 md:w-[70vw]"
-        >
-          <DialogHeader>
-            <h6 className="-mt-3 mb-6 text-base">Connect Starknet Wallet</h6>
-          </DialogHeader>
-          <div className="flex flex-col space-y-2 self-center">
-            {connectors.map((connector) => {
-              const connectorInfo = wallets.find(
-                (wallet) => wallet.id === connector.id,
-              );
-              return (
-                <div className="mt-5 flex justify-center" key={connector.id}>
-                  <Button
-                    className="w-full justify-between self-center px-4 py-6 font-sans text-lg font-light capitalize"
-                    variant={"outline"}
-                    onClick={() =>
-                      connector.available()
-                        ? connect({ connector })
-                        : window.open(getConnectorDiscovery(connector.id))
-                    }
-                  >
-                    <div className="flex items-center justify-center">
-                      <WalletIcons id={connector.id} />
+        >*/}
+        <DialogHeader>
+          <h6 className="-mt-3 mb-6 text-base">Connect Starknet Wallet</h6>
+        </DialogHeader>
+        <div className="flex flex-col space-y-2 self-center">
+          {connectors.map((connector) => {
+            const connectorInfo = wallets.find(
+              (wallet) => wallet.id === connector.id,
+            );
+            return (
+              <div className="mt-5 flex justify-center" key={connector.id}>
+                <Button
+                  className="w-full justify-between self-center px-4 py-6 font-sans text-lg font-light capitalize"
+                  variant={"outline"}
+                  onClick={() =>
+                    connector.available()
+                      ? connect({ connector })
+                      : window.open(getConnectorDiscovery(connector.id))
+                  }
+                >
+                  <div className="flex items-center justify-center">
+                    <WalletIcons id={connector.id} />
 
-                      {!connector.available() ? "Install " : ""}
-                      {connectorInfo?.name
-                        ? `${connectorInfo.name}`
-                        : "Login with Email"}
-                    </div>
-                  </Button>
-                </div>
-              );
-            })}
-          </div>
-        </motion.div>
+                    {!connector.available() ? "Install " : ""}
+                    {connectorInfo?.name
+                      ? `${connectorInfo.name}`
+                      : "Login with Email"}
+                  </div>
+                </Button>
+              </div>
+            );
+          })}
+        </div>
+        {/*</motion.div>*/}
       </DialogContent>
     </Dialog>
   );

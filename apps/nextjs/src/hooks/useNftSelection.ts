@@ -113,25 +113,22 @@ export default function useNftSelection({
   );
 
   function selectBatchNfts(
-    nfts: NonNullable<
-      paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
-    >,
+    contractAddress: string,
+    tokenIds: string[],
     // | RouterOutputs["erc721Tokens"]["all"]["items"],
   ) {
-    if (nfts.length === 0) {
+    console.log(tokenIds);
+    if (tokenIds.length === 0) {
       return;
     }
     setSelectedTokensByUserAddress((previousValue) => ({
       ...previousValue,
       [userAddress]: {
-        collectionAddress: nfts[0]?.token?.contract,
-        tokenIds: nfts
-          .map((nft) => nft.token?.tokenId)
-          .slice(0, MAX_SELECTED_ITEMS),
+        collectionAddress: contractAddress,
+        tokenIds: tokenIds.slice(0, MAX_SELECTED_ITEMS),
       },
     }));
   }
-
   const deselectAllNfts = useCallback(() => {
     setSelectedTokensByUserAddress((previousValue) => ({
       ...previousValue,

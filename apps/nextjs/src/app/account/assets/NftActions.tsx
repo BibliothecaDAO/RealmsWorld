@@ -1,14 +1,17 @@
 import type { paths } from "@reservoir0x/reservoir-sdk";
-import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { MAX_SELECTED_ITEMS } from "@/hooks/useNftSelection";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { XIcon } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
+import type { ChainId } from "@realms-world/constants";
 import { Badge, Button } from "@realms-world/ui";
 
 type L1orL2Tokens =
+  | NonNullable<
+      paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
+    >
   | NonNullable<
       paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
     >
@@ -19,10 +22,12 @@ export const NftActions = ({
   selectBatchNfts,
   totalSelectedNfts,
   tokens,
+  sourceChain,
   deselectAllNfts,
 }: {
   selectedTokenIds: string[];
-  selectBatchNfts: (tokens: L1orL2Tokens) => void;
+  selectBatchNfts: (contractAddress: string, tokenIds: string[]) => void;
+  sourceChain: ChainId;
   totalSelectedNfts: number;
   tokens: L1orL2Tokens;
   deselectAllNfts: () => void;
@@ -34,6 +39,14 @@ export const NftActions = ({
     totalSelectedNfts === MAX_SELECTED_ITEMS ||
     totalSelectedNfts === tokens.length;
   const hasMoreThanMaxSelectNfts = tokens.length > MAX_SELECTED_ITEMS;
+
+  const batchData =
+    tokens[0] && "token" in tokens[0]
+      ? (tokens[0]?.token?.contract ?? "0x",
+        tokens.map((token) => token.token?.tokenId))
+      : "contract_address" in tokens[0]
+        ? tokens[0]?.contract_address ?? "0x"
+        : "0x";
   return (
     <div className="my-2 flex w-full justify-between">
       <div className="flex items-center gap-x-4">
@@ -42,7 +55,7 @@ export const NftActions = ({
           onClick={() => {
             setNftBridgeModalProps({
               selectedTokenIds: selectedTokenIds,
-              sourceChain: SUPPORTED_L1_CHAIN_ID,
+              sourceChain: sourceChain,
             });
             toggleNftBridge();
             /*writeAsync({
@@ -74,7 +87,7 @@ export const NftActions = ({
         ) : (
           <Button
             onClick={() => {
-              selectBatchNfts(tokens);
+              selectBatchNfts();
             }}
             color="default"
             size="sm"

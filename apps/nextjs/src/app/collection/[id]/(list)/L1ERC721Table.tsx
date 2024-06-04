@@ -3,6 +3,7 @@
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { NftActions } from "@/app/account/assets/NftActions";
 import { L1ERC721Card } from "@/app/collection/[id]/(list)/L1ERC721Card";
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import useNftSelection from "@/hooks/useNftSelection";
 import { useUIStore } from "@/providers/UIStoreProvider";
 
@@ -14,9 +15,13 @@ export const L1ERC721Table = ({
   selectable,
 }: {
   address: string;
-  tokens: NonNullable<
-    paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
-  >;
+  tokens:
+    | NonNullable<
+        paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
+      >
+    | NonNullable<
+        paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
+      >;
   selectable?: boolean;
 }) => {
   const { isGrid } = useUIStore((state) => state);
@@ -29,7 +34,7 @@ export const L1ERC721Table = ({
   const {
     deselectAllNfts,
     isNftSelected,
-    selectBatchNfts,
+    selectL1BatchNfts,
     toggleNftSelection,
     totalSelectedNfts,
     selectedTokenIds,
@@ -41,9 +46,10 @@ export const L1ERC721Table = ({
         <NftActions
           selectedTokenIds={selectedTokenIds}
           totalSelectedNfts={totalSelectedNfts}
-          selectBatchNfts={selectBatchNfts}
+          selectBatchNfts={selectL1BatchNfts}
           tokens={tokens}
           deselectAllNfts={deselectAllNfts}
+          sourceChain={SUPPORTED_L1_CHAIN_ID}
         />
       )}
       <div className={isGrid ? grid : list}>
@@ -53,10 +59,9 @@ export const L1ERC721Table = ({
             token.token?.contract ?? "0x",
           );
           return (
-            <>
+            <div key={index}>
               {selectable ? (
                 <div
-                  key={index}
                   className="cursor-pointer"
                   onClick={() =>
                     toggleNftSelection(
@@ -76,13 +81,12 @@ export const L1ERC721Table = ({
                 </div>
               ) : (
                 <L1ERC721Card
-                  key={index}
                   collectionName={collectionName ?? ""}
                   token={token}
                   layout={isGrid ? "grid" : "list"}
                 />
               )}
-            </>
+            </div>
           );
         })}
       </div>

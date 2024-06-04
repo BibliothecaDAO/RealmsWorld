@@ -15,11 +15,13 @@ export const StarknetLoginButton = ({
   variant,
   textClass,
   buttonClass,
+  children,
 }: {
   openAccount?: boolean;
   variant?: VariantProps<typeof buttonVariants>["variant"];
   textClass?: string;
   buttonClass?: string;
+  children?: React.ReactNode;
 }) => {
   const { address, isConnected } = useL2Account();
   const { toggleAccount, toggleStarknetLogin } = useUIStore((state) => state);
@@ -39,8 +41,12 @@ export const StarknetLoginButton = ({
     >
       <span className="flex items-center font-sans normal-case">
         <StarknetLogo className="h-6 w-6" />
-        <span className={` pl-2 ${textClass ?? "sm:block"}`}>
-          {address && isConnected ? <>{shortenHex(address, 8)}</> : "Starknet"}
+        <span className={`pl-2 ${textClass ?? "sm:block"}`}>
+          {address && isConnected ? (
+            <>{shortenHex(address, 8)}</>
+          ) : (
+            children ?? "Starknet"
+          )}
         </span>
       </span>
     </Button>

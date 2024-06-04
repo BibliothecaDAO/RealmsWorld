@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { NftActions } from "@/app/account/assets/NftActions";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import useNftSelection from "@/hooks/useNftSelection";
 import { cleanQuery } from "@/lib/reservoir/getToken";
 import { useUIStore } from "@/providers/UIStoreProvider";
@@ -96,6 +97,7 @@ const L2ERC721Table = ({
           selectBatchNfts={selectBatchNfts}
           tokens={erc721Tokens.pages[0]?.items}
           deselectAllNfts={deselectAllNfts}
+          sourceChain={SUPPORTED_L2_CHAIN_ID}
         />
       ) : null}
       <div className={isGrid ? grid : list}>

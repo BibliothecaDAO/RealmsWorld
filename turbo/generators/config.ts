@@ -1,9 +1,9 @@
 import { execSync } from "node:child_process";
-import type { PackageJson, PlopTypes } from "@turbo/gen";
+import type { PlopTypes } from "@turbo/gen";
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
   plop.setGenerator("init", {
-    description: "Generate a new package for the Acme Monorepo",
+    description: "Generate a new package for the Realms.World Monorepo",
     prompts: [
       {
         type: "input",
@@ -52,7 +52,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         path: "packages/{{ name }}/package.json",
         async transform(content, answers) {
           if ("deps" in answers && typeof answers.deps === "string") {
-            const pkg = JSON.parse(content) as PackageJson;
+            const pkg = JSON.parse(content);
             for (const dep of answers.deps.split(" ").filter(Boolean)) {
               const version = await fetch(
                 `https://registry.npmjs.org/-/package/${dep}/dist-tags`,

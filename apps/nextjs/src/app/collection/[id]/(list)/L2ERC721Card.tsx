@@ -126,7 +126,7 @@ const GridDetails = ({
   token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
   address?: string;
 }) => (
-  <div className="flex h-full w-full flex-col justify-between p-3 ">
+  <div className="flex h-full w-full flex-col justify-between p-3">
     <div className="flex justify-between pb-2">
       <span className="truncate">{decodeURIComponent(token.name ?? "")}</span>
     </div>

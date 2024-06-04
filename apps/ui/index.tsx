@@ -27,13 +27,13 @@ export { Calendar } from "./src/components/ui/calendar";
 export { Carousel } from "./src/components/ui/carousel";
 
 export {
-    Card,
-    CardHeader,
-    CardFooter,
-    CardTitle,
-    CardDescription,
-    CardContent,
-  } from "./src/components/ui/card";
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "./src/components/ui/card";
 export {
   Collapsible,
   CollapsibleTrigger,
@@ -74,6 +74,7 @@ export {
   DialogTrigger,
   DialogPortal,
   DialogOverlay,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogFooter,
@@ -166,15 +167,15 @@ export { Skeleton } from "./src/components/ui/skeleton";
 export { Slider } from "./src/components/ui/slider";
 export { Switch } from "./src/components/ui/switch";
 export {
-    Table,
-    TableHeader,
-    TableBody,
-    TableFooter,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableCaption,
-  } from "./src/components/ui/table";
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from "./src/components/ui/table";
 export {
   Tabs,
   TabsList,

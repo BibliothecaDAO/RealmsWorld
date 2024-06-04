@@ -34,9 +34,9 @@ function AssetL2CollectionPreview({
         {!l2address ? (
           <h3>Please connect your starknet wallet</h3>
         ) : (
-          <ScrollArea>
-            <Suspense fallback={<LoadingSkeletonGrid />}>
-              {collectionAddress && (
+          <Suspense fallback={<LoadingSkeletonGrid />}>
+            {collectionAddress && (
+              <ScrollArea>
                 <L2ERC721Table
                   contractAddress={collectionAddress}
                   infiniteScroll={false}
@@ -45,9 +45,9 @@ function AssetL2CollectionPreview({
                   loadMoreAssetName={collectionName}
                   selectable
                 />
-              )}
-            </Suspense>
-          </ScrollArea>
+              </ScrollArea>
+            )}
+          </Suspense>
         )}
       </div>
     </div>

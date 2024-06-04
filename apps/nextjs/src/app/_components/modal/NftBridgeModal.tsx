@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { ActionType } from "@/constants/transferSteps";
 import { useWriteDepositRealms } from "@/hooks/bridge/useWriteDepositRealms";
 import useERC721Approval from "@/hooks/token/useERC721Approval";
 import EthereumLogo from "@/icons/ethereum.svg";
@@ -22,7 +23,10 @@ import {
   ScrollArea,
 } from "@realms-world/ui";
 
+import { EthereumLoginButton } from "../wallet/EthereumLoginButton";
 import { StarknetLoginButton } from "../wallet/StarknetLoginButton";
+import TransactionSubmittedModalBody from "./TransactionSubmittedModal/TransactionSubmittedModalBody";
+import TransactionSubmittedModalButton from "./TransactionSubmittedModal/TransactionSubmittedModalButton";
 
 export const NftBridgeModal = () => {
   const {
@@ -83,91 +87,104 @@ export const NftBridgeModal = () => {
             Bridge {selectedTokenIds.length} Realms
           </DialogTitle>
 
-          {!l1Address || !l2Address ? (
-            <StarknetLoginButton />
-          ) : (
-            <ScrollArea className="-mr-6 max-h-[600px] pr-6">
-              <div className="space-y-6">
-                <div>
-                  <hr />
-                  <div className="my-2">
-                    {selectedTokenIds.map(
-                      (id: string, index: number) =>
-                        "#" +
-                        id +
-                        (index === selectedTokenIds.length - 1 ? "" : ", "),
-                    )}
-                  </div>
-                  <hr />
-                </div>
-                <div className="mb-4 flex items-center">
-                  <div className="flex flex-col">
-                    <span className="pb-1 text-sm uppercase">From</span>
-                    {renderBadge(
-                      isSourceL1,
-                      isSourceL1 ? l1Address : l2Address,
-                    )}
-                  </div>
-                  <MoveRightIcon className="w-10" />
-                  <div className="flex flex-col">
-                    <span className="pb-1 text-sm uppercase">To</span>
-                    {renderBadge(
-                      !isSourceL1,
-                      isSourceL1 ? l2Address : l1Address,
-                    )}
-                  </div>
-                </div>
+          {!l1Address && <EthereumLoginButton />}
+          {!l2Address && <StarknetLoginButton />}
+          {l1Address && l2Address && (
+            <>
+              {!data ? (
+                <ScrollArea className="-mr-6 max-h-[600px] pr-6">
+                  <div className="space-y-6">
+                    <div>
+                      <hr />
+                      <div className="my-2">
+                        {selectedTokenIds.map(
+                          (id: string, index: number) =>
+                            "#" +
+                            id +
+                            (index === selectedTokenIds.length - 1 ? "" : ", "),
+                        )}
+                      </div>
+                      <hr />
+                    </div>
+                    <div className="mb-4 flex items-center">
+                      <div className="flex flex-col">
+                        <span className="pb-1 text-sm uppercase">From</span>
+                        {renderBadge(
+                          isSourceL1,
+                          isSourceL1 ? l1Address : l2Address,
+                        )}
+                      </div>
+                      <MoveRightIcon className="w-10" />
+                      <div className="flex flex-col">
+                        <span className="pb-1 text-sm uppercase">To</span>
+                        {renderBadge(
+                          !isSourceL1,
+                          isSourceL1 ? l2Address : l1Address,
+                        )}
+                      </div>
+                    </div>
 
-                {isApprovedForAll ? (
-                  <Button
-                    className="w-full"
-                    onClick={() =>
-                      depositRealms({
-                        tokenIds: selectedTokenIds.map((id) => BigInt(id)),
-                        l2Address: l2Address,
-                      })
-                    }
-                    disabled={isDepositPending}
-                  >
-                    {isDepositPending ? (
-                      <>
-                        <Loader className="mr-2 animate-spin" />
-                        Confirm in Wallet
-                      </>
+                    {isApprovedForAll ? (
+                      <Button
+                        className="w-full"
+                        onClick={() =>
+                          depositRealms({
+                            tokenIds: selectedTokenIds.map((id) => BigInt(id)),
+                            l2Address: l2Address,
+                          })
+                        }
+                        disabled={isDepositPending}
+                      >
+                        {isDepositPending ? (
+                          <>
+                            <Loader className="mr-2 animate-spin" />
+                            Confirm in Wallet
+                          </>
+                        ) : (
+                          "Bridge Realms"
+                        )}
+                      </Button>
                     ) : (
-                      "Bridge Realms"
-                    )}
-                  </Button>
-                ) : (
-                  <>
-                    <p>
-                      You must approve the Bridge contract for your Realms
-                      before confirming transfer
-                    </p>
-                    <Button
-                      onClick={approveForAll}
-                      disabled={isApprovePending || approveForAllLoading}
-                      className="w-full"
-                    >
-                      {isApprovePending ? (
-                        "Confirm in Wallet"
-                      ) : (
-                        <>
-                          {approveForAllLoading ? (
-                            <>
-                              <Loader className="mr-2 animate-spin" /> In
-                              Progress
-                            </>
+                      <>
+                        <p>
+                          You must approve the Bridge contract for your Realms
+                          before confirming transfer
+                        </p>
+                        <Button
+                          onClick={approveForAll}
+                          disabled={isApprovePending || approveForAllLoading}
+                          className="w-full"
+                        >
+                          {isApprovePending ? (
+                            "Confirm in Wallet"
                           ) : (
-                            "Approve Realms"
+                            <>
+                              {approveForAllLoading ? (
+                                <>
+                                  <Loader className="mr-2 animate-spin" /> In
+                                  Progress
+                                </>
+                              ) : (
+                                "Approve Realms"
+                              )}
+                            </>
                           )}
-                        </>
-                      )}
-                    </Button>
-                  </>
-                )}
-              </div>
-            </ScrollArea>
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </ScrollArea>
+              ) : (
+                <>
+                  <TransactionSubmittedModalBody
+                    transfer={{ type: ActionType.TRANSFER_TO_L2, l1hash: data }}
+                  />
+                  <TransactionSubmittedModalButton
+                    transfer={{ type: ActionType.TRANSFER_TO_L2, l1hash: data }}
+                  />
+                </>
+              )}
+            </>
           )}
         </DialogContent>
       </Dialog>

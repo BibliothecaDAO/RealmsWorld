@@ -17,17 +17,11 @@ import {
   NavigationMenuTrigger,
 } from "@realms-world/ui";
 
-import { WalletSheet } from "./wallet/WalletSheet";
+import { EthereumLoginButton } from "./wallet/EthereumLoginButton";
+import { StarknetLoginButton } from "./wallet/StarknetLoginButton";
 
 export const TopNav = () => {
-  //{ scrollY } = useScroll();
-  //const [isScrolled, setIsScrolled] = useState(false);
-
   const { toggleSidebar } = useUIStore((state) => state);
-
-  /*useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 0);
-  });*/
 
   const aboutLinks = [
     /*{
@@ -139,7 +133,17 @@ export const TopNav = () => {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <WalletSheet />
+        <div className="flex flex-col space-y-4 px-1 md:flex-row md:space-x-2 md:space-y-0">
+          <EthereumLoginButton
+            variant={"default"}
+            textClass="group-hover:block"
+          />
+          <StarknetLoginButton
+            textClass="group-hover:block"
+            variant={"default"}
+            openAccount
+          />
+        </div>
       </div>
     </div>
   );
