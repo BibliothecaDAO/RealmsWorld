@@ -31,7 +31,7 @@
     "npm-check-updates": "^16.14.18",
     "prettier": "^3.2.5",
     "tsup": "^8.0.2",
-    "turbo": "1.13.2",
+    "turbo": "^1.13.3",
     "typescript": "^5.4.5"
   },
   "prettier": "@realms-world/prettier-config"

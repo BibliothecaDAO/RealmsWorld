@@ -122,9 +122,9 @@ export default async function Page() {
   const realmNFTHolders = await getRealmNFTHolders();
 
   return (
-    <PageLayout title="Lords Tokenomics">
+    <PageLayout title="$Lords Tokenomics">
       <div className="pb-8 md:text-2xl">
-        The Lords token is the native token of the Realms Autonomous World. It
+        The $Lords token is the native token of the Realms Autonomous World. It
         is governed by BibliothecaDAO who controls the issuance of the token.
       </div>
       <DashBoard 
