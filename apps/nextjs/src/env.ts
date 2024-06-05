@@ -18,7 +18,6 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.string().url(),
-    RESERVOIR_API_KEY: z.string(),
     INNGEST_EVENT_KEY: z.string().optional(),
   },
 

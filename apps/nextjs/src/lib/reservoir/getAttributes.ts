@@ -15,7 +15,7 @@ export const getAttributes = async ({
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": env.RESERVOIR_API_KEY,
+          "x-api-key": env.NEXT_PUBLIC_RESERVOIR_API_KEY,
           "Access-Control-Allow-Origin": "*",
         },
         next: { revalidate: 1000 },
