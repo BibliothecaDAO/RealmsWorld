@@ -6,15 +6,14 @@ import {
   useContract,
   useContractWrite as useL2ContractWrite,
 } from "@starknet-react/core";
-import { parseEther } from "viem";
 import { useAccount as useL1Account } from "wagmi";
 
 import { REALMS_BRIDGE_ADDRESS } from "@realms-world/constants";
 
-export const useWriteInitiateWithdrawLords = ({
-  amount,
+export const useWriteInitiateWithdrawRealms = ({
+  selectedTokenIds,
 }: {
-  amount: string | null;
+  selectedTokenIds: string[];
 }) => {
   const { address: addressL1 } = useL1Account();
 
@@ -26,21 +25,27 @@ export const useWriteInitiateWithdrawLords = ({
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const calls: Call[] = useMemo(() => {
-    if (!amount || !addressL1) return [];
+    if (!selectedTokenIds.length || !addressL1) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
-      contract?.populateTransaction.initiate_withdrawal?.(addressL1, {
-        low: parseEther(amount),
-        high: 0,
-      }),
+      contract?.populateTransaction.deposit_tokens?.(
+        Date.now(),
+        addressL1,
+        selectedTokenIds,
+      ),
     ];
-  }, [addressL1, amount, contract?.populateTransaction]);
+  }, [addressL1, selectedTokenIds, contract?.populateTransaction]);
 
-  const { writeAsync, data: withdrawHash } = useL2ContractWrite({ calls });
+  const {
+    writeAsync,
+    data: withdrawHash,
+    ...writeReturn
+  } = useL2ContractWrite({ calls });
 
   return {
     calls,
     writeAsync,
     withdrawHash,
+    ...writeReturn,
   };
 };

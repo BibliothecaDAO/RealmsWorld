@@ -43,7 +43,8 @@ export const L1ERC721Card = ({
       className={cn(
         "group flex transform border bg-background duration-300 hover:border-bright-yellow",
         isGrid ? "w-full flex-col" : "justify-between",
-        isSelected && "border-[5px] border-accent-foreground",
+        isSelected &&
+          "border-2 border-accent-foreground hover:border-accent-foreground/50",
       )}
     >
       <div>

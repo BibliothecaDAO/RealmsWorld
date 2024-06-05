@@ -58,11 +58,6 @@ export const NftActions = ({
       }
     });
     batchData = { contractAddress, tokenIds };
-    /*} else if ("contract_address" in tokens[0]) {
-      batchData = tokens[0]?.contract_address ?? "0x";
-    } else {
-      batchData = "0x";
-    }*/
   }
   return (
     <div className="my-2 flex w-full justify-between">
@@ -75,10 +70,6 @@ export const NftActions = ({
               sourceChain: sourceChain,
             });
             toggleNftBridge();
-            /*writeAsync({
-                tokenIds: selectedTokenIds.map((id) => BigInt(id)),
-                l2Address,
-              })*/
           }}
           disabled={totalSelectedNfts < 1}
         >
