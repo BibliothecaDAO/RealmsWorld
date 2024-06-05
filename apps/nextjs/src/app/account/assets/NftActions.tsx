@@ -40,13 +40,30 @@ export const NftActions = ({
     totalSelectedNfts === tokens.length;
   const hasMoreThanMaxSelectNfts = tokens.length > MAX_SELECTED_ITEMS;
 
-  const batchData =
-    tokens[0] && "token" in tokens[0]
-      ? (tokens[0]?.token?.contract ?? "0x",
-        tokens.map((token) => token.token?.tokenId))
-      : "contract_address" in tokens[0]
-        ? tokens[0]?.contract_address ?? "0x"
-        : "0x";
+  let batchData: { contractAddress: string; tokenIds: string[] };
+  if (tokens[0]) {
+    let contractAddress = "0x";
+    if ("token" in tokens[0]) {
+      contractAddress = tokens[0]?.token?.contract ?? "0x";
+    } else if ("contract_address" in tokens[0]) {
+      contractAddress = tokens[0]?.contract_address ?? "0x";
+    }
+    const tokenIds = tokens.map((token) => {
+      if ("token" in token) {
+        return token.token?.tokenId ?? "";
+      } else if ("contract_address" in token) {
+        return token.token_id.toString();
+      } else {
+        return "";
+      }
+    });
+    batchData = { contractAddress, tokenIds };
+    /*} else if ("contract_address" in tokens[0]) {
+      batchData = tokens[0]?.contract_address ?? "0x";
+    } else {
+      batchData = "0x";
+    }*/
+  }
   return (
     <div className="my-2 flex w-full justify-between">
       <div className="flex items-center gap-x-4">
@@ -87,7 +104,7 @@ export const NftActions = ({
         ) : (
           <Button
             onClick={() => {
-              selectBatchNfts();
+              selectBatchNfts(batchData.contractAddress, batchData.tokenIds);
             }}
             color="default"
             size="sm"

@@ -34,7 +34,7 @@ export const L1ERC721Table = ({
   const {
     deselectAllNfts,
     isNftSelected,
-    selectL1BatchNfts,
+    selectBatchNfts,
     toggleNftSelection,
     totalSelectedNfts,
     selectedTokenIds,
@@ -46,7 +46,7 @@ export const L1ERC721Table = ({
         <NftActions
           selectedTokenIds={selectedTokenIds}
           totalSelectedNfts={totalSelectedNfts}
-          selectBatchNfts={selectL1BatchNfts}
+          selectBatchNfts={selectBatchNfts}
           tokens={tokens}
           deselectAllNfts={deselectAllNfts}
           sourceChain={SUPPORTED_L1_CHAIN_ID}
@@ -55,7 +55,7 @@ export const L1ERC721Table = ({
       <div className={isGrid ? grid : list}>
         {tokens.map((token, index) => {
           const isSelected = isNftSelected(
-            token.token?.tokenId.toString() ?? "0",
+            token.token?.tokenId?.toString() ?? "0",
             token.token?.contract ?? "0x",
           );
           return (
@@ -65,7 +65,7 @@ export const L1ERC721Table = ({
                   className="cursor-pointer"
                   onClick={() =>
                     toggleNftSelection(
-                      token.token?.tokenId.toString() ?? "0",
+                      token.token?.tokenId?.toString() ?? "0",
                       token.token?.contract ?? "0x",
                     )
                   }

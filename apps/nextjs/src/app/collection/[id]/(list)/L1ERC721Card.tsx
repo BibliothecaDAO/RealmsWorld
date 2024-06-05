@@ -41,9 +41,9 @@ export const L1ERC721Card = ({
   return (
     <div
       className={cn(
-        "group flex transform border-2 bg-background duration-300 hover:border-bright-yellow",
+        "group flex transform border bg-background duration-300 hover:border-bright-yellow",
         isGrid ? "w-full flex-col" : "justify-between",
-        isSelected && "border-[5px] border-accent-foreground ",
+        isSelected && "border-[5px] border-accent-foreground",
       )}
     >
       <div>
@@ -54,7 +54,7 @@ export const L1ERC721Card = ({
             <Image
               src={token.token.image}
               alt={token.token.name ?? ""}
-              className={`${isGrid ? "mx-auto " : ""}`}
+              className={`${isGrid ? "mx-auto" : ""}`}
               width={imageSize}
               height={imageSize}
             />
