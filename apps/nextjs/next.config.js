@@ -105,6 +105,9 @@ const withMDX = createMDX({
   extension: /\.mdx?$/,
 });
 
-export default MillionLint.next({ rsc: true, auto: { rsc: true } })(
-  withMDX(config),
-);
+const enhancedConfig =
+  !process.env.NODE_ENV === "production"
+    ? MillionLint.next({ rsc: true, auto: { rsc: true } })(withMDX(config))
+    : withMDX(config);
+
+export default enhancedConfig;
