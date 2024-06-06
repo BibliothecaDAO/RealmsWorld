@@ -1,7 +1,7 @@
 ---
 title: "Discover Force Prime Heroes in the Realms.World"
-subtitle: "Slay your way to the top, Adventurer"
-date: "2024-06-05"
+subtitle: "Slay your way to the top of Force Prime, Adventurer"
+date: "2024-06-06"
 tags: ["strategy", "puzzle", "tournament"]
 author: SECRETIVE
 image: "/blog/Force Prime x Realms banner brand colours.png"
@@ -12,7 +12,7 @@ image: "/blog/Force Prime x Realms banner brand colours.png"
 With a new gameplay season starting, we proudly welcome *Force Prime Heroes* to [Realms.World](https://realms.world/games/force-prime-heroes)
 
 
-Inspired by the legendary *Heroes of Might and Magic* series, players are cast onto a monster-filled map with one ultimate goal: raid and kill the Bone Dragon. Season Two is just starting and players will find two major updates. Their hero is upgradable, and this season introduces the first single player campaign.
+Inspired by the legendary *Heroes of Might and Magic* series, players are cast onto a monster-filled map with one ultimate goal: to figure out how to raid and kill the Bone Dragon. Grand Season Two is just starting and players will find two major updates. You hero is now upgradable: use four stats to customise your character build. This season also introduces the first single player campaign.
 
  
   
@@ -21,13 +21,13 @@ Inspired by the legendary *Heroes of Might and Magic* series, players are cast o
 
   
 
-Force Prime Heroes launched its open beta and is seeking Adventurers to compete.  As you play you accrue points and play for prizes. There are weekly tournaments and blitz tournaments - [follow Force Prime on X for ongoing updates](https://x.com/ForcePrime_io). Launch the fully onchain game from their [website](http://forceprime.io) or [Realms.World](https://realms.world/games/force-prime-heroes).
+Force Prime Heroes is in open beta and is seeking Adventurers to compete.  As you play you accrue points and play for prizes ($2000 STRK this Season). There are weekly tournaments and blitz tournaments - [follow Force Prime on X for ongoing updates](https://x.com/ForcePrime_io). Launch the fully onchain game from their [website](http://forceprime.io) or [Realms.World](https://realms.world/games/force-prime-heroes).
 
   
 
-Force Prime Heroes is played alone (at the moment, multiplayer is on the roadmap) with competition for the top spots on the global leaderboard. Players strategically traverse the game map, forge formidable armies, vanquish hordes of monsters, and uncover the most effective path to confront the final boss.
+Force Prime Heroes is played alone (at the moment...) with competition for the top spots on the global leaderboard. Players strategically traverse the game map, forge formidable armies, vanquish hordes of monsters, and uncover the most effective path to confront the final boss.
 
-With multiple maps, a single-player campaign mode and a player-base growing in size, Force Prime Heroes will bring out your competitive slayer side. The developers at Force Prime Studios have an ambitious roadmap and will continue to role out new features, season by season, to keep you coming back to the fight. 
+With multiple maps, a single player campaign mode and a player-base growing in size, Force Prime Heroes will bring out your competitive slayer side. The developers at Force Prime Studios have an ambitious roadmap and will continue to role out new features, season by season. 
  
   
 
