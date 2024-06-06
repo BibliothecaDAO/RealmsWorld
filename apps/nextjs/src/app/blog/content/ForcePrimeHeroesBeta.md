@@ -7,12 +7,10 @@ author: SECRETIVE
 image: "/blog/Force Prime x Realms banner brand colours.png"
 ---
 
-# Discover Force Prime Heroes in the Realms.World
-
 With a new gameplay season starting, we proudly welcome *Force Prime Heroes* to [Realms.World](https://realms.world/games/force-prime-heroes)
 
 
-Inspired by the legendary *Heroes of Might and Magic* series, players are cast onto a monster-filled map with one ultimate goal: to figure out how to raid and kill the Bone Dragon. Grand Season Two is just starting and players will find two major updates. You hero is now upgradable: use four stats to customise your character build. This season also introduces the first single player campaign.
+Inspired by the legendary *Heroes of Might and Magic* series, players are cast onto a monster-filled map with one ultimate goal: to figure out how to raid and kill the Bone Dragon. Grand Season Two is just starting and players will find two major updates. Your hero is now upgradable: use four stats to customise your character build. This season also introduces the first single player campaign.
 
  
   
