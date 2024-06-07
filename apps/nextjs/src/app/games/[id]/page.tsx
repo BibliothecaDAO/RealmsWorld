@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { StatusDot } from "@/app/_components/StatusDot";
 import { ChevronLeft } from "lucide-react";
 
 import { CHAIN_IDS_TO_NAMES, games, Tokens } from "@realms-world/constants";
@@ -9,6 +8,7 @@ import {
   Badge,
   Button,
   Carousel,
+  StatusDot,
   Tabs,
   TabsContent,
   TabsList,
@@ -52,10 +52,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             <div className="flex flex-wrap">
               {game?.tokens?.map((token, index) =>
                 token === Tokens.LORDS ? (
-                  <Button
-                    href="/swap"
-                    key={index}
-                  >
+                  <Button href="/swap" key={index}>
                     {token}
                   </Button>
                 ) : (
@@ -98,7 +95,15 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   const tableData = [
-    { key: "Studio", value: (<Link href={`/studios/${game?.developer ?? ""}`}> {game?.developer}</Link>) },
+    {
+      key: "Studio",
+      value: (
+        <Link href={`/studios/${game?.developer ?? ""}`}>
+          {" "}
+          {game?.developer}
+        </Link>
+      ),
+    },
     { key: "Status", value: game?.status },
     {
       key: "Chain",
