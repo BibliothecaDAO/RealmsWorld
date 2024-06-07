@@ -78,7 +78,7 @@ export const Mainnet: Story = {
   },
 };
 
-export const DarkGreenBackground: Story = {
+export const DarkGreenBackgroundOutline: Story = {
   render: (args) => (
     <Badge {...args}>
       {StatusDot("mainnet")}
@@ -86,6 +86,7 @@ export const DarkGreenBackground: Story = {
     </Badge>
   ),
   args: {
-    className: "bg-dark-green text-foreground text-bright-yellow font-sans",
+    className: "bg-dark-green text-bright-yellow font-sans",
+    variant: "outline",
   },
 };
