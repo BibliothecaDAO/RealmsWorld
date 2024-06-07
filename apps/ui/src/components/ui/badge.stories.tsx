@@ -77,3 +77,15 @@ export const Mainnet: Story = {
     className: "bg-bright-yellow text-theme-gray font-sans",
   },
 };
+
+export const DarkGreenBackground: Story = {
+  render: (args) => (
+    <Badge {...args}>
+      {StatusDot("mainnet")}
+      Mainnet
+    </Badge>
+  ),
+  args: {
+    className: "bg-dark-green text-foreground text-bright-yellow font-sans",
+  },
+};
