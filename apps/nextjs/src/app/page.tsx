@@ -53,7 +53,7 @@ export default async function Home() {
       <div className="my-24">
         <hr />
         <h3>Events</h3>
-        <EventGrid />
+        <EventGrid isHomepage={true} />
       </div>
       <hr />
 
