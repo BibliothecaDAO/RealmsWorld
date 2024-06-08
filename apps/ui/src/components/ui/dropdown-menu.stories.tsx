@@ -9,7 +9,7 @@ import {
 } from "./dropdown-menu";
 
 const meta: Meta<typeof DropdownMenu> = {
-  title: "ui/DropownMenu",
+  title: "Components/DropownMenu",
   component: DropdownMenu,
   tags: ["autodocs"],
   argTypes: {},
@@ -26,25 +26,23 @@ const sortDirection = [
 export const Base: Story = {
   render: (args) => (
     <DropdownMenu {...args}>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button size={"xs"} variant={"default"}>
-            Direction
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          {sortDirection.map((query, index) => {
-            return (
-              <DropdownMenuItem
-                key={index}
-                className="font-sans-serif text-bright-yellow"
-              >
-                {query.title}
-              </DropdownMenuItem>
-            );
-          })}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button size={"xs"} variant={"default"}>
+          Direction
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        {sortDirection.map((query, index) => {
+          return (
+            <DropdownMenuItem
+              key={index}
+              className="font-sans-serif text-bright-yellow"
+            >
+              {query.title}
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
     </DropdownMenu>
   ),
   args: {},

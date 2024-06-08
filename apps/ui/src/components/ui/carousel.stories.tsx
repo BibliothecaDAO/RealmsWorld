@@ -6,7 +6,7 @@ import { games } from "@realms-world/constants";
 import { Carousel } from "./carousel";
 
 const meta: Meta<typeof Carousel> = {
-  title: "ui/Carousel",
+  title: "Components/Carousel",
   component: Carousel,
   tags: ["autodocs"],
   argTypes: {},

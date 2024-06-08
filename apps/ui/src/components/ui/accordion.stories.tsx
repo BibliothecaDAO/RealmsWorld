@@ -10,7 +10,7 @@ import { Button } from "./button";
 import { Input } from "./input";
 
 const meta: Meta<typeof Accordion> = {
-  title: "ui/Accordion",
+  title: "Components/Accordion",
   component: Accordion,
   tags: ["autodocs"],
   argTypes: {},
