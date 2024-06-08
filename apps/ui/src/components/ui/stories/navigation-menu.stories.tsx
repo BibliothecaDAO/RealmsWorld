@@ -9,7 +9,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "./navigation-menu";
+} from "../navigation-menu";
 
 const communityLinks = [
   {

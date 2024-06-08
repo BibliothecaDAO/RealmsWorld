@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { HammerIcon } from "lucide-react";
 
-import { Button } from "./button";
-import { ScrollArea, ScrollBar } from "./scroll-area";
+import { Button } from "../button";
+import { ScrollArea, ScrollBar } from "../scroll-area";
 
 const meta: Meta<typeof ScrollArea> = {
   title: "Components/ScrollArea",

@@ -5,9 +5,9 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./accordion";
-import { Button } from "./button";
-import { Input } from "./input";
+} from "../accordion";
+import { Button } from "../button";
+import { Input } from "../input";
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",

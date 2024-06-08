@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
 
-import { Carousel } from "./carousel";
+import { Carousel } from "../carousel";
 
 const meta: Meta<typeof Carousel> = {
   title: "Components/Carousel",

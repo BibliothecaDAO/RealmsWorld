@@ -25,8 +25,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./alert-dialog";
-import { Button } from "./button";
+} from "../alert-dialog";
+import { Button } from "../button";
 
 const meta: Meta<typeof AlertDialog> = {
   title: "ui/AlertDialog",

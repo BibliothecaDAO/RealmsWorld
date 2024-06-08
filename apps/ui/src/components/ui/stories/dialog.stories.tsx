@@ -6,8 +6,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 
-import { Button } from "./button";
-import { Checkbox } from "./checkbox";
+import { Button } from "../button";
+import { Checkbox } from "../checkbox";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./dialog";
+} from "../dialog";
 
 const meta: Meta<typeof Dialog> = {
   title: "Components/Dialog",

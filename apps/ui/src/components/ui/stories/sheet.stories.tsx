@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { cn } from "@realms-world/utils";
 
-import { Button } from "./button";
+import { Button } from "../button";
 import {
   Sheet,
   SheetContent,
@@ -14,7 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
   sheetVariants,
-} from "./sheet";
+} from "../sheet";
 
 const meta: Meta<typeof Sheet> = {
   title: "Components/Sheet",

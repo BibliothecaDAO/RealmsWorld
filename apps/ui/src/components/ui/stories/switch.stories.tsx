@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Loader2, Mail } from "lucide-react";
 
-import { Switch } from "./switch";
+import { Switch } from "../switch";
 
 const meta: Meta<typeof Switch> = {
   title: "ui/Switch",

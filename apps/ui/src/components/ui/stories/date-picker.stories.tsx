@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { DateRange } from "react-day-picker";
 import * as React from "react";
 
-import { Button } from "./button";
-import { DatePicker } from "./date-picker";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Button } from "../button";
+import { DatePicker } from "../date-picker";
+import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 
 const meta: Meta<typeof DatePicker> = {
   title: "Components/DatePicker",
