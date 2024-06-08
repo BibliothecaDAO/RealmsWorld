@@ -6,6 +6,8 @@ import { Loader } from "lucide-react";
 
 import { cn } from "@realms-world/utils";
 
+// TODO: where are these classes supposed to be coming from for primary and transparent variants? They get added to the component classes when using the variant keys but don't change the style of the element.
+
 const iconButtonVariants = cva(
   cn(
     "transition-fg relative inline-flex w-fit items-center justify-center overflow-hidden rounded-md outline-none",
@@ -67,7 +69,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 
     /**
      * In the case of a button where asChild is true, and isLoading is true, we ensure that
-     * only on element is passed as a child to the Slot component. This is because the Slot
+     * only one element is passed as a child to the Slot component. This is because the Slot
      * component only accepts a single child.
      */
     const renderInner = () => {

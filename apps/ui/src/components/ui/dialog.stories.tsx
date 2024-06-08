@@ -76,10 +76,8 @@ export const DialogWithTableContent: Story = {
                   <TableRow
                     hover
                     role="checkbox"
-                    aria-checked={true}
                     tabIndex={-1}
                     key={"test"}
-                    selected={true}
                     sx={{
                       cursor: "pointer",
                       "&:hover": {
@@ -97,7 +95,6 @@ export const DialogWithTableContent: Story = {
                       <Checkbox
                         color="primary"
                         className="!text-bright-yellow"
-                        checked={true}
                       />
                     </TableCell>
                     <TableCell
