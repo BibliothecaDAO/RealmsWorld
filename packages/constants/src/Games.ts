@@ -114,10 +114,10 @@ export const games: Game[] = [
     links: {
       homepage: "https://lootunder.world/pistols",
       testnet: "https://pistols.lootunder.world/",
-      twitter: "https://x.com/LootUnderworld",
+      twitter: "https://x.com/underware_gg",
     },
     operatingSystems: ["Web Browser"],
-    lords: "TBD",
+    lords: "10% of wager, min of 4 per game",
     chains: [ChainId.SLOT_TESTNET, ChainId.REALMS_L3],
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
@@ -151,7 +151,7 @@ export const games: Game[] = [
     status: "alpha",
     description: "Play to Lose your Miiiind!",
     longform:
-      "Underdark: Lair of the Slenderduck is a unique location in Realms.World, and a generative on-chain dungeon skin-crawler built on StarkNet. You have hubristically stumbled into the twisting tunnels beneath the manor at Old Kurnkornor, where you will lose your mind. With each step your limited light fades, and you descend further into madness. Collect Dark Tar to renew your light, avoid the twisted duck spawn, and find the stairs to escape the Slenderduck's gibbering embrace, even if only for a few more precious moments of sanity.",
+      "Underdark: Lair of the Slenderduck is a unique location in The Underworld & Realms.World, and a generative onchain dungeon skin-crawler built on Dojo & StarkNet. You have hubristically stumbled into the twisting tunnels beneath the manor at Old Kurnkornor, where you will lose your mind. With each step your limited light fades, and you descend further into madness. Collect Dark Tar to renew your light, avoid the twisted duck spawn, and find the stairs to escape the Slenderduck's gibbering embrace, even if only for a few more precious moments of sanity.",
     links: {
       homepage: "https://lootunder.world/underdark",
       testnet: "https://underdark.lootunder.world/",
@@ -173,7 +173,7 @@ export const games: Game[] = [
     status: "development",
     description: "The Mysteries Below the Realms",
     longform:
-      "Explore the endless mysteries of the The Underworld. A living autonomous (under)world of drama, story and danger, waiting to be explored and shaped by its inhabitants, and occupying the liminal space between and underneath. Underworld is an extension to Realms built on Starknet and Dojo, adding composable building blocks, and enabling a range of interoperable game experiences. The flagship game will be a retro narrative dungeon crawler.",
+      "Explore the endless mysteries of The Underworld. A living autonomous (under)world of drama, story and danger, waiting to be explored and shaped by its inhabitants, and occupying the liminal space between and underneath. Underworld is an extension to Eternum & Realms, built on Starknet and Dojo, adding composable building blocks, and enabling a range of interoperable game experiences. The flagship game will be a retro narrative dungeon crawler.",
     links: {
       homepage: "https://lootunder.world",
       twitter: "https://x.com/LootUnderworld",
@@ -314,4 +314,25 @@ export const games: Game[] = [
     tokens: [Tokens.LORDS],
     screenshotLength: 1,
   },
+  {
+    name: "Force Prime Heroes",
+    id: "force-prime-heroes",
+    developer: Studios.FORCE_PRIME_STUDIO,
+    genres: ["strategy", "RPG"],
+    color: "#f5f5f5",
+    status: "alpha",
+    description: "Classic Turn Based Strategy",
+    longform:
+        "Force Prime Heroes is a fully on-chain game inspired by the Heroes of Might and Magic series. You need to explore the map with your hero, grow your army, defeat enemies and kill the Bone Dragon to win. Find your best strategy and become a true hero of on-chain worlds!",
+    links: {
+      homepage: "https://forceprime.io",
+      discord: "https://discord.gg/8SFzxSgbq3",
+      twitter: "https://twitter.com/ForcePrime_io",
+    },
+    operatingSystems: ["Web Browser"],
+    chains: [ChainId.SN_DEVNET],
+    collections: [],
+    tokens: [],
+    screenshotLength: 4,
+  }
 ];
