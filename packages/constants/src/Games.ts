@@ -209,12 +209,12 @@ export const games: Game[] = [
     screenshotLength: 4,
   },
    {
-    name: "Kingdom-of-Lords",
+    name: "Kingdom & Lords",
     id: "Kingdom-of-Lords",
     developer: Studios.MISSISSIPPI_TEAM,
     genres: ["SLG", "PVP", "MMO Strategy Game"],
     color: "#6F391E",
-    status: "beta",
+    status: "development",
     description: "Fully on-chain MMO Strategy Game",
     longform:
       'The kindom of Lords is a fully on-chain SLG game designed specifically for the Starknet\n\nIn the world of "Kingdom&Lords", you embark on an epic journey, where strategy and wisdom go hand in hand, and alliances are forged to conquer new territories. Build your village, develop agriculture and economy, muster a mighty army, and erect invincible walls. \n\nBut "Kingdom of Lords" is more than this, its a realm of social strategy where no hero stands alone, only with brave and wise allies. Every decision you make can alter the course of battle, and your alliance is your unbreakable shield. Send envoys, make allies with heroes from all corners of the world, and fight side by side with players globally to witness the rise of a dynasty.',
