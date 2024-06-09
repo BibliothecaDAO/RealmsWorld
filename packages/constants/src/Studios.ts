@@ -11,7 +11,7 @@ interface Link {
 }
 export enum Studios {
   BIBLIO_DAO = "biblio-dao",
-  PAVED_STUDIO = "paved-studios",
+  PAVED_STUDIO = "StolsiLabs",
   UNDERWARE = "underware",
   ZKORP = "zkorp",
   MISSISSIPPI_TEAM = "mississippi-team",
