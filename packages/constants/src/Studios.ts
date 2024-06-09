@@ -13,7 +13,7 @@ export enum Studios {
   BIBLIO_DAO = "biblio-dao",
   PAVED_STUDIO = "StolsiLabs",
   UNDERWARE = "underware",
-  ZKORP = "zkorp",
+  ZKORP = "zKorp",
   MISSISSIPPI_TEAM = "mississippi-team",
   CRAZY_DIAMOND = "crazy-diamond",
   GRUGS_LAIR = "grugs-lair",
