@@ -83,7 +83,7 @@ export const games: Game[] = [
     developer: Studios.BIBLIO_DAO,
     genres: ["Play to Die", "Roguelike"],
     color: "#f5f5f5",
-    status: "mainnet",
+    status: "development",
     description: "Play to Die",
     longform:
       "Survivors is the first Loot adventure game exploring the Play2Die mechanic. It is a game of onchain survival where you must defeat beasts and collect gear in the fight to stay alive and make it to the top of the leaderboard.",
