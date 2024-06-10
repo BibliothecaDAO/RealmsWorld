@@ -326,7 +326,7 @@ export const games: Game[] = [
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 1,
-    playable: true,
+    playable: false,
   },
   {
     name: "Force Prime Heroes",
