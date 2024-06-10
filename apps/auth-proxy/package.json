@@ -5,7 +5,6 @@
   "scripts": {
     "build": "nitro build",
     "clean": "rm -rf .turbo node_modules",
-    "dev": "nitro dev --port 3001",
     "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
@@ -20,7 +19,7 @@
     "@realms-world/tsconfig": "*",
     "eslint": "^9.4.0",
     "nitropack": "2.9.6",
-    "prettier": "^3.3.0",
+    "prettier": "^3.3.1",
     "typescript": "^5.4.5"
   },
   "prettier": "@realms-world/prettier-config"

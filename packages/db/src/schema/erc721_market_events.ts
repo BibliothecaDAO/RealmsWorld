@@ -4,17 +4,17 @@ import {
   integer,
   numeric,
   pgEnum,
+  pgTable,
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
 
 import { int8range } from "../int8range";
-import { pgSqlTable } from "./_table";
 import { erc721Tokens } from "./erc721_tokens";
 
 export const statusEnum = pgEnum("status", ["open", "cancelled", "filled"]);
 
-export const erc721MarketEvents = pgSqlTable("erc721_market_events", {
+export const erc721MarketEvents = pgTable("erc721_market_events", {
   _cursor: int8range("_cursor"),
   id: integer("id").notNull(),
   hash: text("hash"),

@@ -1,11 +1,11 @@
-import { bigint, numeric, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { bigint, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-export const bridge = pgTable("bridge", {
+export const erc721_bridge = pgTable("erc721_bridge", {
   _cursor: bigint("_cursor", { mode: "number" }),
   hash: text("hash").primaryKey(),
   type: text("type"),
   l1Account: text("l1Account"),
   l2Account: text("l2Account"),
-  amount: numeric("amount"),
+  tokenIds: text("tokenIds").array(),
   timestamp: timestamp("timestamp"),
 });

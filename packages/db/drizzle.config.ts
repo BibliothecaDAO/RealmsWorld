@@ -5,11 +5,10 @@ if (!process.env.DATABASE_URL) {
 }
 
 export default {
-  schema: "./src/schema.ts",
+  schema: "./src/schema/index.ts",
   dialect: "postgresql",
   dbCredentials: {
     url: process.env.DATABASE_URL + "?ssl=true",
     ssl: true,
   },
-  tablesFilter: ["rw_*"],
 } satisfies Config;

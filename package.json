@@ -27,12 +27,12 @@
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
-    "@turbo/gen": "^2.0.1",
+    "@turbo/gen": "^2.0.3",
     "million": "^3.1.11",
     "npm-check-updates": "^16.14.20",
-    "prettier": "^3.3.0",
+    "prettier": "^3.3.1",
     "tsup": "^8.1.0",
-    "turbo": "2.0.1",
+    "turbo": "2.0.3",
     "typescript": "^5.4.5"
   },
   "prettier": "@realms-world/prettier-config"

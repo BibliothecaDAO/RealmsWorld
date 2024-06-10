@@ -16,14 +16,14 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.13",
     "postcss": "^8.4.38",
-    "tailwindcss": "3.4.3"
+    "tailwindcss": "3.4.4"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "*",
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
     "eslint": "^9.4.0",
-    "prettier": "^3.3.0",
+    "prettier": "^3.3.1",
     "typescript": "^5.4.5"
   },
   "prettier": "@realms-world/prettier-config"
