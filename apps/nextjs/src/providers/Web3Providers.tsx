@@ -51,7 +51,7 @@ export const config = getDefaultConfig({
   transports: isTestnet ? { [sepolia.id]: http() } : { [mainnet.id]: http() },
 });
 
-export function Provider({ children }: { children: ReactElement }) {
+export function Web3Providers({ children }: { children: ReactElement }) {
   return (
     <StarknetConfig
       autoConnect

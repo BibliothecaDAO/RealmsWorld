@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useLordsPrice } from "@/hooks/useLordsPrice";
+import { useLordsPrice } from "@/hooks/lords/useLordsPrice";
 import Album from "@/icons/album.svg";
 import Bridge from "@/icons/bridge.svg";
 import Calender from "@/icons/calendar.svg";
@@ -85,7 +85,7 @@ const Sidebar = () => {
         <SideHeaderImg className="w-full opacity-0 group-hover:opacity-100" />
       </div>
       <Link
-        className="absolute z-20 mx-auto flex w-full justify-center p-4 font-sans-serif text-xl font-semibold group-hover:pt-2.5 sm:text-2xl "
+        className="absolute z-20 mx-auto flex w-full justify-center p-4 font-sans-serif text-xl font-semibold group-hover:pt-2.5 sm:text-2xl"
         href="/"
         onClick={toggleSidebar}
       >
@@ -110,7 +110,7 @@ const Sidebar = () => {
                     >
                       <span className="absolute">{item.icon}</span>
 
-                      <span className="visible absolute pl-9 opacity-100 transition-opacity group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-150 group-hover:duration-500 sm:opacity-0 ">
+                      <span className="visible absolute pl-9 opacity-100 transition-opacity group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-150 group-hover:duration-500 sm:opacity-0">
                         {item.name}
                       </span>
                     </Button>
@@ -135,7 +135,7 @@ const Sidebar = () => {
               </Link>
             </Button>
 
-            <div className=" flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
+            <div className="flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
               {social.map((item, index) => {
                 return (
                   <Link href={item.href} target="_blank" key={index}>

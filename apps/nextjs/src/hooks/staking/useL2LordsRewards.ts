@@ -1,22 +1,29 @@
 import type { Call } from "starknet";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import RealmsABI from "@/abi/L2/Realms.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { useTransactionManager } from "@/stores/useL2TransasctionManager";
 import {
   useAccount,
   useContract,
   useContractRead,
   useContractWrite,
 } from "@starknet-react/core";
+import { formatEther } from "viem";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
+import { useToast } from "@realms-world/ui";
+
+import useStore from "../useStore";
 
 export const useL2LordsRewards = () => {
+  const { toast } = useToast();
   const { address: l2Address } = useAccount();
   const l2RealmsAddress = getCollectionAddresses(Collections.REALMS)?.[
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;
-  const { data: balance, isFetching: l2LordsIsLoading } = useContractRead({
+
+  const { data: balance, isFetching } = useContractRead({
     address: l2RealmsAddress,
     abi: RealmsABI,
     functionName: "get_reward_balance_for",
@@ -37,13 +44,29 @@ export const useL2LordsRewards = () => {
     return [contract?.populateTransaction.reward_claim?.()];
   }, [l2Address, contract?.populateTransaction]);
 
-  const { writeAsync, data: claimHash } = useContractWrite({ calls });
+  const {
+    writeAsync,
+    data: claimHash,
+    isPending: isSubmitting,
+  } = useContractWrite({ calls });
+
+  const hashes = useStore(useTransactionManager, (state) => state);
+
+  const claimRewards = useCallback(async () => {
+    const tx = await writeAsync();
+    hashes?.addHash(tx.transaction_hash);
+    toast({
+      title: "Realms' Lords Claim Submitted",
+      description: `Claim of ${formatEther(balance as bigint)} Lords in progress`,
+    });
+  }, [writeAsync, hashes, toast, balance]);
 
   return {
     balance,
     calls,
-    loading: l2LordsIsLoading,
-    writeAsync,
+    isFetching,
+    isSubmitting,
+    claimRewards,
     claimHash,
   };
 };

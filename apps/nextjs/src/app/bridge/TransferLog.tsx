@@ -13,8 +13,9 @@ import {
   NETWORK_NAME,
   STARKSCAN_ETH_TX_URL,
   STARKSCAN_TX_URL,
+  SUPPORTED_L1_CHAIN_ID,
+  SUPPORTED_L2_CHAIN_ID,
 } from "@/constants/env";
-import { ChainType, tokens } from "@/constants/tokens";
 import LordsIcon from "@/icons/lords.svg";
 import {
   isOnChain,
@@ -35,6 +36,7 @@ import {
 import PropTypes from "prop-types";
 import { formatEther } from "viem";
 
+import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 import { cn } from "@realms-world/utils";
 
@@ -68,11 +70,12 @@ export const TransferLog = ({
 
   useEffect(() => {
     const getl2hash = () => {
+      console.log(depositEvents);
       const hash = depositEvents?.[0].payload
         ? getTransactionHash(
             TransactionHashPrefix.L1_HANDLER,
-            tokens.L1.LORDS.bridgeAddress[ChainType.L1[NETWORK_NAME]] ?? "",
-            tokens.L2.LORDS.bridgeAddress[ChainType.L2[NETWORK_NAME]] ?? "",
+            LORDS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] ?? "",
+            LORDS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID] ?? "",
             "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
             depositEvents?.[0].payload,
             ("SN_" + NETWORK_NAME) as ChainTypeL2,
@@ -111,7 +114,7 @@ export const TransferLog = ({
       <CompleteTransferButton onClick={onCompleteTransferClick} />
     ) : (
       <Button
-        className=" justify-between normal-case"
+        className="justify-between normal-case"
         size={"xs"}
         variant={"outline"}
         disabled={!l1hash}
@@ -128,7 +131,7 @@ export const TransferLog = ({
   const renderL2TxButton = () => {
     return (
       <Button
-        className=" justify-between normal-case"
+        className="justify-between normal-case"
         size={"xs"}
         variant={"outline"}
         disabled={!l2hash}

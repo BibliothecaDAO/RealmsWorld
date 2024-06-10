@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatedMap } from "@/app/_components/AnimatedMap";
-import { useLordsPrice } from "@/hooks/useLordsPrice";
+import { useLordsPrice } from "@/hooks/lords/useLordsPrice";
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
 import { findLowestPriceActiveListing } from "@/utils/getters";

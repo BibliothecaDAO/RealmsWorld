@@ -3,13 +3,14 @@
 import React from "react";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import Starknet from "@/icons/starknet.svg";
-import { formatBigInt, shortenHex } from "@/utils/utils";
+import { shortenHex } from "@/utils/utils";
 import { useAccount, useDisconnect, useStarkName } from "@starknet-react/core";
 import { LogOut } from "lucide-react";
 
 import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
+import { CopyButton } from "../CopyButton";
 import { ExplorerLink } from "./ExplorerLink";
 import { StarknetLoginButton } from "./StarknetLoginButton";
 
@@ -22,12 +23,12 @@ export const StarkAccount = () => {
 
   const isConnected = status === "connected";
 
-  if (isConnected) {
+  if (isConnected && address) {
     return (
       <div className="flex w-full justify-between border-t p-2">
         <div className="flex py-1 text-lg">
           <Starknet className="mr-3 w-7" />
-          {displayStarkAddress}
+          <CopyButton text={address} displayText={displayStarkAddress} />
         </div>
         <div className="flex items-center space-x-2">
           <ExplorerLink />

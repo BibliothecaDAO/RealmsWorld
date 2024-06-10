@@ -9,6 +9,7 @@ import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
 import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
+import { CopyButton } from "../CopyButton";
 import { EthereumLoginButton } from "./EthereumLoginButton";
 import { ExplorerLink } from "./ExplorerLink";
 
@@ -25,7 +26,7 @@ function EthereumAccount() {
       <div className="flex w-full justify-between border-t p-2">
         <div className="flex py-1 text-lg">
           <EthereumLogo className="mr-3 w-7" />
-          {displayEthAddress}
+          <CopyButton text={address} displayText={displayEthAddress} />
         </div>
         <div className="flex items-center space-x-2">
           <ExplorerLink isL1 />

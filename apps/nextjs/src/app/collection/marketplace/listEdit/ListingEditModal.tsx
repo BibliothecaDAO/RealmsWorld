@@ -21,7 +21,6 @@ import {
   Input,
   Progress,
   Tooltip,
-  TooltipProvider,
 } from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
@@ -204,13 +203,11 @@ export function ListingEditModal({
                       <div className="mb-2 justify-between">
                         <p>Set New Price</p>
                         <div className="flex items-center gap-4">
-                          <TooltipProvider>
-                            <Tooltip
-                              side="left"
-                              width={200}
-                              content={`How many Lords you will receive after creator royalties are subtracted.`}
-                            />
-                          </TooltipProvider>
+                          <Tooltip
+                            side="left"
+                            width={200}
+                            content={`How many Lords you will receive after creator royalties are subtracted.`}
+                          />
                         </div>
                       </div>
                       <div className="flex flex-col gap-1">

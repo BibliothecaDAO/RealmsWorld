@@ -11,15 +11,12 @@ import {
   useContractRead,
   useAccount as useL2Account,
 } from "@starknet-react/core";
+import { Loader } from "lucide-react";
 import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
   Button,
   Card,
   CardContent,
@@ -31,22 +28,17 @@ import {
 
 import { ClaimsTable } from "./ClaimsTable";
 import { FloatAnimation } from "./FloatAnimation";
+import { LegacyClaim } from "./LegacyClaim";
 import { VeLords } from "./VeLords";
 
 export const Overview = () => {
   const { address: l1Address } = useAccount();
   const { address: l2Address } = useL2Account();
 
-  const { balance, writeAsync: claimRewards } = useL2LordsRewards();
+  const { balance, claimRewards, isSubmitting, isFetching } =
+    useL2LordsRewards();
 
-  const {
-    data,
-    galleonLordsAvailable,
-    carrackLordsAvailable,
-    totalClaimable,
-    poolV1Balance,
-    poolV2Balance,
-  } = useStaking();
+  const { data } = useStaking();
   //const delegateData = useLordship(l1Address);
   const { toggleStakingMigration } = useUIStore((state) => state);
 
@@ -122,74 +114,16 @@ export const Overview = () => {
                     <CardTitle>Claims</CardTitle>
                   </CardHeader>
                   <CardContent className="grid grid-cols-4 gap-4">
-                    <Accordion className="col-span-full" type="multiple">
-                      <AccordionItem value={"lords"} className="mb-2">
-                        <AccordionTrigger className="flex w-full border bg-muted-foreground/40 p-4 text-xl">
-                          <div className="flex justify-start">
-                            Legacy (L1) Claimable Lords:{" "}
-                            <span className="ml-8 flex items-center">
-                              <LordsIcon className="mr-3 h-5 w-5 fill-primary" />
-                              {totalClaimable.toString()}
-                            </span>
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="border border-y-0 bg-background p-4">
-                          <div className="grid text-lg">
-                            <div className="font-sans text-xl font-semibold">
-                              Galleon
-                            </div>
-                            <dl className="grid gap-1">
-                              <div className="flex items-center justify-between">
-                                <dt className="text-muted-foreground">
-                                  Epoch 0-10:
-                                </dt>
-                                <dd>
-                                  {galleonLordsAvailable?.toLocaleString()}{" "}
-                                  <Button className="ml-3" size={"xs"}>
-                                    Claim
-                                  </Button>
-                                </dd>
-                              </div>
-                              <div className="flex items-center justify-between">
-                                <dt className="text-muted-foreground">
-                                  Epoch 11-35:
-                                </dt>
-                                <dd>{poolV1Balance?.toLocaleString() ?? 0}</dd>
-                              </div>
-                              <div className="flex items-center justify-between">
-                                <dt className="text-muted-foreground">
-                                  Epoch 36-109:
-                                </dt>
-                                <dd>{poolV2Balance.toLocaleString()}</dd>
-                              </div>
-                            </dl>
-                            <div className="mt-4 font-sans text-xl font-semibold">
-                              Carrack
-                            </div>
-                            <dl className="grid gap-1">
-                              <div className="flex items-center justify-between">
-                                <dt className="text-muted-foreground">
-                                  Epoch 11-109:
-                                </dt>
-                                <dd>
-                                  {carrackLordsAvailable?.toLocaleString() ?? 0}
-                                  {carrackLordsAvailable && (
-                                    <Button className="ml-3" size={"sm"}>
-                                      Claim
-                                    </Button>
-                                  )}
-                                </dd>
-                              </div>
-                            </dl>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
+                    <LegacyClaim />
                     <Card>
                       <CardHeader>
                         <CardDescription>Claimable Lords</CardDescription>
                         <CardTitle className="flex items-center text-4xl">
-                          {balance && formatEther(balance as bigint)}
+                          {isFetching ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            balance && formatEther(balance as bigint)
+                          )}
                           <LordsIcon className="ml-3 h-7 w-7 fill-current" />
                         </CardTitle>
                       </CardHeader>
@@ -197,8 +131,13 @@ export const Overview = () => {
                         <Button
                           onClick={() => claimRewards()}
                           className="w-full"
+                          disabled={isSubmitting}
                         >
-                          Claim
+                          {isSubmitting ? (
+                            <Loader className="animate-spin" />
+                          ) : (
+                            "Claim"
+                          )}
                         </Button>
                       </CardContent>
                     </Card>

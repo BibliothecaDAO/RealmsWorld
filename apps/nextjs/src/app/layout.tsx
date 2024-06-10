@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
-import { Provider } from "@/providers/Web3Providers";
 import { Analytics } from "@vercel/analytics/react";
 
 import "@realms-world/styles/globals.css";
@@ -14,12 +13,12 @@ import { StarknetLoginModal } from "@/app/_components/modal/StarknetLoginModal";
 import { TopNav } from "@/app/_components/TopNav";
 import { WalletSheet } from "@/app/_components/wallet/WalletSheet";
 import { env } from "@/env";
+import { UIStoreProvider } from "@/providers/UIStoreProvider";
+import { WalletsProvider } from "@/providers/WalletsProvider";
+import { Web3Providers } from "@/providers/Web3Providers";
 import { TRPCReactProvider } from "@/trpc/react";
 
-import { Toaster } from "@realms-world/ui";
-
-import { UIStoreProvider } from "../providers/UIStoreProvider";
-import { WalletsProvider } from "../providers/WalletsProvider";
+import { Toaster, TooltipProvider } from "@realms-world/ui";
 
 const silkscreen = Silkscreen({
   subsets: ["latin"],
@@ -54,21 +53,23 @@ export default function Layout(props: { children: React.ReactNode }) {
       >
         <TRPCReactProvider headersPromise={getHeaders()}>
           <UIStoreProvider>
-            <Provider>
+            <Web3Providers>
               <WalletsProvider>
-                <main className="flex-wrap md:flex">
-                  <Sidebar />
-                  <div className="z-10 flex flex-grow flex-col">
-                    <TopNav />
-                    <div className="flex-grow">{props.children}</div>
-                  </div>
-                </main>
-                <Footer />
-                <Toaster />
-                <StarknetLoginModal />
-                <WalletSheet />
+                <TooltipProvider>
+                  <main className="flex-wrap md:flex">
+                    <Sidebar />
+                    <div className="z-10 flex flex-grow flex-col">
+                      <TopNav />
+                      <div className="flex-grow">{props.children}</div>
+                    </div>
+                  </main>
+                  <Footer />
+                  <Toaster />
+                  <StarknetLoginModal />
+                  <WalletSheet />
+                </TooltipProvider>
               </WalletsProvider>
-            </Provider>
+            </Web3Providers>
           </UIStoreProvider>
         </TRPCReactProvider>
         <Analytics />
