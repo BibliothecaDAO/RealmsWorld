@@ -13,7 +13,7 @@ export const EventGrid = ({ isHomepage }: EventGridProps) => {
   const currentDate = new Date();
 
   const upcomingEvents = events.filter(event => new Date(event.startDate) > currentDate);
-  const pastEvents = events.filter(event => new Date(event.startDate) < currentDate);
+  const pastEvents = events.filter(event => new Date(event.endDate) < currentDate);
 
   return (
     <div>
