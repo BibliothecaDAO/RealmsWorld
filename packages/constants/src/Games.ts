@@ -55,7 +55,7 @@ export const games: Game[] = [
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
     screenshotLength: 2,
-    playable: true,
+    playable: false,
   },
   {
     name: "Paved",
