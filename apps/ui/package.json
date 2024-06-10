@@ -14,7 +14,8 @@
     "dev": "storybook dev -p 6006",
     "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "ui-add": "bun x shadcn-ui add && prettier src --write --list-different"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.5.0",

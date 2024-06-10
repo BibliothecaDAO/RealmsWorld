@@ -13,17 +13,19 @@
   "scripts": {
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
-    "clean:workspaces": "turbo clean",
-    "db:push": "bun --cwd packages/db push",
-    "db:studio": "bun --cwd packages/db studio",
+    "clean:workspaces": "turbo run clean",
+    "db:push": "turbo -F @realms-world/db push",
+    "db:studio": "turbo -F @realms-world/db studio",
     "deps:update": "ncu -i --deep --install never",
-    "dev": "turbo dev --parallel",
+    "dev": "turbo watch dev",
+    "dev:next": "turbo watch dev -F @realms-world/nextjs",
     "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
     "lint:ws": "bunx sherif@latest -r root-package-private-field",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo run typecheck",
+    "ui-add": "turbo run ui-add"
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
