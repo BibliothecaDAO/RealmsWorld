@@ -30,6 +30,7 @@ export interface Game {
   collections?: Collections[];
   tokens?: Tokens[];
   screenshotLength?: number;
+  playable: boolean,
 }
 
 export const games: Game[] = [
@@ -54,6 +55,7 @@ export const games: Game[] = [
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
     screenshotLength: 2,
+    playable: true,
   },
   {
     name: "Paved",
@@ -76,6 +78,7 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
     screenshotLength: 2,
+    playable: true,
   },
   {
     name: "Loot Survivor",
@@ -100,6 +103,7 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN, Collections.BEASTS],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
+    playable: true,
   },
   {
     name: "Pistols at Ten Blocks",
@@ -122,6 +126,7 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
     screenshotLength: 6,
+    playable: true,
   },
   {
     name: "zConqueror",
@@ -141,6 +146,7 @@ export const games: Game[] = [
     operatingSystems: ["Web Browser"],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
+    playable: true,
   },
   {
     name: "Underdark",
@@ -163,6 +169,7 @@ export const games: Game[] = [
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 6,
+    playable: true,
   },
   {
     name: "Loot Underworld",
@@ -184,6 +191,7 @@ export const games: Game[] = [
     collections: [Collections.REALMS, Collections.BEASTS],
     tokens: [Tokens.LORDS],
     screenshotLength: 6,
+    playable: false,
   },
   {
     name: "Mississippi",
@@ -207,6 +215,7 @@ export const games: Game[] = [
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
+    playable: true,
   },
    {
     name: "Kingdom & Lords",
@@ -229,6 +238,7 @@ export const games: Game[] = [
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
+    playable: true,
   },
   {
     name: "GenLoot",
@@ -247,6 +257,7 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN, Collections.REALMS],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
+    playable: true,
   },
   {
     name: "Rising Revenant",
@@ -269,6 +280,7 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
+    playable: true,
   },
   {
     name: "Arcane Assembler",
@@ -291,6 +303,7 @@ export const games: Game[] = [
     collections: [],
     tokens: [],
     screenshotLength: 4,
+    playable: true,
   },
   {
     name: "Call the Banners",
@@ -313,6 +326,7 @@ export const games: Game[] = [
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 1,
+    playable: true,
   },
   {
     name: "Force Prime Heroes",
@@ -334,5 +348,6 @@ export const games: Game[] = [
     collections: [],
     tokens: [],
     screenshotLength: 4,
+    playable: true,
   }
 ];
