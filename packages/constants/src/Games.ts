@@ -103,7 +103,7 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN, Collections.BEASTS],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
-    playable: true,
+    playable: false,
   },
   {
     name: "Pistols at Ten Blocks",
