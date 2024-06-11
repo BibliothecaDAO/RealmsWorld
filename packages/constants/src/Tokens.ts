@@ -74,7 +74,7 @@ export const USDC: Record<number | string, Token> = {
     "USD Coin",
   ),
 };
-export const LORDS: Record<number | string, Token> = {
+export const LORDS: Partial<Record<ChainId, Token>> = {
   [ChainId.MAINNET]: new Token(
     ChainId.MAINNET,
     "0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0",
@@ -105,15 +105,29 @@ export const LORDS: Record<number | string, Token> = {
   ),
 };
 export const SUPPORTED_TOKENS: { [chainId in ChainId]: Token[] } = {
-  [ChainId.SN_MAIN]: [LORDS[ChainId.SN_MAIN], USDC[ChainId.SN_MAIN], ETH[ChainId.SN_MAIN], STRK[ChainId.SN_MAIN]].filter(token => token !== undefined) as Token[],
-  [ChainId.SN_SEPOLIA]: [LORDS[ChainId.SN_SEPOLIA], USDC[ChainId.SN_SEPOLIA], ETH[ChainId.SN_SEPOLIA], STRK[ChainId.SN_SEPOLIA]].filter(token => token !== undefined) as Token[],
-  [ChainId.MAINNET]: [LORDS[ChainId.MAINNET]].filter(token => token !== undefined) as Token[],
-  [ChainId.SEPOLIA]: [LORDS[ChainId.SEPOLIA]].filter(token => token !== undefined) as Token[],
+  [ChainId.SN_MAIN]: [
+    LORDS[ChainId.SN_MAIN],
+    USDC[ChainId.SN_MAIN],
+    ETH[ChainId.SN_MAIN],
+    STRK[ChainId.SN_MAIN],
+  ].filter((token) => token !== undefined) as Token[],
+  [ChainId.SN_SEPOLIA]: [
+    LORDS[ChainId.SN_SEPOLIA],
+    USDC[ChainId.SN_SEPOLIA],
+    ETH[ChainId.SN_SEPOLIA],
+    STRK[ChainId.SN_SEPOLIA],
+  ].filter((token) => token !== undefined) as Token[],
+  [ChainId.MAINNET]: [LORDS[ChainId.MAINNET]].filter(
+    (token) => token !== undefined,
+  ) as Token[],
+  [ChainId.SEPOLIA]: [LORDS[ChainId.SEPOLIA]].filter(
+    (token) => token !== undefined,
+  ) as Token[],
   [ChainId.MISSISSIPPI_TESTNET]: [],
   [ChainId.REALMS_L3]: [],
   [ChainId.SLOT_TESTNET]: [],
   [ChainId.SN_DEVNET]: [],
-}
+};
 
 export const LORDS_BRIDGE_ADDRESS: Record<number | string, string> = {
   [ChainId.MAINNET]: "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",

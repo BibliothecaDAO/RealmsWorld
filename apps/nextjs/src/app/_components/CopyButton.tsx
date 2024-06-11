@@ -59,7 +59,7 @@ export function CopyButton({
             )}
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="left">Copy Address</TooltipContent>
+        <TooltipContent side="right">Copy Address</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

@@ -18,6 +18,7 @@ import {
 } from "@realms-world/ui";
 
 import { EthereumLoginButton } from "./wallet/EthereumLoginButton";
+import { LordsDropdown } from "./wallet/LordsDropdown";
 import { StarknetLoginButton } from "./wallet/StarknetLoginButton";
 
 export const TopNav = () => {
@@ -134,6 +135,7 @@ export const TopNav = () => {
           </NavigationMenu>
         </div>
         <div className="flex flex-col space-y-4 px-1 md:flex-row md:space-x-2 md:space-y-0">
+          <LordsDropdown />
           <EthereumLoginButton
             variant={"default"}
             textClass="group-hover:block"
