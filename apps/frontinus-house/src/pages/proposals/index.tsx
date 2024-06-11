@@ -11,7 +11,7 @@ export default function Proposals() {
   useEffect(() => {
     const fetchProposals = async () => {
       const proposalsData = await getNetwork("sn-sep").api.loadProposals(
-        ["0x00f6fefea3affabce38a3734fb1a9c235dd80243cfca52529545a439d7462cdd"],
+        ["0x067813fb2d7a60d8ea9bd2273c52f1946fe69f99ce64cc37ce8189cbf0b1c3e5"],
         {
           limit: 20,
         },
