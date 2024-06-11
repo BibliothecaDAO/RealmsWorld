@@ -5,6 +5,8 @@ import { isStarknetAddress } from "@/utils/utils";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
+import UserTokenGrid from "./UserTokenGrid";
+
 export function generateMetadata({
   params,
 }: {

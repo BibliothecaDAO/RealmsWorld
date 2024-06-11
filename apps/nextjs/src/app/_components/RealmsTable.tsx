@@ -22,7 +22,8 @@ interface DataTableProps<TData> {
   data: TData[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<TData, any>[];
-  onRowSelectionChange?: (rows) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onRowSelectionChange?: (rows: any) => void;
 }
 
 export function RealmsTable<TData>({

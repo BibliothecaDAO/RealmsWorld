@@ -122,14 +122,14 @@ const L1TokenData = async ({
       includeAttributes: true,
       includeQuantity: true,
     },
-  }) as Promise<{ tokens: TokenMarketData[] }>;
+  });
   const collectionData = getCollections([{ contract: contractAddress }]);
   const [{ tokens }, { collections }] = await Promise.all([
     tokensData,
     collectionData,
   ]);
-  const token = tokens[0]?.token;
-  const market = tokens[0]?.market;
+  const token = tokens?.[0]?.token;
+  const market = tokens?.[0]?.market;
   const collection = collections?.[0];
 
   return (
@@ -138,17 +138,25 @@ const L1TokenData = async ({
         <TokenInformation
           name={token.name}
           image={token.image}
-          tokenId={parseInt(token.tokenId)}
+          tokenId={parseInt(token.tokenId, 10)}
           owner={token.owner}
-          attributes={token.attributes}
+          attributes={token.attributes?.map((attr) => ({
+            key: attr.key ?? "",
+            value: attr.value,
+            collectionId: collectionId,
+            token_key: token.tokenId,
+            attributeId: parseInt(attr.key ?? "0"),
+          }))}
           collection={collection}
           collectionId={collectionId}
         >
-          {market?.floorAsk.price && (
-            <h2>{formatEther(BigInt(market.floorAsk.price.amount.raw))} ETH</h2>
+          {market?.floorAsk?.price && (
+            <h2>
+              {formatEther(BigInt(market.floorAsk.price.amount?.raw ?? 0))} ETH
+            </h2>
           )}
           <div>
-            {collection && (
+            {collection && tokens[0]?.token && (
               <TokenContent collection={collection} token={token} />
             )}
           </div>

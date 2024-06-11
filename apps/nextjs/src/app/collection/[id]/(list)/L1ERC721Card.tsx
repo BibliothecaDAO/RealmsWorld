@@ -12,9 +12,13 @@ import { BuyButton } from "../../reservoir/BuyModal";
 //import { BuyButton } from "./BuyModal";
 
 interface L1ERC721CardProps {
-  token: NonNullable<
-    paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
-  >[0];
+  token:
+    | NonNullable<
+        paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
+      >[0]
+    | NonNullable<
+        paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
+      >[0];
   collectionName: string;
   layout?: "grid" | "list";
   selectable?: boolean;
@@ -30,13 +34,15 @@ export const L1ERC721Card = ({
 }: L1ERC721CardProps) => {
   const isGrid = layout == "grid";
 
-  const grid =
+  /* const grid =
     "bg-background duration-300 transform border hover:-translate-y-1";
 
   const list =
     "bg-background duration-300 transform border-t hover:-translate-y-1 flex w-full";
-
+*/
   const imageSize = isGrid ? 800 : 60;
+
+  const isMarket = "market" in token;
 
   return (
     <div
@@ -66,7 +72,7 @@ export const L1ERC721Card = ({
             <div className={`w-full px-3 pb-2 pt-4`}>
               <div className="flex w-full justify-between text-sm">
                 <span className="font-semibold">#{token.token?.tokenId} </span>
-                {token.market?.floorAsk?.source?.icon && (
+                {isMarket && token.market?.floorAsk?.source?.icon && (
                   <Image
                     src={token.market.floorAsk.source.icon}
                     alt="An example image"
@@ -79,7 +85,8 @@ export const L1ERC721Card = ({
               <h6>{token.token?.name}</h6>
 
               <div className="my-3 h-6 text-sm">
-                {token.market?.floorAsk?.price?.amount?.raw &&
+                {isMarket &&
+                  token.market?.floorAsk?.price?.amount?.raw &&
                   formatEther(
                     BigInt(token.market.floorAsk.price.amount.raw ?? 0),
                   ).toLocaleLowerCase() + " ETH"}
@@ -98,11 +105,11 @@ export const L1ERC721Card = ({
                     view
                   </Link>
                 </Button>
-                {token.market?.floorAsk?.id && (
+                {isMarket && token.token && token.market?.floorAsk?.id && (
                   <BuyButton
                     size="xs"
-                    address={token.token?.contract}
-                    id={token.token?.tokenId}
+                    address={token.token.contract}
+                    id={token.token.tokenId}
                   />
                 )}
               </div>
@@ -126,13 +133,14 @@ export const L1ERC721Card = ({
                 </div>
 
                 <h6 className="ml-auto self-center">
-                  {formatEther(
-                    BigInt(token.market?.floorAsk?.price?.amount?.raw ?? 0),
-                  ).toLocaleLowerCase()}
+                  {isMarket &&
+                    formatEther(
+                      BigInt(token.market?.floorAsk?.price?.amount?.raw ?? 0),
+                    ).toLocaleLowerCase()}
                   ETH
                 </h6>
                 <div className="justify-between self-center px-3 text-sm">
-                  {token.market?.floorAsk?.source?.icon && (
+                  {isMarket && token.market?.floorAsk?.source?.icon && (
                     <Image
                       src={token.market.floorAsk.source.icon}
                       alt="An example image"
@@ -152,13 +160,13 @@ export const L1ERC721Card = ({
                     view
                   </Link>
                 </Button>
-                {
+                {token.token && isMarket && (
                   <BuyButton
                     size="default"
-                    address={token.token?.contract}
-                    id={token.token?.tokenId}
+                    address={token.token.contract}
+                    id={token.token.tokenId}
                   />
-                }
+                )}
               </div>
             </div>
           )}

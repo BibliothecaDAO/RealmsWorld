@@ -92,5 +92,6 @@ module.exports = {
       variants: ["hover", "ui-selected"],
     },
   ],
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("@tailwindcss/typography")],
 };

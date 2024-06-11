@@ -29,7 +29,7 @@ export function useWriteFinalizeWithdrawRealms() {
         address: REALMS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] as `0x${string}`,
         abi: L1_REALMS_BRIDGE_ABI,
         functionName: FUNCTION,
-        args: [parsedTokenIds, l1Address],
+        args: [parsedTokenIds],
       });
     },
     [writeContractAsync],

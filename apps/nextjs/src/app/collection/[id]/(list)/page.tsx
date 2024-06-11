@@ -114,12 +114,14 @@ const L1TokenData = async ({
     attributesData,
   ]);
 
-  if (tokens) {
+  if (!tokens) {
     return <div>Collection Not Found</div>;
   }
   return (
-    <TradeLayout tokenAddress={tokenAddress} attributes={attributes}>
-      <L1ERC721Table address={tokenAddress} tokens={tokens} />
-    </TradeLayout>
+    <Suspense>
+      <TradeLayout tokenAddress={tokenAddress} attributes={attributes}>
+        <L1ERC721Table address={tokenAddress} tokens={tokens} />
+      </TradeLayout>
+    </Suspense>
   );
 };

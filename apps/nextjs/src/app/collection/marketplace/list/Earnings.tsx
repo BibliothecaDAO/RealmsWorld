@@ -9,6 +9,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
   Tooltip,
+  TooltipContent,
 } from "@realms-world/ui";
 import { formatBN } from "@realms-world/utils";
 
@@ -61,13 +62,11 @@ const Earnings: FC<EarningsBreakdownProps> = ({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="text-lg">Creator Royalties</span>
-                  <Tooltip
-                    side="right"
-                    width={200}
-                    content={
-                      "A fee on every order that goes to the collection creator."
-                    }
-                  />
+                  <Tooltip>
+                    <TooltipContent side="right">
+                      A fee on every order that goes to the collection creator.
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
 
                 <div className="flex items-center gap-1">

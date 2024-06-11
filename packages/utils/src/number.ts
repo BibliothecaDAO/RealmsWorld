@@ -10,13 +10,13 @@ function formatNumber(
   const formatter = new Intl.NumberFormat("en-US", {
     maximumFractionDigits,
   });
-  
+
   return formatter.format(amount);
 }
 const isSafariBrowser = () =>
   typeof window !== "undefined" &&
-  navigator.userAgent.indexOf("Safari") > -1 &&
-  navigator.userAgent.indexOf("Chrome") <= -1;
+  navigator.userAgent.includes("Safari") &&
+  !navigator.userAgent.includes("Chrome");
 
 function toFixed(num: number, fixed: number) {
   const re = new RegExp("^-?\\d+(?:.\\d{0," + (fixed || -1) + "})?");

@@ -3,19 +3,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
-import type { Activity, Token } from "@/types";
+import type { Activity } from "@/types";
+import type { paths } from "@reservoir0x/reservoir-sdk";
 import { useMemo, useState } from "react";
 import { ActivityCard } from "@/app/collection/[id]/(list)/activity/ActivityCard";
 import { getTokenActivity } from "@/lib/reservoir/getTokenActivity";
 
 interface Props {
-  token: Token;
+  token: NonNullable<
+    NonNullable<
+      paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
+    >[0]["token"]
+  >;
 }
 
 export const TokenActivity = ({ token }: Props) => {
   const [tokenActivity, setTokenActivity] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
-  const token_params = token.collection.id + ":" + token.tokenId;
+  const token_params = token.collection?.id + ":" + token.tokenId;
 
   const getActivity = async () => {
     setLoading(true);
@@ -35,7 +40,7 @@ export const TokenActivity = ({ token }: Props) => {
   }, [token]);
 
   return (
-    <div className=" my-4 grid h-96 grid-cols-1 overflow-y-scroll rounded border">
+    <div className="my-4 grid h-96 grid-cols-1 overflow-y-scroll rounded border">
       {tokenActivity.map((activity: Activity, index: number) => {
         return <ActivityCard key={index} activity={activity} />;
       })}
@@ -44,7 +49,7 @@ export const TokenActivity = ({ token }: Props) => {
           {new Array(6).fill(0).map((index) => (
             <div
               key={index}
-              className=" flex h-20 w-full animate-pulse flex-wrap border-b bg-gray-600 p-2"
+              className="flex h-20 w-full animate-pulse flex-wrap border-b bg-gray-600 p-2"
             ></div>
           ))}
         </>

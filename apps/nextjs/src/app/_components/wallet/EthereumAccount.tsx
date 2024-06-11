@@ -26,7 +26,9 @@ function EthereumAccount() {
       <div className="flex w-full justify-between border-t p-2">
         <div className="flex py-1 text-lg">
           <EthereumLogo className="mr-3 w-7" />
-          <CopyButton text={address} displayText={displayEthAddress} />
+          {address && (
+            <CopyButton text={address} displayText={displayEthAddress} />
+          )}
         </div>
         <div className="flex items-center space-x-2">
           <ExplorerLink isL1 />

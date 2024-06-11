@@ -27,9 +27,9 @@ export const TokenInformation = ({
   >[number];
   collectionId: string;
   children?: React.ReactNode;
-  name: string | null;
-  owner: string | null;
-  image: string | null;
+  name?: string | null;
+  owner?: string | null;
+  image?: string | null;
   attributes?:
     | Attributes[]
     | NonNullable<RouterOutputs["erc721Tokens"]["byId"]>["attributes"];

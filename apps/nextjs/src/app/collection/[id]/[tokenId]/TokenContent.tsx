@@ -17,7 +17,9 @@ interface Props {
   collection: NonNullable<
     paths["/collections/v5"]["get"]["responses"]["200"]["schema"]["collections"]
   >[0];
-  token: Token;
+  token: NonNullable<
+    paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
+  >[0]["token"];
   //   attributes: any;
 }
 
@@ -29,8 +31,12 @@ export const TokenContent = ({ token, collection }: Props) => {
     : undefined;
 
   const owner = address
-    ? token.owner.toUpperCase() === address.toUpperCase()
+    ? token?.owner?.toUpperCase() === address.toUpperCase()
     : false;
+
+  if (!token) {
+    return null;
+  }
 
   const tabs = [
     {
