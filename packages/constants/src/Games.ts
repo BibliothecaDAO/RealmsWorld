@@ -66,7 +66,7 @@ export const games: Game[] = [
     longform:
       "In PAVED, players compete for high scores and rewards by laying tiles to form an expanding medieval landscape. Inspired by the board game Carcassonne, solo and multiplayer modes offer unique, strategic experiences that test both planning and decisiveness. Think you’ve got what it takes? Pave your way to victory in a fully onchain strategy game like no other.",
     links: {
-      homepage: "https://paved.gg",
+      homepage: "https://sepolia.paved.gg/",
       discord: "https://discord.gg/uQnjZhZPfu",
       twitter: "https://twitter.com/pavedgame",
     },

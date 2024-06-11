@@ -71,6 +71,9 @@ async function fetchTokenData(): Promise<EthplorerAddressInfoResponse[]> {
   }
   const daoAddresses = getDaoAddressesArrayByChain(SUPPORTED_L1_CHAIN_ID);
 
+  if (!daoAddresses) {
+    throw new Error("DAO addresses are undefined");
+  }
   const fetchPromises = daoAddresses.map(async (account) => {
     const url = getAddressUrl(account.address);
     return await fetch(url);
