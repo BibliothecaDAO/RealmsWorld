@@ -1,0 +1,8 @@
+{
+  "sepolia": {
+    "RealmLordship": {
+      "address": "0xf14A1376ec9891D380a09Ea225f3B4e276B46dAB",
+      "startBlock": 5792677
+    }
+  }
+}

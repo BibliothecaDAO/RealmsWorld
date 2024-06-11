@@ -20,7 +20,7 @@ export const TokenAttribute = ({
 }: TokenAttributeProps) => {
   return (
     <Link href={`/collection/${contractId}?${title}=${value}`}>
-      <div className="border-2 bg-dark-green px-4 py-2 transition duration-200 hover:bg-bright-yellow hover:text-dark-green">
+      <div className="border-2 bg-background px-4 py-2 transition duration-200 hover:bg-bright-yellow hover:text-dark-green">
         <div className="w-full font-sans text-xs uppercase opacity-50">
           {title}
         </div>

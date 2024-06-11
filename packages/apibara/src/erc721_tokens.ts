@@ -1,11 +1,11 @@
-import type { Config } from "https://esm.sh/@apibara/indexer@0.2.2";
-import type { Postgres } from "https://esm.sh/@apibara/indexer@0.2.2/sink/postgres";
+import type { Config } from "https://esm.sh/@apibara/indexer@0.4.1";
+import type { Postgres } from "https://esm.sh/@apibara/indexer@0.4.1/sink/postgres";
 import type {
   Block,
   BlockHeader,
   EventWithTransaction,
   Starknet,
-} from "https://esm.sh/@apibara/indexer@0.2.2/starknet";
+} from "https://esm.sh/@apibara/indexer@0.4.1/starknet";
 import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import { uint256 } from "https://esm.sh/starknet";
 import { formatUnits } from "https://esm.sh/viem";
@@ -33,7 +33,7 @@ export const config: Config<Starknet, Postgres> = {
   sinkType: "postgres",
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
-    tableName: "rw_erc721_tokens",
+    tableName: "erc721_tokens",
     entityMode: true,
   },
 };
@@ -77,7 +77,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
           update: {
             owner: owner,
             price: null,
-            expiration: null
+            expiration: null,
           },
         };
       }

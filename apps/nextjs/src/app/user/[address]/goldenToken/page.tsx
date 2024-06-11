@@ -5,21 +5,22 @@ import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
-export default async function GoldenToken({
+export default function GoldenToken({
   params,
 }: {
   params: { address: string };
 }) {
+  const address = getCollectionAddresses(Collections.GOLDEN_TOKEN)?.[
+    SUPPORTED_L2_CHAIN_ID
+  ];
   return (
     <Suspense fallback={<LoadingSkeletonGrid />}>
-      <L2ERC721Table
-        contractAddress={
-          getCollectionAddresses(Collections.GOLDEN_TOKEN)[
-            SUPPORTED_L2_CHAIN_ID
-          ]!
-        }
-        ownerAddress={params.address}
-      />
+      {address && (
+        <L2ERC721Table
+          contractAddress={address}
+          ownerAddress={params.address}
+        />
+      )}
     </Suspense>
   );
 }

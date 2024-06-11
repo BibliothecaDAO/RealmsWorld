@@ -2,22 +2,26 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { DepositEvent, WithdrawalEvent } from "@/.graphclient";
-import type { ChainTypeL2 } from "@starkware-industries/commons-js-enums";
+import type { DepositEvent, WithdrawalEvent } from "@/types/subgraph";
+import type {
+  ChainTypeL2,
+  TransactionStatus,
+} from "@starkware-industries/commons-js-enums";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   NETWORK_NAME,
   STARKSCAN_ETH_TX_URL,
   STARKSCAN_TX_URL,
+  SUPPORTED_L1_CHAIN_ID,
+  SUPPORTED_L2_CHAIN_ID,
 } from "@/constants/env";
-import { ChainType, tokens } from "@/constants/tokens";
 import LordsIcon from "@/icons/lords.svg";
 import {
   isOnChain,
   isRejected,
   NetworkType,
   TransactionHashPrefix,
-  TransactionStatus,
   TransactionStatusFriendlyMessage,
 } from "@starkware-industries/commons-js-enums";
 import {
@@ -32,6 +36,7 @@ import {
 import PropTypes from "prop-types";
 import { formatEther } from "viem";
 
+import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 import { cn } from "@realms-world/utils";
 
@@ -64,12 +69,13 @@ export const TransferLog = ({
   }, [isL1, depositEvents]);
 
   useEffect(() => {
-    const getl2hash = async () => {
+    const getl2hash = () => {
+      console.log(depositEvents);
       const hash = depositEvents?.[0].payload
         ? getTransactionHash(
             TransactionHashPrefix.L1_HANDLER,
-            tokens.L1.LORDS.bridgeAddress?.[ChainType.L1[NETWORK_NAME]] ?? "",
-            tokens.L2.LORDS.bridgeAddress?.[ChainType.L2[NETWORK_NAME]] ?? "",
+            LORDS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] ?? "",
+            LORDS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID] ?? "",
             "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
             depositEvents?.[0].payload,
             ("SN_" + NETWORK_NAME) as ChainTypeL2,
@@ -80,7 +86,6 @@ export const TransferLog = ({
     };
 
     if (depositEvents?.[0].payload) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       getl2hash();
     }
   }, [depositEvents, transfer]);
@@ -96,9 +101,7 @@ export const TransferLog = ({
         )}
       >
         {!isOnChain(typedStatus)
-          ? TransactionStatusFriendlyMessage[
-              typedStatus ?? TransactionStatus.NOT_RECEIVED
-            ]
+          ? TransactionStatusFriendlyMessage[typedStatus]
           : ""}
       </div>
     );
@@ -111,14 +114,16 @@ export const TransferLog = ({
       <CompleteTransferButton onClick={onCompleteTransferClick} />
     ) : (
       <Button
-        className=" justify-between normal-case"
+        className="justify-between normal-case"
         size={"xs"}
         variant={"outline"}
         disabled={!l1hash}
-        href={STARKSCAN_ETH_TX_URL(l1hash)}
+        asChild
       >
-        <span>{`${NetworkType.L1} Tx`}</span>
-        <ExternalLinkIcon className="ml-2 h-3 w-3" />
+        <Link href={STARKSCAN_ETH_TX_URL(l1hash)} target="_blank">
+          <span>{`${NetworkType.L1} Tx`}</span>
+          <ExternalLinkIcon className="ml-2 h-3 w-3" />
+        </Link>
       </Button>
     );
   };
@@ -126,15 +131,16 @@ export const TransferLog = ({
   const renderL2TxButton = () => {
     return (
       <Button
-        className=" justify-between normal-case"
+        className="justify-between normal-case"
         size={"xs"}
         variant={"outline"}
         disabled={!l2hash}
         rel="noopener noreferrer"
-        href={STARKSCAN_TX_URL(l2hash)}
       >
-        <span>{`${NetworkType.L2} Tx`}</span>
-        <ExternalLinkIcon className="ml-2 h-3 w-3" />
+        <Link target="_blank" href={STARKSCAN_TX_URL(l2hash)}>
+          <span>{`${NetworkType.L2} Tx`}</span>
+          <ExternalLinkIcon className="ml-2 h-3 w-3" />
+        </Link>
       </Button>
     );
   };

@@ -80,7 +80,10 @@ export const ListModalRenderer: FC<Props> = ({
   const [price, setPrice] = useState<number>(0);
   //const [quantity, setQuantity] = useState(1);
   const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
-    expirationOptions[5]!,
+    expirationOptions[5] ??
+      (() => {
+        throw new Error("Expiration option is undefined");
+      }),
   );
 
   //TODO fetch actual royalty
@@ -102,7 +105,7 @@ export const ListModalRenderer: FC<Props> = ({
       setTransactionError(null);
       setPrice(0);
       setStepData(null);
-      setExpirationOption(expirationOptions[5]!);
+      expirationOptions[5] && setExpirationOption(expirationOptions[5]);
     }
   }, [open]);
 

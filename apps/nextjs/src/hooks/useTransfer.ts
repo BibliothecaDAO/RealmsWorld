@@ -6,8 +6,8 @@ import {
   useHideModal,
   useProgressModal,
   useTransactionSubmittedModal,
-} from "@/app/providers/ModalProvider";
-import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
+} from "@/providers/ModalProvider";
+import { useWalletsProviderContext } from "@/providers/WalletsProvider";
 
 /*import {useTokens} from '../providers/TokensProvider';
 import {useAmount} from '../providers/TransferProvider';*/

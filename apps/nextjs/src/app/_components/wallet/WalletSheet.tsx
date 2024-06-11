@@ -1,23 +1,33 @@
+"use client";
+
 //import { shortenHex } from "@/utils/utils";
 import { Suspense, useEffect, useState } from "react";
+import Link from "next/link";
 import { Account } from "@/app/bridge/Account";
-import { useUIContext } from "@/app/providers/UIProvider";
-import { NETWORK_NAME } from "@/constants/env";
+import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import Bridge from "@/icons/bridge.svg";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import {
   useDisconnect,
   useAccount as useL2Account,
   useNetwork,
 } from "@starknet-react/core";
 
+import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
 //import { AuthShowcase } from "../auth-showcase";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
   Button,
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
+  Label,
   ScrollArea,
   Sheet,
   SheetContent,
@@ -28,22 +38,8 @@ import {
 } from "@realms-world/ui";
 
 import EthereumAccount from "./EthereumAccount";
-import { EthereumLoginButton } from "./EthereumLoginButton";
 import StarkAccount from "./StarkAccount";
-import { StarknetLoginButton } from "./StarknetLoginButton";
-import { StarknetLoginModal } from "./StarknetLoginModal";
 
-/*const tabs = [
-  {
-    name: "Mainnet",
-    content: <Account isL1={true} />,
-  },
-
-  {
-    name: "Starknet",
-    content: <Account isL1={false} />,
-  },
-];*/
 export const WalletSheet = () => {
   const {
     address: l2Address,
@@ -86,7 +82,7 @@ export const WalletSheet = () => {
     NETWORK_ID.mainnet,
   ]);
 
-  const { isAccountOpen, toggleAccount } = useUIContext();
+  const { isAccountOpen, toggleAccount } = useUIStore((state) => state);
 
   const tabs = [
     {
@@ -109,93 +105,95 @@ export const WalletSheet = () => {
   ];
   return (
     <>
-      <div className="flex flex-col space-y-4 px-1 md:flex-row md:space-x-2 md:space-y-0">
-        <EthereumLoginButton
-          variant={"default"}
-          textClass="group-hover:block"
-        />
-        <StarknetLoginButton
-          textClass="group-hover:block"
-          variant={"default"}
-          openAccount
-        />
-        <StarknetLoginModal />
-      </div>
       <Sheet open={isAccountOpen} onOpenChange={toggleAccount}>
-        <SheetContent position={"right"} size={"lg"}>
-          <div className="mt-8 flex w-full flex-col items-start gap-y-4">
+        <SheetContent className={"p-0 sm:max-w-lg"}>
+          <div className="mt-12 flex w-full flex-col items-start">
             <EthereumAccount />
             <StarkAccount />
-            <div className="mt-4">
-              <h5>Actions</h5>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    //disabled={!realms?.length}
-                    className="self-center"
-                    size={"lg"}
-                    variant={"outline"}
-                  >
-                    <Bridge className="mr-2 w-[25px]" />
-                    Bridge Transactions
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="flex h-full min-w-[500px] flex-col sm:max-h-[80%]">
-                  <DialogHeader>
-                    <h6 className="my-0 py-0">Bridge Transactions</h6>
-                  </DialogHeader>
-                  <Tabs
-                    defaultValue={tabs[0]?.name}
-                    className="relative h-full min-h-0"
-                  >
-                    <TabsList className="absolute my-0 w-full justify-center py-2">
-                      {tabs.map((tab, index) => (
-                        <TabsTrigger value={tab.name} key={index}>
-                          {tab.name}
-                        </TabsTrigger>
-                      ))}
-                    </TabsList>
+            <div className="w-full border-t px-3 pt-4">
+              <Label>Actions</Label>
+              <div className="flex items-center gap-x-2">
+                <Button
+                  asChild
+                  className="self-center rounded-lg"
+                  size={"sm"}
+                  variant={"outline"}
+                >
+                  <Link href={"/account/assets"}>My Assets</Link>
+                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      //disabled={!realms?.length}
+                      className="self-center rounded-lg"
+                      size={"sm"}
+                      variant={"outline"}
+                    >
+                      <Bridge className="mr-2 w-[25px]" />
+                      Bridge Transactions
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="flex h-full min-w-[500px] flex-col sm:max-h-[80%]">
+                    <DialogHeader>
+                      <h6 className="my-0 py-0">Bridge Transactions</h6>
+                    </DialogHeader>
+                    <Tabs
+                      defaultValue={tabs[0]?.name}
+                      className="relative h-full min-h-0"
+                    >
+                      <TabsList className="absolute my-0 w-full justify-center py-2">
+                        {tabs.map((tab, index) => (
+                          <TabsTrigger value={tab.name} key={index}>
+                            {tab.name}
+                          </TabsTrigger>
+                        ))}
+                      </TabsList>
 
-                    {tabs.map((tab, index) => (
-                      <TabsContent
-                        value={tab.name}
-                        key={index}
-                        className="h-full pt-14"
-                      >
-                        <ScrollArea className="h-full">
-                          {tab.content}
-                        </ScrollArea>
-                      </TabsContent>
-                    ))}
-                  </Tabs>
-                </DialogContent>
-              </Dialog>
+                      {tabs.map((tab, index) => (
+                        <TabsContent
+                          value={tab.name}
+                          key={index}
+                          className="h-full pt-14"
+                        >
+                          <ScrollArea className="h-full">
+                            {tab.content}
+                          </ScrollArea>
+                        </TabsContent>
+                      ))}
+                    </Tabs>
+                  </DialogContent>
+                </Dialog>
+              </div>
             </div>
           </div>
         </SheetContent>
       </Sheet>
 
       {isWrongNetwork && (
-        <Dialog open={isWrongNetwork}>
-          <DialogContent close={false} className="z-50 h-72 w-full">
-            <DialogHeader>
-              <DialogTitle>Wrong Network</DialogTitle>
-            </DialogHeader>
+        <AlertDialog open={isWrongNetwork}>
+          <AlertDialogContent className="z-50 h-72 w-full">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Wrong Network</AlertDialogTitle>
+            </AlertDialogHeader>
             <span>
               Realms.World currently supports{" "}
-              <span className="capitalize">{NETWORK_NAME}</span>, please change
-              the connected network in your Starknet wallet, or:
+              <span>{CHAIN_IDS_TO_NAMES[SUPPORTED_L2_CHAIN_ID]}</span>, please
+              change the connected network in your Starknet wallet, or:
             </span>
-            <Button
-              variant={"default"}
-              size={"lg"}
-              className="mt-4"
-              onClick={() => onDisconnect()}
-            >
-              Disconnect
-            </Button>
-          </DialogContent>
-        </Dialog>
+            <AlertDialogFooter>
+              <AlertDialogAction asChild>
+                <Button
+                  variant={"default"}
+                  size={"lg"}
+                  className="mt-4"
+                  onClick={() => onDisconnect()}
+                >
+                  Disconnect
+                </Button>
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       )}
     </>
   );

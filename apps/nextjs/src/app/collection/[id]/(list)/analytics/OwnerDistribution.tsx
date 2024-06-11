@@ -46,7 +46,8 @@ export const OwnerDistribution = ({
           if (amount && totalOwners) {
             const ownerPercentage = (amount / totalOwners) * 100;
             const range = tokenRanges[index];
-            const { min, max } = range!;
+            if (!range) return null;
+            const { min, max } = range;
 
             const rangeLabel =
               index > 0 && index + 1 !== tokenRanges.length

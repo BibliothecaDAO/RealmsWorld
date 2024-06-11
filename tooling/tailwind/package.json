@@ -9,28 +9,22 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint .",
+    "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@tailwindcss/typography": "^0.5.12",
+    "@tailwindcss/typography": "^0.5.13",
     "postcss": "^8.4.38",
-    "tailwindcss": "3.4.3"
+    "tailwindcss": "3.4.4"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "*",
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
+    "eslint": "^9.4.0",
+    "prettier": "^3.3.1",
     "typescript": "^5.4.5"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@realms-world/eslint-config/base"
-    ]
   },
   "prettier": "@realms-world/prettier-config"
 }

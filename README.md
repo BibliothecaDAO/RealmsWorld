@@ -20,6 +20,7 @@
 - L2 onchain Marketplace
 - Onchain Game Catalog
 - BibliothecaDAO metrics
+- Frontinus House
 
 #### Quick Links
 

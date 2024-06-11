@@ -3,7 +3,7 @@
 
 import React from "react";
 import { TransferLog } from "@/app/bridge/TransferLog";
-import { useTransferLog } from "@/app/providers/TransferLogProvider";
+import { useTransferLog } from "@/providers/TransferLogProvider";
 import { useCompleteTransferToL1 } from "@/hooks/useTransferToL1";
 //import { evaluate } from "@starkware-industries/commons-js-utils";
 import PropTypes from "prop-types";
