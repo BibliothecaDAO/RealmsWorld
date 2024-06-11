@@ -3,7 +3,9 @@ import type { YogaInitialContext } from "graphql-yoga";
 import { sql } from "drizzle-orm";
 
 import type { SQL } from "@realms-world/db";
-import { and, asc, db, eq, gt, schema } from "@realms-world/db";
+import { and, asc, eq, gt } from "@realms-world/db";
+import { db } from "@realms-world/db/client";
+import { schema } from "@realms-world/db/schema";
 
 import type { queryType } from "./schema";
 

@@ -34,7 +34,7 @@ export function GET(
         amount: claimAm,
       });
     } else {
-      return NextResponse.json({ message: "Claim not found for account" });
+      return NextResponse.json({ data: null, amount: null});
     }
   } catch (error) {
     console.log(error);

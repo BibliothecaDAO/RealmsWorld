@@ -51,7 +51,7 @@ export const Treasury = ({
                   Total USD Value
                 </div>
               </div>
-              {Object.entries(accounts)?.map(([key, account], index) => (
+              {Object.entries(accounts).map(([key, account], index) => (
                 <div
                   className={`table-row  ${selectedAccount === (key as DaoAccounts) ? "bg-bright-yellow/50" : "hover:bg-bright-yellow/20"}`}
                   onClick={() => setSelectedAccount(key as DaoAccounts)}
@@ -93,7 +93,7 @@ const AccountView = ({
   account?: Partial<EthplorerAddressInfoResponse>;
 }) => {
   return (
-    <div className="overflow-x-auto mt-12">
+    <div className="mt-12 overflow-x-auto">
       <div className="min-w-full">
         <div className="table w-full">
           <div className="table-header-group">
@@ -114,16 +114,16 @@ const AccountView = ({
               </div>
               <div className="table-cell whitespace-nowrap px-6 py-4">
                 <span className="flex">
-                  <EthereumLogo className="w-6 mr-2" />
+                  <EthereumLogo className="mr-2 w-6" />
                   {formatUnits(BigInt(account?.ETH?.rawBalance ?? 0), 18)}
                 </span>
               </div>
               <div className="table-cell whitespace-nowrap px-6 py-4">
                 $
-                {(account?.ETH?.price?.rate
+                {(account?.ETH?.price.rate
                   ? parseFloat(
-                      formatUnits(BigInt(account.ETH.rawBalance ?? 0), 18),
-                    ) * parseFloat(account?.ETH.price.rate)
+                      formatUnits(BigInt(account.ETH.rawBalance), 18),
+                    ) * parseFloat(account.ETH.price.rate)
                   : 0
                 ).toLocaleString()}
               </div>
@@ -143,10 +143,12 @@ const AccountView = ({
                     width={24}
                     height={24}
                   />
-                  {parseFloat(formatUnits(
-                    BigInt(token.rawBalance),
-                    parseInt(token.tokenInfo.decimals),
-                  )).toLocaleString()}
+                  {parseFloat(
+                    formatUnits(
+                      BigInt(token.rawBalance),
+                      parseInt(token.tokenInfo.decimals),
+                    ),
+                  ).toLocaleString()}
                 </span>
               </div>
 

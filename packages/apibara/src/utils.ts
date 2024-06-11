@@ -6,6 +6,7 @@ export const whitelistedContracts = [
   Deno.env.get("BEASTS_CONTRACT"),
   Deno.env.get("BLOBERT_CONTRACT"),
   Deno.env.get("BANNERS_CONTRACT"),
+  Deno.env.get("REALMS_CONTRACT"),
 ];
 
 function eventKey(name: string) {

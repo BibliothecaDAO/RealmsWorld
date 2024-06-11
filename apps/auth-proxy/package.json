@@ -5,8 +5,7 @@
   "scripts": {
     "build": "nitro build",
     "clean": "rm -rf .turbo node_modules",
-    "dev": "nitro dev --port 3001",
-    "lint": "eslint .",
+    "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
   },
@@ -18,16 +17,10 @@
     "@realms-world/prettier-config": "*",
     "@realms-world/tailwind-config": "*",
     "@realms-world/tsconfig": "*",
-    "eslint": "^8.57.0",
+    "eslint": "^9.4.0",
     "nitropack": "2.9.6",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.1",
     "typescript": "^5.4.5"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@realms-world/eslint-config/base"
-    ]
   },
   "prettier": "@realms-world/prettier-config"
 }

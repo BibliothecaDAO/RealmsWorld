@@ -1,3 +1,4 @@
+import { env } from "@/env";
 import { EventSchemas, Inngest } from "inngest";
 
 interface Events {
@@ -14,6 +15,6 @@ interface Events {
 }
 export const inngest = new Inngest({
   id: "ERC721",
-  eventKey: process.env.INNGEST_EVENT_KEY ?? "local",
+  eventKey: env.INNGEST_EVENT_KEY ?? "local",
   schemas: new EventSchemas().fromRecord<Events>(),
 });

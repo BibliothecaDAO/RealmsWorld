@@ -9,11 +9,7 @@ import {
 
 import { MarketplaceContract } from "@realms-world/constants";
 
-export const useCancelListing = ({
-  listingId,
-}: {
-  listingId?: number;
-}) => {
+export const useCancelListing = ({ listingId }: { listingId?: number }) => {
   const { contract } = useContract({
     abi: MarketplaceABI,
     address: MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`,
@@ -23,13 +19,8 @@ export const useCancelListing = ({
   const calls: Call[] = useMemo(() => {
     if (!listingId) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [
-      contract?.populateTransaction.cancel!(
-        listingId,
-      ),
-    ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listingId]);
+    return [contract?.populateTransaction.cancel?.(listingId)];
+  }, [contract?.populateTransaction, listingId]);
 
   const { writeAsync, data, error } = useL2ContractWrite({ calls });
 

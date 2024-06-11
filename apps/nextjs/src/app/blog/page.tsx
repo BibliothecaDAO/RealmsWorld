@@ -1,6 +1,6 @@
 import PostGrid from "./PostGrid";
 
-const HomePage = async () => {
+const HomePage = () => {
   return <PostGrid />;
 };
 

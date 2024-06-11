@@ -5,13 +5,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useCallback, useEffect, useState } from "react";
-import { useTransferLog } from "@/app/providers/TransferLogProvider";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import {
   ActionType,
   TransferStep,
   TransferToL2Steps,
 } from "@/constants/transferSteps";
+import { useTransferLog } from "@/providers/TransferLogProvider";
 import { useAccount as useL2Account } from "@starknet-react/core";
 import { formatEther, parseEther, parseUnits } from "viem";
 import {
@@ -22,7 +22,7 @@ import {
 import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
 
 import { useWriteDepositLords } from "./bridge/useWriteDepositLords";
-import { useTokenContractAPI } from "./useTokenContract";
+import { useTokenContractAPI } from "./token/useERC20Approval";
 import { useTransfer } from "./useTransfer";
 import { useTransferProgress } from "./useTransferProgress";
 
@@ -39,6 +39,7 @@ export const useTransferToL2 = () => {
   const [amount, setAmount] = useState("");
   //onst [trackInitiated, trackSuccess, trackError, trackReject] = useTransferToL2Tracking();
 
+  //
   const { allowance, approve, approveHash, l1ERC20Contract } =
     useTokenContractAPI("LORDS", true);
   const { isSuccess: approveIsSuccess } = useWaitForTransactionReceipt({

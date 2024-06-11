@@ -1,27 +1,30 @@
 import type { Metadata } from "next";
+import L2ERC721Table from "@/app/collection/[id]/(list)/L2ERC721Table";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { isStarknetAddress } from "@/utils/utils";
 
-import GoldenToken from "./goldenToken/page";
-import UserTokenGrid from "./UserTokenGrid";
+import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
-export async function generateMetadata({
+export function generateMetadata({
   params,
 }: {
   params: { address: string };
-}): Promise<Metadata> {
+}): Metadata {
   return {
     title: `${params.address}`,
     description: `${params.address} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { address: string };
-}) {
-  if (isStarknetAddress(params.address)) {
-    return <GoldenToken params={params} />;
+export default function Page({ params }: { params: { address: string } }) {
+  const address = getCollectionAddresses(Collections.GOLDEN_TOKEN)?.[
+    SUPPORTED_L2_CHAIN_ID
+  ];
+
+  if (isStarknetAddress(params.address) && address) {
+    return (
+      <L2ERC721Table contractAddress={address} ownerAddress={params.address} />
+    );
   }
 
   return (

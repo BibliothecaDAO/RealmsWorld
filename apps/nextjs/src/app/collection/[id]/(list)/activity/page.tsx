@@ -51,11 +51,9 @@ export default async function Page({
       <div className="flex">
         <CollectionActivity />
         <div id="activity-container" className="grid flex-grow grid-cols-1">
-          {activities
-            ? activities.map((activity: Activity, index: number) => {
-                return <ActivityCard key={index} activity={activity} />;
-              })
-            : "Encountered a temporary error. Please refresh the page and retry."}
+          {activities.map((activity: Activity, index: number) => {
+            return <ActivityCard key={index} activity={activity} />;
+          })}
         </div>
       </div>
     );

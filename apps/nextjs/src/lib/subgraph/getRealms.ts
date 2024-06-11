@@ -1,3 +1,5 @@
+import { env } from "@/env";
+
 const query = `query UsersRealms(
     $address: String!
     $addressId: ID!
@@ -50,20 +52,16 @@ export const getRealms = async ({
   skip: number;
 }) => {
   try {
-    const res = await fetch(
-      "https://api.thegraph.com/subgraphs/name/" +
-        process.env.NEXT_PUBLIC_SUBGRAPH_NAME,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          query,
-          variables: { address, addressId, first, skip },
-        }),
+    const res = await fetch(env.NEXT_PUBLIC_SUBGRAPH_NAME, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        query,
+        variables: { address, addressId, first, skip },
+      }),
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await res.json();

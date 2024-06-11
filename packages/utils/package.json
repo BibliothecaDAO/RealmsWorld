@@ -2,6 +2,7 @@
   "name": "@realms-world/utils",
   "version": "0.1.0",
   "main": "./src/index.ts",
+  "type": "module",
   "files": [
     "dist/**",
     "src/**"
@@ -9,20 +10,21 @@
   "scripts": {
     "build": "tsup",
     "clean": "rimraf -rf dist",
+    "lint": "eslint",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@types/firefox-webext-browser": "^120.0.3",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
-    "tailwind-merge": "^2.2.2"
+    "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
     "@realms-world/tsconfig": "*",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.14.2",
     "typescript": "^5.4.5"
   },
   "publishConfig": {

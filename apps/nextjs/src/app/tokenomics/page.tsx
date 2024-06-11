@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { NETWORK_NAME, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
+import { env } from "@/env";
 import { getRealmNFTHolders } from "@/lib/subgraph/getRealmNFTHolders";
 import { getWalletRealmsHeld } from "@/lib/subgraph/getWalletRealmsHeld";
 
@@ -49,7 +50,7 @@ export interface EthplorerAddressInfoResponse {
 }
 
 interface TotalStakedRealmsData {
-  wallets: {
+  wallets?: {
     realmsHeld: string;
   }[];
 }
@@ -66,9 +67,10 @@ interface ExchangeValue {
 
 async function fetchTokenData(): Promise<EthplorerAddressInfoResponse[]> {
   function getAddressUrl(address: string) {
-    return `https://api.ethplorer.io/getAddressInfo/${address}?apiKey=${process.env.NEXT_PUBLIC_ETHPLORER_APIKEY}&chainId=1`;
+    return `https://api.ethplorer.io/getAddressInfo/${address}?apiKey=${env.NEXT_PUBLIC_ETHPLORER_APIKEY}&chainId=1`;
   }
   const daoAddresses = getDaoAddressesArrayByChain(SUPPORTED_L1_CHAIN_ID);
+
   if (!daoAddresses) {
     throw new Error("DAO addresses are undefined");
   }
@@ -93,7 +95,7 @@ const totalStakedRealmsData: TotalStakedRealmsData = (await getWalletRealmsHeld(
 )) as TotalStakedRealmsData;
 
 const totalStakedRealms: number =
-  totalStakedRealmsData?.wallets.reduce(
+  totalStakedRealmsData.wallets?.reduce(
     (total: number, wallet: { realmsHeld: string }) => {
       return total + parseInt(wallet.realmsHeld, 10);
     },

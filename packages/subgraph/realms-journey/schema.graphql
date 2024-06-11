@@ -1,0 +1,83 @@
+enum RealmTraitOption {
+  regions
+  cities
+  harbors
+  rivers
+}
+enum ResourceName {
+  Wood
+  Stone
+  Coal
+  Copper
+  Obsidian
+  Silver
+  Ironwood
+  Cold_Iron
+  Gold
+  Hartwood
+  Diamonds
+  Sapphire
+  Deep_Crystal
+  Ruby
+  Ignium
+  Ethereal_Silica
+  True_Ice
+  Twilight_Quartz
+  Alchemical_Silver
+  Adamantine
+  Mithral
+  Dragonhide
+}
+
+type Resource @entity {
+  id: ID!
+  name: String
+  totalRealms: Int
+  realms: [RealmResource!]! @derivedFrom(field: "resource")
+}
+
+type Realm @entity {
+  id: ID!
+  tokenId: Int!
+  currentOwner: Wallet!
+  minted: BigInt!
+  name: String
+  cities: Int
+  harbours: Int
+  rivers: Int
+  regions: Int
+  resourceIds: [Int!]
+  resources: [RealmResource!] @derivedFrom(field: "realm")
+  wonder: String
+  rarityScore: BigDecimal
+  rarityRank: BigInt
+  order: String
+  bridgedOwner: Wallet
+  bridgedV2Owner: Wallet
+}
+
+type RealmResource @entity {
+  id: ID!
+  realm: Realm!
+  resource: Resource!
+}
+
+type Wallet @entity {
+  id: ID!
+  address: Bytes!
+  realms: [Realm!] @derivedFrom(field: "currentOwner")
+  realmsHeld: BigInt!
+  bridgedRealmsHeld: BigInt!
+  bridgedV2RealmsHeld: BigInt!
+  totalRealms: BigInt!
+  joined: BigInt!
+}
+
+type Transfer @entity {
+  id: ID!
+  realm: Realm
+  from: Wallet!
+  to: Wallet!
+  txHash: Bytes!
+  timestamp: BigInt!
+}

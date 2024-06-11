@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { StatusDot } from "@/app/_components/StatusDot";
+import { env } from "@/env";
 import { ChevronLeft } from "lucide-react";
 
-import { CHAIN_IDS_TO_NAMES, games, Tokens } from "@realms-world/constants";
+import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
 import {
   Badge,
   Button,
@@ -15,11 +16,11 @@ import {
   TabsTrigger,
 } from "@realms-world/ui";
 
-export async function generateMetadata({
+export function generateMetadata({
   params,
 }: {
   params: { id: string };
-}): Promise<Metadata> {
+}): Metadata {
   const name = games.find((game) => game.id === params.id)?.name ?? "Game";
 
   return {
@@ -50,25 +51,22 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div>
           <div className="flex gap-x-2">
             <div className="flex flex-wrap">
-              {game?.tokens?.map((token, index) =>
-                token === Tokens.LORDS ? (
-                  <Button
-                    href="/swap"
-                    key={index}
-                  >
-                    {token}
-                  </Button>
-                ) : (
+              {game?.tokens?.map((token, index) => (
+                //token === Tokens.LORDS ? (
+                <Link href="/swap">
+                  <Button key={index}>{token}</Button>
+                </Link>
+                /*) : (
                   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                   <Button href={`/tokens/${token}`} key={index}>
                     {token}
                   </Button>
-                ),
-              )}
+                ),*/
+              ))}
               {game?.collections?.map((collection, index) => (
-                <Button href={`/collection/${collection}`} key={index}>
-                  {collection}
-                </Button>
+                <Link href={`/collection/${collection}`}>
+                  <Button key={index}>{collection}</Button>
+                </Link>
               ))}
             </div>
           </div>
@@ -81,9 +79,8 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const isImageFound = async (imageName: string) => {
     return await fetch(
-      (process.env.VERCEL_URL
-        ? "https://" + process.env.VERCEL_URL
-        : "http://localhost:3000") + imageName,
+      (env.VERCEL_URL ? "https://" + env.VERCEL_URL : "http://localhost:3000") +
+        imageName,
       {
         method: "HEAD",
       },
@@ -98,7 +95,15 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   const tableData = [
-    { key: "Studio", value: (<Link href={`/studios/${game?.developer ?? ""}`}> {game?.developer}</Link>) },
+    {
+      key: "Studio",
+      value: (
+        <Link href={`/studios/${game?.developer ?? ""}`}>
+          {" "}
+          {game?.developer}
+        </Link>
+      ),
+    },
     { key: "Status", value: game?.status },
     {
       key: "Chain",
@@ -145,13 +150,8 @@ export default async function Page({ params }: { params: { id: string } }) {
         <>
           {" "}
           {game?.links.whitepaper ? (
-            <Button
-              size={"xs"}
-              variant={"outline"}
-              className="w-full"
-              href={game?.links.whitepaper}
-            >
-              White paper
+            <Button size={"xs"} variant={"outline"} asChild className="w-full">
+              <Link href={game.links.whitepaper}>White paper</Link>
             </Button>
           ) : (
             "No whitepaper available"
@@ -165,13 +165,8 @@ export default async function Page({ params }: { params: { id: string } }) {
         <>
           {" "}
           {game?.links.mainnet && (
-            <Button
-              size={"xs"}
-              variant={"outline"}
-              href={game?.links.mainnet}
-              className="w-full"
-            >
-              Mainnet build
+            <Button size={"xs"} variant={"outline"} asChild className="w-full">
+              <Link href={game.links.mainnet}> Mainnet build</Link>
             </Button>
           )}
         </>
@@ -183,13 +178,8 @@ export default async function Page({ params }: { params: { id: string } }) {
         <>
           {" "}
           {game?.links.testnet && (
-            <Button
-              size={"xs"}
-              variant={"outline"}
-              href={game?.links.testnet}
-              className="w-full"
-            >
-              Testnet Build
+            <Button size={"xs"} variant={"outline"} asChild className="w-full">
+              <Link href={game.links.testnet}>Testnet Build</Link>
             </Button>
           )}
         </>
@@ -201,13 +191,8 @@ export default async function Page({ params }: { params: { id: string } }) {
         <>
           {" "}
           {game?.links.homepage && (
-            <Button
-              size={"xs"}
-              variant={"outline"}
-              href={game?.links.homepage}
-              className="w-full"
-            >
-              {game?.name}
+            <Button size={"xs"} variant={"outline"} asChild className="w-full">
+              <Link href={game.links.homepage}> {game.name}</Link>
             </Button>
           )}
         </>
@@ -218,13 +203,10 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <main className="container mx-auto px-4 ">
       <div>
-        <Button
-          size={"xs"}
-          className=" justify-start"
-          variant={"ghost"}
-          href="/games"
-        >
-          <ChevronLeft className="w-4 self-center" /> back to games
+        <Button size={"xs"} className=" justify-start" variant={"ghost"}>
+          <Link href="/games">
+            <ChevronLeft className="w-4 self-center" /> back to games
+          </Link>
         </Button>
       </div>
 
@@ -260,14 +242,14 @@ export default async function Page({ params }: { params: { id: string } }) {
               </div>
 
               <div className="flex-col space-y-2">
-                {game?.links.homepage && (
+                {game.links.homepage && (
                   <Button
                     size={"lg"}
                     variant={"default"}
-                    href={game?.links.homepage}
+                    asChild
                     className="w-full"
                   >
-                    Play {game?.name}
+                    <Link href={game.links.homepage}> Play {game.name}</Link>
                   </Button>
                 )}
 
@@ -296,7 +278,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
                 {tabs.map((tab, index) => (
                   <TabsContent
-                    className="rounded border bg-dark-green p-4"
+                    className="rounded border bg-background p-4"
                     value={tab.name}
                     key={index}
                   >

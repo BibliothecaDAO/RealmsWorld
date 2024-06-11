@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Fully Onchain Games in the Realms Autonomous World- Created for adventurers by Bibliotheca DAO",
 };
 
-export default async function Page() {
+export default function Page() {
   return (
     <PageLayout>
       <div className="mx-auto max-w-4xl p-4">

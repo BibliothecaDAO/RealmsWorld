@@ -1,4 +1,5 @@
 import React from "react"; // Ensure React is imported if not already
+
 import TotalValueLockedChart from "./TotalValueLockedChart";
 
 export const TotalValueLocked = ({
@@ -7,9 +8,8 @@ export const TotalValueLocked = ({
   totalValueLocked: {
     exchange: string;
     valueUsd: number;
-  }[]
+  }[];
 }) => {
-
   return (
     <>
       <div className="overflow-x-auto">
@@ -24,11 +24,8 @@ export const TotalValueLocked = ({
                   Total USD Value
                 </div>
               </div>
-              {Object.entries(totalValueLocked)?.map(([key, exchange]) => (
-                <div
-                  className={`table-row`}
-                  key={key}
-                >
+              {Object.entries(totalValueLocked).map(([key, exchange]) => (
+                <div className={`table-row`} key={key}>
                   <div className="table-cell flex-grow whitespace-nowrap px-6 py-4">
                     <span className="text-lg">{exchange.exchange}</span>
                   </div>

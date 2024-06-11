@@ -7,12 +7,13 @@ import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
 import { Carousel } from "@realms-world/ui";
 
+import { PageLayout } from "./_components/PageLayout";
 import { Partners } from "./_components/Partners";
 import PostGrid from "./blog/PostGrid";
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
 
-export default async function Home() {
+export default function Home() {
   const carouselImages = games
     .filter((a) => a.status === "beta" || a.status === "mainnet")
     .map((game: Game) => ({
@@ -24,8 +25,8 @@ export default async function Home() {
     }));
 
   return (
-    <div className="container mx-auto mt-24 px-4 md:pl-24 lg:mt-24">
-      <div className="my-4 flex w-fit flex-wrap bg-dark-green p-1 text-xl">
+    <PageLayout>
+      <div className="my-4 flex w-fit flex-wrap p-1 text-xl">
         <span className="align-center">Powered by </span>
         <Link href={"https://dojoengine.org/"}>
           <DojoDark className="mx-2 w-12" />
@@ -75,6 +76,6 @@ export default async function Home() {
         <h3 className="mb-8">Featured Collections</h3>
         <CollectionsList />
       </div>
-    </div>
+    </PageLayout>
   );
 }

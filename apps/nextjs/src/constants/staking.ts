@@ -6,7 +6,7 @@ export const stakingAddresses = {
     paymentPoolV2: "0x8428aad84594b6b78da13e773d902f5c44b93f17",
   },
   SEPOLIA: {
-    v1Galleon: "",
+    v1Galleon: "0x7cb8c2a2e635b8518a3d8e6d70480583c85a7297",
     v2Carrack: "",
     paymentPool: "",
     paymentPoolV2: "0x20395A14fE203Ca6D1738B027AC3Df55C4584455",

@@ -1,6 +1,6 @@
+import type { Activity } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import type { Activity } from "@/types";
 import { shortenHex } from "@/utils/utils";
 
 interface ActivityCardProps {
@@ -92,9 +92,9 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
       </div>
       <div className="flex w-1/2 self-center font-semibold sm:w-2/12 sm:justify-end">
         {activity.type != "transfer" &&
-          (activity.price?.currency ? (
+          (activity.price.currency.symbol ? (
             <div className="self-center">
-              {activity.price?.amount.native} {activity.price?.currency.symbol}
+              {activity.price.amount.native} {activity.price.currency.symbol}
             </div>
           ) : (
             <div className="self-center">{activity.price || 0} ETH</div>
@@ -110,9 +110,9 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
           </span>
         </div>
         <div className="self-center">
-          {activity.order ? (
+          {activity.order.source.icon ? (
             <Image
-              src={activity.order?.source ? activity.order.source.icon : ""}
+              src={activity.order.source.icon}
               alt="An example image"
               width={40}
               height={40}

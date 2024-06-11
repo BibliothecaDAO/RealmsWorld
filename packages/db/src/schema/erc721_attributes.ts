@@ -1,8 +1,13 @@
-import { index, integer, primaryKey, serial, text } from "drizzle-orm/pg-core";
+import {
+  index,
+  integer,
+  pgTable,
+  primaryKey,
+  serial,
+  text,
+} from "drizzle-orm/pg-core";
 
-import { pgSqlTable } from "./_table";
-
-export const erc721Attributes = pgSqlTable(
+export const erc721Attributes = pgTable(
   "erc721_attributes",
   {
     id: serial("id"),

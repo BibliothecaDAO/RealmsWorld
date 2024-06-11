@@ -3,31 +3,33 @@ import { Inconsolata, Silkscreen } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
 import { Analytics } from "@vercel/analytics/react";
 
-import { Provider } from "./providers/providers";
-
 import "@realms-world/styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { cache } from "react";
 import { headers } from "next/headers";
+import { Footer } from "@/app/_components/Footer";
+import { StarknetLoginModal } from "@/app/_components/modal/StarknetLoginModal";
+import { TopNav } from "@/app/_components/TopNav";
+import { WalletSheet } from "@/app/_components/wallet/WalletSheet";
+import { env } from "@/env";
+import { UIStoreProvider } from "@/providers/UIStoreProvider";
+import { WalletsProvider } from "@/providers/WalletsProvider";
+import { Web3Providers } from "@/providers/Web3Providers";
 import { TRPCReactProvider } from "@/trpc/react";
 
-import { Footer } from "./_components/Footer";
-import { TopNav } from "./_components/TopNav";
-import { UIContextProvider } from "./providers/UIProvider";
-import { WalletsProvider } from "./providers/WalletsProvider";
-import { Toaster } from "@realms-world/ui";
+import { Toaster, TooltipProvider } from "@realms-world/ui";
 
-const baiJamjuree = Silkscreen({
+const silkscreen = Silkscreen({
   subsets: ["latin"],
-  variable: "--font-bai-jamjuree",
+  variable: "--font-silkscreen",
   weight: ["400"],
   display: "swap",
 });
 
-const karla = Inconsolata({
+const inconsolata = Inconsolata({
   subsets: ["latin"],
-  variable: "--font-karla",
+  variable: "--font-inconsolata",
   weight: "400",
   display: "swap",
 });
@@ -47,24 +49,28 @@ export default function Layout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body
         style={backgroundImageStyle}
-        className={`bg-dark-green ${baiJamjuree.variable} ${karla.variable} text-bright-yellow`}
+        className={`${silkscreen.variable} ${inconsolata.variable} dark`}
       >
         <TRPCReactProvider headersPromise={getHeaders()}>
-          <UIContextProvider>
-            <Provider>
+          <UIStoreProvider>
+            <Web3Providers>
               <WalletsProvider>
-                <main className="flex-wrap md:flex">
-                  <Sidebar />
-                  <div className="z-10 flex flex-grow flex-col">
-                    <TopNav />
-                    <div className="flex-grow">{props.children}</div>
-                  </div>
-                </main>
-                <Footer />
-                <Toaster />
+                <TooltipProvider>
+                  <main className="flex-wrap md:flex">
+                    <Sidebar />
+                    <div className="z-10 flex flex-grow flex-col">
+                      <TopNav />
+                      <div className="flex-grow">{props.children}</div>
+                    </div>
+                  </main>
+                  <Footer />
+                  <Toaster />
+                  <StarknetLoginModal />
+                  <WalletSheet />
+                </TooltipProvider>
               </WalletsProvider>
-            </Provider>
-          </UIContextProvider>
+            </Web3Providers>
+          </UIStoreProvider>
         </TRPCReactProvider>
         <Analytics />
       </body>
@@ -78,7 +84,7 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.VERCEL_ENV === "production"
+    env.VERCEL_ENV === "production"
       ? "https://realms.world"
       : "http://localhost:3000",
   ),

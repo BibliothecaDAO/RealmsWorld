@@ -4,11 +4,11 @@ import type { Metadata } from "next";
 import { ActivityCard } from "@/app/collection/[id]/(list)/activity/ActivityCard";
 import { getUsersActivity } from "@/lib/reservoir/getUsersActivity";
 
-export async function generateMetadata({
+export function generateMetadata({
   params,
 }: {
   params: { address: string };
-}): Promise<Metadata> {
+}): Metadata {
   return {
     title: `Atlas - Collections Profile: ${params.address}`,
     description: `Collection Details page for ${params.address} - Created for Adventurers by Bibliotheca DAO`,
@@ -26,7 +26,7 @@ export default async function Page({
 
   return (
     <div className=" my-4 grid h-full grid-cols-1 overflow-y-auto rounded border">
-      {activities?.map((activity: Activity, index: number) => {
+      {activities.map((activity: Activity, index: number) => {
         return <ActivityCard key={index} activity={activity} />;
       })}
     </div>

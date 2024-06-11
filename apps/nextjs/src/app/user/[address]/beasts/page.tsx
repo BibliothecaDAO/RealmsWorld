@@ -5,19 +5,18 @@ import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
-export default async function Page({
-  params,
-}: {
-  params: { address: string };
-}) {
+export default function Page({ params }: { params: { address: string } }) {
+  const address = getCollectionAddresses(Collections.BEASTS)?.[
+    SUPPORTED_L2_CHAIN_ID
+  ];
   return (
     <Suspense fallback={<LoadingSkeletonGrid />}>
-      <L2ERC721Table
-        contractAddress={
-          getCollectionAddresses(Collections.BEASTS)[SUPPORTED_L2_CHAIN_ID]!
-        }
-        ownerAddress={params.address}
-      />
+      {address && (
+        <L2ERC721Table
+          contractAddress={address}
+          ownerAddress={params.address}
+        />
+      )}
     </Suspense>
   );
 }

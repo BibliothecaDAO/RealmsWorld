@@ -2,17 +2,17 @@ import { formatUnits } from "viem";
 
 function formatNumber(
   amount: number | null | undefined,
-  maximumFractionDigits: number = 2,
+  maximumFractionDigits = 2,
 ) {
-  const { format } = new Intl.NumberFormat("en-US", {
-    maximumFractionDigits: maximumFractionDigits,
-  });
   if (amount === null || amount === undefined) {
     return "-";
   }
-  return format(amount);
+  const formatter = new Intl.NumberFormat("en-US", {
+    maximumFractionDigits,
+  });
+  
+  return formatter.format(amount);
 }
-
 const isSafariBrowser = () =>
   typeof window !== "undefined" &&
   navigator.userAgent.indexOf("Safari") > -1 &&
@@ -52,7 +52,7 @@ const truncateFractionAndFormat = (
 function formatBN(
   amount: string | number | bigint | null | undefined,
   maximumFractionDigits: number,
-  decimals: number = 18,
+  decimals = 18,
 ) {
   if (typeof amount === "undefined" || amount === null) return "-";
 
@@ -73,7 +73,7 @@ function formatBN(
 
   // New issue introduced in Safari v16 causes a regression and now need lessPrecision flagged in format options
   if (isSafari) {
-    //@ts-ignore
+    //@ts-expect-error Safari Issue workaround
     formatOptions.roundingPriority = "lessPrecision";
   }
 
@@ -130,7 +130,7 @@ function formatBN(
     }
   }
 
-  if (parts && parts.length > 0) {
+  if (parts.length > 0) {
     const lowestValue = Number(
       `0.${new Array(maximumFractionDigits).join("0")}1`,
     );
@@ -160,7 +160,7 @@ function padAddress(address?: string) {
     for (let i = 0; i < neededLength; i++) {
       zeros += "0";
     }
-    const newHex = address?.substring(0, 2) + zeros + address.substring(2);
+    const newHex = address.substring(0, 2) + zeros + address.substring(2);
     return newHex;
   } else {
     return "";

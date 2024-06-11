@@ -4,6 +4,7 @@
   "types": "./src/index.ts",
   "license": "MIT",
   "main": "./src/index.ts",
+  "type": "module",
   "files": [
     "dist/**",
     "src/**"
@@ -11,12 +12,12 @@
   "scripts": {
     "build": "tsup",
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint .",
+    "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5"
   },
@@ -24,13 +25,8 @@
     "@realms-world/eslint-config": "*",
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
-    "eslint": "^8.57.0",
+    "eslint": "^9.4.0",
     "typescript": "^5.4.5"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@realms-world/eslint-config/base"
-    ]
   },
   "prettier": "@realms-world/prettier-config"
 }

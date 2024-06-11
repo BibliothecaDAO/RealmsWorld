@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { formatUnits } from "viem";
 
@@ -38,34 +39,31 @@ export const DashBoard = ({
   console.log(lords)*/
   //const totalAccounts = data.reduce((acc, item) => acc + item.value, 0);
   const lords = Object.values(tokenInfo)
-    ?.flatMap((item) => item.tokens ?? [])
+    .flatMap((item) => item.tokens)
     .find((token) => token.tokenInfo.symbol === "LORDS");
 
-  const sums = tokenInfo
-    ? Object.values(tokenInfo).reduce(
-        (acc, account) => {
-          let sum = 0;
-          account.tokens.forEach((token) => {
-            const value =
-              parseFloat(
-                formatUnits(
-                  BigInt(token.rawBalance),
-                  parseInt(token.tokenInfo.decimals),
-                ),
-              ) * token.tokenInfo.price.rate;
-            sum += value;
-          });
-          sum +=
-            parseFloat(formatUnits(BigInt(account.ETH.rawBalance), 18)) *
-            parseFloat(account.ETH.price.rate);
+  const sums = Object.values(tokenInfo).reduce(
+    (acc, account) => {
+      let sum = 0;
+      account.tokens.forEach((token) => {
+        const value =
+          parseFloat(
+            formatUnits(
+              BigInt(token.rawBalance),
+              parseInt(token.tokenInfo.decimals),
+            ),
+          ) * token.tokenInfo.price.rate;
+        sum += value;
+      });
+      sum +=
+        parseFloat(formatUnits(BigInt(account.ETH.rawBalance), 18)) *
+        parseFloat(account.ETH.price.rate);
 
-          acc[account.address.toLowerCase()] = sum; // Convert to lowercase once here
-          return acc;
-        },
-        {} as Record<string, number>,
-      )
-    : {};
-
+      acc[account.address.toLowerCase()] = sum; // Convert to lowercase once here
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
   const accountsWithBalance = Array.from(DaoAddresses).reduce(
     (
       acc: Record<
@@ -75,7 +73,7 @@ export const DashBoard = ({
           address: string;
           value: number;
           //eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ETH: any; 
+          ETH: any;
           tokens: EthplorerToken[];
         }
       >,
@@ -97,7 +95,7 @@ export const DashBoard = ({
             address,
             value: totalUSDValue ?? 0,
             ETH: originalAccountInfo.ETH,
-            tokens: originalAccountInfo?.tokens,
+            tokens: originalAccountInfo.tokens,
           };
         }
       }
@@ -110,15 +108,13 @@ export const DashBoard = ({
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       <BaseDashboardCard
         title="USD Price"
-        dataTitle={`$${lords?.tokenInfo.price?.rate.toLocaleString()}`}
+        dataTitle={`$${lords?.tokenInfo.price.rate.toLocaleString()}`}
       >
-        <Button
-          href="https://www.coingecko.com/en/coins/lords"
-          size={"xs"}
-          variant={"outline"}
-        >
-          Coin Gecko
-        </Button>
+        <Link target="_blank" href="https://www.coingecko.com/en/coins/lords">
+          <Button size={"xs"} variant={"outline"}>
+            Coin Gecko
+          </Button>
+        </Link>
       </BaseDashboardCard>
       <BaseDashboardCard
         title="Holders ETH + Starknet"

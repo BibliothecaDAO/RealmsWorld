@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { env } from "@/env";
 
 import type { Game } from "@realms-world/constants";
 import { Badge, Button } from "@realms-world/ui";
@@ -16,9 +17,8 @@ export const GameCard = async ({ game }: GameCardProps) => {
 
   const isImageFound = async (imageName: string) => {
     return await fetch(
-      (process.env.VERCEL_URL
-        ? "https://" + process.env.VERCEL_URL
-        : "http://localhost:3000") + imageName,
+      (env.VERCEL_URL ? "https://" + env.VERCEL_URL : "http://localhost:3000") +
+        imageName,
       {
         method: "HEAD",
       },
@@ -43,8 +43,8 @@ export const GameCard = async ({ game }: GameCardProps) => {
             className="bg-bright-yellow text-theme-gray"
             variant={"default"}
           >
-            {StatusDot(game?.status)}
-            {game?.status}
+            {StatusDot(game.status)}
+            {game.status}
           </Badge>
         </div>
 

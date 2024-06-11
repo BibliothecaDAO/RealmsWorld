@@ -39,29 +39,31 @@ const ERC721LineItem: FC<ERC721LineItemProps> = ({
   if (!tokenDetails) {
     return null;
   }
-
+  const address = getCollectionFromAddress(tokenDetails.contract_address ?? "");
   return (
-    <ERC721MarketplaceItem
-      img={tokenDetails?.image ?? ""}
-      name={getTokenName(tokenDetails)}
-      price={price}
-      usdPrice={usdPrice}
-      expires={expires}
-      warning={warning}
-      collection={
-        tokenDetails.contract_address
-          ? CollectionDetails[
-              getCollectionFromAddress(tokenDetails.contract_address)!
-            ].displayName
-          : ""
-      }
-      isUnavailable={isUnavailable}
-      priceSubtitle={priceSubtitle}
-      royaltiesBps={
-        /*showRoyalties && collection?.royalties ? collection.royalties.bps :*/ 500
-      }
-      quantity={quantity}
-    />
+    <>
+      {address && (
+        <ERC721MarketplaceItem
+          img={tokenDetails.image ?? ""}
+          name={getTokenName(tokenDetails)}
+          price={price}
+          usdPrice={usdPrice}
+          expires={expires}
+          warning={warning}
+          collection={
+            tokenDetails.contract_address
+              ? CollectionDetails[address].displayName
+              : ""
+          }
+          isUnavailable={isUnavailable}
+          priceSubtitle={priceSubtitle}
+          royaltiesBps={
+            /*showRoyalties && collection?.royalties ? collection.royalties.bps :*/ 500
+          }
+          quantity={quantity}
+        />
+      )}
+    </>
   );
 };
 

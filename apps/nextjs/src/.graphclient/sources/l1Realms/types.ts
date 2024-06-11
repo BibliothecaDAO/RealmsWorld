@@ -1,16 +1,16 @@
 // @ts-nocheck
 
-import { InContextSdkMethod } from '@graphql-mesh/types';
-import { MeshContext } from '@graphql-mesh/runtime';
+import type { InContextSdkMethod } from '@graphql-mesh/types';
+import type { MeshContext } from '@graphql-mesh/runtime';
 
 export namespace L1RealmsTypes {
   export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Exact<T extends Record<string, unknown>> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
+export interface Scalars {
   ID: string;
   String: string;
   Boolean: boolean;
@@ -20,47 +20,47 @@ export type Scalars = {
   BigInt: any;
   Bytes: any;
   Int8: any;
-};
+}
 
-export type BlockChangedFilter = {
+export interface BlockChangedFilter {
   number_gte: Scalars['Int'];
-};
+}
 
-export type Block_height = {
+export interface Block_height {
   hash?: InputMaybe<Scalars['Bytes']>;
   number?: InputMaybe<Scalars['Int']>;
   number_gte?: InputMaybe<Scalars['Int']>;
-};
+}
 
 /** Defines the order direction, either ascending or descending */
 export type OrderDirection =
   | 'asc'
   | 'desc';
 
-export type Query = {
+export interface Query {
   resource?: Maybe<Resource>;
-  resources: Array<Resource>;
+  resources: Resource[];
   realm?: Maybe<Realm>;
-  realms: Array<Realm>;
+  realms: Realm[];
   realmResource?: Maybe<RealmResource>;
-  realmResources: Array<RealmResource>;
+  realmResources: RealmResource[];
   wallet?: Maybe<Wallet>;
-  wallets: Array<Wallet>;
+  wallets: Wallet[];
   transfer?: Maybe<Transfer>;
-  transfers: Array<Transfer>;
+  transfers: Transfer[];
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
-};
+}
 
 
-export type QueryresourceArgs = {
+export interface QueryresourceArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QueryresourcesArgs = {
+export interface QueryresourcesArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Resource_orderBy>;
@@ -68,17 +68,17 @@ export type QueryresourcesArgs = {
   where?: InputMaybe<Resource_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QueryrealmArgs = {
+export interface QueryrealmArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QueryrealmsArgs = {
+export interface QueryrealmsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Realm_orderBy>;
@@ -86,17 +86,17 @@ export type QueryrealmsArgs = {
   where?: InputMaybe<Realm_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QueryrealmResourceArgs = {
+export interface QueryrealmResourceArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QueryrealmResourcesArgs = {
+export interface QueryrealmResourcesArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<RealmResource_orderBy>;
@@ -104,17 +104,17 @@ export type QueryrealmResourcesArgs = {
   where?: InputMaybe<RealmResource_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerywalletArgs = {
+export interface QuerywalletArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerywalletsArgs = {
+export interface QuerywalletsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Wallet_orderBy>;
@@ -122,17 +122,17 @@ export type QuerywalletsArgs = {
   where?: InputMaybe<Wallet_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerytransferArgs = {
+export interface QuerytransferArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerytransfersArgs = {
+export interface QuerytransfersArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Transfer_orderBy>;
@@ -140,14 +140,14 @@ export type QuerytransfersArgs = {
   where?: InputMaybe<Transfer_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type Query_metaArgs = {
+export interface Query_metaArgs {
   block?: InputMaybe<Block_height>;
-};
+}
 
-export type Realm = {
+export interface Realm {
   id: Scalars['ID'];
   tokenId: Scalars['Int'];
   currentOwner: Wallet;
@@ -157,48 +157,48 @@ export type Realm = {
   harbours: Scalars['Int'];
   rivers: Scalars['Int'];
   regions: Scalars['Int'];
-  resourceIds: Array<Scalars['Int']>;
-  resources?: Maybe<Array<RealmResource>>;
+  resourceIds: Scalars['Int'][];
+  resources?: Maybe<RealmResource[]>;
   wonder?: Maybe<Scalars['String']>;
   rarityScore: Scalars['BigDecimal'];
   rarityRank: Scalars['BigInt'];
   order?: Maybe<Scalars['String']>;
   bridgedOwner?: Maybe<Wallet>;
   bridgedV2Owner?: Maybe<Wallet>;
-};
+}
 
 
-export type RealmresourcesArgs = {
+export interface RealmresourcesArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<RealmResource_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<RealmResource_filter>;
-};
+}
 
-export type RealmResource = {
+export interface RealmResource {
   id: Scalars['ID'];
   realm: Realm;
   resource: Resource;
-};
+}
 
-export type RealmResource_filter = {
+export interface RealmResource_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   realm?: InputMaybe<Scalars['String']>;
   realm_not?: InputMaybe<Scalars['String']>;
   realm_gt?: InputMaybe<Scalars['String']>;
   realm_lt?: InputMaybe<Scalars['String']>;
   realm_gte?: InputMaybe<Scalars['String']>;
   realm_lte?: InputMaybe<Scalars['String']>;
-  realm_in?: InputMaybe<Array<Scalars['String']>>;
-  realm_not_in?: InputMaybe<Array<Scalars['String']>>;
+  realm_in?: InputMaybe<Scalars['String'][]>;
+  realm_not_in?: InputMaybe<Scalars['String'][]>;
   realm_contains?: InputMaybe<Scalars['String']>;
   realm_contains_nocase?: InputMaybe<Scalars['String']>;
   realm_not_contains?: InputMaybe<Scalars['String']>;
@@ -218,8 +218,8 @@ export type RealmResource_filter = {
   resource_lt?: InputMaybe<Scalars['String']>;
   resource_gte?: InputMaybe<Scalars['String']>;
   resource_lte?: InputMaybe<Scalars['String']>;
-  resource_in?: InputMaybe<Array<Scalars['String']>>;
-  resource_not_in?: InputMaybe<Array<Scalars['String']>>;
+  resource_in?: InputMaybe<Scalars['String'][]>;
+  resource_not_in?: InputMaybe<Scalars['String'][]>;
   resource_contains?: InputMaybe<Scalars['String']>;
   resource_contains_nocase?: InputMaybe<Scalars['String']>;
   resource_not_contains?: InputMaybe<Scalars['String']>;
@@ -235,9 +235,9 @@ export type RealmResource_filter = {
   resource_?: InputMaybe<Resource_filter>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<RealmResource_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<RealmResource_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<RealmResource_filter>[]>;
+  or?: InputMaybe<InputMaybe<RealmResource_filter>[]>;
+}
 
 export type RealmResource_orderBy =
   | 'id'
@@ -265,31 +265,31 @@ export type RealmTraitOption =
   | 'harbors'
   | 'rivers';
 
-export type Realm_filter = {
+export interface Realm_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   tokenId?: InputMaybe<Scalars['Int']>;
   tokenId_not?: InputMaybe<Scalars['Int']>;
   tokenId_gt?: InputMaybe<Scalars['Int']>;
   tokenId_lt?: InputMaybe<Scalars['Int']>;
   tokenId_gte?: InputMaybe<Scalars['Int']>;
   tokenId_lte?: InputMaybe<Scalars['Int']>;
-  tokenId_in?: InputMaybe<Array<Scalars['Int']>>;
-  tokenId_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  tokenId_in?: InputMaybe<Scalars['Int'][]>;
+  tokenId_not_in?: InputMaybe<Scalars['Int'][]>;
   currentOwner?: InputMaybe<Scalars['String']>;
   currentOwner_not?: InputMaybe<Scalars['String']>;
   currentOwner_gt?: InputMaybe<Scalars['String']>;
   currentOwner_lt?: InputMaybe<Scalars['String']>;
   currentOwner_gte?: InputMaybe<Scalars['String']>;
   currentOwner_lte?: InputMaybe<Scalars['String']>;
-  currentOwner_in?: InputMaybe<Array<Scalars['String']>>;
-  currentOwner_not_in?: InputMaybe<Array<Scalars['String']>>;
+  currentOwner_in?: InputMaybe<Scalars['String'][]>;
+  currentOwner_not_in?: InputMaybe<Scalars['String'][]>;
   currentOwner_contains?: InputMaybe<Scalars['String']>;
   currentOwner_contains_nocase?: InputMaybe<Scalars['String']>;
   currentOwner_not_contains?: InputMaybe<Scalars['String']>;
@@ -309,16 +309,16 @@ export type Realm_filter = {
   minted_lt?: InputMaybe<Scalars['BigInt']>;
   minted_gte?: InputMaybe<Scalars['BigInt']>;
   minted_lte?: InputMaybe<Scalars['BigInt']>;
-  minted_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  minted_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  minted_in?: InputMaybe<Scalars['BigInt'][]>;
+  minted_not_in?: InputMaybe<Scalars['BigInt'][]>;
   name?: InputMaybe<Scalars['String']>;
   name_not?: InputMaybe<Scalars['String']>;
   name_gt?: InputMaybe<Scalars['String']>;
   name_lt?: InputMaybe<Scalars['String']>;
   name_gte?: InputMaybe<Scalars['String']>;
   name_lte?: InputMaybe<Scalars['String']>;
-  name_in?: InputMaybe<Array<Scalars['String']>>;
-  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  name_in?: InputMaybe<Scalars['String'][]>;
+  name_not_in?: InputMaybe<Scalars['String'][]>;
   name_contains?: InputMaybe<Scalars['String']>;
   name_contains_nocase?: InputMaybe<Scalars['String']>;
   name_not_contains?: InputMaybe<Scalars['String']>;
@@ -337,38 +337,38 @@ export type Realm_filter = {
   cities_lt?: InputMaybe<Scalars['Int']>;
   cities_gte?: InputMaybe<Scalars['Int']>;
   cities_lte?: InputMaybe<Scalars['Int']>;
-  cities_in?: InputMaybe<Array<Scalars['Int']>>;
-  cities_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  cities_in?: InputMaybe<Scalars['Int'][]>;
+  cities_not_in?: InputMaybe<Scalars['Int'][]>;
   harbours?: InputMaybe<Scalars['Int']>;
   harbours_not?: InputMaybe<Scalars['Int']>;
   harbours_gt?: InputMaybe<Scalars['Int']>;
   harbours_lt?: InputMaybe<Scalars['Int']>;
   harbours_gte?: InputMaybe<Scalars['Int']>;
   harbours_lte?: InputMaybe<Scalars['Int']>;
-  harbours_in?: InputMaybe<Array<Scalars['Int']>>;
-  harbours_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  harbours_in?: InputMaybe<Scalars['Int'][]>;
+  harbours_not_in?: InputMaybe<Scalars['Int'][]>;
   rivers?: InputMaybe<Scalars['Int']>;
   rivers_not?: InputMaybe<Scalars['Int']>;
   rivers_gt?: InputMaybe<Scalars['Int']>;
   rivers_lt?: InputMaybe<Scalars['Int']>;
   rivers_gte?: InputMaybe<Scalars['Int']>;
   rivers_lte?: InputMaybe<Scalars['Int']>;
-  rivers_in?: InputMaybe<Array<Scalars['Int']>>;
-  rivers_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  rivers_in?: InputMaybe<Scalars['Int'][]>;
+  rivers_not_in?: InputMaybe<Scalars['Int'][]>;
   regions?: InputMaybe<Scalars['Int']>;
   regions_not?: InputMaybe<Scalars['Int']>;
   regions_gt?: InputMaybe<Scalars['Int']>;
   regions_lt?: InputMaybe<Scalars['Int']>;
   regions_gte?: InputMaybe<Scalars['Int']>;
   regions_lte?: InputMaybe<Scalars['Int']>;
-  regions_in?: InputMaybe<Array<Scalars['Int']>>;
-  regions_not_in?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds_not?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds_contains?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds_contains_nocase?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds_not_contains?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds_not_contains_nocase?: InputMaybe<Array<Scalars['Int']>>;
+  regions_in?: InputMaybe<Scalars['Int'][]>;
+  regions_not_in?: InputMaybe<Scalars['Int'][]>;
+  resourceIds?: InputMaybe<Scalars['Int'][]>;
+  resourceIds_not?: InputMaybe<Scalars['Int'][]>;
+  resourceIds_contains?: InputMaybe<Scalars['Int'][]>;
+  resourceIds_contains_nocase?: InputMaybe<Scalars['Int'][]>;
+  resourceIds_not_contains?: InputMaybe<Scalars['Int'][]>;
+  resourceIds_not_contains_nocase?: InputMaybe<Scalars['Int'][]>;
   resources_?: InputMaybe<RealmResource_filter>;
   wonder?: InputMaybe<Scalars['String']>;
   wonder_not?: InputMaybe<Scalars['String']>;
@@ -376,8 +376,8 @@ export type Realm_filter = {
   wonder_lt?: InputMaybe<Scalars['String']>;
   wonder_gte?: InputMaybe<Scalars['String']>;
   wonder_lte?: InputMaybe<Scalars['String']>;
-  wonder_in?: InputMaybe<Array<Scalars['String']>>;
-  wonder_not_in?: InputMaybe<Array<Scalars['String']>>;
+  wonder_in?: InputMaybe<Scalars['String'][]>;
+  wonder_not_in?: InputMaybe<Scalars['String'][]>;
   wonder_contains?: InputMaybe<Scalars['String']>;
   wonder_contains_nocase?: InputMaybe<Scalars['String']>;
   wonder_not_contains?: InputMaybe<Scalars['String']>;
@@ -396,24 +396,24 @@ export type Realm_filter = {
   rarityScore_lt?: InputMaybe<Scalars['BigDecimal']>;
   rarityScore_gte?: InputMaybe<Scalars['BigDecimal']>;
   rarityScore_lte?: InputMaybe<Scalars['BigDecimal']>;
-  rarityScore_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  rarityScore_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  rarityScore_in?: InputMaybe<Scalars['BigDecimal'][]>;
+  rarityScore_not_in?: InputMaybe<Scalars['BigDecimal'][]>;
   rarityRank?: InputMaybe<Scalars['BigInt']>;
   rarityRank_not?: InputMaybe<Scalars['BigInt']>;
   rarityRank_gt?: InputMaybe<Scalars['BigInt']>;
   rarityRank_lt?: InputMaybe<Scalars['BigInt']>;
   rarityRank_gte?: InputMaybe<Scalars['BigInt']>;
   rarityRank_lte?: InputMaybe<Scalars['BigInt']>;
-  rarityRank_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  rarityRank_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  rarityRank_in?: InputMaybe<Scalars['BigInt'][]>;
+  rarityRank_not_in?: InputMaybe<Scalars['BigInt'][]>;
   order?: InputMaybe<Scalars['String']>;
   order_not?: InputMaybe<Scalars['String']>;
   order_gt?: InputMaybe<Scalars['String']>;
   order_lt?: InputMaybe<Scalars['String']>;
   order_gte?: InputMaybe<Scalars['String']>;
   order_lte?: InputMaybe<Scalars['String']>;
-  order_in?: InputMaybe<Array<Scalars['String']>>;
-  order_not_in?: InputMaybe<Array<Scalars['String']>>;
+  order_in?: InputMaybe<Scalars['String'][]>;
+  order_not_in?: InputMaybe<Scalars['String'][]>;
   order_contains?: InputMaybe<Scalars['String']>;
   order_contains_nocase?: InputMaybe<Scalars['String']>;
   order_not_contains?: InputMaybe<Scalars['String']>;
@@ -432,8 +432,8 @@ export type Realm_filter = {
   bridgedOwner_lt?: InputMaybe<Scalars['String']>;
   bridgedOwner_gte?: InputMaybe<Scalars['String']>;
   bridgedOwner_lte?: InputMaybe<Scalars['String']>;
-  bridgedOwner_in?: InputMaybe<Array<Scalars['String']>>;
-  bridgedOwner_not_in?: InputMaybe<Array<Scalars['String']>>;
+  bridgedOwner_in?: InputMaybe<Scalars['String'][]>;
+  bridgedOwner_not_in?: InputMaybe<Scalars['String'][]>;
   bridgedOwner_contains?: InputMaybe<Scalars['String']>;
   bridgedOwner_contains_nocase?: InputMaybe<Scalars['String']>;
   bridgedOwner_not_contains?: InputMaybe<Scalars['String']>;
@@ -453,8 +453,8 @@ export type Realm_filter = {
   bridgedV2Owner_lt?: InputMaybe<Scalars['String']>;
   bridgedV2Owner_gte?: InputMaybe<Scalars['String']>;
   bridgedV2Owner_lte?: InputMaybe<Scalars['String']>;
-  bridgedV2Owner_in?: InputMaybe<Array<Scalars['String']>>;
-  bridgedV2Owner_not_in?: InputMaybe<Array<Scalars['String']>>;
+  bridgedV2Owner_in?: InputMaybe<Scalars['String'][]>;
+  bridgedV2Owner_not_in?: InputMaybe<Scalars['String'][]>;
   bridgedV2Owner_contains?: InputMaybe<Scalars['String']>;
   bridgedV2Owner_contains_nocase?: InputMaybe<Scalars['String']>;
   bridgedV2Owner_not_contains?: InputMaybe<Scalars['String']>;
@@ -470,9 +470,9 @@ export type Realm_filter = {
   bridgedV2Owner_?: InputMaybe<Wallet_filter>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Realm_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Realm_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Realm_filter>[]>;
+  or?: InputMaybe<InputMaybe<Realm_filter>[]>;
+}
 
 export type Realm_orderBy =
   | 'id'
@@ -514,21 +514,21 @@ export type Realm_orderBy =
   | 'bridgedV2Owner__totalRealms'
   | 'bridgedV2Owner__joined';
 
-export type Resource = {
+export interface Resource {
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   totalRealms?: Maybe<Scalars['Int']>;
-  realms: Array<RealmResource>;
-};
+  realms: RealmResource[];
+}
 
 
-export type ResourcerealmsArgs = {
+export interface ResourcerealmsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<RealmResource_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<RealmResource_filter>;
-};
+}
 
 export type ResourceName =
   | 'Wood'
@@ -554,23 +554,23 @@ export type ResourceName =
   | 'Mithral'
   | 'Dragonhide';
 
-export type Resource_filter = {
+export interface Resource_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   name?: InputMaybe<Scalars['String']>;
   name_not?: InputMaybe<Scalars['String']>;
   name_gt?: InputMaybe<Scalars['String']>;
   name_lt?: InputMaybe<Scalars['String']>;
   name_gte?: InputMaybe<Scalars['String']>;
   name_lte?: InputMaybe<Scalars['String']>;
-  name_in?: InputMaybe<Array<Scalars['String']>>;
-  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  name_in?: InputMaybe<Scalars['String'][]>;
+  name_not_in?: InputMaybe<Scalars['String'][]>;
   name_contains?: InputMaybe<Scalars['String']>;
   name_contains_nocase?: InputMaybe<Scalars['String']>;
   name_not_contains?: InputMaybe<Scalars['String']>;
@@ -589,14 +589,14 @@ export type Resource_filter = {
   totalRealms_lt?: InputMaybe<Scalars['Int']>;
   totalRealms_gte?: InputMaybe<Scalars['Int']>;
   totalRealms_lte?: InputMaybe<Scalars['Int']>;
-  totalRealms_in?: InputMaybe<Array<Scalars['Int']>>;
-  totalRealms_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  totalRealms_in?: InputMaybe<Scalars['Int'][]>;
+  totalRealms_not_in?: InputMaybe<Scalars['Int'][]>;
   realms_?: InputMaybe<RealmResource_filter>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Resource_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Resource_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Resource_filter>[]>;
+  or?: InputMaybe<InputMaybe<Resource_filter>[]>;
+}
 
 export type Resource_orderBy =
   | 'id'
@@ -604,30 +604,30 @@ export type Resource_orderBy =
   | 'totalRealms'
   | 'realms';
 
-export type Subscription = {
+export interface Subscription {
   resource?: Maybe<Resource>;
-  resources: Array<Resource>;
+  resources: Resource[];
   realm?: Maybe<Realm>;
-  realms: Array<Realm>;
+  realms: Realm[];
   realmResource?: Maybe<RealmResource>;
-  realmResources: Array<RealmResource>;
+  realmResources: RealmResource[];
   wallet?: Maybe<Wallet>;
-  wallets: Array<Wallet>;
+  wallets: Wallet[];
   transfer?: Maybe<Transfer>;
-  transfers: Array<Transfer>;
+  transfers: Transfer[];
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
-};
+}
 
 
-export type SubscriptionresourceArgs = {
+export interface SubscriptionresourceArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionresourcesArgs = {
+export interface SubscriptionresourcesArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Resource_orderBy>;
@@ -635,17 +635,17 @@ export type SubscriptionresourcesArgs = {
   where?: InputMaybe<Resource_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionrealmArgs = {
+export interface SubscriptionrealmArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionrealmsArgs = {
+export interface SubscriptionrealmsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Realm_orderBy>;
@@ -653,17 +653,17 @@ export type SubscriptionrealmsArgs = {
   where?: InputMaybe<Realm_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionrealmResourceArgs = {
+export interface SubscriptionrealmResourceArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionrealmResourcesArgs = {
+export interface SubscriptionrealmResourcesArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<RealmResource_orderBy>;
@@ -671,17 +671,17 @@ export type SubscriptionrealmResourcesArgs = {
   where?: InputMaybe<RealmResource_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionwalletArgs = {
+export interface SubscriptionwalletArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionwalletsArgs = {
+export interface SubscriptionwalletsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Wallet_orderBy>;
@@ -689,17 +689,17 @@ export type SubscriptionwalletsArgs = {
   where?: InputMaybe<Wallet_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptiontransferArgs = {
+export interface SubscriptiontransferArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptiontransfersArgs = {
+export interface SubscriptiontransfersArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Transfer_orderBy>;
@@ -707,39 +707,39 @@ export type SubscriptiontransfersArgs = {
   where?: InputMaybe<Transfer_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type Subscription_metaArgs = {
+export interface Subscription_metaArgs {
   block?: InputMaybe<Block_height>;
-};
+}
 
-export type Transfer = {
+export interface Transfer {
   id: Scalars['ID'];
   realm?: Maybe<Realm>;
   from: Wallet;
   to: Wallet;
   txHash: Scalars['Bytes'];
   timestamp: Scalars['BigInt'];
-};
+}
 
-export type Transfer_filter = {
+export interface Transfer_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   realm?: InputMaybe<Scalars['String']>;
   realm_not?: InputMaybe<Scalars['String']>;
   realm_gt?: InputMaybe<Scalars['String']>;
   realm_lt?: InputMaybe<Scalars['String']>;
   realm_gte?: InputMaybe<Scalars['String']>;
   realm_lte?: InputMaybe<Scalars['String']>;
-  realm_in?: InputMaybe<Array<Scalars['String']>>;
-  realm_not_in?: InputMaybe<Array<Scalars['String']>>;
+  realm_in?: InputMaybe<Scalars['String'][]>;
+  realm_not_in?: InputMaybe<Scalars['String'][]>;
   realm_contains?: InputMaybe<Scalars['String']>;
   realm_contains_nocase?: InputMaybe<Scalars['String']>;
   realm_not_contains?: InputMaybe<Scalars['String']>;
@@ -759,8 +759,8 @@ export type Transfer_filter = {
   from_lt?: InputMaybe<Scalars['String']>;
   from_gte?: InputMaybe<Scalars['String']>;
   from_lte?: InputMaybe<Scalars['String']>;
-  from_in?: InputMaybe<Array<Scalars['String']>>;
-  from_not_in?: InputMaybe<Array<Scalars['String']>>;
+  from_in?: InputMaybe<Scalars['String'][]>;
+  from_not_in?: InputMaybe<Scalars['String'][]>;
   from_contains?: InputMaybe<Scalars['String']>;
   from_contains_nocase?: InputMaybe<Scalars['String']>;
   from_not_contains?: InputMaybe<Scalars['String']>;
@@ -780,8 +780,8 @@ export type Transfer_filter = {
   to_lt?: InputMaybe<Scalars['String']>;
   to_gte?: InputMaybe<Scalars['String']>;
   to_lte?: InputMaybe<Scalars['String']>;
-  to_in?: InputMaybe<Array<Scalars['String']>>;
-  to_not_in?: InputMaybe<Array<Scalars['String']>>;
+  to_in?: InputMaybe<Scalars['String'][]>;
+  to_not_in?: InputMaybe<Scalars['String'][]>;
   to_contains?: InputMaybe<Scalars['String']>;
   to_contains_nocase?: InputMaybe<Scalars['String']>;
   to_not_contains?: InputMaybe<Scalars['String']>;
@@ -801,8 +801,8 @@ export type Transfer_filter = {
   txHash_lt?: InputMaybe<Scalars['Bytes']>;
   txHash_gte?: InputMaybe<Scalars['Bytes']>;
   txHash_lte?: InputMaybe<Scalars['Bytes']>;
-  txHash_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  txHash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  txHash_in?: InputMaybe<Scalars['Bytes'][]>;
+  txHash_not_in?: InputMaybe<Scalars['Bytes'][]>;
   txHash_contains?: InputMaybe<Scalars['Bytes']>;
   txHash_not_contains?: InputMaybe<Scalars['Bytes']>;
   timestamp?: InputMaybe<Scalars['BigInt']>;
@@ -811,13 +811,13 @@ export type Transfer_filter = {
   timestamp_lt?: InputMaybe<Scalars['BigInt']>;
   timestamp_gte?: InputMaybe<Scalars['BigInt']>;
   timestamp_lte?: InputMaybe<Scalars['BigInt']>;
-  timestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  timestamp_in?: InputMaybe<Scalars['BigInt'][]>;
+  timestamp_not_in?: InputMaybe<Scalars['BigInt'][]>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Transfer_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Transfer_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Transfer_filter>[]>;
+  or?: InputMaybe<InputMaybe<Transfer_filter>[]>;
+}
 
 export type Transfer_orderBy =
   | 'id'
@@ -853,43 +853,43 @@ export type Transfer_orderBy =
   | 'txHash'
   | 'timestamp';
 
-export type Wallet = {
+export interface Wallet {
   id: Scalars['ID'];
   address: Scalars['Bytes'];
-  realms?: Maybe<Array<Realm>>;
+  realms?: Maybe<Realm[]>;
   realmsHeld: Scalars['BigInt'];
   bridgedRealmsHeld: Scalars['BigInt'];
   bridgedV2RealmsHeld: Scalars['BigInt'];
   totalRealms: Scalars['BigInt'];
   joined: Scalars['BigInt'];
-};
+}
 
 
-export type WalletrealmsArgs = {
+export interface WalletrealmsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Realm_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Realm_filter>;
-};
+}
 
-export type Wallet_filter = {
+export interface Wallet_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   address?: InputMaybe<Scalars['Bytes']>;
   address_not?: InputMaybe<Scalars['Bytes']>;
   address_gt?: InputMaybe<Scalars['Bytes']>;
   address_lt?: InputMaybe<Scalars['Bytes']>;
   address_gte?: InputMaybe<Scalars['Bytes']>;
   address_lte?: InputMaybe<Scalars['Bytes']>;
-  address_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  address_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  address_in?: InputMaybe<Scalars['Bytes'][]>;
+  address_not_in?: InputMaybe<Scalars['Bytes'][]>;
   address_contains?: InputMaybe<Scalars['Bytes']>;
   address_not_contains?: InputMaybe<Scalars['Bytes']>;
   realms_?: InputMaybe<Realm_filter>;
@@ -899,45 +899,45 @@ export type Wallet_filter = {
   realmsHeld_lt?: InputMaybe<Scalars['BigInt']>;
   realmsHeld_gte?: InputMaybe<Scalars['BigInt']>;
   realmsHeld_lte?: InputMaybe<Scalars['BigInt']>;
-  realmsHeld_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  realmsHeld_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  realmsHeld_in?: InputMaybe<Scalars['BigInt'][]>;
+  realmsHeld_not_in?: InputMaybe<Scalars['BigInt'][]>;
   bridgedRealmsHeld?: InputMaybe<Scalars['BigInt']>;
   bridgedRealmsHeld_not?: InputMaybe<Scalars['BigInt']>;
   bridgedRealmsHeld_gt?: InputMaybe<Scalars['BigInt']>;
   bridgedRealmsHeld_lt?: InputMaybe<Scalars['BigInt']>;
   bridgedRealmsHeld_gte?: InputMaybe<Scalars['BigInt']>;
   bridgedRealmsHeld_lte?: InputMaybe<Scalars['BigInt']>;
-  bridgedRealmsHeld_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  bridgedRealmsHeld_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  bridgedRealmsHeld_in?: InputMaybe<Scalars['BigInt'][]>;
+  bridgedRealmsHeld_not_in?: InputMaybe<Scalars['BigInt'][]>;
   bridgedV2RealmsHeld?: InputMaybe<Scalars['BigInt']>;
   bridgedV2RealmsHeld_not?: InputMaybe<Scalars['BigInt']>;
   bridgedV2RealmsHeld_gt?: InputMaybe<Scalars['BigInt']>;
   bridgedV2RealmsHeld_lt?: InputMaybe<Scalars['BigInt']>;
   bridgedV2RealmsHeld_gte?: InputMaybe<Scalars['BigInt']>;
   bridgedV2RealmsHeld_lte?: InputMaybe<Scalars['BigInt']>;
-  bridgedV2RealmsHeld_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  bridgedV2RealmsHeld_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  bridgedV2RealmsHeld_in?: InputMaybe<Scalars['BigInt'][]>;
+  bridgedV2RealmsHeld_not_in?: InputMaybe<Scalars['BigInt'][]>;
   totalRealms?: InputMaybe<Scalars['BigInt']>;
   totalRealms_not?: InputMaybe<Scalars['BigInt']>;
   totalRealms_gt?: InputMaybe<Scalars['BigInt']>;
   totalRealms_lt?: InputMaybe<Scalars['BigInt']>;
   totalRealms_gte?: InputMaybe<Scalars['BigInt']>;
   totalRealms_lte?: InputMaybe<Scalars['BigInt']>;
-  totalRealms_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  totalRealms_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  totalRealms_in?: InputMaybe<Scalars['BigInt'][]>;
+  totalRealms_not_in?: InputMaybe<Scalars['BigInt'][]>;
   joined?: InputMaybe<Scalars['BigInt']>;
   joined_not?: InputMaybe<Scalars['BigInt']>;
   joined_gt?: InputMaybe<Scalars['BigInt']>;
   joined_lt?: InputMaybe<Scalars['BigInt']>;
   joined_gte?: InputMaybe<Scalars['BigInt']>;
   joined_lte?: InputMaybe<Scalars['BigInt']>;
-  joined_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  joined_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  joined_in?: InputMaybe<Scalars['BigInt'][]>;
+  joined_not_in?: InputMaybe<Scalars['BigInt'][]>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Wallet_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Wallet_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Wallet_filter>[]>;
+  or?: InputMaybe<InputMaybe<Wallet_filter>[]>;
+}
 
 export type Wallet_orderBy =
   | 'id'
@@ -949,17 +949,17 @@ export type Wallet_orderBy =
   | 'totalRealms'
   | 'joined';
 
-export type _Block_ = {
+export interface _Block_ {
   /** The hash of the block */
   hash?: Maybe<Scalars['Bytes']>;
   /** The block number */
   number: Scalars['Int'];
   /** Integer representation of the timestamp stored in blocks for the chain */
   timestamp?: Maybe<Scalars['Int']>;
-};
+}
 
 /** The type for the top-level _meta field */
-export type _Meta_ = {
+export interface _Meta_ {
   /**
    * Information about a specific subgraph block. The hash of the block
    * will be null if the _meta field has a block constraint that asks for
@@ -972,7 +972,7 @@ export type _Meta_ = {
   deployment: Scalars['String'];
   /** If `true`, the subgraph encountered indexing errors at some past block */
   hasIndexingErrors: Scalars['Boolean'];
-};
+}
 
 export type _SubgraphErrorPolicy_ =
   /** Data will be returned even if the subgraph has indexing errors */
@@ -980,7 +980,7 @@ export type _SubgraphErrorPolicy_ =
   /** If the subgraph has indexing errors, data will be omitted. The default. */
   | 'deny';
 
-  export type QuerySdk = {
+  export interface QuerySdk {
       /** null **/
   resource: InContextSdkMethod<Query['resource'], QueryresourceArgs, MeshContext>,
   /** null **/
@@ -1003,13 +1003,13 @@ export type _SubgraphErrorPolicy_ =
   transfers: InContextSdkMethod<Query['transfers'], QuerytransfersArgs, MeshContext>,
   /** Access to subgraph metadata **/
   _meta: InContextSdkMethod<Query['_meta'], Query_metaArgs, MeshContext>
-  };
+  }
 
-  export type MutationSdk = {
+  export interface MutationSdk {
     
-  };
+  }
 
-  export type SubscriptionSdk = {
+  export interface SubscriptionSdk {
       /** null **/
   resource: InContextSdkMethod<Subscription['resource'], SubscriptionresourceArgs, MeshContext>,
   /** null **/
@@ -1032,10 +1032,10 @@ export type _SubgraphErrorPolicy_ =
   transfers: InContextSdkMethod<Subscription['transfers'], SubscriptiontransfersArgs, MeshContext>,
   /** Access to subgraph metadata **/
   _meta: InContextSdkMethod<Subscription['_meta'], Subscription_metaArgs, MeshContext>
-  };
+  }
 
-  export type Context = {
+  export interface Context {
       ["l1Realms"]: { Query: QuerySdk, Mutation: MutationSdk, Subscription: SubscriptionSdk },
       ["realmsSubgraph"]: Scalars['ID']
-    };
+    }
 }

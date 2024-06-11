@@ -1,8 +1,6 @@
-import { bigint, numeric, text, timestamp } from "drizzle-orm/pg-core";
+import { bigint, numeric, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-import { pgSqlTable } from "./_table";
-
-export const bridge = pgSqlTable("bridge", {
+export const bridge = pgTable("bridge", {
   _cursor: bigint("_cursor", { mode: "number" }),
   hash: text("hash").primaryKey(),
   type: text("type"),

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useLordsPrice } from "@/hooks/useLordsPrice";
+import { useLordsPrice } from "@/hooks/lords/useLordsPrice";
 import Album from "@/icons/album.svg";
 import Bridge from "@/icons/bridge.svg";
 import Calender from "@/icons/calendar.svg";
@@ -11,17 +11,16 @@ import Crown from "@/icons/crown.svg";
 import Discord from "@/icons/discord.svg";
 import Gamepad from "@/icons/gamepad.svg";
 import LordsIcon from "@/icons/lords.svg";
-
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
 import { Github, Twitter } from "lucide-react";
 
 import { Button, ScrollArea } from "@realms-world/ui";
 
-import { useUIContext } from "../providers/UIProvider";
+import { useUIStore } from "../../providers/UIStoreProvider";
 
 const Sidebar = () => {
-  const { isSidebarOpen, toggleSidebar } = useUIContext();
+  const { isSidebarOpen, toggleSidebar } = useUIStore((state) => state);
 
   const { lordsPrice } = useLordsPrice();
 
@@ -79,14 +78,14 @@ const Sidebar = () => {
   return (
     <div
       className={`${
-        isSidebarOpen ? "bg-dark-green" : "hidden"
-      } z-100 group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col border-r-[3px] bg-dark-green transition-all duration-500 md:flex md:w-[102px] md:hover:w-60`}
+        isSidebarOpen ? "bg-background" : "hidden"
+      } z-100 group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col border-r-[3px] bg-background transition-all duration-500 md:flex md:w-[102px] md:hover:w-60`}
     >
       <div className="absolute mx-4">
         <SideHeaderImg className="w-full opacity-0 group-hover:opacity-100" />
       </div>
       <Link
-        className="absolute z-20 mx-auto flex w-full justify-center p-4 font-sans-serif text-xl font-semibold group-hover:pt-2.5 sm:text-2xl "
+        className="absolute z-20 mx-auto flex w-full justify-center p-4 font-sans-serif text-xl font-semibold group-hover:pt-2.5 sm:text-2xl"
         href="/"
         onClick={toggleSidebar}
       >
@@ -111,7 +110,7 @@ const Sidebar = () => {
                     >
                       <span className="absolute">{item.icon}</span>
 
-                      <span className="visible absolute pl-9 opacity-100 transition-opacity group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-150 group-hover:duration-500 sm:opacity-0 ">
+                      <span className="visible absolute pl-9 opacity-100 transition-opacity group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-150 group-hover:duration-500 sm:opacity-0">
                         {item.name}
                       </span>
                     </Button>
@@ -124,27 +123,24 @@ const Sidebar = () => {
               <hr className="mb-4 border-b-[3px]" />
             </div>
             <Button
-              href="/swap"
+              asChild
               variant={"outline"}
               className="mt-3 flex h-16 flex-col rounded p-2 pt-3 font-sans"
             >
-              <div className="h-8">
-                <LordsIcon className="mx-auto h-6 w-6 fill-bright-yellow pb-1" />
-              </div>
-              {lordsPrice?.usdPrice}
+              <Link href="/swap">
+                <div className="h-8">
+                  <LordsIcon className="mx-auto h-6 w-6 fill-bright-yellow pb-1" />
+                </div>
+                {lordsPrice?.usdPrice}
+              </Link>
             </Button>
 
-            <div className=" flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
+            <div className="flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
               {social.map((item, index) => {
                 return (
-                  <Button
-                    external
-                    variant={"ghost"}
-                    href={item.href}
-                    key={index}
-                  >
+                  <Link href={item.href} target="_blank" key={index}>
                     {item.icon}
-                  </Button>
+                  </Link>
                 );
               })}
             </div>

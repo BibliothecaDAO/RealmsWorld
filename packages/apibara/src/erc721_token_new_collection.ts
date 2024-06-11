@@ -1,4 +1,5 @@
 import type { Config } from "https://esm.sh/@apibara/indexer";
+import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import type { Postgres } from "https://esm.sh/@apibara/indexer/sink/postgres";
 import type {
   Block,
@@ -6,7 +7,6 @@ import type {
   EventWithTransaction,
   Starknet,
 } from "https://esm.sh/@apibara/indexer/starknet";
-import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import { uint256 } from "https://esm.sh/starknet";
 import { formatUnits } from "https://esm.sh/viem";
 
@@ -33,7 +33,7 @@ export const config: Config<Starknet, Postgres> = {
   sinkType: "postgres",
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
-    tableName: "rw_erc721_tokens",
+    tableName: "erc721_tokens",
     entityMode: true,
   },
 };
@@ -47,41 +47,40 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
     Deno.env.get("STREAM_URL") == "https://mainnet.starknet.a5a.ch";
   const isData = event.data != undefined;
 
-      const from = BigInt(isData ? event.data[0] : event.keys[1]);
-      const token_id = parseInt(
-        uint256
-          .uint256ToBN({
-            low: isData ? event.data[2] : event.keys[3],
-            high: isData ? event.data[3] : event.keys[4],
-          })
-          .toString(),
-      );
-      const owner = isData ? event.data[1] : event.keys[2];
+  const from = BigInt(isData ? event.data[0] : event.keys[1]);
+  const token_id = parseInt(
+    uint256
+      .uint256ToBN({
+        low: isData ? event.data[2] : event.keys[3],
+        high: isData ? event.data[3] : event.keys[4],
+      })
+      .toString(),
+  );
+  const owner = isData ? event.data[1] : event.keys[2];
 
-      if (from == 0n) {
-        return {
-          insert: {
-            id: event.fromAddress + ":" + token_id,
-            contract_address: event.fromAddress,
-            token_id,
-            minter: owner,
-            owner: owner,
-          },
-        };
-      } else {
-        console.log(event.fromAddress)
-        return {
-          entity: {
-            id: event.fromAddress + ":" + token_id,
-          },
-          update: {
-            owner: owner,
-            price: null,
-            expiration: null
-          },
-        };
-      }
-    
-    //Refactor to market indexer once apibara multi-table indexers availble
-    
+  if (from == 0n) {
+    return {
+      insert: {
+        id: event.fromAddress + ":" + token_id,
+        contract_address: event.fromAddress,
+        token_id,
+        minter: owner,
+        owner: owner,
+      },
+    };
+  } else {
+    console.log(event.fromAddress);
+    return {
+      entity: {
+        id: event.fromAddress + ":" + token_id,
+      },
+      update: {
+        owner: owner,
+        price: null,
+        expiration: null,
+      },
+    };
+  }
+
+  //Refactor to market indexer once apibara multi-table indexers availble
 }

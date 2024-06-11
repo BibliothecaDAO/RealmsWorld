@@ -46,7 +46,7 @@ export const ListCancelModalRender: FC<Props> = ({
 
   const listing =
     token?.listings &&
-    findLowestPriceActiveListing(token?.listings, token?.owner);
+    findLowestPriceActiveListing(token.listings, token.owner);
 
 
   const {

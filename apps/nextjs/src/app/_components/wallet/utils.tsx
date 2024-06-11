@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ETHERSCAN_ACCOUNT_URL, STARKSCAN_ACCOUNT_URL } from "@/constants/env";
 import { shortenHex } from "@/utils/utils";
 import { useAccount as useL2Account } from "@starknet-react/core";
@@ -24,10 +25,11 @@ export const RenderExplorers = ({ isL1 = true }) => {
           key={index}
           size={"xs"}
           variant={"outline"}
-          href={url}
         >
-          <span>{shortenHex(text ?? "", 8)} </span>
-          <ExternalLinkIcon className="ml-2 h-3 w-3" />
+          <Link target="_blank" href={url}>
+            <span>{shortenHex(text ?? "", 8)} </span>
+            <ExternalLinkIcon className="ml-2 h-3 w-3" />
+          </Link>
         </Button>
       ))}
     </div>

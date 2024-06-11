@@ -2,8 +2,8 @@
 
 import type { VariantProps } from "class-variance-authority";
 import React from "react";
-import { useUIContext } from "@/app/providers/UIProvider";
 import EthereumLogo from "@/icons/ethereum.svg";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useConnect } from "wagmi";
 
@@ -15,23 +15,21 @@ export const EthereumLoginButton = ({
   variant,
   textClass,
   buttonClass,
+  children,
 }: {
   //openAccount?: boolean;
   variant?: VariantProps<typeof buttonVariants>["variant"];
   textClass?: string;
   buttonClass?: string;
+  children?: React.ReactNode;
 }) => {
-  const { connectors, isPending } = useConnect();
+  const { isPending } = useConnect();
   /*const modal = useModal({
     onConnect() {
       !isAccountOpen && openAccount && toggleAccount();
     },
   });*/
-  const { /*isAccountOpen,*/ toggleAccount } = useUIContext();
-
-  if (!connectors) {
-    return null;
-  }
+  const { /*isAccountOpen,*/ toggleAccount } = useUIStore((state) => state);
 
   return (
     <ConnectButton.Custom>
@@ -46,12 +44,12 @@ export const EthereumLoginButton = ({
           >
             <span className="flex items-center font-sans normal-case">
               <EthereumLogo className="w-6" />
-              <span className={` pl-2 ${textClass ?? "sm:block"}`}>
+              <span className={`pl-2 ${textClass ?? "sm:block"}`}>
                 {connected ? (
-                  account?.displayName
+                  account.displayName
                 ) : (
                   <>
-                    Ethereum
+                    {children ?? "Ethereum"}
                     {isPending && (
                       <div className="absolute right-0">
                         <svg

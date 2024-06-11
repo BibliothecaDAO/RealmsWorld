@@ -1,5 +1,6 @@
 import { RESERVOIR_API_URL } from "@/constants/env";
 import { reservoirLootCollectionSetId } from "@/constants/erc721Tokens";
+import { env } from "@/env";
 
 export const getUsersActivity = async ({ address }: { address: string }) => {
   try {
@@ -7,7 +8,7 @@ export const getUsersActivity = async ({ address }: { address: string }) => {
     const res = await fetch(url, {
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
+        "x-api-key": env.NEXT_PUBLIC_RESERVOIR_API_KEY,
         "Access-Control-Allow-Origin": "*",
       },
     });

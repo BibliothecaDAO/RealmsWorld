@@ -2,16 +2,16 @@ import { relations } from "drizzle-orm";
 import {
   integer,
   jsonb,
+  pgTable,
   primaryKey,
   serial,
   text,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
-import { pgSqlTable } from "./_table";
 import { erc721Collections } from "./erc721_collections";
 
-export const erc721AttributeKeys = pgSqlTable(
+export const erc721AttributeKeys = pgTable(
   "erc721_attribute_keys",
   {
     id: serial("id").notNull(),

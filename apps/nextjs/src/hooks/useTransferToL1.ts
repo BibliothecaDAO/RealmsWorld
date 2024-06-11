@@ -4,7 +4,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useTransferLog } from "@/app/providers/TransferLogProvider";
+import { useTransferLog } from "@/providers/TransferLogProvider";
 import {
   CompleteTransferToL1Steps,
   stepOf,
@@ -32,7 +32,7 @@ export const useCompleteTransferToL1 = () => {
 
   const onWithdrawal = (event: { blockHash: string }) => {
     console.log("Withdrawal event dispatched", event, transfer);
-    const transferData = { ...transfer, l1hash: event?.blockHash };
+    const transferData = { ...transfer, l1hash: event.blockHash };
     handleData(transferData);
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     refetch();

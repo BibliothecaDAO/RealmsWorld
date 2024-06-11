@@ -4,6 +4,7 @@ import Link from "next/link";
 import Bookmark from "@/icons/bookmark.svg";
 import PieChart from "@/icons/pie-chart.svg";
 import RealmsL3 from "@/icons/realms_l3.svg";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { HammerIcon, Menu /*, ShieldQuestion*/ } from "lucide-react";
 
 import {
@@ -16,18 +17,11 @@ import {
   NavigationMenuTrigger,
 } from "@realms-world/ui";
 
-import { useUIContext } from "../providers/UIProvider";
-import { WalletSheet } from "./wallet/WalletSheet";
+import { EthereumLoginButton } from "./wallet/EthereumLoginButton";
+import { StarknetLoginButton } from "./wallet/StarknetLoginButton";
 
 export const TopNav = () => {
-  //{ scrollY } = useScroll();
-  //const [isScrolled, setIsScrolled] = useState(false);
-
-  const { toggleSidebar } = useUIContext();
-
-  /*useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 0);
-  });*/
+  const { toggleSidebar } = useUIStore((state) => state);
 
   const aboutLinks = [
     /*{
@@ -67,7 +61,7 @@ export const TopNav = () => {
   return (
     <div
       id="topnav"
-      className={`fixed z-[100] w-full border-b-[3px] bg-dark-green p-3 pl-4 sm:pl-8 md:pl-32`}
+      className={`fixed z-[100] w-full border-b-[3px] bg-background p-3 pl-4 sm:pl-8 md:pl-32`}
     >
       <div className="flex justify-between">
         <Button className="md:hidden" onClick={toggleSidebar}>
@@ -92,7 +86,7 @@ export const TopNav = () => {
                             asChild
                           >
                             <Link
-                              href={link.href}
+                              href={`/${link.href}`}
                               className="block px-4 py-2 font-semibold tracking-wide"
                             >
                               <div className="flex">
@@ -121,7 +115,7 @@ export const TopNav = () => {
                             asChild
                           >
                             <Link
-                              href={link.href}
+                              href={`/${link.href}`}
                               className="block px-4 py-2 font-semibold tracking-wide"
                             >
                               <div className="flex">
@@ -139,7 +133,17 @@ export const TopNav = () => {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <WalletSheet />
+        <div className="flex flex-col space-y-4 px-1 md:flex-row md:space-x-2 md:space-y-0">
+          <EthereumLoginButton
+            variant={"default"}
+            textClass="group-hover:block"
+          />
+          <StarknetLoginButton
+            textClass="group-hover:block"
+            variant={"default"}
+            openAccount
+          />
+        </div>
       </div>
     </div>
   );

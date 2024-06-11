@@ -25,7 +25,7 @@ export const config: Config<Starknet, Postgres> = {
   sinkType: "postgres",
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
-    tableName: "rw_erc721_transfers",
+    tableName: "erc721_transfers",
     entityMode: false,
   },
 };
