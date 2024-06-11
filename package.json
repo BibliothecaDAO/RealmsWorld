@@ -11,14 +11,14 @@
     "tooling/*"
   ],
   "scripts": {
-    "build": "turbo build",
+    "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
     "db:push": "turbo -F @realms-world/db push",
     "db:studio": "turbo -F @realms-world/db studio",
     "deps:update": "ncu -i --deep --install never",
     "dev": "turbo watch dev",
-    "dev:next": "turbo watch dev -F @realms-world/nextjs",
+    "dev:next": "turbo watch dev -F @realms-world/nextjs...",
     "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",

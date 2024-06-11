@@ -20,7 +20,7 @@
     "@emotion/styled": "^11.11.5",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
-    "@million/lint": "1.0.0-rc.26",
+    "@million/lint": "1.0.0-rc.75",
     "@mui/material": "^5.15.15",
     "@mui/styles": "^5.15.15",
     "@next/mdx": "^14.2.3",

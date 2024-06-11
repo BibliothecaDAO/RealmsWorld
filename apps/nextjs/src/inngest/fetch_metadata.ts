@@ -11,7 +11,9 @@ import { hash, shortString, uint256 } from "starknet";
 
 import type { SQL } from "@realms-world/db";
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
-import { and, db, eq, inArray, schema, sql } from "@realms-world/db";
+import { and, eq, inArray, sql } from "@realms-world/db";
+import { db } from "@realms-world/db/client";
+import { schema } from "@realms-world/db/schema";
 
 //import blobertABI from "../abi/L2/Blobert.json";
 //import { Client } from "https://esm.sh/ts-postgres";

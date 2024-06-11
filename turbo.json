@@ -1,7 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "ui": "tui",
-  "globalDependencies": ["**/.env"],
   "tasks": {
     "topo": {
       "dependsOn": ["^topo"]
@@ -58,9 +57,8 @@
     "AUTH_DISCORD_SECRET",
     "AUTH_REDIRECT_PROXY_URL",
     "AUTH_SECRET",
-    "AUTH_URL"
+    "PORT"
   ],
-
   "globalPassThroughEnv": [
     "NODE_ENV",
     "CI",

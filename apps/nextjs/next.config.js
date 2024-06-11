@@ -110,6 +110,4 @@ const enhancedConfig =
     ? MillionLint.next({ rsc: true, auto: { rsc: true } })(withMDX(config))
     : withMDX(config);
 
-export default MillionLint.next({ rsc: true, auto: { rsc: true } })(
-  withMDX(config),
-);
+export default enhancedConfig;
