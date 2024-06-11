@@ -329,7 +329,6 @@ const SingleDatePicker = ({
        * changed then we want to reset the time.
        */
 
-
       /**
        * If the time is set, and the date is changed
        * then we want to update the date with the
@@ -531,7 +530,7 @@ const RangeDatePicker = ({
         setStartTime(new Time(0, 0));
       }
 
-      if (newRange?.to ) {
+      if (newRange?.to) {
         setEndTime(new Time(0, 0));
       }
 
@@ -593,10 +592,8 @@ const RangeDatePicker = ({
 
       const newDate = new Date(range.from.getTime());
 
-
-        newDate.setHours(time.hour);
-        newDate.setMinutes(time.minute);
-      
+      newDate.setHours(time.hour);
+      newDate.setMinutes(time.minute);
 
       setRange({
         ...range,
@@ -611,10 +608,8 @@ const RangeDatePicker = ({
 
       const newDate = new Date(range.to.getTime());
 
-   
-        newDate.setHours(time.hour);
-        newDate.setMinutes(time.minute);
-      
+      newDate.setHours(time.hour);
+      newDate.setMinutes(time.minute);
 
       setRange({
         ...range,

@@ -126,7 +126,7 @@ export function Carousel({
                 //priority={index === 0}
               />
               {image.title && (
-                <div className="z-100 absolute  bottom-0 w-full px-12 pb-8 backdrop-blur">
+                <div className="z-100 absolute bottom-0 w-full px-12 pb-8 backdrop-blur">
                   <h4>{image.title}</h4>
                   <p className="mb-8">{image.description}</p>
                   <a href={`${image.href}`}>
