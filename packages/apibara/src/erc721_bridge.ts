@@ -1,5 +1,5 @@
 import type { Config } from "https://esm.sh/@apibara/indexer";
-import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
+//import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import type { Postgres } from "https://esm.sh/@apibara/indexer/sink/postgres";
 //import type { Webhook } from "https://esm.sh/@apibara/indexer/sink/webhook";
 import type { Block, Starknet } from "https://esm.sh/@apibara/indexer/starknet";
@@ -14,7 +14,7 @@ function eventKey(name: string) {
 const WITHDRAw_REQUEST_INITIATED = eventKey("WithdrawRequestCompleted");
 const DEPOSIT_REQUEST_HANDLED = eventKey("DepositRequestInitiated");
 
-export const config: Config<Starknet, Console> = {
+export const config: Config<Starknet, Postgres> = {
   streamUrl: Deno.env.get("STREAM_URL"),
   startingBlock: Number(Deno.env.get("ERC721_BRIDGE_STARTING_BLOCK")),
   network: "starknet",
@@ -42,9 +42,9 @@ export const config: Config<Starknet, Console> = {
       },
     ],
   },
-  sinkType: "console",
+  sinkType: "postgres",
   sinkOptions: {
-    //connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
+    connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
     tableName: "erc721_bridge",
     entityMode: false,
   },
@@ -67,10 +67,6 @@ export default function transform({ header, events }: Block) {
     }
     switch (event.keys[0]) {
       case WITHDRAw_REQUEST_INITIATED: {
-        console.log(event.data);
-        console.log(ids);
-
-        console.log(tokenIds);
         return {
           type: "WithdrawRequestCompleted",
           hash: uint256
