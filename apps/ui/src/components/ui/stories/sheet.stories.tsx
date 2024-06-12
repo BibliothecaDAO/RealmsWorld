@@ -1,8 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { cva } from "class-variance-authority";
-import { AnimatePresence, motion } from "framer-motion";
-
-import { cn } from "@realms-world/utils";
 
 import { Button } from "../button";
 import {
@@ -13,7 +9,6 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-  sheetVariants,
 } from "../sheet";
 
 const meta: Meta<typeof Sheet> = {
@@ -29,13 +24,13 @@ type Story = StoryObj<typeof Sheet>;
 export const Base: Story = {
   render: (args) => (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger>
         <Button className="self-center" size={"lg"} variant={"outline"}>
           Click Me
         </Button>
       </SheetTrigger>
 
-      <SheetContent className="bg-white" position={"right"} size={"lg"}>
+      <SheetContent className="bg-dark-green" side={"right"}>
         <SheetTitle>
           <h2>This is a dialog title</h2>
         </SheetTitle>
@@ -54,16 +49,16 @@ export const Base: Story = {
   args: {},
 };
 
-export const LeftSmall: Story = {
+export const Left: Story = {
   render: (args) => (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger>
         <Button className="self-center" size={"lg"} variant={"outline"}>
           Click Me
         </Button>
       </SheetTrigger>
 
-      <SheetContent className="bg-white" position={"left"} size={"sm"}>
+      <SheetContent className="bg-dark-green" side={"left"}>
         <SheetTitle>
           <h2>This is a dialog title</h2>
         </SheetTitle>
@@ -82,16 +77,16 @@ export const LeftSmall: Story = {
   args: {},
 };
 
-export const TopLarge: Story = {
+export const Top: Story = {
   render: (args) => (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger>
         <Button className="self-center" size={"lg"} variant={"outline"}>
           Click Me
         </Button>
       </SheetTrigger>
 
-      <SheetContent className="bg-white" position={"top"} size={"lg"}>
+      <SheetContent className="bg-dark-green" side={"top"}>
         <SheetTitle>
           <h2>This is a dialog title</h2>
         </SheetTitle>
@@ -110,44 +105,16 @@ export const TopLarge: Story = {
   args: {},
 };
 
-export const BottomXLarge: Story = {
+export const Bottom: Story = {
   render: (args) => (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger>
         <Button className="self-center" size={"lg"} variant={"outline"}>
           Click Me
         </Button>
       </SheetTrigger>
 
-      <SheetContent className="bg-white" position={"bottom"} size={"xl"}>
-        <SheetTitle>
-          <h2>This is a dialog title</h2>
-        </SheetTitle>
-        <SheetHeader>
-          <p>This is a dialog header</p>
-        </SheetHeader>
-        <SheetDescription>
-          <p>This is a dialog description</p>
-        </SheetDescription>
-        <SheetFooter>
-          <p>This is a dialog footer</p>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  ),
-  args: {},
-};
-
-export const RightFull: Story = {
-  render: (args) => (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button className="self-center" size={"lg"} variant={"outline"}>
-          Click Me
-        </Button>
-      </SheetTrigger>
-
-      <SheetContent className="bg-white" position={"right"} size={"full"}>
+      <SheetContent className="bg-dark-green" side={"bottom"}>
         <SheetTitle>
           <h2>This is a dialog title</h2>
         </SheetTitle>

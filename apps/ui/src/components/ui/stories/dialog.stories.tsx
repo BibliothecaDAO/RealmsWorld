@@ -35,7 +35,7 @@ export const Base: Story = {
           Click Me
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-white">
+      <DialogContent className="bg-background">
         <DialogTitle>
           <h2>This is a dialog title</h2>
         </DialogTitle>

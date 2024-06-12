@@ -20,10 +20,10 @@ export default meta;
 type Story = StoryObj<typeof Accordion>;
 export const AttributeDropdownFullWidthButtons: Story = {
   render: (args) => (
-    <div className="bg-dark-green font-sans-serif text-bright-yellow">
+    <div className="font-sans-seri text-bright-yellow">
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
-          <AccordionTrigger className="bg-primary px-2 py-2 text-sm">
+          <AccordionTrigger className="bg-background px-2 py-2 text-sm">
             {"Status (2)"}
           </AccordionTrigger>
           <AccordionContent>
@@ -38,7 +38,7 @@ export const AttributeDropdownFullWidthButtons: Story = {
                   Buy Now Only
                 </Button>
                 <Button
-                  key={1}
+                  key={2}
                   size={"sm"}
                   variant="outline"
                   className="font-body my-1 mr-1 w-full"
@@ -57,10 +57,10 @@ export const AttributeDropdownFullWidthButtons: Story = {
 
 export const AttributeDropdownWithInput: Story = {
   render: (args) => (
-    <div className="bg-dark-green font-sans-serif text-bright-yellow">
+    <div className="font-sans-serif text-bright-yellow">
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
-          <AccordionTrigger className="bg-primary px-2 py-2 text-sm">
+          <AccordionTrigger className="bg-background px-2 py-2 text-sm">
             {"Cities ()"}
           </AccordionTrigger>
           <AccordionContent>

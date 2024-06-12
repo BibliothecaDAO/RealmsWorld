@@ -17,7 +17,7 @@ export const Base: Story = {
   render: (args) => (
     <div className="bg-dark-green">
       <Tabs defaultValue={"click_me"} className="relative h-full min-h-0">
-        <TabsList className="absolute my-0 w-full justify-center py-2">
+        <TabsList className="my-0 w-full justify-center py-2">
           <TabsTrigger value={"click_me"} key={1}>
             <Button variant="default">Click Me</Button>
           </TabsTrigger>
@@ -26,13 +26,13 @@ export const Base: Story = {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value={"click_me"} key={1} className="h-full pt-14">
+        <TabsContent value={"click_me"} key={1} className="h-full">
           <div className="p-[40px] font-sans-serif text-bright-yellow">
             <p>Insert Content for the first tab here.</p>
           </div>
         </TabsContent>
 
-        <TabsContent value={"click_me_too"} key={2} className="h-full pt-14">
+        <TabsContent value={"click_me_too"} key={2} className="h-full">
           <div className="p-[40px] font-sans-serif text-bright-yellow">
             <p>Insert Content for the second tab here.</p>
           </div>
