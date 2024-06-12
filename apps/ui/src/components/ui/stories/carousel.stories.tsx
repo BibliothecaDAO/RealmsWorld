@@ -27,7 +27,7 @@ export const Base: Story = {
   render: (args) => (
     <Carousel
       {...args}
-      className="h-96 w-full sm:max-h-[750px] sm:min-h-[750px]"
+      className="left-0 top-0 h-[700px] font-sans-serif sm:w-full"
     />
   ),
   args: {
