@@ -1,7 +1,4 @@
 import type { Preview } from "@storybook/react";
-//import "./tailwind-imports.css";
-//import "@realms-world/styles/globals.css";
-
 import * as React from "react";
 import { Inconsolata, Silkscreen } from "next/font/google";
 import { withThemeFromJSXProvider } from "@storybook/addon-themes";
