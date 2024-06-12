@@ -4,7 +4,6 @@ import { Alert } from "../alert";
 
 const meta: Meta<typeof Alert> = {
   title: "ui/Alert",
-  // @ts-expect-error
   component: Alert,
   tags: ["autodocs"],
   argTypes: {},
@@ -14,37 +13,37 @@ export default meta;
 type Story = StoryObj<typeof Alert>;
 
 export const Base: Story = {
-  render: (args) => <Alert {...args} />,
+  render: (args) => (
+    <Alert {...args}>
+      <p>This is a default alert</p>
+    </Alert>
+  ),
   args: {
     title: "Information",
-    message: "This is an info alert",
-    variant: "info",
-  },
-};
-
-export const Success: Story = {
-  render: (args) => <Alert {...args} />,
-  args: {
-    title: "",
-    message: "This is a success alert",
-    variant: "success",
+    variant: "default",
   },
 };
 
 export const Warning: Story = {
-  render: (args) => <Alert {...args} />,
+  render: (args) => (
+    <Alert {...args}>
+      <p>This is a warning alert</p>
+    </Alert>
+  ),
   args: {
     title: "",
-    message: "This is a warning alert",
     variant: "warning",
   },
 };
 
-export const Error: Story = {
-  render: (args) => <Alert {...args} />,
+export const Destructive: Story = {
+  render: (args) => (
+    <Alert {...args}>
+      <p>This is a destructive alert</p>
+    </Alert>
+  ),
   args: {
     title: "",
-    message: "This is an error alert",
-    variant: "error",
+    variant: "destructive",
   },
 };
