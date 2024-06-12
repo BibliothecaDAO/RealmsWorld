@@ -29,20 +29,11 @@ export const Base: Story = {
           Click Me
         </Button>
       </SheetTrigger>
-
-      <SheetContent className="bg-dark-green" side={"right"}>
-        <SheetTitle>
-          <h2>This is a dialog title</h2>
-        </SheetTitle>
-        <SheetHeader>
-          <p>This is a dialog header</p>
-        </SheetHeader>
-        <SheetDescription>
-          <p>This is a dialog description</p>
-        </SheetDescription>
-        <SheetFooter>
-          <p>This is a dialog footer</p>
-        </SheetFooter>
+      <SheetContent side={"right"}>
+        <SheetTitle>This is a dialog title</SheetTitle>
+        <SheetHeader>This is a dialog header</SheetHeader>
+        <SheetDescription>This is a dialog description</SheetDescription>
+        <SheetFooter>This is a dialog footer</SheetFooter>
       </SheetContent>
     </Sheet>
   ),
@@ -58,75 +49,11 @@ export const Left: Story = {
         </Button>
       </SheetTrigger>
 
-      <SheetContent className="bg-dark-green" side={"left"}>
-        <SheetTitle>
-          <h2>This is a dialog title</h2>
-        </SheetTitle>
-        <SheetHeader>
-          <p>This is a dialog header</p>
-        </SheetHeader>
-        <SheetDescription>
-          <p>This is a dialog description</p>
-        </SheetDescription>
-        <SheetFooter>
-          <p>This is a dialog footer</p>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  ),
-  args: {},
-};
-
-export const Top: Story = {
-  render: (args) => (
-    <Sheet>
-      <SheetTrigger>
-        <Button className="self-center" size={"lg"} variant={"outline"}>
-          Click Me
-        </Button>
-      </SheetTrigger>
-
-      <SheetContent className="bg-dark-green" side={"top"}>
-        <SheetTitle>
-          <h2>This is a dialog title</h2>
-        </SheetTitle>
-        <SheetHeader>
-          <p>This is a dialog header</p>
-        </SheetHeader>
-        <SheetDescription>
-          <p>This is a dialog description</p>
-        </SheetDescription>
-        <SheetFooter>
-          <p>This is a dialog footer</p>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  ),
-  args: {},
-};
-
-export const Bottom: Story = {
-  render: (args) => (
-    <Sheet>
-      <SheetTrigger>
-        <Button className="self-center" size={"lg"} variant={"outline"}>
-          Click Me
-        </Button>
-      </SheetTrigger>
-
-      <SheetContent className="bg-dark-green" side={"bottom"}>
-        <SheetTitle>
-          <h2>This is a dialog title</h2>
-        </SheetTitle>
-        <SheetHeader>
-          <p>This is a dialog header</p>
-        </SheetHeader>
-        <SheetDescription>
-          <p>This is a dialog description</p>
-        </SheetDescription>
-        <SheetFooter>
-          <p>This is a dialog footer</p>
-        </SheetFooter>
+      <SheetContent side={"left"}>
+        <SheetTitle>This is a dialog title</SheetTitle>
+        <SheetHeader>This is a dialog header</SheetHeader>
+        <SheetDescription>This is a dialog description</SheetDescription>
+        <SheetFooter>his is a dialog footer</SheetFooter>
       </SheetContent>
     </Sheet>
   ),
