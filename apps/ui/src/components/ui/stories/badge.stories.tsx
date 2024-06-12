@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Badge, StatusDot } from "../badge";
+import { Badge } from "../badge";
 
 const meta: Meta<typeof Badge> = {
   title: "ui/Badge",
@@ -31,7 +31,9 @@ export const Outline: Story = {
 export const Development: Story = {
   render: (args) => (
     <Badge {...args}>
-      {StatusDot("development")}
+      <span
+        className={`mr-2 inline-block h-2 w-2 animate-pulse rounded-full bg-red-500`}
+      ></span>
       Development
     </Badge>
   ),
@@ -43,7 +45,9 @@ export const Development: Story = {
 export const Beta: Story = {
   render: (args) => (
     <Badge {...args}>
-      {StatusDot("beta")}
+      <span
+        className={`mr-2 inline-block h-2 w-2 animate-pulse rounded-full bg-green-500`}
+      ></span>
       Beta
     </Badge>
   ),
@@ -56,7 +60,9 @@ export const Alpha: Story = {
   render: (args) => (
     <div className="font-sans">
       <Badge {...args}>
-        {StatusDot("alpha")}
+        <span
+          className={`mr-2 inline-block h-2 w-2 animate-pulse rounded-full bg-green-500`}
+        ></span>
         Alpha
       </Badge>
     </div>
@@ -69,7 +75,23 @@ export const Alpha: Story = {
 export const Mainnet: Story = {
   render: (args) => (
     <Badge {...args}>
-      {StatusDot("mainnet")}
+      <span
+        className={`mr-2 inline-block h-2 w-2 animate-pulse rounded-full bg-green-500`}
+      ></span>
+      Mainnet
+    </Badge>
+  ),
+  args: {
+    className: "bg-bright-yellow text-theme-gray font-sans",
+  },
+};
+
+export const Default: Story = {
+  render: (args) => (
+    <Badge {...args}>
+      <span
+        className={`mr-2 inline-block h-2 w-2 animate-pulse rounded-full bg-gray-500`}
+      ></span>
       Mainnet
     </Badge>
   ),
@@ -81,7 +103,9 @@ export const Mainnet: Story = {
 export const DarkGreenBackgroundOutline: Story = {
   render: (args) => (
     <Badge {...args}>
-      {StatusDot("mainnet")}
+      <span
+        className={`mr-2 inline-block h-2 w-2 animate-pulse rounded-full bg-green-500`}
+      ></span>
       Mainnet
     </Badge>
   ),
