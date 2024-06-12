@@ -1,12 +1,12 @@
 "use client";
 
-import { useQuery } from "@/hooks/useQuery";
+import { useQueryParams } from "@/hooks/useQueryParams";
 import { X } from "lucide-react";
 
 import { Button } from "@realms-world/ui";
 
 export const AttributeTags = () => {
-  const { handleAttributeClick, getQueriesFromUrl } = useQuery();
+  const { handleAttributeClick, getQueriesFromUrl } = useQueryParams();
 
   return (
     <div className="w-full">

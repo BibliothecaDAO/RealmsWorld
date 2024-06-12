@@ -1,25 +1,26 @@
 // @ts-nocheck
-import { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import type { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 import { gql } from '@graphql-mesh/utils';
 
-import type { GetMeshOptions } from '@graphql-mesh/runtime';
+import type { GetMeshOptions , ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
 import type { YamlConfig } from '@graphql-mesh/types';
 import { PubSub } from '@graphql-mesh/utils';
 import { DefaultLogger } from '@graphql-mesh/utils';
 import MeshCache from "@graphql-mesh/cache-localforage";
 import { fetch as fetchFn } from '@whatwg-node/fetch';
 
-import { MeshResolvedSource } from '@graphql-mesh/runtime';
-import { MeshTransform, MeshPlugin } from '@graphql-mesh/types';
+import type { MeshResolvedSource } from '@graphql-mesh/runtime';
+import type { MeshTransform, MeshPlugin } from '@graphql-mesh/types';
 import GraphqlHandler from "@graphql-mesh/graphql"
 import StitchingMerger from "@graphql-mesh/merger-stitching";
 import { printWithCache } from '@graphql-mesh/utils';
-import { createMeshHTTPHandler, MeshHTTPHandler } from '@graphql-mesh/http';
-import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
+import type { MeshHTTPHandler } from '@graphql-mesh/http';
+import { createMeshHTTPHandler } from '@graphql-mesh/http';
+import { getMesh } from '@graphql-mesh/runtime';
 import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
 import { path as pathModule } from '@graphql-mesh/cross-helpers';
-import { ImportFn } from '@graphql-mesh/types';
+import type { ImportFn } from '@graphql-mesh/types';
 import type { LordsbridgeTypes } from './sources/lordsbridge/types';
 import type { ApibaraTypes } from './sources/apibara/types';
 import type { L1RealmsTypes } from './sources/l1Realms/types';
@@ -28,7 +29,7 @@ import * as importedModule$1 from "./sources/lordsbridge/introspectionSchema";
 import * as importedModule$2 from "./sources/l1Realms/introspectionSchema";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Exact<T extends Record<string, unknown>> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
@@ -36,7 +37,7 @@ export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: Non
 
 
 /** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
+export interface Scalars {
   ID: string;
   String: string;
   Boolean: boolean;
@@ -48,79 +49,79 @@ export type Scalars = {
   BigInt: any;
   Bytes: any;
   Int8: any;
-};
+}
 
-export type Query = {
-  l2deposits: Array<L2Deposit>;
+export interface Query {
+  l2deposits: L2Deposit[];
   deposit?: Maybe<Deposit>;
-  l2withdrawals: Array<L2Withdrawal>;
-  beasts: Array<Beast>;
+  l2withdrawals: L2Withdrawal[];
+  beasts: Beast[];
   depositEvent?: Maybe<DepositEvent>;
-  depositEvents: Array<DepositEvent>;
-  deposits: Array<Deposit>;
+  depositEvents: DepositEvent[];
+  deposits: Deposit[];
   withdrawalEvent?: Maybe<WithdrawalEvent>;
-  withdrawalEvents: Array<WithdrawalEvent>;
+  withdrawalEvents: WithdrawalEvent[];
   withdrawal?: Maybe<Withdrawal>;
-  withdrawals: Array<Withdrawal>;
+  withdrawals: Withdrawal[];
   token?: Maybe<Token>;
-  tokens: Array<Token>;
+  tokens: Token[];
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
   resource?: Maybe<Resource>;
-  resources: Array<Resource>;
+  resources: Resource[];
   realm?: Maybe<Realm>;
-  realms: Array<Realm>;
+  realms: Realm[];
   realmResource?: Maybe<RealmResource>;
-  realmResources: Array<RealmResource>;
+  realmResources: RealmResource[];
   wallet?: Maybe<Wallet>;
-  wallets: Array<Wallet>;
+  wallets: Wallet[];
   transfer?: Maybe<Transfer>;
-  transfers: Array<Transfer>;
-};
+  transfers: Transfer[];
+}
 
 
-export type Queryl2depositsArgs = {
+export interface Queryl2depositsArgs {
   first?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Scalars['String']>;
   orderByDirection?: InputMaybe<Scalars['String']>;
   where?: InputMaybe<WhereFilterForTransaction>;
-};
+}
 
 
-export type QuerydepositArgs = {
+export interface QuerydepositArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type Queryl2withdrawalsArgs = {
+export interface Queryl2withdrawalsArgs {
   first?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Scalars['String']>;
   orderByDirection?: InputMaybe<Scalars['String']>;
   where?: InputMaybe<WhereFilterForWithdrawals>;
-};
+}
 
 
-export type QuerybeastsArgs = {
+export interface QuerybeastsArgs {
   first?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Scalars['String']>;
   orderByDirection?: InputMaybe<Scalars['String']>;
   where?: InputMaybe<WhereFilterForBeasts>;
-};
+}
 
 
-export type QuerydepositEventArgs = {
+export interface QuerydepositEventArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerydepositEventsArgs = {
+export interface QuerydepositEventsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<DepositEvent_orderBy>;
@@ -128,10 +129,10 @@ export type QuerydepositEventsArgs = {
   where?: InputMaybe<DepositEvent_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerydepositsArgs = {
+export interface QuerydepositsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Deposit_orderBy>;
@@ -139,17 +140,17 @@ export type QuerydepositsArgs = {
   where?: InputMaybe<Deposit_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerywithdrawalEventArgs = {
+export interface QuerywithdrawalEventArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerywithdrawalEventsArgs = {
+export interface QuerywithdrawalEventsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<WithdrawalEvent_orderBy>;
@@ -157,17 +158,17 @@ export type QuerywithdrawalEventsArgs = {
   where?: InputMaybe<WithdrawalEvent_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerywithdrawalArgs = {
+export interface QuerywithdrawalArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerywithdrawalsArgs = {
+export interface QuerywithdrawalsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Withdrawal_orderBy>;
@@ -175,17 +176,17 @@ export type QuerywithdrawalsArgs = {
   where?: InputMaybe<Withdrawal_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerytokenArgs = {
+export interface QuerytokenArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerytokensArgs = {
+export interface QuerytokensArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Token_orderBy>;
@@ -193,22 +194,22 @@ export type QuerytokensArgs = {
   where?: InputMaybe<Token_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type Query_metaArgs = {
+export interface Query_metaArgs {
   block?: InputMaybe<Block_height>;
-};
+}
 
 
-export type QueryresourceArgs = {
+export interface QueryresourceArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QueryresourcesArgs = {
+export interface QueryresourcesArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Resource_orderBy>;
@@ -216,17 +217,17 @@ export type QueryresourcesArgs = {
   where?: InputMaybe<Resource_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QueryrealmArgs = {
+export interface QueryrealmArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QueryrealmsArgs = {
+export interface QueryrealmsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Realm_orderBy>;
@@ -234,17 +235,17 @@ export type QueryrealmsArgs = {
   where?: InputMaybe<Realm_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QueryrealmResourceArgs = {
+export interface QueryrealmResourceArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QueryrealmResourcesArgs = {
+export interface QueryrealmResourcesArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<RealmResource_orderBy>;
@@ -252,17 +253,17 @@ export type QueryrealmResourcesArgs = {
   where?: InputMaybe<RealmResource_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerywalletArgs = {
+export interface QuerywalletArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerywalletsArgs = {
+export interface QuerywalletsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Wallet_orderBy>;
@@ -270,17 +271,17 @@ export type QuerywalletsArgs = {
   where?: InputMaybe<Wallet_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerytransferArgs = {
+export interface QuerytransferArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type QuerytransfersArgs = {
+export interface QuerytransfersArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Transfer_orderBy>;
@@ -288,36 +289,36 @@ export type QuerytransfersArgs = {
   where?: InputMaybe<Transfer_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
-export type L2Deposit = {
+export interface L2Deposit {
   id: Scalars['String'];
   l2Recipient: Scalars['String'];
   amount: Scalars['Decimal'];
   timestamp: Scalars['DateTime'];
   hash: Scalars['String'];
-};
+}
 
-export type WhereFilterForTransaction = {
+export interface WhereFilterForTransaction {
   id?: InputMaybe<Scalars['String']>;
   l2Recipient?: InputMaybe<Scalars['String']>;
-};
+}
 
-export type L2Withdrawal = {
+export interface L2Withdrawal {
   id: Scalars['String'];
   l1Recipient: Scalars['String'];
   l2Sender: Scalars['String'];
   amount: Scalars['Decimal'];
   timestamp: Scalars['DateTime'];
   hash: Scalars['String'];
-};
+}
 
-export type WhereFilterForWithdrawals = {
+export interface WhereFilterForWithdrawals {
   id?: InputMaybe<Scalars['String']>;
   l2Sender?: InputMaybe<Scalars['String']>;
-};
+}
 
-export type Beast = {
+export interface Beast {
   id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
@@ -326,47 +327,47 @@ export type Beast = {
   prefix?: Maybe<Scalars['String']>;
   suffix?: Maybe<Scalars['String']>;
   owner: Scalars['String'];
-};
+}
 
-export type WhereFilterForBeasts = {
+export interface WhereFilterForBeasts {
   id?: InputMaybe<Scalars['String']>;
   owner?: InputMaybe<Scalars['String']>;
-};
+}
 
-export type Subscription = {
+export interface Subscription {
   depositEvent?: Maybe<DepositEvent>;
-  depositEvents: Array<DepositEvent>;
+  depositEvents: DepositEvent[];
   deposit?: Maybe<Deposit>;
-  deposits: Array<Deposit>;
+  deposits: Deposit[];
   withdrawalEvent?: Maybe<WithdrawalEvent>;
-  withdrawalEvents: Array<WithdrawalEvent>;
+  withdrawalEvents: WithdrawalEvent[];
   withdrawal?: Maybe<Withdrawal>;
-  withdrawals: Array<Withdrawal>;
+  withdrawals: Withdrawal[];
   token?: Maybe<Token>;
-  tokens: Array<Token>;
+  tokens: Token[];
   /** Access to subgraph metadata */
   _meta?: Maybe<_Meta_>;
   resource?: Maybe<Resource>;
-  resources: Array<Resource>;
+  resources: Resource[];
   realm?: Maybe<Realm>;
-  realms: Array<Realm>;
+  realms: Realm[];
   realmResource?: Maybe<RealmResource>;
-  realmResources: Array<RealmResource>;
+  realmResources: RealmResource[];
   wallet?: Maybe<Wallet>;
-  wallets: Array<Wallet>;
+  wallets: Wallet[];
   transfer?: Maybe<Transfer>;
-  transfers: Array<Transfer>;
-};
+  transfers: Transfer[];
+}
 
 
-export type SubscriptiondepositEventArgs = {
+export interface SubscriptiondepositEventArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptiondepositEventsArgs = {
+export interface SubscriptiondepositEventsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<DepositEvent_orderBy>;
@@ -374,17 +375,17 @@ export type SubscriptiondepositEventsArgs = {
   where?: InputMaybe<DepositEvent_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptiondepositArgs = {
+export interface SubscriptiondepositArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptiondepositsArgs = {
+export interface SubscriptiondepositsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Deposit_orderBy>;
@@ -392,17 +393,17 @@ export type SubscriptiondepositsArgs = {
   where?: InputMaybe<Deposit_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionwithdrawalEventArgs = {
+export interface SubscriptionwithdrawalEventArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionwithdrawalEventsArgs = {
+export interface SubscriptionwithdrawalEventsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<WithdrawalEvent_orderBy>;
@@ -410,17 +411,17 @@ export type SubscriptionwithdrawalEventsArgs = {
   where?: InputMaybe<WithdrawalEvent_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionwithdrawalArgs = {
+export interface SubscriptionwithdrawalArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionwithdrawalsArgs = {
+export interface SubscriptionwithdrawalsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Withdrawal_orderBy>;
@@ -428,17 +429,17 @@ export type SubscriptionwithdrawalsArgs = {
   where?: InputMaybe<Withdrawal_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptiontokenArgs = {
+export interface SubscriptiontokenArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptiontokensArgs = {
+export interface SubscriptiontokensArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Token_orderBy>;
@@ -446,22 +447,22 @@ export type SubscriptiontokensArgs = {
   where?: InputMaybe<Token_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type Subscription_metaArgs = {
+export interface Subscription_metaArgs {
   block?: InputMaybe<Block_height>;
-};
+}
 
 
-export type SubscriptionresourceArgs = {
+export interface SubscriptionresourceArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionresourcesArgs = {
+export interface SubscriptionresourcesArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Resource_orderBy>;
@@ -469,17 +470,17 @@ export type SubscriptionresourcesArgs = {
   where?: InputMaybe<Resource_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionrealmArgs = {
+export interface SubscriptionrealmArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionrealmsArgs = {
+export interface SubscriptionrealmsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Realm_orderBy>;
@@ -487,17 +488,17 @@ export type SubscriptionrealmsArgs = {
   where?: InputMaybe<Realm_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionrealmResourceArgs = {
+export interface SubscriptionrealmResourceArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionrealmResourcesArgs = {
+export interface SubscriptionrealmResourcesArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<RealmResource_orderBy>;
@@ -505,17 +506,17 @@ export type SubscriptionrealmResourcesArgs = {
   where?: InputMaybe<RealmResource_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionwalletArgs = {
+export interface SubscriptionwalletArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptionwalletsArgs = {
+export interface SubscriptionwalletsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Wallet_orderBy>;
@@ -523,17 +524,17 @@ export type SubscriptionwalletsArgs = {
   where?: InputMaybe<Wallet_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptiontransferArgs = {
+export interface SubscriptiontransferArgs {
   id: Scalars['ID'];
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
 
-export type SubscriptiontransfersArgs = {
+export interface SubscriptiontransfersArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Transfer_orderBy>;
@@ -541,69 +542,69 @@ export type SubscriptiontransfersArgs = {
   where?: InputMaybe<Transfer_filter>;
   block?: InputMaybe<Block_height>;
   subgraphError?: _SubgraphErrorPolicy_;
-};
+}
 
-export type BlockChangedFilter = {
+export interface BlockChangedFilter {
   number_gte: Scalars['Int'];
-};
+}
 
-export type Block_height = {
+export interface Block_height {
   hash?: InputMaybe<Scalars['Bytes']>;
   number?: InputMaybe<Scalars['Int']>;
   number_gte?: InputMaybe<Scalars['Int']>;
-};
+}
 
-export type Deposit = {
+export interface Deposit {
   /** [bridgeL1Address, ...payload].join('-') */
   id: Scalars['ID'];
-  depositEvents: Array<DepositEvent>;
+  depositEvents: DepositEvent[];
   l1Sender: Scalars['Bytes'];
   l2Recipient: Scalars['Bytes'];
   createdTimestamp?: Maybe<Scalars['BigInt']>;
-};
+}
 
 
-export type DepositdepositEventsArgs = {
+export interface DepositdepositEventsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<DepositEvent_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<DepositEvent_filter>;
-};
+}
 
-export type DepositEvent = {
+export interface DepositEvent {
   /** uniq ID */
   id: Scalars['ID'];
   bridgeAddressL1: Scalars['Bytes'];
   bridgeAddressL2: Scalars['Bytes'];
   amount: Scalars['BigInt'];
   status: TransferStatus;
-  payload?: Maybe<Array<Scalars['BigInt']>>;
+  payload?: Maybe<Scalars['BigInt'][]>;
   nonce?: Maybe<Scalars['BigInt']>;
   createdAtBlock: Scalars['BigInt'];
   createdTxHash: Scalars['Bytes'];
   finishedAtBlock?: Maybe<Scalars['BigInt']>;
   finishedAtDate?: Maybe<Scalars['BigInt']>;
   finishedTxHash?: Maybe<Scalars['Bytes']>;
-};
+}
 
-export type DepositEvent_filter = {
+export interface DepositEvent_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   bridgeAddressL1?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_not?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_gt?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_lt?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_gte?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_lte?: InputMaybe<Scalars['Bytes']>;
-  bridgeAddressL1_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  bridgeAddressL1_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  bridgeAddressL1_in?: InputMaybe<Scalars['Bytes'][]>;
+  bridgeAddressL1_not_in?: InputMaybe<Scalars['Bytes'][]>;
   bridgeAddressL1_contains?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_not_contains?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL2?: InputMaybe<Scalars['Bytes']>;
@@ -612,8 +613,8 @@ export type DepositEvent_filter = {
   bridgeAddressL2_lt?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL2_gte?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL2_lte?: InputMaybe<Scalars['Bytes']>;
-  bridgeAddressL2_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  bridgeAddressL2_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  bridgeAddressL2_in?: InputMaybe<Scalars['Bytes'][]>;
+  bridgeAddressL2_not_in?: InputMaybe<Scalars['Bytes'][]>;
   bridgeAddressL2_contains?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL2_not_contains?: InputMaybe<Scalars['Bytes']>;
   amount?: InputMaybe<Scalars['BigInt']>;
@@ -622,42 +623,42 @@ export type DepositEvent_filter = {
   amount_lt?: InputMaybe<Scalars['BigInt']>;
   amount_gte?: InputMaybe<Scalars['BigInt']>;
   amount_lte?: InputMaybe<Scalars['BigInt']>;
-  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  amount_in?: InputMaybe<Scalars['BigInt'][]>;
+  amount_not_in?: InputMaybe<Scalars['BigInt'][]>;
   status?: InputMaybe<TransferStatus>;
   status_not?: InputMaybe<TransferStatus>;
-  status_in?: InputMaybe<Array<TransferStatus>>;
-  status_not_in?: InputMaybe<Array<TransferStatus>>;
-  payload?: InputMaybe<Array<Scalars['BigInt']>>;
-  payload_not?: InputMaybe<Array<Scalars['BigInt']>>;
-  payload_contains?: InputMaybe<Array<Scalars['BigInt']>>;
-  payload_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
-  payload_not_contains?: InputMaybe<Array<Scalars['BigInt']>>;
-  payload_not_contains_nocase?: InputMaybe<Array<Scalars['BigInt']>>;
+  status_in?: InputMaybe<TransferStatus[]>;
+  status_not_in?: InputMaybe<TransferStatus[]>;
+  payload?: InputMaybe<Scalars['BigInt'][]>;
+  payload_not?: InputMaybe<Scalars['BigInt'][]>;
+  payload_contains?: InputMaybe<Scalars['BigInt'][]>;
+  payload_contains_nocase?: InputMaybe<Scalars['BigInt'][]>;
+  payload_not_contains?: InputMaybe<Scalars['BigInt'][]>;
+  payload_not_contains_nocase?: InputMaybe<Scalars['BigInt'][]>;
   nonce?: InputMaybe<Scalars['BigInt']>;
   nonce_not?: InputMaybe<Scalars['BigInt']>;
   nonce_gt?: InputMaybe<Scalars['BigInt']>;
   nonce_lt?: InputMaybe<Scalars['BigInt']>;
   nonce_gte?: InputMaybe<Scalars['BigInt']>;
   nonce_lte?: InputMaybe<Scalars['BigInt']>;
-  nonce_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  nonce_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  nonce_in?: InputMaybe<Scalars['BigInt'][]>;
+  nonce_not_in?: InputMaybe<Scalars['BigInt'][]>;
   createdAtBlock?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_not?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_gt?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_lt?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_gte?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_lte?: InputMaybe<Scalars['BigInt']>;
-  createdAtBlock_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  createdAtBlock_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  createdAtBlock_in?: InputMaybe<Scalars['BigInt'][]>;
+  createdAtBlock_not_in?: InputMaybe<Scalars['BigInt'][]>;
   createdTxHash?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_not?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_gt?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_lt?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_gte?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_lte?: InputMaybe<Scalars['Bytes']>;
-  createdTxHash_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  createdTxHash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  createdTxHash_in?: InputMaybe<Scalars['Bytes'][]>;
+  createdTxHash_not_in?: InputMaybe<Scalars['Bytes'][]>;
   createdTxHash_contains?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_not_contains?: InputMaybe<Scalars['Bytes']>;
   finishedAtBlock?: InputMaybe<Scalars['BigInt']>;
@@ -666,31 +667,31 @@ export type DepositEvent_filter = {
   finishedAtBlock_lt?: InputMaybe<Scalars['BigInt']>;
   finishedAtBlock_gte?: InputMaybe<Scalars['BigInt']>;
   finishedAtBlock_lte?: InputMaybe<Scalars['BigInt']>;
-  finishedAtBlock_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  finishedAtBlock_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  finishedAtBlock_in?: InputMaybe<Scalars['BigInt'][]>;
+  finishedAtBlock_not_in?: InputMaybe<Scalars['BigInt'][]>;
   finishedAtDate?: InputMaybe<Scalars['BigInt']>;
   finishedAtDate_not?: InputMaybe<Scalars['BigInt']>;
   finishedAtDate_gt?: InputMaybe<Scalars['BigInt']>;
   finishedAtDate_lt?: InputMaybe<Scalars['BigInt']>;
   finishedAtDate_gte?: InputMaybe<Scalars['BigInt']>;
   finishedAtDate_lte?: InputMaybe<Scalars['BigInt']>;
-  finishedAtDate_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  finishedAtDate_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  finishedAtDate_in?: InputMaybe<Scalars['BigInt'][]>;
+  finishedAtDate_not_in?: InputMaybe<Scalars['BigInt'][]>;
   finishedTxHash?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_not?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_gt?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_lt?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_gte?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_lte?: InputMaybe<Scalars['Bytes']>;
-  finishedTxHash_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  finishedTxHash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  finishedTxHash_in?: InputMaybe<Scalars['Bytes'][]>;
+  finishedTxHash_not_in?: InputMaybe<Scalars['Bytes'][]>;
   finishedTxHash_contains?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_not_contains?: InputMaybe<Scalars['Bytes']>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<DepositEvent_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<DepositEvent_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<DepositEvent_filter>[]>;
+  or?: InputMaybe<InputMaybe<DepositEvent_filter>[]>;
+}
 
 export type DepositEvent_orderBy =
   | 'id'
@@ -706,21 +707,21 @@ export type DepositEvent_orderBy =
   | 'finishedAtDate'
   | 'finishedTxHash';
 
-export type Deposit_filter = {
+export interface Deposit_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
-  depositEvents?: InputMaybe<Array<Scalars['String']>>;
-  depositEvents_not?: InputMaybe<Array<Scalars['String']>>;
-  depositEvents_contains?: InputMaybe<Array<Scalars['String']>>;
-  depositEvents_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
-  depositEvents_not_contains?: InputMaybe<Array<Scalars['String']>>;
-  depositEvents_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
+  depositEvents?: InputMaybe<Scalars['String'][]>;
+  depositEvents_not?: InputMaybe<Scalars['String'][]>;
+  depositEvents_contains?: InputMaybe<Scalars['String'][]>;
+  depositEvents_contains_nocase?: InputMaybe<Scalars['String'][]>;
+  depositEvents_not_contains?: InputMaybe<Scalars['String'][]>;
+  depositEvents_not_contains_nocase?: InputMaybe<Scalars['String'][]>;
   depositEvents_?: InputMaybe<DepositEvent_filter>;
   l1Sender?: InputMaybe<Scalars['Bytes']>;
   l1Sender_not?: InputMaybe<Scalars['Bytes']>;
@@ -728,8 +729,8 @@ export type Deposit_filter = {
   l1Sender_lt?: InputMaybe<Scalars['Bytes']>;
   l1Sender_gte?: InputMaybe<Scalars['Bytes']>;
   l1Sender_lte?: InputMaybe<Scalars['Bytes']>;
-  l1Sender_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  l1Sender_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  l1Sender_in?: InputMaybe<Scalars['Bytes'][]>;
+  l1Sender_not_in?: InputMaybe<Scalars['Bytes'][]>;
   l1Sender_contains?: InputMaybe<Scalars['Bytes']>;
   l1Sender_not_contains?: InputMaybe<Scalars['Bytes']>;
   l2Recipient?: InputMaybe<Scalars['Bytes']>;
@@ -738,8 +739,8 @@ export type Deposit_filter = {
   l2Recipient_lt?: InputMaybe<Scalars['Bytes']>;
   l2Recipient_gte?: InputMaybe<Scalars['Bytes']>;
   l2Recipient_lte?: InputMaybe<Scalars['Bytes']>;
-  l2Recipient_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  l2Recipient_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  l2Recipient_in?: InputMaybe<Scalars['Bytes'][]>;
+  l2Recipient_not_in?: InputMaybe<Scalars['Bytes'][]>;
   l2Recipient_contains?: InputMaybe<Scalars['Bytes']>;
   l2Recipient_not_contains?: InputMaybe<Scalars['Bytes']>;
   createdTimestamp?: InputMaybe<Scalars['BigInt']>;
@@ -748,13 +749,13 @@ export type Deposit_filter = {
   createdTimestamp_lt?: InputMaybe<Scalars['BigInt']>;
   createdTimestamp_gte?: InputMaybe<Scalars['BigInt']>;
   createdTimestamp_lte?: InputMaybe<Scalars['BigInt']>;
-  createdTimestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  createdTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  createdTimestamp_in?: InputMaybe<Scalars['BigInt'][]>;
+  createdTimestamp_not_in?: InputMaybe<Scalars['BigInt'][]>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Deposit_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Deposit_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Deposit_filter>[]>;
+  or?: InputMaybe<InputMaybe<Deposit_filter>[]>;
+}
 
 export type Deposit_orderBy =
   | 'id'
@@ -768,31 +769,31 @@ export type OrderDirection =
   | 'asc'
   | 'desc';
 
-export type Token = {
+export interface Token {
   /** address */
   id: Scalars['ID'];
   name: Scalars['String'];
   symbol: Scalars['String'];
   decimals: Scalars['Int'];
-};
+}
 
-export type Token_filter = {
+export interface Token_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   name?: InputMaybe<Scalars['String']>;
   name_not?: InputMaybe<Scalars['String']>;
   name_gt?: InputMaybe<Scalars['String']>;
   name_lt?: InputMaybe<Scalars['String']>;
   name_gte?: InputMaybe<Scalars['String']>;
   name_lte?: InputMaybe<Scalars['String']>;
-  name_in?: InputMaybe<Array<Scalars['String']>>;
-  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  name_in?: InputMaybe<Scalars['String'][]>;
+  name_not_in?: InputMaybe<Scalars['String'][]>;
   name_contains?: InputMaybe<Scalars['String']>;
   name_contains_nocase?: InputMaybe<Scalars['String']>;
   name_not_contains?: InputMaybe<Scalars['String']>;
@@ -811,8 +812,8 @@ export type Token_filter = {
   symbol_lt?: InputMaybe<Scalars['String']>;
   symbol_gte?: InputMaybe<Scalars['String']>;
   symbol_lte?: InputMaybe<Scalars['String']>;
-  symbol_in?: InputMaybe<Array<Scalars['String']>>;
-  symbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+  symbol_in?: InputMaybe<Scalars['String'][]>;
+  symbol_not_in?: InputMaybe<Scalars['String'][]>;
   symbol_contains?: InputMaybe<Scalars['String']>;
   symbol_contains_nocase?: InputMaybe<Scalars['String']>;
   symbol_not_contains?: InputMaybe<Scalars['String']>;
@@ -831,13 +832,13 @@ export type Token_filter = {
   decimals_lt?: InputMaybe<Scalars['Int']>;
   decimals_gte?: InputMaybe<Scalars['Int']>;
   decimals_lte?: InputMaybe<Scalars['Int']>;
-  decimals_in?: InputMaybe<Array<Scalars['Int']>>;
-  decimals_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  decimals_in?: InputMaybe<Scalars['Int'][]>;
+  decimals_not_in?: InputMaybe<Scalars['Int'][]>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Token_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Token_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Token_filter>[]>;
+  or?: InputMaybe<InputMaybe<Token_filter>[]>;
+}
 
 export type Token_orderBy =
   | 'id'
@@ -851,25 +852,25 @@ export type TransferStatus =
   | 'ACCEPTED_ON_L1'
   | 'ACCEPTED_ON_L2';
 
-export type Withdrawal = {
+export interface Withdrawal {
   /** [bridgeL1Address, ...payload].join('-') */
   id: Scalars['ID'];
   l1Recipient: Scalars['Bytes'];
   l2Sender: Scalars['Bytes'];
   createdTimestamp?: Maybe<Scalars['BigInt']>;
-  withdrawalEvents: Array<WithdrawalEvent>;
-};
+  withdrawalEvents: WithdrawalEvent[];
+}
 
 
-export type WithdrawalwithdrawalEventsArgs = {
+export interface WithdrawalwithdrawalEventsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<WithdrawalEvent_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<WithdrawalEvent_filter>;
-};
+}
 
-export type WithdrawalEvent = {
+export interface WithdrawalEvent {
   /** uniq ID */
   id: Scalars['ID'];
   bridgeAddressL1: Scalars['Bytes'];
@@ -882,25 +883,25 @@ export type WithdrawalEvent = {
   finishedAtBlock?: Maybe<Scalars['BigInt']>;
   finishedAtDate?: Maybe<Scalars['BigInt']>;
   finishedTxHash?: Maybe<Scalars['Bytes']>;
-};
+}
 
-export type WithdrawalEvent_filter = {
+export interface WithdrawalEvent_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   bridgeAddressL1?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_not?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_gt?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_lt?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_gte?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_lte?: InputMaybe<Scalars['Bytes']>;
-  bridgeAddressL1_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  bridgeAddressL1_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  bridgeAddressL1_in?: InputMaybe<Scalars['Bytes'][]>;
+  bridgeAddressL1_not_in?: InputMaybe<Scalars['Bytes'][]>;
   bridgeAddressL1_contains?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL1_not_contains?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL2?: InputMaybe<Scalars['Bytes']>;
@@ -909,8 +910,8 @@ export type WithdrawalEvent_filter = {
   bridgeAddressL2_lt?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL2_gte?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL2_lte?: InputMaybe<Scalars['Bytes']>;
-  bridgeAddressL2_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  bridgeAddressL2_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  bridgeAddressL2_in?: InputMaybe<Scalars['Bytes'][]>;
+  bridgeAddressL2_not_in?: InputMaybe<Scalars['Bytes'][]>;
   bridgeAddressL2_contains?: InputMaybe<Scalars['Bytes']>;
   bridgeAddressL2_not_contains?: InputMaybe<Scalars['Bytes']>;
   l1Recipient?: InputMaybe<Scalars['Bytes']>;
@@ -919,8 +920,8 @@ export type WithdrawalEvent_filter = {
   l1Recipient_lt?: InputMaybe<Scalars['Bytes']>;
   l1Recipient_gte?: InputMaybe<Scalars['Bytes']>;
   l1Recipient_lte?: InputMaybe<Scalars['Bytes']>;
-  l1Recipient_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  l1Recipient_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  l1Recipient_in?: InputMaybe<Scalars['Bytes'][]>;
+  l1Recipient_not_in?: InputMaybe<Scalars['Bytes'][]>;
   l1Recipient_contains?: InputMaybe<Scalars['Bytes']>;
   l1Recipient_not_contains?: InputMaybe<Scalars['Bytes']>;
   amount?: InputMaybe<Scalars['BigInt']>;
@@ -929,28 +930,28 @@ export type WithdrawalEvent_filter = {
   amount_lt?: InputMaybe<Scalars['BigInt']>;
   amount_gte?: InputMaybe<Scalars['BigInt']>;
   amount_lte?: InputMaybe<Scalars['BigInt']>;
-  amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  amount_in?: InputMaybe<Scalars['BigInt'][]>;
+  amount_not_in?: InputMaybe<Scalars['BigInt'][]>;
   status?: InputMaybe<TransferStatus>;
   status_not?: InputMaybe<TransferStatus>;
-  status_in?: InputMaybe<Array<TransferStatus>>;
-  status_not_in?: InputMaybe<Array<TransferStatus>>;
+  status_in?: InputMaybe<TransferStatus[]>;
+  status_not_in?: InputMaybe<TransferStatus[]>;
   createdAtBlock?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_not?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_gt?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_lt?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_gte?: InputMaybe<Scalars['BigInt']>;
   createdAtBlock_lte?: InputMaybe<Scalars['BigInt']>;
-  createdAtBlock_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  createdAtBlock_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  createdAtBlock_in?: InputMaybe<Scalars['BigInt'][]>;
+  createdAtBlock_not_in?: InputMaybe<Scalars['BigInt'][]>;
   createdTxHash?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_not?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_gt?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_lt?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_gte?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_lte?: InputMaybe<Scalars['Bytes']>;
-  createdTxHash_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  createdTxHash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  createdTxHash_in?: InputMaybe<Scalars['Bytes'][]>;
+  createdTxHash_not_in?: InputMaybe<Scalars['Bytes'][]>;
   createdTxHash_contains?: InputMaybe<Scalars['Bytes']>;
   createdTxHash_not_contains?: InputMaybe<Scalars['Bytes']>;
   finishedAtBlock?: InputMaybe<Scalars['BigInt']>;
@@ -959,31 +960,31 @@ export type WithdrawalEvent_filter = {
   finishedAtBlock_lt?: InputMaybe<Scalars['BigInt']>;
   finishedAtBlock_gte?: InputMaybe<Scalars['BigInt']>;
   finishedAtBlock_lte?: InputMaybe<Scalars['BigInt']>;
-  finishedAtBlock_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  finishedAtBlock_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  finishedAtBlock_in?: InputMaybe<Scalars['BigInt'][]>;
+  finishedAtBlock_not_in?: InputMaybe<Scalars['BigInt'][]>;
   finishedAtDate?: InputMaybe<Scalars['BigInt']>;
   finishedAtDate_not?: InputMaybe<Scalars['BigInt']>;
   finishedAtDate_gt?: InputMaybe<Scalars['BigInt']>;
   finishedAtDate_lt?: InputMaybe<Scalars['BigInt']>;
   finishedAtDate_gte?: InputMaybe<Scalars['BigInt']>;
   finishedAtDate_lte?: InputMaybe<Scalars['BigInt']>;
-  finishedAtDate_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  finishedAtDate_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  finishedAtDate_in?: InputMaybe<Scalars['BigInt'][]>;
+  finishedAtDate_not_in?: InputMaybe<Scalars['BigInt'][]>;
   finishedTxHash?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_not?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_gt?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_lt?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_gte?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_lte?: InputMaybe<Scalars['Bytes']>;
-  finishedTxHash_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  finishedTxHash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  finishedTxHash_in?: InputMaybe<Scalars['Bytes'][]>;
+  finishedTxHash_not_in?: InputMaybe<Scalars['Bytes'][]>;
   finishedTxHash_contains?: InputMaybe<Scalars['Bytes']>;
   finishedTxHash_not_contains?: InputMaybe<Scalars['Bytes']>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<WithdrawalEvent_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<WithdrawalEvent_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<WithdrawalEvent_filter>[]>;
+  or?: InputMaybe<InputMaybe<WithdrawalEvent_filter>[]>;
+}
 
 export type WithdrawalEvent_orderBy =
   | 'id'
@@ -998,23 +999,23 @@ export type WithdrawalEvent_orderBy =
   | 'finishedAtDate'
   | 'finishedTxHash';
 
-export type Withdrawal_filter = {
+export interface Withdrawal_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   l1Recipient?: InputMaybe<Scalars['Bytes']>;
   l1Recipient_not?: InputMaybe<Scalars['Bytes']>;
   l1Recipient_gt?: InputMaybe<Scalars['Bytes']>;
   l1Recipient_lt?: InputMaybe<Scalars['Bytes']>;
   l1Recipient_gte?: InputMaybe<Scalars['Bytes']>;
   l1Recipient_lte?: InputMaybe<Scalars['Bytes']>;
-  l1Recipient_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  l1Recipient_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  l1Recipient_in?: InputMaybe<Scalars['Bytes'][]>;
+  l1Recipient_not_in?: InputMaybe<Scalars['Bytes'][]>;
   l1Recipient_contains?: InputMaybe<Scalars['Bytes']>;
   l1Recipient_not_contains?: InputMaybe<Scalars['Bytes']>;
   l2Sender?: InputMaybe<Scalars['Bytes']>;
@@ -1023,8 +1024,8 @@ export type Withdrawal_filter = {
   l2Sender_lt?: InputMaybe<Scalars['Bytes']>;
   l2Sender_gte?: InputMaybe<Scalars['Bytes']>;
   l2Sender_lte?: InputMaybe<Scalars['Bytes']>;
-  l2Sender_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  l2Sender_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  l2Sender_in?: InputMaybe<Scalars['Bytes'][]>;
+  l2Sender_not_in?: InputMaybe<Scalars['Bytes'][]>;
   l2Sender_contains?: InputMaybe<Scalars['Bytes']>;
   l2Sender_not_contains?: InputMaybe<Scalars['Bytes']>;
   createdTimestamp?: InputMaybe<Scalars['BigInt']>;
@@ -1033,20 +1034,20 @@ export type Withdrawal_filter = {
   createdTimestamp_lt?: InputMaybe<Scalars['BigInt']>;
   createdTimestamp_gte?: InputMaybe<Scalars['BigInt']>;
   createdTimestamp_lte?: InputMaybe<Scalars['BigInt']>;
-  createdTimestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  createdTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  withdrawalEvents?: InputMaybe<Array<Scalars['String']>>;
-  withdrawalEvents_not?: InputMaybe<Array<Scalars['String']>>;
-  withdrawalEvents_contains?: InputMaybe<Array<Scalars['String']>>;
-  withdrawalEvents_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
-  withdrawalEvents_not_contains?: InputMaybe<Array<Scalars['String']>>;
-  withdrawalEvents_not_contains_nocase?: InputMaybe<Array<Scalars['String']>>;
+  createdTimestamp_in?: InputMaybe<Scalars['BigInt'][]>;
+  createdTimestamp_not_in?: InputMaybe<Scalars['BigInt'][]>;
+  withdrawalEvents?: InputMaybe<Scalars['String'][]>;
+  withdrawalEvents_not?: InputMaybe<Scalars['String'][]>;
+  withdrawalEvents_contains?: InputMaybe<Scalars['String'][]>;
+  withdrawalEvents_contains_nocase?: InputMaybe<Scalars['String'][]>;
+  withdrawalEvents_not_contains?: InputMaybe<Scalars['String'][]>;
+  withdrawalEvents_not_contains_nocase?: InputMaybe<Scalars['String'][]>;
   withdrawalEvents_?: InputMaybe<WithdrawalEvent_filter>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Withdrawal_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Withdrawal_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Withdrawal_filter>[]>;
+  or?: InputMaybe<InputMaybe<Withdrawal_filter>[]>;
+}
 
 export type Withdrawal_orderBy =
   | 'id'
@@ -1055,17 +1056,17 @@ export type Withdrawal_orderBy =
   | 'createdTimestamp'
   | 'withdrawalEvents';
 
-export type _Block_ = {
+export interface _Block_ {
   /** The hash of the block */
   hash?: Maybe<Scalars['Bytes']>;
   /** The block number */
   number: Scalars['Int'];
   /** Integer representation of the timestamp stored in blocks for the chain */
   timestamp?: Maybe<Scalars['Int']>;
-};
+}
 
 /** The type for the top-level _meta field */
-export type _Meta_ = {
+export interface _Meta_ {
   /**
    * Information about a specific subgraph block. The hash of the block
    * will be null if the _meta field has a block constraint that asks for
@@ -1078,7 +1079,7 @@ export type _Meta_ = {
   deployment: Scalars['String'];
   /** If `true`, the subgraph encountered indexing errors at some past block */
   hasIndexingErrors: Scalars['Boolean'];
-};
+}
 
 export type _SubgraphErrorPolicy_ =
   /** Data will be returned even if the subgraph has indexing errors */
@@ -1086,7 +1087,7 @@ export type _SubgraphErrorPolicy_ =
   /** If the subgraph has indexing errors, data will be omitted. The default. */
   | 'deny';
 
-export type Realm = {
+export interface Realm {
   id: Scalars['ID'];
   tokenId: Scalars['Int'];
   currentOwner: Wallet;
@@ -1096,48 +1097,48 @@ export type Realm = {
   harbours: Scalars['Int'];
   rivers: Scalars['Int'];
   regions: Scalars['Int'];
-  resourceIds: Array<Scalars['Int']>;
-  resources?: Maybe<Array<RealmResource>>;
+  resourceIds: Scalars['Int'][];
+  resources?: Maybe<RealmResource[]>;
   wonder?: Maybe<Scalars['String']>;
   rarityScore: Scalars['BigDecimal'];
   rarityRank: Scalars['BigInt'];
   order?: Maybe<Scalars['String']>;
   bridgedOwner?: Maybe<Wallet>;
   bridgedV2Owner?: Maybe<Wallet>;
-};
+}
 
 
-export type RealmresourcesArgs = {
+export interface RealmresourcesArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<RealmResource_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<RealmResource_filter>;
-};
+}
 
-export type RealmResource = {
+export interface RealmResource {
   id: Scalars['ID'];
   realm: Realm;
   resource: Resource;
-};
+}
 
-export type RealmResource_filter = {
+export interface RealmResource_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   realm?: InputMaybe<Scalars['String']>;
   realm_not?: InputMaybe<Scalars['String']>;
   realm_gt?: InputMaybe<Scalars['String']>;
   realm_lt?: InputMaybe<Scalars['String']>;
   realm_gte?: InputMaybe<Scalars['String']>;
   realm_lte?: InputMaybe<Scalars['String']>;
-  realm_in?: InputMaybe<Array<Scalars['String']>>;
-  realm_not_in?: InputMaybe<Array<Scalars['String']>>;
+  realm_in?: InputMaybe<Scalars['String'][]>;
+  realm_not_in?: InputMaybe<Scalars['String'][]>;
   realm_contains?: InputMaybe<Scalars['String']>;
   realm_contains_nocase?: InputMaybe<Scalars['String']>;
   realm_not_contains?: InputMaybe<Scalars['String']>;
@@ -1157,8 +1158,8 @@ export type RealmResource_filter = {
   resource_lt?: InputMaybe<Scalars['String']>;
   resource_gte?: InputMaybe<Scalars['String']>;
   resource_lte?: InputMaybe<Scalars['String']>;
-  resource_in?: InputMaybe<Array<Scalars['String']>>;
-  resource_not_in?: InputMaybe<Array<Scalars['String']>>;
+  resource_in?: InputMaybe<Scalars['String'][]>;
+  resource_not_in?: InputMaybe<Scalars['String'][]>;
   resource_contains?: InputMaybe<Scalars['String']>;
   resource_contains_nocase?: InputMaybe<Scalars['String']>;
   resource_not_contains?: InputMaybe<Scalars['String']>;
@@ -1174,9 +1175,9 @@ export type RealmResource_filter = {
   resource_?: InputMaybe<Resource_filter>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<RealmResource_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<RealmResource_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<RealmResource_filter>[]>;
+  or?: InputMaybe<InputMaybe<RealmResource_filter>[]>;
+}
 
 export type RealmResource_orderBy =
   | 'id'
@@ -1204,31 +1205,31 @@ export type RealmTraitOption =
   | 'harbors'
   | 'rivers';
 
-export type Realm_filter = {
+export interface Realm_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   tokenId?: InputMaybe<Scalars['Int']>;
   tokenId_not?: InputMaybe<Scalars['Int']>;
   tokenId_gt?: InputMaybe<Scalars['Int']>;
   tokenId_lt?: InputMaybe<Scalars['Int']>;
   tokenId_gte?: InputMaybe<Scalars['Int']>;
   tokenId_lte?: InputMaybe<Scalars['Int']>;
-  tokenId_in?: InputMaybe<Array<Scalars['Int']>>;
-  tokenId_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  tokenId_in?: InputMaybe<Scalars['Int'][]>;
+  tokenId_not_in?: InputMaybe<Scalars['Int'][]>;
   currentOwner?: InputMaybe<Scalars['String']>;
   currentOwner_not?: InputMaybe<Scalars['String']>;
   currentOwner_gt?: InputMaybe<Scalars['String']>;
   currentOwner_lt?: InputMaybe<Scalars['String']>;
   currentOwner_gte?: InputMaybe<Scalars['String']>;
   currentOwner_lte?: InputMaybe<Scalars['String']>;
-  currentOwner_in?: InputMaybe<Array<Scalars['String']>>;
-  currentOwner_not_in?: InputMaybe<Array<Scalars['String']>>;
+  currentOwner_in?: InputMaybe<Scalars['String'][]>;
+  currentOwner_not_in?: InputMaybe<Scalars['String'][]>;
   currentOwner_contains?: InputMaybe<Scalars['String']>;
   currentOwner_contains_nocase?: InputMaybe<Scalars['String']>;
   currentOwner_not_contains?: InputMaybe<Scalars['String']>;
@@ -1248,16 +1249,16 @@ export type Realm_filter = {
   minted_lt?: InputMaybe<Scalars['BigInt']>;
   minted_gte?: InputMaybe<Scalars['BigInt']>;
   minted_lte?: InputMaybe<Scalars['BigInt']>;
-  minted_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  minted_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  minted_in?: InputMaybe<Scalars['BigInt'][]>;
+  minted_not_in?: InputMaybe<Scalars['BigInt'][]>;
   name?: InputMaybe<Scalars['String']>;
   name_not?: InputMaybe<Scalars['String']>;
   name_gt?: InputMaybe<Scalars['String']>;
   name_lt?: InputMaybe<Scalars['String']>;
   name_gte?: InputMaybe<Scalars['String']>;
   name_lte?: InputMaybe<Scalars['String']>;
-  name_in?: InputMaybe<Array<Scalars['String']>>;
-  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  name_in?: InputMaybe<Scalars['String'][]>;
+  name_not_in?: InputMaybe<Scalars['String'][]>;
   name_contains?: InputMaybe<Scalars['String']>;
   name_contains_nocase?: InputMaybe<Scalars['String']>;
   name_not_contains?: InputMaybe<Scalars['String']>;
@@ -1276,38 +1277,38 @@ export type Realm_filter = {
   cities_lt?: InputMaybe<Scalars['Int']>;
   cities_gte?: InputMaybe<Scalars['Int']>;
   cities_lte?: InputMaybe<Scalars['Int']>;
-  cities_in?: InputMaybe<Array<Scalars['Int']>>;
-  cities_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  cities_in?: InputMaybe<Scalars['Int'][]>;
+  cities_not_in?: InputMaybe<Scalars['Int'][]>;
   harbours?: InputMaybe<Scalars['Int']>;
   harbours_not?: InputMaybe<Scalars['Int']>;
   harbours_gt?: InputMaybe<Scalars['Int']>;
   harbours_lt?: InputMaybe<Scalars['Int']>;
   harbours_gte?: InputMaybe<Scalars['Int']>;
   harbours_lte?: InputMaybe<Scalars['Int']>;
-  harbours_in?: InputMaybe<Array<Scalars['Int']>>;
-  harbours_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  harbours_in?: InputMaybe<Scalars['Int'][]>;
+  harbours_not_in?: InputMaybe<Scalars['Int'][]>;
   rivers?: InputMaybe<Scalars['Int']>;
   rivers_not?: InputMaybe<Scalars['Int']>;
   rivers_gt?: InputMaybe<Scalars['Int']>;
   rivers_lt?: InputMaybe<Scalars['Int']>;
   rivers_gte?: InputMaybe<Scalars['Int']>;
   rivers_lte?: InputMaybe<Scalars['Int']>;
-  rivers_in?: InputMaybe<Array<Scalars['Int']>>;
-  rivers_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  rivers_in?: InputMaybe<Scalars['Int'][]>;
+  rivers_not_in?: InputMaybe<Scalars['Int'][]>;
   regions?: InputMaybe<Scalars['Int']>;
   regions_not?: InputMaybe<Scalars['Int']>;
   regions_gt?: InputMaybe<Scalars['Int']>;
   regions_lt?: InputMaybe<Scalars['Int']>;
   regions_gte?: InputMaybe<Scalars['Int']>;
   regions_lte?: InputMaybe<Scalars['Int']>;
-  regions_in?: InputMaybe<Array<Scalars['Int']>>;
-  regions_not_in?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds_not?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds_contains?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds_contains_nocase?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds_not_contains?: InputMaybe<Array<Scalars['Int']>>;
-  resourceIds_not_contains_nocase?: InputMaybe<Array<Scalars['Int']>>;
+  regions_in?: InputMaybe<Scalars['Int'][]>;
+  regions_not_in?: InputMaybe<Scalars['Int'][]>;
+  resourceIds?: InputMaybe<Scalars['Int'][]>;
+  resourceIds_not?: InputMaybe<Scalars['Int'][]>;
+  resourceIds_contains?: InputMaybe<Scalars['Int'][]>;
+  resourceIds_contains_nocase?: InputMaybe<Scalars['Int'][]>;
+  resourceIds_not_contains?: InputMaybe<Scalars['Int'][]>;
+  resourceIds_not_contains_nocase?: InputMaybe<Scalars['Int'][]>;
   resources_?: InputMaybe<RealmResource_filter>;
   wonder?: InputMaybe<Scalars['String']>;
   wonder_not?: InputMaybe<Scalars['String']>;
@@ -1315,8 +1316,8 @@ export type Realm_filter = {
   wonder_lt?: InputMaybe<Scalars['String']>;
   wonder_gte?: InputMaybe<Scalars['String']>;
   wonder_lte?: InputMaybe<Scalars['String']>;
-  wonder_in?: InputMaybe<Array<Scalars['String']>>;
-  wonder_not_in?: InputMaybe<Array<Scalars['String']>>;
+  wonder_in?: InputMaybe<Scalars['String'][]>;
+  wonder_not_in?: InputMaybe<Scalars['String'][]>;
   wonder_contains?: InputMaybe<Scalars['String']>;
   wonder_contains_nocase?: InputMaybe<Scalars['String']>;
   wonder_not_contains?: InputMaybe<Scalars['String']>;
@@ -1335,24 +1336,24 @@ export type Realm_filter = {
   rarityScore_lt?: InputMaybe<Scalars['BigDecimal']>;
   rarityScore_gte?: InputMaybe<Scalars['BigDecimal']>;
   rarityScore_lte?: InputMaybe<Scalars['BigDecimal']>;
-  rarityScore_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
-  rarityScore_not_in?: InputMaybe<Array<Scalars['BigDecimal']>>;
+  rarityScore_in?: InputMaybe<Scalars['BigDecimal'][]>;
+  rarityScore_not_in?: InputMaybe<Scalars['BigDecimal'][]>;
   rarityRank?: InputMaybe<Scalars['BigInt']>;
   rarityRank_not?: InputMaybe<Scalars['BigInt']>;
   rarityRank_gt?: InputMaybe<Scalars['BigInt']>;
   rarityRank_lt?: InputMaybe<Scalars['BigInt']>;
   rarityRank_gte?: InputMaybe<Scalars['BigInt']>;
   rarityRank_lte?: InputMaybe<Scalars['BigInt']>;
-  rarityRank_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  rarityRank_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  rarityRank_in?: InputMaybe<Scalars['BigInt'][]>;
+  rarityRank_not_in?: InputMaybe<Scalars['BigInt'][]>;
   order?: InputMaybe<Scalars['String']>;
   order_not?: InputMaybe<Scalars['String']>;
   order_gt?: InputMaybe<Scalars['String']>;
   order_lt?: InputMaybe<Scalars['String']>;
   order_gte?: InputMaybe<Scalars['String']>;
   order_lte?: InputMaybe<Scalars['String']>;
-  order_in?: InputMaybe<Array<Scalars['String']>>;
-  order_not_in?: InputMaybe<Array<Scalars['String']>>;
+  order_in?: InputMaybe<Scalars['String'][]>;
+  order_not_in?: InputMaybe<Scalars['String'][]>;
   order_contains?: InputMaybe<Scalars['String']>;
   order_contains_nocase?: InputMaybe<Scalars['String']>;
   order_not_contains?: InputMaybe<Scalars['String']>;
@@ -1371,8 +1372,8 @@ export type Realm_filter = {
   bridgedOwner_lt?: InputMaybe<Scalars['String']>;
   bridgedOwner_gte?: InputMaybe<Scalars['String']>;
   bridgedOwner_lte?: InputMaybe<Scalars['String']>;
-  bridgedOwner_in?: InputMaybe<Array<Scalars['String']>>;
-  bridgedOwner_not_in?: InputMaybe<Array<Scalars['String']>>;
+  bridgedOwner_in?: InputMaybe<Scalars['String'][]>;
+  bridgedOwner_not_in?: InputMaybe<Scalars['String'][]>;
   bridgedOwner_contains?: InputMaybe<Scalars['String']>;
   bridgedOwner_contains_nocase?: InputMaybe<Scalars['String']>;
   bridgedOwner_not_contains?: InputMaybe<Scalars['String']>;
@@ -1392,8 +1393,8 @@ export type Realm_filter = {
   bridgedV2Owner_lt?: InputMaybe<Scalars['String']>;
   bridgedV2Owner_gte?: InputMaybe<Scalars['String']>;
   bridgedV2Owner_lte?: InputMaybe<Scalars['String']>;
-  bridgedV2Owner_in?: InputMaybe<Array<Scalars['String']>>;
-  bridgedV2Owner_not_in?: InputMaybe<Array<Scalars['String']>>;
+  bridgedV2Owner_in?: InputMaybe<Scalars['String'][]>;
+  bridgedV2Owner_not_in?: InputMaybe<Scalars['String'][]>;
   bridgedV2Owner_contains?: InputMaybe<Scalars['String']>;
   bridgedV2Owner_contains_nocase?: InputMaybe<Scalars['String']>;
   bridgedV2Owner_not_contains?: InputMaybe<Scalars['String']>;
@@ -1409,9 +1410,9 @@ export type Realm_filter = {
   bridgedV2Owner_?: InputMaybe<Wallet_filter>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Realm_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Realm_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Realm_filter>[]>;
+  or?: InputMaybe<InputMaybe<Realm_filter>[]>;
+}
 
 export type Realm_orderBy =
   | 'id'
@@ -1453,21 +1454,21 @@ export type Realm_orderBy =
   | 'bridgedV2Owner__totalRealms'
   | 'bridgedV2Owner__joined';
 
-export type Resource = {
+export interface Resource {
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   totalRealms?: Maybe<Scalars['Int']>;
-  realms: Array<RealmResource>;
-};
+  realms: RealmResource[];
+}
 
 
-export type ResourcerealmsArgs = {
+export interface ResourcerealmsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<RealmResource_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<RealmResource_filter>;
-};
+}
 
 export type ResourceName =
   | 'Wood'
@@ -1493,23 +1494,23 @@ export type ResourceName =
   | 'Mithral'
   | 'Dragonhide';
 
-export type Resource_filter = {
+export interface Resource_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   name?: InputMaybe<Scalars['String']>;
   name_not?: InputMaybe<Scalars['String']>;
   name_gt?: InputMaybe<Scalars['String']>;
   name_lt?: InputMaybe<Scalars['String']>;
   name_gte?: InputMaybe<Scalars['String']>;
   name_lte?: InputMaybe<Scalars['String']>;
-  name_in?: InputMaybe<Array<Scalars['String']>>;
-  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  name_in?: InputMaybe<Scalars['String'][]>;
+  name_not_in?: InputMaybe<Scalars['String'][]>;
   name_contains?: InputMaybe<Scalars['String']>;
   name_contains_nocase?: InputMaybe<Scalars['String']>;
   name_not_contains?: InputMaybe<Scalars['String']>;
@@ -1528,14 +1529,14 @@ export type Resource_filter = {
   totalRealms_lt?: InputMaybe<Scalars['Int']>;
   totalRealms_gte?: InputMaybe<Scalars['Int']>;
   totalRealms_lte?: InputMaybe<Scalars['Int']>;
-  totalRealms_in?: InputMaybe<Array<Scalars['Int']>>;
-  totalRealms_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  totalRealms_in?: InputMaybe<Scalars['Int'][]>;
+  totalRealms_not_in?: InputMaybe<Scalars['Int'][]>;
   realms_?: InputMaybe<RealmResource_filter>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Resource_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Resource_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Resource_filter>[]>;
+  or?: InputMaybe<InputMaybe<Resource_filter>[]>;
+}
 
 export type Resource_orderBy =
   | 'id'
@@ -1543,32 +1544,32 @@ export type Resource_orderBy =
   | 'totalRealms'
   | 'realms';
 
-export type Transfer = {
+export interface Transfer {
   id: Scalars['ID'];
   realm?: Maybe<Realm>;
   from: Wallet;
   to: Wallet;
   txHash: Scalars['Bytes'];
   timestamp: Scalars['BigInt'];
-};
+}
 
-export type Transfer_filter = {
+export interface Transfer_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   realm?: InputMaybe<Scalars['String']>;
   realm_not?: InputMaybe<Scalars['String']>;
   realm_gt?: InputMaybe<Scalars['String']>;
   realm_lt?: InputMaybe<Scalars['String']>;
   realm_gte?: InputMaybe<Scalars['String']>;
   realm_lte?: InputMaybe<Scalars['String']>;
-  realm_in?: InputMaybe<Array<Scalars['String']>>;
-  realm_not_in?: InputMaybe<Array<Scalars['String']>>;
+  realm_in?: InputMaybe<Scalars['String'][]>;
+  realm_not_in?: InputMaybe<Scalars['String'][]>;
   realm_contains?: InputMaybe<Scalars['String']>;
   realm_contains_nocase?: InputMaybe<Scalars['String']>;
   realm_not_contains?: InputMaybe<Scalars['String']>;
@@ -1588,8 +1589,8 @@ export type Transfer_filter = {
   from_lt?: InputMaybe<Scalars['String']>;
   from_gte?: InputMaybe<Scalars['String']>;
   from_lte?: InputMaybe<Scalars['String']>;
-  from_in?: InputMaybe<Array<Scalars['String']>>;
-  from_not_in?: InputMaybe<Array<Scalars['String']>>;
+  from_in?: InputMaybe<Scalars['String'][]>;
+  from_not_in?: InputMaybe<Scalars['String'][]>;
   from_contains?: InputMaybe<Scalars['String']>;
   from_contains_nocase?: InputMaybe<Scalars['String']>;
   from_not_contains?: InputMaybe<Scalars['String']>;
@@ -1609,8 +1610,8 @@ export type Transfer_filter = {
   to_lt?: InputMaybe<Scalars['String']>;
   to_gte?: InputMaybe<Scalars['String']>;
   to_lte?: InputMaybe<Scalars['String']>;
-  to_in?: InputMaybe<Array<Scalars['String']>>;
-  to_not_in?: InputMaybe<Array<Scalars['String']>>;
+  to_in?: InputMaybe<Scalars['String'][]>;
+  to_not_in?: InputMaybe<Scalars['String'][]>;
   to_contains?: InputMaybe<Scalars['String']>;
   to_contains_nocase?: InputMaybe<Scalars['String']>;
   to_not_contains?: InputMaybe<Scalars['String']>;
@@ -1630,8 +1631,8 @@ export type Transfer_filter = {
   txHash_lt?: InputMaybe<Scalars['Bytes']>;
   txHash_gte?: InputMaybe<Scalars['Bytes']>;
   txHash_lte?: InputMaybe<Scalars['Bytes']>;
-  txHash_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  txHash_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  txHash_in?: InputMaybe<Scalars['Bytes'][]>;
+  txHash_not_in?: InputMaybe<Scalars['Bytes'][]>;
   txHash_contains?: InputMaybe<Scalars['Bytes']>;
   txHash_not_contains?: InputMaybe<Scalars['Bytes']>;
   timestamp?: InputMaybe<Scalars['BigInt']>;
@@ -1640,13 +1641,13 @@ export type Transfer_filter = {
   timestamp_lt?: InputMaybe<Scalars['BigInt']>;
   timestamp_gte?: InputMaybe<Scalars['BigInt']>;
   timestamp_lte?: InputMaybe<Scalars['BigInt']>;
-  timestamp_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  timestamp_in?: InputMaybe<Scalars['BigInt'][]>;
+  timestamp_not_in?: InputMaybe<Scalars['BigInt'][]>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Transfer_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Transfer_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Transfer_filter>[]>;
+  or?: InputMaybe<InputMaybe<Transfer_filter>[]>;
+}
 
 export type Transfer_orderBy =
   | 'id'
@@ -1682,43 +1683,43 @@ export type Transfer_orderBy =
   | 'txHash'
   | 'timestamp';
 
-export type Wallet = {
+export interface Wallet {
   id: Scalars['ID'];
   address: Scalars['Bytes'];
-  realms?: Maybe<Array<Realm>>;
+  realms?: Maybe<Realm[]>;
   realmsHeld: Scalars['BigInt'];
   bridgedRealmsHeld: Scalars['BigInt'];
   bridgedV2RealmsHeld: Scalars['BigInt'];
   totalRealms: Scalars['BigInt'];
   joined: Scalars['BigInt'];
-};
+}
 
 
-export type WalletrealmsArgs = {
+export interface WalletrealmsArgs {
   skip?: InputMaybe<Scalars['Int']>;
   first?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Realm_orderBy>;
   orderDirection?: InputMaybe<OrderDirection>;
   where?: InputMaybe<Realm_filter>;
-};
+}
 
-export type Wallet_filter = {
+export interface Wallet_filter {
   id?: InputMaybe<Scalars['ID']>;
   id_not?: InputMaybe<Scalars['ID']>;
   id_gt?: InputMaybe<Scalars['ID']>;
   id_lt?: InputMaybe<Scalars['ID']>;
   id_gte?: InputMaybe<Scalars['ID']>;
   id_lte?: InputMaybe<Scalars['ID']>;
-  id_in?: InputMaybe<Array<Scalars['ID']>>;
-  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  id_in?: InputMaybe<Scalars['ID'][]>;
+  id_not_in?: InputMaybe<Scalars['ID'][]>;
   address?: InputMaybe<Scalars['Bytes']>;
   address_not?: InputMaybe<Scalars['Bytes']>;
   address_gt?: InputMaybe<Scalars['Bytes']>;
   address_lt?: InputMaybe<Scalars['Bytes']>;
   address_gte?: InputMaybe<Scalars['Bytes']>;
   address_lte?: InputMaybe<Scalars['Bytes']>;
-  address_in?: InputMaybe<Array<Scalars['Bytes']>>;
-  address_not_in?: InputMaybe<Array<Scalars['Bytes']>>;
+  address_in?: InputMaybe<Scalars['Bytes'][]>;
+  address_not_in?: InputMaybe<Scalars['Bytes'][]>;
   address_contains?: InputMaybe<Scalars['Bytes']>;
   address_not_contains?: InputMaybe<Scalars['Bytes']>;
   realms_?: InputMaybe<Realm_filter>;
@@ -1728,45 +1729,45 @@ export type Wallet_filter = {
   realmsHeld_lt?: InputMaybe<Scalars['BigInt']>;
   realmsHeld_gte?: InputMaybe<Scalars['BigInt']>;
   realmsHeld_lte?: InputMaybe<Scalars['BigInt']>;
-  realmsHeld_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  realmsHeld_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  realmsHeld_in?: InputMaybe<Scalars['BigInt'][]>;
+  realmsHeld_not_in?: InputMaybe<Scalars['BigInt'][]>;
   bridgedRealmsHeld?: InputMaybe<Scalars['BigInt']>;
   bridgedRealmsHeld_not?: InputMaybe<Scalars['BigInt']>;
   bridgedRealmsHeld_gt?: InputMaybe<Scalars['BigInt']>;
   bridgedRealmsHeld_lt?: InputMaybe<Scalars['BigInt']>;
   bridgedRealmsHeld_gte?: InputMaybe<Scalars['BigInt']>;
   bridgedRealmsHeld_lte?: InputMaybe<Scalars['BigInt']>;
-  bridgedRealmsHeld_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  bridgedRealmsHeld_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  bridgedRealmsHeld_in?: InputMaybe<Scalars['BigInt'][]>;
+  bridgedRealmsHeld_not_in?: InputMaybe<Scalars['BigInt'][]>;
   bridgedV2RealmsHeld?: InputMaybe<Scalars['BigInt']>;
   bridgedV2RealmsHeld_not?: InputMaybe<Scalars['BigInt']>;
   bridgedV2RealmsHeld_gt?: InputMaybe<Scalars['BigInt']>;
   bridgedV2RealmsHeld_lt?: InputMaybe<Scalars['BigInt']>;
   bridgedV2RealmsHeld_gte?: InputMaybe<Scalars['BigInt']>;
   bridgedV2RealmsHeld_lte?: InputMaybe<Scalars['BigInt']>;
-  bridgedV2RealmsHeld_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  bridgedV2RealmsHeld_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  bridgedV2RealmsHeld_in?: InputMaybe<Scalars['BigInt'][]>;
+  bridgedV2RealmsHeld_not_in?: InputMaybe<Scalars['BigInt'][]>;
   totalRealms?: InputMaybe<Scalars['BigInt']>;
   totalRealms_not?: InputMaybe<Scalars['BigInt']>;
   totalRealms_gt?: InputMaybe<Scalars['BigInt']>;
   totalRealms_lt?: InputMaybe<Scalars['BigInt']>;
   totalRealms_gte?: InputMaybe<Scalars['BigInt']>;
   totalRealms_lte?: InputMaybe<Scalars['BigInt']>;
-  totalRealms_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  totalRealms_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  totalRealms_in?: InputMaybe<Scalars['BigInt'][]>;
+  totalRealms_not_in?: InputMaybe<Scalars['BigInt'][]>;
   joined?: InputMaybe<Scalars['BigInt']>;
   joined_not?: InputMaybe<Scalars['BigInt']>;
   joined_gt?: InputMaybe<Scalars['BigInt']>;
   joined_lt?: InputMaybe<Scalars['BigInt']>;
   joined_gte?: InputMaybe<Scalars['BigInt']>;
   joined_lte?: InputMaybe<Scalars['BigInt']>;
-  joined_in?: InputMaybe<Array<Scalars['BigInt']>>;
-  joined_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  joined_in?: InputMaybe<Scalars['BigInt'][]>;
+  joined_not_in?: InputMaybe<Scalars['BigInt'][]>;
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
-  and?: InputMaybe<Array<InputMaybe<Wallet_filter>>>;
-  or?: InputMaybe<Array<InputMaybe<Wallet_filter>>>;
-};
+  and?: InputMaybe<InputMaybe<Wallet_filter>[]>;
+  or?: InputMaybe<InputMaybe<Wallet_filter>[]>;
+}
 
 export type Wallet_orderBy =
   | 'id'
@@ -1784,19 +1785,19 @@ export type ResolversObject<TObject> = WithIndex<TObject>;
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 
-export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
+export interface ResolverWithResolve<TResult, TParent, TContext, TArgs> {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
+}
 
-export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
+export interface LegacyStitchingResolver<TResult, TParent, TContext, TArgs> {
   fragment: string;
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
+}
 
-export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
+export interface NewStitchingResolver<TResult, TParent, TContext, TArgs> {
   selectionSet: string | ((fieldNode: FieldNode) => SelectionSetNode);
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
+}
 export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
 export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
   | ResolverFn<TResult, TParent, TContext, TArgs>
@@ -1971,47 +1972,47 @@ export type ResolversParentTypes = ResolversObject<{
   Wallet_filter: Wallet_filter;
 }>;
 
-export type entityDirectiveArgs = { };
+export interface entityDirectiveArgs { }
 
 export type entityDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = entityDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type subgraphIdDirectiveArgs = {
+export interface subgraphIdDirectiveArgs {
   id: Scalars['String'];
-};
+}
 
 export type subgraphIdDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = subgraphIdDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type derivedFromDirectiveArgs = {
+export interface derivedFromDirectiveArgs {
   field: Scalars['String'];
-};
+}
 
 export type derivedFromDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = derivedFromDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type QueryResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  l2deposits?: Resolver<Array<ResolversTypes['L2Deposit']>, ParentType, ContextType, RequireFields<Queryl2depositsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
+  l2deposits?: Resolver<ResolversTypes['L2Deposit'][], ParentType, ContextType, RequireFields<Queryl2depositsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
   deposit?: Resolver<Maybe<ResolversTypes['Deposit']>, ParentType, ContextType, RequireFields<QuerydepositArgs, 'id' | 'subgraphError'>>;
-  l2withdrawals?: Resolver<Array<ResolversTypes['L2Withdrawal']>, ParentType, ContextType, RequireFields<Queryl2withdrawalsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
-  beasts?: Resolver<Array<ResolversTypes['Beast']>, ParentType, ContextType, RequireFields<QuerybeastsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
+  l2withdrawals?: Resolver<ResolversTypes['L2Withdrawal'][], ParentType, ContextType, RequireFields<Queryl2withdrawalsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
+  beasts?: Resolver<ResolversTypes['Beast'][], ParentType, ContextType, RequireFields<QuerybeastsArgs, 'first' | 'skip' | 'orderBy' | 'orderByDirection' | 'where'>>;
   depositEvent?: Resolver<Maybe<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<QuerydepositEventArgs, 'id' | 'subgraphError'>>;
-  depositEvents?: Resolver<Array<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<QuerydepositEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
-  deposits?: Resolver<Array<ResolversTypes['Deposit']>, ParentType, ContextType, RequireFields<QuerydepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  depositEvents?: Resolver<ResolversTypes['DepositEvent'][], ParentType, ContextType, RequireFields<QuerydepositEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  deposits?: Resolver<ResolversTypes['Deposit'][], ParentType, ContextType, RequireFields<QuerydepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
   withdrawalEvent?: Resolver<Maybe<ResolversTypes['WithdrawalEvent']>, ParentType, ContextType, RequireFields<QuerywithdrawalEventArgs, 'id' | 'subgraphError'>>;
-  withdrawalEvents?: Resolver<Array<ResolversTypes['WithdrawalEvent']>, ParentType, ContextType, RequireFields<QuerywithdrawalEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  withdrawalEvents?: Resolver<ResolversTypes['WithdrawalEvent'][], ParentType, ContextType, RequireFields<QuerywithdrawalEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
   withdrawal?: Resolver<Maybe<ResolversTypes['Withdrawal']>, ParentType, ContextType, RequireFields<QuerywithdrawalArgs, 'id' | 'subgraphError'>>;
-  withdrawals?: Resolver<Array<ResolversTypes['Withdrawal']>, ParentType, ContextType, RequireFields<QuerywithdrawalsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  withdrawals?: Resolver<ResolversTypes['Withdrawal'][], ParentType, ContextType, RequireFields<QuerywithdrawalsArgs, 'skip' | 'first' | 'subgraphError'>>;
   token?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokenArgs, 'id' | 'subgraphError'>>;
-  tokens?: Resolver<Array<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<QuerytokensArgs, 'skip' | 'first' | 'subgraphError'>>;
+  tokens?: Resolver<ResolversTypes['Token'][], ParentType, ContextType, RequireFields<QuerytokensArgs, 'skip' | 'first' | 'subgraphError'>>;
   _meta?: Resolver<Maybe<ResolversTypes['_Meta_']>, ParentType, ContextType, Partial<Query_metaArgs>>;
   resource?: Resolver<Maybe<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<QueryresourceArgs, 'id' | 'subgraphError'>>;
-  resources?: Resolver<Array<ResolversTypes['Resource']>, ParentType, ContextType, RequireFields<QueryresourcesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  resources?: Resolver<ResolversTypes['Resource'][], ParentType, ContextType, RequireFields<QueryresourcesArgs, 'skip' | 'first' | 'subgraphError'>>;
   realm?: Resolver<Maybe<ResolversTypes['Realm']>, ParentType, ContextType, RequireFields<QueryrealmArgs, 'id' | 'subgraphError'>>;
-  realms?: Resolver<Array<ResolversTypes['Realm']>, ParentType, ContextType, RequireFields<QueryrealmsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  realms?: Resolver<ResolversTypes['Realm'][], ParentType, ContextType, RequireFields<QueryrealmsArgs, 'skip' | 'first' | 'subgraphError'>>;
   realmResource?: Resolver<Maybe<ResolversTypes['RealmResource']>, ParentType, ContextType, RequireFields<QueryrealmResourceArgs, 'id' | 'subgraphError'>>;
-  realmResources?: Resolver<Array<ResolversTypes['RealmResource']>, ParentType, ContextType, RequireFields<QueryrealmResourcesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  realmResources?: Resolver<ResolversTypes['RealmResource'][], ParentType, ContextType, RequireFields<QueryrealmResourcesArgs, 'skip' | 'first' | 'subgraphError'>>;
   wallet?: Resolver<Maybe<ResolversTypes['Wallet']>, ParentType, ContextType, RequireFields<QuerywalletArgs, 'id' | 'subgraphError'>>;
-  wallets?: Resolver<Array<ResolversTypes['Wallet']>, ParentType, ContextType, RequireFields<QuerywalletsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  wallets?: Resolver<ResolversTypes['Wallet'][], ParentType, ContextType, RequireFields<QuerywalletsArgs, 'skip' | 'first' | 'subgraphError'>>;
   transfer?: Resolver<Maybe<ResolversTypes['Transfer']>, ParentType, ContextType, RequireFields<QuerytransferArgs, 'id' | 'subgraphError'>>;
-  transfers?: Resolver<Array<ResolversTypes['Transfer']>, ParentType, ContextType, RequireFields<QuerytransfersArgs, 'skip' | 'first' | 'subgraphError'>>;
+  transfers?: Resolver<ResolversTypes['Transfer'][], ParentType, ContextType, RequireFields<QuerytransfersArgs, 'skip' | 'first' | 'subgraphError'>>;
 }>;
 
 export type L2DepositResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['L2Deposit'] = ResolversParentTypes['L2Deposit']> = ResolversObject<{
@@ -2055,26 +2056,26 @@ export type BeastResolvers<ContextType = MeshContext, ParentType extends Resolve
 
 export type SubscriptionResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
   depositEvent?: SubscriptionResolver<Maybe<ResolversTypes['DepositEvent']>, "depositEvent", ParentType, ContextType, RequireFields<SubscriptiondepositEventArgs, 'id' | 'subgraphError'>>;
-  depositEvents?: SubscriptionResolver<Array<ResolversTypes['DepositEvent']>, "depositEvents", ParentType, ContextType, RequireFields<SubscriptiondepositEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  depositEvents?: SubscriptionResolver<ResolversTypes['DepositEvent'][], "depositEvents", ParentType, ContextType, RequireFields<SubscriptiondepositEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
   deposit?: SubscriptionResolver<Maybe<ResolversTypes['Deposit']>, "deposit", ParentType, ContextType, RequireFields<SubscriptiondepositArgs, 'id' | 'subgraphError'>>;
-  deposits?: SubscriptionResolver<Array<ResolversTypes['Deposit']>, "deposits", ParentType, ContextType, RequireFields<SubscriptiondepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  deposits?: SubscriptionResolver<ResolversTypes['Deposit'][], "deposits", ParentType, ContextType, RequireFields<SubscriptiondepositsArgs, 'skip' | 'first' | 'subgraphError'>>;
   withdrawalEvent?: SubscriptionResolver<Maybe<ResolversTypes['WithdrawalEvent']>, "withdrawalEvent", ParentType, ContextType, RequireFields<SubscriptionwithdrawalEventArgs, 'id' | 'subgraphError'>>;
-  withdrawalEvents?: SubscriptionResolver<Array<ResolversTypes['WithdrawalEvent']>, "withdrawalEvents", ParentType, ContextType, RequireFields<SubscriptionwithdrawalEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  withdrawalEvents?: SubscriptionResolver<ResolversTypes['WithdrawalEvent'][], "withdrawalEvents", ParentType, ContextType, RequireFields<SubscriptionwithdrawalEventsArgs, 'skip' | 'first' | 'subgraphError'>>;
   withdrawal?: SubscriptionResolver<Maybe<ResolversTypes['Withdrawal']>, "withdrawal", ParentType, ContextType, RequireFields<SubscriptionwithdrawalArgs, 'id' | 'subgraphError'>>;
-  withdrawals?: SubscriptionResolver<Array<ResolversTypes['Withdrawal']>, "withdrawals", ParentType, ContextType, RequireFields<SubscriptionwithdrawalsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  withdrawals?: SubscriptionResolver<ResolversTypes['Withdrawal'][], "withdrawals", ParentType, ContextType, RequireFields<SubscriptionwithdrawalsArgs, 'skip' | 'first' | 'subgraphError'>>;
   token?: SubscriptionResolver<Maybe<ResolversTypes['Token']>, "token", ParentType, ContextType, RequireFields<SubscriptiontokenArgs, 'id' | 'subgraphError'>>;
-  tokens?: SubscriptionResolver<Array<ResolversTypes['Token']>, "tokens", ParentType, ContextType, RequireFields<SubscriptiontokensArgs, 'skip' | 'first' | 'subgraphError'>>;
+  tokens?: SubscriptionResolver<ResolversTypes['Token'][], "tokens", ParentType, ContextType, RequireFields<SubscriptiontokensArgs, 'skip' | 'first' | 'subgraphError'>>;
   _meta?: SubscriptionResolver<Maybe<ResolversTypes['_Meta_']>, "_meta", ParentType, ContextType, Partial<Subscription_metaArgs>>;
   resource?: SubscriptionResolver<Maybe<ResolversTypes['Resource']>, "resource", ParentType, ContextType, RequireFields<SubscriptionresourceArgs, 'id' | 'subgraphError'>>;
-  resources?: SubscriptionResolver<Array<ResolversTypes['Resource']>, "resources", ParentType, ContextType, RequireFields<SubscriptionresourcesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  resources?: SubscriptionResolver<ResolversTypes['Resource'][], "resources", ParentType, ContextType, RequireFields<SubscriptionresourcesArgs, 'skip' | 'first' | 'subgraphError'>>;
   realm?: SubscriptionResolver<Maybe<ResolversTypes['Realm']>, "realm", ParentType, ContextType, RequireFields<SubscriptionrealmArgs, 'id' | 'subgraphError'>>;
-  realms?: SubscriptionResolver<Array<ResolversTypes['Realm']>, "realms", ParentType, ContextType, RequireFields<SubscriptionrealmsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  realms?: SubscriptionResolver<ResolversTypes['Realm'][], "realms", ParentType, ContextType, RequireFields<SubscriptionrealmsArgs, 'skip' | 'first' | 'subgraphError'>>;
   realmResource?: SubscriptionResolver<Maybe<ResolversTypes['RealmResource']>, "realmResource", ParentType, ContextType, RequireFields<SubscriptionrealmResourceArgs, 'id' | 'subgraphError'>>;
-  realmResources?: SubscriptionResolver<Array<ResolversTypes['RealmResource']>, "realmResources", ParentType, ContextType, RequireFields<SubscriptionrealmResourcesArgs, 'skip' | 'first' | 'subgraphError'>>;
+  realmResources?: SubscriptionResolver<ResolversTypes['RealmResource'][], "realmResources", ParentType, ContextType, RequireFields<SubscriptionrealmResourcesArgs, 'skip' | 'first' | 'subgraphError'>>;
   wallet?: SubscriptionResolver<Maybe<ResolversTypes['Wallet']>, "wallet", ParentType, ContextType, RequireFields<SubscriptionwalletArgs, 'id' | 'subgraphError'>>;
-  wallets?: SubscriptionResolver<Array<ResolversTypes['Wallet']>, "wallets", ParentType, ContextType, RequireFields<SubscriptionwalletsArgs, 'skip' | 'first' | 'subgraphError'>>;
+  wallets?: SubscriptionResolver<ResolversTypes['Wallet'][], "wallets", ParentType, ContextType, RequireFields<SubscriptionwalletsArgs, 'skip' | 'first' | 'subgraphError'>>;
   transfer?: SubscriptionResolver<Maybe<ResolversTypes['Transfer']>, "transfer", ParentType, ContextType, RequireFields<SubscriptiontransferArgs, 'id' | 'subgraphError'>>;
-  transfers?: SubscriptionResolver<Array<ResolversTypes['Transfer']>, "transfers", ParentType, ContextType, RequireFields<SubscriptiontransfersArgs, 'skip' | 'first' | 'subgraphError'>>;
+  transfers?: SubscriptionResolver<ResolversTypes['Transfer'][], "transfers", ParentType, ContextType, RequireFields<SubscriptiontransfersArgs, 'skip' | 'first' | 'subgraphError'>>;
 }>;
 
 export interface BigDecimalScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['BigDecimal'], any> {
@@ -2091,7 +2092,7 @@ export interface BytesScalarConfig extends GraphQLScalarTypeConfig<ResolversType
 
 export type DepositResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Deposit'] = ResolversParentTypes['Deposit']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  depositEvents?: Resolver<Array<ResolversTypes['DepositEvent']>, ParentType, ContextType, RequireFields<DepositdepositEventsArgs, 'skip' | 'first'>>;
+  depositEvents?: Resolver<ResolversTypes['DepositEvent'][], ParentType, ContextType, RequireFields<DepositdepositEventsArgs, 'skip' | 'first'>>;
   l1Sender?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   l2Recipient?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   createdTimestamp?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
@@ -2104,7 +2105,7 @@ export type DepositEventResolvers<ContextType = MeshContext, ParentType extends 
   bridgeAddressL2?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   amount?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['TransferStatus'], ParentType, ContextType>;
-  payload?: Resolver<Maybe<Array<ResolversTypes['BigInt']>>, ParentType, ContextType>;
+  payload?: Resolver<Maybe<ResolversTypes['BigInt'][]>, ParentType, ContextType>;
   nonce?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
   createdAtBlock?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   createdTxHash?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
@@ -2131,7 +2132,7 @@ export type WithdrawalResolvers<ContextType = MeshContext, ParentType extends Re
   l1Recipient?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   l2Sender?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
   createdTimestamp?: Resolver<Maybe<ResolversTypes['BigInt']>, ParentType, ContextType>;
-  withdrawalEvents?: Resolver<Array<ResolversTypes['WithdrawalEvent']>, ParentType, ContextType, RequireFields<WithdrawalwithdrawalEventsArgs, 'skip' | 'first'>>;
+  withdrawalEvents?: Resolver<ResolversTypes['WithdrawalEvent'][], ParentType, ContextType, RequireFields<WithdrawalwithdrawalEventsArgs, 'skip' | 'first'>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -2174,8 +2175,8 @@ export type RealmResolvers<ContextType = MeshContext, ParentType extends Resolve
   harbours?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   rivers?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   regions?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  resourceIds?: Resolver<Array<ResolversTypes['Int']>, ParentType, ContextType>;
-  resources?: Resolver<Maybe<Array<ResolversTypes['RealmResource']>>, ParentType, ContextType, RequireFields<RealmresourcesArgs, 'skip' | 'first'>>;
+  resourceIds?: Resolver<ResolversTypes['Int'][], ParentType, ContextType>;
+  resources?: Resolver<Maybe<ResolversTypes['RealmResource'][]>, ParentType, ContextType, RequireFields<RealmresourcesArgs, 'skip' | 'first'>>;
   wonder?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   rarityScore?: Resolver<ResolversTypes['BigDecimal'], ParentType, ContextType>;
   rarityRank?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -2196,7 +2197,7 @@ export type ResourceResolvers<ContextType = MeshContext, ParentType extends Reso
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   totalRealms?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  realms?: Resolver<Array<ResolversTypes['RealmResource']>, ParentType, ContextType, RequireFields<ResourcerealmsArgs, 'skip' | 'first'>>;
+  realms?: Resolver<ResolversTypes['RealmResource'][], ParentType, ContextType, RequireFields<ResourcerealmsArgs, 'skip' | 'first'>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -2213,7 +2214,7 @@ export type TransferResolvers<ContextType = MeshContext, ParentType extends Reso
 export type WalletResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Wallet'] = ResolversParentTypes['Wallet']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   address?: Resolver<ResolversTypes['Bytes'], ParentType, ContextType>;
-  realms?: Resolver<Maybe<Array<ResolversTypes['Realm']>>, ParentType, ContextType, RequireFields<WalletrealmsArgs, 'skip' | 'first'>>;
+  realms?: Resolver<Maybe<ResolversTypes['Realm'][]>, ParentType, ContextType, RequireFields<WalletrealmsArgs, 'skip' | 'first'>>;
   realmsHeld?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   bridgedRealmsHeld?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
   bridgedV2RealmsHeld?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>;
@@ -2297,7 +2298,7 @@ const cache = new (MeshCache as any)({
       store: rootStore.child('cache'),
       pubsub,
       logger,
-    } as any)
+    })
 
 const sources: MeshResolvedSource[] = [];
 const transforms: MeshTransform[] = [];
@@ -2450,7 +2451,7 @@ export type BeastsQueryVariables = Exact<{
 }>;
 
 
-export type BeastsQuery = { beasts: Array<Pick<Beast, 'id' | 'name' | 'image' | 'level' | 'tier' | 'prefix' | 'suffix' | 'owner'>> };
+export interface BeastsQuery { beasts: Pick<Beast, 'id' | 'name' | 'image' | 'level' | 'tier' | 'prefix' | 'suffix' | 'owner'>[] }
 
 export type DepositsQueryVariables = Exact<{
   depositsWhere?: InputMaybe<Deposit_filter>;
@@ -2458,21 +2459,17 @@ export type DepositsQueryVariables = Exact<{
 }>;
 
 
-export type DepositsQuery = { deposits: Array<(
-    Pick<Deposit, 'id' | 'l1Sender' | 'l2Recipient' | 'createdTimestamp'>
-    & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate' | 'payload' | 'nonce'>> }
-  )>, withdrawals: Array<(
-    Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
-    & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
-  )> };
+export interface DepositsQuery { deposits: (Pick<Deposit, 'id' | 'l1Sender' | 'l2Recipient' | 'createdTimestamp'>
+    & { depositEvents: Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate' | 'payload' | 'nonce'>[] })[], withdrawals: (Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
+    & { withdrawalEvents: Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>[] })[] }
 
 export type WalletsRealmsQueryVariables = Exact<{
-  addresses?: InputMaybe<Array<Scalars['Bytes']> | Scalars['Bytes']>;
+  addresses?: InputMaybe<Scalars['Bytes'][] | Scalars['Bytes']>;
   first?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type WalletsRealmsQuery = { wallets: Array<Pick<Wallet, 'realmsHeld' | 'bridgedRealmsHeld' | 'bridgedV2RealmsHeld'>> };
+export interface WalletsRealmsQuery { wallets: Pick<Wallet, 'realmsHeld' | 'bridgedRealmsHeld' | 'bridgedV2RealmsHeld'>[] }
 
 export type UsersRealmsQueryVariables = Exact<{
   address: Scalars['String'];
@@ -2482,7 +2479,7 @@ export type UsersRealmsQueryVariables = Exact<{
 }>;
 
 
-export type UsersRealmsQuery = { realms: Array<Pick<Realm, 'id' | 'name'>>, bridgedRealms: Array<Pick<Realm, 'id' | 'name'>>, bridgedV2Realms: Array<Pick<Realm, 'id' | 'name'>>, wallet?: Maybe<Pick<Wallet, 'realmsHeld' | 'bridgedRealmsHeld' | 'bridgedV2RealmsHeld'>> };
+export interface UsersRealmsQuery { realms: Pick<Realm, 'id' | 'name'>[], bridgedRealms: Pick<Realm, 'id' | 'name'>[], bridgedV2Realms: Pick<Realm, 'id' | 'name'>[], wallet?: Maybe<Pick<Wallet, 'realmsHeld' | 'bridgedRealmsHeld' | 'bridgedV2RealmsHeld'>> }
 
 export type L2WithdrawalsQueryVariables = Exact<{
   where?: InputMaybe<WhereFilterForWithdrawals>;
@@ -2490,20 +2487,16 @@ export type L2WithdrawalsQueryVariables = Exact<{
 }>;
 
 
-export type L2WithdrawalsQuery = { l2withdrawals: Array<Pick<L2Withdrawal, 'l2Sender' | 'l1Recipient' | 'amount' | 'timestamp'>>, deposits: Array<(
-    Pick<Deposit, 'id' | 'l1Sender' | 'l2Recipient' | 'createdTimestamp'>
-    & { depositEvents: Array<Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate' | 'payload' | 'nonce'>> }
-  )> };
+export interface L2WithdrawalsQuery { l2withdrawals: Pick<L2Withdrawal, 'l2Sender' | 'l1Recipient' | 'amount' | 'timestamp'>[], deposits: (Pick<Deposit, 'id' | 'l1Sender' | 'l2Recipient' | 'createdTimestamp'>
+    & { depositEvents: Pick<DepositEvent, 'id' | 'status' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate' | 'payload' | 'nonce'>[] })[] }
 
 export type WithdrawalsQueryVariables = Exact<{
   where?: InputMaybe<Withdrawal_filter>;
 }>;
 
 
-export type WithdrawalsQuery = { withdrawals: Array<(
-    Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
-    & { withdrawalEvents: Array<Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>> }
-  )> };
+export interface WithdrawalsQuery { withdrawals: (Pick<Withdrawal, 'id' | 'l2Sender' | 'l1Recipient' | 'createdTimestamp'>
+    & { withdrawalEvents: Pick<WithdrawalEvent, 'id' | 'status' | 'l1Recipient' | 'amount' | 'createdTxHash' | 'finishedTxHash' | 'finishedAtDate'>[] })[] }
 
 
 export const BeastsDocument = gql`

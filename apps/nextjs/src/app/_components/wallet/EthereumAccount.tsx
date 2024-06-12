@@ -1,84 +1,49 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useUIContext } from "@/app/providers/UIProvider";
-import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
-import Album from "@/icons/album.svg";
+import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import EthereumLogo from "@/icons/ethereum.svg";
-import Lords from "@/icons/lords.svg";
+import { shortenHex } from "@/utils/utils";
 import { LogOut } from "lucide-react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
 
+import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
-import { AccountLink } from "./AccountLink";
+import { CopyButton } from "../CopyButton";
 import { EthereumLoginButton } from "./EthereumLoginButton";
-import { DisplayBalance } from "./StarkAccount";
+import { ExplorerLink } from "./ExplorerLink";
 
 function EthereumAccount() {
   const { address, isConnected } = useAccount();
   const { error } = useConnect();
   const { disconnect } = useDisconnect();
-  const { balances } = useWalletsProviderContext();
+  const { data: ensAddress } = useEnsName({ address });
 
-  const { toggleAccount } = useUIContext();
-
-  const DisplayChainInfo = () => (
-    <div className="flex">
-      <EthereumLogo className="mx-2 w-5" />
-      <AccountLink isL1 />
-    </div>
-  );
-
-  const router = useRouter();
+  const displayEthAddress = ensAddress ?? shortenHex(address ?? "", 8);
 
   if (isConnected) {
     return (
-      <div className="flex w-full flex-col justify-between border-2">
-        <div className="flex justify-between p-2">
-          <DisplayChainInfo />
+      <div className="flex w-full justify-between border-t p-2">
+        <div className="flex py-1 text-lg">
+          <EthereumLogo className="mr-3 w-7" />
+          {address && (
+            <CopyButton text={address} displayText={displayEthAddress} />
+          )}
+        </div>
+        <div className="flex items-center space-x-2">
+          <ExplorerLink isL1 />
           <Button variant="outline" size="xs" onClick={() => disconnect()}>
             <LogOut className="w-4 self-center" />
-          </Button>
-        </div>
-        <div className="flex justify-between border-t p-2 ">
-          <Button
-            onClick={() => {
-              router.push(`/user/${address}`);
-              toggleAccount();
-            }}
-            variant="outline"
-          >
-            <Album className="mr-2 h-6 w-6" />
-            Assets
-          </Button>
-          <DisplayBalance
-            icon={<EthereumLogo className="mr-2 w-4" />}
-            balance={balances.l1.eth}
-            tokenName="ETH"
-          />
-          <DisplayBalance
-            icon={<Lords className="w-6 fill-current pr-2" />}
-            balance={balances.l1.lords}
-            tokenName="LORDS"
-          />
-          <Button
-            onClick={() => {
-              router.push(`/bridge`);
-              toggleAccount();
-            }}
-            size="sm"
-            variant="default"
-          >
-            Bridge
           </Button>
         </div>
       </div>
     );
   }
   return (
-    <div className="ml-2 w-full self-center">
-      <EthereumLoginButton />
+    <div className="mb-3 ml-2 w-full self-center">
+      <EthereumLoginButton>
+        Login to {CHAIN_IDS_TO_NAMES[SUPPORTED_L1_CHAIN_ID]}
+      </EthereumLoginButton>
       {error && <div>{error.message}</div>}
     </div>
   );

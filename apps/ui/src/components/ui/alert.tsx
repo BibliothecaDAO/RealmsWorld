@@ -1,92 +1,61 @@
 import type { VariantProps } from "class-variance-authority";
-import React from "react";
+import * as React from "react";
 import { cva } from "class-variance-authority";
-import { AlertTriangleIcon, CheckCircleIcon, InfoIcon } from "lucide-react";
-import PropTypes from "prop-types";
 
 import { cn } from "@realms-world/utils";
 
-export const AlertType = {
-  SUCCESS: "success",
-  ERROR: "error",
-  WARNING: "warning",
-  INFO: "info",
-};
-
-export const AlertAlign = {
-  LEFT: "alignLeft",
-  CENTER: "alignCenter",
-  RIGHT: "alignRight",
-};
-const alertVariants = cva("flex rounded border-2 text-lg p-2 font-sans", {
-  variants: {
-    variant: {
-      success: "border-cyan-400 bg-emerald-300",
-      warning: "border-yellow-500 bg-amber-100 !text-yellow-600",
-      info: "border-slate-600 bg-slate-400",
-      error: "",
+const alertVariants = cva(
+  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+  {
+    variants: {
+      variant: {
+        default: "bg-background text-foreground",
+        warning: "border-yellow-500 bg-amber-100 !text-yellow-600",
+        destructive:
+          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+      },
     },
-    align: {
-      left: "",
-      center: "justify-center",
-      right: "justify-flex-end",
+    defaultVariants: {
+      variant: "default",
     },
   },
-});
+);
 
-export interface AlertProps extends VariantProps<typeof alertVariants> {
-  title?: string;
-  message?: string;
-}
+const Alert = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+>(({ className, variant, ...props }, ref) => (
+  <div
+    ref={ref}
+    role="alert"
+    className={cn(alertVariants({ variant }), className)}
+    {...props}
+  />
+));
+Alert.displayName = "Alert";
 
-export const Alert = ({
-  title = "",
-  message = "",
-  variant = "info",
-  align = "left",
-}: AlertProps) => {
-  const renderIcon = () => {
-    switch (variant) {
-      case AlertType.SUCCESS:
-        return <CheckCircleIcon />;
-      case AlertType.WARNING:
-        return <AlertTriangleIcon />;
-      case AlertType.ERROR:
-      case AlertType.INFO:
-      default:
-        return <InfoIcon />;
-    }
-  };
+const AlertTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h5
+    ref={ref}
+    className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+    {...props}
+  />
+));
+AlertTitle.displayName = "AlertTitle";
 
-  return (
-    <div className={cn("flex rounded p-2", alertVariants({ variant, align }))}>
-      <div className={cn("flex w-full" /*, styles[align]*/)}>
-        <div className="mr-2 flex h-5 w-5 justify-around self-center">
-          {renderIcon()}
-        </div>
-        <div className="flex w-full flex-col text-left ">
-          {title && (
-            <div
-              dangerouslySetInnerHTML={{ __html: title }}
-              className="font-medium"
-            ></div>
-          )}
-          {message && (
-            <div
-              className="text-ellipsis+ max-w-full self-center
-              "
-              dangerouslySetInnerHTML={{ __html: message }}
-            />
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
+const AlertDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    {...props}
+  />
+));
+AlertDescription.displayName = "AlertDescription";
 
-Alert.propTypes = {
-  title: PropTypes.string,
-  message: PropTypes.string,
-  type: PropTypes.string,
-  align: PropTypes.string,
-};
+export { Alert, AlertTitle, AlertDescription };

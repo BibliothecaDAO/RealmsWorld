@@ -1,4 +1,4 @@
-import type { Collection, TokenMarketData } from "@/types";
+import type { TokenMarketData } from "@/types";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
@@ -18,11 +18,11 @@ import { LoadingSkeleton } from "./loading";
 import { TokenContent } from "./TokenContent";
 import { TokenInformation } from "./TokenInformation";
 
-export async function generateMetadata({
+export function generateMetadata({
   params: { tokenId, id },
 }: {
   params: { id: string; tokenId: string };
-}): Promise<Metadata> {
+}): Metadata {
   const collection = CollectionDetails[id as Collections].displayName;
   return {
     title: `${collection} #${tokenId}`,
@@ -36,7 +36,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
+export default function Page({
   params,
 }: {
   params: { id: string; tokenId: string };
@@ -49,7 +49,7 @@ export default async function Page({
     return (
       <Suspense fallback={<LoadingSkeleton />}>
         <L2TokenData
-          contractAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID]!}
+          contractAddress={tokenAddresses[SUPPORTED_L2_CHAIN_ID] ?? ""}
           tokenId={params.tokenId}
           collectionId={params.id}
         />
@@ -59,7 +59,7 @@ export default async function Page({
     return (
       <L1TokenData
         collectionId={params.id}
-        contractAddress={tokenAddresses[SUPPORTED_L1_CHAIN_ID]!}
+        contractAddress={tokenAddresses[SUPPORTED_L1_CHAIN_ID] ?? ""}
         tokenId={params.tokenId}
       />
     );
@@ -122,10 +122,8 @@ const L1TokenData = async ({
       includeAttributes: true,
       includeQuantity: true,
     },
-  }) as Promise<{ tokens: TokenMarketData[] }>;
-  const collectionData = getCollections([
-    { contract: contractAddress },
-  ]) as Promise<{ collections: Collection[] }>;
+  });
+  const collectionData = getCollections([{ contract: contractAddress }]);
   const [{ tokens }, { collections }] = await Promise.all([
     tokensData,
     collectionData,
@@ -134,27 +132,31 @@ const L1TokenData = async ({
   const market = tokens?.[0]?.market;
   const collection = collections?.[0];
 
-  if (!tokens) {
-    return <div>Collection Not Found</div>;
-  }
-
   return (
     <>
       {token && (
         <TokenInformation
           name={token.name}
           image={token.image}
-          tokenId={parseInt(token.tokenId)}
+          tokenId={parseInt(token.tokenId, 10)}
           owner={token.owner}
-          attributes={token.attributes}
+          attributes={token.attributes?.map((attr) => ({
+            key: attr.key ?? "",
+            value: attr.value,
+            collectionId: collectionId,
+            token_key: token.tokenId,
+            attributeId: parseInt(attr.key ?? "0"),
+          }))}
           collection={collection}
           collectionId={collectionId}
         >
-          {market?.floorAsk.price && (
-            <h2>{formatEther(BigInt(market.floorAsk.price.amount.raw))} ETH</h2>
+          {market?.floorAsk?.price && (
+            <h2>
+              {formatEther(BigInt(market.floorAsk.price.amount?.raw ?? 0))} ETH
+            </h2>
           )}
           <div>
-            {collection && (
+            {collection && tokens[0]?.token && (
               <TokenContent collection={collection} token={token} />
             )}
           </div>

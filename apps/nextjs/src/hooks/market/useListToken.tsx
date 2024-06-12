@@ -50,11 +50,11 @@ export const useListToken = ({
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
-      collectionContract?.populateTransaction.set_approval_for_all!(
+      collectionContract?.populateTransaction.set_approval_for_all?.(
         MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`, //Marketplace address
         1,
       ),
-      contract?.populateTransaction.create!(
+      contract?.populateTransaction.create?.(
         tokenId,
         marketplaceId,
         !price ? "0" : parseUnits(`${price}`, 18).toString(),

@@ -10,7 +10,7 @@ import { TopOwners } from "./TopOwners";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const tokenAddresses = getCollectionAddresses(params.id);
-  if (!tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
+  if (!tokenAddresses?.[SUPPORTED_L1_CHAIN_ID]) {
     return <h3 className="mt-8 text-center">Coming Soon</h3>;
   }
   const ownersDistributionData = getOwnersDistribution({
@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       {cards.map((card, index) => (
         <div
           key={index}
-          className="rounded-xl border-2 bg-dark-green px-8 py-2"
+          className="rounded-xl border-2 bg-background px-8 py-2"
         >
           {card.component}
         </div>

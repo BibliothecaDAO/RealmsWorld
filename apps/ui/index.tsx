@@ -15,7 +15,7 @@ export {
   AlertDialogAction,
   AlertDialogCancel,
 } from "./src/components/ui/alert-dialog";
-export { Alert } from "./src/components/ui/alert";
+export { Alert, AlertTitle, AlertDescription } from "./src/components/ui/alert";
 export { AspectRatio } from "./src/components/ui/aspect-ratio";
 export {
   Avatar,
@@ -23,17 +23,18 @@ export {
   AvatarFallback,
 } from "./src/components/ui/avatar";
 export { Button, buttonVariants } from "./src/components/ui/button";
+export type { ButtonProps } from "./src/components/ui/button";
 export { Calendar } from "./src/components/ui/calendar";
 export { Carousel } from "./src/components/ui/carousel";
 
-/* export {
-    Card,
-    CardHeader,
-    CardFooter,
-    CardTitle,
-    CardDescription,
-    CardContent,
-  } from "./src/components/ui/card";*/
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "./src/components/ui/card";
 export {
   Collapsible,
   CollapsibleTrigger,
@@ -74,6 +75,7 @@ export {
   DialogTrigger,
   DialogPortal,
   DialogOverlay,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogFooter,
@@ -165,16 +167,16 @@ export {
 export { Skeleton } from "./src/components/ui/skeleton";
 export { Slider } from "./src/components/ui/slider";
 export { Switch } from "./src/components/ui/switch";
-/*export {
-    Table,
-    TableHeader,
-    TableBody,
-    TableFooter,
-    TableHead,
-    TableRow,
-    TableCell,
-    TableCaption,
-  } from "./src/components/ui/table";*/
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from "./src/components/ui/table";
 export {
   Tabs,
   TabsList,
@@ -202,4 +204,4 @@ export {
 } from "./src/components/ui/tooltip";
 export { useToast, toast } from "./src/components/ui/use-toast";
 
-export { Badge, StatusDot } from "./src/components/ui/badge";
+export { Badge } from "./src/components/ui/badge";

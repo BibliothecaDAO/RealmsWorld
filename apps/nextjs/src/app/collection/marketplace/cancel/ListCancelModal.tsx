@@ -75,15 +75,14 @@ export function ListCancelModal({
               {isListingAvailable && cancelStep === CancelStep.Cancel && (
                 <div className="flex flex-col">
                   {transactionError && (
-                    <Alert
-                      variant={"warning"}
-                      message={transactionError.message}
-                    />
+                    <Alert variant={"warning"}>
+                      {transactionError.message}
+                    </Alert>
                   )}
                   <div className="border-b p-2">
                     <ERC721LineItem
                       tokenDetails={token}
-                      price={listing?.price}
+                      price={listing.price}
                       // priceSubtitle="Price"
                       //usdPrice={totalUsd.toString()}
                       /* collection={
@@ -109,7 +108,7 @@ export function ListCancelModal({
                     {listing?.price && (
                       <ERC721LineItem
                         tokenDetails={token}
-                        price={listing?.price}
+                        price={listing.price}
                         //usdPrice={totalUsd}
                         //collection={collection?.name || ""}
                         expires={expires}

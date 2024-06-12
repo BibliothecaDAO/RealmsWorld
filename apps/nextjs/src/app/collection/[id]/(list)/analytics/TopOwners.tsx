@@ -23,7 +23,7 @@ export const TopOwners = ({
         <div>% Owned</div>
       </div>
       <ScrollArea className="ScrollAreaRoot h-96">
-        {owners?.owners?.map((owner) => (
+        {owners.owners?.map((owner) => (
           <div key={owner.address} className="grid grid-cols-5 py-1">
             <div className="col-span-2">
               <Link href={`/user/${owner.address}`}>

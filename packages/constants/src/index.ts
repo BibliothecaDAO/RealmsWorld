@@ -9,6 +9,7 @@ export {
   getCollectionAddresses,
   getCollectionFromAddress,
   CollectionDetails,
+  REALMS_BRIDGE_ADDRESS,
 } from "./Collections";
 export {
   DaoAccounts,
@@ -18,3 +19,4 @@ export {
 } from "./DAO";
 export { studios, getGamesByStudio } from "./Studios";
 export type { Studios } from "./Studios";
+export { StakingAddresses, StakingContracts } from "./Staking";

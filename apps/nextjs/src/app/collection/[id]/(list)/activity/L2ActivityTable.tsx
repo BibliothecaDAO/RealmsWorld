@@ -56,13 +56,11 @@ export const L2ActivityTable = ({
   return (
     <div className="w-full">
       <div id="activity-container" className="grid flex-grow grid-cols-1">
-        {erc721MarketEvents
-          ? erc721MarketEvents.pages?.map((page) =>
-              page.items.map((activity, index: number) => {
-                return <L2ActivityCard key={index} activity={activity} />;
-              }),
-            )
-          : "Encountered a temporary error. Please refresh the page and retry."}
+        {erc721MarketEvents.pages.map((page) =>
+          page.items.map((activity, index: number) => {
+            return <L2ActivityCard key={index} activity={activity} />;
+          }),
+        )}
         {isFetching &&
           hasNextPage &&
           Array.from({ length: 3 }).map((_, index) => (

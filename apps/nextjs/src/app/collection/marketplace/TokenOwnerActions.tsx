@@ -28,7 +28,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
 
   const lowestPriceActiveListing =
     token?.listings &&
-    findLowestPriceActiveListing(token?.listings, token?.owner);
+    findLowestPriceActiveListing(token.listings, token.owner);
   return (
     <>
       {/*token?.listings?.map((listing) => {
@@ -50,7 +50,7 @@ const TokenOwnerActions: React.FC<TokenOwnerActionsProps> = ({
         <div className="flex gap-x-3">
           <ListingEditModal
             token={token}
-            listingId={lowestPriceActiveListing?.id}
+            listingId={lowestPriceActiveListing.id}
             trigger={
               <Button variant={"default"}>
                 <>

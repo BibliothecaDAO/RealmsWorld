@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+
+//import { motion } from "framer-motion";
 
 export default function RootLayout({
   children,
@@ -25,13 +26,13 @@ export default function RootLayout({
       }
     >
       {/* <div className="mask-transparent absolute  h-48 w-full before:bg-[url:var(--image-url)] before:bg-cover before:bg-center before:bg-no-repeat" /> */}
-      <motion.div
+      {/*<motion.div
         initial={{ opacity: 0.5 }}
         animate={{ opacity: 1 }}
         className="sm:pl-32"
-      >
-        {children}
-      </motion.div>
+    >*/}
+      {children}
+      {/*</motion.div>*/}
     </div>
   );
 }

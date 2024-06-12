@@ -27,13 +27,12 @@ export const useEditListing = ({
     if (!listingId || !price) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
-      contract?.populateTransaction.edit!(
+      contract?.populateTransaction.edit?.(
         listingId,
         parseUnits(`${price}`, 18).toString(),
       ),
     ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listingId, price]);
+  }, [contract?.populateTransaction, listingId, price]);
 
   const { writeAsync, data, error } = useL2ContractWrite({ calls });
 

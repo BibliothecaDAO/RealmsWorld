@@ -11,6 +11,8 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-viewport"),
     getAbsolutePath("@storybook/addon-links"),
     getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@storybook/addon-themes"),
+    getAbsolutePath("storybook-dark-mode"),
     getAbsolutePath("@storybook/addon-interactions"),
     {
       name: getAbsolutePath("@storybook/addon-styling-webpack"),
@@ -39,11 +41,9 @@ const config: StorybookConfig = {
         ],
       },
     },
+    "@chromatic-com/storybook",
   ],
-  framework: {
-    name: "@storybook/nextjs",
-    options: {},
-  },
+  framework: "@storybook/nextjs",
   webpackFinal: async (config) => {
     if (config.resolve) {
       config.resolve.alias = {
@@ -54,9 +54,7 @@ const config: StorybookConfig = {
     return config;
   },
 
-  docs: {
-    autodocs: true,
-  },
+  docs: {},
   staticDirs: ["../public"],
 };
 

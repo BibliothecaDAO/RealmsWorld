@@ -12,7 +12,7 @@ import { ZodError } from "zod";
 
 import type { Session } from "@realms-world/auth";
 import { auth } from "@realms-world/auth";
-import { db } from "@realms-world/db";
+import { db } from "@realms-world/db/client";
 
 /**
  * 1. CONTEXT

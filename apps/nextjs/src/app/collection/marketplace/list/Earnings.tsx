@@ -9,7 +9,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
   Tooltip,
-  TooltipProvider,
+  TooltipContent,
 } from "@realms-world/ui";
 import { formatBN } from "@realms-world/utils";
 
@@ -38,7 +38,7 @@ const Earnings: FC<EarningsBreakdownProps> = ({
         <CollapsibleTrigger asChild>
           <Button
             variant={"ghost"}
-            className="flex	 w-full items-start justify-between"
+            className="flex w-full items-start justify-between"
           >
             <div className="flex items-center gap-2">
               <h6 className="mt-0">Total Earnings</h6>
@@ -62,15 +62,11 @@ const Earnings: FC<EarningsBreakdownProps> = ({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="text-lg">Creator Royalties</span>
-                  <TooltipProvider>
-                    <Tooltip
-                      side="right"
-                      width={200}
-                      content={
-                        "A fee on every order that goes to the collection creator."
-                      }
-                    />
-                  </TooltipProvider>
+                  <Tooltip>
+                    <TooltipContent side="right">
+                      A fee on every order that goes to the collection creator.
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
 
                 <div className="flex items-center gap-1">

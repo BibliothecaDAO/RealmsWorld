@@ -27,7 +27,7 @@ export function padAddress(address?: string) {
     for (let i = 0; i < neededLength; i++) {
       zeros += "0";
     }
-    const newHex = address?.substring(0, 2) + zeros + address.substring(2);
+    const newHex = address.substring(0, 2) + zeros + address.substring(2);
     return newHex;
   } else {
     return "";
@@ -77,7 +77,7 @@ export function formatQueryString(querybatch: any, type = "contract") {
 }
 
 export function isStarknetAddress(address: string) {
-  return address?.length == 66 || address.length == 65;
+  return address.length == 66 || address.length == 65;
 }
 
 export const isBrowserLocaleClockType24h = () => {
@@ -94,10 +94,6 @@ export const isBrowserLocaleClockType24h = () => {
 export function getTokenName(
   tokenDetails: RouterOutputs["erc721Tokens"]["all"]["items"][number],
 ) {
-  if (!tokenDetails) {
-    return "Invalid token details";
-  }
-
   return tokenDetails.name
     ? decodeURIComponent(tokenDetails.name)
     : `#${tokenDetails.token_id}`;

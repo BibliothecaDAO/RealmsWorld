@@ -7,7 +7,7 @@ export const metadata = {
     "Various collections of the Realms Autonomous  World - Created for adventurers by Bibliotheca DAO",
 };
 
-export default async function Page() {
+export default function Page() {
   return (
     <>
       <PageLayout title="Collections">

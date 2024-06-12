@@ -15,7 +15,7 @@ import {
   DialogTitle,
 } from "@realms-world/ui";
 
-import { useHideModal, useModal } from "../providers/ModalProvider";
+import { useHideModal, useModal } from "../../providers/ModalProvider";
 
 export interface Component {
   component: LazyExoticComponent<ComponentType<any>>;
@@ -27,12 +27,10 @@ export const ModalWrapper = () => {
   const hideModal = useHideModal();
 
   const getComponents = (components: string[]) => {
-    return components
-      ? components.map((c: any) => ({
-          component: lazy(() => import(`../_components/modal/${c.path}`)),
-          props: c.props,
-        }))
-      : [];
+    return components.map((c: any) => ({
+      component: lazy(() => import(`../_components/modal/${c.path}`)),
+      props: c.props,
+    }));
   };
 
   const renderLoading = () => {

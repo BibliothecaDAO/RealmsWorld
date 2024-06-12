@@ -26,8 +26,8 @@ import {
 } from "@realms-world/ui";
 
 import { StarknetLoginButton } from "../_components/wallet/StarknetLoginButton";
+import { useWalletsProviderContext } from "../../providers/WalletsProvider";
 import { TokenBalance } from "../bridge/TokenBalance";
-import { useWalletsProviderContext } from "../providers/WalletsProvider";
 
 const AVNU_OPTIONS = {
   baseUrl: `https://${NETWORK_NAME == "MAIN" ? "starknet" : "sepolia"}.api.avnu.fi`,
@@ -102,10 +102,7 @@ export const SwapTokens = ({
           setSellAmount(
             isBuyLords
               ? formatEther(sellAmountFromBuyAmount)
-              : formatUnits(
-                  quotes[0].buyAmount,
-                  selectedTokenObj?.decimals ?? 18,
-                ),
+              : formatUnits(quotes[0].buyAmount, selectedTokenObj.decimals),
           );
         }
       })
@@ -178,8 +175,8 @@ export const SwapTokens = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBuyLords, selectedTokenObj, isBuyInputDebouncing, buyAmount]);
 
-  const handleSwap = async () => {
-    if (!account || !sellAmount || !quotes?.[0]) return;
+  const handleSwap = () => {
+    if (!account || !sellAmount || !quotes[0]) return;
     setErrorMessage("");
     setSuccessMessage("");
     setLoading(true);
@@ -220,7 +217,7 @@ export const SwapTokens = ({
             disabled={loading}
             id="buy-amount"
             value={
-              quotes?.[0]
+              quotes[0]
                 ? formatUnits(
                     quotes[0].buyAmount,
                     selectedTokenObj?.decimals ?? 18,
@@ -247,7 +244,7 @@ export const SwapTokens = ({
                       height={20}
                       alt={token.name ?? ""}
                     />
-                    {token?.symbol}
+                    {token.symbol}
                   </span>
                 </SelectItem>
               ))}
@@ -269,7 +266,7 @@ export const SwapTokens = ({
             className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0 "
             disabled={loading}
             id="buy-amount"
-            value={quotes?.[0] ? formatEther(quotes[0].buyAmount) : buyAmount}
+            value={quotes[0] ? formatEther(quotes[0].buyAmount) : buyAmount}
           />
         ) : (
           <Input
@@ -295,7 +292,7 @@ export const SwapTokens = ({
         return <p>Loading...</p>;
       case parseEther(sellAmount ?? "0") > sellBalance:
         return "Insufficient Balance";
-      case !!quotes?.[0]:
+      case !!quotes[0]:
         return "Swap";
 
       default:
@@ -313,12 +310,10 @@ export const SwapTokens = ({
             {quotes[0] && `≈ $${quotes[0]?.buyAmountInUsd.toFixed(2)}`}
           </span>
           <TokenBalance
-            onClick={() =>
-              setSellAmount(formatEther(BigInt(sellBalance) ?? 0n))
-            }
+            onClick={() => setSellAmount(formatEther(BigInt(sellBalance)))}
             balance={sellBalance}
             symbol=""
-            isLoading={l2loading && !balances.l2?.lords}
+            isLoading={l2loading && !balances.l2.lords}
           />
         </div>
       </div>
@@ -347,9 +342,7 @@ export const SwapTokens = ({
       ) : (
         <Button
           disabled={
-            loading ||
-            !sellAmount ||
-            parseEther(sellAmount ?? "0") > sellBalance
+            loading || !sellAmount || parseEther(sellAmount) > sellBalance
           }
           onClick={handleSwap}
           className="mt-2 w-full"
