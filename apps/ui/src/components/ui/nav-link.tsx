@@ -38,7 +38,6 @@ export const NavLink = ({
     <Link
       className={cn(
         buttonVariants({ variant, size, className }),
-        "pb-4",
         isActive &&
           "border-b-2 border-accent-foreground !text-accent-foreground",
       )}

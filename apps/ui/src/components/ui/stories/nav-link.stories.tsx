@@ -38,10 +38,10 @@ export const Outline: Story = {
   },
 };
 
-export const Subtle: Story = {
+export const Secondary: Story = {
   render: (args) => <NavLink {...args}>Link</NavLink>,
   args: {
-    variant: "subtle",
+    variant: "secondary",
     href: "#",
     exact: true,
   },
