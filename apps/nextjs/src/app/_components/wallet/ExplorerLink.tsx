@@ -1,32 +1,43 @@
 import Link from "next/link";
-import { ETHERSCAN_ACCOUNT_URL, STARKSCAN_ACCOUNT_URL } from "@/constants/env";
-import { useAccount as useL2Account } from "@starknet-react/core";
+import {
+  ETHERSCAN_ACCOUNT_URL,
+  ETHERSCAN_TX_URL,
+  STARKSCAN_ACCOUNT_URL,
+  STARKSCAN_TX_URL,
+  SUPPORTED_L1_CHAIN_ID,
+} from "@/constants/env";
 import { ExternalLinkIcon } from "lucide-react";
-import { useAccount } from "wagmi";
 
+import type { ChainId } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
-export const ExplorerLink = ({ isL1 = false }: { isL1?: boolean }) => {
-  const { address } = useAccount();
-  const { address: l2address } = useL2Account();
+export const ExplorerLink = ({
+  chainId,
+  text,
+  type = "tx",
+  hash,
+}: {
+  chainId: ChainId;
+  text?: string;
+  type?: "account" | "tx";
+  hash: string;
+}) => {
+  const isL1 = chainId === SUPPORTED_L1_CHAIN_ID;
 
-  const explorersL1 = [
-    { text: "Etherscan", url: ETHERSCAN_ACCOUNT_URL(address) },
-  ];
-  const explorersL2 = [
-    { text: "Account", url: STARKSCAN_ACCOUNT_URL(l2address) },
-  ];
-  const explorers = isL1 ? explorersL1 : explorersL2;
+  const explorerURL = isL1
+    ? type === "tx"
+      ? ETHERSCAN_TX_URL(hash)
+      : ETHERSCAN_ACCOUNT_URL(hash)
+    : type === "tx"
+      ? STARKSCAN_TX_URL(hash)
+      : STARKSCAN_ACCOUNT_URL(hash);
 
   return (
-    <>
-      {explorers.map(({ text, url }) => (
-        <Button key={text} variant={"outline"} size={"xs"} asChild>
-          <Link href={url} target="_blank">
-            <ExternalLinkIcon className="h-4" />
-          </Link>
-        </Button>
-      ))}
-    </>
+    <Button key={text} variant={"outline"} size={"xs"} asChild>
+      <Link href={explorerURL} target="_blank">
+        {text}
+        <ExternalLinkIcon className="h-4" />
+      </Link>
+    </Button>
   );
 };

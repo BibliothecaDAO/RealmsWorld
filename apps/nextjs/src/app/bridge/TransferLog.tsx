@@ -33,7 +33,6 @@ import {
   MinusCircleIcon,
   PlusCircleIcon,
 } from "lucide-react";
-import PropTypes from "prop-types";
 import { formatEther } from "viem";
 
 import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
@@ -190,14 +189,4 @@ const CompleteTransferButton = ({ onClick }: { onClick: any }) => {
       Claim<span className="hidden sm:ml-1 sm:block">On L1</span>
     </Button>
   );
-};
-
-CompleteTransferButton.propTypes = {
-  onClick: PropTypes.func,
-};
-
-TransferLog.propTypes = {
-  transfer: PropTypes.object,
-  onCompleteTransferClick: PropTypes.func,
-  onTxClick: PropTypes.func,
 };

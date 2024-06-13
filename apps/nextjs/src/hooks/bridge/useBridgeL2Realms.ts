@@ -1,6 +1,8 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import ERC721ABI from "@/abi/L2/ERC721.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { TransactionType } from "@/constants/transactions";
+import { useTransactionManager } from "@/stores/useTransasctionManager";
 import {
   useAccount,
   useContractRead,
@@ -12,8 +14,10 @@ import {
   getCollectionAddresses,
   REALMS_BRIDGE_ADDRESS,
 } from "@realms-world/constants";
+import { toast } from "@realms-world/ui";
 
 import { useERC721Approval } from "../token/starknet/useERC721Approval";
+import useStore from "../useStore";
 import { useWriteInitiateWithdrawRealms } from "./useWriteInitiateWithdrawRealms";
 
 export function useBridgeL2Realms({
@@ -55,9 +59,24 @@ export function useBridgeL2Realms({
     calls: depositCalls,
   });
 
+  const transactions = useStore(useTransactionManager, (state) => state);
+
+  const initiateWithdraw = useCallback(async () => {
+    const tx = await writeAsync();
+    transactions?.addTx(
+      tx.transaction_hash,
+      TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,
+      SUPPORTED_L2_CHAIN_ID,
+    );
+    toast({
+      title: TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,
+      description: `${selectedTokenIds.length} Realms will be ready to withdraw on Ethereum in ~12 hours`,
+    });
+  }, [writeAsync, transactions, selectedTokenIds.length]);
+
   return {
     isApprovedForAll,
-    writeAsync,
+    initiateWithdraw,
     ...writeReturn,
   };
 }

@@ -1,21 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { TransactionType } from "@/constants/transactions";
 import { ActionType } from "@/constants/transferSteps";
 import { useBridgeL2Realms } from "@/hooks/bridge/useBridgeL2Realms";
 import { useWriteDepositRealms } from "@/hooks/bridge/useWriteDepositRealms";
 import useERC721Approval from "@/hooks/token/useERC721Approval";
+import useStore from "@/hooks/useStore";
 import EthereumLogo from "@/icons/ethereum.svg";
 import StarknetLogo from "@/icons/starknet.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
+import { useTransactionManager } from "@/stores/useTransasctionManager";
 import { shortenHex } from "@/utils/utils";
 import {
   useDeployAccount,
   useAccount as useL2Account,
 } from "@starknet-react/core";
-import { Loader, MoveRightIcon } from "lucide-react";
+import { Loader, MoveRightIcon, RefreshCcw } from "lucide-react";
 import { useAccount } from "wagmi";
 
 import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
@@ -27,6 +30,7 @@ import {
   DialogContent,
   DialogTitle,
   ScrollArea,
+  toast,
 } from "@realms-world/ui";
 
 import { EthereumLoginButton } from "../wallet/EthereumLoginButton";
@@ -44,17 +48,28 @@ export const NftBridgeModal = () => {
   const isSourceL1 = sourceChain == SUPPORTED_L1_CHAIN_ID;
   const { address: l1Address } = useAccount();
   const { address: l2Address, account } = useL2Account();
+  const transactions = useStore(useTransactionManager, (state) => state);
 
   const {
     writeAsync: depositRealms,
     isPending: isDepositPending,
     data: depositData,
   } = useWriteDepositRealms({
-    onSuccess: (data) => console.log("success" + data),
+    onSuccess: (data: string) => {
+      transactions?.addTx(
+        data,
+        TransactionType.BRIDGE_REALMS_L1_TO_L2,
+        SUPPORTED_L2_CHAIN_ID,
+      );
+      toast({
+        title: TransactionType.BRIDGE_REALMS_L1_TO_L2,
+        description: `${selectedTokenIds.length} Realms will be appear in your L2 wallet in a few minutes`,
+      });
+    },
   });
 
   const {
-    writeAsync: withdrawRealms,
+    initiateWithdraw,
     isPending: isWithdrawPending,
     data: withdrawData,
   } = useBridgeL2Realms({ selectedTokenIds });
@@ -68,21 +83,22 @@ export const NftBridgeModal = () => {
 
   const [nonce, setNonce] = useState<string | undefined>();
 
-  useEffect(() => {
-    const getNonce = async () => {
-      if (account?.address) {
-        console.log("getting " + account.address);
-        try {
-          const nonce = await account.getNonce();
-          setNonce(nonce);
-        } catch {
-          setNonce(undefined);
-        }
+  const getNonce = useCallback(async () => {
+    if (account?.address) {
+      console.log("getting " + account.address);
+      try {
+        const nonce = await account.getNonce();
+        setNonce(nonce);
+      } catch {
+        setNonce(undefined);
       }
-    };
+    }
+  }, [account]);
+
+  useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getNonce();
-  }, [account]);
+  }, [getNonce]);
 
   const renderBadge = (isL1: boolean, address: string) => (
     <Badge className="rounded-2xl pr-4">
@@ -149,16 +165,21 @@ export const NftBridgeModal = () => {
                       </div>
                     </div>
                     {!nonce && (
-                      <Alert variant={"destructive"}>
-                        Your account must be deployed on Starknet before
-                        bridging your Realms.{" "}
-                        <Link
-                          href="https://support.argent.xyz/hc/en-us/articles/8802319054237-How-to-activate-deploy-my-Argent-X-wallet"
-                          target="_blank"
-                          className="text-bright-yellow underline"
-                        >
-                          Follow the Argent X guide to deploy your account
-                        </Link>
+                      <Alert variant={"destructive"} className="flex">
+                        <div>
+                          Your account must be deployed on Starknet before
+                          bridging your Realms.{" "}
+                          <Link
+                            href="https://support.argent.xyz/hc/en-us/articles/8802319054237-How-to-activate-deploy-my-Argent-X-wallet"
+                            target="_blank"
+                            className="text-bright-yellow underline"
+                          >
+                            Follow the Argent X guide to deploy your account
+                          </Link>
+                        </div>
+                        <Button variant={"outline"} onClick={getNonce}>
+                          <RefreshCcw className="w-8" />
+                        </Button>
                       </Alert>
                     )}
                     {isApprovedForAll ? (
@@ -172,7 +193,7 @@ export const NftBridgeModal = () => {
                                 ),
                                 l2Address: l2Address,
                               })
-                            : withdrawRealms()
+                            : initiateWithdraw()
                         }
                         disabled={
                           (isSourceL1 && !nonce) ||

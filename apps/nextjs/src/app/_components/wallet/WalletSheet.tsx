@@ -39,6 +39,7 @@ import {
 
 import EthereumAccount from "./EthereumAccount";
 import StarkAccount from "./StarkAccount";
+import { TransactionList } from "./transactions/TransactionList";
 
 export const WalletSheet = () => {
   const {
@@ -110,9 +111,9 @@ export const WalletSheet = () => {
           <div className="mt-12 flex w-full flex-col items-start">
             <EthereumAccount />
             <StarkAccount />
-            <div className="w-full border-t px-3 pt-4">
-              <Label>Actions</Label>
-              <div className="flex items-center gap-x-2">
+            <div className="w-full border-b border-t px-3 py-4">
+              <Label>Quick Actions:</Label>
+              <div className="mt-1 flex items-center gap-x-2">
                 <Button
                   asChild
                   className="self-center rounded-lg"
@@ -165,6 +166,7 @@ export const WalletSheet = () => {
                 </Dialog>
               </div>
             </div>
+            <TransactionList />
           </div>
         </SheetContent>
       </Sheet>
@@ -181,11 +183,11 @@ export const WalletSheet = () => {
               change the connected network in your Starknet wallet, or:
             </span>
             <AlertDialogFooter>
-              <AlertDialogAction asChild>
+              <AlertDialogAction>
                 <Button
                   variant={"default"}
                   size={"lg"}
-                  className="mt-4"
+                  className="mt-4 w-full"
                   onClick={() => onDisconnect()}
                 >
                   Disconnect

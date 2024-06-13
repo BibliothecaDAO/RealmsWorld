@@ -21,17 +21,21 @@ function EthereumAccount() {
 
   const displayEthAddress = ensAddress ?? shortenHex(address ?? "", 8);
 
-  if (isConnected) {
+  if (isConnected && address) {
     return (
       <div className="flex w-full justify-between border-t p-2">
         <div className="flex py-1 text-lg">
           <EthereumLogo className="mr-3 w-7" />
-          {address && (
-            <CopyButton text={address} displayText={displayEthAddress} />
-          )}
+
+          <CopyButton text={address} displayText={displayEthAddress} />
         </div>
         <div className="flex items-center space-x-2">
-          <ExplorerLink isL1 />
+          <ExplorerLink
+            type="account"
+            hash={address}
+            text="Etherscan"
+            chainId={SUPPORTED_L1_CHAIN_ID}
+          />
           <Button variant="outline" size="xs" onClick={() => disconnect()}>
             <LogOut className="w-4 self-center" />
           </Button>
