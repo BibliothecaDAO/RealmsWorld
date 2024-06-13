@@ -32,7 +32,7 @@
     "@turbo/gen": "^2.0.3",
     "million": "^3.1.11",
     "npm-check-updates": "^16.14.20",
-    "prettier": "^3.3.1",
+    "prettier": "^3.3.2",
     "tsup": "^8.1.0",
     "turbo": "2.0.3",
     "typescript": "^5.4.5"

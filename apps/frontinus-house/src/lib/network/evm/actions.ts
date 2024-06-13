@@ -32,25 +32,15 @@ import { Contract } from "@ethersproject/contracts";
 import { Provider } from "@ethersproject/providers";
 import {
   clients,
-  evmArbitrum,
-  evmGoerli,
-  evmLineaGoerli,
   evmMainnet,
   EvmNetworkConfig,
-  evmOptimism,
-  evmPolygon,
   evmSepolia,
   getEvmStrategy,
 } from "@snapshot-labs/sx";
 
 const CONFIGS: Record<number, EvmNetworkConfig> = {
-  10: evmOptimism,
-  137: evmPolygon,
-  42161: evmArbitrum,
   1: evmMainnet,
-  5: evmGoerli,
   11155111: evmSepolia,
-  59140: evmLineaGoerli,
 };
 
 export function createActions(

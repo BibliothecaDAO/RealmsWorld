@@ -5,16 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "clean": "git clean -xdf .next .turbo node_modules",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@apollo/client": "^3.10.4",
+    "@apollo/client": "^3.10.5",
     "@argent/get-starknet": "^6.4.7",
     "@iconify-json/heroicons-outline": "^1.1.10",
-    "@realms-world/ui": "*",
-    "@snapshot-labs/sx": "^0.1.2",
+    "@snapshot-labs/sx": "0.1.2",
     "@types/remarkable": "^2.0.8",
     "autoprefixer": "^10.4.19",
     "graphql": "^16.8.1",
@@ -25,7 +25,7 @@
     "react-dom": "18.3.1",
     "react-router-dom": "^6.23.1",
     "remarkable": "^2.0.1",
-    "starknet": "^5.24.3",
+    "starknet": "5.25.0",
     "tailwindcss": "3.4.4"
   },
   "devDependencies": {
@@ -38,6 +38,9 @@
     "eslint": "^9.4.0",
     "eslint-plugin-react-refresh": "^0.4.7",
     "typescript": "^5.4.5",
-    "vite": "^5.2.12"
+    "vite": "^5.2.13"
+  },
+  "resolutions": {
+    "react": "18.3.1"
   }
 }

@@ -19,7 +19,7 @@
     "@realms-world/tsconfig": "*",
     "eslint": "^9.4.0",
     "nitropack": "2.9.6",
-    "prettier": "^3.3.1",
+    "prettier": "^3.3.2",
     "typescript": "^5.4.5"
   },
   "prettier": "@realms-world/prettier-config"
