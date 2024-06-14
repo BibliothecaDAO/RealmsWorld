@@ -6,8 +6,6 @@ import { Loader } from "lucide-react";
 
 import { cn } from "@realms-world/utils";
 
-// TODO: where are these classes supposed to be coming from for primary and transparent variants? They get added to the component classes when using the variant keys but don't change the style of the element.
-
 const iconButtonVariants = cva(
   cn(
     "transition-fg relative inline-flex w-fit items-center justify-center overflow-hidden rounded-md outline-none",
