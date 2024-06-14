@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, log } from "@graphprotocol/graph-ts";
 
 import { WithdrawalEvent } from "../../generated/schema";
 import { LogMessageToL1 } from "../../generated/StarknetMessaging/StarknetMessaging";
@@ -15,11 +15,17 @@ export function createWithdrawalEvent(event: LogMessageToL1): WithdrawalEvent {
 
   let l1Recipient = event.params.payload[2];
   let ids = event.params.payload.slice(5);
-  let tokenIds: BigInt[] = [];
+  let tokenIds = new Array<BigInt>(0);
+
   for (let i = 0; i < event.params.payload[4].toI32(); i += 2) {
     tokenIds.push(convertUint256ToBigInt(ids[i], ids[i + 1]));
   }
+  log.debug("conveted are following {}", [tokenIds.toString()]);
 
+  withdrawalEvent.hash = convertUint256ToBigInt(
+    event.params.payload[0],
+    event.params.payload[1],
+  );
   withdrawalEvent.l1Recipient = bigIntToAddressBytes(
     l1Recipient,
     ADDRESS_TYPE.ETHEREUM,

@@ -29,16 +29,14 @@ export const config: Config<Starknet, Postgres> = {
         keys: [
           hash.getSelectorFromName("WithdrawRequestCompleted") as `0x${string}`,
         ],
-        includeTransaction: true,
-        includeReceipt: true,
+        includeReceipt: false,
       },
       {
         fromAddress: Deno.env.get("ERC721_BRIDGE_CONTRACT") as `0x${string}`,
         keys: [
           hash.getSelectorFromName("DepositRequestInitiated") as `0x${string}`,
         ],
-        includeTransaction: true,
-        includeReceipt: true,
+        includeReceipt: false,
       },
     ],
   },
@@ -51,9 +49,11 @@ export const config: Config<Starknet, Postgres> = {
 };
 
 export default function transform({ header, events }: Block) {
-  return events?.flatMap(({ event, receipt }) => {
+  return events?.flatMap(({ event, transaction }) => {
     const [hashLow, hashHigh, l1Account, l2Account, idsLength, ...ids] =
       event.data;
+    const transactionHash = transaction.meta.hash;
+
     const tokenIds = [];
     for (let i = 0; i < ids.length; i += 2) {
       tokenIds.push(
@@ -69,6 +69,7 @@ export default function transform({ header, events }: Block) {
       case WITHDRAw_REQUEST_INITIATED: {
         return {
           type: "WithdrawRequestCompleted",
+          tx_hash: transactionHash,
           hash: uint256
             .uint256ToBN({
               low: hashLow,

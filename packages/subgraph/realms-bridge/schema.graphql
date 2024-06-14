@@ -35,6 +35,7 @@ type Deposit @entity {
 type WithdrawalEvent @entity {
   "uniq ID"
   id: ID!
+  hash: BigInt!
   bridgeAddressL1: Bytes!
   bridgeAddressL2: Bytes!
   l1Recipient: Bytes!
@@ -50,6 +51,7 @@ type WithdrawalEvent @entity {
 type Withdrawal @entity {
   "[bridgeL1Address, ...payload].join('-')"
   id: ID!
+  hash: BigInt!
   #fromAddress: Bytes!
   l1Recipient: Bytes!
   l2Sender: Bytes!
