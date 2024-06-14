@@ -53,10 +53,43 @@ export const Loading: Story = {
     variant: "outline",
   },
 };
-export const WithIcon: Story = {
+
+export const Icon: Story = {
+  render: (args) => (
+    <Button {...args}>
+      <Mail />
+    </Button>
+  ),
+  args: {
+    size: "icon",
+  },
+};
+
+export const TextWithIcon: Story = {
   render: (args) => (
     <Button {...args}>
       <Mail className="mr-2 h-4 w-4" /> Login with Email Button
     </Button>
   ),
+};
+
+export const ExtraSmall: Story = {
+  render: (args) => <Button {...args}>Button</Button>,
+  args: {
+    size: "xs",
+  },
+};
+
+export const Small: Story = {
+  render: (args) => <Button {...args}>Button</Button>,
+  args: {
+    size: "sm",
+  },
+};
+
+export const Large: Story = {
+  render: (args) => <Button {...args}>Button</Button>,
+  args: {
+    size: "lg",
+  },
 };

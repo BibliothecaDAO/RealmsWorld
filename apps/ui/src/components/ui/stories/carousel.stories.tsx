@@ -15,7 +15,7 @@ export default meta;
 
 type Story = StoryObj<typeof Carousel>;
 
-const carouselImages = games.map((game: Game) => ({
+const baseCarouselImages = games.map((game: Game) => ({
   alt: game.name,
   src: `https://realms.world/_next/image?url=/games/${game.id}/cover.webp&w=3840&q=75`,
   description: game.description,
@@ -31,9 +31,38 @@ export const Base: Story = {
     />
   ),
   args: {
-    images: carouselImages,
+    images: baseCarouselImages,
     cover: true,
     options: { loop: true },
     autoPlay: true,
+  },
+};
+
+export const CarouselWithPreviewImages: Story = {
+  render: (args) => (
+    <Carousel
+      {...args}
+      className="h-96 w-full sm:max-h-[750px] sm:min-h-[750px]"
+    />
+  ),
+  args: {
+    images: [
+      {
+        alt: "pistols",
+        src: `https://realms.world/games/pistols/screenshots/4.png`,
+      },
+      {
+        alt: "pistols",
+        src: `https://realms.world/games/pistols/screenshots/5.png`,
+      },
+      {
+        alt: "pistols",
+        src: `https://realms.world/games/pistols/screenshots/6.png`,
+      },
+    ],
+    cover: true,
+    options: { loop: true },
+    autoPlay: true,
+    showPreview: true,
   },
 };
