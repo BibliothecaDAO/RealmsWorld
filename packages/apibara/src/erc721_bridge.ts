@@ -85,6 +85,7 @@ export default function transform({ header, events }: Block) {
       case DEPOSIT_REQUEST_HANDLED: {
         return {
           type: "DepositRequestInitiated",
+          tx_hash: transactionHash,
           hash: uint256
             .uint256ToBN({
               low: hashLow,
