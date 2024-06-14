@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Mail, Trash } from "lucide-react";
+import { Mail } from "lucide-react";
 
 import { IconButton } from "../icon-button";
 
@@ -61,7 +61,7 @@ export const Large: Story = {
   },
 };
 
-export const XLarge: Story = {
+export const ExtraLarge: Story = {
   render: (args) => (
     <IconButton {...args}>
       <Mail color="white" />

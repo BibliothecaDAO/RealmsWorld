@@ -30,10 +30,10 @@ export const Base: Story = {
         </Button>
       </SheetTrigger>
       <SheetContent side={"right"}>
-        <SheetTitle>This is a dialog title</SheetTitle>
-        <SheetHeader>This is a dialog header</SheetHeader>
-        <SheetDescription>This is a dialog description</SheetDescription>
-        <SheetFooter>This is a dialog footer</SheetFooter>
+        <SheetTitle>This is a sheet title</SheetTitle>
+        <SheetHeader>This is a sheet header</SheetHeader>
+        <SheetDescription>This is a sheet description</SheetDescription>
+        <SheetFooter>This is a sheet footer</SheetFooter>
       </SheetContent>
     </Sheet>
   ),
@@ -50,10 +50,10 @@ export const Left: Story = {
       </SheetTrigger>
 
       <SheetContent side={"left"}>
-        <SheetTitle>This is a dialog title</SheetTitle>
-        <SheetHeader>This is a dialog header</SheetHeader>
-        <SheetDescription>This is a dialog description</SheetDescription>
-        <SheetFooter>his is a dialog footer</SheetFooter>
+        <SheetTitle>This is a sheet title</SheetTitle>
+        <SheetHeader>This is a sheet header</SheetHeader>
+        <SheetDescription>This is a sheet description</SheetDescription>
+        <SheetFooter>This is a sheet footer</SheetFooter>
       </SheetContent>
     </Sheet>
   ),
