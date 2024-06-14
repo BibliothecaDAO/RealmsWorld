@@ -120,8 +120,9 @@ export function Carousel({
                 aria-roledescription="slide"
                 src={image.src}
                 alt={image.alt}
+                //fill
                 sizes="100vw"
-                className={`${cover ? "object-cover" : "object-contain"} h-full w-full`}
+                className={`${cover ? "object-cover" : "object-contain"}`}
                 //priority={index === 0}
               />
               {image.title && (

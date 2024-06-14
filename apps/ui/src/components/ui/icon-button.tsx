@@ -67,7 +67,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 
     /**
      * In the case of a button where asChild is true, and isLoading is true, we ensure that
-     * only one element is passed as a child to the Slot component. This is because the Slot
+     * only on element is passed as a child to the Slot component. This is because the Slot
      * component only accepts a single child.
      */
     const renderInner = () => {
