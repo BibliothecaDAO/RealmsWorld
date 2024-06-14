@@ -31,7 +31,12 @@ export const StarkAccount = () => {
           <CopyButton text={address} displayText={displayStarkAddress} />
         </div>
         <div className="flex items-center space-x-2">
-          <ExplorerLink />
+          <ExplorerLink
+            type="account"
+            text="Starkscan"
+            chainId={SUPPORTED_L2_CHAIN_ID}
+            hash={address}
+          />
           <Button variant="outline" size="xs" onClick={() => disconnect()}>
             <LogOut className="w-4 self-center" />
           </Button>

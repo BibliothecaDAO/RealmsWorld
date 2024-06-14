@@ -1,0 +1,79 @@
+###############
+### DEPOSIT ###
+###############
+
+type DepositEvent @entity {
+  "uniq ID"
+  id: ID!
+  bridgeAddressL1: Bytes!
+  bridgeAddressL2: Bytes!
+  tokenIds: [BigInt!]!
+  status: TransferStatus!
+  payload: [BigInt!]
+  nonce: BigInt
+  createdAtBlock: BigInt!
+  createdTxHash: Bytes!
+  finishedAtBlock: BigInt
+  finishedAtDate: BigInt
+  finishedTxHash: Bytes
+}
+
+type Deposit @entity {
+  "[bridgeL1Address, ...payload].join('-')"
+  id: ID!
+  depositEvents: [DepositEvent!]!
+  #createdTxHash: Bytes!
+  l1Sender: Bytes!
+  l2Recipient: Bytes!
+  createdTimestamp: BigInt
+}
+
+##################
+### WITHDRAWAL ###
+##################
+
+type WithdrawalEvent @entity {
+  "uniq ID"
+  id: ID!
+  hash: BigInt!
+  bridgeAddressL1: Bytes!
+  bridgeAddressL2: Bytes!
+  l1Recipient: Bytes!
+  tokenIds: [BigInt!]!
+  status: TransferStatus!
+  createdAtBlock: BigInt!
+  createdTxHash: Bytes!
+  finishedAtBlock: BigInt
+  finishedAtDate: BigInt
+  finishedTxHash: Bytes
+}
+
+type Withdrawal @entity {
+  "[bridgeL1Address, ...payload].join('-')"
+  id: ID!
+  hash: BigInt!
+  #fromAddress: Bytes!
+  l1Recipient: Bytes!
+  l2Sender: Bytes!
+  createdTimestamp: BigInt
+  withdrawalEvents: [WithdrawalEvent!]!
+}
+
+#############
+### OTHER ###
+#############
+
+enum TransferStatus {
+  PENDING
+  FINISHED
+  ACCEPTED_ON_L1
+  ACCEPTED_ON_L2
+}
+
+type Token @entity {
+  "address"
+  id: ID!
+  name: String!
+  symbol: String!
+  decimals: Int!
+}

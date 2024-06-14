@@ -7,5 +7,6 @@ export const erc721_bridge = pgTable("erc721_bridge", {
   l1Account: text("l1Account"),
   l2Account: text("l2Account"),
   tokenIds: text("tokenIds").array(),
+  tx_hash: text("tx_hash"),
   timestamp: timestamp("timestamp"),
 });

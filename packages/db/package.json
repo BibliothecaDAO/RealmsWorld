@@ -39,10 +39,10 @@
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
     "dotenv-cli": "^7.4.2",
-    "drizzle-kit": "^0.22.6",
+    "drizzle-kit": "^0.22.7",
     "eslint": "^9.4.0",
     "postgres-range": "^1.1.4",
-    "prettier": "^3.3.1",
+    "prettier": "^3.3.2",
     "typescript": "^5.4.5"
   },
   "prettier": "@realms-world/prettier-config"

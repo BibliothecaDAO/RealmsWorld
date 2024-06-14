@@ -2,7 +2,8 @@ import type { Call } from "starknet";
 import { useCallback, useMemo } from "react";
 import RealmsABI from "@/abi/L2/Realms.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import { useTransactionManager } from "@/stores/useL2TransasctionManager";
+import { TransactionType } from "@/constants/transactions";
+import { useTransactionManager } from "@/stores/useTransasctionManager";
 import {
   useAccount,
   useContract,
@@ -50,16 +51,20 @@ export const useL2LordsRewards = () => {
     isPending: isSubmitting,
   } = useContractWrite({ calls });
 
-  const hashes = useStore(useTransactionManager, (state) => state);
+  const transactions = useStore(useTransactionManager, (state) => state);
 
   const claimRewards = useCallback(async () => {
     const tx = await writeAsync();
-    hashes?.addHash(tx.transaction_hash);
+    transactions?.addTx(
+      tx.transaction_hash,
+      TransactionType.CLAIM_LORDS,
+      SUPPORTED_L2_CHAIN_ID,
+    );
     toast({
       title: "Realms' Lords Claim Submitted",
       description: `Claim of ${formatEther(balance as bigint)} Lords in progress`,
     });
-  }, [writeAsync, hashes, toast, balance]);
+  }, [writeAsync, transactions, toast, balance]);
 
   return {
     balance,
