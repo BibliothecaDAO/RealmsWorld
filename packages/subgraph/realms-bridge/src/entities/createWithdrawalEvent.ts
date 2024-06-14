@@ -22,7 +22,7 @@ export function createWithdrawalEvent(event: LogMessageToL1): WithdrawalEvent {
   }
   log.debug("conveted are following {}", [tokenIds.toString()]);
 
-  withdrawalEvent.hash = convertUint256ToBigInt(
+  withdrawalEvent.req_hash = convertUint256ToBigInt(
     event.params.payload[0],
     event.params.payload[1],
   );

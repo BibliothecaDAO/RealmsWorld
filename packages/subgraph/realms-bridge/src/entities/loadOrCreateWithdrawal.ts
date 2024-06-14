@@ -13,7 +13,7 @@ export function loadOrCreateWithdrawal(
 
   if (!withdrawal) {
     withdrawal = new Withdrawal(id);
-    withdrawal.hash = hash;
+    withdrawal.req_hash = hash;
     withdrawal.l1Recipient = l1Recipient;
     withdrawal.l2Sender = l2Sender;
     withdrawal.withdrawalEvents = [];

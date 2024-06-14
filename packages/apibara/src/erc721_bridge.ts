@@ -69,8 +69,8 @@ export default function transform({ header, events }: Block) {
       case WITHDRAw_REQUEST_INITIATED: {
         return {
           type: "WithdrawRequestCompleted",
-          tx_hash: transactionHash,
-          hash: uint256
+          hash: transactionHash,
+          req_hash: uint256
             .uint256ToBN({
               low: hashLow,
               high: hashHigh,
@@ -85,8 +85,8 @@ export default function transform({ header, events }: Block) {
       case DEPOSIT_REQUEST_HANDLED: {
         return {
           type: "DepositRequestInitiated",
-          tx_hash: transactionHash,
-          hash: uint256
+          hash: transactionHash,
+          req_hash: uint256
             .uint256ToBN({
               low: hashLow,
               high: hashHigh,
