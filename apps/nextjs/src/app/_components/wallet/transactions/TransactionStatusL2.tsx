@@ -12,7 +12,7 @@ export function TransactionStatusL2({ hash }: { hash: string }) {
   return (
     <Badge
       variant="outline"
-      className="font-muted-foreground !border-emerald-500 text-sm"
+      className="font-muted-foreground !border-emerald-500 text-xs"
     >
       {isLoading
         ? "Loading..."
