@@ -1,5 +1,3 @@
-import "server-only";
-
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { RESERVOIR_API_URL, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { env } from "@/env";
