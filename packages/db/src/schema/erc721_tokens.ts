@@ -1,23 +1,40 @@
 import { relations } from "drizzle-orm";
-import { bigint, integer, numeric, pgTable, text } from "drizzle-orm/pg-core";
+import {
+  bigint,
+  integer,
+  numeric,
+  pgTable,
+  primaryKey,
+  text,
+} from "drizzle-orm/pg-core";
 
 import { int8range } from "../int8range";
 import { erc721MarketEvents } from "./erc721_market_events";
 import { erc721TokenAttributes } from "./erc721_token_attributes";
 
-export const erc721Tokens = pgTable("erc721_tokens", {
-  _cursor: int8range("_cursor"),
-  id: text("id").notNull(),
-  token_id: integer("token_id").notNull(),
-  contract_address: text("contract_address"),
-  minter: text("minter"),
-  owner: text("owner"),
-  image: text("image"),
-  name: text("name"),
-  price: numeric("price"),
-  expiration: integer("expiration"),
-  lastPrice: numeric("last_price"),
-});
+export const erc721Tokens = pgTable(
+  "erc721_tokens",
+  {
+    _cursor: int8range("_cursor"),
+    id: text("id").notNull(),
+    token_id: integer("token_id").notNull(),
+    contract_address: text("contract_address"),
+    minter: text("minter"),
+    owner: text("owner"),
+    image: text("image"),
+    name: text("name"),
+    price: numeric("price"),
+    expiration: integer("expiration"),
+    lastPrice: numeric("last_price"),
+  },
+  (table) => {
+    return {
+      pk: primaryKey({
+        columns: [table._cursor, table.id, table.owner, table.lastPrice],
+      }),
+    };
+  },
+);
 export const erc721TokensRelations = relations(erc721Tokens, ({ many }) => ({
   transfers: many(erc721Transfers),
   listings: many(erc721MarketEvents),

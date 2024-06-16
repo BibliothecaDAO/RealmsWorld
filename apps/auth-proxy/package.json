@@ -17,7 +17,7 @@
     "@realms-world/prettier-config": "*",
     "@realms-world/tailwind-config": "*",
     "@realms-world/tsconfig": "*",
-    "eslint": "^9.4.0",
+    "eslint": "^9.5.0",
     "nitropack": "2.9.6",
     "prettier": "^3.3.2",
     "typescript": "^5.4.5"

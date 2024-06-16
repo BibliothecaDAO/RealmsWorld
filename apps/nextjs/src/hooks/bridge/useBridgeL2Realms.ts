@@ -68,6 +68,7 @@ export function useBridgeL2Realms({
       type: TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,
       chainId: SUPPORTED_L2_CHAIN_ID,
       status: "pending",
+      timestamp: new Date(Date.now()),
     });
     toast({
       title: TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,

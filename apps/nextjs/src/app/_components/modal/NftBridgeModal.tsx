@@ -56,11 +56,12 @@ export const NftBridgeModal = () => {
     data: depositData,
   } = useWriteDepositRealms({
     onSuccess: (data: string) => {
-      transactions?.addTx(
-        data,
-        TransactionType.BRIDGE_REALMS_L1_TO_L2,
-        SUPPORTED_L2_CHAIN_ID,
-      );
+      transactions?.addTx({
+        hash: data,
+        type: TransactionType.BRIDGE_REALMS_L1_TO_L2,
+        chainId: SUPPORTED_L1_CHAIN_ID,
+        timestamp: new Date(),
+      });
       toast({
         title: TransactionType.BRIDGE_REALMS_L1_TO_L2,
         description: `${selectedTokenIds.length} Realms will be appear in your L2 wallet in a few minutes`,
@@ -196,9 +197,8 @@ export const NftBridgeModal = () => {
                             : initiateWithdraw()
                         }
                         disabled={
-                          (isSourceL1 && !nonce) ||
-                          isDepositPending ||
-                          isWithdrawPending
+                          /*(isSourceL1 && !nonce) ||*/
+                          isDepositPending || isWithdrawPending
                         }
                       >
                         {isDepositPending || isWithdrawPending ? (

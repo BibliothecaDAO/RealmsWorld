@@ -23,24 +23,16 @@ export function useWriteFinalizeWithdrawRealms() {
       l2Address,
       tokenIds,
     }: {
-      hash: string;
+      hash: string | bigint;
       l1Address: string;
       l2Address: string;
-      tokenIds: string[];
+      tokenIds: string[] | bigint[];
     }) => {
       const parsedTokenIds = tokenIds.map((id) => {
         const uInt = uint256.bnToUint256(BigInt(id));
         return [BigInt(uInt.low), BigInt(uInt.high)];
       });
       const hashUint = uint256.bnToUint256(BigInt(hash));
-      console.log([
-        BigInt(hashUint.low),
-        BigInt(hashUint.high),
-        BigInt(l1Address),
-        BigInt(l2Address),
-        BigInt(tokenIds.length),
-        ...parsedTokenIds.flat(),
-      ]);
       return await writeContractAsync({
         address: REALMS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] as `0x${string}`,
         abi: L1_REALMS_BRIDGE_ABI,

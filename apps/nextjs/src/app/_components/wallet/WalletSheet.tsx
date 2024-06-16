@@ -31,6 +31,8 @@ import {
   ScrollArea,
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   Tabs,
   TabsContent,
   TabsList,
@@ -108,7 +110,10 @@ export const WalletSheet = () => {
     <>
       <Sheet open={isAccountOpen} onOpenChange={toggleAccount}>
         <SheetContent className={"p-0 sm:max-w-lg"}>
-          <div className="mt-12 flex w-full flex-col items-start">
+          <SheetHeader>
+            <SheetTitle className="p-2 text-xl">Wallet</SheetTitle>
+          </SheetHeader>
+          <div className="flex w-full flex-col items-start">
             <EthereumAccount />
             <StarkAccount />
             <div className="w-full border-b border-t px-3 py-4">

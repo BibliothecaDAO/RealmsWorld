@@ -1,5 +1,4 @@
 import type { TransactionType } from "@/constants/transactions";
-import type { RealmsWithdrawalEvent } from "@/types/subgraph";
 import { isStarknetAddress } from "@/utils/utils";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -8,11 +7,11 @@ import type { ChainId } from "@realms-world/constants";
 import { padAddress } from "@realms-world/utils";
 
 export interface Transaction {
-  status: "pending" | "complete" | "failed" | "requiresAction";
+  status?: "pending" | "complete" | "failed" | "requiresAction";
   type: TransactionType;
-  chainId: ChainId;
+  chainId?: ChainId;
   hash: string;
-  withdrawalEvents?: RealmsWithdrawalEvent[];
+  timestamp: Date | string;
 }
 
 interface TransactionState {

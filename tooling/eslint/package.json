@@ -16,7 +16,7 @@
   "dependencies": {
     "@next/eslint-plugin-next": "^14.2.4",
     "typescript-eslint": "rc-v8",
-    "eslint-config-turbo": "^2.0.3",
+    "eslint-config-turbo": "^2.0.4",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.34.2",
@@ -25,7 +25,7 @@
   "devDependencies": {
     "@realms-world/prettier-config": "workspace:*",
     "@realms-world/tsconfig": "workspace:*",
-    "eslint": "^9.4.0",
+    "eslint": "^9.5.0",
     "prettier": "^3.3.2",
     "typescript": "^5.4.5"
   },

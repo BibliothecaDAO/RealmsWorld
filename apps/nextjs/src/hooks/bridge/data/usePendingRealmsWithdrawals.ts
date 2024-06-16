@@ -54,5 +54,6 @@ export const usePendingRealmsWithdrawals = ({
           return res.data?.withdrawals;
         }),
     enabled: !!address,
+    refetchInterval: 20000,
   });
 };

@@ -7,3 +7,9 @@ export enum TransactionType {
   BRIDGE_REALMS_L2_TO_L1_CONFIRM = "Finalise Realms Withdrawal to L1",
   CLAIM_LORDS = "Claim Lords",
 }
+
+export enum BridgeTransactionType {
+  WithdrawRequestCompleted = TransactionType.BRIDGE_REALMS_L1_TO_L2,
+  DepositRequestInitiated = TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,
+  FAILED = "Failed",
+}

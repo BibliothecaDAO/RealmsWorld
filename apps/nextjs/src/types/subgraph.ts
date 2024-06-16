@@ -11,8 +11,8 @@ export interface Scalars {
   Decimal: any;
   DateTime: any;
   BigDecimal: any;
-  BigInt: any;
-  Bytes: any;
+  BigInt: bigint;
+  Bytes: string;
   Int8: any;
 }
 export interface Wallet {
@@ -107,7 +107,7 @@ export interface RealmsWithdrawalEvent {
   bridgeAddressL1: Scalars["Bytes"];
   bridgeAddressL2: Scalars["Bytes"];
   l1Recipient: Scalars["Bytes"];
-  tokenIds: Scalars["BigInt"];
+  tokenIds: Scalars["BigInt"][];
   status: TransferStatus;
   createdAtBlock: Scalars["BigInt"];
   createdTxHash: Scalars["Bytes"];

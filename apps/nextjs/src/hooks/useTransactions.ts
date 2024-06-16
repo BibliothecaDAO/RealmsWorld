@@ -1,18 +1,26 @@
 import type { Transaction } from "@/stores/useTransasctionManager";
-import type { RealmsWithdrawalEvent } from "@/types/subgraph";
-import { useEffect, useState } from "react";
+import type { RealmsWithdrawal, RealmsWithdrawalEvent } from "@/types/subgraph";
+import { useMemo } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import { TransactionType } from "@/constants/transactions";
+import {
+  BridgeTransactionType,
+  TransactionType,
+} from "@/constants/transactions";
 import { usePendingRealmsWithdrawals } from "@/hooks/bridge/data/usePendingRealmsWithdrawals";
 import useStore from "@/hooks/useStore";
 import { useTransactionManager } from "@/stores/useTransasctionManager";
 import { api } from "@/trpc/react";
-import { WithdrawalEvent } from "@/types/subgraph";
-import { num } from "starknet";
 import { useAccount } from "wagmi";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
+import type { ChainId } from "@realms-world/constants";
 import { padAddress } from "@realms-world/utils";
+
+export interface CombinedTransaction
+  extends Transaction,
+    Partial<RealmsWithdrawal> {
+  tokenIds?: string[];
+}
 
 export const useTransactions = () => {
   const transactions = useStore(
@@ -21,9 +29,12 @@ export const useTransactions = () => {
   );
   const { address } = useAccount();
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({ address });
-  const filters: RouterInputs["erc721Bridge"]["all"] = {
-    l1Account: padAddress(address),
-  };
+  const filters: RouterInputs["erc721Bridge"]["all"] = useMemo(
+    () => ({
+      l1Account: padAddress(address),
+    }),
+    [address],
+  );
 
   const { data: l2BridgeTransactions } = api.erc721Bridge.all.useQuery(
     filters,
@@ -32,63 +43,101 @@ export const useTransactions = () => {
     },
   );
 
-  // Create a map of l2BridgeTransactions by req_hash for quick lookup
-  const l2TransactionsMap = new Map<
-    string,
-    Omit<
-      NonNullable<RouterOutputs["erc721Bridge"]["all"]>[number],
-      "_cursor"
-    > & { withdrawalEvents?: RealmsWithdrawalEvent[] }
-  >(l2BridgeTransactions?.map((tx) => [tx.req_hash ?? "", tx]));
-
-  // Merge pendingWithdrawals into l2BridgeTransactions if they have the same req_hash
-  pendingWithdrawals?.forEach((withdrawal) => {
-    if (typeof withdrawal.req_hash == "string") {
-      const matchingTransaction = l2TransactionsMap.get(
-        withdrawal.req_hash.toString(),
-      );
-      if (matchingTransaction) {
-        // Merge withdrawalEvents into the matching l2BridgeTransaction
-        matchingTransaction.withdrawalEvents = withdrawal.withdrawalEvents;
-      } else {
-        // If no matching transaction, add the withdrawal as a new transaction
-        l2TransactionsMap.set(withdrawal.req_hash.toString(), {
-          ...withdrawal,
-          hash: "",
-          l1Account: padAddress(address),
-          l2Account: padAddress(address), // Assuming the same account for simplicity
-          timestamp:
-            typeof withdrawal.createdTimestamp == "bigint"
-              ? new Date(withdrawal.createdTimestamp.toString())
-              : new Date(),
-          withdrawalEvents: withdrawal.withdrawalEvents,
-          type: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
-          tokenIds:
-            withdrawal.withdrawalEvents[0]?.tokenIds.map((id) =>
-              id.toString(),
-            ) ?? [],
-        });
+  const l2TransactionsMap = useMemo(() => {
+    const map = new Map<
+      bigint,
+      NonNullable<RouterOutputs["erc721Bridge"]["all"]>[number] & {
+        withdrawalEvents?: RealmsWithdrawalEvent[];
+        chainId: ChainId;
       }
-    }
-  });
+    >(
+      l2BridgeTransactions?.map((tx) => [
+        BigInt(tx.req_hash ?? ""),
+        {
+          ...tx,
+          type: BridgeTransactionType[
+            tx.type as keyof typeof BridgeTransactionType
+          ],
+          chainId: !tx.hash ? SUPPORTED_L1_CHAIN_ID : SUPPORTED_L2_CHAIN_ID,
+        },
+      ]),
+    );
+    pendingWithdrawals?.forEach((withdrawal) => {
+      if (withdrawal.req_hash) {
+        const matchingTransaction = map.get(withdrawal.req_hash);
+        if (matchingTransaction) {
+          matchingTransaction.withdrawalEvents = withdrawal.withdrawalEvents;
+          matchingTransaction.type =
+            TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM;
+          matchingTransaction.chainId = SUPPORTED_L1_CHAIN_ID;
+        } else {
+          console.log(
+            typeof withdrawal.withdrawalEvents[0]?.finishedTxHash +
+              withdrawal.withdrawalEvents[0]?.finishedTxHash,
+          );
+          map.set(BigInt(withdrawal.req_hash), {
+            ...withdrawal,
+            chainId: SUPPORTED_L1_CHAIN_ID,
+            req_hash: withdrawal.req_hash.toString(),
+            hash:
+              withdrawal.withdrawalEvents[0]?.finishedTxHash ??
+              withdrawal.withdrawalEvents[0]?.createdTxHash,
+            l1Account: padAddress(address),
+            l2Account: padAddress(address),
+            timestamp: new Date(
+              Number(withdrawal.createdTimestamp ?? 0n) * 1000,
+            ),
+            withdrawalEvents: withdrawal.withdrawalEvents,
+            type: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
+            _cursor: 0,
+            tokenIds:
+              withdrawal.withdrawalEvents[0]?.tokenIds.map((id) =>
+                id.toString(),
+              ) ?? [],
+          });
+        }
+      }
+    });
 
-  // Modify each transaction in the map based on the conditions
-  l2TransactionsMap.forEach((value) => {
-    if (value.withdrawalEvents && value.withdrawalEvents.length > 0) {
-      value.type = TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM;
-    } else if (value.type === "DepositRequestInitiated") {
-      value.type = TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE;
-    } else {
-      value.type = TransactionType.BRIDGE_REALMS_L1_TO_L2;
-    }
-  });
+    return map;
+  }, [l2BridgeTransactions, pendingWithdrawals, address]);
 
-  // Convert the map back to an array for the combinedTransactions
-  const combinedTransactions = Array.from(l2TransactionsMap.values());
+  const combinedTransactions: CombinedTransaction[] = useMemo(() => {
+    const transactionsMap = new Map<string, CombinedTransaction>();
 
-  // Include other transactions that are not part of l2BridgeTransactions or pendingWithdrawals
-  combinedTransactions.push(...(transactions ?? []));
+    const transactionsArray = Array.from(l2TransactionsMap.values()).map(
+      (tx) => ({
+        ...tx,
+        req_hash: tx.req_hash ? BigInt(tx.req_hash) : undefined,
+      }),
+    );
+    console.log(transactionsArray);
+    // Add transactions to the map, deduplicating by hash
+    transactionsArray.forEach((tx) => {
+      if (tx.hash && !transactionsMap.has(tx.hash)) {
+        transactionsMap.set(tx.hash, tx);
+      }
+    });
 
+    // Add any additional transactions that might not be in the l2TransactionsMap
+    (transactions ?? []).forEach((tx) => {
+      if (tx.hash && !transactionsMap.has(tx.hash)) {
+        transactionsMap.set(tx.hash, tx);
+      }
+    });
+
+    // Convert the map back to an array
+    const deduplicatedArray = Array.from(transactionsMap.values());
+
+    // Sort the transactions by timestamp
+    deduplicatedArray.sort((a, b) => {
+      const dateA = new Date(a.timestamp);
+      const dateB = new Date(b.timestamp);
+      return dateB.getTime() - dateA.getTime();
+    });
+
+    return deduplicatedArray;
+  }, [l2TransactionsMap, transactions]);
   return {
     transactions: combinedTransactions,
   };

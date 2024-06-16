@@ -35,6 +35,7 @@ export const config: Config<Starknet, Postgres> = {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
     tableName: "erc721_tokens",
     entityMode: true,
+    uniqueColumns: true,
   },
 };
 
