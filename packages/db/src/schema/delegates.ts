@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
   bigint,
   index,
@@ -5,6 +6,8 @@ import {
   numeric,
   pgTable,
   serial,
+  text,
+  timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
 
@@ -83,6 +86,31 @@ export const delegates = pgTable(
       tokenholdersrepresentedamount_idx: index(
         "delegates_tokenholdersrepresentedamount_index",
       ).using("btree", table.tokenHoldersRepresentedAmount),
+    };
+  },
+);
+export const delegatesRelations = relations(delegates, ({ one }) => ({
+  delegateProfile: one(delegateProfiles),
+}));
+
+export const delegateProfiles = pgTable(
+  "delegate_profiles",
+  {
+    delegateId: varchar("delegateId", { length: 256 })
+      .notNull()
+      .primaryKey()
+      .references(() => delegates.id),
+    statement: text("statement").notNull(),
+    interests: text("interests").array(),
+    twitter: text("twitter"),
+    telegram: text("telegram"),
+    discord: text("discord"),
+    createdAt: timestamp("createdAt"),
+    updatedAt: timestamp("updatedAt"),
+  },
+  (table) => {
+    return {
+      delegateId_idx: index().using("btree", table.delegateId),
     };
   },
 );

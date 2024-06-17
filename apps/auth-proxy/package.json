@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@auth/core": "^0.28.2"
+    "@auth/core": "^0.32.0"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "*",
