@@ -10,9 +10,5 @@ export function generateMetadata(): Metadata {
 }
 
 export default function Page() {
-  return (
-    <>
-      <Overview />
-    </>
-  );
+  return <Overview />;
 }

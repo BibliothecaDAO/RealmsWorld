@@ -102,7 +102,7 @@ export const NftBridgeModal = () => {
   }, [getNonce]);
 
   const renderBadge = (isL1: boolean, address: string) => (
-    <Badge className="rounded-2xl pr-4">
+    <Badge className="pr-4">
       {isL1 ? (
         <EthereumLogo className="mr-2 w-8" />
       ) : (

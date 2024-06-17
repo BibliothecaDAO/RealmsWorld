@@ -117,13 +117,13 @@ export const WalletSheet = () => {
             <EthereumAccount />
             <StarkAccount />
             <div className="w-full border-b border-t px-3 py-4">
-              <Label>Quick Actions:</Label>
               <div className="mt-1 flex items-center gap-x-2">
                 <Button
                   asChild
-                  className="self-center rounded-lg"
+                  className="self-center"
                   size={"sm"}
                   variant={"outline"}
+                  onClick={() => toggleAccount()}
                 >
                   <Link href={"/account/assets"}>My Assets</Link>
                 </Button>
@@ -131,7 +131,7 @@ export const WalletSheet = () => {
                   <DialogTrigger asChild>
                     <Button
                       //disabled={!realms?.length}
-                      className="self-center rounded-lg"
+                      className="self-center"
                       size={"sm"}
                       variant={"outline"}
                     >
