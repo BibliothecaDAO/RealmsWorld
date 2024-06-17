@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   bigint,
   index,
@@ -10,6 +10,8 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const tokenholders = pgTable(
   "tokenholders",
@@ -105,8 +107,11 @@ export const delegateProfiles = pgTable(
     twitter: text("twitter"),
     telegram: text("telegram"),
     discord: text("discord"),
-    createdAt: timestamp("createdAt"),
-    updatedAt: timestamp("updatedAt"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt", {
+      mode: "date",
+      withTimezone: true,
+    }).$onUpdateFn(() => sql`now()`),
   },
   (table) => {
     return {
@@ -114,6 +119,21 @@ export const delegateProfiles = pgTable(
     };
   },
 );
+
+export const CreateDelegateProfileSchema = createInsertSchema(
+  delegateProfiles,
+  {
+    delegateId: z.string(),
+    statement: z.string(),
+    interests: z.string().array(),
+    twitter: z.string(),
+    telegram: z.string(),
+    discord: z.string(),
+  },
+).omit({
+  createdAt: true,
+  updatedAt: true,
+});
 
 export const governances = pgTable(
   "governances",
