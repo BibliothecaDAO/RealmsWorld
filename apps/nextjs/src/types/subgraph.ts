@@ -11,8 +11,8 @@ export interface Scalars {
   Decimal: any;
   DateTime: any;
   BigDecimal: any;
-  BigInt: any;
-  Bytes: any;
+  BigInt: bigint;
+  Bytes: string;
   Int8: any;
 }
 export interface Wallet {
@@ -101,7 +101,29 @@ export interface WithdrawalEvent {
   finishedAtDate?: Maybe<Scalars["BigInt"]>;
   finishedTxHash?: Maybe<Scalars["Bytes"]>;
 }
-
+export interface RealmsWithdrawalEvent {
+  /** uniq ID */
+  id: Scalars["ID"];
+  bridgeAddressL1: Scalars["Bytes"];
+  bridgeAddressL2: Scalars["Bytes"];
+  l1Recipient: Scalars["Bytes"];
+  tokenIds: Scalars["BigInt"][];
+  status: TransferStatus;
+  createdAtBlock: Scalars["BigInt"];
+  createdTxHash: Scalars["Bytes"];
+  finishedAtBlock?: Maybe<Scalars["BigInt"]>;
+  finishedAtDate?: Maybe<Scalars["BigInt"]>;
+  finishedTxHash?: Maybe<Scalars["Bytes"]>;
+}
+export interface RealmsWithdrawal {
+  /** [bridgeL1Address, ...payload].join('-') */
+  id: Scalars["ID"];
+  l1Recipient: Scalars["Bytes"];
+  l2Sender: Scalars["Bytes"];
+  createdTimestamp?: Maybe<Scalars["BigInt"]>;
+  withdrawalEvents: RealmsWithdrawalEvent[];
+  req_hash: Scalars["BigInt"];
+}
 export interface Deposit {
   /** [bridgeL1Address, ...payload].join('-') */
   id: Scalars["ID"];
@@ -117,7 +139,9 @@ export interface Withdrawal {
   l2Sender: Scalars["Bytes"];
   createdTimestamp?: Maybe<Scalars["BigInt"]>;
   withdrawalEvents: WithdrawalEvent[];
+  hash: Scalars["BigInt"];
 }
+
 export interface DepositsQuery {
   deposits: (Pick<
     Deposit,

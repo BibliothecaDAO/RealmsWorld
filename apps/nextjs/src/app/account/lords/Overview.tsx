@@ -58,21 +58,16 @@ export const Overview = () => {
     refetchInterval: 10000,
   });
   return (
-    <div className="w-full px-4">
+    <div className="w-full">
       {l1Address && (
         <>
           <div className="flex gap-8">
-            <div className="mt-8 h-[400px] w-1/3">
-              {/*<h2 className="mb-2 text-3xl">Realms</h2>
+            {/* <div className="mt-8 h-[400px] w-1/3"> */}
+            {/*<h2 className="mb-2 text-3xl">Realms</h2>
               <RealmStakingTabs data={data} />*/}
-              <FloatAnimation />
-            </div>
+            {/* <FloatAnimation /> */}
+            {/* </div> */}
             <div className="w-full">
-              <span className="mb-2 flex w-fit items-center pb-4 font-sans text-3xl">
-                <LordsIcon className="mx-auto mr-2 h-7 w-7 fill-bright-yellow" />
-                Realms LORDS Rewards
-              </span>
-
               <div className="mt-4 grid grid-cols-3 gap-4">
                 <Card>
                   <CardHeader>
@@ -96,7 +91,9 @@ export const Overview = () => {
                 <Card>
                   <CardHeader>
                     <CardDescription>Inactive Realms</CardDescription>
-                    <CardTitle className="text-3xl">{totalL1Realms}</CardTitle>
+                    <CardTitle className="text-3xl">
+                      {totalL1Realms ? totalL1Realms : "0"}
+                    </CardTitle>
                   </CardHeader>
                   <CardFooter>
                     on L1{" "}

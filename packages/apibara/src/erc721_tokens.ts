@@ -35,6 +35,7 @@ export const config: Config<Starknet, Postgres> = {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
     tableName: "erc721_tokens",
     entityMode: true,
+    uniqueColumns: true,
   },
 };
 
@@ -42,13 +43,15 @@ export default function transform({ header, events }: Block) {
   return events?.flatMap((event) => transferToTask(header!, event));
 }
 
-function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
+function transferToTask(header: BlockHeader, { event }: EventWithTransaction) {
   const isMainnet =
     Deno.env.get("STREAM_URL") == "https://mainnet.starknet.a5a.ch";
   const isData = event.data != undefined;
   switch (event.keys?.[0]) {
     case TRANSFER_EVENT: {
       const from = BigInt(isData ? event.data[0] : event.keys[1]);
+      const to = BigInt(isData ? event.data[1] : event.keys[2]);
+
       const token_id = parseInt(
         uint256
           .uint256ToBN({
@@ -63,6 +66,25 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
         return {
           insert: {
             id: event.fromAddress + ":" + token_id,
+            contract_address: event.fromAddress,
+            token_id,
+            minter: owner,
+            owner: owner,
+          },
+        };
+      }
+      if (to == 0n) {
+        return {
+          entity: {
+            id: event.fromAddress + ":" + token_id,
+          },
+          update: {
+            id:
+              event.fromAddress +
+              ":" +
+              token_id +
+              ":burned" +
+              header.blockNumber,
             contract_address: event.fromAddress,
             token_id,
             minter: owner,

@@ -1,17 +1,8 @@
 export const StarknetBridgeRealms = [
-  { inputs: [], name: "BridgeNotEnabledError", type: "error" },
   { inputs: [], name: "CairoWrapError", type: "error" },
-  { inputs: [], name: "CollectionMappingAlreadySet", type: "error" },
-  { inputs: [], name: "CollectionTypeMaskUnsupported", type: "error" },
-  { inputs: [], name: "ErrorVerifyingAddressMapping", type: "error" },
-  { inputs: [], name: "InvalidCollectionL1Address", type: "error" },
-  { inputs: [], name: "InvalidCollectionL2Address", type: "error" },
+  { inputs: [], name: "NotEscrowedError", type: "error" },
   { inputs: [], name: "NotPayableError", type: "error" },
   { inputs: [], name: "NotSupportedError", type: "error" },
-  { inputs: [], name: "NotSupportedYetError", type: "error" },
-  { inputs: [], name: "NotWhiteListedError", type: "error" },
-  { inputs: [], name: "UnsupportedTokenStandard", type: "error" },
-  { inputs: [], name: "WithdrawMethodError", type: "error" },
   {
     anonymous: false,
     inputs: [
@@ -51,7 +42,7 @@ export const StarknetBridgeRealms = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "block_timestamp",
+        name: "blockTimestamp",
         type: "uint256",
       },
     ],
@@ -65,7 +56,7 @@ export const StarknetBridgeRealms = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "block_timestamp",
+        name: "blockTimestamp",
         type: "uint256",
       },
     ],
@@ -75,56 +66,11 @@ export const StarknetBridgeRealms = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "reqHash",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "block_timestamp",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "l1Address",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "l2Address",
-        type: "uint256",
-      },
-    ],
-    name: "CollectionDeployedFromL2",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "collection",
-        type: "address",
-      },
-      { indexed: false, internalType: "bool", name: "enable", type: "bool" },
-    ],
-    name: "CollectionWhiteListUpdated",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
       { indexed: true, internalType: "uint256", name: "hash", type: "uint256" },
       {
         indexed: false,
         internalType: "uint256",
-        name: "block_timestamp",
+        name: "blockTimestamp",
         type: "uint256",
       },
       {
@@ -135,38 +81,6 @@ export const StarknetBridgeRealms = [
       },
     ],
     name: "DepositRequestInitiated",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "colllectionL1",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "collectionL2",
-        type: "uint256",
-      },
-    ],
-    name: "L1L2CollectionMappingUpdated",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "bytes32",
-        name: "msgHash",
-        type: "bytes32",
-      },
-    ],
-    name: "MessageHashAutoWithdrawAdded",
     type: "event",
   },
   {
@@ -204,19 +118,11 @@ export const StarknetBridgeRealms = [
   {
     anonymous: false,
     inputs: [
-      { indexed: false, internalType: "bool", name: "enable", type: "bool" },
-    ],
-    name: "WhiteListUpdated",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
       { indexed: true, internalType: "uint256", name: "hash", type: "uint256" },
       {
         indexed: false,
         internalType: "uint256",
-        name: "block_timestamp",
+        name: "blockTimestamp",
         type: "uint256",
       },
       {
@@ -230,13 +136,6 @@ export const StarknetBridgeRealms = [
     type: "event",
   },
   { stateMutability: "payable", type: "fallback" },
-  {
-    inputs: [{ internalType: "uint256", name: "msgHash", type: "uint256" }],
-    name: "addMessageHashForAutoWithdraw",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
   {
     inputs: [
       { internalType: "uint256[]", name: "payload", type: "uint256[]" },
@@ -259,52 +158,10 @@ export const StarknetBridgeRealms = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "bool", name: "enable", type: "bool" }],
-    name: "enableBridge",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "bool", name: "enable", type: "bool" }],
-    name: "enableWhiteList",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "getWhiteListedCollections",
-    outputs: [{ internalType: "address[]", name: "", type: "address[]" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "bytes", name: "data", type: "bytes" }],
     name: "initialize",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "isEnabled",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "isWhiteListEnabled",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "collection", type: "address" }],
-    name: "isWhiteListed",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -339,26 +196,15 @@ export const StarknetBridgeRealms = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "address", name: "collectionL1", type: "address" },
-      { internalType: "snaddress", name: "collectionL2", type: "uint256" },
-      { internalType: "bool", name: "force", type: "bool" },
-    ],
-    name: "setL1L2CollectionMapping",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "uint256", name: "l2Address", type: "uint256" }],
-    name: "setStarklaneL2Address",
+    name: "setL2BridgeAddress",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [{ internalType: "uint256", name: "l2Selector", type: "uint256" }],
-    name: "setStarklaneL2Selector",
+    name: "setL2BridgeSelector",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -400,19 +246,9 @@ export const StarknetBridgeRealms = [
     type: "function",
   },
   {
-    inputs: [
-      { internalType: "address", name: "collection", type: "address" },
-      { internalType: "bool", name: "enable", type: "bool" },
-    ],
-    name: "whiteList",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "uint256[]", name: "request", type: "uint256[]" }],
     name: "withdrawTokens",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
+    outputs: [],
     stateMutability: "payable",
     type: "function",
   },

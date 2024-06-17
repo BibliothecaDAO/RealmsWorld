@@ -1,5 +1,12 @@
 import { relations } from "drizzle-orm";
-import { bigint, integer, numeric, pgTable, text } from "drizzle-orm/pg-core";
+import {
+  bigint,
+  integer,
+  numeric,
+  pgTable,
+  primaryKey,
+  text,
+} from "drizzle-orm/pg-core";
 
 import { int8range } from "../int8range";
 import { erc721MarketEvents } from "./erc721_market_events";

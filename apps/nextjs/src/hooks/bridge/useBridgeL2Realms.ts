@@ -63,11 +63,13 @@ export function useBridgeL2Realms({
 
   const initiateWithdraw = useCallback(async () => {
     const tx = await writeAsync();
-    transactions?.addTx(
-      tx.transaction_hash,
-      TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,
-      SUPPORTED_L2_CHAIN_ID,
-    );
+    transactions?.addTx({
+      hash: tx.transaction_hash,
+      type: TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,
+      chainId: SUPPORTED_L2_CHAIN_ID,
+      status: "pending",
+      timestamp: new Date(Date.now()),
+    });
     toast({
       title: TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,
       description: `${selectedTokenIds.length} Realms will be ready to withdraw on Ethereum in ~12 hours`,

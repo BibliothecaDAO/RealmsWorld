@@ -1,3 +1,5 @@
+"use client";
+
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +23,7 @@ function UserTokenCard({
     <button onClick={onClick}>
       <div
         className={cn(
-          "flex transform flex-col border bg-background  duration-300 hover:-translate-y-1",
+          "flex transform flex-col border bg-background duration-300 hover:-translate-y-1",
           selected && "border-bright-yellow ring ring-bright-yellow",
         )}
       >
@@ -29,7 +31,7 @@ function UserTokenCard({
           <Image
             src={token.token.image}
             alt={"Image for: " + token.token.name}
-            className="mx-auto "
+            className="mx-auto"
             width={400}
             height={400}
           />
