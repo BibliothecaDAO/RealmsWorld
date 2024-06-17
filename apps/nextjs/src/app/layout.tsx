@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inconsolata, Silkscreen } from "next/font/google";
+import { Inconsolata, Jost, Silkscreen } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -20,7 +20,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 
 import { Toaster, TooltipProvider } from "@realms-world/ui";
 
-const silkscreen = Silkscreen({
+const silkscreen = Jost({
   subsets: ["latin"],
   variable: "--font-silkscreen",
   weight: ["400"],
@@ -49,7 +49,7 @@ export default function Layout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body
         style={backgroundImageStyle}
-        className={`${silkscreen.variable} ${inconsolata.variable} dark`}
+        className={`${inconsolata.variable} ${silkscreen.variable} dark`}
       >
         <TRPCReactProvider headersPromise={getHeaders()}>
           <UIStoreProvider>

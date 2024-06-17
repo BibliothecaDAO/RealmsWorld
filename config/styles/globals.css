@@ -3,48 +3,48 @@
 @tailwind utilities;
 @layer base {
   :root {
-    --background: 36 100% 95%;
-    --foreground: -2 30% 25%;
-    --card: 36 50% 90%;
-    --card-foreground: 36 5% 15%;
-    --popover: 36 100% 95%;
-    --popover-foreground: 36 100% 10%;
-    --primary: 69 9% 15%;
+    --background: 36 44% 95%;
+    --foreground: 36 5% 6%;
+    --card: 36 44% 90%;
+    --card-foreground: 36 5% 10%;
+    --popover: 36 44% 95%;
+    --popover-foreground: 36 95% 6%;
+    --primary: 36 88.9% 85.9%;
     --primary-foreground: 0 0% 0%;
     --secondary: 36 30% 70%;
     --secondary-foreground: 0 0% 0%;
-    --muted: 36 88.9% 85.9%;
+    --muted: -2 30% 85%;
     --muted-foreground: 36 5% 35%;
     --accent: -2 30% 80%;
-    --accent-foreground: 36 5% 15%;
-    --destructive: 0 100% 30%;
+    --accent-foreground: 36 5% 10%;
+    --destructive: 0 50% 30%;
     --destructive-foreground: 36 5% 90%;
-    --border: 68 5% 29%;
-    --input: 36 30% 26%;
+    --border: 36 30% 50%;
+    --input: 36 30% 18%;
     --ring: 36 88.9% 85.9%;
-    --radius: 0.5rem;
+    --radius: 0rem;
   }
   .dark {
-    --background: 69 9% 15%;
-    --foreground: 36 88.9% 85.9%;
-    --card: 75 3.92% 20%;
+    --background: 36 44% 6%;
+    --foreground: 36 5% 90%;
+    --card: 36 44% 6%;
     --card-foreground: 36 5% 90%;
-    --popover: 69 9% 15%;
-    --popover-foreground: 36 88.9% 85.9%;
+    --popover: 36 44% 5%;
+    --popover-foreground: 36 5% 90%;
     --primary: 36 88.9% 85.9%;
-    --primary-foreground: 67.5 5.41% 29.02%;
-    --secondary: 36 30% 20%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 36 30% 10%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 75 3.92% 20%;
-    --muted-foreground: 38.71 13.42% 45.29%;
-    --accent: 68 5% 29%;
-    --accent-foreground: 338 100% 79%;
-    --destructive: 0 100% 30%;
+    --muted: -2 30% 15%;
+    --muted-foreground: 36 5% 60%;
+    --accent: -2 30% 15%;
+    --accent-foreground: 36 5% 90%;
+    --destructive: 0 50% 30%;
     --destructive-foreground: 36 5% 90%;
-    --border: 68 5% 29%;
-    --input: 68 5% 29%;
+    --border: 36 30% 18%;
+    --input: 36 30% 18%;
     --ring: 36 88.9% 85.9%;
-    --radius: 30;
+    --radius: 0rem;
     --speed: 3;
     --power4: linear(
       0 0%,

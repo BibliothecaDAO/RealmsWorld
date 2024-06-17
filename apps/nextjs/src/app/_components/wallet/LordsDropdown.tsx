@@ -26,7 +26,7 @@ export const LordsDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size={"sm"} className="mr-3 rounded" variant={"outline"}>
+        <Button size={"sm"} className="mr-3" variant={"outline"}>
           <LordsIcon className="mr-2 w-[1.55rem] fill-current" />{" "}
           {parseInt(
             formatEther((l2Data?.value ?? 0n) + (l1Data?.value ?? 0n)),

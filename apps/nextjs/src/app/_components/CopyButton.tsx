@@ -40,7 +40,7 @@ export function CopyButton({
               "group [&_svg]:size-3.5",
               displayText
                 ? "w-auto font-sans-serif normal-case"
-                : "h-7 w-7 rounded-[6px]",
+                : "h-7 w-7 rounded-[1px]",
             )}
             onClick={async () => {
               await navigator.clipboard.writeText(text);

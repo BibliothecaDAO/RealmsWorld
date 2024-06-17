@@ -13,7 +13,7 @@ import Gamepad from "@/icons/gamepad.svg";
 import LordsIcon from "@/icons/lords.svg";
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
-import { Github, Twitter } from "lucide-react";
+import { Github, Twitter, User } from "lucide-react";
 
 import { Button, ScrollArea } from "@realms-world/ui";
 
@@ -42,22 +42,22 @@ const Sidebar = () => {
       icon: <Calender className="w-[25px]" />,
     },
     {
-      name: "Bridge",
-      href: "/bridge",
-      icon: <Bridge className="w-[25px]" />,
+      name: "Account",
+      href: "/account",
+      icon: <User className="w-[25px]" />,
     },
-    {
-      name: "Staking",
-      href: "/staking",
-      icon: <Coins className="w-[25px]" />,
-    },
+    // {
+    //   name: "Staking",
+    //   href: "/staking",
+    //   icon: <Coins className="w-[25px]" />,
+    // },
   ];
 
   const social = [
     {
       name: "Discord",
       href: "https://discord.gg/realmsworld",
-      icon: <Discord className="w-8 fill-current" />,
+      icon: <Discord className="w-6 fill-current" />,
     },
     {
       name: "Twitter",
@@ -125,7 +125,7 @@ const Sidebar = () => {
             <Button
               asChild
               variant={"outline"}
-              className="mt-3 flex h-16 flex-col rounded p-2 pt-3 font-sans"
+              className="mt-3 flex h-16 flex-col p-2 pt-3 font-sans"
             >
               <Link href="/swap">
                 <div className="h-8">
@@ -135,7 +135,7 @@ const Sidebar = () => {
               </Link>
             </Button>
 
-            <div className="flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
+            <div className="my-3 flex pt-8 sm:mt-auto sm:flex-col sm:space-y-2">
               {social.map((item, index) => {
                 return (
                   <Link href={item.href} target="_blank" key={index}>

@@ -18,26 +18,28 @@ export const TransactionItem = ({ tx }: { tx: CombinedTransaction }) => {
     tx.withdrawalEvents?.[0]?.status == "ACCEPTED_ON_L1";
 
   return (
-    <div className="mb-1.5 rounded border p-2" key={tx.hash}>
+    <div className="mb-1.5 border p-3" key={tx.hash}>
       <div className="flex justify-between">
         <div className="flex w-full flex-col">
-          <span className="text-xs text-muted-foreground">
-            {tx.timestamp.toLocaleString()}
-          </span>
-          <span className="mb-1">{tx.type}</span>
-          <div className="mb-1.5 flex">
-            {tx.tokenIds?.slice(0, 5).map((id) => (
-              <Badge className={"px-1 pr-2"} variant={"outline"} key={id}>
-                #{id}
-              </Badge>
-            ))}
-          </div>
-          <div>
+          <div className="mb-3 flex gap-2 text-xs text-muted-foreground">
+            <span className="self-center">
+              {" "}
+              {tx.timestamp.toLocaleString()}
+            </span>
+
             <ExplorerLink
               type="tx"
               hash={tx.hash}
               chainId={tx.chainId ?? SUPPORTED_L2_CHAIN_ID}
             />
+          </div>
+          <span className="mb-3 text-xl">{tx.type}</span>
+          <div className="mb-1.5 flex gap-2">
+            {tx.tokenIds?.slice(0, 5).map((id) => (
+              <Badge className={""} variant={"outline"} key={id}>
+                Token #{id}
+              </Badge>
+            ))}
           </div>
         </div>
         <div>
