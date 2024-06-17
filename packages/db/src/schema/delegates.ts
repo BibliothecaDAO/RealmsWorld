@@ -92,7 +92,10 @@ export const delegates = pgTable(
   },
 );
 export const delegatesRelations = relations(delegates, ({ one }) => ({
-  delegateProfile: one(delegateProfiles),
+  delegateProfile: one(delegateProfiles, {
+    fields: [delegates.id],
+    references: [delegateProfiles.delegateId],
+  }),
 }));
 
 export const delegateProfiles = pgTable(
@@ -118,6 +121,12 @@ export const delegateProfiles = pgTable(
       delegateId_idx: index().using("btree", table.delegateId),
     };
   },
+);
+export const delegateProfilesRelations = relations(
+  delegateProfiles,
+  ({ one }) => ({
+    delegate: one(delegates),
+  }),
 );
 
 export const CreateDelegateProfileSchema = createInsertSchema(

@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { DelegationProfile } from "@/app/_components/delegation/Profile";
+import { api } from "@/trpc/server";
+
+import type { RouterInputs } from "@realms-world/api";
 
 export function generateMetadata(): Metadata {
   return {
@@ -70,7 +73,12 @@ const exampleDelegation = [
     telegram: "https://twitter.com/realmsworld",
   },
 ];
-export default function Page() {
+export default async function Page() {
+  const filters: RouterInputs["delegates"]["all"] = {
+    limit: 20,
+  };
+
+  const delegates = await api.delegates.all(filters);
   return (
     <div>
       <div className="w-full">
@@ -82,8 +90,8 @@ export default function Page() {
       </div>
 
       <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-3">
-        {exampleDelegation.map((delegation) => (
-          <DelegationProfile {...delegation} />
+        {delegates.items.map((delegation) => (
+          <DelegationProfile key={delegation.id} {...delegation} />
         ))}
       </div>
     </div>

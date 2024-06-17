@@ -2,6 +2,7 @@ import * as React from "react";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 import { Github, Twitter } from "lucide-react";
 
+import type { RouterOutputs } from "@realms-world/api";
 import {
   Button,
   Card,
@@ -12,23 +13,9 @@ import {
   CardTitle,
 } from "@realms-world/ui";
 
-interface DelegationProfileProps {
-  address: string;
-  description: string;
-  delegated: string;
-  twitter?: string;
-  github?: string;
-  telegram?: string;
-}
-
-export function DelegationProfile({
-  address,
-  description,
-  telegram,
-  twitter,
-  github,
-  delegated,
-}: DelegationProfileProps) {
+export function DelegationProfile(
+  props: RouterOutputs["delegates"]["all"]["items"][0],
+) {
   return (
     <Card>
       <CardHeader>
@@ -38,14 +25,16 @@ export function DelegationProfile({
             className="h-14 w-14 rounded-full"
           />
           <div>
-            <div>{shortenAddress(address)}</div>
+            <div>{shortenAddress(props.id)}</div>
             <div className="text-lg font-bold uppercase text-muted-foreground">
-              {delegated} Votes delegated
+              {props.delegatedVotes} Votes delegated
             </div>
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent>{description}</CardContent>
+      {props.delegateProfile && (
+        <CardContent>{props.delegateProfile.statement}</CardContent>
+      )}
       <CardFooter>
         <div className="flex w-full justify-end gap-3">
           <Button
@@ -56,16 +45,16 @@ export function DelegationProfile({
           >
             Delegate To
           </Button>
-          {twitter && (
+          {props.delegateProfile && (
             <Button variant={"outline"} size={"sm"} rel="noopener noreferrer">
               <Twitter />
             </Button>
           )}
-          {github && (
+          {/*github && (
             <Button variant={"outline"} size={"sm"} rel="noopener noreferrer">
               <Github />
             </Button>
-          )}
+          )*/}
         </div>
       </CardFooter>
     </Card>
