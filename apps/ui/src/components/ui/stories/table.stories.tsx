@@ -1,13 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import type { ColumnDef, SortingState } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
 
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
