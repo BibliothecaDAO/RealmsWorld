@@ -1,0 +1,38 @@
+{
+  "name": "@realms-world/siws-next-auth",
+  "version": "0.4.1",
+  "description": "Authentication adapter for Sign-In with Starknet and NextAuth.js",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=12.4"
+  },
+  "scripts": {
+    "dev": "bun build:watch & bun typegen:watch",
+    "prepare": "bun build",
+    "prebuild": "bun typegen",
+    "typecheck": "bun tsc --noEmit",
+    "typegen": "tsc --emitDeclarationOnly || true",
+    "typegen:watch": "tsc --emitDeclarationOnly --watch"
+  },
+  "keywords": [],
+  "author": "Redbeard",
+  "license": "MIT",
+  "peerDependencies": {
+    "@rainbow-me/rainbowkit": "2.0.x || 2.1.x",
+    "next-auth": "5.0.0-beta.19",
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "ethers": "^5.6.8",
+    "siws_lib": "*"
+  }
+}
