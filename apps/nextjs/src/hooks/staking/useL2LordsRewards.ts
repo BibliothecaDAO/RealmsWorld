@@ -1,14 +1,14 @@
 import type { Call } from "starknet";
 import { useCallback, useMemo } from "react";
-import RealmsABI from "@/abi/L2/Realms.json";
+import { RealmsABI } from "@/abi/L2/Realms";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { TransactionType } from "@/constants/transactions";
 import { useTransactionManager } from "@/stores/useTransasctionManager";
 import {
   useAccount,
   useContract,
-  useContractRead,
-  useContractWrite,
+  useReadContract,
+  useSendTransaction,
 } from "@starknet-react/core";
 import { formatEther } from "viem";
 
@@ -24,7 +24,7 @@ export const useL2LordsRewards = () => {
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;
 
-  const { data: balance, isFetching } = useContractRead({
+  const { data: balance, isFetching } = useReadContract({
     address: l2RealmsAddress,
     abi: RealmsABI,
     functionName: "get_reward_balance_for",
@@ -42,29 +42,30 @@ export const useL2LordsRewards = () => {
   const calls: Call[] = useMemo(() => {
     if (!l2Address) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [contract?.populateTransaction.reward_claim?.()];
-  }, [l2Address, contract?.populateTransaction]);
+    return [contract?.populate("reward_claim", [])];
+  }, [l2Address, contract]);
 
   const {
-    writeAsync,
+    sendAsync,
     data: claimHash,
     isPending: isSubmitting,
-  } = useContractWrite({ calls });
+  } = useSendTransaction({ calls });
 
   const transactions = useStore(useTransactionManager, (state) => state);
 
   const claimRewards = useCallback(async () => {
-    const tx = await writeAsync();
-    transactions?.addTx(
-      tx.transaction_hash,
-      TransactionType.CLAIM_LORDS,
-      SUPPORTED_L2_CHAIN_ID,
-    );
+    const tx = await sendAsync();
+    transactions?.addTx({
+      hash: tx.transaction_hash,
+      type: TransactionType.CLAIM_LORDS,
+      chainId: SUPPORTED_L2_CHAIN_ID,
+      timestamp: new Date(Date.now()),
+    });
     toast({
       title: "Realms' Lords Claim Submitted",
       description: `Claim of ${formatEther(balance as bigint)} Lords in progress`,
     });
-  }, [writeAsync, transactions, toast, balance]);
+  }, [sendAsync, transactions, toast, balance]);
 
   return {
     balance,

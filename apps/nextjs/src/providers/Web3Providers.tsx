@@ -9,9 +9,12 @@ import {
   sepolia as starkSepolia,
 } from "@starknet-react/chains";
 import {
+  argent,
   blastProvider,
+  braavos,
   StarknetConfig,
   publicProvider as starkPublicProvider,
+  useInjectedConnectors,
 } from "@starknet-react/core";
 import { ArgentMobileConnector } from "starknetkit/argentMobile";
 import { InjectedConnector } from "starknetkit/injected";
@@ -21,19 +24,16 @@ import { mainnet, sepolia } from "wagmi/chains";
 
 import { TransferLogProvider } from "./TransferLogProvider";
 
-const starkProvider = env.NEXT_PUBLIC_BLAST_API
-  ? blastProvider({
-      apiKey: env.NEXT_PUBLIC_BLAST_API,
-    })
-  : starkPublicProvider();
-const starkConnectors = [
+const starkProvider = starkPublicProvider();
+/*const starkConnectors = [
   new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
   new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
   new WebWalletConnector({
     url: "https://web.argent.xyz",
   }),
   new ArgentMobileConnector(),
-];
+];*/
+
 const isTestnet = env.NEXT_PUBLIC_IS_TESTNET === "true";
 
 const theme = darkTheme({
@@ -52,6 +52,14 @@ export const config = getDefaultConfig({
 });
 
 export function Web3Providers({ children }: { children: ReactElement }) {
+  const { connectors: starkConnectors } = useInjectedConnectors({
+    // Show these connectors if the user has no connector installed.
+    recommended: [argent(), braavos()],
+    // Hide recommended connectors if the user has any connector installed.
+    includeRecommended: "always",
+    // Randomize the order of the connectors.
+    order: "alphabetical",
+  });
   return (
     <StarknetConfig
       autoConnect

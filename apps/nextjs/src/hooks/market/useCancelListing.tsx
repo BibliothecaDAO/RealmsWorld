@@ -4,7 +4,7 @@ import MarketplaceABI from "@/abi/L2/Marketplace.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
   useContract,
-  useContractWrite as useL2ContractWrite,
+  useSendTransaction as useL2ContractWrite,
 } from "@starknet-react/core";
 
 import { MarketplaceContract } from "@realms-world/constants";
@@ -19,14 +19,14 @@ export const useCancelListing = ({ listingId }: { listingId?: number }) => {
   const calls: Call[] = useMemo(() => {
     if (!listingId) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [contract?.populateTransaction.cancel?.(listingId)];
-  }, [contract?.populateTransaction, listingId]);
+    return [contract?.populate("cancel", [listingId])];
+  }, [contract, listingId]);
 
-  const { writeAsync, data, error } = useL2ContractWrite({ calls });
+  const { sendAsync, data, error } = useL2ContractWrite({ calls });
 
   return {
     calls,
-    writeAsync,
+    sendAsync,
     data,
     error,
   };

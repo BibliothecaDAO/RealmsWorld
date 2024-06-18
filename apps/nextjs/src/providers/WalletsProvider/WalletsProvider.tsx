@@ -13,8 +13,8 @@ import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
 import L2_ERC20 from "@/abi/L2/ERC20.json";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
-  useContractRead,
   useAccount as useL2Account,
+  useReadContract,
 } from "@starknet-react/core";
 import { hash, uint256 } from "starknet";
 import { useBalance, useAccount as useL1Account } from "wagmi";
@@ -75,7 +75,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     data: l2LordsBalance,
     isFetching: l2LordsIsLoading,
     refetch: l2LordsRefetch,
-  } = useContractRead({
+  } = useReadContract({
     address: LORDS[SUPPORTED_L2_CHAIN_ID]?.address,
     abi: L2_C1ERC20,
     functionName: "balance_of",
@@ -84,7 +84,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     watch: true,
   });
 
-  const { data: l2EthBalance, isFetching: l2EthIsLoading } = useContractRead({
+  const { data: l2EthBalance, isFetching: l2EthIsLoading } = useReadContract({
     address: ETH[SUPPORTED_L2_CHAIN_ID]?.address,
     abi: L2_ERC20,
     functionName: "balanceOf",

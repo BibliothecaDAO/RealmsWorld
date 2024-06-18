@@ -3,7 +3,7 @@
 //import { Mail } from "lucide-react";
 import { useEffect } from "react";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { useAccount, useConnect } from "@starknet-react/core";
+import { useAccount, useConnect, useWalletRequest } from "@starknet-react/core";
 
 //import { motion } from "framer-motion";
 
@@ -88,6 +88,10 @@ export const StarknetLoginModal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
 
+  const { request, data, isPending, isError, error } = useWalletRequest({
+    type: "wallet_getPermissions",
+  });
+
   return (
     <Dialog open={isStarknetLoginOpen} onOpenChange={toggleStarknetLogin}>
       <DialogContent className="w-full min-w-[350px] !pt-8">
@@ -102,6 +106,15 @@ export const StarknetLoginModal = () => {
         <DialogHeader>
           <h6 className="-mt-3 mb-6 text-base">Connect Starknet Wallet</h6>
         </DialogHeader>
+        <div>Permissions: {isPending ? "Wait..." : JSON.stringify(data)}</div>
+        <div>isError: {isError ? "True" : "False"}</div>
+        <div>Error: {isError ? error?.message : "Null"}</div>
+        <button
+          onClick={() => request()}
+          className="rounded bg-red-500 px-2 py-1 text-white"
+        >
+          Get Wallet Permissions
+        </button>
         <div className="flex flex-col space-y-2 self-center">
           {connectors.map((connector) => {
             const connectorInfo = wallets.find(

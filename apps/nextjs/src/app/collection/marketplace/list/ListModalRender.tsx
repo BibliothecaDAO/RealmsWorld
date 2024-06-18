@@ -3,7 +3,7 @@ import type { ExpirationOption } from "@/types";
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
 import { useListToken } from "@/hooks/market/useListToken";
-import { useWaitForTransaction } from "@starknet-react/core";
+import { useTransactionReceipt } from "@starknet-react/core";
 import dayjs from "dayjs";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -142,7 +142,7 @@ export const ListModalRenderer: FC<Props> = ({
     collectionId,
   });
 
-  const { data: transactionData, error: txErrror } = useWaitForTransaction({
+  const { data: transactionData, error: txErrror } = useTransactionReceipt({
     hash: data?.transaction_hash,
     watch: true,
   });
