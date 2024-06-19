@@ -7,10 +7,14 @@
   "directories": {
     "lib": "src"
   },
+  "files": [
+    "dist/**",
+    "src/**"
+  ],
   "scripts": {
     "test": "jest",
-    "build": "tsdx build ",
-    "gcp-build": "tsdx build",
+    "build": "tsup",
+    "gcp-build": "tsc",
     "clean": "rm -fr node_modules dist && rm -f package-lock.json && npm install",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
