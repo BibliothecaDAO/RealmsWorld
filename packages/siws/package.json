@@ -15,7 +15,7 @@
     "test": "jest",
     "build": "tsup",
     "gcp-build": "tsc",
-    "clean": "rm -fr node_modules dist && rm -f package-lock.json && npm install",
+    "clean": "rm -rf .turbo node_modules",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
@@ -30,9 +30,9 @@
   "homepage": "https://github.com/nethermindeth",
   "dependencies": {
     "@stablelib/random": "^1.0.1",
-    "ajv": "^8.12.0",
+    "ajv": "^8.16.0",
     "ajv-errors": "^3.0.0",
-    "ajv-formats": "^2.1.1",
+    "ajv-formats": "^3.0.1",
     "npm-check-updates": "^16.10.12",
     "starknet": "^6.9.0",
     "uri-js": "^4.4.1",
