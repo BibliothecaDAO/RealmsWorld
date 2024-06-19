@@ -52,7 +52,7 @@
         "nonce": {
           "type": "string",
           "minLength": 8,
-          "maxLength": 31,
+          "maxLength": 64,
           "pattern": "^[a-zA-Z0-9]*$",
           "errorMessage": "Nonce must be an alphanumeric string between 8 and 31 characters"
         },

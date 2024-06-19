@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuthShowcase } from "@/app/_components/auth/auth-showcase";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 
 import {
@@ -24,6 +25,8 @@ export function generateMetadata(): Metadata {
 export default function Page() {
   return (
     <div>
+      <AuthShowcase />
+
       <div className="w-full">
         <h4 className="my-4 text-3xl">Delegation Profile</h4>
 

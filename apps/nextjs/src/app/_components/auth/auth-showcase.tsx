@@ -1,20 +1,20 @@
+import { SessionProvider } from "next-auth/react";
+
 import { auth, signIn, signOut } from "@realms-world/auth";
+
+import { SIWSLogin } from "./SIWSLogin";
 
 export async function AuthShowcase() {
   const session = await auth();
 
+  console.log(session);
+
   if (!session) {
     return (
-      <form
-        action={async () => {
-          "use server";
-          await signIn("discord");
-        }}
-      >
-        <button className="bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20">
-          Sign in with Discord
-        </button>
-      </form>
+      <SessionProvider>
+        {" "}
+        <SIWSLogin />
+      </SessionProvider>
     );
   }
 

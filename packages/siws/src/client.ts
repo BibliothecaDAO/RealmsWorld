@@ -1,26 +1,28 @@
-import Ajv2020 from "ajv/dist/2020";
-import addFormats from "ajv-formats";
 import ajvErrors from "ajv-errors";
-import schema from "./sign-in-schema.json";
-import abiAccountContract from "./account-contract-abi.json";
+import addFormats from "ajv-formats";
+import Ajv2020 from "ajv/dist/2020";
 import {
-  ErrorTypes,
-  SignInWithStarknetError,
-  SignInWithStarknetResponse,
-  VerifyParams,
-  VerifyOpts,
-} from "./types";
-import {
-  TypedData,
-  typedData,
+  BigNumberish,
+  Contract,
   num,
   RpcProvider,
-  Contract,
   shortString,
-  BigNumberish,
+  TypedData,
+  typedData,
 } from "starknet";
 
-import { ISiwsTypedData, ISiwsDomain, ISiwsMessage } from "./types";
+import abiAccountContract from "./account-contract-abi.json";
+import schema from "./sign-in-schema.json";
+import {
+  ErrorTypes,
+  ISiwsDomain,
+  ISiwsMessage,
+  ISiwsTypedData,
+  SignInWithStarknetError,
+  SignInWithStarknetResponse,
+  VerifyOpts,
+  VerifyParams,
+} from "./types";
 
 import getMessageHash = typedData.getMessageHash;
 
@@ -37,7 +39,7 @@ export class SiwsTypedData implements ISiwsTypedData {
     domain: ISiwsDomain,
     message: ISiwsMessage,
     primaryType?: string,
-    types?: any
+    types?: any,
   ) {
     this.domain = domain;
     this.message = message;
@@ -95,7 +97,7 @@ export class SiwsTypedData implements ISiwsTypedData {
       const errors = validate.errors;
       // console.log(validate.errors);
       const errorMessage = errors
-        .map((error) => `${error.instancePath} ${error.message}`)
+        ?.map((error) => `${error.instancePath} ${error.message}`)
         .join(". ");
       throw new SignInWithStarknetError(errorMessage as ErrorTypes);
     }
@@ -109,20 +111,20 @@ export class SiwsTypedData implements ISiwsTypedData {
       obj.domain,
       obj.message,
       obj.primaryType,
-      obj.types
+      obj.types,
     );
   }
 
   async verifyMessageHash(
     hash: BigNumberish,
     signature: string[],
-    provider: RpcProvider
+    provider: RpcProvider,
   ): Promise<boolean> {
     try {
       const accountContract = new Contract(
         abiAccountContract,
         this.message.address,
-        provider
+        provider,
       );
       await accountContract.call("isValidSignature", [hash, signature]);
       return true;
@@ -135,7 +137,7 @@ export class SiwsTypedData implements ISiwsTypedData {
   async verifyMessage(
     data: TypedData,
     signature: string[],
-    provider: RpcProvider
+    provider: RpcProvider,
   ): Promise<boolean> {
     const hash = await getMessageHash(data, this.message.address);
     return this.verifyMessageHash(hash, signature, provider);
@@ -148,7 +150,7 @@ export class SiwsTypedData implements ISiwsTypedData {
    */
   public async verify(
     params: VerifyParams,
-    opts: VerifyOpts
+    opts: VerifyOpts,
   ): Promise<SignInWithStarknetResponse> {
     return new Promise<SignInWithStarknetResponse>((resolve, reject) => {
       const { domain, nonce, network, signature } = params;
@@ -161,7 +163,7 @@ export class SiwsTypedData implements ISiwsTypedData {
           error: new SignInWithStarknetError(
             ErrorTypes.NETWORK_MISMATCH,
             network,
-            this.domain.chainId
+            this.domain.chainId,
           ),
         });
       }
@@ -174,7 +176,7 @@ export class SiwsTypedData implements ISiwsTypedData {
           error: new SignInWithStarknetError(
             ErrorTypes.DOMAIN_MISMATCH,
             domain,
-            this.domain.name
+            this.domain.name,
           ),
         });
       }
@@ -187,7 +189,7 @@ export class SiwsTypedData implements ISiwsTypedData {
           error: new SignInWithStarknetError(
             ErrorTypes.NONCE_MISMATCH,
             nonce,
-            this.message.nonce
+            this.message.nonce,
           ),
         });
       }
@@ -207,7 +209,7 @@ export class SiwsTypedData implements ISiwsTypedData {
             error: new SignInWithStarknetError(
               ErrorTypes.EXPIRED_MESSAGE,
               `${checkTime.toISOString()} < ${expirationDate.toISOString()}`,
-              `${checkTime.toISOString()} >= ${expirationDate.toISOString()}`
+              `${checkTime.toISOString()} >= ${expirationDate.toISOString()}`,
             ),
           });
         }
@@ -223,7 +225,7 @@ export class SiwsTypedData implements ISiwsTypedData {
             error: new SignInWithStarknetError(
               ErrorTypes.EXPIRED_MESSAGE,
               `${checkTime.toISOString()} >= ${notBefore.toISOString()}`,
-              `${checkTime.toISOString()} < ${notBefore.toISOString()}`
+              `${checkTime.toISOString()} < ${notBefore.toISOString()}`,
             ),
           });
         }
@@ -237,7 +239,7 @@ export class SiwsTypedData implements ISiwsTypedData {
               data: this,
               error: new SignInWithStarknetError(
                 ErrorTypes.INVALID_SIGNATURE,
-                "Signature verification failed"
+                "Signature verification failed",
               ),
             });
           return resolve({
@@ -251,7 +253,7 @@ export class SiwsTypedData implements ISiwsTypedData {
             data: this,
             error: new SignInWithStarknetError(
               ErrorTypes.INVALID_SIGNATURE,
-              "Signature verfication failed. Check if you have an account created."
+              "Signature verfication failed. Check if you have an account created.",
             ),
           });
         });

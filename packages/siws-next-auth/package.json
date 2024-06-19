@@ -33,6 +33,6 @@
   },
   "devDependencies": {
     "ethers": "^5.6.8",
-    "siws_lib": "*"
+    "siws": "*"
   }
 }

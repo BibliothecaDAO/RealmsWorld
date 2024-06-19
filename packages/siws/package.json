@@ -1,15 +1,15 @@
 {
-  "name": "siws_lib",
+  "name": "siws",
   "version": "0.0.1",
   "description": "Sign-In with Starknet helper library",
-  "main": "./dist/siws.js",
-  "types": "./dist/siws.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "directories": {
     "lib": "src"
   },
   "scripts": {
     "test": "jest",
-    "build": "tsdx build --transpileOnly",
+    "build": "tsdx build ",
     "gcp-build": "tsdx build",
     "clean": "rm -fr node_modules dist && rm -f package-lock.json && npm install",
     "lint": "eslint --ext .js,.ts .",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
-    "@types/node": "^20.2.1",
+    "@types/node": "^20.14.5",
     "@realms-world/eslint-config": "*",
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",

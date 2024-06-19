@@ -106,15 +106,6 @@ export const StarknetLoginModal = () => {
         <DialogHeader>
           <h6 className="-mt-3 mb-6 text-base">Connect Starknet Wallet</h6>
         </DialogHeader>
-        <div>Permissions: {isPending ? "Wait..." : JSON.stringify(data)}</div>
-        <div>isError: {isError ? "True" : "False"}</div>
-        <div>Error: {isError ? error?.message : "Null"}</div>
-        <button
-          onClick={() => request()}
-          className="rounded bg-red-500 px-2 py-1 text-white"
-        >
-          Get Wallet Permissions
-        </button>
         <div className="flex flex-col space-y-2 self-center">
           {connectors.map((connector) => {
             const connectorInfo = wallets.find(
