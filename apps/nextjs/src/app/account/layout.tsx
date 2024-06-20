@@ -1,5 +1,6 @@
 import { StakingMigrationModal } from "@/app/_components/modal/StakingMigrationModal";
 import { PageLayout } from "@/app/_components/PageLayout";
+import { SessionProvider } from "next-auth/react";
 
 import { NavLink } from "@realms-world/ui";
 
@@ -24,8 +25,8 @@ export default function RootLayout({
     //   link: "activity",
     // },
     {
-      name: "Delegations",
-      link: "delegation",
+      name: "Delegates",
+      link: "delegates",
     },
     {
       name: "Profile",
@@ -33,7 +34,7 @@ export default function RootLayout({
     },
   ];
   return (
-    <>
+    <SessionProvider>
       <PageLayout size={"sm"} title="Account">
         <div className="mb-4 flex w-full space-x-4 border-b text-xl">
           {tabs.map((tab) => (
@@ -50,6 +51,6 @@ export default function RootLayout({
       </PageLayout>
       <StakingMigrationModal />
       <NftBridgeModal />
-    </>
+    </SessionProvider>
   );
 }

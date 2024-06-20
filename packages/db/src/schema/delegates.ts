@@ -101,9 +101,9 @@ export const delegateProfiles = pgTable(
     id: varchar("id", { length: 256 })
       .default(sql`gen_random_uuid()`)
       .primaryKey(),
-    delegateId: varchar("delegateId", { length: 256 }).references(
-      () => delegates.id,
-    ),
+    delegateId: varchar("delegateId", { length: 256 })
+      .references(() => delegates.id)
+      .unique(),
     statement: text("statement").notNull(),
     interests: text("interests").array(),
     twitter: text("twitter"),
@@ -114,7 +114,7 @@ export const delegateProfiles = pgTable(
     updatedAt: timestamp("updatedAt", {
       mode: "date",
       withTimezone: true,
-    }).$onUpdateFn(() => sql`now()`),
+    }).$onUpdateFn(() => new Date()),
   },
   (table) => {
     return {

@@ -1,16 +1,20 @@
 "use client";
 
 import { useRef } from "react";
+import { SIWSLogin } from "@/app/_components/auth/SIWSLogin";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
+import type { RouterOutputs } from "@realms-world/api";
 import { CreateDelegateProfileSchema } from "@realms-world/db/schema";
 import {
+  Alert,
   Button,
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,8 +25,15 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@realms-world/ui";
+import { padAddress } from "@realms-world/utils";
 
-export const ProfileForm = () => {
+export const ProfileForm = ({
+  delegateProfile,
+}: {
+  delegateProfile?: NonNullable<
+    RouterOutputs["delegates"]["byId"]
+  >["delegateProfile"];
+}) => {
   const formRef = useRef<HTMLFormElement>(null);
   const form = useForm({
     resolver: zodResolver(CreateDelegateProfileSchema),
@@ -34,7 +45,9 @@ export const ProfileForm = () => {
       discord: "",
       github: "",
     },
+    values: delegateProfile ?? undefined,
   });
+  const { data: session } = useSession();
 
   const utils = api.useUtils();
   const createDelegateProfile = api.delegates.createProfile.useMutation({
@@ -52,13 +65,17 @@ export const ProfileForm = () => {
       });
     },
   });
+
+  const requiresSignature =
+    !session?.user.name ||
+    padAddress(session.user.name) != delegateProfile?.delegateId;
+
   return (
     <Form {...form}>
       <form
         ref={formRef}
         className="space-y-8"
         onSubmit={form.handleSubmit((data) => {
-          console.log(data);
           createDelegateProfile.mutate(data);
         })}
       >
@@ -96,25 +113,25 @@ export const ProfileForm = () => {
             <FormItem>
               <FormLabel>Interests</FormLabel>
               <FormControl>
-                <>
-                  <ToggleGroup
-                    {...field}
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    type={"multiple"}
-                  >
-                    <ToggleGroupItem value="gaming">Gaming</ToggleGroupItem>
-                    <ToggleGroupItem value="game-design">
-                      Game Design
-                    </ToggleGroupItem>
-                    <ToggleGroupItem value="dao">DAO</ToggleGroupItem>
-                    <ToggleGroupItem value="defi">DeFi</ToggleGroupItem>
-                    <ToggleGroupItem value="autonomous-worlds">
-                      Autonomous Worlds
-                    </ToggleGroupItem>
-                  </ToggleGroup>
-                  <Input {...field} placeholder="Select Interests" />
-                </>
+                <ToggleGroup
+                  {...field}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  type={"multiple"}
+                  variant="outline"
+                  size={"sm"}
+                  className="justify-start"
+                >
+                  <ToggleGroupItem value="gaming">Gaming</ToggleGroupItem>
+                  <ToggleGroupItem value="game-design">
+                    Game Design
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="dao">DAO</ToggleGroupItem>
+                  <ToggleGroupItem value="defi">DeFi</ToggleGroupItem>
+                  <ToggleGroupItem value="autonomous-worlds">
+                    Autonomous Worlds
+                  </ToggleGroupItem>
+                </ToggleGroup>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -157,10 +174,34 @@ export const ProfileForm = () => {
           )}
         />
 
-        <Button type="submit" className="mt-4">
-          Save Profile
-        </Button>
+        {!requiresSignature && (
+          <Button
+            type="submit"
+            className="mt-4"
+            disabled={
+              !form.formState.isDirty || createDelegateProfile.isPending
+            }
+          >
+            {createDelegateProfile.isPending ? (
+              <>
+                <Loader className="mr-2 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              "Save Profile"
+            )}
+          </Button>
+        )}
       </form>
+      {requiresSignature && (
+        <>
+          <SIWSLogin />
+          <Alert variant={"warning"}>
+            You must sign a transaction with your Starknet wallet to edit your
+            profile.
+          </Alert>
+        </>
+      )}
     </Form>
   );
 };

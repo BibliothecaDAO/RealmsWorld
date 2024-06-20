@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DelegationProfile } from "@/app/_components/delegation/Profile";
+import { DelegateProfile } from "@/app/_components/delegation/Profile";
 import { api } from "@/trpc/server";
 
 import type { RouterInputs } from "@realms-world/api";
@@ -29,7 +29,7 @@ export default async function Page() {
 
       <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-3">
         {delegates.items.map((delegate) => (
-          <DelegationProfile key={delegate.id} delegate={delegate} />
+          <DelegateProfile key={delegate.id} delegate={delegate} />
         ))}
       </div>
     </div>

@@ -6,6 +6,7 @@ import {
   CreateDelegateProfileSchema,
   delegateProfiles,
   delegates,
+  tokenholders,
 } from "@realms-world/db/schema";
 import { padAddress } from "@realms-world/utils";
 
@@ -60,11 +61,22 @@ export const delegatesRouter = {
       };
     }),
 
+  tokenHolderById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.query.tokenholders.findFirst({
+        where: eq(tokenholders.id, padAddress(input.id)),
+      });
+    }),
+
   byId: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.delegates.findFirst({
-        where: eq(delegates.id, input.id),
+        where: eq(delegates.id, padAddress(input.id)),
+        with: {
+          delegateProfile: true,
+        },
       });
     }),
 
@@ -73,7 +85,12 @@ export const delegatesRouter = {
     .mutation(({ ctx, input }) => {
       if (!ctx.session.user.name) return;
       const delegateId = padAddress(ctx.session.user.name);
-      console.log(delegateId);
-      return ctx.db.insert(delegateProfiles).values({ ...input, delegateId });
+      return ctx.db
+        .insert(delegateProfiles)
+        .values({ ...input, delegateId })
+        .onConflictDoUpdate({
+          target: delegateProfiles.delegateId,
+          set: { ...input },
+        });
     }),
 } satisfies TRPCRouterRecord;

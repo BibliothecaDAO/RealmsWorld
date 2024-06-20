@@ -1,5 +1,3 @@
-import { SessionProvider } from "next-auth/react";
-
 import { auth, signIn, signOut } from "@realms-world/auth";
 
 import { SIWSLogin } from "./SIWSLogin";
@@ -7,15 +5,8 @@ import { SIWSLogin } from "./SIWSLogin";
 export async function AuthShowcase() {
   const session = await auth();
 
-  console.log(session);
-
   if (!session) {
-    return (
-      <SessionProvider>
-        {" "}
-        <SIWSLogin />
-      </SessionProvider>
-    );
+    return <SIWSLogin />;
   }
 
   return (
