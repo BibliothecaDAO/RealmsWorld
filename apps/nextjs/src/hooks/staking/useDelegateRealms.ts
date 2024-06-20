@@ -1,13 +1,10 @@
 import { RealmsABI } from "@/abi/L2/Realms";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useContract, useSendTransaction } from "@starknet-react/core";
-import { useAccount as useL1Account } from "wagmi";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
-export const useDelegateRealms = ({ delegatee }: { delegatee: string }) => {
-  const { address: addressL1 } = useL1Account();
-
+export const useDelegateRealms = ({ delegatee }: { delegatee?: string }) => {
   const l2RealmsAddress = getCollectionAddresses(Collections.REALMS)[
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;

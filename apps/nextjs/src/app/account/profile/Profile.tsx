@@ -1,13 +1,20 @@
 "use client";
 
 import Image from "next/image";
+import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
 import { api } from "@/trpc/react";
 import { shortenHex } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { Badge, CardContent, CardHeader, CardTitle } from "@realms-world/ui";
+import {
+  Badge,
+  Button,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@realms-world/ui";
 
 import { ProfileForm } from "./ProfileForm";
 
@@ -27,6 +34,10 @@ export const Profile = ({
       enabled: !!address,
     },
   );
+  const { sendAsync: delegateRealms } = useDelegateRealms({
+    delegatee: address,
+  });
+
   const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(
     {
       id: address ?? "0x",
@@ -72,6 +83,9 @@ export const Profile = ({
                       : shortenHex(tokenHolder?.delegate ?? "0x", 8)}
                   </Badge>
                 </div>
+                <Button size="sm" onClick={() => delegateRealms()}>
+                  Delegate to Self
+                </Button>
               </div>
             </CardTitle>
           </CardHeader>
