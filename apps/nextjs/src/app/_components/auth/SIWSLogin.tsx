@@ -30,7 +30,7 @@ export function SIWSLogin() {
     };
     createSignInData();
   }, [address]);
-  const { data, signTypedDataAsync, error, isPending } = useSignTypedData({
+  const { signTypedDataAsync, error, isPending } = useSignTypedData({
     params: signInData,
   });
   const handleLogin = async () => {

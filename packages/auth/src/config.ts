@@ -60,21 +60,21 @@ export const authConfig = {
           placeholder: "0x0,0x0",
         },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         try {
           const signindata = SiwsTypedData.fromJson(
             credentials.message as string,
           );
 
-          const nextAuthUrl = new URL(env.NEXTAUTH_URL || "");
           const csrf = cookies()
             .get("next-auth.csrf-token")
             ?.value.split("|")[0];
-
+          console.log(req.headers.get("host"));
+          console.log(credentials);
           const result = await signindata.verify(
             {
               signature: (credentials.signature as string).split(","),
-              domain: nextAuthUrl.host,
+              domain: req.headers.get("host") ?? "http://localhost:3000", //nextAuthUrl.host,
               nonce: csrf,
             },
             {},
