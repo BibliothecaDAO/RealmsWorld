@@ -62,11 +62,10 @@ export const authConfig = {
       },
       async authorize(credentials) {
         try {
-          const signindata = SiwsTypedData.fromJson(credentials.message);
+          const signindata = SiwsTypedData.fromJson(
+            credentials.message as string,
+          );
 
-          /*const siws = new SiwsTypedData(
-            JSON.parse(credentials.message || "{}"),
-          );*/
           const nextAuthUrl = new URL(env.NEXTAUTH_URL || "");
           const csrf = cookies()
             .get("next-auth.csrf-token")
@@ -74,7 +73,7 @@ export const authConfig = {
 
           const result = await signindata.verify(
             {
-              signature: credentials.signature.split(",") || "",
+              signature: (credentials.signature as string).split(","),
               domain: nextAuthUrl.host,
               nonce: csrf,
             },

@@ -19,12 +19,14 @@
   },
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "push": "bun with-env drizzle-kit push",
     "studio": "drizzle-kit studio",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {

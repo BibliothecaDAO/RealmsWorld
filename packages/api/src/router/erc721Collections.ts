@@ -1,12 +1,13 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { sum } from "drizzle-orm";
 import { z } from "zod";
 
 import { and, asc, eq, gt, min, sql } from "@realms-world/db";
 import { erc721Collections, erc721MarketEvents } from "@realms-world/db/schema";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { publicProcedure } from "../trpc";
 
-export const erc721CollectionsRouter = createTRPCRouter({
+export const erc721CollectionsRouter = {
   all: publicProcedure
     .input(
       z.object({
@@ -91,4 +92,4 @@ export const erc721CollectionsRouter = createTRPCRouter({
         )
         .groupBy(erc721Collections.marketplaceId);
     }),
-});
+} satisfies TRPCRouterRecord;

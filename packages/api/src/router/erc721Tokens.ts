@@ -1,3 +1,4 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 
@@ -7,9 +8,9 @@ import { erc721TokenAttributes, erc721Tokens } from "@realms-world/db/schema";
 import { padAddress } from "@realms-world/utils";
 
 import { withCursorPagination } from "../cursorPagination";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { publicProcedure } from "../trpc";
 
-export const erc721TokensRouter = createTRPCRouter({
+export const erc721TokensRouter = {
   all: publicProcedure
     .input(
       z.object({
@@ -173,4 +174,4 @@ export const erc721TokensRouter = createTRPCRouter({
         },
       });
     }),
-});
+} satisfies TRPCRouterRecord;
