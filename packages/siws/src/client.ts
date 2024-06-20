@@ -1,6 +1,3 @@
-import ajvErrors from "ajv-errors";
-import addFormats from "ajv-formats";
-import Ajv2020 from "ajv/dist/2020";
 import {
   BigNumberish,
   Contract,
@@ -10,6 +7,7 @@ import {
   TypedData,
   typedData,
 } from "starknet";
+import { z } from "zod";
 
 import abiAccountContract from "./account-contract-abi.json";
 import schema from "./sign-in-schema.json";
@@ -25,6 +23,38 @@ import {
 } from "./types";
 
 import getMessageHash = typedData.getMessageHash;
+
+const StarknetDomainSchema = z.object({
+  name: z.string(),
+  chainId: z.string(),
+  version: z.string(),
+  revision: z.string(),
+});
+
+const MessageSchema = z.object({
+  address: z.string(),
+  statement: z.string(),
+  uri: z.string(),
+  nonce: z.string(),
+  issuedAt: z.string(),
+  version: z.string(),
+});
+
+const SiwsTypedDataSchema = z.object({
+  domain: StarknetDomainSchema,
+  message: MessageSchema,
+  primaryType: z.string().optional(),
+  types: z
+    .record(
+      z.array(
+        z.object({
+          name: z.string(),
+          type: z.string(),
+        }),
+      ),
+    )
+    .optional(),
+});
 
 export class SiwsTypedData implements ISiwsTypedData {
   domain: ISiwsDomain;
@@ -79,29 +109,17 @@ export class SiwsTypedData implements ISiwsTypedData {
   }
 
   public validateData(): boolean {
-    const ajv = new Ajv2020({ allErrors: true, strict: true });
-    addFormats(ajv);
-    ajvErrors(ajv);
-
-    const validate = ajv.compile(schema);
-
-    const dataForValidation = {
-      domain: this.domain,
-      message: this.message,
-      primaryType: this.primaryType,
-      types: this.types,
-    };
-
-    // Perform validation
-    if (!validate(dataForValidation)) {
-      const errors = validate.errors;
-      // console.log(validate.errors);
-      const errorMessage = errors
-        ?.map((error) => `${error.instancePath} ${error.message}`)
-        .join(". ");
-      throw new SignInWithStarknetError(errorMessage as ErrorTypes);
+    try {
+      SiwsTypedDataSchema.parse({
+        domain: this.domain,
+        message: this.message,
+        primaryType: this.primaryType,
+        types: this.types,
+      });
+      return true;
+    } catch (error) {
+      throw new SignInWithStarknetError(error as ErrorTypes);
     }
-    return true;
   }
 
   // Static method to create an instance from a JSON blob
@@ -139,7 +157,10 @@ export class SiwsTypedData implements ISiwsTypedData {
     signature: string[],
     provider: RpcProvider,
   ): Promise<boolean> {
+    console.log(data);
+    console.log(this.message);
     const hash = await getMessageHash(data, this.message.address);
+    console.log(hash);
     return this.verifyMessageHash(hash, signature, provider);
   }
 
@@ -230,6 +251,7 @@ export class SiwsTypedData implements ISiwsTypedData {
           });
         }
       }
+      console.log("here");
 
       this.verifyMessage(this, signature, opts.provider)
         .then((valid) => {

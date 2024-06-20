@@ -29,14 +29,10 @@
   ],
   "homepage": "https://github.com/nethermindeth",
   "dependencies": {
-    "@stablelib/random": "^1.0.1",
-    "ajv": "^8.16.0",
-    "ajv-errors": "^3.0.0",
-    "ajv-formats": "^3.0.1",
-    "npm-check-updates": "^16.10.12",
     "starknet": "^6.9.0",
     "uri-js": "^4.4.1",
-    "valid-url": "^1.0.9"
+    "valid-url": "^1.0.9",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
