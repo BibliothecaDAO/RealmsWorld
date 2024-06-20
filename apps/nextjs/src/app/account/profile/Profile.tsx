@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
 import { api } from "@/trpc/react";
 import { shortenHex } from "@/utils/utils";
@@ -49,7 +50,7 @@ export const Profile = ({
   );
   return (
     <>
-      {delegate && (
+      {delegate ? (
         <>
           <CardHeader>
             <CardTitle className="flex gap-2">
@@ -91,6 +92,37 @@ export const Profile = ({
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <ProfileForm delegateProfile={delegate.delegateProfile} />
+          </CardContent>
+        </>
+      ) : (
+        <>
+          <CardHeader>
+            <CardTitle>No delegate found</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {tokenHolder?.totalTokensHeldRaw ? (
+              <>
+                Delegate your {tokenHolder?.totalTokensHeldRaw} Realms to
+                yourself to create a delegate profile
+                <Button size="sm" onClick={() => delegateRealms()}>
+                  Delegate to Self
+                </Button>
+              </>
+            ) : (
+              <>
+                <p className="mb-4">
+                  You must have at least one Realm on Starknet to create a
+                  delegate profile. Either bridge a Realm from Etherum or
+                  purchase on the marketplace to get started
+                </p>
+                <Button asChild className="mr-4">
+                  <Link href="/account/assets">Bridge</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/collection/realms">Marketplace</Link>
+                </Button>
+              </>
+            )}
           </CardContent>
         </>
       )}
