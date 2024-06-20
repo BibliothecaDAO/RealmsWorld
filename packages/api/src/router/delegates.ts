@@ -7,6 +7,7 @@ import {
   delegateProfiles,
   delegates,
 } from "@realms-world/db/schema";
+import { padAddress } from "@realms-world/utils";
 
 import { withCursorPagination } from "../cursorPagination";
 import { protectedProcedure, publicProcedure } from "../trpc";
@@ -67,10 +68,12 @@ export const delegatesRouter = {
       });
     }),
 
-  create: protectedProcedure
+  createProfile: protectedProcedure
     .input(CreateDelegateProfileSchema)
     .mutation(({ ctx, input }) => {
-      const delegateId = ctx.session.user.id;
+      if (!ctx.session.user.name) return;
+      const delegateId = padAddress(ctx.session.user.name);
+      console.log(delegateId);
       return ctx.db.insert(delegateProfiles).values({ ...input, delegateId });
     }),
 } satisfies TRPCRouterRecord;

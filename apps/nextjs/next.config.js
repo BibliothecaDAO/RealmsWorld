@@ -76,6 +76,7 @@ const config = {
       { protocol: "https", hostname: "pro.opensea.io" },
       { protocol: "https", hostname: "*.ipfs.nftstorage.link" },
       { protocol: "https", hostname: "ethplorer.io" },
+      { protocol: "https", hostname: "avatars.githubusercontent.com" },
     ],
   },
   async headers() {

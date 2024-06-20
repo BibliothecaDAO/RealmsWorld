@@ -1,19 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { AuthShowcase } from "@/app/_components/auth/auth-showcase";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 
-import {
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-  Input,
-  Label,
-  Textarea,
-} from "@realms-world/ui";
+import { Card, CardContent, CardHeader, CardTitle } from "@realms-world/ui";
+
+import { ProfileForm } from "./ProfileForm";
 
 export function generateMetadata(): Metadata {
   return {
@@ -33,7 +25,10 @@ export default function Page() {
         <Card className="w-1/2">
           <CardHeader>
             <CardTitle className="flex gap-2">
-              <img
+              <Image
+                alt="profile image"
+                width={48}
+                height={48}
                 src="https://avatars.githubusercontent.com/u/1?v=4"
                 className="h-14 w-14 rounded-full"
               />
@@ -50,27 +45,7 @@ export default function Page() {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <div>
-              <Label>Profile</Label>
-              <Textarea placeholder="Enter Your Profile description" />
-            </div>
-
-            <div>
-              <Label>Discord</Label>
-              <Input placeholder="Enter Your Discord handle" />
-            </div>
-
-            <div>
-              <Label>Twitter</Label>
-              <Input placeholder="Enter Your Twitter handle" />
-            </div>
-
-            <div>
-              <Label>Github</Label>
-              <Input placeholder="Enter Your Github handle" />
-            </div>
-
-            <Button className="mt-4">Save Profile</Button>
+            <ProfileForm />
           </CardContent>
         </Card>
       </div>

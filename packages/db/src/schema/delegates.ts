@@ -92,22 +92,22 @@ export const delegates = pgTable(
   },
 );
 export const delegatesRelations = relations(delegates, ({ one }) => ({
-  delegateProfile: one(delegateProfiles, {
-    fields: [delegates.id],
-    references: [delegateProfiles.delegateId],
-  }),
+  delegateProfile: one(delegateProfiles),
 }));
 
 export const delegateProfiles = pgTable(
   "delegate_profiles",
   {
-    delegateId: varchar("delegateId", { length: 256 })
-      .notNull()
-      .primaryKey()
-      .references(() => delegates.id),
+    id: varchar("id", { length: 256 })
+      .default(sql`gen_random_uuid()`)
+      .primaryKey(),
+    delegateId: varchar("delegateId", { length: 256 }).references(
+      () => delegates.id,
+    ),
     statement: text("statement").notNull(),
     interests: text("interests").array(),
     twitter: text("twitter"),
+    github: text("github"),
     telegram: text("telegram"),
     discord: text("discord"),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -125,21 +125,25 @@ export const delegateProfiles = pgTable(
 export const delegateProfilesRelations = relations(
   delegateProfiles,
   ({ one }) => ({
-    delegate: one(delegates),
+    delegate: one(delegates, {
+      fields: [delegateProfiles.delegateId],
+      references: [delegates.id],
+    }),
   }),
 );
 
 export const CreateDelegateProfileSchema = createInsertSchema(
   delegateProfiles,
   {
-    delegateId: z.string(),
     statement: z.string(),
-    interests: z.string().array(),
-    twitter: z.string(),
-    telegram: z.string(),
-    discord: z.string(),
+    interests: z.string().array().optional(),
+    twitter: z.string().optional(),
+    github: z.string().optional(),
+    telegram: z.string().optional(),
+    discord: z.string().optional(),
   },
 ).omit({
+  delegateId: true,
   createdAt: true,
   updatedAt: true,
 });

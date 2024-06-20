@@ -1,4 +1,8 @@
+"use client";
+
 import * as React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 import { Github, Twitter } from "lucide-react";
 
@@ -13,27 +17,33 @@ import {
   CardTitle,
 } from "@realms-world/ui";
 
-export function DelegationProfile(
-  props: RouterOutputs["delegates"]["all"]["items"][0],
-) {
+export function DelegationProfile({
+  delegate,
+}: {
+  delegate: RouterOutputs["delegates"]["all"]["items"][0];
+}) {
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex gap-2">
-          <img
+          <Image
+            alt="profile"
+            width={48}
+            height={48}
             src="https://avatars.githubusercontent.com/u/1?v=4"
             className="h-14 w-14 rounded-full"
           />
           <div>
-            <div>{shortenAddress(props.id)}</div>
+            <div>{delegate.id && shortenAddress(delegate.id)}</div>
+
             <div className="text-lg font-bold uppercase text-muted-foreground">
-              {props.delegatedVotes} Votes delegated
+              {delegate.delegatedVotes} Votes delegated
             </div>
           </div>
         </CardTitle>
       </CardHeader>
-      {props.delegateProfile && (
-        <CardContent>{props.delegateProfile.statement}</CardContent>
+      {delegate.delegateProfile && (
+        <CardContent>{delegate.delegateProfile.statement}</CardContent>
       )}
       <CardFooter>
         <div className="flex w-full justify-end gap-3">
@@ -45,9 +55,19 @@ export function DelegationProfile(
           >
             Delegate To
           </Button>
-          {props.delegateProfile && (
-            <Button variant={"outline"} size={"sm"} rel="noopener noreferrer">
-              <Twitter />
+          {delegate.delegateProfile?.twitter && (
+            <Button
+              asChild
+              variant={"outline"}
+              size={"sm"}
+              rel="noopener noreferrer"
+            >
+              <Link
+                href={"https://x.com/" + delegate.delegateProfile.twitter}
+                target="_blank"
+              >
+                <Twitter />
+              </Link>
             </Button>
           )}
           {/*github && (
