@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { SIWSLogin } from "@/app/_components/auth/SIWSLogin";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,8 +28,10 @@ import {
 import { padAddress } from "@realms-world/utils";
 
 export const ProfileForm = ({
+  delegateId,
   delegateProfile,
 }: {
+  delegateId: string;
   delegateProfile?: NonNullable<
     RouterOutputs["delegates"]["byId"]
   >["delegateProfile"];
@@ -66,9 +68,9 @@ export const ProfileForm = ({
     },
   });
 
-  const requiresSignature =
-    !session?.user.name ||
-    padAddress(session.user.name) != delegateProfile?.delegateId;
+  const requiresSignature = useMemo(() => {
+    return !session?.user.name || padAddress(session.user.name) != delegateId;
+  }, [session?.user.name, delegateProfile?.delegateId, delegateId]);
 
   return (
     <Form {...form}>
@@ -173,7 +175,6 @@ export const ProfileForm = ({
             </FormItem>
           )}
         />
-
         {!requiresSignature && (
           <Button
             type="submit"

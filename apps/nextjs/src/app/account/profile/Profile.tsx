@@ -91,7 +91,10 @@ export const Profile = ({
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <ProfileForm delegateProfile={delegate.delegateProfile} />
+            <ProfileForm
+              delegateProfile={delegate.delegateProfile}
+              delegateId={delegate.id}
+            />
           </CardContent>
         </>
       ) : (

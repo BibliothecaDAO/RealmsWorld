@@ -144,7 +144,7 @@ export class SiwsTypedData implements ISiwsTypedData {
         this.message.address,
         provider,
       );
-      await accountContract.call("isValidSignature", [hash, signature]);
+      await accountContract.call("is_valid_signature", [hash, signature]);
       return true;
     } catch (e) {
       console.log(e);
