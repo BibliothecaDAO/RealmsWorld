@@ -102,7 +102,7 @@ export const Profile = ({
           <CardContent>
             {tokenHolder?.totalTokensHeldRaw ? (
               <>
-                Delegate your {tokenHolder?.totalTokensHeldRaw} Realms to
+                Delegate your {tokenHolder.totalTokensHeldRaw} Realms to
                 yourself to create a delegate profile
                 <Button size="sm" onClick={() => delegateRealms()}>
                   Delegate to Self

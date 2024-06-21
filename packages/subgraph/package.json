@@ -2,7 +2,7 @@
   "name": "realms-journey",
   "license": "UNLICENSED",
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.74.1",
+    "@graphprotocol/graph-cli": "0.75.0",
     "@graphprotocol/graph-ts": "0.35.1"
   },
   "devDependencies": {

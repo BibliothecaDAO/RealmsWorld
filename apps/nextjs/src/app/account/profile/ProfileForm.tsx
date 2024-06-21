@@ -115,7 +115,7 @@ export const ProfileForm = ({
               <FormControl>
                 <ToggleGroup
                   {...field}
-                  value={field.value}
+                  //value={field.value}
                   onValueChange={field.onChange}
                   type={"multiple"}
                   variant="outline"

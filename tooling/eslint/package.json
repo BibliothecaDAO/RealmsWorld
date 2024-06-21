@@ -18,7 +18,7 @@
     "typescript-eslint": "rc-v8",
     "eslint-config-turbo": "^2.0.4",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "rc"
   },
@@ -27,7 +27,7 @@
     "@realms-world/tsconfig": "workspace:*",
     "eslint": "^9.5.0",
     "prettier": "^3.3.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   },
   "prettier": "@realms-world/prettier-config"
 }

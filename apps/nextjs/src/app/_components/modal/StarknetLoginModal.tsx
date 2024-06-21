@@ -88,10 +88,6 @@ export const StarknetLoginModal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
 
-  const { request, data, isPending, isError, error } = useWalletRequest({
-    type: "wallet_getPermissions",
-  });
-
   return (
     <Dialog open={isStarknetLoginOpen} onOpenChange={toggleStarknetLogin}>
       <DialogContent className="w-full min-w-[350px] !pt-8">

@@ -85,8 +85,8 @@ export const NftBridgeModal = () => {
   const [nonce, setNonce] = useState<string | undefined>();
 
   const getNonce = useCallback(async () => {
-    if (account?.address) {
-      console.log("getting " + account.address);
+    if (l2Address && account) {
+      console.log("getting " + l2Address);
       try {
         const nonce = await account.getNonce();
         setNonce(nonce);
@@ -94,12 +94,12 @@ export const NftBridgeModal = () => {
         setNonce(undefined);
       }
     }
-  }, [account]);
+  }, [l2Address, account]);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getNonce();
-  }, [getNonce]);
+  }, [getNonce, l2Address]);
 
   const renderBadge = (isL1: boolean, address: string) => (
     <Badge className="pr-4">
@@ -128,7 +128,6 @@ export const NftBridgeModal = () => {
           <DialogTitle className="text-2xl">
             Bridge {selectedTokenIds.length} Realms
           </DialogTitle>
-
           {!l1Address && <EthereumLoginButton />}
           {!l2Address && <StarknetLoginButton />}
           {l1Address && l2Address && (
@@ -197,8 +196,9 @@ export const NftBridgeModal = () => {
                             : initiateWithdraw()
                         }
                         disabled={
-                          /*(isSourceL1 && !nonce) ||*/
-                          isDepositPending || isWithdrawPending
+                          (isSourceL1 && !nonce) ||
+                          isDepositPending ||
+                          isWithdrawPending
                         }
                       >
                         {isDepositPending || isWithdrawPending ? (
