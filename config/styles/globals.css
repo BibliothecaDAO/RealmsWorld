@@ -22,7 +22,7 @@
     --border: 36 30% 50%;
     --input: 36 30% 18%;
     --ring: 36 88.9% 85.9%;
-    --radius: 0rem;
+    --radius: 0.3rem;
   }
   .dark {
     --background: 36 44% 6%;
@@ -189,7 +189,7 @@ body::-webkit-scrollbar-thumb,
   @apply bg-black;
 }
 
-.tab-container {
+/* .tab-container {
   @apply mb-4 mt-4 flex;
 }
 
@@ -211,7 +211,7 @@ body::-webkit-scrollbar-thumb,
 
 .tab-button.inactive:hover {
   @apply bg-gray-400;
-}
+} */
 .mask-transparent::before {
   @apply absolute bottom-0 left-0 right-0 top-0 z-0;
   mask-image: linear-gradient(to bottom, white 200px, transparent);

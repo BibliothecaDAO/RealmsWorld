@@ -16,6 +16,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
 } from "@realms-world/ui";
 
 import { SocialIcons } from "../SocialIcons";
@@ -29,29 +32,36 @@ export function DelegateProfile({
     delegatee: delegate.id,
   });
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex gap-2">
-          <Image
-            alt="profile"
-            width={48}
-            height={48}
-            src="https://avatars.githubusercontent.com/u/1?v=4"
-            className="h-14 w-14 rounded-full"
-          />
-          <div>
-            <div>{delegate.id && shortenHex(delegate.id)}</div>
+  const [showFullStatement, setShowFullStatement] = React.useState(false);
 
-            <div className="text-lg font-bold uppercase text-muted-foreground">
-              {delegate.delegatedVotesRaw} Votes delegated
+  const toggleStatement = () => {
+    setShowFullStatement((prev) => !prev);
+  };
+
+  const statementLines = delegate.delegateProfile?.statement.split("\n") || [];
+
+  return (
+    <Card className="flex flex-col">
+      <CardHeader>
+        <CardTitle className="flex flex-wrap gap-2">
+          <div className="flex w-full gap-3">
+            <Image
+              alt="profile"
+              width={48}
+              height={48}
+              src="https://avatars.githubusercontent.com/u/1?v=4"
+              className="h-14 w-14 rounded-full"
+            />
+            <div>
+              <div>{delegate.id && shortenHex(delegate.id)}</div>
+
+              <div className="text-lg font-bold uppercase text-muted-foreground">
+                {delegate.delegatedVotesRaw} Votes delegated
+              </div>
             </div>
           </div>
-        </CardTitle>
-      </CardHeader>
-      {delegate.delegateProfile && (
-        <>
-          <CardContent>
+
+          {delegate.delegateProfile && (
             <div className="mb-2 flex gap-1">
               {delegate.delegateProfile.interests?.map((interest) => (
                 <Badge variant={"outline"} className="px-1 py-0.5 text-xs">
@@ -59,47 +69,39 @@ export function DelegateProfile({
                 </Badge>
               ))}
             </div>
-            <div>{delegate.delegateProfile.statement}</div>
+          )}
+        </CardTitle>
+      </CardHeader>
+      {delegate.delegateProfile && (
+        <>
+          <CardContent className="overflow-hidden">
+            <div className="text-lg">
+              {showFullStatement
+                ? delegate.delegateProfile.statement
+                : statementLines.slice(0, 3).join("\n")}
+            </div>
+            {statementLines.length > 3 && (
+              <Button onClick={toggleStatement} variant={"ghost"} size={"xs"}>
+                {showFullStatement ? "Show Less" : "Show More"}
+              </Button>
+            )}
           </CardContent>
         </>
       )}
-      <CardFooter>
-        <div className="flex w-full justify-end gap-3">
-          <Button
-            className="justify-start"
-            variant={"default"}
-            size={"sm"}
-            rel="noopener noreferrer"
-            onClick={() => delegateRealms()}
-          >
-            Delegate To
-          </Button>
-          <SocialIcons
-            x={delegate.delegateProfile?.twitter ?? undefined}
-            github={delegate.delegateProfile?.github ?? undefined}
-            discord={delegate.delegateProfile?.discord ?? undefined}
-          />
-          {/*delegate.delegateProfile?.twitter && (
-            <Button
-              asChild
-              variant={"outline"}
-              size={"sm"}
-              rel="noopener noreferrer"
-            >
-              <Link
-                href={"https://x.com/" + delegate.delegateProfile.twitter}
-                target="_blank"
-              >
-                <Twitter />
-              </Link>
-            </Button>
-          )*/}
-          {/*github && (
-            <Button variant={"outline"} size={"sm"} rel="noopener noreferrer">
-              <Github />
-            </Button>
-          )*/}
-        </div>
+      <CardFooter className="mt-auto flex w-full justify-between">
+        <Button
+          variant={"default"}
+          size={"sm"}
+          rel="noopener noreferrer"
+          onClick={() => delegateRealms()}
+        >
+          Delegate To
+        </Button>
+        <SocialIcons
+          x={delegate.delegateProfile?.twitter ?? undefined}
+          github={delegate.delegateProfile?.github ?? undefined}
+          discord={delegate.delegateProfile?.discord ?? undefined}
+        />
       </CardFooter>
     </Card>
   );

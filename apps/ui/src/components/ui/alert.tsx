@@ -5,14 +5,15 @@ import { cva } from "class-variance-authority";
 import { cn } from "@realms-world/utils";
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border p-4 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
+  "relative w-full rounded-lg border px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7",
   {
     variants: {
       variant: {
         default: "bg-background text-foreground",
-        warning: "border-yellow-500 bg-amber-100 !text-yellow-600",
         destructive:
           "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+        warning:
+          "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive text-white bg-yellow-900 dark:bg-yellow-800",
       },
     },
     defaultVariants: {

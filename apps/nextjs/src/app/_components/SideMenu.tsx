@@ -102,7 +102,7 @@ const Sidebar = () => {
                     <Button
                       className="group flex w-full justify-normal px-2 text-lg font-semibold normal-case transition-all duration-200"
                       key={index}
-                      variant={"ghost"}
+                      variant={"outline"}
                       onClick={() => {
                         handleClick(item.href);
                         toggleSidebar();

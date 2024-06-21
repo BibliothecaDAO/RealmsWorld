@@ -19,13 +19,21 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
 
   const messageComponent =
     type === ActionType.TRANSFER_TO_L2 ? (
-      <Alert title={"This is an Alpha version"} variant="warning">
+      <Alert
+        className="bg-yellow-900 text-white"
+        title={"This is an Alpha version"}
+        variant="destructive"
+      >
         Completing a Ethereum → StarkNet transfer may take up to several hours
         depending on the congestion. It may take a while for your wallet balance
         to update.
       </Alert>
     ) : !isTransferCompleted ? (
-      <Alert title={"This is an Alpha version"} variant="warning">
+      <Alert
+        className="bg-yellow-900 text-white"
+        title={"This is an Alpha version"}
+        variant="destructive"
+      >
         The StarkNet → Ethereum transfer divided into two stages:\n• A waiting
         period of several hours is expected between the stages.\n• At the end of
         the first step, you will be required to sign in order to complete the
@@ -34,8 +42,8 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
     ) : null;
 
   return (
-    <div className="mb-6 flex flex-col items-center px-2 text-center ">
-      <div className="mb-4 w-2/3  text-sm">{textMessage}</div>
+    <div className="mb-6 flex flex-col items-center">
+      <div className="mb-4 text-lg">{textMessage}</div>
       {messageComponent}
     </div>
   );

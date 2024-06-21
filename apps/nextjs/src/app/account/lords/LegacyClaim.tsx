@@ -20,7 +20,7 @@ export const LegacyClaim = () => {
   return (
     <Accordion className="col-span-full" type="multiple">
       <AccordionItem value={"lords"} className="mb-2">
-        <AccordionTrigger className="flex w-full border bg-muted-foreground/40 p-4 text-xl">
+        <AccordionTrigger className="flex w-full border p-4 text-xl">
           <div className="flex justify-start">
             Legacy (L1) Claimable Lords:{" "}
             <span className="ml-8 flex items-center">

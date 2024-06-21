@@ -53,12 +53,12 @@ export default function Home() {
 
       <div className="my-24">
         <hr />
-        <h3>Events</h3>
+        <h3 className="mb-4 text-xl">Events</h3>
         <EventGrid />
       </div>
       <hr />
 
-      <h3>All Games</h3>
+      <h3 className="mb-4 text-xl">All Games</h3>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {games.map((game: Game, index) => (
           <GameCard key={index} game={game} />
@@ -67,13 +67,13 @@ export default function Home() {
 
       <hr />
       <div className="my-24">
-        <h3>News</h3>
+        <h3 className="mb-4 text-xl">News</h3>
         <PostGrid />
       </div>
 
       <hr className="my-8 border" />
-      <div className="my-20 ">
-        <h3 className="mb-8">Featured Collections</h3>
+      <div className="my-20">
+        <h3 className="mb-4 text-xl">Featured Collections</h3>
         <CollectionsList />
       </div>
     </PageLayout>

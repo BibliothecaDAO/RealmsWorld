@@ -56,33 +56,35 @@ export const Profile = ({
             <CardTitle className="flex gap-2">
               <Image
                 alt="profile image"
-                width={48}
-                height={48}
+                width={16}
+                height={16}
                 src="https://avatars.githubusercontent.com/u/1?v=4"
-                className="h-14 w-14 rounded-full"
+                className="h-16 w-16 rounded-full"
               />
-              <div>
-                <div>{shortenAddress(delegate.id)}</div>
-                <div className="flex items-center text-lg font-bold uppercase text-muted-foreground">
-                  Voting Power:
-                  <Badge variant="outline" className="ml-2">
-                    {delegate.delegatedVotesRaw} Realms
-                  </Badge>
-                </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <span className="text-lg font-bold uppercase">
-                    Delegation:
-                  </span>
-                  <Badge variant="outline">
-                    {tokenHolder?.tokenBalanceRaw} /{" "}
-                    {tokenHolder?.totalTokensHeldRaw} Realms
-                  </Badge>
-                  <span className="text-sm">delegated to</span>
-                  <Badge variant="outline">
-                    {tokenHolder?.delegate == delegate.id
-                      ? "self"
-                      : shortenHex(tokenHolder?.delegate ?? "0x", 8)}
-                  </Badge>
+              <div className="flex w-full justify-between">
+                <div>
+                  <div className="mb-1">{shortenAddress(delegate.id)}</div>
+                  <div className="mb-1 flex items-center text-sm font-bold uppercase text-muted-foreground">
+                    Voting Power:
+                    <Badge variant="default" className="ml-2">
+                      {delegate.delegatedVotesRaw} Realms
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <span className="text-sm font-bold uppercase">
+                      Delegation:
+                    </span>
+                    <Badge variant="default">
+                      {tokenHolder?.tokenBalanceRaw} /{" "}
+                      {tokenHolder?.totalTokensHeldRaw} Realms
+                    </Badge>
+                    <span className="text-sm">delegated to</span>
+                    <Badge variant="default">
+                      {tokenHolder?.delegate == delegate.id
+                        ? "self"
+                        : shortenHex(tokenHolder?.delegate ?? "0x", 8)}
+                    </Badge>
+                  </div>
                 </div>
                 <Button size="sm" onClick={() => delegateRealms()}>
                   Delegate to Self

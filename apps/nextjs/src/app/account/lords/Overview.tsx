@@ -111,16 +111,13 @@ export const Overview = () => {
                     <CardTitle>Claims</CardTitle>
                   </CardHeader>
                   <CardContent className="grid grid-cols-4 gap-4">
-                    <LegacyClaim />
                     <Card>
                       <CardHeader>
                         <CardDescription>Claimable Lords</CardDescription>
                         <CardTitle className="flex items-center text-4xl">
-                          {isFetching ? (
-                            <Loader className="animate-spin" />
-                          ) : (
-                            balance && formatEther(balance as bigint)
-                          )}
+                          {balance &&
+                            Number(formatEther(balance as bigint)).toFixed(0)}
+
                           <LordsIcon className="ml-3 h-7 w-7 fill-current" />
                         </CardTitle>
                       </CardHeader>
@@ -170,6 +167,7 @@ export const Overview = () => {
                     </div>
                   </CardContent>
                 </Card>
+                <LegacyClaim />
               </div>
             </div>
           </div>
