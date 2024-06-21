@@ -1,8 +1,17 @@
+import Image from "next/image";
+
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (
-    <div className=" mx-auto flex h-screen w-full flex-wrap justify-center px-4 sm:px-10">
-      <div className="self-center" role="status">
+    <div className="mx-auto flex h-screen w-full flex-wrap justify-center px-4 sm:px-10">
+      <Image
+        src="/pink_crown.svg"
+        className="self-center"
+        alt="logo"
+        width={100}
+        height={100}
+      />
+      {/* <div className="self-center" role="status">
         <svg
           aria-hidden="true"
           className="h-12 w-12 animate-spin fill-bright-yellow text-gray-200 dark:text-gray-600"
@@ -20,7 +29,7 @@ export default function Loading() {
           />
         </svg>
         <span className="sr-only">Loading...</span>
-      </div>
+      </div> */}
     </div>
   );
 }

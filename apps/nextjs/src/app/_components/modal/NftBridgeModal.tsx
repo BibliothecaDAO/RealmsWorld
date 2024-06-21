@@ -102,7 +102,7 @@ export const NftBridgeModal = () => {
   }, [getNonce, l2Address]);
 
   const renderBadge = (isL1: boolean, address: string) => (
-    <Badge className="pr-4">
+    <Badge className="flex gap-4 px-4">
       {isL1 ? (
         <EthereumLogo className="mr-2 w-8" />
       ) : (
@@ -147,7 +147,7 @@ export const NftBridgeModal = () => {
                       </div>
                       <hr />
                     </div>
-                    <div className="mb-4 flex items-center">
+                    <div className="flex w-full justify-between">
                       <div className="flex flex-col">
                         <span className="pb-1 text-sm uppercase">From</span>
                         {renderBadge(
@@ -155,7 +155,7 @@ export const NftBridgeModal = () => {
                           isSourceL1 ? l1Address : l2Address,
                         )}
                       </div>
-                      <MoveRightIcon className="w-10" />
+                      <MoveRightIcon className="w-10 self-center" />
                       <div className="flex flex-col">
                         <span className="pb-1 text-sm uppercase">To</span>
                         {renderBadge(

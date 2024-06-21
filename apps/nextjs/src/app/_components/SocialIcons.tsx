@@ -4,6 +4,8 @@ import Telegram from "@/icons/telegram.svg";
 import X from "@/icons/x.svg";
 import { ExternalLink, GithubIcon, Globe } from "lucide-react";
 
+import { Button } from "@realms-world/ui";
+
 export const SocialIcons = ({
   x,
   website,
@@ -25,11 +27,11 @@ export const SocialIcons = ({
       value: external,
     },
     {
-      icon: <Discord className="h-[28px] w-[28px] fill-current" />,
+      icon: <Discord className="h-[22px] w-[22px] fill-current" />,
       value: discord,
     },
     {
-      icon: <X className="h-[26px] w-[26px]" />,
+      icon: <X className="h-[22px] w-[22px]" />,
       value: x ? "https://x.com/" + x : undefined,
     },
     { icon: <Globe />, value: website },
@@ -38,13 +40,15 @@ export const SocialIcons = ({
   ];
 
   return (
-    <div className="mx-auto my-4 flex justify-center space-x-2">
+    <div className="flex gap-3">
       {links.map((social, index) => {
         if (social.value)
           return (
-            <Link key={index} href={`${social.value}`}>
-              {social.icon}
-            </Link>
+            <Button size={"sm"} variant={"outline"} asChild>
+              <Link key={index} href={`${social.value}`}>
+                {social.icon}
+              </Link>
+            </Button>
           );
       })}
     </div>

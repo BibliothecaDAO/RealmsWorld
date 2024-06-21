@@ -105,8 +105,6 @@ export function useAirdropClaim() {
     }
   };
 
-  console.log(balance);
-
   useEffect(() => {
     setDataLoading(true);
 

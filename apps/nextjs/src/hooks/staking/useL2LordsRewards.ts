@@ -1,5 +1,5 @@
 import type { Call } from "starknet";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { RealmsABI } from "@/abi/L2/Realms";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { TransactionType } from "@/constants/transactions";
@@ -24,14 +24,43 @@ export const useL2LordsRewards = () => {
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;
 
+  const [previousBalance, setPreviousBalance] = useState<bigint | null>(null);
+  const [easedBalance, setEasedBalance] = useState<bigint | null>(null);
+
   const { data: balance, isFetching } = useReadContract({
     address: l2RealmsAddress,
     abi: RealmsABI,
     functionName: "get_reward_balance_for",
     enabled: !!l2Address,
     args: l2Address ? [l2Address] : undefined,
-    refetchInterval: 10000,
+    refetchInterval: 5000,
   });
+
+  useEffect(() => {
+    if (balance !== undefined && balance !== previousBalance) {
+      const start = previousBalance ?? balance;
+      const end = balance;
+      const duration = 1000; // duration of the easing in ms
+      const startTime = Date.now();
+
+      const ease = () => {
+        const now = Date.now();
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easedValue = start + BigInt(Number(end - start) * progress);
+
+        setEasedBalance(easedValue);
+
+        if (progress < 1) {
+          requestAnimationFrame(ease);
+        } else {
+          setPreviousBalance(balance);
+        }
+      };
+
+      ease();
+    }
+  }, [balance, previousBalance]);
 
   const { contract } = useContract({
     abi: RealmsABI,
@@ -68,7 +97,7 @@ export const useL2LordsRewards = () => {
   }, [sendAsync, transactions, toast, balance]);
 
   return {
-    balance,
+    balance: easedBalance,
     calls,
     isFetching,
     isSubmitting,

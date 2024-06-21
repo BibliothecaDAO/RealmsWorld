@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button, Card } from "@realms-world/ui";
+import { Badge, Button, Card, CardContent } from "@realms-world/ui";
 
 export const EventCard = ({ event }: { event: Event }) => {
   const [isToday, setIsToday] = useState(false);
@@ -27,16 +27,19 @@ export const EventCard = ({ event }: { event: Event }) => {
           alt=""
         />
       </Link>
-      <div className="flex h-56  flex-col bg-theme-gray-light p-4">
-        <span className={`flex flex-shrink  px-2 py-1`}>
-          <div
-            className={`h-4 w-4 self-center rounded-full bg-green-600 ${isToday ? "animate-pulse" : ""}`}
-          />
-          <div className="self-center px-2">
-            {event.startDate} to {event.endDate}
-          </div>
-        </span>
-        <h5>{event.name}</h5>
+      <CardContent className="flex h-56 flex-col p-4">
+        <div>
+          <Badge variant={"outline"}>
+            <div
+              className={`h-3 w-3 self-center rounded-full bg-green-600 ${isToday ? "animate-pulse" : ""}`}
+            />
+            <div className="self-center px-2">
+              {event.startDate} to {event.endDate}
+            </div>
+          </Badge>
+        </div>
+
+        <h5 className="mb-3 text-2xl">{event.name}</h5>
         <p>{event.description}</p>
         <div className="mt-auto flex w-full justify-between self-end">
           <Button asChild size={"xs"} variant="default">
@@ -49,7 +52,7 @@ export const EventCard = ({ event }: { event: Event }) => {
             <Link href={"/events/" + event.slug}>More info</Link>
           </Button>
         </div>
-      </div>
+      </CardContent>
     </Card>
   );
 };
