@@ -44,7 +44,7 @@ export const config: Config<Starknet, Postgres> = {
 export default function transform({ header, events }: Block) {
   return events?.flatMap(({ event, transaction }) => {
     const [amountLow, amountHigh] = event.data;
-    const recipient = event.keys[0];
+    const recipient = event.keys[1];
     const amountRaw = uint256.uint256ToBN({ low: amountLow, high: amountHigh });
     const amount = formatUnits(amountRaw, 18);
     const transactionHash = transaction.meta.hash;
