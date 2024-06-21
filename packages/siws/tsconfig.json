@@ -1,0 +1,8 @@
+{
+  "extends": "@realms-world/tsconfig/internal-package.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+  },
+  "include": ["src/*", "src", "src/**/*.ts", "@types/**/*.d.ts"],
+  "exclude": ["node_modules"]
+}

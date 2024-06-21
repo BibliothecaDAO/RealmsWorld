@@ -14,11 +14,11 @@
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "prettier": "^3.3.2",
-    "prettier-plugin-tailwindcss": "^0.6.4"
+    "prettier-plugin-tailwindcss": "^0.6.5"
   },
   "devDependencies": {
     "@realms-world/tsconfig": "*",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   },
   "prettier": "@realms-world/prettier-config"
 }

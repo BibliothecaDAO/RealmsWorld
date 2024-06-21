@@ -71,10 +71,6 @@ export const useTransactions = () => {
             TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM;
           matchingTransaction.chainId = SUPPORTED_L1_CHAIN_ID;
         } else {
-          console.log(
-            typeof withdrawal.withdrawalEvents[0]?.finishedTxHash +
-              withdrawal.withdrawalEvents[0]?.finishedTxHash,
-          );
           map.set(BigInt(withdrawal.req_hash), {
             ...withdrawal,
             chainId: SUPPORTED_L1_CHAIN_ID,
@@ -111,7 +107,6 @@ export const useTransactions = () => {
         req_hash: tx.req_hash ? BigInt(tx.req_hash) : undefined,
       }),
     );
-    console.log(transactionsArray);
     // Add transactions to the map, deduplicating by hash
     transactionsArray.forEach((tx) => {
       if (tx.hash && !transactionsMap.has(tx.hash)) {

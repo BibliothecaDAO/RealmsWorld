@@ -8,8 +8,8 @@ import { useStaking } from "@/hooks/staking/useStaking";
 import LordsIcon from "@/icons/lords.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import {
-  useContractRead,
   useAccount as useL2Account,
+  useReadContract,
 } from "@starknet-react/core";
 import { Loader } from "lucide-react";
 import { formatEther } from "viem";
@@ -47,7 +47,7 @@ export const Overview = () => {
     +data?.wallet?.bridgedRealmsHeld +
     +data?.wallet?.bridgedV2RealmsHeld;
 
-  const { data: realmsBalance } = useContractRead({
+  const { data: realmsBalance } = useReadContract({
     address: getCollectionAddresses(Collections.REALMS)?.[
       SUPPORTED_L2_CHAIN_ID
     ] as `0x${string}`,

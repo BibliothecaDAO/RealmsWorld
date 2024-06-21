@@ -1,9 +1,9 @@
-import { useWaitForTransaction } from "@starknet-react/core";
+import { useTransactionReceipt } from "@starknet-react/core";
 
 import { Badge } from "@realms-world/ui";
 
 export function TransactionStatusL2({ hash }: { hash: string }) {
-  const { data, error, isLoading, isError } = useWaitForTransaction({
+  const { data, error, isLoading, isError } = useTransactionReceipt({
     hash,
     watch: true,
     retry: true,

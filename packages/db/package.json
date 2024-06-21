@@ -19,12 +19,14 @@
   },
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "push": "bun with-env drizzle-kit push",
     "studio": "drizzle-kit studio",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
@@ -32,6 +34,7 @@
     "@t3-oss/env-nextjs": "^0.10.1",
     "@t3-oss/env-core": "^0.10.1",
     "drizzle-orm": "^0.31.2",
+    "drizzle-zod": "^0.5.1",
     "zod": "^3.23"
   },
   "devDependencies": {
@@ -43,7 +46,7 @@
     "eslint": "^9.5.0",
     "postgres-range": "^1.1.4",
     "prettier": "^3.3.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   },
   "prettier": "@realms-world/prettier-config"
 }

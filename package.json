@@ -35,7 +35,7 @@
     "prettier": "^3.3.2",
     "tsup": "^8.1.0",
     "turbo": "2.0.4",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   },
   "prettier": "@realms-world/prettier-config"
 }

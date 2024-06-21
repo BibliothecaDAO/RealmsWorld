@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import ERC721ABI from "@/abi/L2/ERC721.json";
 import {
   useContract,
-  useContractWrite as useL2ContractWrite,
+  useSendTransaction as useL2ContractWrite,
 } from "@starknet-react/core";
 import { useAccount as useL1Account } from "wagmi";
 
@@ -25,16 +25,14 @@ export const useERC721Approval = ({
   const calls: Call[] = useMemo(() => {
     if (!contractAddress || !operator || !addressL1) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return [
-      contract?.populateTransaction.set_approval_for_all?.(operator, true),
-    ];
-  }, [contractAddress, operator, addressL1, contract?.populateTransaction]);
+    return [contract?.populate("set_approval_for_all", [operator, true])];
+  }, [contractAddress, operator, addressL1, contract]);
 
-  const { writeAsync, ...writeReturn } = useL2ContractWrite({ calls });
+  const { sendAsync, ...writeReturn } = useL2ContractWrite({ calls });
 
   return {
     calls,
-    writeAsync,
+    sendAsync,
     ...writeReturn,
   };
 };

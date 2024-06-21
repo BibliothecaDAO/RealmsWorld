@@ -1,3 +1,4 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
@@ -5,9 +6,9 @@ import { and, eq, inArray, sql } from "@realms-world/db";
 import { erc721MarketEvents, erc721Tokens } from "@realms-world/db/schema";
 
 import { withCursorPagination } from "../cursorPagination";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { publicProcedure } from "../trpc";
 
-export const erc721MarketEventsRouter = createTRPCRouter({
+export const erc721MarketEventsRouter = {
   all: publicProcedure
     .input(
       z.object({
@@ -115,4 +116,4 @@ export const erc721MarketEventsRouter = createTRPCRouter({
         where: eq(erc721Tokens.id, input.id),
       });
     }),
-});
+} satisfies TRPCRouterRecord;

@@ -5,8 +5,8 @@ import { TransactionType } from "@/constants/transactions";
 import { useTransactionManager } from "@/stores/useTransasctionManager";
 import {
   useAccount,
-  useContractRead,
-  useContractWrite,
+  useReadContract,
+  useSendTransaction,
 } from "@starknet-react/core";
 
 import {
@@ -31,7 +31,7 @@ export function useBridgeL2Realms({
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;
 
-  const { data: isApprovedForAll } = useContractRead({
+  const { data: isApprovedForAll } = useReadContract({
     abi: ERC721ABI,
     address: l2RealmsAddress,
     args: l2BridgeAddress ? [address ?? "0xtest", l2BridgeAddress] : [],
@@ -55,14 +55,14 @@ export function useBridgeL2Realms({
     return [...depositCall];
   }, [approveCall, depositCall, isApprovedForAll]);
 
-  const { writeAsync, ...writeReturn } = useContractWrite({
+  const { sendAsync, ...writeReturn } = useSendTransaction({
     calls: depositCalls,
   });
 
   const transactions = useStore(useTransactionManager, (state) => state);
 
   const initiateWithdraw = useCallback(async () => {
-    const tx = await writeAsync();
+    const tx = await sendAsync();
     transactions?.addTx({
       hash: tx.transaction_hash,
       type: TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,
@@ -74,7 +74,7 @@ export function useBridgeL2Realms({
       title: TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,
       description: `${selectedTokenIds.length} Realms will be ready to withdraw on Ethereum in ~12 hours`,
     });
-  }, [writeAsync, transactions, selectedTokenIds.length]);
+  }, [sendAsync, transactions, selectedTokenIds.length]);
 
   return {
     isApprovedForAll,
