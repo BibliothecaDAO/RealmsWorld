@@ -1,434 +1,68 @@
 [
   {
-    "name": "UpgradeableImpl",
-    "type": "impl",
-    "interface_name": "openzeppelin::upgrades::interface::IUpgradeable"
-  },
-  {
-    "name": "openzeppelin::upgrades::interface::IUpgradeable",
-    "type": "interface",
-    "items": [
-      {
-        "name": "upgrade",
-        "type": "function",
-        "inputs": [
-          {
-            "name": "new_class_hash",
-            "type": "core::starknet::class_hash::ClassHash"
-          }
-        ],
-        "outputs": [],
-        "state_mutability": "external"
-      }
-    ]
-  },
-  {
-    "name": "BridgeImpl",
-    "type": "impl",
-    "interface_name": "bridge::interfaces::IBridge"
-  },
-  {
-    "name": "core::starknet::eth_address::EthAddress",
-    "type": "struct",
-    "members": [
-      {
-        "name": "address",
-        "type": "core::felt252"
-      }
-    ]
-  },
-  {
-    "name": "core::integer::u256",
-    "type": "struct",
-    "members": [
-      {
-        "name": "low",
-        "type": "core::integer::u128"
-      },
-      {
-        "name": "high",
-        "type": "core::integer::u128"
-      }
-    ]
-  },
-  {
-    "name": "core::array::Span::<core::integer::u256>",
-    "type": "struct",
-    "members": [
-      {
-        "name": "snapshot",
-        "type": "@core::array::Array::<core::integer::u256>"
-      }
-    ]
-  },
-  {
-    "name": "bridge::interfaces::IBridge",
-    "type": "interface",
-    "items": [
-      {
-        "name": "deposit_tokens",
-        "type": "function",
-        "inputs": [
-          {
-            "name": "salt",
-            "type": "core::felt252"
-          },
-          {
-            "name": "owner_l1",
-            "type": "core::starknet::eth_address::EthAddress"
-          },
-          {
-            "name": "token_ids",
-            "type": "core::array::Span::<core::integer::u256>"
-          }
-        ],
-        "outputs": [],
-        "state_mutability": "external"
-      },
-      {
-        "name": "set_l1_bridge_address",
-        "type": "function",
-        "inputs": [
-          {
-            "name": "address",
-            "type": "core::starknet::eth_address::EthAddress"
-          }
-        ],
-        "outputs": [],
-        "state_mutability": "external"
-      },
-      {
-        "name": "set_l2_token_address",
-        "type": "function",
-        "inputs": [
-          {
-            "name": "address",
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "outputs": [],
-        "state_mutability": "external"
-      },
-      {
-        "name": "get_l1_bridge_address",
-        "type": "function",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::starknet::eth_address::EthAddress"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "name": "get_l2_token_address",
-        "type": "function",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "state_mutability": "view"
-      }
-    ]
-  },
-  {
-    "name": "OwnableTwoStepMixinImpl",
-    "type": "impl",
-    "interface_name": "openzeppelin::access::ownable::interface::OwnableTwoStepABI"
-  },
-  {
-    "name": "openzeppelin::access::ownable::interface::OwnableTwoStepABI",
-    "type": "interface",
-    "items": [
-      {
-        "name": "owner",
-        "type": "function",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "name": "pending_owner",
-        "type": "function",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "name": "accept_ownership",
-        "type": "function",
-        "inputs": [],
-        "outputs": [],
-        "state_mutability": "external"
-      },
-      {
-        "name": "transfer_ownership",
-        "type": "function",
-        "inputs": [
-          {
-            "name": "new_owner",
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "outputs": [],
-        "state_mutability": "external"
-      },
-      {
-        "name": "renounce_ownership",
-        "type": "function",
-        "inputs": [],
-        "outputs": [],
-        "state_mutability": "external"
-      },
-      {
-        "name": "pendingOwner",
-        "type": "function",
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "state_mutability": "view"
-      },
-      {
-        "name": "acceptOwnership",
-        "type": "function",
-        "inputs": [],
-        "outputs": [],
-        "state_mutability": "external"
-      },
-      {
-        "name": "transferOwnership",
-        "type": "function",
-        "inputs": [
-          {
-            "name": "newOwner",
-            "type": "core::starknet::contract_address::ContractAddress"
-          }
-        ],
-        "outputs": [],
-        "state_mutability": "external"
-      },
-      {
-        "name": "renounceOwnership",
-        "type": "function",
-        "inputs": [],
-        "outputs": [],
-        "state_mutability": "external"
-      }
-    ]
-  },
-  {
-    "name": "constructor",
-    "type": "constructor",
+    "name": "deposit_tokens",
+    "type": "function",
     "inputs": [
       {
-        "name": "bridge_admin",
-        "type": "core::starknet::contract_address::ContractAddress"
-      },
-      {
-        "name": "l1_bridge_address",
-        "type": "core::starknet::eth_address::EthAddress"
-      },
-      {
-        "name": "l2_token_address",
-        "type": "core::starknet::contract_address::ContractAddress"
-      }
-    ]
-  },
-  {
-    "name": "bridge::request::Request",
-    "type": "struct",
-    "members": [
-      {
-        "name": "hash",
-        "type": "core::integer::u256"
+        "name": "salt",
+        "type": "core::felt252"
       },
       {
         "name": "owner_l1",
         "type": "core::starknet::eth_address::EthAddress"
       },
       {
-        "name": "owner_l2",
-        "type": "core::starknet::contract_address::ContractAddress"
-      },
-      {
-        "name": "ids",
+        "name": "token_ids",
         "type": "core::array::Span::<core::integer::u256>"
-      }
-    ]
-  },
-  {
-    "name": "withdraw_auto_from_l1",
-    "type": "l1_handler",
-    "inputs": [
-      {
-        "name": "from_address",
-        "type": "core::felt252"
-      },
-      {
-        "name": "req",
-        "type": "bridge::request::Request"
       }
     ],
     "outputs": [],
     "state_mutability": "external"
   },
   {
-    "kind": "struct",
-    "name": "bridge::interfaces::DepositRequestInitiated",
-    "type": "event",
-    "members": [
+    "name": "set_l1_bridge_address",
+    "type": "function",
+    "inputs": [
       {
-        "kind": "key",
-        "name": "hash",
-        "type": "core::integer::u256"
-      },
-      {
-        "kind": "key",
-        "name": "block_timestamp",
-        "type": "core::integer::u64"
-      },
-      {
-        "kind": "data",
-        "name": "req_content",
-        "type": "bridge::request::Request"
+        "name": "address",
+        "type": "core::starknet::eth_address::EthAddress"
       }
-    ]
+    ],
+    "outputs": [],
+    "state_mutability": "external"
   },
   {
-    "kind": "struct",
-    "name": "bridge::interfaces::WithdrawRequestCompleted",
-    "type": "event",
-    "members": [
+    "name": "set_l2_token_address",
+    "type": "function",
+    "inputs": [
       {
-        "kind": "key",
-        "name": "hash",
-        "type": "core::integer::u256"
-      },
-      {
-        "kind": "key",
-        "name": "block_timestamp",
-        "type": "core::integer::u64"
-      },
-      {
-        "kind": "data",
-        "name": "req_content",
-        "type": "bridge::request::Request"
-      }
-    ]
-  },
-  {
-    "kind": "struct",
-    "name": "openzeppelin::upgrades::upgradeable::UpgradeableComponent::Upgraded",
-    "type": "event",
-    "members": [
-      {
-        "kind": "data",
-        "name": "class_hash",
-        "type": "core::starknet::class_hash::ClassHash"
-      }
-    ]
-  },
-  {
-    "kind": "enum",
-    "name": "openzeppelin::upgrades::upgradeable::UpgradeableComponent::Event",
-    "type": "event",
-    "variants": [
-      {
-        "kind": "nested",
-        "name": "Upgraded",
-        "type": "openzeppelin::upgrades::upgradeable::UpgradeableComponent::Upgraded"
-      }
-    ]
-  },
-  {
-    "kind": "struct",
-    "name": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferred",
-    "type": "event",
-    "members": [
-      {
-        "kind": "key",
-        "name": "previous_owner",
-        "type": "core::starknet::contract_address::ContractAddress"
-      },
-      {
-        "kind": "key",
-        "name": "new_owner",
+        "name": "address",
         "type": "core::starknet::contract_address::ContractAddress"
       }
-    ]
+    ],
+    "outputs": [],
+    "state_mutability": "external"
   },
   {
-    "kind": "struct",
-    "name": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferStarted",
-    "type": "event",
-    "members": [
+    "name": "get_l1_bridge_address",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
       {
-        "kind": "key",
-        "name": "previous_owner",
+        "type": "core::starknet::eth_address::EthAddress"
+      }
+    ],
+    "state_mutability": "view"
+  },
+  {
+    "name": "get_l2_token_address",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      {
         "type": "core::starknet::contract_address::ContractAddress"
-      },
-      {
-        "kind": "key",
-        "name": "new_owner",
-        "type": "core::starknet::contract_address::ContractAddress"
       }
-    ]
-  },
-  {
-    "kind": "enum",
-    "name": "openzeppelin::access::ownable::ownable::OwnableComponent::Event",
-    "type": "event",
-    "variants": [
-      {
-        "kind": "nested",
-        "name": "OwnershipTransferred",
-        "type": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferred"
-      },
-      {
-        "kind": "nested",
-        "name": "OwnershipTransferStarted",
-        "type": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferStarted"
-      }
-    ]
-  },
-  {
-    "kind": "enum",
-    "name": "bridge::bridge::bridge::Event",
-    "type": "event",
-    "variants": [
-      {
-        "kind": "nested",
-        "name": "DepositRequestInitiated",
-        "type": "bridge::interfaces::DepositRequestInitiated"
-      },
-      {
-        "kind": "nested",
-        "name": "WithdrawRequestCompleted",
-        "type": "bridge::interfaces::WithdrawRequestCompleted"
-      },
-      {
-        "kind": "flat",
-        "name": "UpgradeableEvent",
-        "type": "openzeppelin::upgrades::upgradeable::UpgradeableComponent::Event"
-      },
-      {
-        "kind": "flat",
-        "name": "OwnableEvent",
-        "type": "openzeppelin::access::ownable::ownable::OwnableComponent::Event"
-      }
-    ]
+    ],
+    "state_mutability": "view"
   }
 ]

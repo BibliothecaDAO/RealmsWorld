@@ -4,30 +4,17 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { Account } from "@/app/bridge/Account";
-import { NETWORK_NAME, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { NETWORK_NAME } from "@/constants/env";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import {
-  useDisconnect,
-  useAccount as useL2Account,
-  useNetwork,
-} from "@starknet-react/core";
+import { useAccount as useL2Account, useNetwork } from "@starknet-react/core";
 
-import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
-//import { AuthShowcase } from "../auth-showcase";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
   Button,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTrigger,
-  Label,
   ScrollArea,
   Sheet,
   SheetContent,
@@ -39,6 +26,7 @@ import {
   TabsTrigger,
 } from "@realms-world/ui";
 
+import { WrongNetworkModal } from "../modal/WrongNetworkModal";
 import EthereumAccount from "./EthereumAccount";
 import StarkAccount from "./StarkAccount";
 import { TransactionList } from "./transactions/TransactionList";
@@ -50,13 +38,7 @@ export const WalletSheet = () => {
     chainId,
   } = useL2Account();
   const { chain } = useNetwork();
-  const { disconnect } = useDisconnect();
   const [isWrongNetwork, setIsWrongNetwork] = useState(false);
-
-  const onDisconnect = () => {
-    setIsWrongNetwork(false);
-    disconnect();
-  };
 
   const NETWORK_ID = {
     mainnet: 23448594291968334n,
@@ -64,10 +46,10 @@ export const WalletSheet = () => {
   };
 
   useEffect(() => {
-    if (isL2Connected && chainId) {
+    if (isL2Connected && chain.id) {
       if (
-        (chainId === NETWORK_ID.sepolia && NETWORK_NAME === "MAIN") ||
-        (chainId === NETWORK_ID.mainnet && NETWORK_NAME === "SEPOLIA")
+        (NETWORK_NAME === "MAIN" && chain.id != NETWORK_ID.mainnet) ||
+        (NETWORK_NAME === "SEPOLIA" && chain.id != NETWORK_ID.sepolia)
       ) {
         setIsWrongNetwork(true);
       } else {
@@ -176,32 +158,7 @@ export const WalletSheet = () => {
         </SheetContent>
       </Sheet>
 
-      {isWrongNetwork && (
-        <AlertDialog open={isWrongNetwork}>
-          <AlertDialogContent className="z-50 h-72 w-full">
-            <AlertDialogHeader>
-              <AlertDialogTitle>Wrong Network</AlertDialogTitle>
-            </AlertDialogHeader>
-            <span>
-              Realms.World currently supports{" "}
-              <span>{CHAIN_IDS_TO_NAMES[SUPPORTED_L2_CHAIN_ID]}</span>, please
-              change the connected network in your Starknet wallet, or:
-            </span>
-            <AlertDialogFooter>
-              <AlertDialogAction>
-                <Button
-                  variant={"default"}
-                  size={"lg"}
-                  className="mt-4 w-full"
-                  onClick={() => onDisconnect()}
-                >
-                  Disconnect
-                </Button>
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      )}
+      {isWrongNetwork && <WrongNetworkModal />}
     </>
   );
 };

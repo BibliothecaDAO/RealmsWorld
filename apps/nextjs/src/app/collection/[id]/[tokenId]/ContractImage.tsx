@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import Image from "next/image";
 import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import { useContractRead } from "@starknet-react/core";
+import { useReadContract } from "@starknet-react/core";
 import { Loader } from "lucide-react";
 import { shortString } from "starknet";
 
@@ -27,7 +27,7 @@ export const ContractImage = ({
   const tokenAddress =
     getCollectionAddresses(collectionId)?.[SUPPORTED_L2_CHAIN_ID];
 
-  const { data } = useContractRead({
+  const { data } = useReadContract({
     functionName: "token_uri",
     args: [tokenId],
     abi: L2_C1ERC20,

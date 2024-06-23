@@ -86,16 +86,14 @@ export const VeLords = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p>
-                  Lock your Lords for veLords and:
-                  <ul className="ml-5 list-disc">
-                    <li>
-                      Direct Lords emissions from the DAO to scale successful
-                      games
-                    </li>
-                    <li>Be rewarded with dLords (dependant on lock time)</li>
-                  </ul>
-                </p>
+                <p>Lock your Lords for veLords and:</p>
+                <ul className="ml-5 list-disc">
+                  <li>
+                    Direct Lords emissions from the DAO to scale successful
+                    games
+                  </li>
+                  <li>Be rewarded with dLords (dependant on lock time)</li>
+                </ul>
               </CardContent>
             </Card>
             <Card>

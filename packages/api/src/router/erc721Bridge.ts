@@ -1,12 +1,13 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
 import { desc, eq, or } from "@realms-world/db";
 import { erc721_bridge } from "@realms-world/db/schema";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { publicProcedure } from "../trpc";
 
-export const erc721BridgeRouter = createTRPCRouter({
+export const erc721BridgeRouter = {
   all: publicProcedure
     .input(
       z
@@ -41,4 +42,4 @@ export const erc721BridgeRouter = createTRPCRouter({
         where: eq(erc721_bridge.hash, input.hash),
       });
     }),
-});
+} satisfies TRPCRouterRecord;

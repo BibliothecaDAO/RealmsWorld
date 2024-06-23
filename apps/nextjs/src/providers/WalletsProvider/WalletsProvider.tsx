@@ -13,8 +13,8 @@ import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
 import L2_ERC20 from "@/abi/L2/ERC20.json";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
-  useContractRead,
   useAccount as useL2Account,
+  useReadContract,
 } from "@starknet-react/core";
 import { hash, uint256 } from "starknet";
 import { useBalance, useAccount as useL1Account } from "wagmi";
@@ -30,12 +30,12 @@ interface WalletsProviderContextValue {
       lords?: bigint;
       eth?: bigint;
     };
-    l2: {
+    /*l2: {
       lords?: bigint;
       eth?: bigint;
-    };
+    };*/
   };
-  l2loading: boolean;
+  //l2loading: boolean;
   refetch: () => void;
 }
 
@@ -71,11 +71,11 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   const { address: l1Account } = useL1Account();
   const { address: l2Account } = useL2Account();
 
-  const {
+  /*const {
     data: l2LordsBalance,
     isFetching: l2LordsIsLoading,
     refetch: l2LordsRefetch,
-  } = useContractRead({
+  } = useReadContract({
     address: LORDS[SUPPORTED_L2_CHAIN_ID]?.address,
     abi: L2_C1ERC20,
     functionName: "balance_of",
@@ -84,14 +84,14 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     watch: true,
   });
 
-  const { data: l2EthBalance, isFetching: l2EthIsLoading } = useContractRead({
+  const { data: l2EthBalance, isFetching: l2EthIsLoading } = useReadContract({
     address: ETH[SUPPORTED_L2_CHAIN_ID]?.address,
     abi: L2_ERC20,
     functionName: "balanceOf",
     enabled: !!l2Account,
     args: l2Account ? [l2Account] : undefined,
     watch: true,
-  });
+  });*/
 
   const l1ERC20Contract = {
     address: LORDS[SUPPORTED_L1_CHAIN_ID]?.address,
@@ -118,7 +118,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   }, [l1Account, l2Account]);
 
   const refetch = async () => {
-    l2LordsRefetch;
+    //l2LordsRefetch;
     await l1LordsRefetch();
   };
 
@@ -126,14 +126,14 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     accountHash,
     tokens,
     // updateTokenBalance,
-    l2loading: l2LordsIsLoading || l2EthIsLoading,
+    //l2loading: l2LordsIsLoading || l2EthIsLoading,
     refetch: refetch,
     balances: {
       l1: {
         eth: l1EthBalance?.value,
         lords: l1LordsBalance?.value,
       },
-      l2: {
+      /* l2: {
         //@ts-expect-error incorrect SN react types
         eth: l2EthBalance?.balance
           ? //@ts-expect-error incorrect SN react types
@@ -141,7 +141,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
             uint256.uint256ToBN(l2EthBalance.balance)
           : 0n,
         lords: l2LordsBalance as bigint,
-      },
+      },*/
     },
   };
 

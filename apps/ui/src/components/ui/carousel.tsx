@@ -126,8 +126,8 @@ export function Carousel({
                 //priority={index === 0}
               />
               {image.title && (
-                <div className="z-100 absolute bottom-0 w-full px-12 pb-8 backdrop-blur">
-                  <h4>{image.title}</h4>
+                <div className="z-100 bg-brown/90 absolute bottom-0 w-full p-8 px-12 backdrop-blur">
+                  <h4 className="mb-4 text-2xl">{image.title}</h4>
                   <p className="mb-8">{image.description}</p>
                   <a href={`${image.href}`}>
                     <Button variant={"default"}>Play</Button>

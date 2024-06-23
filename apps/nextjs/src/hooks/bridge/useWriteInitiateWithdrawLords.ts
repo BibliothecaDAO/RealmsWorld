@@ -4,7 +4,7 @@ import L2BridgeABI from "@/abi/L2/LordsBridge.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
   useContract,
-  useContractWrite as useL2ContractWrite,
+  useSendTransaction as useL2ContractWrite,
 } from "@starknet-react/core";
 import { parseEther } from "viem";
 import { useAccount as useL1Account } from "wagmi";
@@ -29,18 +29,21 @@ export const useWriteInitiateWithdrawLords = ({
     if (!amount || !addressL1) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
-      contract?.populateTransaction.initiate_withdrawal?.(addressL1, {
-        low: parseEther(amount),
-        high: 0,
-      }),
+      contract?.populate("initiate_withdrawal", [
+        addressL1,
+        {
+          low: parseEther(amount),
+          high: 0,
+        },
+      ]),
     ];
-  }, [addressL1, amount, contract?.populateTransaction]);
+  }, [addressL1, amount, contract]);
 
-  const { writeAsync, data: withdrawHash } = useL2ContractWrite({ calls });
+  const { sendAsync, data: withdrawHash } = useL2ContractWrite({ calls });
 
   return {
     calls,
-    writeAsync,
+    sendAsync,
     withdrawHash,
   };
 };

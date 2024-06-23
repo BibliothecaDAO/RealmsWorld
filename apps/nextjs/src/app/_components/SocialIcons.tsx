@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Discord from "@/icons/discord.svg";
-import X from "@/icons/x.svg";
 import Telegram from "@/icons/telegram.svg";
+import X from "@/icons/x.svg";
 import { ExternalLink, GithubIcon, Globe } from "lucide-react";
+
+import { Button } from "@realms-world/ui";
 
 export const SocialIcons = ({
   x,
@@ -10,7 +12,7 @@ export const SocialIcons = ({
   discord,
   external,
   github,
-  telegram
+  telegram,
 }: {
   x?: string;
   website?: string;
@@ -25,26 +27,28 @@ export const SocialIcons = ({
       value: external,
     },
     {
-      icon: <Discord className="h-[28px] w-[28px] fill-current" />,
+      icon: <Discord className="h-[22px] w-[22px] fill-current" />,
       value: discord,
     },
     {
-      icon: <X className="h-[26px] w-[26px] "/>,
-      value: "https://x.com/" + x,
+      icon: <X className="h-[22px] w-[22px]" />,
+      value: x ? "https://x.com/" + x : undefined,
     },
     { icon: <Globe />, value: website },
-    {icon: <GithubIcon />, value: github},
-    {icon: <Telegram className="h-6 w-6" />, value: telegram }
+    { icon: <GithubIcon />, value: github },
+    { icon: <Telegram className="h-6 w-6" />, value: telegram },
   ];
 
   return (
-    <div className="mx-auto my-4 flex justify-center space-x-2">
+    <div className="flex gap-3">
       {links.map((social, index) => {
         if (social.value)
           return (
-            <Link key={index} href={`${social.value}`}>
-              {social.icon}
-            </Link>
+            <Button size={"sm"} variant={"outline"} asChild>
+              <Link key={index} href={`${social.value}`}>
+                {social.icon}
+              </Link>
+            </Button>
           );
       })}
     </div>

@@ -1,3 +1,4 @@
+import { relations, sql } from "drizzle-orm";
 import {
   bigint,
   index,
@@ -5,8 +6,12 @@ import {
   numeric,
   pgTable,
   serial,
+  text,
+  timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const tokenholders = pgTable(
   "tokenholders",
@@ -86,6 +91,62 @@ export const delegates = pgTable(
     };
   },
 );
+export const delegatesRelations = relations(delegates, ({ one }) => ({
+  delegateProfile: one(delegateProfiles),
+}));
+
+export const delegateProfiles = pgTable(
+  "delegate_profiles",
+  {
+    id: varchar("id", { length: 256 })
+      .default(sql`gen_random_uuid()`)
+      .primaryKey(),
+    delegateId: varchar("delegateId", { length: 256 })
+      .references(() => delegates.id)
+      .unique(),
+    statement: text("statement").notNull(),
+    interests: text("interests").array(),
+    twitter: text("twitter"),
+    github: text("github"),
+    telegram: text("telegram"),
+    discord: text("discord"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt", {
+      mode: "date",
+      withTimezone: true,
+    }).$onUpdateFn(() => new Date()),
+  },
+  (table) => {
+    return {
+      delegateId_idx: index().using("btree", table.delegateId),
+    };
+  },
+);
+export const delegateProfilesRelations = relations(
+  delegateProfiles,
+  ({ one }) => ({
+    delegate: one(delegates, {
+      fields: [delegateProfiles.delegateId],
+      references: [delegates.id],
+    }),
+  }),
+);
+
+export const CreateDelegateProfileSchema = createInsertSchema(
+  delegateProfiles,
+  {
+    statement: z.string(),
+    interests: z.string().array().optional(),
+    twitter: z.string().optional(),
+    github: z.string().optional(),
+    telegram: z.string().optional(),
+    discord: z.string().optional(),
+  },
+).omit({
+  delegateId: true,
+  createdAt: true,
+  updatedAt: true,
+});
 
 export const governances = pgTable(
   "governances",

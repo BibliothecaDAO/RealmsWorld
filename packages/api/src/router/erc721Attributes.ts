@@ -1,3 +1,4 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 
@@ -12,7 +13,7 @@ import {
 //import { withCursorPagination } from "../cursorPagination";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
-export const erc721AttributesRouter = createTRPCRouter({
+export const erc721AttributesRouter = {
   all: publicProcedure
     .input(
       z.object({
@@ -103,4 +104,4 @@ export const erc721AttributesRouter = createTRPCRouter({
         },
       });
     }),
-});
+} satisfies TRPCRouterRecord;

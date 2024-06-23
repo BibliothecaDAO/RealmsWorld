@@ -2,9 +2,10 @@ import { useEffect, useState } from "react"; // React
 
 import { NETWORK_NAME } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
-import { getAddress, parseUnits, solidityPackedKeccak256 } from "ethers"; // Ethers
-import keccak256 from "keccak256"; // Keccak256 hashing
+//import keccak256 from "keccak256"; // Keccak256 hashing
 import MerkleTree from "merkletreejs"; // MerkleTree.js
+import { encodePacked, getAddress, keccak256, parseUnits } from "viem"; // Ethers
+
 import {
   useAccount as useL1Account,
   useReadContract,
@@ -17,7 +18,7 @@ import airdrop from "../constants/airdrop.json";
 function generateLeaf(address: string, value: string): Buffer {
   return Buffer.from(
     // Hash in appropriate Merkle format
-    solidityPackedKeccak256(["address", "uint256"], [address, value]).slice(2),
+    keccak256(encodePacked(["address", "uint256"], [address, value])).slice(2),
     "hex",
   );
 }
@@ -103,8 +104,6 @@ export function useAirdropClaim() {
       console.error(`Error when claiming tokens: ${e}`);
     }
   };
-
-  console.log(balance);
 
   useEffect(() => {
     setDataLoading(true);

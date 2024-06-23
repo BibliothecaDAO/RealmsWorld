@@ -9,9 +9,8 @@ import useDebounce from "@/hooks/useDebounce";
 import LordsIcon from "@/icons/lords.svg";
 import { executeSwap, fetchQuotes } from "@avnu/avnu-sdk";
 import { useAccount, useBalance } from "@starknet-react/core";
-import { parseUnits } from "ethers";
 import { ArrowUpDown } from "lucide-react";
-import { formatEther, formatUnits, parseEther } from "viem";
+import { formatEther, formatUnits, parseEther, parseUnits } from "viem";
 
 import { LORDS } from "@realms-world/constants";
 import { SUPPORTED_TOKENS } from "@realms-world/constants/src/Tokens";
@@ -213,7 +212,7 @@ export const SwapTokens = ({
             onChange={handleChangeBuyInput}
             placeholder="0"
             type="text"
-            className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0 "
+            className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0"
             disabled={loading}
             id="buy-amount"
             value={
@@ -263,7 +262,7 @@ export const SwapTokens = ({
             onChange={handleChangeBuyInput}
             placeholder="0"
             type="text"
-            className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0 "
+            className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0"
             disabled={loading}
             id="buy-amount"
             value={quotes[0] ? formatEther(quotes[0].buyAmount) : buyAmount}
@@ -302,7 +301,7 @@ export const SwapTokens = ({
 
   return (
     <>
-      <div className="rounded border bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
+      <div className="rounded border bg-black/20 p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
         <p className="text-sm">You pay</p>
         {isBuyLords ? renderTokensInput() : renderLordsInput()}
         <div className="flex justify-between">
@@ -330,7 +329,7 @@ export const SwapTokens = ({
           />
         </button>
       )}
-      <div className="mt-4 rounded border  bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
+      <div className="mt-4 rounded border bg-black/20 p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
         <p className="text-sm">You receive</p>
         {isBuyLords ? renderLordsInput() : renderTokensInput()}
         <span className="text-sm text-bright-yellow/50">

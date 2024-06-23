@@ -1,5 +1,6 @@
 import { authRouter } from "./router/auth";
 import { bridgeRouter } from "./router/bridge";
+import { delegatesRouter } from "./router/delegates";
 import { erc721AttributesRouter } from "./router/erc721Attributes";
 import { erc721BridgeRouter } from "./router/erc721Bridge";
 import { erc721CollectionsRouter } from "./router/erc721Collections";
@@ -9,12 +10,13 @@ import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,
-  erc721Tokens: erc721TokensRouter,
   bridge: bridgeRouter,
-  erc721Bridge: erc721BridgeRouter,
-  erc721MarketEvents: erc721MarketEventsRouter,
+  delegates: delegatesRouter,
   erc721Attributes: erc721AttributesRouter,
+  erc721Bridge: erc721BridgeRouter,
   erc721Collections: erc721CollectionsRouter,
+  erc721MarketEvents: erc721MarketEventsRouter,
+  erc721Tokens: erc721TokensRouter,
 });
 
 // export type definition of API

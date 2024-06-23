@@ -16,7 +16,7 @@ import { ChainType, tokens } from "@/constants/tokens";
 import { env } from "@/env";
 import {
   useAccount,
-  useContractWrite,
+  useSendTransaction,
   useWaitForTransaction,
 } from "@starknet-react/core";
 import { ExternalLinkIcon, Loader2 } from "lucide-react";
@@ -53,7 +53,7 @@ export default function Mint() {
     data: mintData,
     write,
     isPending: isTxSubmitting,
-  } = useContractWrite({
+  } = useSendTransaction({
     calls: [
       {
         contractAddress: tokens.L2.ETH.tokenAddress[
@@ -70,7 +70,7 @@ export default function Mint() {
     data: submittedData,
     isLoading: isTxLoading,
     error,
-  } = useWaitForTransaction({ hash: mintData?.transaction_hash });
+  } = useTransactionReceipt({ hash: mintData?.transaction_hash });
 
   const isLoading = isTxSubmitting || (mintData && isTxLoading);
   return (
@@ -126,7 +126,7 @@ export default function Mint() {
                   })
                   .toString()}
                 <Button
-                  className=" justify-between normal-case"
+                  className="justify-between normal-case"
                   size={"xs"}
                   variant={"outline"}
                   rel="noopener noreferrer"

@@ -3,7 +3,7 @@
 //import { Mail } from "lucide-react";
 import { useEffect } from "react";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { useAccount, useConnect } from "@starknet-react/core";
+import { useAccount, useConnect, useWalletRequest } from "@starknet-react/core";
 
 //import { motion } from "framer-motion";
 

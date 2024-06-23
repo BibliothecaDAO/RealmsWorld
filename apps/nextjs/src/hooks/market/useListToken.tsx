@@ -6,7 +6,7 @@ import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { findCollectionKeyByAddress } from "@/utils/getters";
 import {
   useContract,
-  useContractWrite as useL2ContractWrite,
+  useSendTransaction as useL2ContractWrite,
 } from "@starknet-react/core";
 import { parseUnits } from "viem";
 
@@ -50,25 +50,25 @@ export const useListToken = ({
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
-      collectionContract?.populateTransaction.set_approval_for_all?.(
+      collectionContract?.populate("set_approval_for_all", [
         MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`, //Marketplace address
         1,
-      ),
-      contract?.populateTransaction.create?.(
+      ]),
+      contract?.populate("create", [
         tokenId,
         marketplaceId,
         !price ? "0" : parseUnits(`${price}`, 18).toString(),
         expirationTime,
-      ),
+      ]),
     ];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tokenId, collectionId, price, expirationTime]);
 
-  const { writeAsync, data, error } = useL2ContractWrite({ calls });
+  const { sendAsync, data, error } = useL2ContractWrite({ calls });
 
   return {
     calls,
-    writeAsync,
+    sendAsync,
     data,
     error,
   };

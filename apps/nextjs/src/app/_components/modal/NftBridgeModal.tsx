@@ -85,8 +85,8 @@ export const NftBridgeModal = () => {
   const [nonce, setNonce] = useState<string | undefined>();
 
   const getNonce = useCallback(async () => {
-    if (account?.address) {
-      console.log("getting " + account.address);
+    if (l2Address && account) {
+      console.log("getting " + l2Address);
       try {
         const nonce = await account.getNonce();
         setNonce(nonce);
@@ -94,15 +94,15 @@ export const NftBridgeModal = () => {
         setNonce(undefined);
       }
     }
-  }, [account]);
+  }, [l2Address, account]);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getNonce();
-  }, [getNonce]);
+  }, [getNonce, l2Address]);
 
   const renderBadge = (isL1: boolean, address: string) => (
-    <Badge className="pr-4">
+    <Badge className="flex gap-4 px-4">
       {isL1 ? (
         <EthereumLogo className="mr-2 w-8" />
       ) : (
@@ -128,7 +128,6 @@ export const NftBridgeModal = () => {
           <DialogTitle className="text-2xl">
             Bridge {selectedTokenIds.length} Realms
           </DialogTitle>
-
           {!l1Address && <EthereumLoginButton />}
           {!l2Address && <StarknetLoginButton />}
           {l1Address && l2Address && (
@@ -148,7 +147,7 @@ export const NftBridgeModal = () => {
                       </div>
                       <hr />
                     </div>
-                    <div className="mb-4 flex items-center">
+                    <div className="flex w-full justify-between">
                       <div className="flex flex-col">
                         <span className="pb-1 text-sm uppercase">From</span>
                         {renderBadge(
@@ -156,7 +155,7 @@ export const NftBridgeModal = () => {
                           isSourceL1 ? l1Address : l2Address,
                         )}
                       </div>
-                      <MoveRightIcon className="w-10" />
+                      <MoveRightIcon className="w-10 self-center" />
                       <div className="flex flex-col">
                         <span className="pb-1 text-sm uppercase">To</span>
                         {renderBadge(
@@ -197,8 +196,9 @@ export const NftBridgeModal = () => {
                             : initiateWithdraw()
                         }
                         disabled={
-                          /*(isSourceL1 && !nonce) ||*/
-                          isDepositPending || isWithdrawPending
+                          (isSourceL1 && !nonce) ||
+                          isDepositPending ||
+                          isWithdrawPending
                         }
                       >
                         {isDepositPending || isWithdrawPending ? (

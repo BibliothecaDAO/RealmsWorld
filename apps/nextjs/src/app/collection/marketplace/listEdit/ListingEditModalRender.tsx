@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useEditListing } from "@/hooks/market/useEditListing";
 import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
-import { useAccount, useWaitForTransaction } from "@starknet-react/core";
+import { useAccount, useTransactionReceipt } from "@starknet-react/core";
 import dayjs from "dayjs";
 import { parseUnits } from "viem";
 
@@ -139,7 +139,7 @@ export const ListingEditModalRender: FC<Props> = ({
     price: price.toString(),
   });
 
-  const { data: transactionData } = useWaitForTransaction({
+  const { data: transactionData } = useTransactionReceipt({
     hash: data?.transaction_hash,
   });
   useEffect(() => {

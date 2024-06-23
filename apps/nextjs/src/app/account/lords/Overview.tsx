@@ -8,8 +8,8 @@ import { useStaking } from "@/hooks/staking/useStaking";
 import LordsIcon from "@/icons/lords.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import {
-  useContractRead,
   useAccount as useL2Account,
+  useReadContract,
 } from "@starknet-react/core";
 import { Loader } from "lucide-react";
 import { formatEther } from "viem";
@@ -47,7 +47,7 @@ export const Overview = () => {
     +data?.wallet?.bridgedRealmsHeld +
     +data?.wallet?.bridgedV2RealmsHeld;
 
-  const { data: realmsBalance } = useContractRead({
+  const { data: realmsBalance } = useReadContract({
     address: getCollectionAddresses(Collections.REALMS)?.[
       SUPPORTED_L2_CHAIN_ID
     ] as `0x${string}`,
@@ -111,16 +111,13 @@ export const Overview = () => {
                     <CardTitle>Claims</CardTitle>
                   </CardHeader>
                   <CardContent className="grid grid-cols-4 gap-4">
-                    <LegacyClaim />
                     <Card>
                       <CardHeader>
                         <CardDescription>Claimable Lords</CardDescription>
                         <CardTitle className="flex items-center text-4xl">
-                          {isFetching ? (
-                            <Loader className="animate-spin" />
-                          ) : (
-                            balance && formatEther(balance as bigint)
-                          )}
+                          {balance &&
+                            Number(formatEther(balance as bigint)).toFixed(0)}
+
                           <LordsIcon className="ml-3 h-7 w-7 fill-current" />
                         </CardTitle>
                       </CardHeader>
@@ -170,6 +167,7 @@ export const Overview = () => {
                     </div>
                   </CardContent>
                 </Card>
+                <LegacyClaim />
               </div>
             </div>
           </div>

@@ -4,7 +4,7 @@ import { useBuyToken } from "@/hooks/market/useBuyToken";
 import { useWalletsProviderContext } from "@/providers/WalletsProvider";
 import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
-import { useAccount, useWaitForTransaction } from "@starknet-react/core";
+import { useAccount, useTransactionReceipt } from "@starknet-react/core";
 import { formatUnits } from "viem";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
@@ -109,7 +109,7 @@ export const BuyModalRender: FC<Props> = ({
     error: writeError,
     data,
   } = useBuyToken({ listingId: listing?.id, price: listing?.price });
-  const { data: transactionData } = useWaitForTransaction({
+  const { data: transactionData } = useTransactionReceipt({
     hash: data?.transaction_hash,
     watch: true,
   });

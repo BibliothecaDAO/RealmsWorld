@@ -208,8 +208,8 @@ export const games: Game[] = [
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
   },
-   {
-    name: "Kingdom-of-Lords",
+  {
+    name: "Kingdom of Lords",
     id: "Kingdom-of-Lords",
     developer: Studios.MISSISSIPPI_TEAM,
     genres: ["SLG", "PVP", "MMO Strategy Game"],
@@ -225,7 +225,7 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "As the main token of the game",
-    chains: [ ChainId.REALMS_L3],
+    chains: [ChainId.REALMS_L3],
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
@@ -323,7 +323,7 @@ export const games: Game[] = [
     status: "alpha",
     description: "Classic Turn Based Strategy",
     longform:
-        "Force Prime Heroes is a fully on-chain game inspired by the Heroes of Might and Magic series. You need to explore the map with your hero, grow your army, defeat enemies and kill the Bone Dragon to win. Find your best strategy and become a true hero of on-chain worlds!",
+      "Force Prime Heroes is a fully on-chain game inspired by the Heroes of Might and Magic series. You need to explore the map with your hero, grow your army, defeat enemies and kill the Bone Dragon to win. Find your best strategy and become a true hero of on-chain worlds!",
     links: {
       homepage: "https://forceprime.io",
       discord: "https://discord.gg/8SFzxSgbq3",
@@ -334,5 +334,5 @@ export const games: Game[] = [
     collections: [],
     tokens: [],
     screenshotLength: 4,
-  }
+  },
 ];
