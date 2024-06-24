@@ -7,6 +7,7 @@ import { useL2LordsRewards } from "@/hooks/staking/useL2LordsRewards";
 import { useStaking } from "@/hooks/staking/useStaking";
 import LordsIcon from "@/icons/lords.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
+import { api } from "@/trpc/react";
 import {
   useAccount as useL2Account,
   useReadContract,
@@ -25,9 +26,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@realms-world/ui";
+import { padAddress } from "@realms-world/utils";
 
 import { ClaimsTable } from "./ClaimsTable";
-import { FloatAnimation } from "./FloatAnimation";
+//import { FloatAnimation } from "./FloatAnimation";
 import { LegacyClaim } from "./LegacyClaim";
 import { VeLords } from "./VeLords";
 
@@ -41,11 +43,23 @@ export const Overview = () => {
   const { data } = useStaking();
   //const delegateData = useLordship(l1Address);
   const { toggleStakingMigration } = useUIStore((state) => state);
+  const { data: lordsRewardsClaims } = api.lordsRewards.all.useQuery(
+    {
+      address: padAddress(l2Address),
+    },
+    {
+      enabled: !!l2Address,
+    },
+  );
 
+  const totalClaimed =
+    lordsRewardsClaims?.reduce((acc, claim) => acc + Number(claim.amount), 0) ??
+    0;
+  console.log(data);
   const totalL1Realms =
-    +data?.wallet?.realmsHeld +
-    +data?.wallet?.bridgedRealmsHeld +
-    +data?.wallet?.bridgedV2RealmsHeld;
+    BigInt(data?.wallet?.realmsHeld ?? 0) +
+    BigInt(data?.wallet?.bridgedRealmsHeld ?? 0) +
+    BigInt(data?.wallet?.bridgedV2RealmsHeld ?? 0);
 
   const { data: realmsBalance } = useReadContract({
     address: getCollectionAddresses(Collections.REALMS)?.[
@@ -115,8 +129,7 @@ export const Overview = () => {
                       <CardHeader>
                         <CardDescription>Claimable Lords</CardDescription>
                         <CardTitle className="flex items-center text-4xl">
-                          {balance &&
-                            Number(formatEther(balance as bigint)).toFixed(0)}
+                          {balance && Number(formatEther(balance)).toFixed(0)}
 
                           <LordsIcon className="ml-3 h-7 w-7 fill-current" />
                         </CardTitle>
@@ -137,31 +150,27 @@ export const Overview = () => {
                     </Card>
                     <Card>
                       <CardHeader>
-                        <CardDescription>Claimed</CardDescription>
+                        <CardDescription>Total Claimed</CardDescription>
                         <CardTitle className="flex items-center text-4xl">
-                          X <LordsIcon className="ml-3 h-7 w-7 fill-current" />
+                          {totalClaimed.toLocaleString()}
+                          <LordsIcon className="ml-3 h-7 w-7 fill-current" />
                         </CardTitle>
                       </CardHeader>
                     </Card>
                     <div className="col-span-full">
                       <ClaimsTable
                         data={[
-                          {
-                            start_date: new Date(
-                              Date.now(),
-                            ).toLocaleDateString(),
-                            realms: 2,
-                            lords_rewards: 180n,
-                            claim: null,
-                          },
-                          {
-                            start_date: new Date(
-                              "2/3/2024",
-                            ).toLocaleDateString(),
-                            realms: 1,
-                            lords_rewards: 60n,
-                            claim: new Date(Date.now()).toLocaleDateString(),
-                          },
+                          ...(balance
+                            ? [
+                                {
+                                  amount: Number(formatEther(balance)).toFixed(
+                                    0,
+                                  ),
+                                  timestamp: null,
+                                },
+                              ]
+                            : []),
+                          ...(lordsRewardsClaims ?? []),
                         ]}
                       />
                     </div>

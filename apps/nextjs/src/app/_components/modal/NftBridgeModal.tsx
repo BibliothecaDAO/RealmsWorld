@@ -14,13 +14,11 @@ import StarknetLogo from "@/icons/starknet.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useTransactionManager } from "@/stores/useTransasctionManager";
 import { shortenHex } from "@/utils/utils";
-import {
-  useDeployAccount,
-  useAccount as useL2Account,
-} from "@starknet-react/core";
+import { useAccount as useL2Account } from "@starknet-react/core";
 import { Loader, MoveRightIcon, RefreshCcw } from "lucide-react";
 import { useAccount } from "wagmi";
 
+import type { StepItem } from "@realms-world/ui";
 import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
 import {
   Alert,
@@ -30,7 +28,10 @@ import {
   DialogContent,
   DialogTitle,
   ScrollArea,
+  Step,
+  Stepper,
   toast,
+  useStepper,
 } from "@realms-world/ui";
 
 import { EthereumLoginButton } from "../wallet/EthereumLoginButton";
@@ -38,7 +39,9 @@ import { StarknetLoginButton } from "../wallet/StarknetLoginButton";
 import TransactionSubmittedModalBody from "./TransactionSubmittedModal/TransactionSubmittedModalBody";
 import TransactionSubmittedModalButton from "./TransactionSubmittedModal/TransactionSubmittedModalButton";
 
-export const NftBridgeModal = () => {
+import "@realms-world/ui";
+
+export default function NftBridgeModal() {
   const {
     isNftBridgeOpen,
     toggleNftBridge,
@@ -83,6 +86,7 @@ export const NftBridgeModal = () => {
   } = useERC721Approval();
 
   const [nonce, setNonce] = useState<string | undefined>();
+  const { nextStep, setStep } = useStepper();
 
   const getNonce = useCallback(async () => {
     if (l2Address && account) {
@@ -95,6 +99,18 @@ export const NftBridgeModal = () => {
       }
     }
   }, [l2Address, account]);
+  const steps = [
+    {
+      label: "Approve",
+      description: `Allow Bridge Contract access to Realms`,
+      id: "approve",
+    },
+    {
+      label: "Bridge",
+      description: `Realms to Starknet`,
+      id: "bridge",
+    },
+  ] satisfies StepItem[];
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -128,117 +144,151 @@ export const NftBridgeModal = () => {
           <DialogTitle className="text-2xl">
             Bridge {selectedTokenIds.length} Realms
           </DialogTitle>
+          {isApprovedForAll && <p>Approved</p>}
           {!l1Address && <EthereumLoginButton />}
           {!l2Address && <StarknetLoginButton />}
           {l1Address && l2Address && (
             <>
               {!depositData && !withdrawData ? (
                 <ScrollArea className="-mr-6 max-h-[600px] pr-6">
-                  <div className="space-y-6">
-                    <div>
-                      <hr />
-                      <div className="my-2">
-                        {selectedTokenIds.map(
-                          (id: string, index: number) =>
-                            "#" +
-                            id +
-                            (index === selectedTokenIds.length - 1 ? "" : ", "),
-                        )}
-                      </div>
-                      <hr />
-                    </div>
-                    <div className="flex w-full justify-between">
-                      <div className="flex flex-col">
-                        <span className="pb-1 text-sm uppercase">From</span>
-                        {renderBadge(
-                          isSourceL1,
-                          isSourceL1 ? l1Address : l2Address,
-                        )}
-                      </div>
-                      <MoveRightIcon className="w-10 self-center" />
-                      <div className="flex flex-col">
-                        <span className="pb-1 text-sm uppercase">To</span>
-                        {renderBadge(
-                          !isSourceL1,
-                          isSourceL1 ? l2Address : l1Address,
-                        )}
-                      </div>
-                    </div>
-                    {!nonce && (
-                      <Alert variant={"destructive"} className="flex">
-                        <div>
-                          Your account must be deployed on Starknet before
-                          bridging your Realms.{" "}
-                          <Link
-                            href="https://support.argent.xyz/hc/en-us/articles/8802319054237-How-to-activate-deploy-my-Argent-X-wallet"
-                            target="_blank"
-                            className="text-bright-yellow underline"
-                          >
-                            Follow the Argent X guide to deploy your account
-                          </Link>
-                        </div>
-                        <Button variant={"outline"} onClick={getNonce}>
-                          <RefreshCcw className="w-8" />
-                        </Button>
-                      </Alert>
-                    )}
-                    {isApprovedForAll ? (
-                      <Button
-                        className="w-full"
-                        onClick={() =>
-                          isSourceL1
-                            ? depositRealms({
-                                tokenIds: selectedTokenIds.map((id) =>
-                                  BigInt(id),
-                                ),
-                                l2Address: l2Address,
-                              })
-                            : initiateWithdraw()
-                        }
-                        disabled={
-                          (isSourceL1 && !nonce) ||
-                          isDepositPending ||
-                          isWithdrawPending
-                        }
-                      >
-                        {isDepositPending || isWithdrawPending ? (
-                          <>
-                            <Loader className="mr-2 animate-spin" />
-                            Confirm in Wallet
-                          </>
-                        ) : (
-                          "Bridge Realms"
-                        )}
-                      </Button>
-                    ) : (
-                      <>
-                        <p>
-                          You must approve the Bridge contract for your Realms
-                          before confirming transfer
-                        </p>
-                        <Button
-                          onClick={approveForAll}
-                          disabled={isApprovePending || approveForAllLoading}
-                          className="w-full"
-                        >
-                          {isApprovePending ? (
-                            "Confirm in Wallet"
-                          ) : (
-                            <>
-                              {approveForAllLoading ? (
-                                <>
-                                  <Loader className="mr-2 animate-spin" /> In
-                                  Progress
-                                </>
-                              ) : (
-                                "Approve Realms"
-                              )}
-                            </>
-                          )}
-                        </Button>
-                      </>
-                    )}
-                  </div>
+                  <Stepper
+                    initialStep={0}
+                    variant="circle-alt"
+                    steps={steps}
+                    orientation="horizontal"
+                  >
+                    {steps.map((stepProps) => {
+                      return (
+                        <Step key={stepProps.label} {...stepProps}>
+                          <div className="mt-6 space-y-6">
+                            <div>
+                              <hr />
+                              <div className="my-2">
+                                {selectedTokenIds.map(
+                                  (id: string, index: number) =>
+                                    "#" +
+                                    id +
+                                    (index === selectedTokenIds.length - 1
+                                      ? ""
+                                      : ", "),
+                                )}
+                              </div>
+                              <hr />
+                            </div>
+                            <div className="flex w-full justify-between">
+                              <div className="flex flex-col">
+                                <span className="pb-1 text-sm uppercase">
+                                  From
+                                </span>
+                                {renderBadge(
+                                  isSourceL1,
+                                  isSourceL1 ? l1Address : l2Address,
+                                )}
+                              </div>
+                              <MoveRightIcon className="w-10 self-center" />
+                              <div className="flex flex-col">
+                                <span className="pb-1 text-sm uppercase">
+                                  To
+                                </span>
+                                {renderBadge(
+                                  !isSourceL1,
+                                  isSourceL1 ? l2Address : l1Address,
+                                )}
+                              </div>
+                            </div>
+                            {!nonce && (
+                              <Alert variant={"destructive"} className="flex">
+                                <div>
+                                  Your account must be deployed on Starknet
+                                  before bridging your Realms.{" "}
+                                  <Link
+                                    href="https://support.argent.xyz/hc/en-us/articles/8802319054237-How-to-activate-deploy-my-Argent-X-wallet"
+                                    target="_blank"
+                                    className="text-bright-yellow underline"
+                                  >
+                                    Follow the Argent X guide to deploy your
+                                    account
+                                  </Link>
+                                </div>
+                                <Button variant={"outline"} onClick={getNonce}>
+                                  <RefreshCcw className="w-8" />
+                                </Button>
+                              </Alert>
+                            )}
+                            {stepProps.id == "bridge" && (
+                              <Button
+                                className="w-full"
+                                onClick={() =>
+                                  isSourceL1
+                                    ? depositRealms({
+                                        tokenIds: selectedTokenIds.map((id) =>
+                                          BigInt(id),
+                                        ),
+                                        l2Address: l2Address,
+                                      })
+                                    : initiateWithdraw()
+                                }
+                                disabled={
+                                  (isSourceL1 && !nonce) ||
+                                  isDepositPending ||
+                                  isWithdrawPending
+                                }
+                              >
+                                {isDepositPending || isWithdrawPending ? (
+                                  <>
+                                    <Loader className="mr-2 animate-spin" />
+                                    Confirm in Wallet
+                                  </>
+                                ) : (
+                                  "Bridge Realms"
+                                )}
+                              </Button>
+                            )}
+                            {stepProps.id == "approve" && (
+                              <>
+                                <p>
+                                  You must approve the Bridge contract for your
+                                  Realms before confirming transfer
+                                </p>
+                                <Button
+                                  onClick={async () => {
+                                    const hash = await approveForAll();
+                                    if (hash) {
+                                      toast({
+                                        title: "Approved Realms",
+                                        description: `You can now proceed to bridge your Realms`,
+                                      });
+                                      nextStep();
+                                    }
+                                  }}
+                                  disabled={
+                                    isApprovePending || approveForAllLoading
+                                  }
+                                  className="w-full"
+                                >
+                                  {isApprovePending ? (
+                                    "Confirm in Wallet"
+                                  ) : (
+                                    <>
+                                      {approveForAllLoading ? (
+                                        <>
+                                          <Loader className="mr-2 animate-spin" />{" "}
+                                          In Progress
+                                        </>
+                                      ) : (
+                                        "Approve Realms"
+                                      )}
+                                    </>
+                                  )}
+                                </Button>
+                              </>
+                            )}
+                          </div>
+                        </Step>
+                      );
+                    })}
+                    <Footer />
+                  </Stepper>
                 </ScrollArea>
               ) : (
                 <>
@@ -271,4 +321,36 @@ export const NftBridgeModal = () => {
     );
   }
   return null;
+}
+
+const Footer = () => {
+  const {
+    nextStep,
+    prevStep,
+    resetSteps,
+    hasCompletedAllSteps,
+    isLastStep,
+    isOptionalStep,
+    isDisabledStep,
+    setStep,
+  } = useStepper();
+  const { isApprovedForAll } = useERC721Approval();
+  useEffect(() => {
+    console.log(isApprovedForAll);
+    if (isApprovedForAll) {
+      setStep(1);
+    } else {
+      setStep(0);
+    }
+  }, [isApprovedForAll, setStep]);
+
+  return (
+    <>
+      {hasCompletedAllSteps && (
+        <div className="my-2 flex h-40 items-center justify-center rounded-md border bg-secondary text-primary">
+          <h1 className="text-xl">Woohoo! All steps completed! 🎉</h1>
+        </div>
+      )}
+    </>
+  );
 };

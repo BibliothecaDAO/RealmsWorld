@@ -1,10 +1,11 @@
+import dynamic from "next/dynamic";
 import { StakingMigrationModal } from "@/app/_components/modal/StakingMigrationModal";
 import { PageLayout } from "@/app/_components/PageLayout";
 import { SessionProvider } from "next-auth/react";
 
 import { NavLink } from "@realms-world/ui";
 
-import { NftBridgeModal } from "../_components/modal/NftBridgeModal";
+import { AuthWrapper } from "./AuthWrapper";
 
 export default function RootLayout({
   children,
@@ -33,6 +34,14 @@ export default function RootLayout({
       link: "profile",
     },
   ];
+
+  const NftBridgeModal = dynamic(
+    () => import("@/app/_components/modal/NftBridgeModal"),
+    {
+      ssr: false,
+    },
+  );
+
   return (
     <SessionProvider>
       <PageLayout size={"sm"} title="Account">
@@ -47,7 +56,7 @@ export default function RootLayout({
             </NavLink>
           ))}
         </div>
-        {children}
+        <AuthWrapper>{children}</AuthWrapper>
       </PageLayout>
       <StakingMigrationModal />
       <NftBridgeModal />

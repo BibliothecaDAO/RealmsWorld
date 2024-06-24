@@ -215,3 +215,10 @@ export {
 export { useToast, toast } from "./src/components/ui/use-toast";
 
 export { Badge } from "./src/components/ui/badge";
+
+export { Stepper, Step, useStepper } from "./src/components/ui/stepper";
+export type {
+  StepProps,
+  StepperProps,
+  StepItem,
+} from "./src/components/ui/stepper";
