@@ -101,5 +101,5 @@ export const REALMS_BRIDGE_ADDRESS: Record<number | string, string> = {
   [ChainId.SEPOLIA]: "0x345Eaf46F42228670489B47764b0Bd21f2141bd1",
   [ChainId.SN_MAIN]: "",
   [ChainId.SN_SEPOLIA]:
-    "0xf9f57a19409452d5ca6b0a9313ba4dab445ce200cc7993eae64fb019baf4d3",
+    "0x467f6b080db9734b8b0a2ccb7fd020914e47f2f62aa668f56c4124946e4eb70",
 };

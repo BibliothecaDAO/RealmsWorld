@@ -14,6 +14,8 @@ import {
 import { Button } from "@realms-world/ui";
 
 import { WrongNetworkModal } from "../_components/modal/WrongNetworkModal";
+import { EthereumLoginButton } from "../_components/wallet/EthereumLoginButton";
+import { StarknetLoginButton } from "../_components/wallet/StarknetLoginButton";
 
 export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -53,10 +55,10 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
       {fullyConnected ? (
         children
       ) : (
-        <div>
-          Not connected
-          {data?.toString()}
-          <Button onClick={() => request()}>Request chain</Button>
+        <div className="flex max-w-[250px] flex-col gap-4">
+          <span className="text-xl">Connect your wallets</span>
+          {!isStarknetConnected && <StarknetLoginButton />}
+          {!isEthereumConnected && <EthereumLoginButton />}
           {isStarknetConnected && !isStarknetRightNetwork && !isPending && (
             <WrongNetworkModal />
           )}

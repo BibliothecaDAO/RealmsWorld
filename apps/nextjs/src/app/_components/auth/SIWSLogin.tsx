@@ -55,7 +55,6 @@ export function SIWSLogin({ buttonText }: { buttonText?: string }) {
         await handleLogin();
       }}
     >
-      {session?.user.name}
       {error && <div>{error.message}</div>}
       <Button disabled={isPending}>
         {isPending ? (
