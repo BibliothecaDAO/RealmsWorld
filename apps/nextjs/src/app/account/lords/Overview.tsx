@@ -55,7 +55,6 @@ export const Overview = () => {
   const totalClaimed =
     lordsRewardsClaims?.reduce((acc, claim) => acc + Number(claim.amount), 0) ??
     0;
-  console.log(data);
   const totalL1Realms =
     BigInt(data?.wallet?.realmsHeld ?? 0) +
     BigInt(data?.wallet?.bridgedRealmsHeld ?? 0) +
@@ -129,8 +128,7 @@ export const Overview = () => {
                       <CardHeader>
                         <CardDescription>Claimable Lords</CardDescription>
                         <CardTitle className="flex items-center text-4xl">
-                          {balance && Number(formatEther(balance)).toFixed(0)}
-
+                          {balance && Number(formatEther(balance)).toFixed(4)}
                           <LordsIcon className="ml-3 h-7 w-7 fill-current" />
                         </CardTitle>
                       </CardHeader>

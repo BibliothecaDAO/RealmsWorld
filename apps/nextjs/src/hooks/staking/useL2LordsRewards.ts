@@ -47,7 +47,8 @@ export const useL2LordsRewards = () => {
         const now = Date.now();
         const elapsed = now - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const easedValue = start + BigInt(Number(end - start) * progress);
+        const easedValue =
+          start + BigInt(Math.round(Number(end - start) * progress));
 
         setEasedBalance(easedValue);
 
