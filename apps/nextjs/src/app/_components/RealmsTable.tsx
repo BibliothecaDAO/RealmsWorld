@@ -22,6 +22,7 @@ interface DataTableProps<TData> {
   data: TData[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<TData, any>[];
+  rowSelection?: Record<string, boolean>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onRowSelectionChange?: (rows: any) => void;
 }
@@ -30,15 +31,9 @@ export function RealmsTable<TData>({
   data,
   columns,
   onRowSelectionChange,
+  rowSelection,
 }: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [rowSelection, setRowSelection] = useState({});
-
-  useEffect(() => {
-    if (onRowSelectionChange) {
-      onRowSelectionChange(rowSelection);
-    }
-  }, [rowSelection, onRowSelectionChange]);
 
   const table = useReactTable({
     data,
@@ -47,7 +42,7 @@ export function RealmsTable<TData>({
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    onRowSelectionChange: setRowSelection,
+    onRowSelectionChange: onRowSelectionChange,
 
     //getRowId: (row) => row.id,
     state: {

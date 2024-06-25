@@ -85,7 +85,10 @@ export const erc721TokensRouter = {
 
       if (contractAddress) {
         whereFilter.push(
-          eq(erc721Tokens.contract_address, contractAddress.toLowerCase()),
+          eq(
+            erc721Tokens.contract_address,
+            padAddress(contractAddress.toLowerCase()),
+          ),
         );
       }
       if (owner) {

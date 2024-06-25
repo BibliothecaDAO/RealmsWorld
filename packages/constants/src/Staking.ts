@@ -12,11 +12,11 @@ export const StakingAddresses: {
 } = {
   [StakingContracts.GALLEON]: {
     [ChainId.MAINNET]: "0x17963290db8c30552d0cfa2a6453ff20a28c31a2",
-    [ChainId.SEPOLIA]: "",
+    [ChainId.SEPOLIA]: "0x7cb8c2a2e635b8518a3d8e6d70480583c85a7297",
   },
   [StakingContracts.CARRACK]: {
     [ChainId.MAINNET]: "0xcdFe3d7eBFA793675426F150E928CD395469cA53",
-    [ChainId.SEPOLIA]: "0x7cb8c2a2e635b8518a3d8e6d70480583c85a7297",
+    [ChainId.SEPOLIA]: "",
   },
   [StakingContracts.PAYMENT_POOL]: {
     [ChainId.MAINNET]: "0x55A69A21C44B1922D3F96B961AE567C789c4399e",

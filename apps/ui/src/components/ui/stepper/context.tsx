@@ -13,10 +13,10 @@ interface StepperContextValue extends StepperProps {
   initialStep: number;
 }
 
-type StepperContextProviderProps = {
+interface StepperContextProviderProps {
   value: Omit<StepperContextValue, "activeStep">;
   children: React.ReactNode;
-};
+}
 
 const StepperContext = React.createContext<
   StepperContextValue & {
@@ -54,6 +54,7 @@ const StepperProvider = ({ value, children }: StepperContextProviderProps) => {
   };
 
   const setStep = (step: number) => {
+    console.log("context set " + step);
     setActiveStep(step);
   };
 

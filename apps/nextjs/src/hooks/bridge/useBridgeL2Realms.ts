@@ -34,7 +34,7 @@ export function useBridgeL2Realms({
   const { data: isApprovedForAll } = useReadContract({
     abi: ERC721ABI,
     address: l2RealmsAddress,
-    args: l2BridgeAddress ? [address ?? "0xtest", l2BridgeAddress] : [],
+    args: l2BridgeAddress && address ? [address, l2BridgeAddress] : [],
     functionName: "is_approved_for_all",
     watch: true,
   });
@@ -70,11 +70,9 @@ export function useBridgeL2Realms({
       status: "pending",
       timestamp: new Date(Date.now()),
     });
-    toast({
-      title: TransactionType.BRIDGE_REALMS_L2_TO_L1_INITIATE,
-      description: `${selectedTokenIds.length} Realms will be ready to withdraw on Ethereum in ~12 hours`,
-    });
-  }, [sendAsync, transactions, selectedTokenIds.length]);
+
+    return tx;
+  }, [sendAsync, transactions]);
 
   return {
     isApprovedForAll,

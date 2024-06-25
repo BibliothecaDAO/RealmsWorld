@@ -35,20 +35,25 @@ export default function useERC721Approval() {
     },
   });
 
+  console.log(isApprovedForAll);
+
   const { data: blockNumber } = useBlockNumber({ watch: true });
 
   useEffect(() => {
-    void refetch();
-  }, [blockNumber, refetch]);
+    if (address) {
+      console.log("refetcjomgs" + isApprovedForAll);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      refetch();
+    }
+  }, [blockNumber, refetch, address, isApprovedForAll]);
 
-  const approveForAll = async () => {
+  const approveForAll = async () =>
     await writeAsync({
       contractAddress: CollectionAddresses.realms[
         SUPPORTED_L1_CHAIN_ID
       ] as `0x${string}`,
       operator: REALMS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] as `0x${string}`,
     });
-  };
 
   const { isLoading: approveForAllLoading } = useWaitForTransactionReceipt({
     hash: data,

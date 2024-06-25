@@ -19,45 +19,53 @@ import {
 } from "@realms-world/ui";
 
 interface Claim {
-  start_date: string;
-  realms: number;
-  lords_rewards: bigint;
-  claim: string | null;
+  timestamp?: Date | null;
+  //realms: number;
+  amount: bigint | string;
 }
 
 export const columns: ColumnDef<Claim>[] = [
   {
-    accessorKey: "start_date",
-    header: () => <span className="font-sans">Starting</span>,
+    accessorKey: "timestamp",
+    id: "timestamp",
+    header: () => <span className="font-sans">Claimed On</span>,
+    cell: (cell) => {
+      return <span>{cell.getValue()?.toLocaleString()}</span>;
+    },
   },
-  {
+  /*{
     accessorKey: "realms",
     header: () => <span className="font-sans">Realms Staked</span>,
-  },
+  },*/
   {
-    accessorKey: "lords_rewards",
+    accessorKey: "amount",
+    id: "amount",
     header: () => <span className="font-sans">Lords Rewards</span>,
+    cell: (cell) => {
+      return <span>{Number(cell.getValue() as bigint).toLocaleString()}</span>;
+    },
   },
   {
-    accessorKey: "claim",
+    accessorKey: "timestamp",
+    id: "claim",
     header: () => <span className="font-sans">Claim</span>,
     cell: (cell) => {
       if (!cell.getValue()) {
         return <Button size={"xs"}>Claim</Button>;
       } else {
-        return <span>Claimed: {cell.getValue() as ReactNode}</span>;
+        return <span>Claimed</span>;
       }
     },
   },
 ];
 interface DataTableProps<TData> {
-  data: TData[];
+  data?: TData[];
   //columns: ColumnDef<TData, TValue>[];
 }
 
 export function ClaimsTable({ data }: DataTableProps<Claim>) {
   const table = useReactTable<Claim>({
-    data,
+    data: data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     //getRowId: (row) => row.start_date,

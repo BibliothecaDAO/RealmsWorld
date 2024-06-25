@@ -15,9 +15,13 @@ export function createWithdrawalEvent(event: LogMessageToL1): WithdrawalEvent {
 
   let l1Recipient = event.params.payload[2];
   let ids = event.params.payload.slice(5);
-  let tokenIds = new Array<BigInt>(0);
+  log.debug("withdraw tokenIds are following {} with length {}", [
+    ids.toString(),
+    event.params.payload[4].toI32().toString(),
+  ]);
 
-  for (let i = 0; i < event.params.payload[4].toI32(); i += 2) {
+  let tokenIds = new Array<BigInt>(0);
+  for (let i = 0; i < event.params.payload[4].toI32() * 2; i += 2) {
     tokenIds.push(convertUint256ToBigInt(ids[i], ids[i + 1]));
   }
   log.debug("conveted are following {}", [tokenIds.toString()]);
