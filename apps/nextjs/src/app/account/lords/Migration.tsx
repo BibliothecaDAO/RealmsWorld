@@ -166,7 +166,7 @@ export const StakingMigration = () => {
                     <p className="text-xl">
                       You are ready to discover your Realms on the Starknet L2
                     </p>
-                    <Button asChild>
+                    <Button className="mt-4" asChild>
                       <Link href="/account/assets">Go To Bridge</Link>
                     </Button>
                   </div>
@@ -177,7 +177,7 @@ export const StakingMigration = () => {
                       Delegate your Realms voting power (to yourself or others)
                       to start receiving Lords
                     </p>
-                    <Button asChild>
+                    <Button className="mt-4" asChild>
                       <Link href="/account/delegates">Go To Delegates</Link>
                     </Button>{" "}
                   </div>

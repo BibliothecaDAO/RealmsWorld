@@ -113,7 +113,7 @@ export {
   FormDescription,
   FormMessage,
 } from "./src/components/ui/form";
-export { Input } from "./src/components/ui/input";
+export { Input, inputBaseStyles } from "./src/components/ui/input";
 export { Label } from "./src/components/ui/label";
 export {
   Menubar,

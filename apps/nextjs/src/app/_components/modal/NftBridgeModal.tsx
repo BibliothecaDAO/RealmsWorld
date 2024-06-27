@@ -158,7 +158,9 @@ const BridgeSteps = ({
     if (hash) {
       toast({
         title: "Bridge Realms",
-        description: `${selectedTokenIds.length} Realms will be appear in your L2 wallet in a few minutes`,
+        description: isSourceL1
+          ? `${selectedTokenIds.length} Realms will be appear in your L2 wallet in a few minutes`
+          : `${selectedTokenIds.length} Realms will require a transction in ~6 hours to finalize your withdrawal`,
       });
     }
   };

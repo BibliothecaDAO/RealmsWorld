@@ -34,10 +34,16 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
         title={"This is an Alpha version"}
         variant="destructive"
       >
-        The StarkNet → Ethereum transfer divided into two stages:\n• A waiting
-        period of several hours is expected between the stages.\n• At the end of
-        the first step, you will be required to sign in order to complete the
-        transfer.
+        The StarkNet → Ethereum transfer divided into two stages:
+        <ul className="list-disc pl-5">
+          <li>
+            A waiting period of several hours is expected between the stages.
+          </li>
+          <li>
+            At the end of the first step, you will be required to sign a
+            transaction on Ethereum to finish withdrawing
+          </li>
+        </ul>
       </Alert>
     ) : null;
 

@@ -1,7 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
-import { eq } from "@realms-world/db";
+import { eq, like } from "@realms-world/db";
 import {
   CreateDelegateProfileSchema,
   delegateProfiles,
@@ -21,13 +21,14 @@ export const delegatesRouter = {
           limit: z.number().min(1).max(100).nullish(),
           cursor: z.number().nullish(),
           orderBy: z.string().nullish(),
+          search: z.string().nullish(),
         })
         .partial(),
     )
     .query(async ({ ctx, input }) => {
       const limit = input.limit ?? 12;
 
-      const { cursor, orderBy } = input;
+      const { cursor, orderBy, search } = input;
       // const whereFilter: SQL[] = [];
 
       const items = await ctx.db.query.delegates.findMany({
@@ -42,6 +43,7 @@ export const delegatesRouter = {
             ],
           ],
           limit: limit + 1,
+          where: search ? like(delegates.id, "%" + search + "%") : undefined,
         }),
         with: {
           delegateProfile: true,

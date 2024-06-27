@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inconsolata, Jost, Silkscreen } from "next/font/google";
+import { Inconsolata, Jost } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
 import { Analytics } from "@vercel/analytics/react";
 

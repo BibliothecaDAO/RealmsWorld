@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
 import { api } from "@/trpc/react";
-import { shortenHex } from "@/utils/utils";
+import { padAddress, shortenHex } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 
@@ -75,8 +75,7 @@ export const Profile = ({
                       Delegation:
                     </span>
                     <Badge variant="default">
-                      {tokenHolder?.tokenBalanceRaw} /{" "}
-                      {tokenHolder?.totalTokensHeldRaw} Realms
+                      {tokenHolder?.tokenBalanceRaw} Realms
                     </Badge>
                     <span className="text-sm">delegated to</span>
                     <Badge variant="default">
@@ -86,9 +85,11 @@ export const Profile = ({
                     </Badge>
                   </div>
                 </div>
-                <Button size="sm" onClick={() => delegateRealms()}>
-                  Delegate to Self
-                </Button>
+                {tokenHolder?.delegate != padAddress(address) && (
+                  <Button size="sm" onClick={() => delegateRealms()}>
+                    Delegate to Self
+                  </Button>
+                )}
               </div>
             </CardTitle>
           </CardHeader>
@@ -105,10 +106,10 @@ export const Profile = ({
             <CardTitle>No delegate found</CardTitle>
           </CardHeader>
           <CardContent>
-            {tokenHolder?.totalTokensHeldRaw ? (
+            {tokenHolder?.tokenBalanceRaw ? (
               <>
-                Delegate your {tokenHolder.totalTokensHeldRaw} Realms to
-                yourself to create a delegate profile
+                Delegate your {tokenHolder.tokenBalanceRaw} Realms to yourself
+                to create a delegate profile
                 <Button size="sm" onClick={() => delegateRealms()}>
                   Delegate to Self
                 </Button>

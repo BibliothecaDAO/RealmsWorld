@@ -23,6 +23,8 @@ export const useQueryParams = () => {
   ) => {
     const params = new URLSearchParams(searchParams);
 
+    console.log(key, value);
+
     if (multi) {
       if (params.getAll(key).includes(value) || params.get(key) == value) {
         params.delete(key, value);
@@ -32,7 +34,7 @@ export const useQueryParams = () => {
     } else {
       params.get(key) == value ? params.delete(key) : params.set(key, value);
     }
-
+    console.log(params);
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     router.replace(`${pathname}?${params}`);
   };

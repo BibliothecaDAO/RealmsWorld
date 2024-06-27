@@ -1,45 +1,28 @@
-"use client";
-
-import * as React from "react";
+//import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
-import { shortenHex } from "@/utils/utils";
+import { ReadMore } from "@/app/_components/ReadMore";
+import { StarkName } from "@/app/_components/StarkName";
 import { Github, Twitter } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
   Badge,
-  Button,
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
 } from "@realms-world/ui";
 
-import { SocialIcons } from "../SocialIcons";
+import { SocialIcons } from "../../_components/SocialIcons";
+import { DelegateActions } from "./DelegateActions";
 
-export function DelegateProfile({
+export function DelegateCard({
   delegate,
 }: {
   delegate: RouterOutputs["delegates"]["all"]["items"][0];
 }) {
-  const { sendAsync: delegateRealms } = useDelegateRealms({
-    delegatee: delegate.id,
-  });
-
-  const [showFullStatement, setShowFullStatement] = React.useState(false);
-
-  const toggleStatement = () => {
-    setShowFullStatement((prev) => !prev);
-  };
-
-  const statementLines = delegate.delegateProfile?.statement.split("\n") || [];
-
+  //const starkName = useStarkDisplayName(delegate.id);
   return (
     <Card className="flex flex-col">
       <CardHeader>
@@ -53,7 +36,9 @@ export function DelegateProfile({
               className="h-14 w-14 rounded-full"
             />
             <div>
-              <div>{delegate.id && shortenHex(delegate.id)}</div>
+              <div>
+                <StarkName address={delegate.id} />
+              </div>
 
               <div className="text-lg font-bold uppercase text-muted-foreground">
                 {delegate.delegatedVotesRaw} Votes delegated
@@ -76,27 +61,16 @@ export function DelegateProfile({
         <>
           <CardContent className="overflow-hidden">
             <div className="text-lg">
-              {showFullStatement
-                ? delegate.delegateProfile.statement
-                : statementLines.slice(0, 3).join("\n")}
+              <ReadMore
+                id={delegate.id}
+                text={delegate.delegateProfile.statement}
+              />
             </div>
-            {statementLines.length > 3 && (
-              <Button onClick={toggleStatement} variant={"ghost"} size={"xs"}>
-                {showFullStatement ? "Show Less" : "Show More"}
-              </Button>
-            )}
           </CardContent>
         </>
       )}
       <CardFooter className="mt-auto flex w-full justify-between">
-        <Button
-          variant={"default"}
-          size={"sm"}
-          rel="noopener noreferrer"
-          onClick={() => delegateRealms()}
-        >
-          Delegate To
-        </Button>
+        <DelegateActions delegate={delegate} />
         <SocialIcons
           x={delegate.delegateProfile?.twitter ?? undefined}
           github={delegate.delegateProfile?.github ?? undefined}
