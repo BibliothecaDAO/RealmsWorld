@@ -2,9 +2,12 @@
 
 import { useMemo, useRef } from "react";
 import { SIWSLogin } from "@/app/_components/auth/SIWSLogin";
+import Discord from "@/icons/discord.svg";
+import Telegram from "@/icons/telegram.svg";
+import X from "@/icons/x.svg";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader } from "lucide-react";
+import { Github, Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
@@ -70,117 +73,153 @@ export const ProfileForm = ({
 
   const requiresSignature = useMemo(() => {
     return !session?.user.name || padAddress(session.user.name) != delegateId;
-  }, [session?.user.name, delegateProfile?.delegateId, delegateId]);
+  }, [session?.user.name, delegateId]);
 
   return (
-    <Form {...form}>
-      <form
-        ref={formRef}
-        className="space-y-8"
-        onSubmit={form.handleSubmit((data) => {
-          createDelegateProfile.mutate(data);
-        })}
-      >
-        <FormField
-          name="statement"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Profile</FormLabel>
-              <FormControl>
-                <Textarea
-                  {...field}
-                  placeholder="Enter Your Profile description"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <>
+      {requiresSignature && (
+        <>
+          <Alert variant={"warning"}>
+            You must sign a transaction with your Starknet wallet to edit your
+            profile.
+          </Alert>
+        </>
+      )}
+      <Form {...form}>
+        <form
+          ref={formRef}
+          onSubmit={form.handleSubmit((data) => {
+            createDelegateProfile.mutate(data);
+          })}
+        >
+          <fieldset disabled={requiresSignature} className="space-y-8">
+            <FormField
+              name="statement"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Profile</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="min-h-[100px]"
+                      {...field}
+                      placeholder="Enter Your Profile description"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        <FormField
-          name="discord"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Discord</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Enter Your Discord handle" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="interests"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Interests</FormLabel>
-              <FormControl>
-                <ToggleGroup
-                  {...field}
-                  //value={field.value}
-                  onValueChange={field.onChange}
-                  type={"multiple"}
-                  variant="outline"
-                  size={"sm"}
-                  className="justify-start"
-                >
-                  <ToggleGroupItem value="gaming">Gaming</ToggleGroupItem>
-                  <ToggleGroupItem value="game-design">
-                    Game Design
-                  </ToggleGroupItem>
-                  <ToggleGroupItem value="dao">DAO</ToggleGroupItem>
-                  <ToggleGroupItem value="defi">DeFi</ToggleGroupItem>
-                  <ToggleGroupItem value="autonomous-worlds">
-                    Autonomous Worlds
-                  </ToggleGroupItem>
-                </ToggleGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="twitter"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Twitter</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Enter Your Twitter handle" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="telegram"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Telegram</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Enter Your Telegram handle" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="github"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Github</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Enter Your Github handle" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {!requiresSignature && (
+            <FormField
+              name="interests"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Interests</FormLabel>
+                  <FormControl>
+                    <ToggleGroup
+                      {...field}
+                      //value={field.value}
+                      onValueChange={field.onChange}
+                      type={"multiple"}
+                      variant="outline"
+                      size={"sm"}
+                      className="justify-start"
+                    >
+                      <ToggleGroupItem value="gaming">Gaming</ToggleGroupItem>
+                      <ToggleGroupItem value="game-design">
+                        Game Design
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="dao">DAO</ToggleGroupItem>
+                      <ToggleGroupItem value="defi">DeFi</ToggleGroupItem>
+                      <ToggleGroupItem value="autonomous-worlds">
+                        Autonomous Worlds
+                      </ToggleGroupItem>
+                    </ToggleGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="discord"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Discord</FormLabel>
+                  <FormControl>
+                    <div className="flex items-center">
+                      <Discord className="mr-3 h-6 w-6" />
+                      <Input
+                        {...field}
+                        placeholder="Enter Your Discord handle"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="twitter"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Twitter</FormLabel>
+                  <FormControl>
+                    <div className="flex items-center">
+                      <X className="mr-3 h-6 w-6" />
+                      <Input
+                        {...field}
+                        placeholder="Enter Your Twitter handle"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="telegram"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Telegram</FormLabel>
+                  <FormControl>
+                    <div className="flex items-center">
+                      <Telegram className="mr-3 h-6 w-6" />
+                      <Input
+                        {...field}
+                        placeholder="Enter Your Telegram handle"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="github"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Github</FormLabel>
+                  <FormControl>
+                    <div className="flex items-center">
+                      <Github className="mr-3 h-6 w-6" />
+                      <Input
+                        {...field}
+                        placeholder="Enter Your Github handle"
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </fieldset>
           <Button
             type="submit"
             className="mt-4"
             disabled={
-              !form.formState.isDirty || createDelegateProfile.isPending
+              !form.formState.isDirty ||
+              createDelegateProfile.isPending ||
+              requiresSignature
             }
           >
             {createDelegateProfile.isPending ? (
@@ -192,17 +231,8 @@ export const ProfileForm = ({
               "Save Profile"
             )}
           </Button>
-        )}
-      </form>
-      {requiresSignature && (
-        <>
-          <SIWSLogin />
-          <Alert variant={"warning"}>
-            You must sign a transaction with your Starknet wallet to edit your
-            profile.
-          </Alert>
-        </>
-      )}
-    </Form>
+        </form>
+      </Form>
+    </>
   );
 };

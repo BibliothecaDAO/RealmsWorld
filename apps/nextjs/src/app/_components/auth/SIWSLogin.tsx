@@ -2,6 +2,7 @@
 
 import type { SiwsTypedData } from "siws";
 import { useEffect, useState } from "react";
+import Starknet from "@/icons/starknet.svg";
 import { useAccount, useSignTypedData } from "@starknet-react/core";
 import { Loader } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
@@ -57,6 +58,7 @@ export function SIWSLogin({ buttonText }: { buttonText?: string }) {
     >
       {error && <div>{error.message}</div>}
       <Button disabled={isPending}>
+        <Starknet className="mr-2 h-6 w-6" />
         {isPending ? (
           <>
             <Loader className="mr-2 animate-spin" /> Signing...

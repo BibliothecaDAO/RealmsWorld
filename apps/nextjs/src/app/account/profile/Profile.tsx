@@ -7,6 +7,7 @@ import { api } from "@/trpc/react";
 import { padAddress, shortenHex } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
+import { UserRoundPlus } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
@@ -66,7 +67,7 @@ export const Profile = ({
                   <div className="mb-1">{shortenAddress(delegate.id)}</div>
                   <div className="mb-1 flex items-center text-sm font-bold uppercase text-muted-foreground">
                     Voting Power:
-                    <Badge variant="default" className="ml-2">
+                    <Badge variant="outline" className="ml-2">
                       {delegate.delegatedVotesRaw} Realms
                     </Badge>
                   </div>
@@ -74,11 +75,11 @@ export const Profile = ({
                     <span className="text-sm font-bold uppercase">
                       Delegation:
                     </span>
-                    <Badge variant="default">
+                    <Badge variant="outline">
                       {tokenHolder?.tokenBalanceRaw} Realms
                     </Badge>
                     <span className="text-sm">delegated to</span>
-                    <Badge variant="default">
+                    <Badge variant="outline">
                       {tokenHolder?.delegate == delegate.id
                         ? "self"
                         : shortenHex(tokenHolder?.delegate ?? "0x", 8)}
@@ -87,7 +88,7 @@ export const Profile = ({
                 </div>
                 {tokenHolder?.delegate != padAddress(address) && (
                   <Button size="sm" onClick={() => delegateRealms()}>
-                    Delegate to Self
+                    <UserRoundPlus className="mr-2" /> Delegate to Self
                   </Button>
                 )}
               </div>
@@ -111,7 +112,7 @@ export const Profile = ({
                 Delegate your {tokenHolder.tokenBalanceRaw} Realms to yourself
                 to create a delegate profile
                 <Button size="sm" onClick={() => delegateRealms()}>
-                  Delegate to Self
+                  <UserRoundPlus className="mr-2" /> Delegate to Self
                 </Button>
               </>
             ) : (
