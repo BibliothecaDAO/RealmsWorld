@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import RealmsABI from "@/abi/L2/Realms.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useL2LordsRewards } from "@/hooks/staking/useL2LordsRewards";
@@ -12,12 +13,15 @@ import {
   useAccount as useL2Account,
   useReadContract,
 } from "@starknet-react/core";
-import { Loader } from "lucide-react";
+import { Loader, TriangleAlert } from "lucide-react";
 import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
   Button,
   Card,
   CardContent,
@@ -70,8 +74,32 @@ export const Overview = () => {
     args: l2Address ? [l2Address] : undefined,
     refetchInterval: 10000,
   });
+  const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(
+    {
+      id: l2Address ?? "0x",
+    },
+    {
+      refetchInterval: 60000,
+      enabled: !!l2Address,
+    },
+  );
   return (
     <div className="w-full">
+      {!tokenHolder?.delegate &&
+        parseInt(tokenHolder?.tokenBalanceRaw ?? "0") > 0 && (
+          <Alert variant={"warning"} className="mt-4">
+            <TriangleAlert className="h-5 w-5" />
+            <AlertTitle className="text-lg">
+              Your have Realms not earning Lords
+            </AlertTitle>
+            <AlertDescription>
+              You must delegate to yourself or others at
+              <Button asChild className="ml-2">
+                <Link href="/account/delegates">Delegates</Link>
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
       {l1Address && (
         <>
           <div className="flex gap-8">

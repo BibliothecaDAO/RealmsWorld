@@ -118,7 +118,7 @@ export const WalletSheet = () => {
                       variant={"outline"}
                     >
                       <Bridge className="mr-2 w-[25px]" />
-                      Bridge Transactions
+                      Lords Bridge TX
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="flex h-full min-w-[500px] flex-col sm:max-h-[80%]">

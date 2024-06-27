@@ -1,12 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { usePendingRealmsWithdrawals } from "@/hooks/bridge/data/usePendingRealmsWithdrawals";
 import EthereumLogo from "@/icons/ethereum.svg";
 import StarknetLogo from "@/icons/starknet.svg";
+import { useUIStore } from "@/providers/UIStoreProvider";
+import { TriangleAlert } from "lucide-react";
+import { useAccount } from "wagmi";
 
 import { Collections } from "@realms-world/constants";
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
   Badge,
+  Button,
   Tabs,
   TabsContent,
   TabsList,
@@ -18,6 +26,12 @@ import AssetL2CollectionPreview from "./AssetL2CollectionPreview";
 
 export const BridgeNftWrapper = () => {
   const [activeChain, setActiveChain] = useState("l1");
+  const { address } = useAccount();
+  const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({
+    address,
+    status: "ACCEPTED_ON_L1",
+  });
+  const { toggleAccount } = useUIStore((state) => state);
 
   return (
     <div>
@@ -51,6 +65,20 @@ export const BridgeNftWrapper = () => {
             </Badge>
           </TabsTrigger>
         </TabsList>
+        {pendingWithdrawals?.length && (
+          <Alert variant={"warning"} className="mt-4">
+            <TriangleAlert className="h-5 w-5" />
+            <AlertTitle className="text-lg">
+              Your have Realms to Withdraw on L1
+            </AlertTitle>
+            <AlertDescription>
+              Check your account transaction sidebar to finalize your{" "}
+              <Button onClick={() => toggleAccount()}>
+                {pendingWithdrawals.length} withdrawals
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
 
         <TabsContent value={"l1"}>
           <AssetL1CollectionPreview />

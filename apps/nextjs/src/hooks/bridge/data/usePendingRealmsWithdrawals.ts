@@ -1,13 +1,16 @@
 import type { RealmsWithdrawal } from "@/types/subgraph";
+import type { TransactionFinalityStatus } from "starknet";
 import { env } from "@/env";
 import { useQuery } from "@tanstack/react-query";
 
 const query = `query Withdrawals(
     $l1Address: String
+    $status: [String]
   ) {
     withdrawals(
       where: {
         l1Recipient: $l1Address
+        withdrawalEvents_: {status_in: $status}
       }
       orderBy: createdTimestamp
       orderDirection: desc
@@ -32,11 +35,22 @@ const query = `query Withdrawals(
 
 export const usePendingRealmsWithdrawals = ({
   address,
+  status,
 }: {
   address?: string;
+  status?: TransactionFinalityStatus;
 }) => {
+  const variables: { l1Address?: string; status?: string[] } = {};
+  if (address) {
+    variables.l1Address = address.toLowerCase();
+  }
+  if (status) {
+    variables.status = [status];
+  } else {
+    variables.status = ["ACCEPTED_ON_L1", "FINISHED"];
+  }
   return useQuery({
-    queryKey: ["pendingRealmsWithdrawals" + address],
+    queryKey: ["pendingRealmsWithdrawals" + address + status],
     queryFn: async () =>
       await fetch(env.NEXT_PUBLIC_REALMS_BRIDGE_SUBGRAPH_NAME, {
         method: "POST",
@@ -45,7 +59,7 @@ export const usePendingRealmsWithdrawals = ({
         },
         body: JSON.stringify({
           query,
-          variables: { l1Address: address?.toLowerCase() },
+          variables: variables,
         }),
       })
         .then((res) => res.json())
