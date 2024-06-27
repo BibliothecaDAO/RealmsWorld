@@ -37,9 +37,11 @@ export const LegacyClaim = () => {
                 <dt className="text-muted-foreground">Epoch 0-10:</dt>
                 <dd>
                   {galleonLordsAvailable?.toLocaleString()}{" "}
-                  <Button className="ml-3" size={"xs"}>
-                    Claim
-                  </Button>
+                  {galleonLordsAvailable && galleonLordsAvailable > 0 ? (
+                    <Button className="ml-3" size={"xs"}>
+                      Claim
+                    </Button>
+                  ) : null}
                 </dd>
               </div>
               <div className="flex items-center justify-between">
