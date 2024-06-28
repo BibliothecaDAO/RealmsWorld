@@ -38,11 +38,10 @@ export const getRealmNFTHolders = async (): Promise<Wallet[]> => {
 
   try {
     let continueFetching = true;
-    
+
     do {
       const response = await fetch(
-        "https://api.thegraph.com/subgraphs/name/" +
-          process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
+        process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
         {
           method: "POST",
           headers: {
@@ -58,9 +57,13 @@ export const getRealmNFTHolders = async (): Promise<Wallet[]> => {
         },
       );
 
-      const responseData: QueryResponse = await response.json() as QueryResponse;
-      
-      if (!responseData.data.wallets || responseData.data.wallets.length === 0) {
+      const responseData: QueryResponse =
+        (await response.json()) as QueryResponse;
+
+      if (
+        !responseData.data.wallets ||
+        responseData.data.wallets.length === 0
+      ) {
         continueFetching = false;
       }
 
@@ -68,9 +71,8 @@ export const getRealmNFTHolders = async (): Promise<Wallet[]> => {
       skip = skip + pageSize;
     } while (continueFetching);
     return allData;
-
   } catch (error) {
-    console.error('Error catching the data:', error);
+    console.error("Error catching the data:", error);
     throw error;
   }
 };

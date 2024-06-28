@@ -48,20 +48,16 @@ export async function POST(request: Request) {
   const first = searchParams.get("first");
   const skip = searchParams.get("skip");
 
-  const res = await fetch(
-    "https://api.thegraph.com/subgraphs/name/" +
-      process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
-    {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        query,
-        variables: { address, addressId, first, skip },
-      }),
+  const res = await fetch(process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
     },
-  );
+    body: JSON.stringify({
+      query,
+      variables: { address, addressId, first, skip },
+    }),
+  });
 
   return NextResponse.json(await res.json());
 }
