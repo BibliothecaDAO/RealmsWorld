@@ -12,10 +12,10 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
 
   const textMessage =
     type === ActionType.TRANSFER_TO_L2
-      ? "Your transaction has been successfully sent to StarkNet!"
+      ? "Your transaction has been successfully sent to Starknet!"
       : isTransferCompleted
         ? "Your transfer is completed on Ethereum!"
-        : "Your transaction is now being processing on StarkNet.";
+        : "Your transaction is now being processing on Starknet.";
 
   const messageComponent =
     type === ActionType.TRANSFER_TO_L2 ? (
@@ -24,7 +24,7 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
         title={"This is an Alpha version"}
         variant="destructive"
       >
-        Completing a Ethereum → StarkNet transfer may take up to several hours
+        Completing a Ethereum → Starknet transfer may take up to several hours
         depending on the congestion. It may take a while for your wallet balance
         to update.
       </Alert>
@@ -34,7 +34,7 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
         title={"This is an Alpha version"}
         variant="destructive"
       >
-        The StarkNet → Ethereum transfer divided into two stages:
+        The Starknet → Ethereum transfer divided into two stages:
         <ul className="list-disc pl-5">
           <li>
             A waiting period of several hours is expected between the stages.

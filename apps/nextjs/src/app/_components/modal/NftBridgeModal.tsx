@@ -297,12 +297,12 @@ const Footer = ({
   const { hasCompletedAllSteps, setStep, nextStep } = useStepper();
   const { isApprovedForAll } = useERC721Approval();
   useEffect(() => {
-    if (isApprovedForAll) {
+    if (isApprovedForAll && isSourceL1) {
       setStep(1);
     } else {
       setStep(0);
     }
-  }, [isApprovedForAll, setStep]);
+  }, [isApprovedForAll, setStep, isSourceL1]);
   useEffect(() => {
     if (depositData || withdrawData) {
       nextStep();
@@ -348,18 +348,26 @@ export default function NftBridgeModal() {
   const { address: l1Address } = useAccount();
   const { address: l2Address } = useL2Account();
 
-  const steps = [
-    {
-      label: "Approve",
-      description: `Allow Bridge Contract access to Realms`,
-      id: "approve",
-    },
-    {
-      label: "Bridge",
-      description: `Realms to Starknet`,
-      id: "bridge",
-    },
-  ] satisfies StepItem[];
+  const steps = isSourceL1
+    ? ([
+        {
+          label: "Approve",
+          description: `Allow Bridge Contract access to Realms`,
+          id: "approve",
+        },
+        {
+          label: "Bridge",
+          description: `Realms to Starknet`,
+          id: "bridge",
+        },
+      ] satisfies StepItem[])
+    : ([
+        {
+          label: "Approve & Bridge",
+          description: `Realms to Ethereum`,
+          id: "bridge",
+        },
+      ] satisfies StepItem[]);
 
   if (isNftBridgeOpen) {
     return (

@@ -33,11 +33,11 @@ const transferProgressStrings = {
   },
   deposit: {
     type: "Transfer in progress",
-    message: "Transferring confirmation... Lords to StarkNet...",
+    message: "Transferring confirmation... Lords to Starknet...",
   },
   initiateWithdraw: {
     type: "Initiate transfer",
-    message: "Initiating transfer of {{amount}} Lords from StarkNet...",
+    message: "Initiating transfer of {{amount}} Lords from Starknet...",
   },
   withdraw: {
     type: "Transfer in progress",

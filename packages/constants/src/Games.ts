@@ -151,7 +151,7 @@ export const games: Game[] = [
     status: "alpha",
     description: "Play to Lose your Miiiind!",
     longform:
-      "Underdark: Lair of the Slenderduck is a unique location in The Underworld & Realms.World, and a generative onchain dungeon skin-crawler built on Dojo & StarkNet. You have hubristically stumbled into the twisting tunnels beneath the manor at Old Kurnkornor, where you will lose your mind. With each step your limited light fades, and you descend further into madness. Collect Dark Tar to renew your light, avoid the twisted duck spawn, and find the stairs to escape the Slenderduck's gibbering embrace, even if only for a few more precious moments of sanity.",
+      "Underdark: Lair of the Slenderduck is a unique location in The Underworld & Realms.World, and a generative onchain dungeon skin-crawler built on Dojo & Starknet. You have hubristically stumbled into the twisting tunnels beneath the manor at Old Kurnkornor, where you will lose your mind. With each step your limited light fades, and you descend further into madness. Collect Dark Tar to renew your light, avoid the twisted duck spawn, and find the stairs to escape the Slenderduck's gibbering embrace, even if only for a few more precious moments of sanity.",
     links: {
       homepage: "https://lootunder.world/underdark",
       testnet: "https://underdark.lootunder.world/",
@@ -257,7 +257,7 @@ export const games: Game[] = [
     status: "development",
     description: "Last man standing",
     longform:
-      "Rising Revenant is a last man standing strategy game that is built on StarkNet and powered by Dojo. Rising Revenant offers an exhilarating mix of strategy, chance, and foresight, making it a captivating endeavor for gamers and crypto enthusiasts. Will you rise to the challenge and etch your name in the annals of this adventure?",
+      "Rising Revenant is a last man standing strategy game that is built on Starknet and powered by Dojo. Rising Revenant offers an exhilarating mix of strategy, chance, and foresight, making it a captivating endeavor for gamers and crypto enthusiasts. Will you rise to the challenge and etch your name in the annals of this adventure?",
     links: {
       discord: "https://t.co/E9lZFnBzci",
       twitter: "https://twitter.com/RRisingRevenant",

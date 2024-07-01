@@ -1,3 +1,3 @@
-# StarkNet Indexer with Apibara
+# Starknet Indexer with Apibara
 
-This repository uses [Apibara](https://github.com/apibara/dna) to index StarkNet data.
+This repository uses [Apibara](https://github.com/apibara/dna) to index Starknet data.
