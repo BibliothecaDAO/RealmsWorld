@@ -56,21 +56,17 @@ export const getBridgeWithdrawals = async ({
   skip: number;*/
 }) => {
   try {
-    const res = await fetch(
-      "https://api.thegraph.com/subgraphs/name/" +
-        process.env.NEXT_PUBLIC_SUBGRAPH_NAME,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          query,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          variables: { depositsWhere, withdrawalsWhere },
-        }),
+    const res = await fetch(process.env.NEXT_PUBLIC_SUBGRAPH_NAME, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        query,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        variables: { depositsWhere, withdrawalsWhere },
+      }),
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await res.json();

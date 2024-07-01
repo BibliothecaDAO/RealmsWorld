@@ -16,20 +16,16 @@ export const getWalletRealmsHeld = async ({
   addresses: string[];
 }) => {
   try {
-    const res = await fetch(
-      "https://api.thegraph.com/subgraphs/name/" +
-        process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          query,
-          variables: { addresses },
-        }),
+    const res = await fetch(process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        query,
+        variables: { addresses },
+      }),
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const data = await res.json();
