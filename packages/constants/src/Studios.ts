@@ -78,12 +78,14 @@ export const studios: { [key in Studios]?: StudioInterface } = {
   [Studios.GRUGS_LAIR]: {
     name: "Grug's Lair",
     id: "grugs-lair",
-    description: "",
-    longform: "",
+    description: "On-chain gaming studio",
+    longform: "Grug's Lair, a groundbreaking gaming studio immersed in the dynamic world of blockchain technology. Grug’s lair focus is on crafting innovative on-chain gaming experiences, leveraging the power of mini-games and the potential of blockchain to offer an unparalleled gaming journey for crypto enthusiasts.",
     logoFormat: "png",
     links: {
-      homepage: "https://www.grugslair.xyz/",
-      twitter: "GrugsLair",
+      discord: "https://t.co/E9lZFnBzci",
+      twitter: "https://twitter.com/grugslair",
+      github: "https://github.com/grugslair",
+      homepage: "https://www.grugslair.xyz/"
     },
   },
   [Studios.ZKORP]: {
