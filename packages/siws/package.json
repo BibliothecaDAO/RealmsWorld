@@ -40,7 +40,7 @@
     "@realms-world/eslint-config": "*",
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
-    "eslint": "^9.5.0",
+    "eslint": "^9.6.0",
     "prettier": "^3.3.2",
     "typescript": "^5.5.2",
     "jest": "^29.7.0",

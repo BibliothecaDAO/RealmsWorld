@@ -43,17 +43,18 @@ export function useBridgeL2Realms({
     contractAddress: l2RealmsAddress,
     operator: l2BridgeAddress as `0x${string}`,
   });
-
+  const { calls: removeApprovalCall } = useERC721Approval({
+    contractAddress: l2RealmsAddress,
+    operator: l2BridgeAddress as `0x${string}`,
+    removeApproval: true,
+  });
   const { calls: depositCall } = useWriteInitiateWithdrawRealms({
     selectedTokenIds,
   });
 
   const depositCalls = useMemo(() => {
-    if (!isApprovedForAll) {
-      return [...approveCall, ...depositCall];
-    }
-    return [...depositCall];
-  }, [approveCall, depositCall, isApprovedForAll]);
+    return [...approveCall, ...depositCall, ...removeApprovalCall];
+  }, [approveCall, depositCall, removeApprovalCall]);
 
   const { sendAsync, ...writeReturn } = useSendTransaction({
     calls: depositCalls,
