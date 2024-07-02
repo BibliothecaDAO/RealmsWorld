@@ -122,7 +122,7 @@ export function Carousel({
                 alt={image.alt}
                 //fill
                 sizes="100vw"
-                className={`${cover ? "object-cover" : "object-contain"}`}
+                className={`${cover ? "object-cover" : "object-contain"} h-full w-full`}
                 //priority={index === 0}
               />
               {image.title && (

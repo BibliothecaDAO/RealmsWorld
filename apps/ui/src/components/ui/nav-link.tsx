@@ -34,13 +34,10 @@ export const NavLink = ({
 }: NavLinkProps) => {
   const pathname = usePathname();
   const isActive = exact ? pathname === href : pathname.startsWith(href);
-
-  variant = "ghost";
   return (
     <Link
       className={cn(
         buttonVariants({ variant, size, className }),
-        "pb-4",
         isActive &&
           "border-b-2 border-accent-foreground !text-accent-foreground",
       )}

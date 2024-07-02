@@ -42,7 +42,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const tabs = [
     {
       name: "Details",
-      content: <div className=" leading-relaxed">{game?.longform}</div>,
+      content: <div className="leading-relaxed">{game?.longform}</div>,
     },
 
     {
@@ -112,7 +112,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           {" "}
           {game?.chains.map((a, i) =>
             String(a) === "420" ? (
-              <Link key={i} href="/network" className=" h-full self-center">
+              <Link key={i} href="/network" className="h-full self-center">
                 {" "}
                 <Badge
                   key={i}
@@ -201,9 +201,9 @@ export default async function Page({ params }: { params: { id: string } }) {
   ];
 
   return (
-    <main className="container mx-auto px-4 ">
+    <main className="container mx-auto px-4">
       <div>
-        <Button size={"xs"} className=" justify-start" variant={"ghost"}>
+        <Button size={"xs"} className="justify-start" variant={"ghost"}>
           <Link href="/games">
             <ChevronLeft className="w-4 self-center" /> back to games
           </Link>
@@ -254,16 +254,18 @@ export default async function Page({ params }: { params: { id: string } }) {
                 )}
 
                 <table className="w-full divide-y py-8 text-sm capitalize">
-                  {tableData.map((data, index) => (
-                    <tr key={index}>
-                      <td className="whitespace-nowrap px-2 py-2 font-sans text-bright-yellow/70">
-                        {data.key}
-                      </td>
-                      <td className=" whitespace-nowrap px-2 py-2 text-right ">
-                        {data.value}
-                      </td>
-                    </tr>
-                  ))}
+                  <tbody>
+                    {tableData.map((data, index) => (
+                      <tr key={index}>
+                        <td className="whitespace-nowrap px-2 py-2 font-sans text-bright-yellow/70">
+                          {data.key}
+                        </td>
+                        <td className="whitespace-nowrap px-2 py-2 text-right">
+                          {data.value}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
                 </table>
               </div>
 

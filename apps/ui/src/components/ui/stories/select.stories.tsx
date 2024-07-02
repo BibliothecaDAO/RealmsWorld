@@ -24,7 +24,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "./select";
+} from "../select";
 
 const meta: Meta<typeof Select> = {
   title: "ui/Select",

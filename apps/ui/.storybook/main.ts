@@ -31,9 +31,10 @@ const config: StorybookConfig = {
                 },
               },
               {
-                // Gets options from `postcss.config.js` in your project root
-                loader: "postcss-loader",
-                options: { implementation: require.resolve("postcss") },
+                loader: require.resolve("postcss-loader"),
+                options: {
+                  implementation: require("postcss"),
+                },
               },
             ],
           },
