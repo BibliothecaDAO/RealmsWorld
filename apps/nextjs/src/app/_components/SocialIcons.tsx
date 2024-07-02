@@ -35,7 +35,10 @@ export const SocialIcons = ({
       value: x ? "https://x.com/" + x : undefined,
     },
     { icon: <Globe />, value: website },
-    { icon: <GithubIcon />, value: github },
+    {
+      icon: <GithubIcon />,
+      value: github ? "https://github.com/" + github : undefined,
+    },
     { icon: <Telegram className="h-6 w-6" />, value: telegram },
   ];
 

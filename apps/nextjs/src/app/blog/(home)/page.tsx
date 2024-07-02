@@ -1,4 +1,4 @@
-import PostGrid from "./PostGrid";
+import PostGrid from "../PostGrid";
 
 const HomePage = () => {
   return <PostGrid />;

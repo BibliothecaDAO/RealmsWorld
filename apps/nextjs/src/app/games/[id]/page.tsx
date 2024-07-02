@@ -8,6 +8,11 @@ import { ChevronLeft } from "lucide-react";
 import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
 import {
   Badge,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
   Button,
   Carousel,
   Tabs,
@@ -99,7 +104,6 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "Studio",
       value: (
         <Link href={`/studios/${game?.developer ?? ""}`}>
-          {" "}
           {game?.developer}
         </Link>
       ),
@@ -109,7 +113,6 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "Chain",
       value: (
         <div className="flex justify-end">
-          {" "}
           {game?.chains.map((a, i) =>
             String(a) === "420" ? (
               <Link key={i} href="/network" className="h-full self-center">
@@ -148,7 +151,6 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "White Paper",
       value: (
         <>
-          {" "}
           {game?.links.whitepaper ? (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
               <Link href={game.links.whitepaper}>White paper</Link>
@@ -163,7 +165,6 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "Mainnet",
       value: (
         <>
-          {" "}
           {game?.links.mainnet && (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
               <Link href={game.links.mainnet}> Mainnet build</Link>
@@ -176,7 +177,6 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "Testnet",
       value: (
         <>
-          {" "}
           {game?.links.testnet && (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
               <Link href={game.links.testnet}>Testnet Build</Link>
@@ -189,7 +189,6 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "Homepage",
       value: (
         <>
-          {" "}
           {game?.links.homepage && (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
               <Link href={game.links.homepage}> {game.name}</Link>
@@ -202,17 +201,21 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <main className="container mx-auto px-4">
-      <div>
-        <Button size={"xs"} className="justify-start" variant={"ghost"}>
-          <Link href="/games">
-            <ChevronLeft className="w-4 self-center" /> back to games
-          </Link>
-        </Button>
-      </div>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/games">Games</BreadcrumbLink>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
       <div className="flex flex-wrap">
-        <div className="mb-4 w-full">
-          <h1>{game?.name}</h1>
+        <div className="my-4 w-full">
+          <h1 className="text-4xl font-bold">{game?.name}</h1>
         </div>
 
         <div className="mb-8 flex w-full space-x-2 font-sans uppercase">
@@ -254,18 +257,16 @@ export default async function Page({ params }: { params: { id: string } }) {
                 )}
 
                 <table className="w-full divide-y py-8 text-sm capitalize">
-                  <tbody>
-                    {tableData.map((data, index) => (
-                      <tr key={index}>
-                        <td className="whitespace-nowrap px-2 py-2 font-sans text-bright-yellow/70">
-                          {data.key}
-                        </td>
-                        <td className="whitespace-nowrap px-2 py-2 text-right">
-                          {data.value}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
+                  {tableData.map((data, index) => (
+                    <tr key={index}>
+                      <td className="whitespace-nowrap px-2 py-2 font-sans text-bright-yellow/70">
+                        {data.key}
+                      </td>
+                      <td className="whitespace-nowrap px-2 py-2 text-right">
+                        {data.value}
+                      </td>
+                    </tr>
+                  ))}
                 </table>
               </div>
 

@@ -22,6 +22,15 @@ export {
   AvatarImage,
   AvatarFallback,
 } from "./src/components/ui/avatar";
+export {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbEllipsis,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbLink,
+} from "./src/components/ui/breadcrumb";
 export { Button, buttonVariants } from "./src/components/ui/button";
 export type { ButtonProps } from "./src/components/ui/button";
 export { Calendar } from "./src/components/ui/calendar";

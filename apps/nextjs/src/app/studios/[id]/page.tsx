@@ -43,7 +43,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const tabs = [
     {
       name: "Details",
-      content: <div className=" leading-relaxed">{studio.longform}</div>,
+      content: <div className="leading-relaxed">{studio.longform}</div>,
     },
   ];
 
@@ -72,7 +72,7 @@ export default function Page({ params }: { params: { id: string } }) {
     <PageLayout>
       <div>
         <Link href="/studios">
-          <Button size={"xs"} className=" justify-start" variant={"ghost"}>
+          <Button size={"xs"} className="justify-start" variant={"ghost"}>
             <ChevronLeft className="w-4 self-center" /> back to studios
           </Button>
         </Link>
@@ -80,7 +80,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
       <div className="flex flex-wrap gap-x-10">
         <div className="mb-4 w-full">
-          <h1 className="h3">{studio.name}</h1>
+          <h1 className="mb-2 text-3xl font-bold">{studio.name}</h1>
           <hr />
         </div>
 
@@ -109,7 +109,7 @@ export default function Page({ params }: { params: { id: string } }) {
                     <td className="whitespace-nowrap px-2 py-2 font-sans text-bright-yellow/70">
                       {data.key}
                     </td>
-                    <td className="px-2 py-2 text-right ">{data.value}</td>
+                    <td className="px-2 py-2 text-right">{data.value}</td>
                   </tr>
                 ))}
               </tbody>

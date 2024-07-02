@@ -28,7 +28,7 @@ export const AttributeDropdownFullWidthButtons: Story = {
           </AccordionTrigger>
           <AccordionContent>
             <div className="pt-1">
-              <div className=" p-1">
+              <div className="p-1">
                 <Button
                   key={1}
                   size={"sm"}
@@ -65,7 +65,7 @@ export const AttributeDropdownWithInput: Story = {
           </AccordionTrigger>
           <AccordionContent>
             <div className="pt-1">
-              <div className=" p-1">
+              <div className="p-1">
                 <div className="flex space-x-2 px-2">
                   <Input
                     type="number"

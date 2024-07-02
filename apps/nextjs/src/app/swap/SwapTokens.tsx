@@ -201,7 +201,7 @@ export const SwapTokens = ({
         {isBuyLords ? (
           <Input
             disabled={loading}
-            className="flex-grow-1 mb-0 !bg-transparent text-xl focus:ring-0"
+            className="flex-grow-1 mb-0 border-0 !bg-transparent text-xl focus:ring-0"
             onChange={handleChangeInput}
             value={sellAmount}
             //disabled={loading}
@@ -212,7 +212,7 @@ export const SwapTokens = ({
             onChange={handleChangeBuyInput}
             placeholder="0"
             type="text"
-            className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0"
+            className="border-0 !bg-transparent text-xl placeholder:text-slate-400 focus:ring-0"
             disabled={loading}
             id="buy-amount"
             value={
@@ -262,14 +262,14 @@ export const SwapTokens = ({
             onChange={handleChangeBuyInput}
             placeholder="0"
             type="text"
-            className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0"
+            className="!bg-transparent text-xl border-0  placeholder:text-slate-400 focus:ring-0"
             disabled={loading}
             id="buy-amount"
             value={quotes[0] ? formatEther(quotes[0].buyAmount) : buyAmount}
           />
         ) : (
           <Input
-            className="flex-grow-1 mb-0 !bg-transparent text-xl focus:ring-0"
+            className="flex-grow-1 mb-0 border-0  !bg-transparent text-xl focus:ring-0"
             onChange={handleChangeInput}
             value={sellAmount}
             disabled={loading}

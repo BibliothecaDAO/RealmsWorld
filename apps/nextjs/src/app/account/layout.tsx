@@ -50,6 +50,7 @@ export default function RootLayout({
             <NavLink
               key={tab.name}
               exact
+              variant={"ghost"}
               href={`/account${tab.link && "/" + tab.link}`}
             >
               {tab.name}

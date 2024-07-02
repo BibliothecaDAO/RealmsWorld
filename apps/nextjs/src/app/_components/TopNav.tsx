@@ -45,16 +45,17 @@ export const TopNav = () => {
     {
       title: "Frontinus House",
       href: "https://frontinus.house",
+      target: "_blank",
       icon: <RealmsL3 className="w-5 fill-current" />,
     },
     {
       title: "Blog",
-      href: "blog",
+      href: "/blog",
       icon: <Bookmark className="w-5" />,
     },
     {
       title: "Studios",
-      href: "studios",
+      href: "/studios",
       icon: <HammerIcon className="w-5" />,
     },
   ];
@@ -116,7 +117,8 @@ export const TopNav = () => {
                             asChild
                           >
                             <Link
-                              href={`/${link.href}`}
+                              href={`${link.href}`}
+                              target={link.target}
                               className="block px-4 py-2 font-semibold tracking-wide"
                             >
                               <div className="flex">

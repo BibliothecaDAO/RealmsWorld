@@ -113,7 +113,7 @@ export const Base: Story = {
                     >
                       <span className="absolute">{item.icon}</span>
 
-                      <span className="visible absolute pl-9 opacity-100 transition-opacity group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-150 group-hover:duration-500 sm:opacity-0 ">
+                      <span className="visible absolute pl-9 opacity-100 transition-opacity group-hover:visible group-hover:flex group-hover:opacity-100 group-hover:delay-150 group-hover:duration-500 sm:opacity-0">
                         {item.name}
                       </span>
                     </Button>

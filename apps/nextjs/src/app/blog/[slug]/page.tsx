@@ -3,7 +3,14 @@ import type { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "@realms-world/ui";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+  Button,
+} from "@realms-world/ui";
 
 import { getArticleData } from "../getArticles";
 
@@ -56,8 +63,19 @@ export default async function Article({ params: { slug } }: ArticlePageProps) {
   return (
     <>
       <div>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         <div className="my-12 text-left">
-          <h1>{article.title}</h1>
+          <h1 className="text-4xl font-bold">{article.title}</h1>
           <p className="mt-2 text-xl">{article.subtitle}</p>
           <div className="mt-8 text-xl font-bold">
             <span>Posted on </span>
