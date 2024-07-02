@@ -90,7 +90,7 @@ export const Overview = () => {
           <Alert variant={"warning"} className="mt-4">
             <TriangleAlert className="h-5 w-5" />
             <AlertTitle className="text-lg">
-              Your have Realms not earning Lords
+              Your Realms are not earning Lords
             </AlertTitle>
             <AlertDescription>
               You must delegate to yourself or others at

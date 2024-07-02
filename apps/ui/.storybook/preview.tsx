@@ -9,7 +9,7 @@ import { ThemeProvider } from "@storybook/theming";
 import { ToastProvider } from "../src/components/ui/toast";
 import { Toaster } from "../src/components/ui/toaster";
 
-import "./globals.css";
+import "./App.css";
 
 export const decorators = [
   (Story) => (

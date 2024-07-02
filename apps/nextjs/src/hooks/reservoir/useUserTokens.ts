@@ -14,6 +14,7 @@ export const useUserTokens = ({ address }: { address?: string }) => {
           return res as paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"];
         }),
     enabled: !!address,
+    refetchInterval: 15000,
   });
 
   return { tokens: data, isLoading };

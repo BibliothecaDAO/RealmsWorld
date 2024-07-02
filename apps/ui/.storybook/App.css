@@ -1,14 +1,16 @@
+@import "@realms-world/styles/globals.css"; /*TODO - this isnt working for some reason so is copied*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @layer base {
   :root {
-    --background: 36 100% 95%;
-    --foreground: 36 5% 10%;
-    --card: 36 50% 90%;
-    --card-foreground: 36 5% 15%;
-    --popover: 36 100% 95%;
-    --popover-foreground: 36 100% 10%;
+    --background: 36 44% 95%;
+    --foreground: 36 5% 6%;
+    --card: 36 44% 90%;
+    --card-foreground: 36 5% 10%;
+    --popover: 36 44% 95%;
+    --popover-foreground: 36 95% 6%;
     --primary: 36 88.9% 85.9%;
     --primary-foreground: 0 0% 0%;
     --secondary: 36 30% 70%;
@@ -16,37 +18,36 @@
     --muted: -2 30% 85%;
     --muted-foreground: 36 5% 35%;
     --accent: -2 30% 80%;
-    --accent-foreground: 36 5% 15%;
-    --destructive: 0 100% 30%;
+    --accent-foreground: 36 5% 10%;
+    --destructive: 0 50% 30%;
     --destructive-foreground: 36 5% 90%;
     --border: 36 30% 50%;
-    --input: 36 30% 26%;
+    --input: 36 30% 18%;
     --ring: 36 88.9% 85.9%;
-    --radius: 0.5rem;
+    --radius: 0.3rem;
   }
   .dark {
-    --background: 69 9% 15%;
-    --foreground: 36 88.9% 85.9%;
-    --card: 36 50% 10%;
+    --background: 36 44% 6%;
+    --foreground: 36 5% 90%;
+    --card: 36 44% 6%;
     --card-foreground: 36 5% 90%;
-    --popover: 69 9% 15%;
-    --popover-foreground: 36 88.9% 85.9%;
+    --popover: 36 44% 5%;
+    --popover-foreground: 36 5% 90%;
     --primary: 36 88.9% 85.9%;
-    --primary-foreground: 67.5 5.41% 29.02%;
-    --secondary: 36 30% 20%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 36 30% 10%;
     --secondary-foreground: 0 0% 100%;
-    --muted: -2 30% 25%;
+    --muted: -2 30% 15%;
     --muted-foreground: 36 5% 60%;
-    --accent: 68 5% 29%;
-    --accent-foreground: 338 100% 79%;
-    --destructive: 0 100% 30%;
+    --accent: -2 30% 15%;
+    --accent-foreground: 36 5% 90%;
+    --destructive: 0 50% 30%;
     --destructive-foreground: 36 5% 90%;
-    --border: 68 5% 29%;
-    --input: 68 5% 29%;
+    --border: 36 30% 18%;
+    --input: 36 30% 18%;
     --ring: 36 88.9% 85.9%;
-    --radius: 0.5rem;
+    --radius: 0rem;
     --speed: 3;
-    --radius: 20;
     --power4: linear(
       0 0%,
       0.0012 14.95%,
@@ -94,7 +95,7 @@
     --chroma: 2;
     --lightness: 0.26;
     --limit: 320;
-    --distance: 10;
+    --distance: 8;
   }
 }
 
@@ -102,7 +103,6 @@
   * {
     @apply border-border;
     box-sizing: border-box;
-    transform-style: preserve-3d;
   }
   html {
     @apply scroll-smooth;
@@ -191,7 +191,7 @@ body::-webkit-scrollbar-thumb,
   @apply bg-black;
 }
 
-.tab-container {
+/* .tab-container {
   @apply mb-4 mt-4 flex;
 }
 
@@ -213,7 +213,7 @@ body::-webkit-scrollbar-thumb,
 
 .tab-button.inactive:hover {
   @apply bg-gray-400;
-}
+} */
 .mask-transparent::before {
   @apply absolute bottom-0 left-0 right-0 top-0 z-0;
   mask-image: linear-gradient(to bottom, white 200px, transparent);
@@ -224,7 +224,8 @@ body::-webkit-scrollbar-thumb,
 }
 
 .rings {
-  width: 50vmin;
+  transform-style: preserve-3d;
+  width: 85%;
   max-width: 300px;
   aspect-ratio: 1;
   position: relative;

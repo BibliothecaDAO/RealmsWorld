@@ -69,7 +69,7 @@ export const BridgeNftWrapper = () => {
           <Alert variant={"warning"} className="mt-4">
             <TriangleAlert className="h-5 w-5" />
             <AlertTitle className="text-lg">
-              Your have Realms to Withdraw on L1
+              You have Realms to Withdraw on L1
             </AlertTitle>
             <AlertDescription>
               Check your account transaction sidebar to finalize your{" "}
