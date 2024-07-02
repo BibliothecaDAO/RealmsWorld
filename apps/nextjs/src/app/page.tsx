@@ -54,7 +54,7 @@ export default function Home() {
       <div className="my-24">
         <hr />
         <h3 className="mb-4 text-xl">Events</h3>
-        <EventGrid />
+        <EventGrid isHomepage={true} />
       </div>
       <hr />
 
