@@ -1,6 +1,7 @@
 {
   "extends": "@realms-world/tsconfig/internal-package.json",
   "compilerOptions": {
+    "jsx": "preserve",
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "baseUrl": ".",
     "jsx": "preserve",

@@ -33,7 +33,7 @@ const config: StorybookConfig = {
               {
                 loader: require.resolve("postcss-loader"),
                 options: {
-                  implementation: require.resolve("postcss"),
+                  implementation: require("postcss"),
                 },
               },
             ],
