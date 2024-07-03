@@ -22,7 +22,7 @@ export function SpaceProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const fetchProposals = async () => {
       const spaceData = await getNetwork("sn-sep").api.loadSpace(
-        "0x067813fb2d7a60d8ea9bd2273c52f1946fe69f99ce64cc37ce8189cbf0b1c3e5",
+        "0x0011c8d7674bb371708933d29c5e2a4ea31a6535809950b863851373f1afc112",
       );
       spaceData && setSpace(spaceData);
     };

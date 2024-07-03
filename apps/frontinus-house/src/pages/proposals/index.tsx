@@ -11,7 +11,7 @@ export default function Proposals() {
   useEffect(() => {
     const fetchProposals = async () => {
       const proposalsData = await getNetwork("sn-sep").api.loadProposals(
-        ["0x067813fb2d7a60d8ea9bd2273c52f1946fe69f99ce64cc37ce8189cbf0b1c3e5"],
+        ["0x0011c8d7674bb371708933d29c5e2a4ea31a6535809950b863851373f1afc112"],
         {
           limit: 20,
         },
@@ -33,29 +33,29 @@ export default function Proposals() {
         <hr />
         {proposals
           ? proposals.map((proposal) => {
-              return (
-                <div>
-                  <Link to={`/proposals/${proposal.proposal_id}`}>
-                    <div className="mx-4 flex border-b py-[14px]">
-                      <div className="mr-4 w-0 flex-auto">
-                        <div className="flex space-x-2">
-                          <div className="my-1 items-center leading-6 md:flex md:min-w-0">
-                            <h4 className="my-0">
-                              {proposal.title ?? `Proposal #${proposal.id}`}
-                            </h4>
-                          </div>
+            return (
+              <div>
+                <Link to={`/proposals/${proposal.proposal_id}`}>
+                  <div className="mx-4 flex border-b py-[14px]">
+                    <div className="mr-4 w-0 flex-auto">
+                      <div className="flex space-x-2">
+                        <div className="my-1 items-center leading-6 md:flex md:min-w-0">
+                          <h4 className="my-0">
+                            {proposal.title ?? `Proposal #${proposal.id}`}
+                          </h4>
                         </div>
-                        <div className="mr-4 inline">
-                          {getProposalId(proposal)} by{" "}
-                          {proposal.author.name || shorten(proposal.author.id)}
-                        </div>
-                        <span>{proposal.vote_count} votes</span>
                       </div>
+                      <div className="mr-4 inline">
+                        {getProposalId(proposal)} by{" "}
+                        {proposal.author.name || shorten(proposal.author.id)}
+                      </div>
+                      <span>{proposal.vote_count} votes</span>
                     </div>
-                  </Link>
-                </div>
-              );
-            })
+                  </div>
+                </Link>
+              </div>
+            );
+          })
           : "Loading"}
       </LayoutBody>
     </Layout>

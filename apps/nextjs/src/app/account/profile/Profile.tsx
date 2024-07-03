@@ -21,6 +21,7 @@ import {
 } from "@realms-world/ui";
 
 import { ProfileForm } from "./ProfileForm";
+import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 
 export const Profile = ({
   initialDelegate,
@@ -30,7 +31,7 @@ export const Profile = ({
   const { address } = useAccount();
   const { data: delegate } = api.delegates.byId.useQuery(
     {
-      id: address ?? "0x",
+      user: address,
     },
     {
       refetchInterval: 60000,
@@ -41,8 +42,12 @@ export const Profile = ({
   const { sendAsync: delegateRealms } = useDelegateRealms({
     delegatee: address,
   });
+  const { data: currentDelegate } = useCurrentDelegate()
 
-  const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(
+  const { data: ownerTokens } = api.erc721Tokens.all.useQuery({ owner: address, limit: 1 }, {
+    enabled: !!address,
+  });
+  /*const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(
     {
       id: address ?? "0x",
     },
@@ -50,7 +55,7 @@ export const Profile = ({
       refetchInterval: 60000,
       enabled: !!address,
     },
-  );
+  );*/
   return (
     <div className="grid grid-cols-5 gap-x-6">
       <Card className="col-span-3">
@@ -67,7 +72,7 @@ export const Profile = ({
                 />
                 <div className="flex w-full justify-between">
                   <div>
-                    <div className="mb-1">{shortenAddress(delegate.id)}</div>
+                    <div className="mb-1">{shortenAddress(delegate.user)}</div>
                     <div className="mb-1 flex items-center text-sm font-bold uppercase text-muted-foreground">
                       Voting Power:
                       <Badge variant="outline" className="ml-2">
@@ -79,17 +84,17 @@ export const Profile = ({
                         Delegation:
                       </span>
                       <Badge variant="outline">
-                        {tokenHolder?.tokenBalanceRaw} Realms
+                        {/*tokenHolder?.tokenBalanceRaw*/} Realms
                       </Badge>
                       <span className="text-sm">delegated to</span>
                       <Badge variant="outline">
-                        {tokenHolder?.delegate == delegate.id
+                        {currentDelegate == address
                           ? "self"
-                          : shortenHex(tokenHolder?.delegate ?? "0x", 8)}
+                          : shortenHex(currentDelegate, 8)}
                       </Badge>
                     </div>
                   </div>
-                  {tokenHolder?.delegate != padAddress(address) && (
+                  {currentDelegate != padAddress(address) && (
                     <Button size="sm" onClick={() => delegateRealms()}>
                       <UserRoundPlus className="mr-2" /> Delegate to Self
                     </Button>
@@ -100,7 +105,7 @@ export const Profile = ({
             <CardContent className="flex flex-col gap-4">
               <ProfileForm
                 delegateProfile={delegate.delegateProfile}
-                delegateId={delegate.id}
+                delegateId={delegate.user}
               />
             </CardContent>
           </>
@@ -110,9 +115,9 @@ export const Profile = ({
               <CardTitle>No delegate found</CardTitle>
             </CardHeader>
             <CardContent>
-              {tokenHolder?.tokenBalanceRaw ? (
+              {ownerTokens?.items.length ? (
                 <>
-                  Delegate your {tokenHolder.tokenBalanceRaw} Realms to yourself
+                  Delegate your Realms to yourself
                   to create a delegate profile
                   <Button size="sm" onClick={() => delegateRealms()}>
                     <UserRoundPlus className="mr-2" /> Delegate to Self

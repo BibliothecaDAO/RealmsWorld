@@ -6,6 +6,7 @@ import { useAccount } from "@starknet-react/core";
 
 import type { RouterOutputs } from "@realms-world/api";
 import { Button } from "@realms-world/ui";
+import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 
 export const DelegateActions = ({
   delegate,
@@ -14,20 +15,11 @@ export const DelegateActions = ({
 }) => {
   const { address } = useAccount();
   const { sendAsync: delegateRealms } = useDelegateRealms({
-    delegatee: delegate.id,
+    delegatee: delegate.user,
   });
+  const { data: currentDelegate } = useCurrentDelegate()
 
-  const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(
-    {
-      id: address ?? "0x",
-    },
-    {
-      refetchInterval: 60000,
-      enabled: !!address,
-    },
-  );
-
-  const isCurrentDelegate = tokenHolder?.delegate === delegate.id;
+  const isCurrentDelegate = currentDelegate === delegate.id;
   return (
     <Button
       variant={"default"}

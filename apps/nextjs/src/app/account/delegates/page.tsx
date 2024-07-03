@@ -4,7 +4,9 @@ import { api } from "@/trpc/server";
 
 import type { RouterInputs } from "@realms-world/api";
 
-import { DelegatesActions } from "./DelegatesToolbar";
+import { DelegatesToolbar } from "./DelegatesToolbar";
+import { Suspense } from "react";
+import { DelegatesList } from "./DelegatesList";
 
 export function generateMetadata(): Metadata {
   return {
@@ -13,7 +15,7 @@ export function generateMetadata(): Metadata {
   };
 }
 
-export default async function Page({
+export default function Page({
   searchParams: { search },
 }: {
   searchParams: { search?: string };
@@ -22,10 +24,8 @@ export default async function Page({
     limit: 20,
     search: search,
   };
-  console.log(filters);
+  const delegates = api.delegates.all(filters);
 
-  const delegates = await api.delegates.all(filters);
-  console.log(delegates);
   return (
     <div>
       <div className="w-full">
@@ -35,12 +35,11 @@ export default async function Page({
           governance tokens.
         </p>
       </div>
-      <DelegatesActions />
-      <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-3">
-        {delegates.items.map((delegate) => (
-          <DelegateCard key={delegate.id} delegate={delegate} />
-        ))}
-      </div>
+      <DelegatesToolbar />
+      <Suspense
+        fallback={<div>Loading...</div>}>
+        <DelegatesList delegates={delegates} />
+      </Suspense>
     </div>
   );
 }

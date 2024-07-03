@@ -14,7 +14,7 @@ export const SignInSIWS = () => {
   const { address } = useAccount();
   const { data: delegate } = api.delegates.byId.useQuery(
     {
-      id: address ?? "0x",
+      user: address,
     },
     {
       refetchInterval: 60000,
@@ -22,8 +22,8 @@ export const SignInSIWS = () => {
     },
   );
   const requiresSignature = useMemo(() => {
-    return !session?.user.name || padAddress(session.user.name) != delegate?.id;
-  }, [session?.user.name, delegate?.id]);
+    return !session?.user.name || padAddress(session.user.name) != delegate?.user;
+  }, [session?.user.name, delegate?.user]);
   return (
     <>
       {requiresSignature ? (

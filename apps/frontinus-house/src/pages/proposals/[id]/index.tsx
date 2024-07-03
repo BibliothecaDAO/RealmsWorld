@@ -12,7 +12,7 @@ export default function Proposal() {
   useEffect(() => {
     const fetchProposals = async () => {
       const proposalsData = await getNetwork("sn-sep").api.loadProposal(
-        "0x067813fb2d7a60d8ea9bd2273c52f1946fe69f99ce64cc37ce8189cbf0b1c3e5",
+        "0x0011c8d7674bb371708933d29c5e2a4ea31a6535809950b863851373f1afc112",
         1,
         0,
       );

@@ -15,13 +15,16 @@ import {
   Input,
 } from "@realms-world/ui";
 import { padAddress } from "@realms-world/utils";
+import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 
-export const DelegatesActions = () => {
+export const DelegatesToolbar = () => {
   const { address } = useAccount();
   const { sendAsync: delegateRealms } = useDelegateRealms({
     delegatee: address,
   });
-  const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(
+  const { data: currentDelegate } = useCurrentDelegate()
+
+  /*const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(
     {
       id: address ?? "0x",
     },
@@ -29,7 +32,7 @@ export const DelegatesActions = () => {
       refetchInterval: 60000,
       enabled: !!address,
     },
-  );
+  );*/
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
@@ -46,8 +49,9 @@ export const DelegatesActions = () => {
   const [searchAddress, setSearchAddress] = useState("");
   return (
     <>
-      {!tokenHolder?.delegate &&
-        parseInt(tokenHolder?.tokenBalanceRaw ?? "0") > 0 && (
+      {!currentDelegate &&
+      //TODO
+        /*parseInt(tokenHolder?.tokenBalanceRaw ?? "0") > 0 &&*/ (
           <Alert variant={"warning"} className="mt-4">
             <TriangleAlert className="h-5 w-5" />
             <AlertTitle className="text-lg">
@@ -81,7 +85,7 @@ export const DelegatesActions = () => {
           </form>
         </div>
         <div>
-          {tokenHolder?.delegate != padAddress(address) && (
+          {currentDelegate != padAddress(address) && (
             <Button size="sm" onClick={() => delegateRealms()}>
               <UserRoundPlus className="mr-2" /> Delegate to Self
             </Button>

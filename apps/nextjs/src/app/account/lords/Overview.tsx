@@ -36,6 +36,7 @@ import { ClaimsTable } from "./ClaimsTable";
 //import { FloatAnimation } from "./FloatAnimation";
 import { LegacyClaim } from "./LegacyClaim";
 import { VeLords } from "./VeLords";
+import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 
 export const Overview = () => {
   const { address: l1Address } = useAccount();
@@ -74,19 +75,12 @@ export const Overview = () => {
     args: l2Address ? [l2Address] : undefined,
     refetchInterval: 10000,
   });
-  const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(
-    {
-      id: l2Address ?? "0x",
-    },
-    {
-      refetchInterval: 60000,
-      enabled: !!l2Address,
-    },
-  );
+  const { data: currentDelegate } = useCurrentDelegate()
+
   return (
     <div className="w-full">
-      {!tokenHolder?.delegate &&
-        parseInt(tokenHolder?.tokenBalanceRaw ?? "0") > 0 && (
+      {!currentDelegate &&
+        realmsBalance > 0 && (
           <Alert variant={"warning"} className="mt-4">
             <TriangleAlert className="h-5 w-5" />
             <AlertTitle className="text-lg">
@@ -188,13 +182,13 @@ export const Overview = () => {
                         data={[
                           ...(balance
                             ? [
-                                {
-                                  amount: Number(formatEther(balance)).toFixed(
-                                    5,
-                                  ),
-                                  timestamp: null,
-                                },
-                              ]
+                              {
+                                amount: Number(formatEther(balance)).toFixed(
+                                  5,
+                                ),
+                                timestamp: null,
+                              },
+                            ]
                             : []),
                           ...(lordsRewardsClaims ?? []),
                         ]}

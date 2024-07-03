@@ -77,14 +77,6 @@ export const ProfileForm = ({
 
   return (
     <>
-      {requiresSignature && (
-        <>
-          <Alert variant={"warning"}>
-            You must sign a transaction with your Starknet wallet to edit your
-            profile.
-          </Alert>
-        </>
-      )}
       <Form {...form}>
         <form
           ref={formRef}

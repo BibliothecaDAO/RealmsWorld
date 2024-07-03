@@ -5,55 +5,55 @@ import {
   integer,
   numeric,
   pgTable,
+  primaryKey,
   serial,
   text,
   timestamp,
+  uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const tokenholders = pgTable(
-  "tokenholders",
+import { int8range } from "../int8range";
+
+export const governances = pgTable(
+  "governances",
   {
-    id: varchar("id", { length: 256 }).notNull().primaryKey(),
-    delegate: varchar("delegate", { length: 256 }),
-    tokenBalanceRaw: numeric("tokenBalanceRaw", {
+    uid: uuid("uid").defaultRandom().primaryKey().notNull(),
+    // TODO: failed to parse database type 'int8range'
+    block_range: int8range("block_range").notNull(),
+    id: varchar("id", { length: 256 }).notNull(),
+    currentDelegates: integer("currentDelegates").notNull(),
+    totalDelegates: integer("totalDelegates").notNull(),
+    delegatedVotesRaw: numeric("delegatedVotesRaw", {
       precision: 80,
       scale: 0,
     }).notNull(),
-    tokenBalance: numeric("tokenBalance", {
-      precision: 80,
-      scale: 20,
-    }).notNull(),
-    totalTokensHeldRaw: numeric("totalTokensHeldRaw", {
-      precision: 80,
-      scale: 0,
-    }).notNull(),
-    totalTokensHeld: numeric("totalTokensHeld", {
+    delegatedVotes: numeric("delegatedVotes", {
       precision: 80,
       scale: 20,
     }).notNull(),
   },
   (table) => {
     return {
-      delegate_idx: index().using("btree", table.delegate),
+      currentdelegates_idx: index("governances_currentdelegates_index").using(
+        "btree",
+        table.currentDelegates,
+      ),
+      delegatedvotes_idx: index("governances_delegatedvotes_index").using(
+        "btree",
+        table.delegatedVotes,
+      ),
+      delegatedvotesraw_idx: index("governances_delegatedvotesraw_index").using(
+        "btree",
+        table.delegatedVotesRaw,
+      ),
       id_idx: index().using("btree", table.id),
-      tokenbalance_idx: index("tokenholders_tokenbalance_index").using(
+      totaldelegates_idx: index("governances_totaldelegates_index").using(
         "btree",
-        table.tokenBalance,
+        table.totalDelegates,
       ),
-      tokenbalanceraw_idx: index("tokenholders_tokenbalanceraw_index").using(
-        "btree",
-        table.tokenBalanceRaw,
-      ),
-      totaltokensheld_idx: index("tokenholders_totaltokensheld_index").using(
-        "btree",
-        table.totalTokensHeld,
-      ),
-      totaltokensheldraw_idx: index(
-        "tokenholders_totaltokensheldraw_index",
-      ).using("btree", table.totalTokensHeldRaw),
     };
   },
 );
@@ -61,7 +61,12 @@ export const tokenholders = pgTable(
 export const delegates = pgTable(
   "delegates",
   {
-    id: varchar("id", { length: 256 }).notNull().primaryKey(),
+    uid: uuid("uid").defaultRandom().primaryKey().notNull(),
+    // TODO: failed to parse database type 'int8range'
+    block_range: int8range("block_range").notNull(),
+    id: varchar("id", { length: 256 }).notNull(),
+    governance: varchar("governance", { length: 256 }),
+    user: varchar("user", { length: 256 }).notNull(),
     delegatedVotesRaw: numeric("delegatedVotesRaw", {
       precision: 80,
       scale: 0,
@@ -73,6 +78,7 @@ export const delegates = pgTable(
     tokenHoldersRepresentedAmount: integer(
       "tokenHoldersRepresentedAmount",
     ).notNull(),
+    tokenHoldersRepresented: integer("tokenHoldersRepresented").notNull(),
   },
   (table) => {
     return {
@@ -84,16 +90,47 @@ export const delegates = pgTable(
         "btree",
         table.delegatedVotesRaw,
       ),
+      governance_idx: index().using("btree", table.governance),
       id_idx: index().using("btree", table.id),
+      tokenholdersrepresented_idx: index(
+        "delegates_tokenholdersrepresented_index",
+      ).using("btree", table.tokenHoldersRepresented),
       tokenholdersrepresentedamount_idx: index(
         "delegates_tokenholdersrepresentedamount_index",
       ).using("btree", table.tokenHoldersRepresentedAmount),
+      user_idx: index().using("btree", table.user),
     };
   },
 );
-export const delegatesRelations = relations(delegates, ({ one }) => ({
-  delegateProfile: one(delegateProfiles),
-}));
+
+export const _checkpoints = pgTable(
+  "_checkpoints",
+  {
+    id: varchar("id", { length: 10 }).primaryKey().notNull(),
+    // You can use { mode: "bigint" } if numbers are exceeding js number limitations
+    block_number: bigint("block_number", { mode: "number" }).notNull(),
+    contract_address: varchar("contract_address", { length: 66 }).notNull(),
+  },
+  (table) => {
+    return {
+      block_number_idx: index().using("btree", table.block_number),
+      contract_address_idx: index().using("btree", table.contract_address),
+    };
+  },
+);
+
+export const _metadatas = pgTable("_metadatas", {
+  id: varchar("id", { length: 20 }).primaryKey().notNull(),
+  value: varchar("value", { length: 128 }).notNull(),
+});
+
+export const _template_sources = pgTable("_template_sources", {
+  id: serial("id").primaryKey().notNull(),
+  contract_address: varchar("contract_address", { length: 66 }),
+  // You can use { mode: "bigint" } if numbers are exceeding js number limitations
+  start_block: bigint("start_block", { mode: "number" }).notNull(),
+  template: varchar("template", { length: 128 }).notNull(),
+});
 
 export const delegateProfiles = pgTable(
   "delegate_profiles",
@@ -101,9 +138,7 @@ export const delegateProfiles = pgTable(
     id: varchar("id", { length: 256 })
       .default(sql`gen_random_uuid()`)
       .primaryKey(),
-    delegateId: varchar("delegateId", { length: 256 })
-      .references(() => delegates.id)
-      .unique(),
+    delegateId: varchar("delegateId", { length: 256 }).unique(),
     statement: text("statement").notNull(),
     interests: text("interests").array(),
     twitter: text("twitter"),
@@ -122,12 +157,18 @@ export const delegateProfiles = pgTable(
     };
   },
 );
+
+export const delegatesRelations = relations(delegates, ({ one }) => ({
+  delegateProfile: one(delegateProfiles),
+  governance: one(governances),
+}));
+
 export const delegateProfilesRelations = relations(
   delegateProfiles,
   ({ one }) => ({
     delegate: one(delegates, {
       fields: [delegateProfiles.delegateId],
-      references: [delegates.id],
+      references: [delegates.user],
     }),
   }),
 );
@@ -148,78 +189,6 @@ export const CreateDelegateProfileSchema = createInsertSchema(
   updatedAt: true,
 });
 
-export const governances = pgTable(
-  "governances",
-  {
-    id: varchar("id", { length: 256 }).notNull().primaryKey(),
-    currentTokenHolders: integer("currentTokenHolders").notNull(),
-    currentDelegates: integer("currentDelegates").notNull(),
-    totalTokenHolders: integer("totalTokenHolders").notNull(),
-    totalDelegates: integer("totalDelegates").notNull(),
-    delegatedVotesRaw: numeric("delegatedVotesRaw", {
-      precision: 80,
-      scale: 0,
-    }).notNull(),
-    delegatedVotes: numeric("delegatedVotes", {
-      precision: 80,
-      scale: 20,
-    }).notNull(),
-  },
-  (table) => {
-    return {
-      currentdelegates_idx: index("governances_currentdelegates_index").using(
-        "btree",
-        table.currentDelegates,
-      ),
-      currenttokenholders_idx: index(
-        "governances_currenttokenholders_index",
-      ).using("btree", table.currentTokenHolders),
-      delegatedvotes_idx: index("governances_delegatedvotes_index").using(
-        "btree",
-        table.delegatedVotes,
-      ),
-      delegatedvotesraw_idx: index("governances_delegatedvotesraw_index").using(
-        "btree",
-        table.delegatedVotesRaw,
-      ),
-      id_idx: index().using("btree", table.id),
-      totaldelegates_idx: index("governances_totaldelegates_index").using(
-        "btree",
-        table.totalDelegates,
-      ),
-      totaltokenholders_idx: index("governances_totaltokenholders_index").using(
-        "btree",
-        table.totalTokenHolders,
-      ),
-    };
-  },
-);
-
-export const _checkpoints = pgTable(
-  "_checkpoints",
-  {
-    id: varchar("id", { length: 10 }).notNull().primaryKey(),
-    // You can use { mode: "bigint" } if numbers are exceeding js number limitations
-    block_number: bigint("block_number", { mode: "number" }).notNull(),
-    contract_address: varchar("contract_address", { length: 66 }).notNull(),
-  },
-  (table) => {
-    return {
-      block_number_idx: index().using("btree", table.block_number),
-      contract_address_idx: index().using("btree", table.contract_address),
-    };
-  },
-);
-
-export const _metadatas = pgTable("_metadatas", {
-  id: varchar("id", { length: 20 }).notNull().primaryKey(),
-  value: varchar("value", { length: 128 }).notNull(),
-});
-
-export const _template_sources = pgTable("_template_sources", {
-  id: serial("id").notNull(),
-  contract_address: varchar("contract_address", { length: 66 }),
-  // You can use { mode: "bigint" } if numbers are exceeding js number limitations
-  start_block: bigint("start_block", { mode: "number" }).notNull(),
-  template: varchar("template", { length: 128 }).notNull(),
-});
+export const governancesRelations = relations(delegates, ({ one }) => ({
+  delegate: one(delegates),
+}));

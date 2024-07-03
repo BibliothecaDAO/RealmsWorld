@@ -1,12 +1,13 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
-import { eq, like } from "@realms-world/db";
+import type { SQL } from "@realms-world/db";
+import { and, eq, like, sql } from "@realms-world/db";
 import {
   CreateDelegateProfileSchema,
   delegateProfiles,
   delegates,
-  tokenholders,
+  //tokenholders,
 } from "@realms-world/db/schema";
 import { padAddress } from "@realms-world/utils";
 
@@ -29,9 +30,16 @@ export const delegatesRouter = {
       const limit = input.limit ?? 12;
 
       const { cursor, orderBy, search } = input;
-      // const whereFilter: SQL[] = [];
+      const whereFilter: SQL[] = [];
+      whereFilter.push(sql`upper_inf(block_range)`);
+      if (search) {
+        whereFilter.push(like(delegates.id, "%" + search + "%"));
+      }
 
       const items = await ctx.db.query.delegates.findMany({
+        columns: {
+          block_range: false,
+        },
         ...withCursorPagination({
           cursors: [
             [
@@ -43,7 +51,7 @@ export const delegatesRouter = {
             ],
           ],
           limit: limit + 1,
-          where: search ? like(delegates.id, "%" + search + "%") : undefined,
+          where: and(...whereFilter),
         }),
         with: {
           delegateProfile: true,
@@ -63,19 +71,22 @@ export const delegatesRouter = {
       };
     }),
 
-  tokenHolderById: publicProcedure
+  /*tokenHolderById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.tokenholders.findFirst({
         where: eq(tokenholders.id, padAddress(input.id)),
       });
-    }),
+    }),*/
 
   byId: publicProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ user: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.delegates.findFirst({
-        where: eq(delegates.id, padAddress(input.id)),
+        where: and(
+          eq(delegates.user, padAddress(input.user)),
+          sql`upper_inf(block_range)`,
+        ),
         with: {
           delegateProfile: true,
         },
