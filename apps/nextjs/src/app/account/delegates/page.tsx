@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { DelegateCard } from "@/app/account/delegates/DelegateCard";
 import { api } from "@/trpc/server";
 
 import type { RouterInputs } from "@realms-world/api";

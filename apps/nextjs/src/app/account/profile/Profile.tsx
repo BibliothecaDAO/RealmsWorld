@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
 import { api } from "@/trpc/react";
 import { padAddress, shortenHex } from "@/utils/utils";
-import { useAccount } from "@starknet-react/core";
+import { useAccount, useReadContract } from "@starknet-react/core";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 import { UserRoundPlus } from "lucide-react";
 import { SignInSIWS } from "./SignInSIWS";
@@ -19,9 +19,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@realms-world/ui";
-
+import { RealmsABI } from "@/abi/L2/Realms";
 import { ProfileForm } from "./ProfileForm";
 import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { getCollectionAddresses, Collections } from "@realms-world/constants";
 
 export const Profile = ({
   initialDelegate,
@@ -46,6 +48,16 @@ export const Profile = ({
 
   const { data: ownerTokens } = api.erc721Tokens.all.useQuery({ owner: address, limit: 1 }, {
     enabled: !!address,
+  });
+  const { data: realmsBalance } = useReadContract({
+    address: getCollectionAddresses(Collections.REALMS)?.[
+      SUPPORTED_L2_CHAIN_ID
+    ] as `0x${string}`,
+    abi: RealmsABI,
+    functionName: "balance_of",
+    enabled: !!address,
+    args: address ? [address] : undefined,
+    refetchInterval: 10000,
   });
   /*const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(
     {
@@ -84,7 +96,7 @@ export const Profile = ({
                         Delegation:
                       </span>
                       <Badge variant="outline">
-                        {/*tokenHolder?.tokenBalanceRaw*/} Realms
+                        {realmsBalance} Realms
                       </Badge>
                       <span className="text-sm">delegated to</span>
                       <Badge variant="outline">

@@ -1,6 +1,6 @@
 "use client";
 
-import RealmsABI from "@/abi/L2/Realms.json";
+import { RealmsABI } from "@/abi/L2/Realms";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useAccount, useReadContract } from "@starknet-react/core";
 

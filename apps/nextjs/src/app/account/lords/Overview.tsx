@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import RealmsABI from "@/abi/L2/Realms.json";
+import { RealmsABI } from "@/abi/L2/Realms";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useL2LordsRewards } from "@/hooks/staking/useL2LordsRewards";
 //import { useLordship } from "@/hooks/staking/useLordship";
@@ -35,7 +35,7 @@ import { padAddress } from "@realms-world/utils";
 import { ClaimsTable } from "./ClaimsTable";
 //import { FloatAnimation } from "./FloatAnimation";
 import { LegacyClaim } from "./LegacyClaim";
-import { VeLords } from "./VeLords";
+//import { VeLords } from "./VeLords";
 import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 
 export const Overview = () => {
@@ -75,6 +75,7 @@ export const Overview = () => {
     args: l2Address ? [l2Address] : undefined,
     refetchInterval: 10000,
   });
+
   const { data: currentDelegate } = useCurrentDelegate()
 
   return (
