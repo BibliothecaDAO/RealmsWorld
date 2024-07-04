@@ -32,7 +32,7 @@ export const L2ERC721Card = ({
         "group flex transform border bg-background duration-300 hover:border-bright-yellow",
         isGrid ? "w-full flex-col" : "justify-between",
         isSelected &&
-          "border-2 border-accent-foreground hover:border-accent-foreground/50",
+        "border-2 border-accent-foreground hover:border-accent-foreground/50",
       )}
     >
       <div>
@@ -75,7 +75,7 @@ export const L2ERC721Card = ({
           className={cn(
             "absolute right-2 top-2 h-5 w-5 flex-shrink-0 rounded-full shadow-lg",
             isSelected
-              ? "border-[5px] border-primary bg-accent-foreground"
+              ? "border-[5px] border-primary bg-accent"
               : "bg-muted-foreground",
           )}
         />

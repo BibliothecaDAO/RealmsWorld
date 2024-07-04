@@ -65,7 +65,7 @@ export const BridgeNftWrapper = () => {
             </Badge>
           </TabsTrigger>
         </TabsList>
-        {pendingWithdrawals?.length && (
+        {pendingWithdrawals?.length ? (
           <Alert variant={"warning"} className="mt-4">
             <TriangleAlert className="h-5 w-5" />
             <AlertTitle className="text-lg">
@@ -78,7 +78,7 @@ export const BridgeNftWrapper = () => {
               </Button>
             </AlertDescription>
           </Alert>
-        )}
+        ) : null}
 
         <TabsContent value={"l1"}>
           <AssetL1CollectionPreview />

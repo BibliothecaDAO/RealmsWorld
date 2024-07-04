@@ -58,7 +58,7 @@ const BridgeBadge = ({
       <span className="text-lg">
         {
           CHAIN_IDS_TO_NAMES[
-            isL1 ? SUPPORTED_L1_CHAIN_ID : SUPPORTED_L2_CHAIN_ID
+          isL1 ? SUPPORTED_L1_CHAIN_ID : SUPPORTED_L2_CHAIN_ID
           ]
         }
       </span>
@@ -346,28 +346,28 @@ export default function NftBridgeModal() {
 
   const isSourceL1 = sourceChain == SUPPORTED_L1_CHAIN_ID;
   const { address: l1Address } = useAccount();
-  const { address: l2Address } = useL2Account();
+  const { isConnected } = useL2Account();
 
   const steps = isSourceL1
     ? ([
-        {
-          label: "Approve",
-          description: `Allow Bridge Contract access to Realms`,
-          id: "approve",
-        },
-        {
-          label: "Bridge",
-          description: `Realms to Starknet`,
-          id: "bridge",
-        },
-      ] satisfies StepItem[])
+      {
+        label: "Approve",
+        description: `Allow Bridge Contract access to Realms`,
+        id: "approve",
+      },
+      {
+        label: "Bridge",
+        description: `Realms to Starknet`,
+        id: "bridge",
+      },
+    ] satisfies StepItem[])
     : ([
-        {
-          label: "Approve & Bridge",
-          description: `Realms to Ethereum`,
-          id: "bridge",
-        },
-      ] satisfies StepItem[]);
+      {
+        label: "Approve & Bridge",
+        description: `Realms to Ethereum`,
+        id: "bridge",
+      },
+    ] satisfies StepItem[]);
 
   if (isNftBridgeOpen) {
     return (
@@ -377,8 +377,8 @@ export default function NftBridgeModal() {
             Bridge {selectedTokenIds.length} Realms
           </DialogTitle>
           {!l1Address && <EthereumLoginButton />}
-          {!l2Address && <StarknetLoginButton />}
-          {l1Address && l2Address && (
+          {!isConnected && <StarknetLoginButton />}
+          {l1Address && isConnected && (
             <>
               <ScrollArea className="-mr-6 max-h-[600px] pr-6">
                 <BridgeSteps
