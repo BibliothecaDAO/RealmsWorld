@@ -7,7 +7,7 @@ import { Account } from "@/app/bridge/Account";
 import { NETWORK_NAME } from "@/constants/env";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { useAccount as useL2Account, useNetwork } from "@starknet-react/core";
+import { useAccount as useL2Account, useNetwork, useWalletRequest } from "@starknet-react/core";
 
 import {
   Button,
@@ -33,6 +33,7 @@ import { TransactionList } from "./transactions/TransactionList";
 
 export const WalletSheet = () => {
   const {
+    account,
     address: l2Address,
     isConnected: isL2Connected,
     chainId,
@@ -45,27 +46,18 @@ export const WalletSheet = () => {
     sepolia: 393402133025997798000961n,
   };
 
+  const { request, data, isPending } = useWalletRequest({
+    type: "wallet_requestChainId",
+  });
+  const isStarknetWrongNetwork =
+    data !== undefined && BigInt(data) !== chain.id;
+
+  // TODO refactor back to default Chain Id when starknet-react supports
   useEffect(() => {
-    if (isL2Connected && chain.id) {
-      if (
-        (NETWORK_NAME === "MAIN" && chain.id != NETWORK_ID.mainnet) ||
-        (NETWORK_NAME === "SEPOLIA" && chain.id != NETWORK_ID.sepolia)
-      ) {
-        setIsWrongNetwork(true);
-      } else {
-        setIsWrongNetwork(false);
-      }
-    } else {
-      setIsWrongNetwork(false);
+    if (account?.address !== undefined) {
+      request();
     }
-  }, [
-    chain.id,
-    l2Address,
-    isL2Connected,
-    chainId,
-    NETWORK_ID.sepolia,
-    NETWORK_ID.mainnet,
-  ]);
+  }, [account?.address, request]);
 
   const { isAccountOpen, toggleAccount } = useUIStore((state) => state);
 
@@ -158,7 +150,7 @@ export const WalletSheet = () => {
         </SheetContent>
       </Sheet>
 
-      {isWrongNetwork && <WrongNetworkModal />}
+      {isStarknetWrongNetwork && <WrongNetworkModal />}
     </>
   );
 };

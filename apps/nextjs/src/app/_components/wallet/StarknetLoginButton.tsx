@@ -9,6 +9,7 @@ import { useAccount } from "@starknet-react/core";
 
 import type { buttonVariants } from "@realms-world/ui";
 import { Button } from "@realms-world/ui";
+import { Loader } from "lucide-react";
 
 export const StarknetLoginButton = ({
   openAccount = false,
@@ -23,7 +24,7 @@ export const StarknetLoginButton = ({
   buttonClass?: string;
   children?: React.ReactNode;
 }) => {
-  const { account, isConnected } = useAccount();
+  const { account, isConnected, isConnecting } = useAccount();
   const { toggleAccount, toggleStarknetLogin } = useUIStore((state) => state);
 
   const onConnectClick = () => {
@@ -38,15 +39,16 @@ export const StarknetLoginButton = ({
       variant={variant ?? "outline"}
       size="sm"
       onClick={onConnectClick}
+      disabled={isConnecting}
     >
       <span className="flex items-center font-sans normal-case">
         <StarknetLogo className="h-6 w-6" />
         <span className={`pl-2 ${textClass ?? "sm:block"}`}>
           {account?.address ? (
             <>{shortenHex(account.address, 8)}</>
-          ) : (
-            children ?? "Starknet"
-          )}
+          ) : (<>{isConnecting ? <Loader className="animate-spin" /> : (<>
+            {children ?? "Starknet"}</>)
+          }</>)}
         </span>
       </span>
     </Button>
