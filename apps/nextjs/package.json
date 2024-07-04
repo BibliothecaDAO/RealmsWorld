@@ -66,7 +66,7 @@
     "remark-html": "^16.0.1",
     "server-only": "0.0.1",
     "siws": "*",
-    "starknet": "6.9.0",
+    "starknet": "6.11.0",
     "starknetkit": "^2.2.14",
     "superjson": "2.2.1",
     "viem": "^2.13.8",

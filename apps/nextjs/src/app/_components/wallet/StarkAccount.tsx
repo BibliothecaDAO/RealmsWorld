@@ -16,26 +16,26 @@ import { StarknetLoginButton } from "./StarknetLoginButton";
 
 export const StarkAccount = () => {
   const { disconnect } = useDisconnect();
-  const { status, address } = useAccount();
+  const { status, account } = useAccount();
 
-  const { data } = useStarkName({ address });
-  const displayStarkAddress = data ?? shortenHex(address ?? "", 8);
+  const { data } = useStarkName({ address: account?.address });
+  const displayStarkAddress = data ?? shortenHex(account?.address ?? "", 8);
 
   const isConnected = status === "connected";
 
-  if (isConnected && address) {
+  if (account?.address) {
     return (
       <div className="flex w-full justify-between border-t p-2">
         <div className="flex py-1 text-lg">
           <Starknet className="mr-3 w-7" />
-          <CopyButton text={address} displayText={displayStarkAddress} />
+          <CopyButton text={account.address} displayText={displayStarkAddress} />
         </div>
         <div className="flex items-center space-x-2">
           <ExplorerLink
             type="account"
             text="Starkscan"
             chainId={SUPPORTED_L2_CHAIN_ID}
-            hash={address}
+            hash={account.address}
           />
           <Button variant="outline" size="xs" onClick={() => disconnect()}>
             <LogOut className="w-4 self-center" />

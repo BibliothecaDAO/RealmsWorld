@@ -11,8 +11,6 @@ import {
   useSwitchChain as useSwitchEthereumChain,
 } from "wagmi";
 
-import { Button } from "@realms-world/ui";
-
 import { WrongNetworkModal } from "../_components/modal/WrongNetworkModal";
 import { EthereumLoginButton } from "../_components/wallet/EthereumLoginButton";
 import { StarknetLoginButton } from "../_components/wallet/StarknetLoginButton";

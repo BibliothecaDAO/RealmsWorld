@@ -100,9 +100,9 @@ export const Profile = ({
                       </Badge>
                       <span className="text-sm">delegated to</span>
                       <Badge variant="outline">
-                        {currentDelegate == address
+                        {currentDelegate ? currentDelegate == address
                           ? "self"
-                          : shortenHex(currentDelegate, 8)}
+                          : shortenHex(currentDelegate ?? "0x", 8) : null}
                       </Badge>
                     </div>
                   </div>

@@ -5,7 +5,7 @@ import React from "react";
 import StarknetLogo from "@/icons/starknet.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { shortenHex } from "@/utils/utils";
-import { useAccount as useL2Account } from "@starknet-react/core";
+import { useAccount } from "@starknet-react/core";
 
 import type { buttonVariants } from "@realms-world/ui";
 import { Button } from "@realms-world/ui";
@@ -23,7 +23,7 @@ export const StarknetLoginButton = ({
   buttonClass?: string;
   children?: React.ReactNode;
 }) => {
-  const { address, isConnected } = useL2Account();
+  const { account, isConnected } = useAccount();
   const { toggleAccount, toggleStarknetLogin } = useUIStore((state) => state);
 
   const onConnectClick = () => {
@@ -42,8 +42,8 @@ export const StarknetLoginButton = ({
       <span className="flex items-center font-sans normal-case">
         <StarknetLogo className="h-6 w-6" />
         <span className={`pl-2 ${textClass ?? "sm:block"}`}>
-          {address && isConnected ? (
-            <>{shortenHex(address, 8)}</>
+          {account?.address ? (
+            <>{shortenHex(account.address, 8)}</>
           ) : (
             children ?? "Starknet"
           )}
