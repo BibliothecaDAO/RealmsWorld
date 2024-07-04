@@ -49,7 +49,7 @@ export const WalletSheet = () => {
   const { request, data, isPending } = useWalletRequest({
     type: "wallet_requestChainId",
   });
-  const isStarknetWrongNetwork =
+  const isStarknetWrongNetwork = isL2Connected &&
     data !== undefined && BigInt(data) !== chain.id;
 
   // TODO refactor back to default Chain Id when starknet-react supports
