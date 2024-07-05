@@ -22,11 +22,9 @@ import {
 
 export const AttributesDropdown = ({
   address,
-  attributes,
   attributesPromise,
 }: {
   address: string;
-  attributes?: Awaited<ReturnType<typeof getAttributes>>["attributes"];
   attributesPromise?: Promise<RouterOutputs["erc721Attributes"]["all"]>;
 }) => {
   const { handleAttributeClick, isAttributeInQuery, isKeyInQuery } =
@@ -47,7 +45,7 @@ export const AttributesDropdown = ({
       kind: "string",
       values: ["Buy Now Only", "All"].map((value) => ({ value })),
     },
-    ...(attributesFetched?.items ?? attributes ?? []),
+    ...(attributesFetched?.items ?? []),
   ];
   if (finalAttributes.length < 2) {
     return null;
@@ -76,29 +74,29 @@ export const AttributesDropdown = ({
                       {attribute.kind === "string" && (
                         <div className=" p-1">
                           {//@ts-expect-error trpc typings of drizzle sql
-                          attribute.values?.map((a, i: number) => {
-                            return (
-                              <Button
-                                key={i}
-                                size={"sm"}
-                                variant={
-                                  isAttributeInQuery(attribute.key, a.value)
-                                    ? "default"
-                                    : "outline"
-                                }
-                                onClick={() =>
-                                  handleAttributeClick(
-                                    attribute.key,
-                                    a.value,
-                                    attribute.key == "Resource",
-                                  )
-                                }
-                                className={`font-body my-1 mr-1 ${attribute.key == "Status" && "w-full"}`}
-                              >
-                                {a.value} {a.tokenCount && `(${a.tokenCount})`}
-                              </Button>
-                            );
-                          })}
+                            attribute.values?.map((a, i: number) => {
+                              return (
+                                <Button
+                                  key={i}
+                                  size={"sm"}
+                                  variant={
+                                    isAttributeInQuery(attribute.key, a.value)
+                                      ? "default"
+                                      : "outline"
+                                  }
+                                  onClick={() =>
+                                    handleAttributeClick(
+                                      attribute.key,
+                                      a.value,
+                                      attribute.key == "Resource",
+                                    )
+                                  }
+                                  className={`font-body my-1 mr-1 ${attribute.key == "Status" && "w-full"}`}
+                                >
+                                  {a.value} {a.tokenCount && `(${a.tokenCount})`}
+                                </Button>
+                              );
+                            })}
                         </div>
                       )}
 

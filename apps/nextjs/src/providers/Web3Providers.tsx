@@ -3,7 +3,6 @@
 import type { ReactElement } from "react";
 import { env } from "@/env";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import {
   mainnet as starkMainnet,
   sepolia as starkSepolia,
@@ -41,13 +40,6 @@ const starkConnectors = [
 
 const isTestnet = env.NEXT_PUBLIC_IS_TESTNET === "true";
 
-const theme = darkTheme({
-  headlineFont: "Sans Serif",
-  font: "Serif",
-  primaryColor: "#323aa8",
-  primaryHoverColor: "#252ea5",
-});
-
 export const config = getDefaultConfig({
   appName: "Realms.World",
   projectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
@@ -79,28 +71,7 @@ export function Web3Providers({ children }: { children: ReactElement }) {
       <WagmiProvider config={config}>
         <RainbowKitProvider>
           <TransferLogProvider>
-            <ReservoirKitProvider
-              options={{
-                apiKey: env.NEXT_PUBLIC_RESERVOIR_API_KEY,
-                chains: [
-                  {
-                    id: 1,
-                    name: "mainnet",
-                    baseApiUrl: "https://api.reservoir.tools",
-                    active: true,
-                  },
-                  {
-                    id: 11155111,
-                    name: "sepolia",
-                    baseApiUrl: "https://api-sepolia.reservoir.tools",
-                    active: true,
-                  },
-                ],
-              }}
-              theme={theme}
-            >
-              {children}
-            </ReservoirKitProvider>
+            {children}
           </TransferLogProvider>
         </RainbowKitProvider>
       </WagmiProvider>

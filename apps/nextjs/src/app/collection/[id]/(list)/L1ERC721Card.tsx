@@ -7,7 +7,6 @@ import { formatEther } from "viem";
 import { Button } from "@realms-world/ui";
 import { cn } from "@realms-world/utils";
 
-import { BuyButton } from "../../reservoir/BuyModal";
 
 //import { BuyButton } from "./BuyModal";
 
@@ -72,15 +71,7 @@ export const L1ERC721Card = ({
             <div className={`w-full px-3 pb-2 pt-4`}>
               <div className="flex w-full justify-between text-sm">
                 <span className="font-semibold">#{token.token?.tokenId} </span>
-                {isMarket && token.market?.floorAsk?.source?.icon && (
-                  <Image
-                    src={token.market.floorAsk.source.icon}
-                    alt="An example image"
-                    width={20}
-                    height={20}
-                    className=""
-                  />
-                )}
+
               </div>
               <h6>{token.token?.name}</h6>
 
@@ -105,13 +96,6 @@ export const L1ERC721Card = ({
                     view
                   </Link>
                 </Button>
-                {isMarket && token.token && token.market?.floorAsk?.id && (
-                  <BuyButton
-                    size="xs"
-                    address={token.token.contract}
-                    id={token.token.tokenId}
-                  />
-                )}
               </div>
               {selectable && (
                 <div

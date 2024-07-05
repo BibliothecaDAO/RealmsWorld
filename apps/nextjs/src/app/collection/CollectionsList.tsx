@@ -1,10 +1,10 @@
 import { CollectionCard } from "@/app/_components/CollectionCard";
-import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
+//import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { api } from "@/trpc/server";
 
-import { CollectionAddresses } from "@realms-world/constants";
+//import { CollectionAddresses } from "@realms-world/constants";
 
-import { getCollections } from "../../lib/reservoir/getCollections";
+//import { getCollections } from "../../lib/reservoir/getCollections";
 
 export const metadata = {
   title: "Lootverse Collections",
@@ -13,13 +13,13 @@ export const metadata = {
 };
 
 export default async function CollectionsList() {
-  const { collections } = await getCollections([
+  /*const { collections } = await getCollections([
     {
       contract: CollectionAddresses.realms[
         SUPPORTED_L1_CHAIN_ID
       ] as `0x${string}`,
     },
-  ]);
+  ]);*/
   const erc721Collections = await api.erc721Collections.all({});
 
   const l2Collections = [
@@ -51,7 +51,7 @@ export default async function CollectionsList() {
 
   return (
     <div className="grid w-full grid-cols-1 gap-6 px-4 sm:px-0">
-      {collections?.map((collection, index) => {
+      {/*collections?.map((collection, index) => {
         return (
           <CollectionCard
             price={collection.floorAsk?.price?.amount?.native}
@@ -62,7 +62,7 @@ export default async function CollectionsList() {
             key={index}
           />
         );
-      })}
+      })*/}
       {erc721Collections.items.map((collection, index) => {
         const collectionInfo = l2Collections.find(
           (collectionInfo) =>

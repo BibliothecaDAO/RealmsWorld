@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import { getAttributes } from "@/lib/reservoir/getAttributes";
-import { getToken } from "@/lib/reservoir/getToken";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+
 import { api } from "@/trpc/server";
 
 import type { Collections } from "@realms-world/constants";
@@ -11,7 +10,6 @@ import {
   getCollectionAddresses,
 } from "@realms-world/constants";
 
-import { L1ERC721Table } from "./L1ERC721Table";
 import L2ERC721Table from "./L2ERC721Table";
 import { TradeLayout } from "./Trade";
 
@@ -62,17 +60,6 @@ export default function Page({
       return <L2TokenData tokenAddress={l2TokenAddress} />;
     }
   }
-  if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
-    const l1TokenAddress = tokenAddresses[SUPPORTED_L1_CHAIN_ID];
-    if (typeof l1TokenAddress === "string") {
-      return (
-        <L1TokenData
-          tokenAddress={l1TokenAddress}
-          searchParams={searchParams}
-        />
-      );
-    }
-  }
 }
 
 const L2TokenData = ({ tokenAddress }: { tokenAddress: string }) => {
@@ -92,36 +79,3 @@ const L2TokenData = ({ tokenAddress }: { tokenAddress: string }) => {
   );
 };
 
-const L1TokenData = async ({
-  tokenAddress,
-  searchParams,
-}: {
-  tokenAddress: string;
-  searchParams?: {
-    page?: string;
-  };
-}) => {
-  const tokensData = getToken({
-    collection: tokenAddress,
-    query: searchParams ?? {},
-  });
-
-  const attributesData = getAttributes({
-    collection: tokenAddress,
-  });
-  const [{ tokens }, { attributes }] = await Promise.all([
-    tokensData,
-    attributesData,
-  ]);
-
-  if (!tokens) {
-    return <div>Collection Not Found</div>;
-  }
-  return (
-    <Suspense>
-      <TradeLayout tokenAddress={tokenAddress} attributes={attributes}>
-        <L1ERC721Table address={tokenAddress} tokens={tokens} />
-      </TradeLayout>
-    </Suspense>
-  );
-};
