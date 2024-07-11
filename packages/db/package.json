@@ -27,6 +27,7 @@
     "push": "bun with-env drizzle-kit push",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "update-tokens-price": "bun run  ./src/scripts/priceUpdate.ts",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
