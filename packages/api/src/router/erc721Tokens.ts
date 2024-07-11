@@ -40,7 +40,7 @@ export const erc721TokensRouter = createTRPCRouter({
         block,
         sortDirection = "asc",
         attributeFilter,
-        buyNowOnly
+        buyNowOnly,
       } = input;
       const whereFilter: SQL[] = [];
       const cursors = [];
@@ -61,7 +61,7 @@ export const erc721TokensRouter = createTRPCRouter({
         ) {
           cursors.push(
             [
-              sql`case when EXTRACT(EPOCH FROM now()) < ${schema.erc721Tokens.expiration} then ${schema.erc721Tokens.price} else ${sortDirection === "dsc" ? "0" : null} end`,
+              schema.erc721Tokens.price,
               sortDirection ?? "asc", // Sort order ('asc' or 'desc')
               cursor?.price, // Cursor value
             ],
@@ -118,7 +118,7 @@ export const erc721TokensRouter = createTRPCRouter({
         whereFilter.push(...attributesObject);
       }
       if (buyNowOnly) {
-        whereFilter.push(isNotNull(schema.erc721Tokens.price))
+        whereFilter.push(isNotNull(schema.erc721Tokens.price));
       }
       /*const items = await ctx.db
         .select({
