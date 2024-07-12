@@ -28,6 +28,7 @@
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "update-tokens-price": "bun run  ./src/scripts/priceUpdate.ts",
+    "update-tokens-image": "bun run ./src/scripts/imageUpdate.ts",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
