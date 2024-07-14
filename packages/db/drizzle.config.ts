@@ -11,5 +11,4 @@ export default {
     url: process.env.DATABASE_URL + "?ssl=true",
     ssl: true,
   },
-  tablesFilter: ["rw_*"],
 } satisfies Config;

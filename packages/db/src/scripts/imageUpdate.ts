@@ -3,12 +3,14 @@ import { hash, shortString, uint256 } from "starknet";
 
 import {
   ChainId,
+  CollectionDetails,
   Collections,
   getCollectionAddresses,
+  getCollectionFromAddress,
 } from "@realms-world/constants";
 
 import { db } from "../client";
-import { erc721MarketEvents, erc721Tokens } from "../schema";
+import { erc721Tokens } from "../schema";
 
 function eventKey(name: string) {
   const h = BigInt(hash.getSelectorFromName(name));
@@ -41,7 +43,7 @@ async function updateTokensImage() {
           {
             contract_address: token.contract_address,
             entry_point_selector:
-              getCollectionAddresses(Collections.BEASTS)?.[ChainId.MAINNET] ==
+              getCollectionAddresses(Collections.BEASTS)?.[ChainId.SN_MAIN] ==
               token.contract_address
                 ? tokenURI
                 : token_uri, // Token URI
@@ -52,31 +54,91 @@ async function updateTokensImage() {
         id: 0,
       }),
     });
-    const metadata = await response.json();
+    let metadata;
+    metadata = await response.json();
+    if (metadata.error) {
+      const response = await fetch(providerUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          method: "starknet_call",
+          params: [
+            {
+              contract_address: token.contract_address,
+              entry_point_selector: svg_image, // Token URI
+              calldata: [tokenId.low, tokenId.high],
+            },
+            "pending",
+          ],
+          id: 0,
+        }),
+      });
+      metadata = await response.json();
+    }
 
-    if (metadata) {
-      const value: any = [];
+    if (metadata.result) {
+      const value: string[] = [];
       let jsonString: string;
-      let parsedJson: any = {};
-      metadata.result.forEach((result: any) => {
+      let parsedJson: { name: string | null; image: string | null } = {
+        name: null,
+        image: null,
+      };
+      metadata.result.forEach((result: string) => {
         value.push(shortString.decodeShortString(result));
       });
       if (metadata.pending_word) {
         value.push(metadata.pending_word);
       }
-      // Join the array elements, skipping the first and last elements
-      jsonString = value.slice(1, -1).join("").replace(/0+$/, "");
+      if (
+        [
+          getCollectionAddresses(Collections.BEASTS)?.[ChainId.SN_MAIN],
+          getCollectionAddresses(Collections.GOLDEN_TOKEN)?.[ChainId.SN_MAIN],
+        ].includes(token.contract_address)
+      ) {
+        // eslint-disable-next-line no-control-regex
+        const regex = new RegExp("\\u0015", "g");
+        jsonString = value
+          .slice(1)
+          .join("")
+          .substring(27)
+          .replace(/0+$/, "")
+          .replace(
+            /"name":"(.*?)",/g,
+            (match: string, name: string) =>
+              `"name":"${name.replaceAll('"', '\\"')}",`,
+          )
+          .replace(regex, "");
+        parsedJson = JSON.parse(jsonString);
 
-      // Remove the "data:application/json;base64," prefix
-      jsonString = jsonString.substring(29);
-      // Decode the base64 string
-      jsonString = atob(jsonString);
-      // Remove the trailing character if it exists
-      if (jsonString.endsWith("Ó")) {
-        jsonString = jsonString.slice(0, -1);
+        //}
+      } else {
+        if (value.slice(1).join("").startsWith("https")) {
+          parsedJson.image = value.slice(1).join("");
+          parsedJson.name =
+            CollectionDetails[getCollectionFromAddress(token.contract_address)]
+              ?.displayName +
+            " #" +
+            token.token_id;
+        } else if (value.slice(1).join("").startsWith("<svg")) {
+          parsedJson.image =
+            "data:image/svg+xml;utf8," + value.slice(1).join("");
+        } else {
+          jsonString = value.slice(1, -1).join("").replace(/0+$/, "");
+
+          // Remove the "data:application/json;base64," prefix
+          jsonString = jsonString.substring(29);
+          // Decode the base64 string
+          jsonString = atob(jsonString);
+          // Remove the trailing character if it exists
+          if (jsonString.endsWith("Ó")) {
+            jsonString = jsonString.slice(0, -1);
+          }
+          parsedJson = JSON.parse(jsonString);
+        }
       }
-
-      parsedJson = JSON.parse(jsonString);
       console.log(parsedJson.name);
 
       await db

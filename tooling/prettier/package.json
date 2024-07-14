@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.3.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5"
   },
