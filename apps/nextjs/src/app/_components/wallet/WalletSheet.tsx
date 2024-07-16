@@ -3,7 +3,7 @@
 //import { shortenHex } from "@/utils/utils";
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { Account } from "@/app/bridge/Account";
+import { Account } from "@/app/(app)/bridge/Account";
 import { NETWORK_NAME } from "@/constants/env";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";

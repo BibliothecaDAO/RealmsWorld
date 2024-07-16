@@ -1,6 +1,6 @@
 "use client";
 
-import { StakingMigration } from "@/app/account/lords/Migration";
+import { StakingMigration } from "@/app/(app)/account/lords/Migration";
 import { useUIStore } from "@/providers/UIStoreProvider";
 
 import {
