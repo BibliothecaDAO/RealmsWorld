@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { StudioCard } from "@/app/(app)/studios/StudioCard";
 
-import { studios } from "@realms-world/constants";
+import { reader } from "@/utils/keystatic";
 
-import { PageLayout } from "../../_components/PageLayout";
+import { PageLayout } from "@/app/_components/PageLayout";
 
 export const metadata: Metadata = {
   title: "Games of the Realms",
@@ -16,12 +16,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+export default async function Page() {
+  const studios = await reader.collections.studios.all();
   return (
     <PageLayout title="Game Studios">
       <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-        {Object.entries(studios).map(([_, studio], index) => (
-          <StudioCard key={index} studio={studio} />
+        {studios.map((studio, index) => (
+          <StudioCard key={index} studio={studio.entry} slug={studio.slug} />
         ))}
       </div>
     </PageLayout>

@@ -35,7 +35,6 @@ export default async function Page({ params }: { params: { id: string } }) {
     console.error(errors);
     throw new Error('Invalid content');
   }
-  console.log(event)
   const renderable = Markdoc.transform(node);
   return (
     <PageLayout title={event.name}>

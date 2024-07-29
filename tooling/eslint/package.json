@@ -16,17 +16,17 @@
   "dependencies": {
     "@next/eslint-plugin-next": "15.0.0-rc.0",
     "typescript-eslint": "rc-v8",
-    "eslint-config-turbo": "^2.0.6",
+    "eslint-config-turbo": "^2.0.7",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.9.0",
-    "eslint-plugin-react": "^7.34.3",
+    "eslint-plugin-react": "^7.34.4",
     "eslint-plugin-react-hooks": "rc"
   },
   "devDependencies": {
     "@realms-world/prettier-config": "workspace:*",
     "@realms-world/tsconfig": "workspace:*",
     "eslint": "^9.7.0",
-    "prettier": "^3.3.2",
+    "prettier": "^3.3.3",
     "typescript": "^5.5.3"
   },
   "prettier": "@realms-world/prettier-config"

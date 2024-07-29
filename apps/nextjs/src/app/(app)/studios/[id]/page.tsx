@@ -5,6 +5,9 @@ import { PageLayout } from "@/app/_components/PageLayout";
 import { SocialIcons } from "@/app/_components/SocialIcons";
 import { GameCard } from "@/app/(app)/games/GameCard";
 import { ChevronLeft } from "lucide-react";
+import { reader } from "@/utils/keystatic";
+import Markdoc from "@markdoc/markdoc";
+import React from "react";
 
 import type { Game } from "@realms-world/constants";
 import { getGamesByStudio, studios } from "@realms-world/constants";
@@ -35,15 +38,26 @@ export function generateMetadata({
   };
 }
 
-export default function Page({ params }: { params: { id: string } }) {
-  const studioId = params.id as keyof typeof studios;
-  const studio = studios[studioId];
+export default async function Page({ params }: { params: { id: string } }) {
+  const studio = await reader.collections.studios.read(params.id);
+
   if (!studio) return;
-  const studioGames = getGamesByStudio(studioId);
+  console.log(studio)
+  const { node } = await studio.content()
+  const errors = Markdoc.validate(node);
+  if (errors.length) {
+    console.error(errors);
+    throw new Error('Invalid content');
+  }
+  const renderable = Markdoc.transform(node);
+  const studioGames = await Promise.all(studio.games.map(async (game) => {
+    return (await reader.collections.games.read(game ?? "")) ?? "";
+  }));
+  console.log(studioGames)
   const tabs = [
     {
       name: "Details",
-      content: <div className="leading-relaxed">{studio.longform}</div>,
+      content: <div className="leading-relaxed"> {Markdoc.renderers.react(renderable, React)}</div>,
     },
   ];
 
@@ -55,7 +69,7 @@ export default function Page({ params }: { params: { id: string } }) {
           {studio.links.homepage && (
             <Link href={studio.links.homepage}>
               <Button size={"xs"} variant={"outline"} className="w-full">
-                {studio.name}
+                {studio.title}
               </Button>
             </Link>
           )}
@@ -80,7 +94,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
       <div className="flex flex-wrap gap-x-10">
         <div className="mb-4 w-full">
-          <h1 className="mb-2 text-3xl font-bold">{studio.name}</h1>
+          <h1 className="mb-2 text-3xl font-bold">{studio.title}</h1>
           <hr />
         </div>
 
@@ -88,7 +102,7 @@ export default function Page({ params }: { params: { id: string } }) {
           <div className="flex justify-center py-8">
             <Image
               alt=""
-              src={`/studios/${studio.id}/logo.${studio.logoFormat}`}
+              src={`/content/studios/${params.id}/${studio.logo}`}
               width={250}
               height={100}
             />
@@ -139,8 +153,8 @@ export default function Page({ params }: { params: { id: string } }) {
         <div className="flex-1 grow">
           <h4>Games</h4>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {studioGames.map((game: Game, index) => (
-              <GameCard key={index} game={game} />
+            {studioGames.map((game, index) => (
+              <GameCard key={index} game={game} slug={studio.games[index]} />
             ))}
           </div>
         </div>
