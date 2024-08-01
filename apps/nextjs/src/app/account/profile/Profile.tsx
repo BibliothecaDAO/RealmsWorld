@@ -33,7 +33,7 @@ export const Profile = ({
   const { address } = useAccount();
   const { data: delegate } = api.delegates.byId.useQuery(
     {
-      user: address,
+      user: address ?? "0x",
     },
     {
       refetchInterval: 60000,
