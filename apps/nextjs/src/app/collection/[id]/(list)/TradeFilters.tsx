@@ -1,8 +1,8 @@
 "use client";
 
-import { useUIContext } from "@/app/providers/UIProvider";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { sortDirection, sortOptions } from "@/constants";
-import { useQuery } from "@/hooks/useQuery";
+import { useQueryParams } from "@/hooks/useQueryParams";
 import { Filter, Grid, List } from "lucide-react";
 
 import {
@@ -14,8 +14,8 @@ import {
 } from "@realms-world/ui";
 
 export const TradeFilters = () => {
-  const { handleAttributeClick } = useQuery();
-  const { isGrid, toggleFilter, toggleGrid } = useUIContext();
+  const { handleAttributeClick } = useQueryParams();
+  const { isGrid, toggleFilter, toggleGrid } = useUIStore((state) => state,);
   return (
     <div className="ml-auto flex space-x-2">
       <Button

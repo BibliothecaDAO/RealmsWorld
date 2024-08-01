@@ -1,11 +1,13 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { sum } from "drizzle-orm";
 import { z } from "zod";
 
-import { and, asc, eq, gt, min, schema, sql } from "@realms-world/db";
+import { and, asc, eq, gt, min, sql } from "@realms-world/db";
+import { erc721Collections, erc721MarketEvents } from "@realms-world/db/schema";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { publicProcedure } from "../trpc";
 
-export const erc721CollectionsRouter = createTRPCRouter({
+export const erc721CollectionsRouter = {
   all: publicProcedure
     .input(
       z.object({
@@ -20,47 +22,44 @@ export const erc721CollectionsRouter = createTRPCRouter({
       //const { orderBy, direction } = input;
       /*const orderByFilter: SQL[] = [];
       if (direction === "asc") {
-        orderByFilter.push(asc(schema.erc721MarketEvents.token_id));
+        orderByFilter.push(asc(erc721MarketEvents.token_id));
       } else {
-        orderByFilter.push(desc(schema.erc721MarketEvents.id));
+        orderByFilter.push(desc(erc721MarketEvents.id));
       }*/
       const fp = ctx.db
-      .select({
-        floorPrice: min(schema.erc721MarketEvents.price).as('floorPrice'),
-        collectionId: schema.erc721MarketEvents.collection_id,
-      })
-      .from(schema.erc721MarketEvents)
-      .where(
-        and(
-          eq(schema.erc721MarketEvents.status, "open"),
-          eq(schema.erc721MarketEvents.active, true),
-          gt(schema.erc721MarketEvents.expiration, sql`EXTRACT(EPOCH FROM now())`),
-          sql`upper_inf(_cursor)`
-        ),
-      )
-      .groupBy(schema.erc721MarketEvents.collection_id)
-      .orderBy(asc(min(schema.erc721MarketEvents.price)))
-      .as('fp')
+        .select({
+          floorPrice: min(erc721MarketEvents.price).as("floorPrice"),
+          collectionId: erc721MarketEvents.collection_id,
+        })
+        .from(erc721MarketEvents)
+        .where(
+          and(
+            eq(erc721MarketEvents.status, "open"),
+            eq(erc721MarketEvents.active, true),
+            gt(erc721MarketEvents.expiration, sql`EXTRACT(EPOCH FROM now())`),
+            sql`upper_inf(_cursor)`,
+          ),
+        )
+        .groupBy(erc721MarketEvents.collection_id)
+        .orderBy(asc(min(erc721MarketEvents.price)))
+        .as("fp");
       //console.log(fp)
 
       const items = await ctx.db
         .select({
-          marketplaceId: schema.erc721Collections.marketplaceId,
-          volume: sum(schema.erc721MarketEvents.price),
-          floorPrice: fp.floorPrice
+          marketplaceId: erc721Collections.marketplaceId,
+          volume: sum(erc721MarketEvents.price),
+          floorPrice: fp.floorPrice,
         })
-        .from(schema.erc721Collections)
-        .where(and(eq(schema.erc721MarketEvents.status, "filled")))
+        .from(erc721Collections)
+        .where(and(eq(erc721MarketEvents.status, "filled")))
         .leftJoin(
-          schema.erc721MarketEvents,
-          eq(
-            schema.erc721MarketEvents.collection_id,
-            schema.erc721Collections.marketplaceId,
-          ),
+          erc721MarketEvents,
+          eq(erc721MarketEvents.collection_id, erc721Collections.marketplaceId),
         )
-        .leftJoin(fp, eq(fp.collectionId, schema.erc721Collections.marketplaceId))
+        .leftJoin(fp, eq(fp.collectionId, erc721Collections.marketplaceId))
         .limit(limit)
-        .groupBy(schema.erc721Collections.marketplaceId, fp.floorPrice)
+        .groupBy(erc721Collections.marketplaceId, fp.floorPrice);
 
       /*await ctx.db.query.erc721Collections.findMany({
         limit: limit,
@@ -77,23 +76,20 @@ export const erc721CollectionsRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.db
         .select({
-          marketplaceId: schema.erc721Collections.marketplaceId,
-          volume: sum(schema.erc721MarketEvents.price),
+          marketplaceId: erc721Collections.marketplaceId,
+          volume: sum(erc721MarketEvents.price),
         })
-        .from(schema.erc721Collections)
+        .from(erc721Collections)
         .where(
           and(
-            eq(schema.erc721Collections.id, input.id),
-            eq(schema.erc721MarketEvents.status, "filled"),
+            eq(erc721Collections.id, input.id),
+            eq(erc721MarketEvents.status, "filled"),
           ),
         )
         .leftJoin(
-          schema.erc721MarketEvents,
-          eq(
-            schema.erc721MarketEvents.collection_id,
-            schema.erc721Collections.marketplaceId,
-          ),
+          erc721MarketEvents,
+          eq(erc721MarketEvents.collection_id, erc721Collections.marketplaceId),
         )
-        .groupBy(schema.erc721Collections.marketplaceId);
+        .groupBy(erc721Collections.marketplaceId);
     }),
-});
+} satisfies TRPCRouterRecord;

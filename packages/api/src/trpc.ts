@@ -11,8 +11,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import type { Session } from "@realms-world/auth";
-import { auth } from "@realms-world/auth";
-import { db } from "@realms-world/db";
+import { db } from "@realms-world/db/client";
 
 /**
  * 1. CONTEXT
@@ -26,11 +25,11 @@ import { db } from "@realms-world/db";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: {
+export const createTRPCContext = (opts: {
   headers: Headers;
   session: Session | null;
 }) => {
-  const session = opts.session ?? (await auth());
+  const session = opts.session;
   const source = opts.headers.get("x-trpc-source") ?? "unknown";
   console.log(">>> tRPC Request from", source, "by", session?.user);
 

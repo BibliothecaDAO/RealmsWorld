@@ -40,8 +40,8 @@ const ListIem: FC<ListItemProps> = ({
       <div className="flex items-center gap-3 overflow-hidden">
         {token?.image && (
           <Image
-            src={token?.image}
-            alt={token?.name ?? "token"}
+            src={token.image}
+            alt={token.name ?? "token"}
             height={56}
             width={56}
             className="aspect-square"
@@ -49,7 +49,7 @@ const ListIem: FC<ListItemProps> = ({
         )}
         <div className="flex flex-col gap-1 overflow-hidden">
           <h6 className="text-ellipsify">
-            {token?.token_id ? `#${token?.token_id}` : token?.name}
+            {token?.token_id ? `#${token.token_id}` : token?.name}
           </h6>
           <div className="flex items-center gap-1">
             {/*<span className="text-ellipsify">{collection?.name}</span>*/}

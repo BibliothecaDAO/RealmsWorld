@@ -1,12 +1,14 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import { and, eq, inArray, schema, sql } from "@realms-world/db";
+import { and, eq, inArray, sql } from "@realms-world/db";
+import { erc721MarketEvents, erc721Tokens } from "@realms-world/db/schema";
 
 import { withCursorPagination } from "../cursorPagination";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { publicProcedure } from "../trpc";
 
-export const erc721MarketEventsRouter = createTRPCRouter({
+export const erc721MarketEventsRouter = {
   all: publicProcedure
     .input(
       z.object({
@@ -38,7 +40,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let cursors: any[] = [
         [
-          schema.erc721MarketEvents.id, // Column to use for cursor
+          erc721MarketEvents.id, // Column to use for cursor
           direction ?? "desc", // Sort order ('asc' or 'desc')
           cursor, // Cursor value
         ],
@@ -46,32 +48,30 @@ export const erc721MarketEventsRouter = createTRPCRouter({
       if (orderBy == "timestamp") {
         cursors = [
           [
-            schema.erc721MarketEvents.updated_at, // Column to use for cursor
+            erc721MarketEvents.updated_at, // Column to use for cursor
             direction ?? "desc", // Sort order ('asc' or 'desc')
             cursor, // Cursor value
           ],
         ];
       }
       /*if (direction === "asc") {
-        orderByFilter.push(asc(schema.erc721MarketEvents.token_id));
+        orderByFilter.push(asc(erc721MarketEvents.token_id));
       } else {
         if (orderBy == "timestamp") {
-          orderByFilter.push(desc(schema.erc721MarketEvents.updated_at));
+          orderByFilter.push(desc(erc721MarketEvents.updated_at));
         } else {
-          orderByFilter.push(desc(schema.erc721MarketEvents.id));
+          orderByFilter.push(desc(erc721MarketEvents.id));
         }
       }*/
 
       if (token_key) {
-        whereFilter.push(eq(schema.erc721MarketEvents.token_key, token_key));
+        whereFilter.push(eq(erc721MarketEvents.token_key, token_key));
       }
       if (collectionId) {
-        whereFilter.push(
-          eq(schema.erc721MarketEvents.collection_id, collectionId),
-        );
+        whereFilter.push(eq(erc721MarketEvents.collection_id, collectionId));
       }
       if (status?.length && status[0] != undefined) {
-        whereFilter.push(inArray(schema.erc721MarketEvents.status, status));
+        whereFilter.push(inArray(erc721MarketEvents.status, status));
       }
       /*if (owner) {
         whereFilter.push(eq(schema.erc721Tokens.owner, owner.toLowerCase()));
@@ -101,7 +101,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
       if (items.length > limit) {
         const nextItem = items.pop();
         nextCursor =
-          orderBy == "timestamp" ? nextItem!.updated_at : nextItem!.id;
+          orderBy == "timestamp" ? nextItem?.updated_at : nextItem?.id;
       }
       return {
         items,
@@ -113,7 +113,7 @@ export const erc721MarketEventsRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.erc721Tokens.findFirst({
-        where: eq(schema.erc721Tokens.id, input.id),
+        where: eq(erc721Tokens.id, input.id),
       });
     }),
-});
+} satisfies TRPCRouterRecord;

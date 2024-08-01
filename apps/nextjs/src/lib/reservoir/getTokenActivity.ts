@@ -1,4 +1,5 @@
 import { RESERVOIR_API_URL } from "@/constants/env";
+import { env } from "@/env";
 
 export const getTokenActivity = async ({ token }: { token: string }) => {
   try {
@@ -7,7 +8,7 @@ export const getTokenActivity = async ({ token }: { token: string }) => {
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
+          "x-api-key": env.NEXT_PUBLIC_RESERVOIR_API_KEY,
           "Access-Control-Allow-Origin": "*",
         },
       },

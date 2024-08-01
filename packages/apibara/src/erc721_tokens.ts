@@ -1,11 +1,11 @@
-import type { Config } from "https://esm.sh/@apibara/indexer@0.2.2";
-import type { Postgres } from "https://esm.sh/@apibara/indexer@0.2.2/sink/postgres";
+import type { Config } from "https://esm.sh/@apibara/indexer@0.4.1";
+import type { Postgres } from "https://esm.sh/@apibara/indexer@0.4.1/sink/postgres";
 import type {
   Block,
   BlockHeader,
   EventWithTransaction,
   Starknet,
-} from "https://esm.sh/@apibara/indexer@0.2.2/starknet";
+} from "https://esm.sh/@apibara/indexer@0.4.1/starknet";
 import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import { uint256 } from "https://esm.sh/starknet";
 import { formatUnits } from "https://esm.sh/viem";
@@ -33,8 +33,9 @@ export const config: Config<Starknet, Postgres> = {
   sinkType: "postgres",
   sinkOptions: {
     connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
-    tableName: "rw_erc721_tokens",
+    tableName: "erc721_tokens",
     entityMode: true,
+    uniqueColumns: true,
   },
 };
 
@@ -42,13 +43,15 @@ export default function transform({ header, events }: Block) {
   return events?.flatMap((event) => transferToTask(header!, event));
 }
 
-function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
+function transferToTask(header: BlockHeader, { event }: EventWithTransaction) {
   const isMainnet =
     Deno.env.get("STREAM_URL") == "https://mainnet.starknet.a5a.ch";
   const isData = event.data != undefined;
   switch (event.keys?.[0]) {
     case TRANSFER_EVENT: {
       const from = BigInt(isData ? event.data[0] : event.keys[1]);
+      const to = BigInt(isData ? event.data[1] : event.keys[2]);
+
       const token_id = parseInt(
         uint256
           .uint256ToBN({
@@ -69,6 +72,25 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
             owner: owner,
           },
         };
+      }
+      if (to == 0n) {
+        return {
+          entity: {
+            id: event.fromAddress + ":" + token_id,
+          },
+          update: {
+            id:
+              event.fromAddress +
+              ":" +
+              token_id +
+              ":burned" +
+              header.blockNumber,
+            contract_address: event.fromAddress,
+            token_id,
+            minter: owner,
+            owner: owner,
+          },
+        };
       } else {
         return {
           entity: {
@@ -77,7 +99,7 @@ function transferToTask(_header: BlockHeader, { event }: EventWithTransaction) {
           update: {
             owner: owner,
             price: null,
-            expiration: null
+            expiration: null,
           },
         };
       }

@@ -21,7 +21,7 @@ import {
   Input,
   Progress,
   Tooltip,
-  TooltipProvider,
+  TooltipContent,
 } from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
@@ -186,15 +186,14 @@ export function ListingEditModal({
                 editListingStep === EditListingStep.Edit && (
                   <div className="flex flex-col">
                     {transactionError && (
-                      <Alert
-                        variant={"warning"}
-                        message={transactionError.message}
-                      />
+                      <Alert variant={"warning"}>
+                        {transactionError.message}
+                      </Alert>
                     )}
                     <div className="border-b">
                       <ERC721LineItem
                         tokenDetails={token}
-                        price={listing?.price}
+                        price={listing.price}
                         // priceSubtitle="Price"
                         //usdPrice={totalUsd.toString()}
                         expires={expires}
@@ -205,13 +204,12 @@ export function ListingEditModal({
                       <div className="mb-2 justify-between">
                         <p>Set New Price</p>
                         <div className="flex items-center gap-4">
-                          <TooltipProvider>
-                            <Tooltip
-                              side="left"
-                              width={200}
-                              content={`How many Lords you will receive after creator royalties are subtracted.`}
-                            />
-                          </TooltipProvider>
+                          <Tooltip>
+                            <TooltipContent side="left">
+                              How many Lords you will receive after creator
+                              royalties are subtracted.
+                            </TooltipContent>
+                          </Tooltip>
                         </div>
                       </div>
                       <div className="flex flex-col gap-1">
@@ -233,7 +231,7 @@ export function ListingEditModal({
                             }}
                             className={"h-12 w-full"}
                             onBlur={() => {
-                              if (price === undefined) {
+                              if (!price) {
                                 setPrice(0);
                               }
                             }}
@@ -316,7 +314,7 @@ export function ListingEditModal({
                     <>
                       <Progress
                         title={
-                          stepData?.currentStepItem.txHashes &&
+                          stepData.currentStepItem.txHashes &&
                           "Finalizing on blockchain"
                         }
                       />

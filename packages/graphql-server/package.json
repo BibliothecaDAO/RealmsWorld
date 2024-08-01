@@ -4,6 +4,7 @@
   "exports": {
     ".": "./index.ts"
   },
+  "type": "module",
   "typesVersions": {
     "*": {
       "*": [
@@ -14,27 +15,22 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "lint": "eslint .",
+    "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@realms-world/db": "*",
     "garph": "^0.6.8",
-    "graphql": "^16.8.1",
-    "graphql-yoga": "^5.3.0"
+    "graphql": "^16.9.0",
+    "graphql-yoga": "^5.5.0"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "*",
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
-    "eslint": "^8.57.0",
-    "typescript": "^5.4.5"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@realms-world/eslint-config/base"
-    ]
+    "eslint": "^9.6.0",
+    "typescript": "^5.5.3"
   },
   "prettier": "@realms-world/prettier-config"
 }

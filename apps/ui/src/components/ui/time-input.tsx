@@ -1,10 +1,10 @@
 "use client";
 
-import * as React from "react";
 import type { AriaTimeFieldProps, TimeValue } from "@react-aria/datepicker";
+import type { DateFieldState, DateSegment } from "@react-stately/datepicker";
+import * as React from "react";
 import { useDateSegment, useTimeField } from "@react-aria/datepicker";
 import { useTimeFieldState } from "@react-stately/datepicker";
-import type { DateFieldState, DateSegment } from "@react-stately/datepicker";
 
 import { cn } from "@realms-world/utils";
 
@@ -71,14 +71,14 @@ const TimeInput = React.forwardRef<HTMLDivElement, TimeInputProps>(
 
     React.useImperativeHandle<HTMLDivElement | null, HTMLDivElement | null>(
       ref,
-      () => innerRef?.current,
+      () => innerRef.current,
     );
 
-    const locale = window !== undefined ? window.navigator.language : "en-US";
+    const locale = window.navigator.language || "en-US";
 
     const state = useTimeFieldState({
-      hourCycle: hourCycle,
-      locale: locale,
+      hourCycle,
+      locale,
       shouldForceLeadingZeros: true,
       autoFocus: true,
       ...props,

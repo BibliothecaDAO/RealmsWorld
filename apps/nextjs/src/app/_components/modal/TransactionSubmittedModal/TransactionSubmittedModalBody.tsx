@@ -12,33 +12,44 @@ const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {
 
   const textMessage =
     type === ActionType.TRANSFER_TO_L2
-      ? "Your transaction has been successfully sent to StarkNet!"
+      ? "Your transaction has been successfully sent to Starknet!"
       : isTransferCompleted
         ? "Your transfer is completed on Ethereum!"
-        : "Your transaction is now being processing on StarkNet.";
+        : "Your transaction is now being processing on Starknet.";
 
   const messageComponent =
     type === ActionType.TRANSFER_TO_L2 ? (
       <Alert
-        message={
-          "Completing a Ethereum → StarkNet transfer may take up to several hours depending on the congestion. It may take a while for your wallet balance to update."
-        }
+        className="bg-yellow-900 text-white"
         title={"This is an Alpha version"}
-        variant="warning"
-      />
+        variant="destructive"
+      >
+        Completing a Ethereum → Starknet transfer may take up to several hours
+        depending on the congestion. It may take a while for your wallet balance
+        to update.
+      </Alert>
     ) : !isTransferCompleted ? (
       <Alert
-        message={
-          "The StarkNet → Ethereum transfer divided into two stages:\n• A waiting period of several hours is expected between the stages.\n• At the end of the first step, you will be required to sign in order to complete the transfer."
-        }
+        className="bg-yellow-900 text-white"
         title={"This is an Alpha version"}
-        variant="warning"
-      />
+        variant="destructive"
+      >
+        The Starknet → Ethereum transfer divided into two stages:
+        <ul className="list-disc pl-5">
+          <li>
+            A waiting period of several hours is expected between the stages.
+          </li>
+          <li>
+            At the end of the first step, you will be required to sign a
+            transaction on Ethereum to finish withdrawing
+          </li>
+        </ul>
+      </Alert>
     ) : null;
 
   return (
-    <div className="mb-6 flex flex-col items-center px-2 text-center ">
-      <div className="mb-4 w-2/3  text-sm">{textMessage}</div>
+    <div className="mb-6 flex flex-col items-center">
+      <div className="mb-4 text-lg">{textMessage}</div>
       {messageComponent}
     </div>
   );

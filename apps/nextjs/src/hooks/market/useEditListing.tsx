@@ -4,7 +4,7 @@ import MarketplaceABI from "@/abi/L2/Marketplace.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
   useContract,
-  useContractWrite as useL2ContractWrite,
+  useSendTransaction as useL2ContractWrite,
 } from "@starknet-react/core";
 import { parseUnits } from "viem";
 
@@ -27,19 +27,18 @@ export const useEditListing = ({
     if (!listingId || !price) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
-      contract?.populateTransaction.edit!(
+      contract?.populate("edit", [
         listingId,
         parseUnits(`${price}`, 18).toString(),
-      ),
+      ]),
     ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listingId, price]);
+  }, [contract, listingId, price]);
 
-  const { writeAsync, data, error } = useL2ContractWrite({ calls });
+  const { sendAsync, data, error } = useL2ContractWrite({ calls });
 
   return {
     calls,
-    writeAsync,
+    sendAsync,
     data,
     error,
   };

@@ -9,9 +9,8 @@ import useDebounce from "@/hooks/useDebounce";
 import LordsIcon from "@/icons/lords.svg";
 import { executeSwap, fetchQuotes } from "@avnu/avnu-sdk";
 import { useAccount, useBalance } from "@starknet-react/core";
-import { parseUnits } from "ethers";
 import { ArrowUpDown } from "lucide-react";
-import { formatEther, formatUnits, parseEther } from "viem";
+import { formatEther, formatUnits, parseEther, parseUnits } from "viem";
 
 import { LORDS } from "@realms-world/constants";
 import { SUPPORTED_TOKENS } from "@realms-world/constants/src/Tokens";
@@ -26,8 +25,8 @@ import {
 } from "@realms-world/ui";
 
 import { StarknetLoginButton } from "../_components/wallet/StarknetLoginButton";
+import { useWalletsProviderContext } from "../../providers/WalletsProvider";
 import { TokenBalance } from "../bridge/TokenBalance";
-import { useWalletsProviderContext } from "../providers/WalletsProvider";
 
 const AVNU_OPTIONS = {
   baseUrl: `https://${NETWORK_NAME == "MAIN" ? "starknet" : "sepolia"}.api.avnu.fi`,
@@ -102,10 +101,7 @@ export const SwapTokens = ({
           setSellAmount(
             isBuyLords
               ? formatEther(sellAmountFromBuyAmount)
-              : formatUnits(
-                  quotes[0].buyAmount,
-                  selectedTokenObj?.decimals ?? 18,
-                ),
+              : formatUnits(quotes[0].buyAmount, selectedTokenObj.decimals),
           );
         }
       })
@@ -178,8 +174,8 @@ export const SwapTokens = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBuyLords, selectedTokenObj, isBuyInputDebouncing, buyAmount]);
 
-  const handleSwap = async () => {
-    if (!account || !sellAmount || !quotes?.[0]) return;
+  const handleSwap = () => {
+    if (!account || !sellAmount || !quotes[0]) return;
     setErrorMessage("");
     setSuccessMessage("");
     setLoading(true);
@@ -205,7 +201,7 @@ export const SwapTokens = ({
         {isBuyLords ? (
           <Input
             disabled={loading}
-            className="flex-grow-1 mb-0 !bg-transparent text-xl focus:ring-0"
+            className="flex-grow-1 mb-0 border-0 !bg-transparent text-xl focus:ring-0"
             onChange={handleChangeInput}
             value={sellAmount}
             //disabled={loading}
@@ -216,11 +212,11 @@ export const SwapTokens = ({
             onChange={handleChangeBuyInput}
             placeholder="0"
             type="text"
-            className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0 "
+            className="border-0 !bg-transparent text-xl placeholder:text-slate-400 focus:ring-0"
             disabled={loading}
             id="buy-amount"
             value={
-              quotes?.[0]
+              quotes[0]
                 ? formatUnits(
                     quotes[0].buyAmount,
                     selectedTokenObj?.decimals ?? 18,
@@ -247,7 +243,7 @@ export const SwapTokens = ({
                       height={20}
                       alt={token.name ?? ""}
                     />
-                    {token?.symbol}
+                    {token.symbol}
                   </span>
                 </SelectItem>
               ))}
@@ -266,14 +262,14 @@ export const SwapTokens = ({
             onChange={handleChangeBuyInput}
             placeholder="0"
             type="text"
-            className="!bg-transparent text-xl placeholder:text-slate-400 focus:ring-0 "
+            className="!bg-transparent text-xl border-0  placeholder:text-slate-400 focus:ring-0"
             disabled={loading}
             id="buy-amount"
-            value={quotes?.[0] ? formatEther(quotes[0].buyAmount) : buyAmount}
+            value={quotes[0] ? formatEther(quotes[0].buyAmount) : buyAmount}
           />
         ) : (
           <Input
-            className="flex-grow-1 mb-0 !bg-transparent text-xl focus:ring-0"
+            className="flex-grow-1 mb-0 border-0  !bg-transparent text-xl focus:ring-0"
             onChange={handleChangeInput}
             value={sellAmount}
             disabled={loading}
@@ -295,7 +291,7 @@ export const SwapTokens = ({
         return <p>Loading...</p>;
       case parseEther(sellAmount ?? "0") > sellBalance:
         return "Insufficient Balance";
-      case !!quotes?.[0]:
+      case !!quotes[0]:
         return "Swap";
 
       default:
@@ -305,7 +301,7 @@ export const SwapTokens = ({
 
   return (
     <>
-      <div className="rounded border bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
+      <div className="rounded border bg-black/20 p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
         <p className="text-sm">You pay</p>
         {isBuyLords ? renderTokensInput() : renderLordsInput()}
         <div className="flex justify-between">
@@ -313,12 +309,10 @@ export const SwapTokens = ({
             {quotes[0] && `≈ $${quotes[0]?.buyAmountInUsd.toFixed(2)}`}
           </span>
           <TokenBalance
-            onClick={() =>
-              setSellAmount(formatEther(BigInt(sellBalance) ?? 0n))
-            }
+            onClick={() => setSellAmount(formatEther(BigInt(sellBalance)))}
             balance={sellBalance}
             symbol=""
-            isLoading={l2loading && !balances.l2?.lords}
+            isLoading={l2loading && !balances.l2.lords}
           />
         </div>
       </div>
@@ -335,7 +329,7 @@ export const SwapTokens = ({
           />
         </button>
       )}
-      <div className="mt-4 rounded border  bg-black/20  p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
+      <div className="mt-4 rounded border bg-black/20 p-4 focus-within:!border-bright-yellow/80 hover:border-bright-yellow/40">
         <p className="text-sm">You receive</p>
         {isBuyLords ? renderLordsInput() : renderTokensInput()}
         <span className="text-sm text-bright-yellow/50">
@@ -347,9 +341,7 @@ export const SwapTokens = ({
       ) : (
         <Button
           disabled={
-            loading ||
-            !sellAmount ||
-            parseEther(sellAmount ?? "0") > sellBalance
+            loading || !sellAmount || parseEther(sellAmount) > sellBalance
           }
           onClick={handleSwap}
           className="mt-2 w-full"

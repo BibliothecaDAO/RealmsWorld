@@ -1,10 +1,10 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useState } from "react";
+import { useCancelListing } from "@/hooks/market/useCancelListing";
 import { findLowestPriceActiveListing } from "@/utils/getters";
-import { useWaitForTransaction } from "@starknet-react/core";
+import { useTransactionReceipt } from "@starknet-react/core";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { useCancelListing } from "@/hooks/market/useCancelListing";
 
 //import { useCoinConversion } from "../../hooks";
 
@@ -32,11 +32,7 @@ interface Props {
   children: (props: ChildrenProps) => ReactNode;
 }
 
-export const ListCancelModalRender: FC<Props> = ({
-  open,
-  children,
-  token,
-}) => {
+export const ListCancelModalRender: FC<Props> = ({ open, children, token }) => {
   const [cancelStep, setCancelStep] = useState<CancelStep>(CancelStep.Cancel);
   const [transactionError, setTransactionError] = useState<Error | null>();
 
@@ -46,17 +42,16 @@ export const ListCancelModalRender: FC<Props> = ({
 
   const listing =
     token?.listings &&
-    findLowestPriceActiveListing(token?.listings, token?.owner);
-
+    findLowestPriceActiveListing(token.listings, token.owner);
 
   const {
     data,
     writeAsync,
     error: writeError,
     // isLoading: isTxSubmitting,
-  } = useCancelListing({listingId: listing?.id})
-  
-  const { data: transactionData } = useWaitForTransaction({
+  } = useCancelListing({ listingId: listing?.id });
+
+  const { data: transactionData } = useTransactionReceipt({
     hash: data?.transaction_hash,
     watch: true,
   });

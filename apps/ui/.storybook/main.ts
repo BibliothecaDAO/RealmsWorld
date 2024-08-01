@@ -1,7 +1,8 @@
-import { join, dirname, resolve } from 'path'
+import { dirname, join, resolve } from "path";
 import type { StorybookConfig } from "@storybook/nextjs";
+
 function getAbsolutePath(value) {
-  return dirname(require.resolve(join(value, 'package.json')))
+  return dirname(require.resolve(join(value, "package.json")));
 }
 
 const config: StorybookConfig = {
@@ -10,6 +11,8 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-viewport"),
     getAbsolutePath("@storybook/addon-links"),
     getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@storybook/addon-themes"),
+    getAbsolutePath("storybook-dark-mode"),
     getAbsolutePath("@storybook/addon-interactions"),
     {
       name: getAbsolutePath("@storybook/addon-styling-webpack"),
@@ -30,7 +33,7 @@ const config: StorybookConfig = {
               {
                 loader: require.resolve("postcss-loader"),
                 options: {
-                  implementation: require.resolve("postcss"),
+                  implementation: require("postcss"),
                 },
               },
             ],
@@ -38,29 +41,21 @@ const config: StorybookConfig = {
         ],
       },
     },
-  
+    "@chromatic-com/storybook",
   ],
-  framework: {
-    name: "@storybook/nextjs",
-    options: {
-    },
-  },
+  framework: "@storybook/nextjs",
   webpackFinal: async (config) => {
     if (config.resolve) {
       config.resolve.alias = {
         ...config.resolve.alias,
-        '@realms-world/ui': resolve(__dirname, '../src/'),
+        "@realms-world/ui": resolve(__dirname, "../src/"),
       };
     }
     return config;
   },
 
-
-  docs: {
-    autodocs: true,
-  },
+  docs: {},
   staticDirs: ["../public"],
 };
 
 export default config;
-

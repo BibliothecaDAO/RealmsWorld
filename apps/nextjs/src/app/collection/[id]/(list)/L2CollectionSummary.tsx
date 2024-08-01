@@ -1,5 +1,6 @@
 import type { ContractDetails } from "@/types";
 import Image from "next/image";
+import Link from "next/link";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import LordsIcon from "@/icons/lords.svg";
 import { api } from "@/trpc/server";
@@ -18,10 +19,14 @@ export default async function L2CollectionSummary({
 }: {
   collectionId: string;
 }) {
-  const tokenAddresses = getCollectionAddresses(collectionId);
-  console.log(tokenAddresses[SUPPORTED_L2_CHAIN_ID]!);
+  const l2CollectionAddress =
+    getCollectionAddresses(collectionId)?.[SUPPORTED_L2_CHAIN_ID];
+
+  if (!l2CollectionAddress) {
+    return "No Collection";
+  }
   const erc721Collection = await api.erc721Collections.byId({
-    id: tokenAddresses[SUPPORTED_L2_CHAIN_ID]!,
+    id: l2CollectionAddress,
   });
 
   const contract_details: ContractDetails[] = [
@@ -48,17 +53,16 @@ export default async function L2CollectionSummary({
     },*/
     //{ value: collection.onSaleCount, title: "Listed" },
     {
-      value: erc721Collection?.[0]?.volume,
+      value: erc721Collection[0]?.volume,
       title: "Total Volume",
       icon: <LordsIcon className="w-5 fill-current" />,
     },
     //{ value: collection.tokenCount, title: "Count" },
   ];
-  const marketplaceId = erc721Collection?.[0]?.marketplaceId?.toString();
-  const compatibleGames = marketplaceId ? getGamesByContract(
-    games,
-   marketplaceId
-  ) : [];
+  const marketplaceId = erc721Collection[0]?.marketplaceId?.toString();
+  const compatibleGames = marketplaceId
+    ? getGamesByContract(games, marketplaceId)
+    : [];
 
   return (
     <div className="px-4 sm:mt-10 sm:flex">
@@ -157,8 +161,8 @@ export const CompatibleGames = ({ games }: { games: Game[] }) => {
     <div className="mb-4 flex flex-wrap sm:space-x-2">
       {games.map((game, index) => {
         return (
-          <Button key={index} href={`/games/${game.id}`} className="text-xs">
-            {game.name}
+          <Button key={index} className="text-xs" asChild>
+            <Link href={`/games/${game.id}`}>{game.name}</Link>
           </Button>
         );
       })}

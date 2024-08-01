@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { Button } from "@realms-world/ui";
 
@@ -10,12 +11,12 @@ export const metadata: Metadata = {
     "Fully Onchain Games in the Realms Autonomous World L3 - Created for adventurers by Bibliotheca DAO",
 };
 
-export default async function Page() {
+export default function Page() {
   return (
     <PageLayout title="Realms L3 - Powered by $lords">
       <div className="pb-8 md:text-2xl">
-        The high-performance zkVm L3 for the Realms World of onchain gaming powered
-        by $Lords.
+        The high-performance zkVm L3 for the Realms World of onchain gaming
+        powered by $Lords.
       </div>
 
       <div className="mb-10 sm:w-1/2">
@@ -43,8 +44,8 @@ export default async function Page() {
       </div>
 
       <div className="mt-8">
-        <Button href="https://dev.realms.world/">
-          Developer Documentation
+        <Button asChild>
+          <Link href="https://dev.realms.world/">Developer Documentation</Link>
         </Button>
       </div>
     </PageLayout>

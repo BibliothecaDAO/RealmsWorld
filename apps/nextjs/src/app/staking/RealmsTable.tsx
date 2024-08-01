@@ -1,4 +1,4 @@
-import type { Realm } from "@/.graphclient";
+import type { Realm } from "@/types/subgraph";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";

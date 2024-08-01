@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { PageLayout } from "@/app/_components/PageLayout";
 import { events } from "@/constants/events";
 
 import { games } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
-export async function generateMetadata({
+export function generateMetadata({
   params,
 }: {
   params: { id: string };
-}): Promise<Metadata> {
+}): Metadata {
   const name = games.find((game) => game.id === params.id)?.name ?? "Game";
 
   return {
@@ -19,7 +20,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const event = events.find((event) => event.slug === params.id);
 
   return (
@@ -29,7 +30,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           className="w-96"
           width={350}
           height={350}
-          src={event?.image}
+          src={event.image}
           alt=""
         />
       )}
@@ -40,7 +41,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       </div>
 
       {event?.slug == "paved" ? (
-        <div className="prose prose-lg prose-p:text-bright-yellow prose-headings:text-bright-yellow prose-a:text-flamingo prose-p:font-thin prose-strong:text-bright-yellow prose-ul:text-bright-yellow mx-auto mt-6 max-w-5xl px-6 pb-6 text-xl md:mt-12">
+        <div className="prose prose-lg mx-auto mt-6 max-w-5xl px-6 pb-6 text-xl prose-headings:text-bright-yellow prose-p:font-thin prose-p:text-bright-yellow prose-a:text-flamingo prose-strong:text-bright-yellow prose-ul:text-bright-yellow md:mt-12">
           <p>
             In Realms World&apos;s Paved game, players compete for high scores
             by laying tiles to form an expanding medieval landscape.
@@ -87,7 +88,9 @@ export default async function Page({ params }: { params: { id: string } }) {
       )}
 
       <hr className="my-8" />
-      <Button href="/events">Back to events</Button>
+      <Button asChild>
+        <Link href="/events">Back to events</Link>
+      </Button>
     </PageLayout>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import CollectionSummary from "@/app/collection/[id]/(list)/CollectionSummary";
+import { env } from "@/env";
 
 import { Collections } from "@realms-world/constants";
 import { NavLink } from "@realms-world/ui";
@@ -12,7 +13,7 @@ export default function RootLayout({
   params: { id: string };
 }) {
   const isMintable =
-    process.env.NEXT_PUBLIC_IS_TESTNET == "true" &&
+    env.NEXT_PUBLIC_IS_TESTNET == "true" &&
     params.id == (Collections.GOLDEN_TOKEN as string);
   const tabs = [
     {

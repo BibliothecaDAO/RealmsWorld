@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Lords from "@/icons/lords.svg";
 
-import { Tooltip, TooltipProvider } from "@realms-world/ui";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
 interface Props {
@@ -42,8 +42,8 @@ const ERC721MarketplaceItem: FC<Props> = ({
           <span className="mb-2 block text-lg">{priceSubtitle}</span>
         )}
       </div>
-      <div className="flex  justify-between">
-        <div className="my-3 flex  gap-2">
+      <div className="flex justify-between">
+        <div className="my-3 flex gap-2">
           {img && (
             <Image
               src={img}
@@ -97,13 +97,12 @@ const ERC721MarketplaceItem: FC<Props> = ({
             {!expires && !quantity && royaltiesBps ? (
               <span className="flex gap-1 text-xs font-semibold uppercase">
                 Creator Royalties: {royaltyPercent}%
-                <TooltipProvider>
-                  <Tooltip
-                    side="right"
-                    width={200}
-                    content="A fee on every order that goes to the collection creator."
-                  />
-                </TooltipProvider>
+                <TooltipTrigger />
+                <Tooltip>
+                  <TooltipContent side="right">
+                    A fee on every order that goes to the collection creator.
+                  </TooltipContent>
+                </Tooltip>
               </span>
             ) : null}
           </div>

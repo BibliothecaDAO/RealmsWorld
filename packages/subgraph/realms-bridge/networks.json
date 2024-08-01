@@ -1,0 +1,22 @@
+{
+  "sepolia": {
+    "StarknetMessaging": {
+      "address": "0xe2bb56ee936fd6433dc0f6e7e3b8365c906aa057",
+      "startBlock": 6180467
+    },
+    "context": {
+      "l1_bridge_address": {
+        "data": "0x345Eaf46F42228670489B47764b0Bd21f2141bd1"
+      },
+      "l2_bridge_address ": {
+        "data": "0x0467f6b080db9734b8b0a2ccb7fd020914e47f2f62aa668f56c4124946e4eb70"
+      }
+    }
+  },
+  "mainnet": {
+    "StarknetMessaging": {
+      "address": "0xtest",
+      "startBlock": 10
+    }
+  }
+}

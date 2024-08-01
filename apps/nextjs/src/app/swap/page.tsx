@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Buy LORDS the utility token of Realms.World",
 };
 
-export default async function Page() {
+export default function Page() {
   return (
     <div className="container mx-auto mt-24 max-w-[460px] pt-8">
       <p className="mb-6 text-xl">
