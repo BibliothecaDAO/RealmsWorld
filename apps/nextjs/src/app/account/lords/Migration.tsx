@@ -41,7 +41,7 @@ function UnstakeStep({
   ] as `0x${string}`;
 
   return (
-    <div className="mt-4 max-h-[500px] w-full">
+    <div className="mt-4  w-full">
       <RealmsTable
         data={
           step.id === "unstake-galleon"
@@ -117,21 +117,21 @@ export const StakingMigration = () => {
   const steps = [
     ...(realmsData?.bridgedRealms.length
       ? [
-          {
-            label: `Unstake`,
-            description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Galleon`,
-            id: "unstake-galleon",
-          },
-        ]
+        {
+          label: `Unstake`,
+          description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Galleon`,
+          id: "unstake-galleon",
+        },
+      ]
       : []),
     ...(realmsData?.bridgedV2Realms.length
       ? [
-          {
-            label: `Unstake`,
-            description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Carrack`,
-            id: "unstake-carrack",
-          },
-        ]
+        {
+          label: `Unstake`,
+          description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Carrack`,
+          id: "unstake-carrack",
+        },
+      ]
       : []),
     {
       label: "Bridge",

@@ -30,6 +30,9 @@ export const Profile = ({
 }: {
   initialDelegate?: RouterOutputs["delegates"]["byId"];
 }) => {
+  const l2RealmsAddress = getCollectionAddresses(Collections.REALMS)?.[
+    SUPPORTED_L2_CHAIN_ID
+  ] as `0x${string}`
   const { address } = useAccount();
   const { data: delegate } = api.delegates.byId.useQuery(
     {
@@ -46,13 +49,11 @@ export const Profile = ({
   });
   const { data: currentDelegate } = useCurrentDelegate()
 
-  const { data: ownerTokens } = api.erc721Tokens.all.useQuery({ owner: address, limit: 1 }, {
+  const { data: ownerTokens } = api.erc721Tokens.all.useQuery({ owner: address, limit: 1, contractAddress: l2RealmsAddress }, {
     enabled: !!address,
   });
   const { data: realmsBalance } = useReadContract({
-    address: getCollectionAddresses(Collections.REALMS)?.[
-      SUPPORTED_L2_CHAIN_ID
-    ] as `0x${string}`,
+    address: l2RealmsAddress,
     abi: RealmsABI,
     functionName: "balance_of",
     enabled: !!address,
