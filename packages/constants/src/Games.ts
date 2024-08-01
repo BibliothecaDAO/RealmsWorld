@@ -30,7 +30,7 @@ export interface Game {
   collections?: Collections[];
   tokens?: Tokens[];
   screenshotLength?: number;
-  playable: boolean,
+  playable: boolean;
 }
 
 export const games: Game[] = [
@@ -193,8 +193,8 @@ export const games: Game[] = [
     screenshotLength: 6,
     playable: false,
   },
-  
-   {
+
+  {
     name: "Kingdom & Lords",
     id: "Kingdom-of-Lords",
     developer: Studios.MISSISSIPPI_TEAM,
@@ -324,6 +324,7 @@ export const games: Game[] = [
     collections: [],
     tokens: [],
     screenshotLength: 4,
+    playable: true,
   },
   {
     name: "Blob Arena",
@@ -332,16 +333,16 @@ export const games: Game[] = [
     genres: ["Last Man Standing", "Strategy"],
     color: "#f5f5f5",
     status: "development",
-    description: "Blob Arena is an innovative strategy mini-game where players engage in Pókemon-like battles using unique characters called Bloberts.",
+    description:
+      "Blob Arena is an innovative strategy mini-game where players engage in Pókemon-like battles using unique characters called Bloberts.",
     longform:
       "Aiming to deliver a high-quality gaming experience, Blob Arena stands out for its gameplay dynamics and strategic focus. Players will navigate through exciting encounters, against other players or against AI, using their Bloberts’ distinctive traits to outsmart and defeat opponents. The game’s core mechanic revolves around an enhanced rock-paper-scissors style combat modified by each character’s attributes such as Attack, Defence, Speed, and Strength, which are crucial for mastering the game. ",
-    links: {
-      
-    },
+    links: {},
     operatingSystems: ["Web Browser"],
     chains: [ChainId.SN_SEPOLIA],
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
+    playable: true,
   },
 ];
