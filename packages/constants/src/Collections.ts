@@ -17,6 +17,8 @@ export const CollectionAddresses: {
     [ChainId.SEPOLIA]: "0x0A642270Cc73B2FC1605307F853712F944394564",
     [ChainId.SN_SEPOLIA]:
       "0x3e64aa2c669ffd66a1c78d120812005d8f7e03b75696dd9c0f06e8def143844",
+    [ChainId.SN_MAIN]:
+      "0x7ae27a31bb6526e3de9cf02f081f6ce0615ac12a6d7b85ee58b8ad7947a2809",
   },
   [Collections.BEASTS]: {
     [ChainId.SN_MAIN]:
@@ -97,9 +99,9 @@ export function getCollectionFromAddress(
 }
 
 export const REALMS_BRIDGE_ADDRESS: Record<number | string, string> = {
-  [ChainId.MAINNET]: "",
+  [ChainId.MAINNET]: "0xCEeecEb91c917a3A1295837721E0749526904D0F",
   [ChainId.SEPOLIA]: "0x345Eaf46F42228670489B47764b0Bd21f2141bd1",
-  [ChainId.SN_MAIN]: "",
+  [ChainId.SN_MAIN]: "0x68171a6e631a779b888ddb106c430bbac3ce4cc2b5805410411504f758b60e4",
   [ChainId.SN_SEPOLIA]:
     "0x467f6b080db9734b8b0a2ccb7fd020914e47f2f62aa668f56c4124946e4eb70",
 };
