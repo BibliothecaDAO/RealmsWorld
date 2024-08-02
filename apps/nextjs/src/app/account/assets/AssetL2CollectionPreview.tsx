@@ -43,7 +43,7 @@ function AssetL2CollectionPreview({
                   limit={10}
                   ownerAddress={l2address}
                   loadMoreAssetName={collectionName}
-                  selectable
+                  selectable={collectionName == "realms"}
                 />
               </ScrollArea>
             )}
