@@ -9,6 +9,8 @@ export const metadata = {
 
 export default async function Page() {
   return (
-    <h1>AMMA</h1>
+    <PageLayout>
+      <h1>AMMA</h1>
+    </PageLayout>
     )
 }
