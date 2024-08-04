@@ -1,7 +1,11 @@
+import type { paths } from "@reservoir0x/reservoir-sdk";
 import { RESERVOIR_API_URL } from "@/constants/env";
+import { env } from "@/env";
 import { formatQueryString } from "@/utils/utils";
 
-export const getCollections = async (contracts: { contract: string }[]) => {
+export const getCollections = async (
+  contracts: { contract: string }[],
+): Promise<paths["/collections/v5"]["get"]["responses"]["200"]["schema"]> => {
   const queryParams = formatQueryString(contracts);
 
   try {
@@ -10,7 +14,7 @@ export const getCollections = async (contracts: { contract: string }[]) => {
       {
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": process.env.RESERVOIR_API_KEY ?? "",
+          "x-api-key": env.NEXT_PUBLIC_RESERVOIR_API_KEY,
           "Access-Control-Allow-Origin": "*",
         },
         next: { revalidate: 60 },
@@ -21,7 +25,6 @@ export const getCollections = async (contracts: { contract: string }[]) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
   } catch (error) {
-    console.log(error);
-    return error;
+    throw new Error("Collection not found");
   }
 };

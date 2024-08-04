@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import Image from "next/image";
 import L2_C1ERC20 from "@/abi/L2/C1ERC20.json";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import { useContractRead } from "@starknet-react/core";
+import { useReadContract } from "@starknet-react/core";
 import { Loader } from "lucide-react";
 import { shortString } from "starknet";
 
@@ -25,9 +25,9 @@ export const ContractImage = ({
 }) => {
   const isBeasts = collectionId == "beasts";
   const tokenAddress =
-    getCollectionAddresses(collectionId)[SUPPORTED_L2_CHAIN_ID];
+    getCollectionAddresses(collectionId)?.[SUPPORTED_L2_CHAIN_ID];
 
-  const { data } = useContractRead({
+  const { data } = useReadContract({
     functionName: "token_uri",
     args: [tokenId],
     abi: L2_C1ERC20,
@@ -39,7 +39,7 @@ export const ContractImage = ({
     if (data?.length) {
       const value = [];
       //@ts-expect-error data does have length
-      for (let i = 1; i < data?.length; i++) {
+      for (let i = 1; i < data.length; i++) {
         //@ts-expect-error data does have length
         const result = shortString.decodeShortString(data[i]);
         value.push(result);
@@ -54,7 +54,11 @@ export const ContractImage = ({
           (match: any, name: any) => `"name":"${name.replaceAll('"', '\\"')}",`,
         )
         .replace(regex, "");
+        try {
       return JSON.parse(modifiedJsonString);
+        } catch (e) {
+          console.log(e)
+        }
     }
   }, [data]);
   return (
@@ -75,7 +79,7 @@ export const ContractImage = ({
       )}
 
       {collectionId == "beasts" && tokenUriData?.attributes?.length && (
-        <div className="mt-4 rounded border bg-dark-green">
+        <div className="mt-4 rounded border bg-background">
           <div className="flex items-center justify-between border-b px-3 py-2 pr-6">
             <h5>Type:</h5>
             <span className="text-xl">

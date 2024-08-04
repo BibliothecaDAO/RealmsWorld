@@ -5,29 +5,22 @@
   "scripts": {
     "build": "nitro build",
     "clean": "rm -rf .turbo node_modules",
-    "dev": "nitro dev --port 3001",
-    "lint": "eslint .",
+    "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@auth/core": "^0.28.2"
+    "@auth/core": "^0.34.1"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "*",
     "@realms-world/prettier-config": "*",
     "@realms-world/tailwind-config": "*",
     "@realms-world/tsconfig": "*",
-    "eslint": "^8.57.0",
-    "nitropack": "2.9.6",
-    "prettier": "^3.2.5",
-    "typescript": "^5.4.5"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@realms-world/eslint-config/base"
-    ]
+    "eslint": "^9.6.0",
+    "nitropack": "2.9.7",
+    "prettier": "^3.3.2",
+    "typescript": "^5.5.3"
   },
   "prettier": "@realms-world/prettier-config"
 }

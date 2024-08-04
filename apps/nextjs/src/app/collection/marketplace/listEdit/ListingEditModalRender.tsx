@@ -5,10 +5,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useEditListing } from "@/hooks/market/useEditListing";
 import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
-import {
-  useAccount,
-  useWaitForTransaction,
-} from "@starknet-react/core";
+import { useAccount, useTransactionReceipt } from "@starknet-react/core";
 import dayjs from "dayjs";
 import { parseUnits } from "viem";
 
@@ -91,16 +88,16 @@ export const ListingEditModalRender: FC<Props> = ({
 
   const listing = useMemo(() => {
     if (token?.listings)
-      return findLowestPriceActiveListing(token?.listings, token?.owner);
+      return findLowestPriceActiveListing(token.listings, token.owner);
     else if (listingsData?.items.length)
-      return findLowestPriceActiveListing(listingsData?.items, token?.owner);
+      return findLowestPriceActiveListing(listingsData.items, token?.owner);
   }, [token, listingsData]);
 
   const contract = listing?.token_key?.split(":")[1];
 
   useEffect(() => {
     if (listing?.price) {
-      setPrice(parseInt(listing?.price));
+      setPrice(parseInt(listing.price));
     }
   }, [listing?.price]);
 
@@ -110,9 +107,11 @@ export const ListingEditModalRender: FC<Props> = ({
   );
   const usdPrice = coinConversion.length > 0 ? coinConversion[0].price : 0;
   const totalUsd = usdPrice * (listing?.price?.amount?.decimal || 0);*/
-
   const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
-    expirationOptions[5]!,
+    expirationOptions[5] ??
+      (() => {
+        throw new Error("Expiration option is undefined");
+      }),
   );
 
   //TODO fetch actual royalty
@@ -123,7 +122,7 @@ export const ListingEditModalRender: FC<Props> = ({
       setEditListingStep(EditListingStep.Edit);
       setTransactionError(null);
       setStepData(null);
-      setExpirationOption(expirationOptions[5]!);
+      expirationOptions[5] && setExpirationOption(expirationOptions[5]);
       setQuantity(1);
     }
   }, [open]);
@@ -140,7 +139,7 @@ export const ListingEditModalRender: FC<Props> = ({
     price: price.toString(),
   });
 
-  const { data: transactionData } = useWaitForTransaction({
+  const { data: transactionData } = useTransactionReceipt({
     hash: data?.transaction_hash,
   });
   useEffect(() => {
@@ -156,7 +155,7 @@ export const ListingEditModalRender: FC<Props> = ({
     }
   }, [error]);
 
-  if (expirationOption?.relativeTime && expirationOption?.relativeTimeUnit) {
+  if (expirationOption.relativeTime && expirationOption.relativeTimeUnit) {
     expirationTime = dayjs()
       .add(expirationOption.relativeTime, expirationOption.relativeTimeUnit)
       .unix()

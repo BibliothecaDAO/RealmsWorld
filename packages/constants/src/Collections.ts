@@ -6,7 +6,7 @@ export enum Collections {
   BEASTS = "beasts",
   GOLDEN_TOKEN = "goldentoken",
   BLOBERT = "blobert",
-  BANNERS = 'banners'
+  BANNERS = "banners",
 }
 
 export const CollectionAddresses: {
@@ -14,7 +14,11 @@ export const CollectionAddresses: {
 } = {
   [Collections.REALMS]: {
     [ChainId.MAINNET]: "0x7afe30cb3e53dba6801aa0ea647a0ecea7cbe18d",
-    [ChainId.SEPOLIA]: "0x3dc98f83a0f3ad77d44a68c6d15e08378de3df25",
+    [ChainId.SEPOLIA]: "0x0A642270Cc73B2FC1605307F853712F944394564",
+    [ChainId.SN_SEPOLIA]:
+      "0x3e64aa2c669ffd66a1c78d120812005d8f7e03b75696dd9c0f06e8def143844",
+    [ChainId.SN_MAIN]:
+      "0x07ae27a31bb6526e3de9cf02f081f6ce0615ac12a6d7b85ee58b8ad7947a2809",
   },
   [Collections.BEASTS]: {
     [ChainId.SN_MAIN]:
@@ -37,8 +41,7 @@ export const CollectionAddresses: {
   [Collections.BANNERS]: {
     [ChainId.SN_MAIN]:
       "0x02d66679de61a5c6d57afd21e005a8c96118bd60315fd79a4521d68f5e5430d1",
-    [ChainId.SN_SEPOLIA]:
-      "",
+    [ChainId.SN_SEPOLIA]: "",
   },
 };
 export const CollectionDetails: {
@@ -76,7 +79,7 @@ export const CollectionDetails: {
 };
 export function getCollectionAddresses(
   collectionName: string,
-): Partial<{ [key in ChainId]: string }> {
+): Partial<{ [key in ChainId]: string } | undefined> {
   const normalizedCollectionName = collectionName as Collections;
   return CollectionAddresses[normalizedCollectionName];
 }
@@ -94,3 +97,12 @@ export function getCollectionFromAddress(
   }
   return undefined;
 }
+
+export const REALMS_BRIDGE_ADDRESS: Record<number | string, string> = {
+  [ChainId.MAINNET]: "0xA425Fa1678f7A5DaFe775bEa3F225c4129cdbD25",
+  [ChainId.SEPOLIA]: "0x345Eaf46F42228670489B47764b0Bd21f2141bd1",
+  [ChainId.SN_MAIN]:
+    "0x68171a6e631a779b888ddb106c430bbac3ce4cc2b5805410411504f758b60e4",
+  [ChainId.SN_SEPOLIA]:
+    "0x467f6b080db9734b8b0a2ccb7fd020914e47f2f62aa668f56c4124946e4eb70",
+};

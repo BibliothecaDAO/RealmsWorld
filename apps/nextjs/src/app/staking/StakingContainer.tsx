@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
-import type { Realm } from "@/.graphclient";
+import type { Realm } from "@/types/subgraph";
 import { useEffect, useState } from "react";
 import { ERC721 } from "@/abi/L1/ERC721";
 import { paymentPoolAbi } from "@/abi/L1/PaymentPool";
@@ -40,7 +40,7 @@ const galleonAddress = stakingAddresses[NETWORK_NAME]
   .v1Galleon as `0x${string}`;
 const carrackAddress = stakingAddresses[NETWORK_NAME]
   .v2Carrack as `0x${string}`;
-const realmsAddress = getCollectionAddresses(Collections.REALMS)[
+const realmsAddress = getCollectionAddresses(Collections.REALMS)?.[
   SUPPORTED_L1_CHAIN_ID
 ];
 
@@ -128,14 +128,11 @@ export const StakingContainer = () => {
     return (
       <div className="text-center">
         {poolClaimError && (
-          <Alert
-            message={poolClaimError.message.toString()}
-            variant="warning"
-          />
+          <Alert variant="warning">{poolClaimError.message.toString()}</Alert>
         )}
         <div className="col-span-2 flex flex-col ">
           <h3>Your Realms</h3>
-          <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
+          <div className="flex flex-col rounded border bg-background pb-8 pt-6">
             {realmsDataIsLoading ? (
               "Loading"
             ) : (
@@ -153,16 +150,16 @@ export const StakingContainer = () => {
         <PaymentPoolV2 />
         <h3 className="mt-10">Galleon</h3>
         <div className="flex-col pb-2 text-lg">
-          <span className="bg-dark-green px-2 py-1">
+          <span className="bg-background px-2 py-1">
             Rewards: 49x $LORDS per epoch
           </span>
           <br />
-          <span className="bg-dark-green px-2 py-1">
+          <span className="bg-background px-2 py-1">
             Redemption: Claimable after each fully staked epoch (1 week)
           </span>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:gap-6">
-          <div className="flex flex-col justify-center rounded border bg-dark-green pb-8 pt-6">
+          <div className="flex flex-col justify-center rounded border bg-background pb-8 pt-6">
             {realmsDataIsLoading ? (
               "Loading"
             ) : (
@@ -179,7 +176,7 @@ export const StakingContainer = () => {
               </>
             )}
           </div>
-          <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
+          <div className="flex flex-col rounded border bg-background pb-8 pt-6">
             <span className="pb-4 text-lg">Lords Available</span>
 
             {!isGalleonLordsLoading && typeof lordsAvailableData == "bigint" ? (
@@ -220,60 +217,57 @@ export const StakingContainer = () => {
             ) : (
               "Loading"
             )}
-            {!poolBalanceLoading ? (
-              <div className="mt-2 flex items-center justify-center">
-                <span className="mr-6 text-sm">Epoch 11-35:</span>
-                <span className="mr-3 flex">
-                  <Lords className="mr-2 h-5 w-5 fill-current" />
-                  {poolBalanceLoading ? (
-                    <Loader className="h-5 w-5" />
-                  ) : poolBalanceData != undefined && poolTotal ? (
+
+            <div className="mt-2 flex items-center justify-center">
+              <span className="mr-6 text-sm">Epoch 11-35:</span>
+              <span className="mr-3 flex">
+                <Lords className="mr-2 h-5 w-5 fill-current" />
+                {poolBalanceLoading ? (
+                  <Loader className="h-5 w-5" />
+                ) : poolBalanceData != undefined && poolTotal ? (
+                  <>
+                    {formatEther(poolBalanceData).toLocaleString()} /{" "}
+                    {formatEther(poolTotal).toLocaleString()}
+                  </>
+                ) : (
+                  0
+                )}
+              </span>
+              {poolBalanceData != undefined && hexProof && (
+                <Button
+                  disabled={!poolBalanceData || poolBalanceData == 0n}
+                  size={"sm"}
+                  className="self-center"
+                  variant={"outline"}
+                  onClick={() => {
+                    claimPoolLords({
+                      address: stakingAddresses[NETWORK_NAME]
+                        .paymentPool as `0x${string}`,
+                      abi: paymentPoolAbi,
+                      functionName: "withdraw",
+                      args: [poolBalanceData, hexProof],
+                    });
+                  }}
+                >
+                  {isPoolClaimLoading ? (
                     <>
-                      {formatEther(poolBalanceData).toLocaleString()} /{" "}
-                      {formatEther(poolTotal ?? 0n).toLocaleString() ?? 0n}
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Claiming
                     </>
                   ) : (
-                    0
+                    "Claim"
                   )}
-                </span>
-                {poolBalanceData != undefined && (
-                  <Button
-                    disabled={!poolBalanceData || poolBalanceData == 0n}
-                    size={"sm"}
-                    className="self-center"
-                    variant={"outline"}
-                    onClick={() => {
-                      claimPoolLords({
-                        address: stakingAddresses[NETWORK_NAME]
-                          .paymentPool as `0x${string}`,
-                        abi: paymentPoolAbi,
-                        functionName: "withdraw",
-                        args: [poolBalanceData, hexProof!],
-                      });
-                    }}
-                  >
-                    {isPoolClaimLoading ? (
-                      <>
-                        <Loader2 className="h-5 w-5 animate-spin" />
-                        Claiming
-                      </>
-                    ) : (
-                      "Claim"
-                    )}
-                  </Button>
-                )}
-              </div>
-            ) : (
-              "Loading"
-            )}
+                </Button>
+              )}
+            </div>
           </div>
         </div>
         {realmsData?.bridgedV2Realms.length ??
-        (carrackLordsAvailableData && carrackLordsAvailableData?.[0] > 0n) ? (
+        (carrackLordsAvailableData && carrackLordsAvailableData[0] > 0n) ? (
           <div className="mt-10 flex flex-col">
             <h3>Carrack</h3>
             <div className="pb-2 text-lg">
-              <span className="bg-dark-green px-2 py-1">
+              <span className="bg-background px-2 py-1">
                 Rewards: 49x $LORDS per epoch
               </span>
               <br />
@@ -281,7 +275,7 @@ export const StakingContainer = () => {
 
             <div className="mt-10 flex flex-col">
               <div className="grid grid-cols-2 gap-4 sm:gap-6">
-                <div className="flex flex-col justify-center rounded border bg-dark-green pb-8 pt-6">
+                <div className="flex flex-col justify-center rounded border bg-background pb-8 pt-6">
                   {realmsDataIsLoading ? (
                     "Loading"
                   ) : (
@@ -298,7 +292,7 @@ export const StakingContainer = () => {
                     </>
                   )}
                 </div>
-                <div className="flex flex-col rounded border bg-dark-green pb-8 pt-6">
+                <div className="flex flex-col rounded border bg-background pb-8 pt-6">
                   <span className="pb-4 text-lg">Lords Available</span>
 
                   {isCarrackLordsLoading ? (
@@ -315,7 +309,7 @@ export const StakingContainer = () => {
                         size={"lg"}
                         disabled={
                           !carrackLordsAvailableData?.[0] ||
-                          carrackLordsAvailableData?.[0] == 0n
+                          carrackLordsAvailableData[0] == 0n
                         }
                         className="self-center"
                         variant={"outline"}
@@ -378,7 +372,7 @@ const StakingModal = ({
       address: realmsAddress as `0x${string}`,
       abi: ERC721,
       functionName: "isApprovedForAll",
-      args: [address!, galleonAddress],
+      args: address && [address, galleonAddress],
     });
 
   const { isSuccess } = useWaitForTransactionReceipt({
@@ -487,12 +481,10 @@ const StakingModal = ({
           <div className="flex flex-col self-center">
             <h5>The Galleon</h5>
             <div className="pb-2 text-lg">Rewards: 49x $LORDS per epoch.</div>
-            <Alert
-              message={
-                "Lords earnt after epoch 35 are locked until the DAO approves the migration to Starknet."
-              }
-              variant="warning"
-            />
+            <Alert variant="warning">
+              Lords earnt after epoch 35 are locked until the DAO approves the
+              migration to Starknet.
+            </Alert>
             <Button
               className="my-3"
               onClick={() => setShipType("galleon")}

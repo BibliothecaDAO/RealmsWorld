@@ -30,6 +30,7 @@ export interface Game {
   collections?: Collections[];
   tokens?: Tokens[];
   screenshotLength?: number;
+  playable: boolean;
 }
 
 export const games: Game[] = [
@@ -54,6 +55,7 @@ export const games: Game[] = [
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
     screenshotLength: 2,
+    playable: false,
   },
   {
     name: "Paved",
@@ -76,6 +78,7 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
     screenshotLength: 2,
+    playable: true,
   },
   {
     name: "Loot Survivor",
@@ -83,7 +86,7 @@ export const games: Game[] = [
     developer: Studios.BIBLIO_DAO,
     genres: ["Play to Die", "Roguelike"],
     color: "#f5f5f5",
-    status: "mainnet",
+    status: "development",
     description: "Play to Die",
     longform:
       "Survivors is the first Loot adventure game exploring the Play2Die mechanic. It is a game of onchain survival where you must defeat beasts and collect gear in the fight to stay alive and make it to the top of the leaderboard.",
@@ -100,6 +103,7 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN, Collections.BEASTS],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
+    playable: false,
   },
   {
     name: "Pistols at Ten Blocks",
@@ -122,6 +126,7 @@ export const games: Game[] = [
     collections: [Collections.GOLDEN_TOKEN],
     tokens: [Tokens.LORDS],
     screenshotLength: 6,
+    playable: true,
   },
   {
     name: "zConqueror",
@@ -141,6 +146,7 @@ export const games: Game[] = [
     operatingSystems: ["Web Browser"],
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
+    playable: true,
   },
   {
     name: "Underdark",
@@ -151,7 +157,7 @@ export const games: Game[] = [
     status: "alpha",
     description: "Play to Lose your Miiiind!",
     longform:
-      "Underdark: Lair of the Slenderduck is a unique location in The Underworld & Realms.World, and a generative onchain dungeon skin-crawler built on Dojo & StarkNet. You have hubristically stumbled into the twisting tunnels beneath the manor at Old Kurnkornor, where you will lose your mind. With each step your limited light fades, and you descend further into madness. Collect Dark Tar to renew your light, avoid the twisted duck spawn, and find the stairs to escape the Slenderduck's gibbering embrace, even if only for a few more precious moments of sanity.",
+      "Underdark: Lair of the Slenderduck is a unique location in The Underworld & Realms.World, and a generative onchain dungeon skin-crawler built on Dojo & Starknet. You have hubristically stumbled into the twisting tunnels beneath the manor at Old Kurnkornor, where you will lose your mind. With each step your limited light fades, and you descend further into madness. Collect Dark Tar to renew your light, avoid the twisted duck spawn, and find the stairs to escape the Slenderduck's gibbering embrace, even if only for a few more precious moments of sanity.",
     links: {
       homepage: "https://lootunder.world/underdark",
       testnet: "https://underdark.lootunder.world/",
@@ -163,6 +169,7 @@ export const games: Game[] = [
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 6,
+    playable: true,
   },
   {
     name: "Loot Underworld",
@@ -184,37 +191,16 @@ export const games: Game[] = [
     collections: [Collections.REALMS, Collections.BEASTS],
     tokens: [Tokens.LORDS],
     screenshotLength: 6,
+    playable: false,
   },
+
   {
-    name: "Mississippi",
-    id: "mississippi",
-    developer: Studios.MISSISSIPPI_TEAM,
-    genres: ["SLG", "PVP", "Roguelike"],
-    color: "#6F391E",
-    status: "development",
-    description: "Fully on-chain PVP roguelike game",
-    longform:
-      'Mississippi is a fully on-chain PvP roguelike game. We aim to create an expansive cavern space filled with abundant resources. Players are tasked with exploring the cavern and exploiting as many resources as possible within a fixed time limit. Additionally, we plan to integrate with the Lootverse, allowing for the "extraction" of equipment and resources from Loot Bags and Realms. This integration will provide players with specific attributes for each round.',
-    links: {
-      mainnet: "https://0xMssp.xyz/",
-      testnet: "https://test.0xMssp.xyz/",
-      discord: "https://discord.com/invite/rg9V8J49",
-      twitter: "https://twitter.com/0xMississippi",
-    },
-    operatingSystems: ["Web Browser"],
-    lords: "N/A",
-    chains: [ChainId.MISSISSIPPI_TESTNET, ChainId.REALMS_L3],
-    collections: [],
-    tokens: [Tokens.LORDS],
-    screenshotLength: 4,
-  },
-   {
-    name: "Kingdom-of-Lords",
+    name: "Kingdom & Lords",
     id: "Kingdom-of-Lords",
     developer: Studios.MISSISSIPPI_TEAM,
     genres: ["SLG", "PVP", "MMO Strategy Game"],
     color: "#6F391E",
-    status: "beta",
+    status: "development",
     description: "Fully on-chain MMO Strategy Game",
     longform:
       'The kindom of Lords is a fully on-chain SLG game designed specifically for the Starknet\n\nIn the world of "Kingdom&Lords", you embark on an epic journey, where strategy and wisdom go hand in hand, and alliances are forged to conquer new territories. Build your village, develop agriculture and economy, muster a mighty army, and erect invincible walls. \n\nBut "Kingdom of Lords" is more than this, its a realm of social strategy where no hero stands alone, only with brave and wise allies. Every decision you make can alter the course of battle, and your alliance is your unbreakable shield. Send envoys, make allies with heroes from all corners of the world, and fight side by side with players globally to witness the rise of a dynasty.',
@@ -225,29 +211,31 @@ export const games: Game[] = [
     },
     operatingSystems: ["Web Browser"],
     lords: "As the main token of the game",
-    chains: [ ChainId.REALMS_L3],
+    chains: [ChainId.REALMS_L3],
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
+    playable: true,
   },
-  {
-    name: "GenLoot",
-    id: "gen-loot",
-    developer: Studios.CRAZY_DIAMOND,
-    genres: ["Strategy Card Games", "RPG"],
-    color: "#00FF63",
-    status: "development",
-    description: "Full on chain Role-playing adventure card game",
-    longform:
-      "Combining the mechanics of Loot Survivor contracts with the interactive style of the Reigns game, GenLoot offers a novel fully on-chain gaming experience. Players can explore endless possibilities in this world built on blockchain smart contracts and decentralized storage, simply by swiping cards left or right.",
-    links: {},
-    operatingSystems: ["Web Browser"],
-    lords: "As a game ticket",
-    chains: [ChainId.SN_MAIN],
-    collections: [Collections.GOLDEN_TOKEN, Collections.REALMS],
-    tokens: [Tokens.LORDS],
-    screenshotLength: 3,
-  },
+  // {
+  //   name: "GenLoot",
+  //   id: "gen-loot",
+  //   developer: Studios.CRAZY_DIAMOND,
+  //   genres: ["Strategy Card Games", "RPG"],
+  //   color: "#00FF63",
+  //   status: "development",
+  //   description: "Full on chain Role-playing adventure card game",
+  //   longform:
+  //     "Combining the mechanics of Loot Survivor contracts with the interactive style of the Reigns game, GenLoot offers a novel fully on-chain gaming experience. Players can explore endless possibilities in this world built on blockchain smart contracts and decentralized storage, simply by swiping cards left or right.",
+  //   links: {},
+  //   operatingSystems: ["Web Browser"],
+  //   lords: "As a game ticket",
+  //   chains: [ChainId.SN_MAIN],
+  //   collections: [Collections.GOLDEN_TOKEN, Collections.REALMS],
+  //   tokens: [Tokens.LORDS],
+  //   screenshotLength: 3,
+  //   playable: true,
+  // },
   {
     name: "Rising Revenant",
     id: "rising-revenant",
@@ -268,29 +256,31 @@ export const games: Game[] = [
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
+    playable: true,
   },
-  {
-    name: "Arcane Assembler",
-    id: "arcane-assembler",
-    developer: Studios.ARCANE_ASSEMBLERS,
-    genres: ["Play to Die", "Card Game"],
-    color: "#f5f5f5",
-    status: "development",
-    description: "Arcane Assembler",
-    longform:
-      "Arcane Assembly is a Play2Die card game where you must build the most powerful spell you can... without exploding first. Forage for ingredients, perform rituals, and summon helpers but manage your time wisely. Spells left unattended quickly become unstable. Compete with other mages from across the realm for bragging rights and rewards.",
-    links: {
-      homepage: "https://github.com/ArcaneAssemblers/spellcrafter",
-      discord: "https://discord.gg/4S97gdsK",
-      twitter: "https://twitter.com/ArcaneAssembler",
-    },
-    operatingSystems: ["Web Browser"],
-    lords: "TBD",
-    chains: [ChainId.SN_SEPOLIA, ChainId.REALMS_L3],
-    collections: [],
-    tokens: [],
-    screenshotLength: 4,
-  },
+  // {
+  //   name: "Arcane Assembler",
+  //   id: "arcane-assembler",
+  //   developer: Studios.ARCANE_ASSEMBLERS,
+  //   genres: ["Play to Die", "Card Game"],
+  //   color: "#f5f5f5",
+  //   status: "development",
+  //   description: "Arcane Assembler",
+  //   longform:
+  //     "Arcane Assembly is a Play2Die card game where you must build the most powerful spell you can... without exploding first. Forage for ingredients, perform rituals, and summon helpers but manage your time wisely. Spells left unattended quickly become unstable. Compete with other mages from across the realm for bragging rights and rewards.",
+  //   links: {
+  //     homepage: "https://github.com/ArcaneAssemblers/spellcrafter",
+  //     discord: "https://discord.gg/4S97gdsK",
+  //     twitter: "https://twitter.com/ArcaneAssembler",
+  //   },
+  //   operatingSystems: ["Web Browser"],
+  //   lords: "TBD",
+  //   chains: [ChainId.SN_SEPOLIA, ChainId.REALMS_L3],
+  //   collections: [],
+  //   tokens: [],
+  //   screenshotLength: 4,
+  //   playable: true,
+  // },
   {
     name: "Call the Banners",
     id: "call-the-banners",
@@ -312,6 +302,7 @@ export const games: Game[] = [
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 1,
+    playable: false,
   },
   {
     name: "Force Prime Heroes",
@@ -322,7 +313,7 @@ export const games: Game[] = [
     status: "alpha",
     description: "Classic Turn Based Strategy",
     longform:
-        "Force Prime Heroes is a fully on-chain game inspired by the Heroes of Might and Magic series. You need to explore the map with your hero, grow your army, defeat enemies and kill the Bone Dragon to win. Find your best strategy and become a true hero of on-chain worlds!",
+      "Force Prime Heroes is a fully on-chain game inspired by the Heroes of Might and Magic series. You need to explore the map with your hero, grow your army, defeat enemies and kill the Bone Dragon to win. Find your best strategy and become a true hero of on-chain worlds!",
     links: {
       homepage: "https://forceprime.io",
       discord: "https://discord.gg/8SFzxSgbq3",
@@ -333,6 +324,7 @@ export const games: Game[] = [
     collections: [],
     tokens: [],
     screenshotLength: 4,
+    playable: true,
   },
   {
     name: "Blob Arena",
@@ -341,16 +333,16 @@ export const games: Game[] = [
     genres: ["Last Man Standing", "Strategy"],
     color: "#f5f5f5",
     status: "development",
-    description: "Blob Arena is an innovative strategy mini-game where players engage in Pókemon-like battles using unique characters called Bloberts.",
+    description:
+      "Blob Arena is an innovative strategy mini-game where players engage in Pókemon-like battles using unique characters called Bloberts.",
     longform:
       "Aiming to deliver a high-quality gaming experience, Blob Arena stands out for its gameplay dynamics and strategic focus. Players will navigate through exciting encounters, against other players or against AI, using their Bloberts’ distinctive traits to outsmart and defeat opponents. The game’s core mechanic revolves around an enhanced rock-paper-scissors style combat modified by each character’s attributes such as Attack, Defence, Speed, and Strength, which are crucial for mastering the game. ",
-    links: {
-      
-    },
+    links: {},
     operatingSystems: ["Web Browser"],
     chains: [ChainId.SN_SEPOLIA],
     collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
+    playable: true,
   },
 ];

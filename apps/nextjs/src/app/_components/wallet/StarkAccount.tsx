@@ -1,109 +1,54 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
-import { useUIContext } from "@/app/providers/UIProvider";
-import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
-import Album from "@/icons/album.svg";
-import EthereumLogo from "@/icons/ethereum.svg";
-import Lords from "@/icons/lords.svg";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import Starknet from "@/icons/starknet.svg";
-import { formatBigInt } from "@/utils/utils";
-import { useAccount, useDisconnect } from "@starknet-react/core";
+import { shortenHex } from "@/utils/utils";
+import { useAccount, useDisconnect, useStarkName } from "@starknet-react/core";
 import { LogOut } from "lucide-react";
 
+import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
-import { AccountLink } from "./AccountLink";
+import { CopyButton } from "../CopyButton";
+import { ExplorerLink } from "./ExplorerLink";
 import { StarknetLoginButton } from "./StarknetLoginButton";
-
-export const DisplayBalance = ({
-  icon,
-  balance,
-  tokenName,
-}: {
-  icon?: React.ReactElement;
-  balance?: bigint;
-  tokenName?: string;
-}) => (
-  <div className="flex space-x-2 text-lg sm:text-2xl">
-    <span className="self-center">
-      {balance && balance > 0 ? formatBigInt(balance, 3).toLocaleString() : 0}
-    </span>
-    <span className="self-center">{icon ?? tokenName}</span>
-  </div>
-);
 
 export const StarkAccount = () => {
   const { disconnect } = useDisconnect();
-  const { status, address: addressLong } = useAccount();
+  const { status, account } = useAccount();
 
-  const address = "0x0" + addressLong?.substring(2);
-
-  const { toggleAccount } = useUIContext();
-
-  const { balances } = useWalletsProviderContext();
+  const { data } = useStarkName({ address: account?.address });
+  const displayStarkAddress = data ?? shortenHex(account?.address ?? "", 8);
 
   const isConnected = status === "connected";
 
-  const DisplayChainInfo = () => (
-    <div className="flex">
-      <Starknet className="mx-2 w-6" />
-      <AccountLink isL1={false} />
-    </div>
-  );
-
-  const router = useRouter();
-
-  if (isConnected) {
+  if (account?.address) {
     return (
-      <div className="flex w-full flex-col justify-between border-2">
-        <div className="flex justify-between p-2">
-          <DisplayChainInfo />
-
+      <div className="flex w-full justify-between border-t p-2">
+        <div className="flex py-1 text-lg">
+          <Starknet className="mr-3 w-7" />
+          <CopyButton text={account.address} displayText={displayStarkAddress} />
+        </div>
+        <div className="flex items-center space-x-2">
+          <ExplorerLink
+            type="account"
+            text="Starkscan"
+            chainId={SUPPORTED_L2_CHAIN_ID}
+            hash={account.address}
+          />
           <Button variant="outline" size="xs" onClick={() => disconnect()}>
             <LogOut className="w-4 self-center" />
-          </Button>
-        </div>
-
-        <div className="flex justify-between border-t p-2">
-          <Button
-            onClick={() => {
-              router.push(`/user/${address}`);
-              toggleAccount();
-            }}
-            variant="outline"
-          >
-            <Album className="mr-2 h-6 w-6" />
-            Assets
-          </Button>
-          <DisplayBalance
-            icon={<EthereumLogo className="mr-2 w-4" />}
-            balance={balances.l2.eth}
-            tokenName="ETH"
-          />
-          <DisplayBalance
-            icon={<Lords className="w-6 fill-current pr-2" />}
-            balance={balances.l2.lords}
-            tokenName="LORDS"
-          />
-          <Button
-            onClick={() => {
-              router.push(`/bridge`);
-              toggleAccount();
-            }}
-            size="sm"
-            variant="default"
-          >
-            Bridge
           </Button>
         </div>
       </div>
     );
   }
   return (
-    <div className="ml-2 w-full self-center">
-      <StarknetLoginButton />
+    <div className="mb-3 w-full self-center pl-2">
+      <StarknetLoginButton>
+        Login to {CHAIN_IDS_TO_NAMES[SUPPORTED_L2_CHAIN_ID]}
+      </StarknetLoginButton>
     </div>
   );
 };

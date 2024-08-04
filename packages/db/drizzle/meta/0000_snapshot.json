@@ -1,0 +1,447 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.governances": {
+      "name": "governances",
+      "schema": "",
+      "columns": {
+        "uid": {
+          "name": "uid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "block_range": {
+          "name": "block_range",
+          "type": "int8range",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "currentDelegates": {
+          "name": "currentDelegates",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "totalDelegates": {
+          "name": "totalDelegates",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "delegatedVotesRaw": {
+          "name": "delegatedVotesRaw",
+          "type": "numeric(80, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "delegatedVotes": {
+          "name": "delegatedVotes",
+          "type": "numeric(80, 20)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "governances_currentdelegates_index": {
+          "name": "governances_currentdelegates_index",
+          "columns": [
+            {
+              "expression": "currentDelegates",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "governances_delegatedvotes_index": {
+          "name": "governances_delegatedvotes_index",
+          "columns": [
+            {
+              "expression": "delegatedVotes",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "numeric_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "governances_delegatedvotesraw_index": {
+          "name": "governances_delegatedvotesraw_index",
+          "columns": [
+            {
+              "expression": "delegatedVotesRaw",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "numeric_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "governances_id_index": {
+          "name": "governances_id_index",
+          "columns": [
+            {
+              "expression": "id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "governances_totaldelegates_index": {
+          "name": "governances_totaldelegates_index",
+          "columns": [
+            {
+              "expression": "totalDelegates",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.delegates": {
+      "name": "delegates",
+      "schema": "",
+      "columns": {
+        "uid": {
+          "name": "uid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "block_range": {
+          "name": "block_range",
+          "type": "int8range",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "governance": {
+          "name": "governance",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user": {
+          "name": "user",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "delegatedVotesRaw": {
+          "name": "delegatedVotesRaw",
+          "type": "numeric(80, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "delegatedVotes": {
+          "name": "delegatedVotes",
+          "type": "numeric(80, 20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tokenHoldersRepresentedAmount": {
+          "name": "tokenHoldersRepresentedAmount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tokenHoldersRepresented": {
+          "name": "tokenHoldersRepresented",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "delegates_delegatedvotes_index": {
+          "name": "delegates_delegatedvotes_index",
+          "columns": [
+            {
+              "expression": "delegatedVotes",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "numeric_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "delegates_delegatedvotesraw_index": {
+          "name": "delegates_delegatedvotesraw_index",
+          "columns": [
+            {
+              "expression": "delegatedVotesRaw",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "numeric_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "delegates_governance_index": {
+          "name": "delegates_governance_index",
+          "columns": [
+            {
+              "expression": "governance",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "delegates_id_index": {
+          "name": "delegates_id_index",
+          "columns": [
+            {
+              "expression": "id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "delegates_tokenholdersrepresented_index": {
+          "name": "delegates_tokenholdersrepresented_index",
+          "columns": [
+            {
+              "expression": "tokenHoldersRepresented",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "delegates_tokenholdersrepresentedamount_index": {
+          "name": "delegates_tokenholdersrepresentedamount_index",
+          "columns": [
+            {
+              "expression": "tokenHoldersRepresentedAmount",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int4_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "delegates_user_index": {
+          "name": "delegates_user_index",
+          "columns": [
+            {
+              "expression": "user",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public._checkpoints": {
+      "name": "_checkpoints",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(10)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "block_number": {
+          "name": "block_number",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contract_address": {
+          "name": "contract_address",
+          "type": "varchar(66)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "_checkpoints_block_number_index": {
+          "name": "_checkpoints_block_number_index",
+          "columns": [
+            {
+              "expression": "block_number",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "int8_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "_checkpoints_contract_address_index": {
+          "name": "_checkpoints_contract_address_index",
+          "columns": [
+            {
+              "expression": "contract_address",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public._metadatas": {
+      "name": "_metadatas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(20)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public._template_sources": {
+      "name": "_template_sources",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "contract_address": {
+          "name": "contract_address",
+          "type": "varchar(66)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "start_block": {
+          "name": "start_block",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "template": {
+          "name": "template",
+          "type": "varchar(128)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {}
+  }
+}

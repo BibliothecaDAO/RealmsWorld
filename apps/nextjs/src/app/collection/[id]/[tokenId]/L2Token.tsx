@@ -9,7 +9,6 @@ import { useAccount } from "@starknet-react/core";
 import { Clock } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { getCollectionFromAddress } from "@realms-world/constants";
 import {
   Accordion,
   AccordionContent,
@@ -43,7 +42,7 @@ export const L2Token = ({
   //if (isLoading) return <LoadingSkeleton />;
   if (!erc721Token) return <div>Token Information Loading</div>;
 
-  const activeListings = erc721Token.listings?.filter(
+  const activeListings = erc721Token.listings.filter(
     (
       listing: NonNullable<
         RouterOutputs["erc721Tokens"]["byId"]
@@ -52,11 +51,10 @@ export const L2Token = ({
   );
 
   const lowestPriceActiveListing = findLowestPriceActiveListing(
-    erc721Token?.listings,
-    erc721Token?.owner,
+    erc721Token.listings,
+    erc721Token.owner,
   );
 
-  const collectionId = getCollectionFromAddress(contractAddress);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const expiryDiff = useTimeDiff(lowestPriceActiveListing?.expiration ?? 0);
 
@@ -70,7 +68,7 @@ export const L2Token = ({
           <span>Listing ends in {expiryDiff}</span>
         </div>
       )}
-      <div className="mt-4 flex flex-wrap items-center justify-between border bg-dark-green p-4">
+      <div className="mt-4 flex flex-wrap items-center justify-between border bg-background p-4">
         <div className="flex flex-wrap gap-x-2 text-lg">
           {price ? (
             <>
@@ -99,7 +97,6 @@ export const L2Token = ({
                   }
                   // tokenId={tokenId}
                   token={token}
-                  collectionId={collectionId}
                   orderId={0}
                 />
               )}
@@ -113,7 +110,7 @@ export const L2Token = ({
         className=""
       >
         <AccordionItem value="item-1">
-          <div className="mt-4 border bg-dark-green px-4">
+          <div className="mt-4 border bg-background px-4">
             <AccordionTrigger className="text-lg">Listings</AccordionTrigger>
             <AccordionContent className="-mt-4 w-full flex-wrap gap-x-2">
               {activeListings.length
@@ -131,7 +128,7 @@ export const L2Token = ({
           </div>
         </AccordionItem>
         <AccordionItem value="item-2">
-          <div className="mt-4 border bg-dark-green px-4">
+          <div className="mt-4 border bg-background px-4">
             <AccordionTrigger className="text-lg">
               Token Activity
             </AccordionTrigger>

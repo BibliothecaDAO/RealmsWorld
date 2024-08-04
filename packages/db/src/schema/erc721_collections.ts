@@ -1,11 +1,10 @@
 import { relations } from "drizzle-orm";
-import { integer, text } from "drizzle-orm/pg-core";
+import { integer, pgTable, text } from "drizzle-orm/pg-core";
 
 import { int8range } from "../int8range";
-import { pgSqlTable } from "./_table";
 import { erc721AttributeKeys } from "./erc721_attribute_keys";
 
-export const erc721Collections = pgSqlTable("erc721_collections", {
+export const erc721Collections = pgTable("erc721_collections", {
   _cursor: int8range("_cursor"),
   id: text("id"),
   marketplaceId: integer("marketplaceId"),

@@ -1,3 +1,5 @@
+import { env } from "@/env";
+
 const query = `query WalletsRealms(
   $addresses: [Bytes!]
 ) {
@@ -16,7 +18,7 @@ export const getWalletRealmsHeld = async ({
   addresses: string[];
 }) => {
   try {
-    const res = await fetch(process.env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME, {
+    const res = await fetch(env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME, {
       method: "POST",
       headers: {
         "content-type": "application/json",

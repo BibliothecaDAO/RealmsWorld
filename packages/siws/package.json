@@ -1,0 +1,60 @@
+{
+  "name": "siws",
+  "version": "0.0.1",
+  "description": "Sign-In with Starknet helper library",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "directories": {
+    "lib": "src"
+  },
+  "files": [
+    "dist/**",
+    "src/**"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "tsup",
+    "gcp-build": "tsc",
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint --ext .js,.ts .",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+  },
+  "author": "Nethermind",
+  "license": "Apache-2.0",
+  "keywords": [
+    "starknet",
+    "sign-in",
+    "sign-in-with-starknet",
+    "siws"
+  ],
+  "homepage": "https://github.com/nethermindeth",
+  "dependencies": {
+    "starknet": "^6.9.0",
+    "uri-js": "^4.4.1",
+    "valid-url": "^1.0.9",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.9",
+    "@realms-world/eslint-config": "*",
+    "@realms-world/prettier-config": "*",
+    "@realms-world/tsconfig": "*",
+    "eslint": "^9.6.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.5.3",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.5",
+    "tsdx": "^0.14.1"
+  },
+  "peerDependencies": {
+    "ethers": "^5.6.8 || ^6.0.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nethermindeth/signin-with-starknet.git"
+  },
+  "bugs": {
+    "url": "https://github.com/spruceid/signin-with-starknet/issues"
+  }
+}

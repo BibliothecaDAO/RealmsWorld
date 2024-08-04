@@ -1,5 +1,7 @@
-import type { Attributes, Collection } from "@/types";
+import type { Attributes } from "@/types";
+import type { paths } from "@reservoir0x/reservoir-sdk";
 import Image from "next/image";
+import Link from "next/link";
 import { erc721Tokens } from "@/constants/erc721Tokens";
 import { shortenHex } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
@@ -20,12 +22,14 @@ export const TokenInformation = ({
   image,
   attributes,
 }: {
-  collection?: Collection;
+  collection?: NonNullable<
+    paths["/collections/v5"]["get"]["responses"]["200"]["schema"]["collections"]
+  >[number];
   collectionId: string;
   children?: React.ReactNode;
-  name: string | null;
-  owner: string | null;
-  image: string | null;
+  name?: string | null;
+  owner?: string | null;
+  image?: string | null;
   attributes?:
     | Attributes[]
     | NonNullable<RouterOutputs["erc721Tokens"]["byId"]>["attributes"];
@@ -55,12 +59,12 @@ export const TokenInformation = ({
                     attributeTokenCount={attribute.tokenCount}
                     collectionTokenCount={
                       collection?.tokenCount
-                        ? parseInt(collection?.tokenCount)
+                        ? parseInt(collection.tokenCount)
                         : undefined
                     }
                     contractId={collectionId}
                     floorAskPrice={attribute.floorAskPrice}
-                    title={attribute.key ?? attribute.key}
+                    title={attribute.key}
                     value={attribute.value}
                   />
                 );
@@ -70,11 +74,11 @@ export const TokenInformation = ({
                     key={index}
                     collectionTokenCount={
                       collection?.tokenCount
-                        ? parseInt(collection?.tokenCount)
+                        ? parseInt(collection.tokenCount)
                         : undefined
                     }
                     contractId={collectionId}
-                    title={attribute.key ?? attribute.key}
+                    title={attribute.key}
                     value={attribute.value}
                   />
                 );
@@ -87,15 +91,13 @@ export const TokenInformation = ({
       </div>
       <div className="my-1 w-full px-4 md:w-2/3 md:px-4">
         <div className="mb-8 flex justify-between">
-          <Button
-            size={"sm"}
-            variant={"default"}
-            href={`/collection/${collectionId}`}
-          >
-            <ArrowLeft className="mr-2 w-4 self-center" />{" "}
-            <span className="self-center">
-              {erc721Tokens[collectionId as keyof typeof erc721Tokens]?.name}
-            </span>
+          <Button size={"sm"} variant={"default"} asChild>
+            <Link href={`/collection/${collectionId}`}>
+              <ArrowLeft className="mr-2 w-4 self-center" />{" "}
+              <span className="self-center">
+                {erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
+              </span>
+            </Link>
           </Button>
           <div className="flex space-x-4 text-lg">
             <span>#{tokenId}</span>
@@ -106,8 +108,8 @@ export const TokenInformation = ({
         {owner && (
           <div className="flex space-x-6 text-lg">
             <div className="self-center">Owner </div>
-            <Button variant={"ghost"} href={`/user/${owner}`}>
-              {shortenHex(owner, 8)}
+            <Button variant={"ghost"} asChild>
+              <Link href={`/user/${owner}`}>{shortenHex(owner, 8)}</Link>
             </Button>
           </div>
         )}

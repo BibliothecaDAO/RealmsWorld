@@ -1,25 +1,25 @@
 "use client";
 
+import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 import * as TogglePrimitive from "@radix-ui/react-toggle";
-import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 
 import { cn } from "@realms-world/utils";
 
 const toggleVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors data-[state=on]:bg-slate-200 dark:hover:bg-slate-800 dark:data-[state=on]:bg-slate-700 focus:outline-none dark:text-slate-100 focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:focus:ring-offset-slate-900 hover:bg-slate-100  dark:hover:text-slate-100 dark:data-[state=on]:text-slate-100",
+  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
   {
     variants: {
       variant: {
         default: "bg-transparent",
         outline:
-          "bg-transparent border border-slate-200 hover:bg-slate-100 dark:border-slate-700",
+          "border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground",
       },
       size: {
-        default: "h-10 px-3",
-        sm: "h-9 px-2.5",
-        lg: "h-11 px-5",
+        default: "h-9 px-3",
+        sm: "h-8 px-2",
+        lg: "h-10 px-3",
       },
     },
     defaultVariants: {

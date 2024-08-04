@@ -1,0 +1,298 @@
+@import "@realms-world/styles/globals.css"; /*TODO - this isnt working for some reason so is copied*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    --background: 36 44% 95%;
+    --foreground: 36 5% 6%;
+    --card: 36 44% 90%;
+    --card-foreground: 36 5% 10%;
+    --popover: 36 44% 95%;
+    --popover-foreground: 36 95% 6%;
+    --primary: 36 88.9% 85.9%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 36 30% 70%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: -2 30% 85%;
+    --muted-foreground: 36 5% 35%;
+    --accent: -2 30% 80%;
+    --accent-foreground: 36 5% 10%;
+    --destructive: 0 50% 30%;
+    --destructive-foreground: 36 5% 90%;
+    --border: 36 30% 50%;
+    --input: 36 30% 18%;
+    --ring: 36 88.9% 85.9%;
+    --radius: 0.3rem;
+  }
+  .dark {
+    --background: 69 9% 15%;
+    --foreground: 36 88.9% 85.9%;
+    --card: 69 9% 15%;
+    --card-foreground: 36 5% 90%;
+    --popover: 69 9% 15%;
+    --popover-foreground: 36 88.9% 85.9%;
+    --primary: 36 88.9% 85.9%;
+    --primary-foreground: 67.5 5.41% 29.02%;
+    --secondary: 36 30% 20%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 68 5% 29%;
+    --muted-foreground: 36 5% 60%;
+    --accent: 68 5% 29%;
+    --accent-foreground: 36 5% 90%;
+    --destructive: 0 50% 30%;
+    --destructive-foreground: 36 5% 90%;
+    --border: 68 5% 29%;
+    --input: 68 5% 29%;
+    --ring: 36 88.9% 85.9%;
+    --radius: 0rem;
+    --speed: 3;
+    --power4: linear(
+      0 0%,
+      0.0012 14.95%,
+      0.0089 22.36%,
+      0.0297 28.43%,
+      0.0668 33.43%,
+      0.0979 36.08%,
+      0.1363 38.55%,
+      0.2373 43.07%,
+      0.3675 47.01%,
+      0.5984 52.15%,
+      0.7121 55.23%,
+      0.8192 59.21%,
+      0.898 63.62%,
+      0.9297 66.23%,
+      0.9546 69.06%,
+      0.9733 72.17%,
+      0.9864 75.67%,
+      0.9982 83.73%,
+      1 100%
+    );
+    --power2: linear(
+      0 0%,
+      0.0036 9.62%,
+      0.0185 16.66%,
+      0.0489 23.03%,
+      0.0962 28.86%,
+      0.1705 34.93%,
+      0.269 40.66%,
+      0.3867 45.89%,
+      0.5833 52.95%,
+      0.683 57.05%,
+      0.7829 62.14%,
+      0.8621 67.46%,
+      0.8991 70.68%,
+      0.9299 74.03%,
+      0.9545 77.52%,
+      0.9735 81.21%,
+      0.9865 85%,
+      0.9949 89.15%,
+      1 100%
+    );
+    --ease: var(--power2);
+    --base: 180;
+    --chroma: 2;
+    --lightness: 0.26;
+    --limit: 320;
+    --distance: 8;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* font-feature-settings: "rlig" 1, "calt" 1; */
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+h1,
+h2 {
+  @apply font-sans;
+}
+
+.theme-shadow {
+  @apply shadow-lg shadow-red-300;
+}
+
+body {
+  @apply font-sans-serif;
+}
+@layer base {
+  p > a {
+    @apply text-flamingo;
+  }
+}
+.ScrollAreaScrollbar {
+  display: flex;
+  /* ensures no selection */
+  user-select: none;
+  /* disable browser handling of all panning and zooming gestures on touch devices */
+  touch-action: none;
+  padding: 2px;
+  background: rgb(255 255 255 / 0.1);
+  transition: background 160ms ease-out;
+}
+.ScrollAreaScrollbar:hover {
+  background: rgb(255 255 255 / 0.3);
+}
+.ScrollAreaScrollbar[data-orientation="vertical"] {
+  width: var(--scrollbar-size);
+}
+.ScrollAreaScrollbar[data-orientation="horizontal"] {
+  flex-direction: column;
+  height: var(--scrollbar-size);
+}
+.ScrollAreaRoot {
+  overflow: hidden;
+  --scrollbar-size: 10px;
+}
+
+.ScrollAreaThumb {
+  flex: 1;
+  background: rgb(148 163 184);
+  border-radius: var(--scrollbar-size);
+  position: relative;
+}
+/* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
+.ScrollAreaThumb::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+body::-webkit-scrollbar,
+.table-scroll::-webkit-scrollbar {
+  width: 1em;
+}
+
+body::-webkit-scrollbar-track,
+.table-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb,
+.table-scroll::-webkit-scrollbar-thumb {
+  @apply bg-black;
+}
+
+/* .tab-container {
+  @apply mb-4 mt-4 flex;
+}
+
+.tab-button {
+  @apply mr-1 rounded-t border-b-4 border-transparent px-4 py-2 font-semibold transition-all;
+}
+
+.tab-button:not(:last-child) {
+  @apply mr-1;
+}
+
+.tab-button.active {
+  @apply bg-slate-800 text-white;
+}
+
+.tab-button.inactive {
+  @apply border-gray-400 bg-gray-300 text-black;
+}
+
+.tab-button.inactive:hover {
+  @apply bg-gray-400;
+} */
+.mask-transparent::before {
+  @apply absolute bottom-0 left-0 right-0 top-0 z-0;
+  mask-image: linear-gradient(to bottom, white 200px, transparent);
+  content: "";
+}
+.mask-transparent {
+  position: relative;
+}
+
+.rings {
+  transform-style: preserve-3d;
+  width: 85%;
+  max-width: 300px;
+  aspect-ratio: 1;
+  position: relative;
+  transform: translate3d(0, 0, 100vmin) rotateX(-32deg) rotateY(-32deg)
+    rotateX(90deg);
+}
+
+.ringAnimation {
+  --scale-base: calc(((100 / var(--count)) * var(--index)) * 1%);
+  --scale-top: calc(((100 / var(--count)) * var(--index)) * 1%);
+  width: calc(((100 / var(--count)) * var(--index)) * 1%);
+  aspect-ratio: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  transform: translate3d(0, 0, calc(var(--distance) * -1vmin));
+  animation: float calc(var(--speed) * 1s) infinite var(--ease);
+  animation-delay: calc(
+    sin((var(--index) / var(--count)) * 45deg) * var(--speed) * -1s
+  );
+}
+
+.ringAnimation::after {
+  content: "";
+  border: 2px solid
+    oklch(var(--lightness, 0.5) var(--chroma, 0.25) var(--base, 8));
+  border-radius: calc(var(--radius) * 1%);
+  position: absolute;
+  inset: 0;
+}
+
+.ringAnimation::after {
+  animation: hue calc(var(--speed) * 1s) infinite var(--ease);
+  animation-delay: calc(
+    sin((var(--index) / var(--count)) * 45deg) * var(--speed) * -1s
+  );
+}
+
+@keyframes hue {
+  50% {
+    filter: hue-rotate(calc((var(--limit) - var(--base)) * 1deg));
+  }
+}
+
+@keyframes float {
+  50% {
+    transform: translate3d(0, 0, calc(var(--distance) * 1vmin));
+  }
+  0%,
+  45% {
+    width: var(--scale-base);
+  }
+  75% {
+    width: var(--scale-top);
+  }
+}
+
+@keyframes float-alternate {
+  100% {
+    transform: translate3d(0, 0, calc(var(--distance) * 1vmin));
+  }
+  0%,
+  45% {
+    width: var(--scale-base);
+  }
+  75% {
+    width: var(--scale-top);
+  }
+}

@@ -3,10 +3,8 @@
 
 import React from "react";
 import { TransferLog } from "@/app/bridge/TransferLog";
-import { useTransferLog } from "@/app/providers/TransferLogProvider";
 import { useCompleteTransferToL1 } from "@/hooks/useTransferToL1";
-//import { evaluate } from "@starkware-industries/commons-js-utils";
-import PropTypes from "prop-types";
+import { useTransferLog } from "@/providers/TransferLogProvider";
 
 export const Account = ({ isL1 }: { isL1: boolean }) => {
   const { transfers /*, fetchNextPage, isLoading*/ } = useTransferLog(isL1);
@@ -31,8 +29,4 @@ export const Account = ({ isL1 }: { isL1: boolean }) => {
         : null}
     </>
   );
-};
-
-Account.propTypes = {
-  transferId: PropTypes.string,
 };

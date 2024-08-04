@@ -1,10 +1,10 @@
 import { fileURLToPath } from "url";
+import MillionLint from "@million/lint";
+import createMDX from "@next/mdx";
 import createJiti from "jiti";
 
 // Import env files to validate at build time. Use jiti so we can load .ts files in here.
 createJiti(fileURLToPath(import.meta.url))("./src/env");
-
-import createMDX from "@next/mdx";
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -14,7 +14,7 @@ const config = {
     "@realms-world/api",
     "@realms-world/auth",
     "@realms-world/db",
-    "@realms-world/ui"
+    "@realms-world/ui",
   ],
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
@@ -74,8 +74,9 @@ const config = {
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
       { protocol: "https", hostname: "magically.gg" },
       { protocol: "https", hostname: "pro.opensea.io" },
-      { protocol: "https", hostname: "*.ipfs.nftstorage.link"},
-      { protocol: "https", hostname: "ethplorer.io"}
+      { protocol: "https", hostname: "*.ipfs.nftstorage.link" },
+      { protocol: "https", hostname: "ethplorer.io" },
+      { protocol: "https", hostname: "avatars.githubusercontent.com" },
     ],
   },
   async headers() {
@@ -105,4 +106,9 @@ const withMDX = createMDX({
   extension: /\.mdx?$/,
 });
 
-export default withMDX(config);
+const enhancedConfig =
+  !process.env.NODE_ENV === "production"
+    ? MillionLint.next({ rsc: true, auto: { rsc: true } })(withMDX(config))
+    : withMDX(config);
+
+export default enhancedConfig;

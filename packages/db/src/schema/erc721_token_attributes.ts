@@ -2,15 +2,15 @@ import { relations } from "drizzle-orm";
 import {
   index,
   integer,
+  pgTable,
   primaryKey,
   text,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
-import { pgSqlTable } from "./_table";
 import { erc721Tokens } from "./erc721_tokens";
 
-export const erc721TokenAttributes = pgSqlTable(
+export const erc721TokenAttributes = pgTable(
   "erc721_token_attributes",
   {
     token_key: text("token_key").notNull(),

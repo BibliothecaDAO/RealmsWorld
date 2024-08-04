@@ -1,26 +1,31 @@
+"use client";
+
 import type { VariantProps } from "class-variance-authority";
 import React from "react";
-import { useUIContext } from "@/app/providers/UIProvider";
 import StarknetLogo from "@/icons/starknet.svg";
+import { useUIStore } from "@/providers/UIStoreProvider";
 import { shortenHex } from "@/utils/utils";
-import { useAccount as useL2Account } from "@starknet-react/core";
+import { useAccount } from "@starknet-react/core";
 
 import type { buttonVariants } from "@realms-world/ui";
 import { Button } from "@realms-world/ui";
+import { Loader } from "lucide-react";
 
 export const StarknetLoginButton = ({
   openAccount = false,
   variant,
   textClass,
   buttonClass,
+  children,
 }: {
   openAccount?: boolean;
   variant?: VariantProps<typeof buttonVariants>["variant"];
   textClass?: string;
   buttonClass?: string;
+  children?: React.ReactNode;
 }) => {
-  const { address, isConnected } = useL2Account();
-  const { toggleAccount, toggleStarknetLogin } = useUIContext();
+  const { account, isConnected, isConnecting } = useAccount();
+  const { toggleAccount, toggleStarknetLogin } = useUIStore((state) => state);
 
   const onConnectClick = () => {
     return !isConnected
@@ -34,11 +39,16 @@ export const StarknetLoginButton = ({
       variant={variant ?? "outline"}
       size="sm"
       onClick={onConnectClick}
+      disabled={isConnecting}
     >
       <span className="flex items-center font-sans normal-case">
         <StarknetLogo className="h-6 w-6" />
-        <span className={` pl-2 ${textClass ?? "sm:block"}`}>
-          {address && isConnected ? <>{shortenHex(address, 8)}</> : "Starknet"}
+        <span className={`pl-2 ${textClass ?? "sm:block"}`}>
+          {account?.address ? (
+            <>{shortenHex(account.address, 8)}</>
+          ) : (<>{isConnecting ? <Loader className="animate-spin" /> : (<>
+            {children ?? "Starknet"}</>)
+          }</>)}
         </span>
       </span>
     </Button>

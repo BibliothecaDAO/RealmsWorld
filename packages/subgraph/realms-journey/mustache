@@ -1,0 +1,120 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Loot
+    network: rinkeby
+    source:
+      address: '0x0000000000000000000000000000000000000000'
+      abi: Loot
+      startBlock: 13108876
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - Bag
+        - Wallet
+      abis:
+        - name: Loot
+          file: ./abis/Loot.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/loot-mapping.ts
+
+  - kind: ethereum/contract
+    name: LootRealm
+    network: rinkeby
+    source:
+      address: '0x6B13F1C319c2DdA7Ae15c04f540671B8A0E2AE9B'
+      abi: LootRealm
+      startBlock: 9259490
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - Realm
+        - Wallet
+      abis:
+        - name: LootRealm
+          file: ./abis/LootRealm.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/realm-mapping.ts
+
+  - kind: ethereum/contract
+    name: LootMore
+    network: rinkeby
+    source:
+      address: '0x0000000000000000000000000000000000000000'
+      abi: LootMore
+      startBlock: 13160010
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - MLoot
+        - Wallet
+      abis:
+        - name: LootMore
+          file: ./abis/LootMore.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mloot-mapping.ts 
+
+  - kind: ethereum/contract
+    name: GenesisProjectMana
+    network: rinkeby
+    source:
+      address: '0x0000000000000000000000000000000000000000'
+      abi: GenesisMana
+      startBlock: 13186741
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - Mana
+        - Wallet
+        - Bag
+      abis:
+        - name: GenesisMana
+          file: ./abis/GenesisMana.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mana-mapping.ts
+
+  - kind: ethereum/contract
+    name: GenesisProjectAdventurer
+    network: rinkeby
+    source:
+      address: '0x0000000000000000000000000000000000000000'
+      abi: GenesisAdventurer
+      startBlock: 13235759
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - GAdventurer
+        - Wallet
+        - Bag
+      abis:
+        - name: GenesisAdventurer
+          file: ./abis/GenesisAdventurer.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/gadventurer-mapping.ts

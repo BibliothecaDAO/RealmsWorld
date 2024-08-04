@@ -1,13 +1,19 @@
+import type { TRPCRouterRecord } from "@trpc/server";
 import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import { and, eq, schema } from "@realms-world/db";
+import { and, eq } from "@realms-world/db";
+import {
+  erc721AttributeKeys,
+  erc721Attributes,
+  erc721Tokens,
+} from "@realms-world/db/schema";
 
 //import { withCursorPagination } from "../cursorPagination";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
-export const erc721AttributesRouter = createTRPCRouter({
+export const erc721AttributesRouter = {
   all: publicProcedure
     .input(
       z.object({
@@ -25,9 +31,7 @@ export const erc721AttributesRouter = createTRPCRouter({
       const whereFilter: SQL[] = [];
 
       if (contractAddress) {
-        whereFilter.push(
-          eq(schema.erc721AttributeKeys.collectionId, contractAddress),
-        );
+        whereFilter.push(eq(erc721AttributeKeys.collectionId, contractAddress));
       }
       /*const {
         orderBy: orderByRes,
@@ -37,7 +41,7 @@ export const erc721AttributesRouter = createTRPCRouter({
         limit: limit + 1,
         where: and(...whereFilter),
         cursors: [
-          schema.erc721Attributes.id, // Column to use for cursor
+          erc721Attributes.id, // Column to use for cursor
           direction ?? "asc", // Sort order ('asc' or 'desc')
           cursor, // Cursor value
         ],
@@ -45,28 +49,25 @@ export const erc721AttributesRouter = createTRPCRouter({
 
       const items = await ctx.db
         .select({
-          id: schema.erc721AttributeKeys.id,
-          key: schema.erc721AttributeKeys.key,
-          kind: schema.erc721AttributeKeys.kind,
+          id: erc721AttributeKeys.id,
+          key: erc721AttributeKeys.key,
+          kind: erc721AttributeKeys.kind,
           values: sql`array_agg(jsonb_build_object(
-            'value',${schema.erc721Attributes.value}, 'tokenCount',${schema.erc721Attributes.tokenCount}))`.as(
+            'value',${erc721Attributes.value}, 'tokenCount',${erc721Attributes.tokenCount}))`.as(
             "values",
           ),
         })
-        .from(schema.erc721AttributeKeys)
+        .from(erc721AttributeKeys)
         .where(and(...whereFilter))
         .leftJoin(
-          schema.erc721Attributes,
-          eq(
-            schema.erc721AttributeKeys.id,
-            schema.erc721Attributes.attributeKeyId,
-          ),
+          erc721Attributes,
+          eq(erc721AttributeKeys.id, erc721Attributes.attributeKeyId),
         )
         .groupBy(
-          schema.erc721AttributeKeys.id,
-          schema.erc721AttributeKeys.collectionId,
-          schema.erc721AttributeKeys.key,
-          schema.erc721AttributeKeys.kind,
+          erc721AttributeKeys.id,
+          erc721AttributeKeys.collectionId,
+          erc721AttributeKeys.key,
+          erc721AttributeKeys.kind,
         );
 
       /*const items = await ctx.db.query.erc721Attributes.findMany({
@@ -92,10 +93,7 @@ export const erc721AttributesRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
       return ctx.db.query.erc721Tokens.findFirst({
-        where: and(
-          eq(schema.erc721Tokens.id, input.id),
-          sql`upper_inf(_cursor)`,
-        ),
+        where: and(eq(erc721Tokens.id, input.id), sql`upper_inf(_cursor)`),
         with: {
           listings: {
             where: (listings, { sql }) =>
@@ -106,4 +104,4 @@ export const erc721AttributesRouter = createTRPCRouter({
         },
       });
     }),
-});
+} satisfies TRPCRouterRecord;
