@@ -19,7 +19,7 @@ export const delegatesRouter = {
     .input(
       z
         .object({
-          limit: z.number().min(1).max(100).nullish(),
+          limit: z.number().min(1).max(300).nullish(),
           cursor: z.number().nullish(),
           orderBy: z.string().nullish(),
           search: z.string().nullish(),

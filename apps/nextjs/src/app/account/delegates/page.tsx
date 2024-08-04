@@ -20,7 +20,7 @@ export default function Page({
   searchParams: { search?: string };
 }) {
   const filters: RouterInputs["delegates"]["all"] = {
-    limit: 20,
+    limit: 200,
     search: search,
   };
   const delegates = api.delegates.all(filters);
