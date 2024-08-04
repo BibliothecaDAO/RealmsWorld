@@ -77,7 +77,7 @@ export function DelegateCard({
         <SocialIcons
           x={delegate.delegateProfile?.twitter ?? undefined}
           github={delegate.delegateProfile?.github ?? undefined}
-          discord={delegate.delegateProfile?.discord ?? undefined}
+        //discord={delegate.delegateProfile?.discord ?? undefined}
         />
       </CardFooter>
     </Card>

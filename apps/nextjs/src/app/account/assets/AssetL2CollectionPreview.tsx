@@ -39,8 +39,8 @@ function AssetL2CollectionPreview({
               <ScrollArea>
                 <L2ERC721Table
                   contractAddress={collectionAddress}
-                  infiniteScroll={false}
-                  limit={10}
+                  infiniteScroll={true}
+                  limit={200}
                   ownerAddress={l2address}
                   loadMoreAssetName={collectionName}
                   selectable={collectionName == "realms"}
