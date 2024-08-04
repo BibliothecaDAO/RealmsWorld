@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
 import { api } from "@/trpc/react";
 import { padAddress, shortenHex } from "@/utils/utils";
-import { useAccount, useReadContract } from "@starknet-react/core";
+import { useAccount, useReadContract, useStarkProfile } from "@starknet-react/core";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 import { UserRoundPlus } from "lucide-react";
 import { SignInSIWS } from "./SignInSIWS";
@@ -47,6 +47,8 @@ export const Profile = ({
   const { sendAsync: delegateRealms } = useDelegateRealms({
     delegatee: address,
   });
+  //const { data: starkProfile, isLoading, isError, error } = useStarkProfile({ address: "0x037c6B561b367a85b68668e8663041b9E2F4199c346FBda97dc0c2167F7A6016" });
+
   const { data: currentDelegate } = useCurrentDelegate()
 
   const { data: ownerTokens } = api.erc721Tokens.all.useQuery({ owner: address, limit: 1, contractAddress: l2RealmsAddress }, {
@@ -69,6 +71,7 @@ export const Profile = ({
       enabled: !!address,
     },
   );*/
+
   return (
     <div className="grid grid-cols-5 gap-x-6">
       <Card className="col-span-3">
@@ -80,7 +83,7 @@ export const Profile = ({
                   alt="profile image"
                   width={16}
                   height={16}
-                  src="https://avatars.githubusercontent.com/u/1?v=4"
+                  src="/pink_crown.gif"
                   className="h-16 w-16 rounded-full"
                 />
                 <div className="flex w-full justify-between">

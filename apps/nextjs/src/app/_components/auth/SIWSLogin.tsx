@@ -14,6 +14,7 @@ import { StarknetLoginButton } from "../wallet/StarknetLoginButton";
 //import { SessionProvider, useSession } from "next-auth/react";
 
 import { createSiwsData } from "./createSiwsData";
+import { padAddress } from "@realms-world/utils";
 
 export function SIWSLogin({ buttonText }: { buttonText?: string }) {
   const { address } = useAccount();
@@ -24,7 +25,7 @@ export function SIWSLogin({ buttonText }: { buttonText?: string }) {
     const createSignInData = async () => {
       if (address) {
         const loginString = "Login to Realms.World with your Starknet Wallet";
-        const siwsData = await createSiwsData(loginString, address);
+        const siwsData = await createSiwsData(loginString, padAddress(address));
         setSignInData(siwsData);
         return siwsData;
       }

@@ -16,12 +16,15 @@ import {
 
 import { SocialIcons } from "../../_components/SocialIcons";
 import { DelegateActions } from "./DelegateActions";
+import { useStarkProfile } from "@starknet-react/core";
 
 export function DelegateCard({
   delegate,
 }: {
   delegate: RouterOutputs["delegates"]["all"]["items"][0];
 }) {
+  //const { data, isLoading, isError } = useStarkProfile({ address: delegate.id });
+
   //const starkName = useStarkDisplayName(delegate.id);
   return (
     <Card className="flex flex-col">
@@ -32,7 +35,7 @@ export function DelegateCard({
               alt="profile"
               width={48}
               height={48}
-              src="https://avatars.githubusercontent.com/u/1?v=4"
+              src={"/pink_crown.gif"}
               className="h-14 w-14 rounded-full"
             />
             <div>
