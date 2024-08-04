@@ -54,7 +54,11 @@ export const ContractImage = ({
           (match: any, name: any) => `"name":"${name.replaceAll('"', '\\"')}",`,
         )
         .replace(regex, "");
+        try {
       return JSON.parse(modifiedJsonString);
+        } catch (e) {
+          console.log(e)
+        }
     }
   }, [data]);
   return (

@@ -18,7 +18,7 @@ export const CollectionAddresses: {
     [ChainId.SN_SEPOLIA]:
       "0x3e64aa2c669ffd66a1c78d120812005d8f7e03b75696dd9c0f06e8def143844",
     [ChainId.SN_MAIN]:
-      "0x7ae27a31bb6526e3de9cf02f081f6ce0615ac12a6d7b85ee58b8ad7947a2809",
+      "0x07ae27a31bb6526e3de9cf02f081f6ce0615ac12a6d7b85ee58b8ad7947a2809",
   },
   [Collections.BEASTS]: {
     [ChainId.SN_MAIN]:

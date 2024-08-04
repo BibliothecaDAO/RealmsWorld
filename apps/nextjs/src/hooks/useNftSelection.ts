@@ -3,6 +3,7 @@ import type { paths } from "@reservoir0x/reservoir-sdk";
 import { useCallback, useMemo, useState } from "react";
 
 import type { RouterOutputs } from "@realms-world/api";
+import { toast } from "@realms-world/ui";
 
 export const MAX_SELECTED_ITEMS = 30;
 
@@ -56,7 +57,10 @@ export default function useNftSelection({
       totalSelectedNfts === MAX_SELECTED_ITEMS &&
       collectionAddress === selectedCollectionAddress
     ) {
-      // TODO @YohanTz: Trigger toast here
+      toast({
+        title: "Max Realms Selected",
+        description: "Maximum 30 realms to be bridged in one transaction",
+      });
       return;
     }
 
