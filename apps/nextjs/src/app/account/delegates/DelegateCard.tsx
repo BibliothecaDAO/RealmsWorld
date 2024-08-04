@@ -16,7 +16,7 @@ import {
 
 import { SocialIcons } from "../../_components/SocialIcons";
 import { DelegateActions } from "./DelegateActions";
-import { useStarkProfile } from "@starknet-react/core";
+import { useStarkName, useStarkProfile } from "@starknet-react/core";
 
 export function DelegateCard({
   delegate,
@@ -40,7 +40,7 @@ export function DelegateCard({
             />
             <div>
               <div>
-                <StarkName address={delegate.id} />
+                <StarkName address={delegate.user} />
               </div>
 
               <div className="text-lg font-bold uppercase text-muted-foreground">
