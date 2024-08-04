@@ -73,8 +73,8 @@ export const Profile = ({
   );*/
 
   return (
-    <div className="grid grid-cols-5 gap-x-6">
-      <Card className="col-span-3">
+    <div className="grid flex-1 grid-cols-5 gap-x-6">
+      <Card className="col-span-3 auto-rows-max items-start">
         {delegate ? (
           <>
             <CardHeader>
@@ -118,7 +118,7 @@ export const Profile = ({
                 </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4">
+            <CardContent className="flex flex-col gap-4 max-w-full">
               <ProfileForm
                 delegateProfile={delegate.delegateProfile}
                 delegateId={delegate.user}
