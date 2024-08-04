@@ -10,6 +10,7 @@ export const DelegatesList = ({ delegates }: {
 
     const { data: delegatesInfo } = api.delegates.all.useQuery(
         {
+            limit: 200
         },
         {
             initialData: use(delegates)

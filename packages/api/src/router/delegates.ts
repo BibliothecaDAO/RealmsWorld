@@ -27,7 +27,7 @@ export const delegatesRouter = {
         .partial(),
     )
     .query(async ({ ctx, input }) => {
-      const limit = input.limit ?? 12;
+      const limit = input.limit ?? 100;
 
       const { cursor, orderBy, search } = input;
       const whereFilter: SQL[] = [];
