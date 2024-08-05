@@ -19,8 +19,6 @@ export function useWriteDepositRealms({
     mutation: { onSuccess: (data: any) => onSuccess?.(data) },
   });
 
-  // if (!l2Address) throw new Error("Missing L2 Address");
-
   const writeAsync = useCallback(
     async ({
       tokenIds,
@@ -30,6 +28,8 @@ export function useWriteDepositRealms({
       l2Address: string;
     }) => {
       console.log(l2Address, tokenIds);
+
+      if (!l2Address) throw new Error("Missing L2 Address");
 
       return await writeContractAsync({
         address: REALMS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] as `0x${string}`,
