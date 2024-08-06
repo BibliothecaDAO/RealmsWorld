@@ -10,6 +10,7 @@ import { usePendingRealmsWithdrawals } from "@/hooks/bridge/data/usePendingRealm
 import useStore from "@/hooks/useStore";
 import { useTransactionManager } from "@/stores/useTransasctionManager";
 import { api } from "@/trpc/react";
+import { useAccount as useStarknetAccount } from "@starknet-react/core";
 import { useAccount } from "wagmi";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
@@ -28,18 +29,23 @@ export const useTransactions = () => {
     (state) => state.transactions,
   );
   const { address } = useAccount();
+  const { address: l2Address } = useStarknetAccount();
+
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({ address });
   const filters: RouterInputs["erc721Bridge"]["all"] = useMemo(
     () => ({
       l1Account: padAddress(address),
+      l2Account: padAddress(l2Address),
     }),
-    [address],
+    [address, l2Address],
   );
+  console.log(filters);
 
   const { data: l2BridgeTransactions } = api.erc721Bridge.all.useQuery(
     filters,
     {
       refetchInterval: 30000,
+      enabled: !!address || !!l2Address,
     },
   );
 
@@ -79,7 +85,7 @@ export const useTransactions = () => {
               withdrawal.withdrawalEvents[0]?.finishedTxHash ??
               withdrawal.withdrawalEvents[0]?.createdTxHash,
             l1Account: padAddress(address),
-            l2Account: padAddress(address),
+            l2Account: padAddress(l2Address),
             timestamp: new Date(
               Number(withdrawal.createdTimestamp ?? 0n) * 1000,
             ),
