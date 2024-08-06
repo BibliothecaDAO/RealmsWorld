@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
   Button,
 } from "@realms-world/ui";
+import { formatEther } from "viem";
 
 export const LegacyClaim = () => {
   const {
@@ -36,7 +37,7 @@ export const LegacyClaim = () => {
               <div className="flex items-center justify-between">
                 <dt className="text-muted-foreground">Epoch 0-10:</dt>
                 <dd>
-                  {galleonLordsAvailable?.toLocaleString()}{" "}
+                  {galleonLordsAvailable ? formatEther(galleonLordsAvailable).toLocaleString() : 0}
                   {galleonLordsAvailable && galleonLordsAvailable > 0 ? (
                     <Button className="ml-3" size={"xs"}>
                       Claim
@@ -46,7 +47,7 @@ export const LegacyClaim = () => {
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-muted-foreground">Epoch 11-35:</dt>
-                <dd>{poolV1Balance?.toLocaleString() ?? 0}</dd>
+                <dd>{poolV1Balance ? formatEther(poolV1Balance).toLocaleString() : 0}</dd>
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-muted-foreground">Epoch 36-109:</dt>
@@ -58,12 +59,12 @@ export const LegacyClaim = () => {
               <div className="flex items-center justify-between">
                 <dt className="text-muted-foreground">Epoch 11-109:</dt>
                 <dd>
-                  {carrackLordsAvailable?.toLocaleString() ?? 0}
-                  {carrackLordsAvailable && (
+                  {carrackLordsAvailable ? formatEther(carrackLordsAvailable).toLocaleString() : 0}
+                  {carrackLordsAvailable ? (
                     <Button className="ml-3" size={"sm"}>
                       Claim
                     </Button>
-                  )}
+                  ) : null}
                 </dd>
               </div>
             </dl>
