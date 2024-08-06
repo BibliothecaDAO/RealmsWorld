@@ -27,7 +27,7 @@ export const DelegateActions = ({
       onClick={() => delegateRealms()}
       disabled={isCurrentDelegate}
     >
-      {isCurrentDelegate ? "Delgated" : "Delegate To"}
+      {isCurrentDelegate ? "Delegated" : "Delegate To"}
     </Button>
   );
 };
