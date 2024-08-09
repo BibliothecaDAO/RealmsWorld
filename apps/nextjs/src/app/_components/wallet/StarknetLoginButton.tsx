@@ -44,11 +44,12 @@ export const StarknetLoginButton = ({
       <span className="flex items-center font-sans normal-case">
         <StarknetLogo className="h-6 w-6" />
         <span className={`pl-2 ${textClass ?? "sm:block"}`}>
+          {isConnecting && <Loader className="animate-spin" />}
           {account?.address ? (
             <>{shortenHex(account.address, 8)}</>
-          ) : (<>{isConnecting ? <Loader className="animate-spin" /> : (<>
+          ) : (<>
             {children ?? "Starknet"}</>)
-          }</>)}
+          }
         </span>
       </span>
     </Button>

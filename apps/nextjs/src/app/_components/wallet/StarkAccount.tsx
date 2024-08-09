@@ -4,6 +4,7 @@ import React from "react";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import Starknet from "@/icons/starknet.svg";
 import { shortenHex } from "@/utils/utils";
+import type { Address } from "@starknet-react/core";
 import { useAccount, useDisconnect, useStarkName } from "@starknet-react/core";
 import { LogOut } from "lucide-react";
 
@@ -18,7 +19,7 @@ export const StarkAccount = () => {
   const { disconnect } = useDisconnect();
   const { status, account } = useAccount();
 
-  const { data } = useStarkName({ address: account?.address });
+  const { data } = useStarkName({ address: account?.address as Address });
   const displayStarkAddress = data ?? shortenHex(account?.address ?? "", 8);
 
   const isConnected = status === "connected";

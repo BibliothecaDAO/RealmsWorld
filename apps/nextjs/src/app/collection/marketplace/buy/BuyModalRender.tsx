@@ -106,7 +106,7 @@ export const BuyModalRender: FC<Props> = ({
   const totalUsd = totalIncludingFees * lordsPrice.usdPrice;
 
   const {
-    writeAsync,
+    sendAsync,
     error: writeError,
     data,
   } = useBuyToken({ listingId: listing?.id, price: listing?.price });
@@ -131,8 +131,8 @@ export const BuyModalRender: FC<Props> = ({
 
   const buyToken = useCallback(async () => {
     setBuyStep(BuyStep.Approving);
-    await writeAsync();
-  }, [writeAsync]);
+    await sendAsync();
+  }, [sendAsync]);
 
   useEffect(() => {
     if ((orderId && !listing) ?? isOwner) {
