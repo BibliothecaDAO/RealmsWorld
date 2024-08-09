@@ -81,9 +81,9 @@ export const ListModalRenderer: FC<Props> = ({
   //const [quantity, setQuantity] = useState(1);
   const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
     expirationOptions[5] ??
-      (() => {
-        throw new Error("Expiration option is undefined");
-      }),
+    (() => {
+      throw new Error("Expiration option is undefined");
+    }),
   );
 
   //TODO fetch actual royalty
@@ -132,7 +132,7 @@ export const ListModalRenderer: FC<Props> = ({
   }
 
   const {
-    writeAsync,
+    sendAsync,
     data,
     error: writeError,
   } = useListToken({
@@ -170,8 +170,8 @@ export const ListModalRenderer: FC<Props> = ({
     }*/
     setListStep(ListStep.Listing);
 
-    await writeAsync();
-  }, [writeAsync]);
+    await sendAsync();
+  }, [sendAsync]);
 
   return (
     <>
