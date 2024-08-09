@@ -13,7 +13,7 @@ import { useAccount, useWriteContract } from "wagmi";
 
 import type { StepItem } from "@realms-world/ui";
 import { StakingAddresses, StakingContracts } from "@realms-world/constants";
-import { Alert, Button, Step, Stepper, toast, useStepper } from "@realms-world/ui";
+import { Button, Step, Stepper, toast, useStepper } from "@realms-world/ui";
 
 function UnstakeStep({
   step,
@@ -158,15 +158,8 @@ export const StakingMigration = () => {
               <div className="my-2 flex items-center justify-center rounded-md border bg-secondary p-2 text-primary">
                 {(stepProps.id === "unstake-galleon" ||
                   stepProps.id === "unstake-carrack") &&
-                  realmsData && (<div className="flex flex-col">
-                    <Alert
-                      className="bg-yellow-900 text-white"
-                      title={"Bridge not functional for 24-48hrs"}
-                      variant="destructive"
-                    >
-                      The Realms Bridge is currently undergoing an upgrade and will not be available until ~ August 11
-                    </Alert>
-                    <UnstakeStep step={stepProps} realmsData={realmsData} /></div>
+                  realmsData && (<>
+                    <UnstakeStep step={stepProps} realmsData={realmsData} /></>
                   )}
                 {stepProps.id === "bridge" && (
                   <div className="mt-4">

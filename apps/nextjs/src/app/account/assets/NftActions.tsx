@@ -71,7 +71,7 @@ export const NftActions = ({
             });
             toggleNftBridge();
           }}
-          disabled={true /*totalSelectedNfts < 1*/}
+          disabled={totalSelectedNfts < 1}
         >
           <Bridge className="mr-2 w-6" />
           Bridge
