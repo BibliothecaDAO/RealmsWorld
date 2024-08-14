@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "clean": "rimraf -rf dist",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "lint": "eslint",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
