@@ -4,7 +4,8 @@ import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
 import { NETWORK_NAME } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
-import { useAccount, useReadContract } from "wagmi";
+import { formatEther } from "viem";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
 
 import { useAirdropClaim } from "../useAirdropClaim";
 import { useStakedRealmsData } from "./useStakedRealmsData";
@@ -45,7 +46,23 @@ export const useStaking = () => {
         ],
       // query: { enabled: !!address && !!poolTotal }
     });
-  const { numTokens, balance } = useAirdropClaim();
+  const { numTokens, balance, claimAirdrop: claimPoolV2 } = useAirdropClaim();
+  const {
+    isPending: isGalleonClaimLoading,
+    writeContract: claimGalleon,
+    error: galleonClaimError,
+  } = useWriteContract();
+  const {
+    isPending: isCarrackClaimLoading,
+    writeContract: claimCarrack,
+    error: carrackClaimError,
+  } = useWriteContract();
+
+  const {
+    isPending: isPoolClaimLoading,
+    writeContract: claimPoolV1,
+    error: poolClaimError,
+  } = useWriteContract();
 
   useEffect(() => {
     const fetchStakingData = async () => {
@@ -69,15 +86,20 @@ export const useStaking = () => {
   return {
     data,
     loading:
-      isGalleonLordsLoading && isCarrackLordsLoading && poolBalanceLoading,
+      isGalleonLordsLoading || isCarrackLordsLoading || poolBalanceLoading,
     galleonLordsAvailable,
     carrackLordsAvailable: carrackLordsAvailable?.[0],
     paymentPoolV1,
     poolV1Balance,
     poolV2Balance: balance ? 0 : numTokens,
     totalClaimable:
-      parseInt((galleonLordsAvailable ?? 0n).toString()) +
-      parseInt((carrackLordsAvailable ?? 0n).toString()) +
+      parseInt(formatEther(galleonLordsAvailable ?? 0n).toString()) +
+      parseInt(formatEther(carrackLordsAvailable?.[0] ?? 0n).toString()) +
       (balance ? 0 : numTokens),
+    claimGalleon,
+    claimCarrack,
+    claimPoolV1,
+    claimPoolV2,
+    error: poolClaimError ?? galleonClaimError ?? carrackClaimError,
   };
 };

@@ -40,7 +40,7 @@ const merkleTree = new MerkleTree(
 export function useAirdropClaim() {
   const { address: addressL1 } = useL1Account();
 
-  const { writeContract } = useWriteContract();
+  const { writeContract, error } = useWriteContract();
 
   const [dataLoading, setDataLoading] = useState<boolean>(true); // Data retrieval status
   const [numTokens, setNumTokens] = useState<number>(0); // Number of claimable tokens
@@ -93,11 +93,9 @@ export function useAirdropClaim() {
 
     // Generate airdrop proof
     const proof: string[] = merkleTree.getHexProof(leaf);
-
     // Try to claim airdrop and refresh sync status
     try {
       claim(numTokens, proof);
-
       //   await syncStatus();
     } catch (e) {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -115,6 +113,10 @@ export function useAirdropClaim() {
 
     setDataLoading(false);
   }, [addressL1]);
+
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
 
   return {
     dataLoading,
