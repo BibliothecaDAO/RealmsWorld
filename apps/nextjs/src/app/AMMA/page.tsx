@@ -1,5 +1,6 @@
 
 import { PageLayout } from "../_components/PageLayout";
+import NewTemplate from '../_components/game-template/NewTemplate';
 
 export const metadata = {
   title: "AMMA Event",
@@ -10,7 +11,7 @@ export const metadata = {
 export default async function Page() {
   return (
     <PageLayout>
-      <h1>AMMA</h1>
+      <NewTemplate />
     </PageLayout>
-    )
+  )
 }
