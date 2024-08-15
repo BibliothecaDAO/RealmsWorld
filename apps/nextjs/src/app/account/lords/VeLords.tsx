@@ -5,10 +5,11 @@ import { TokenInput } from "@/app/_components/TokenInput";
 import { TokenBalance } from "@/app/bridge/TokenBalance";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import LordsIcon from "@/icons/lords.svg";
+import type { Address } from "@starknet-react/core";
 import { useAccount, useBalance } from "@starknet-react/core";
 import { formatEther } from "viem";
 
-import { LORDS } from "@realms-world/constants";
+import { LORDS, StakingAddresses } from "@realms-world/constants";
 import {
   Button,
   Card,
@@ -24,17 +25,24 @@ import {
   TabsList,
   TabsTrigger,
 } from "@realms-world/ui";
+import { useVeLords } from "@/hooks/staking/useVeLords";
+const veLordsAddress = StakingAddresses.velords[SUPPORTED_L2_CHAIN_ID];
 
 export const VeLords = () => {
   const { address } = useAccount();
   const { isLoading, data } = useBalance({
     address,
-    token: LORDS[SUPPORTED_L2_CHAIN_ID]?.address,
+    token: LORDS[SUPPORTED_L2_CHAIN_ID]?.address as Address,
+    watch: true,
+  });
+  const { isLoading: veLordsIsLoading, data } = useBalance({
+    address,
+    token: veLordsAddress as Address,
     watch: true,
   });
   const [amount, setAmount] = useState<string>();
   const [lockWeeks, setLockWeeks] = useState<string>("1");
-
+  const { claim, manageLock } = useVeLords()
   return (
     <div className="mt-4 grid grid-cols-3 gap-4 md:grid-cols-5">
       <Card>
@@ -51,7 +59,7 @@ export const VeLords = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            19999999
+            {data?.formatted}
             <LordsIcon className="ml-2 h-7 w-7 fill-current" />
           </CardTitle>
         </CardHeader>
@@ -135,7 +143,38 @@ export const VeLords = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full">Stake Lords</Button>
+                <Button onClick={() => amount && manageLock(parseInt(amount), Date.now())} className="w-full">Stake Lords</Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </TabsContent>
+        <TabsContent value={"rewards"}>
+          <div className="grid grid-cols-2 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  Claim your Lords Rewards
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>Your Lords Earnt</p>
+
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Claim Lords</CardTitle>
+                <CardDescription>
+                  Lock
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex gap-4">
+                  These are your rewards
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button onClick={() => amount && claim()} className="w-full">Claim Lords</Button>
               </CardFooter>
             </Card>
           </div>

@@ -5,6 +5,8 @@ export enum StakingContracts {
   CARRACK = "carrack",
   PAYMENT_POOL = "paymentpool",
   PAYMENT_POOL_V2 = "paymentpoolv2",
+  VE_LORDS = "velords",
+  REWARD_POOL = "rewardpool",
 }
 
 export const StakingAddresses: {
@@ -25,5 +27,15 @@ export const StakingAddresses: {
   [StakingContracts.PAYMENT_POOL_V2]: {
     [ChainId.MAINNET]: "0x8428aad84594b6b78da13e773d902f5c44b93f17",
     [ChainId.SEPOLIA]: "",
+  },
+  [StakingContracts.VE_LORDS]: {
+    [ChainId.SN_MAIN]: "",
+    [ChainId.SN_SEPOLIA]:
+      "0x29dc004a77c981b425628d36997e4534a100c2c324a0caa00e8e198ca23ce8",
+  },
+  [StakingContracts.REWARD_POOL]: {
+    [ChainId.SN_MAIN]: "",
+    [ChainId.SN_SEPOLIA]:
+      "0x33b412ab2a9bf3a4e0b701b7760f29e7f6137d8e28acc9c51daf12b8a9902bc",
   },
 };

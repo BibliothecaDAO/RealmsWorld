@@ -37,6 +37,7 @@ import { ClaimsTable } from "./ClaimsTable";
 import { LegacyClaim } from "./LegacyClaim";
 //import { VeLords } from "./VeLords";
 import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
+import { VeLords } from "./VeLords";
 
 export const Overview = () => {
   const { address: l1Address } = useAccount();
@@ -201,7 +202,7 @@ export const Overview = () => {
               </div>
             </div>
           </div>
-          {/*<div className="mt-24 w-full">
+          <div className="mt-24 w-full">
             <div className="w-full">
               <span className="mb-2 flex w-fit items-center pb-4 font-sans text-3xl">
                 <LordsIcon className="mx-auto mr-2 h-7 w-7 fill-bright-yellow" />
@@ -209,7 +210,7 @@ export const Overview = () => {
               </span>
               <VeLords />
             </div>
-                      </div>*/}
+          </div>
         </>
       )}
     </div>
