@@ -1,5 +1,5 @@
-type Fetcher<T> = (url: string, options?: FetcherOpts) => Promise<T>
-interface FetcherOpts {
+export type Fetcher<T> = (url: string, options?: FetcherOpts) => Promise<T>
+export interface FetcherOpts {
   headers?: Record<string, string>
 };
 
