@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TokenInput } from "@/app/_components/TokenInput";
 import { TokenBalance } from "@/app/bridge/TokenBalance";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import LordsIcon from "@/icons/lords.svg";
 import type { Address } from "@starknet-react/core";
-import { useAccount, useBalance } from "@starknet-react/core";
-import { formatEther } from "viem";
+import { useAccount, useBalance, useReadContract } from "@starknet-react/core";
+import { formatEther, parseEther } from "viem";
+import { VeLords as VeLordsABI } from "@/abi/L2/VeLords";
 
 import { LORDS, StakingAddresses } from "@realms-world/constants";
 import {
@@ -26,29 +27,54 @@ import {
   TabsTrigger,
 } from "@realms-world/ui";
 import { useVeLords } from "@/hooks/staking/useVeLords";
-const veLordsAddress = StakingAddresses.velords[SUPPORTED_L2_CHAIN_ID];
 
 export const VeLords = () => {
+  const veLordsAddress = StakingAddresses.velords[SUPPORTED_L2_CHAIN_ID];
   const { address } = useAccount();
   const { isLoading, data } = useBalance({
     address,
-    token: LORDS[SUPPORTED_L2_CHAIN_ID]?.address as Address,
+    token: "0x04ef0e2993abf44178d3a40f2818828ed1c09cde9009677b7a3323570b4c0f2e", //LORDS[SUPPORTED_L2_CHAIN_ID]?.address as Address,
     watch: true,
   });
-  const { isLoading: veLordsIsLoading, data } = useBalance({
+  const { isLoading: veLordsIsLoading, data: veLordsData } = useBalance({
     address,
     token: veLordsAddress as Address,
     watch: true,
   });
-  const [amount, setAmount] = useState<string>();
+  const { data: totalSupply, isFetching, error } = useReadContract({
+    address: veLordsAddress as Address,
+    abi: VeLordsABI,
+    functionName: "total_supply",
+    //enabled: !!l2Address,
+    watch: true,
+    args: []
+    // args: l2Address ? [l2Address] : undefined,
+    //blockIdentifier: BlockTag.PENDING as BlockNumber,
+  });
+  const { data: ownerLordsLock } = useReadContract({
+    address: veLordsAddress as Address,
+    abi: VeLordsABI,
+    functionName: "get_lock_for",
+    //enabled: !!l2Address,
+    watch: true,
+    args: address ? [address] : undefined
+    // args: l2Address ? [l2Address] : undefined,
+    //blockIdentifier: BlockTag.PENDING as BlockNumber,
+  });
+
+
+  const [amount, setAmount] = useState<string>("");
   const [lockWeeks, setLockWeeks] = useState<string>("1");
-  const { claim, manageLock } = useVeLords()
+  const { claim, manageLock, withdraw } = useVeLords()
+  useEffect(() => {
+    console.log((Date.now() / 1000) + parseInt(lockWeeks) * 7 * 24 * 60 * 60)
+  }, [lockWeeks])
   return (
     <div className="mt-4 grid grid-cols-3 gap-4 md:grid-cols-5">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            49
+            {ownerLordsLock?.amount && Number(formatEther(ownerLordsLock?.amount)).toFixed(4)}
             <LordsIcon className="ml-2 h-7 w-7 fill-current" />
           </CardTitle>
         </CardHeader>
@@ -57,19 +83,31 @@ export const VeLords = () => {
         </CardFooter>
       </Card>
       <Card>
+        {error?.message}
         <CardHeader>
           <CardTitle className="flex items-center">
-            {data?.formatted}
+            {Number(veLordsData?.formatted).toFixed(4)}
             <LordsIcon className="ml-2 h-7 w-7 fill-current" />
           </CardTitle>
         </CardHeader>
         <CardFooter>
-          <CardDescription>Total Locked LORDS</CardDescription>
+          <CardDescription>veLORDS Balance</CardDescription>
         </CardFooter>
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center">69.42%</CardTitle>
+          <CardTitle className="flex items-center">
+            {totalSupply && veLordsData && ((Number(veLordsData.value) / Number(totalSupply)) * 100).toFixed(2)}%
+          </CardTitle>
+          <span className="text-muteds text-sm">Total: {totalSupply && Number(formatEther(totalSupply)).toFixed(2)} veLords</span>
+        </CardHeader>
+        <CardFooter>
+          <CardDescription>Your share of Pool</CardDescription>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center">X.XX%</CardTitle>
         </CardHeader>
         <CardFooter>
           <CardDescription>veLords max vAPR</CardDescription>
@@ -115,7 +153,7 @@ export const VeLords = () => {
               <CardContent>
                 <div className="flex gap-4">
                   <div className="w-1/2">
-                    <Label>Lords</Label>
+                    <Label>{ownerLordsLock?.amount && "Add "}Lords <span className="text-muted text-sm">{ownerLordsLock?.amount && formatEther(ownerLordsLock.amount)} locked</span></Label>
                     <TokenInput
                       onChange={(event) => {
                         setAmount(event.target.value);
@@ -139,11 +177,14 @@ export const VeLords = () => {
                       value={lockWeeks}
                       onChange={(event) => setLockWeeks(event.target.value)}
                     ></Input>
+                    <div className="flex justify-end text-sm">
+                      Locked until: {ownerLordsLock?.end_time && new Date(Number(ownerLordsLock.end_time) * 1000).toLocaleString()}</div>
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button onClick={() => amount && manageLock(parseInt(amount), Date.now())} className="w-full">Stake Lords</Button>
+              <CardFooter className="flex gap-x-4">
+                <Button onClick={() => amount && manageLock(parseEther(amount), Math.round((Date.now() / 1000) + parseInt(lockWeeks) * 7 * 24 * 60 * 60))} className="w-full">Stake Lords</Button>
+                <Button onClick={() => withdraw()} className="w-full">Withdraw Lords</Button>
               </CardFooter>
             </Card>
           </div>
@@ -174,7 +215,7 @@ export const VeLords = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button onClick={() => amount && claim()} className="w-full">Claim Lords</Button>
+                <Button onClick={() => claim()} className="w-full">Claim Lords</Button>
               </CardFooter>
             </Card>
           </div>

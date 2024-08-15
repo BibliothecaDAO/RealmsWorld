@@ -31,7 +31,7 @@ export const StakingAddresses: {
   [StakingContracts.VE_LORDS]: {
     [ChainId.SN_MAIN]: "",
     [ChainId.SN_SEPOLIA]:
-      "0x29dc004a77c981b425628d36997e4534a100c2c324a0caa00e8e198ca23ce8",
+      "0x0029dc004a77c981b425628d36997e4534a100c2c324a0caa00e8e198ca23ce8",
   },
   [StakingContracts.REWARD_POOL]: {
     [ChainId.SN_MAIN]: "",
