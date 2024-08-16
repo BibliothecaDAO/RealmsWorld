@@ -22,7 +22,7 @@
     "@realms-world/auth": "*",
     "@realms-world/db": "*",
     "@realms-world/utils": "*",
-    "@trpc/server": "11.0.0-rc.364",
+    "@trpc/server": "11.0.0-rc.477",
     "drizzle-pagination": "1.0.10",
     "superjson": "2.2.1",
     "zod": "^3.23.8"
@@ -33,7 +33,7 @@
     "@realms-world/tsconfig": "*",
     "eslint": "^9.9.0",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   },
   "prettier": "@realms-world/prettier-config"
 }

@@ -30,7 +30,7 @@
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
     "eslint": "^9.9.0",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   },
   "prettier": "@realms-world/prettier-config"
 }

@@ -18,10 +18,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@auth/core": "^0.34.1",
-    "@auth/drizzle-adapter": "^1.4.1",
+    "@auth/core": "^0.34.2",
+    "@auth/drizzle-adapter": "^1.4.2",
     "@realms-world/db": "*",
-    "@t3-oss/env-nextjs": "^0.10.1",
+    "@t3-oss/env-nextjs": "^0.11.0",
     "next": "^15.0.0-rc.0",
     "next-auth": "5.0.0-beta.19",
     "react": "^19.0.0-rc.0",
@@ -35,7 +35,7 @@
     "@realms-world/tsconfig": "*",
     "eslint": "^9.9.0",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   },
   "prettier": "@realms-world/prettier-config"
 }

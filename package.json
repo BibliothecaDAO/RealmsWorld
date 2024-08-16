@@ -1,9 +1,9 @@
 {
   "name": "@realms-world/monorepo",
   "engines": {
-    "node": ">=20.12.0"
+    "node": ">=20.16.0"
   },
-  "packageManager": "bun@1.1.12",
+  "packageManager": "bun@1.1.24",
   "workspaces": [
     "apps/*",
     "config/*",
@@ -29,13 +29,13 @@
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
-    "@turbo/gen": "^2.0.12",
+    "@turbo/gen": "^2.0.14",
     "million": "^3.1.11",
     "npm-check-updates": "^17.0.6",
     "prettier": "^3.3.3",
     "tsup": "^8.2.4",
-    "turbo": "2.0.12",
-    "typescript": "^5.5.3"
+    "turbo": "2.0.14",
+    "typescript": "^5.5.4"
   },
   "prettier": "@realms-world/prettier-config"
 }
