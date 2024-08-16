@@ -28,8 +28,7 @@ export const useVeLords = () => {
   });
   const { contract: lordsContract } = useContract({
     abi: L2_C1ERC20,
-    address:
-      "0x04ef0e2993abf44178d3a40f2818828ed1c09cde9009677b7a3323570b4c0f2e", //LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`,
+    address: LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`,
   });
   const {
     sendAsync: manageLordsLock,
@@ -46,14 +45,16 @@ export const useVeLords = () => {
   const manageLock = async (amount: bigint, unlockTime: number) => {
     console.log(unlockTime);
     console.log(amount);
-    await manageLordsLock([
-      lordsContract?.populate("approve", [
-        veLordsAddress as `0x${string}`, //Marketplace address
-        amount,
-        0,
-      ]),
-      veLords?.populate("manage_lock", [amount, unlockTime, address]),
-    ]);
+    if (lordsContract) {
+      await manageLordsLock([
+        lordsContract?.populate("approve", [
+          veLordsAddress as `0x${string}`, //Marketplace address
+          amount,
+          0,
+        ]),
+        veLords?.populate("manage_lock", [amount, unlockTime, address]),
+      ]);
+    }
   };
 
   const claim = async (recipient?: Address) => {

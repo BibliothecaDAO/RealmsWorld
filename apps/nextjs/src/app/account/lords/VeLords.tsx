@@ -27,19 +27,23 @@ import {
   TabsTrigger,
 } from "@realms-world/ui";
 import { useVeLords } from "@/hooks/staking/useVeLords";
+import type { BlockNumber } from "starknet";
+import { BlockTag } from "starknet";
 
 export const VeLords = () => {
   const veLordsAddress = StakingAddresses.velords[SUPPORTED_L2_CHAIN_ID];
   const { address } = useAccount();
   const { isLoading, data } = useBalance({
     address,
-    token: "0x04ef0e2993abf44178d3a40f2818828ed1c09cde9009677b7a3323570b4c0f2e", //LORDS[SUPPORTED_L2_CHAIN_ID]?.address as Address,
+    token: LORDS[SUPPORTED_L2_CHAIN_ID]?.address as Address,
     watch: true,
   });
   const { isLoading: veLordsIsLoading, data: veLordsData } = useBalance({
     address,
     token: veLordsAddress as Address,
     watch: true,
+    blockIdentifier: BlockTag.PENDING as BlockNumber,
+
   });
   const { data: totalSupply, isFetching, error } = useReadContract({
     address: veLordsAddress as Address,
@@ -57,9 +61,9 @@ export const VeLords = () => {
     functionName: "get_lock_for",
     //enabled: !!l2Address,
     watch: true,
-    args: address ? [address] : undefined
+    args: address ? [address] : undefined,
     // args: l2Address ? [l2Address] : undefined,
-    //blockIdentifier: BlockTag.PENDING as BlockNumber,
+    blockIdentifier: BlockTag.PENDING as BlockNumber,
   });
 
 
