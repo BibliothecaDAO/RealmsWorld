@@ -148,6 +148,7 @@ const BridgeSteps = ({
   const onBridge = async () => {
     let hash;
     if (isSourceL1) {
+      if (!l2Address) throw new Error("Missing L2 Address");
       hash = await depositRealms({
         tokenIds: selectedTokenIds.map((id) => BigInt(id)),
         l2Address: l2Address,

@@ -7,9 +7,12 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "plugins": [{ "name": "next" }],
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "module": "ES2015"
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "module": "esnext"
   },
   "include": [".", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

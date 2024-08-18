@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "bun with-env next build",
-    "clean": "git clean -xdf .next .turbo node_modules",
+    "clean": "git clean -xdf .cache .nitro .output .turbo .vercel node_modules",
     "dev": "bun with-env next dev",
     "lint": "eslint",
     "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",

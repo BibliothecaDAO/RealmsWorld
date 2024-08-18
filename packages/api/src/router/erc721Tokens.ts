@@ -14,7 +14,7 @@ export const erc721TokensRouter = {
   all: publicProcedure
     .input(
       z.object({
-        limit: z.number().min(1).max(100).nullish(),
+        limit: z.number().min(1).max(200).nullish(),
         cursor: z
           .object({
             token_id: z.number().nullish(),

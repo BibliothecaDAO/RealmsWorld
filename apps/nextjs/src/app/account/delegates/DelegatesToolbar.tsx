@@ -85,11 +85,11 @@ export const DelegatesToolbar = () => {
           </form>
         </div>
         <div>
-          {currentDelegate != padAddress(address) && (
-            <Button size="sm" onClick={() => delegateRealms()}>
-              <UserRoundPlus className="mr-2" /> Delegate to Self
-            </Button>
-          )}
+
+          <Button size="sm" onClick={() => delegateRealms()} disabled={currentDelegate == padAddress(address)}>
+            <UserRoundPlus className="mr-2" /> Delegate{currentDelegate == padAddress(address) && 'd'} to Self
+          </Button>
+
         </div>
       </div>
     </>

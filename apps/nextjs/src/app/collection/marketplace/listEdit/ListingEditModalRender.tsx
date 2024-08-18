@@ -54,8 +54,8 @@ interface ChildrenProps {
 interface Props {
   open: boolean;
   token?:
-    | RouterOutputs["erc721Tokens"]["byId"]
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  | RouterOutputs["erc721Tokens"]["byId"]
+  | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   collectionId?: string;
   //normalizeRoyalties?: boolean;
   children: (props: ChildrenProps) => ReactNode;
@@ -109,9 +109,9 @@ export const ListingEditModalRender: FC<Props> = ({
   const totalUsd = usdPrice * (listing?.price?.amount?.decimal || 0);*/
   const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
     expirationOptions[5] ??
-      (() => {
-        throw new Error("Expiration option is undefined");
-      }),
+    (() => {
+      throw new Error("Expiration option is undefined");
+    }),
   );
 
   //TODO fetch actual royalty
@@ -134,7 +134,7 @@ export const ListingEditModalRender: FC<Props> = ({
 */
   let expirationTime: string | null = null;
 
-  const { writeAsync, data, error } = useEditListing({
+  const { sendAsync, data, error } = useEditListing({
     listingId: listing?.id,
     price: price.toString(),
   });
@@ -189,8 +189,8 @@ export const ListingEditModalRender: FC<Props> = ({
     }
 
     setEditListingStep(EditListingStep.Approving);
-    await writeAsync();
-  }, [address, contract, token, price, quantity, expirationTime, writeAsync]);
+    await sendAsync();
+  }, [address, contract, token, price, quantity, expirationTime, sendAsync]);
 
   useEffect(() => {
     if (!open) {

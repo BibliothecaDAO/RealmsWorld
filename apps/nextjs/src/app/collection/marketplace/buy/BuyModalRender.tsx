@@ -6,7 +6,7 @@ import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 import { useAccount, useTransactionReceipt } from "@starknet-react/core";
 import { formatUnits } from "viem";
-
+import { useLordsBalance as useL2LordsBalance } from "@/hooks/token/starknet/useLordsBalance";
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
 
 export enum BuyStep {
@@ -43,8 +43,8 @@ interface ChildrenProps {
 interface Props {
   open: boolean;
   token:
-    | RouterOutputs["erc721Tokens"]["byId"]
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  | RouterOutputs["erc721Tokens"]["byId"]
+  | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   tokenId?: string;
   defaultQuantity?: number;
   orderId?: number;
@@ -71,6 +71,7 @@ export const BuyModalRender: FC<Props> = ({
   const [quantity, setQuantity] = useState(1);
   const lordsPrice = { usdPrice: 0.11 };
   const { balances } = useWalletsProviderContext();
+  const { data: l2LordsBalance } = useL2LordsBalance();
 
   /*  const blockExplorerBaseUrl =
     wagmiChain?.blockExplorers?.default?.url || "https://etherscan.io";
@@ -105,7 +106,7 @@ export const BuyModalRender: FC<Props> = ({
   const totalUsd = totalIncludingFees * lordsPrice.usdPrice;
 
   const {
-    writeAsync,
+    sendAsync,
     error: writeError,
     data,
   } = useBuyToken({ listingId: listing?.id, price: listing?.price });
@@ -130,8 +131,8 @@ export const BuyModalRender: FC<Props> = ({
 
   const buyToken = useCallback(async () => {
     setBuyStep(BuyStep.Approving);
-    await writeAsync();
-  }, [writeAsync]);
+    await sendAsync();
+  }, [sendAsync]);
 
   useEffect(() => {
     if ((orderId && !listing) ?? isOwner) {
@@ -182,16 +183,16 @@ export const BuyModalRender: FC<Props> = ({
   useEffect(() => {
     if (
       // !lords or lords  balance < item total + gas
-      parseInt(formatUnits(balances.l2.lords ?? 0n, 18)) < totalIncludingFees
+      parseInt(formatUnits(l2LordsBalance?.value ?? 0n, 18)) < totalIncludingFees
     ) {
       const missingAmountToBuyAsset =
-        totalIncludingFees - parseInt(formatUnits(balances.l2.lords ?? 0n, 18));
+        totalIncludingFees - parseInt(formatUnits(l2LordsBalance?.value ?? 0n, 18));
       setMissingAmount(missingAmountToBuyAsset);
       setHasEnoughCurrency(false);
     } else {
       setHasEnoughCurrency(true);
     }
-  }, [totalIncludingFees, gasCost, balances.l2.lords]);
+  }, [totalIncludingFees, gasCost, l2LordsBalance?.value]);
 
   useEffect(() => {
     if (!open) {

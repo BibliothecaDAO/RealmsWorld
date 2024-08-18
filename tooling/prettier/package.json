@@ -7,14 +7,14 @@
     ".": "./index.js"
   },
   "scripts": {
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "git clean -xdf .cache .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.3.0",
-    "prettier": "^3.3.2",
-    "prettier-plugin-tailwindcss": "^0.6.5"
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.6"
   },
   "devDependencies": {
     "@realms-world/tsconfig": "*",

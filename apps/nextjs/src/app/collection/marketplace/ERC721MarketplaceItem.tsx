@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Lords from "@/icons/lords.svg";
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "@realms-world/ui";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
 interface Props {
@@ -97,12 +97,14 @@ const ERC721MarketplaceItem: FC<Props> = ({
             {!expires && !quantity && royaltiesBps ? (
               <span className="flex gap-1 text-xs font-semibold uppercase">
                 Creator Royalties: {royaltyPercent}%
-                <TooltipTrigger />
-                <Tooltip>
-                  <TooltipContent side="right">
-                    A fee on every order that goes to the collection creator.
-                  </TooltipContent>
-                </Tooltip>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger />
+                    <TooltipContent side="right">
+                      A fee on every order that goes to the collection creator.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </span>
             ) : null}
           </div>

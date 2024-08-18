@@ -30,7 +30,7 @@ export interface Game {
   collections?: Collections[];
   tokens?: Tokens[];
   screenshotLength?: number;
-  playable: boolean,
+  playable: boolean;
 }
 
 export const games: Game[] = [
@@ -104,6 +104,30 @@ export const games: Game[] = [
     tokens: [Tokens.LORDS],
     screenshotLength: 4,
     playable: false,
+  },
+  {
+    name: "Dark Shuffle",
+    id: "dark-shuffle",
+    developer: Studios.BIBLIO_DAO,
+    genres: ["Deck-building", "Roguelike", "Play to Die"],
+    color: "#FFE97F",
+    status: "beta",
+    description: "Dark Shuffle",
+    longform:
+      "Draft a deck of mighty creatures and powerful spells. Venture through a map of challenges and fight against the beasts. Compete in seasons and reap the rewards.",
+    links: {
+      homepage: "https://darkshuffle.dev/",
+      testnet: "https://darkshuffle.dev/",
+      discord: "https://discord.gg/uQnjZhZPfu",
+      twitter: "https://twitter.com/await_0x",
+    },
+    operatingSystems: ["Web Browser"],
+    lords: "Entry Fee",
+    chains: [ChainId.REALMS_L3],
+    collections: [Collections.BEASTS],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 3,
+    playable: true,
   },
   {
     name: "Pistols at Ten Blocks",
@@ -193,8 +217,8 @@ export const games: Game[] = [
     screenshotLength: 6,
     playable: false,
   },
-  
-   {
+
+  {
     name: "Kingdom & Lords",
     id: "Kingdom-of-Lords",
     developer: Studios.MISSISSIPPI_TEAM,
@@ -243,18 +267,17 @@ export const games: Game[] = [
     genres: ["Last Man Standing", "Strategy"],
     color: "#f5f5f5",
     status: "development",
-    description: "Last man standing",
+    description: "Turn based battle game",
     longform:
-      "Rising Revenant is a last man standing strategy game that is built on Starknet and powered by Dojo. Rising Revenant offers an exhilarating mix of strategy, chance, and foresight, making it a captivating endeavor for gamers and crypto enthusiasts. Will you rise to the challenge and etch your name in the annals of this adventure?",
+      "Rising Revenant is an immersive last man standing strategy game built on Starknet and powered by Dojo. The game unfolds in two distinct stages. In the preparation phase, players meticulously plan their strategies, allocate resources, and invest in critical upgrades. Once preparations are complete, the game transitions into the action-packed game phase, where players unleash their reinforcements, trade and engage in intense events. Success in Rising Revenant hinges on strategic planning and tactical prowess, with performance in both phases determining the rewards. The ultimate objective: to be the last Revenant standing.",
     links: {
-      discord: "https://t.co/E9lZFnBzci",
       twitter: "https://twitter.com/RRisingRevenant",
       whitepaper: "https://github.com/GrugLikesRocks/Rising-Revenant",
     },
     operatingSystems: ["Web Browser"],
     lords: "Trade for resources",
-    chains: [ChainId.SN_MAIN, ChainId.REALMS_L3],
-    collections: [Collections.GOLDEN_TOKEN],
+    chains: [ChainId.SN_SEPOLIA],
+    collections: [],
     tokens: [Tokens.LORDS],
     screenshotLength: 3,
     playable: true,
@@ -326,5 +349,24 @@ export const games: Game[] = [
     tokens: [],
     screenshotLength: 4,
     playable: true,
-  }
+  },
+  {
+    name: "Blob Arena",
+    id: "blob-arena",
+    developer: Studios.GRUGS_LAIR,
+    genres: ["Last Man Standing", "Strategy"],
+    color: "#f5f5f5",
+    status: "development",
+    description:
+      "Blob Arena is an innovative strategy mini-game where players engage in Pókemon-like battles using unique characters called Bloberts.",
+    longform:
+      "Aiming to deliver a high-quality gaming experience, Blob Arena stands out for its gameplay dynamics and strategic focus. Players will navigate through exciting encounters, against other players or against AI, using their Bloberts’ distinctive traits to outsmart and defeat opponents. The game’s core mechanic revolves around an enhanced rock-paper-scissors style combat modified by each character’s attributes such as Attack, Defence, Speed, and Strength, which are crucial for mastering the game. ",
+    links: {},
+    operatingSystems: ["Web Browser"],
+    chains: [ChainId.SN_SEPOLIA],
+    collections: [],
+    tokens: [Tokens.LORDS],
+    screenshotLength: 3,
+    playable: true,
+  },
 ];

@@ -19,7 +19,9 @@ export const useDelegateRealms = ({ delegatee }: { delegatee?: string }) => {
     data: withdrawHash,
     ...writeReturn
   } = useSendTransaction({
-    calls: delegatee ? [contract.populate("delegate", [delegatee])] : undefined,
+    calls: delegatee
+      ? [contract?.populate("delegate", [delegatee])]
+      : undefined,
   });
 
   return {
