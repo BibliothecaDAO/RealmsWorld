@@ -43,7 +43,7 @@ export const Overview = () => {
   const { address: l1Address } = useAccount();
   const { address: l2Address } = useL2Account();
 
-  const { balance, claimRewards, isSubmitting, isFetching } =
+  const { balance, claimRewards, isSubmitting } =
     useL2LordsRewards();
 
   const { data, loading } = useStaking();

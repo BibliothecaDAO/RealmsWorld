@@ -3,7 +3,10 @@
 //import { Mail } from "lucide-react";
 import { useEffect } from "react";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { useAccount, useConnect, useWalletRequest } from "@starknet-react/core";
+import {
+  useAccount, useConnect
+} from "@starknet-react/core";
+import type { Connector } from "@starknet-react/core";
 
 //import { motion } from "framer-motion";
 
@@ -14,7 +17,7 @@ import { Button, Dialog, DialogContent, DialogHeader } from "@realms-world/ui";
 import WalletIcons from "../wallet/WalletIcons";
 
 export const StarknetLoginModal = () => {
-  const { connect, connectors } = useConnect();
+  const { connectAsync, connectors } = useConnect();
   const {
     isStarknetLoginOpen,
     toggleStarknetLogin,
@@ -22,6 +25,8 @@ export const StarknetLoginModal = () => {
     isAccountOpen,
   } = useUIStore((state) => state);
   const { isConnected } = useAccount();
+
+
 
   const wallets = [
     {
@@ -113,15 +118,15 @@ export const StarknetLoginModal = () => {
                   className="w-full justify-between self-center px-4 py-6 font-sans text-lg font-light capitalize"
                   variant={"outline"}
                   onClick={() =>
-                    connector.available()
-                      ? connect({ connector })
+                    connector.available
+                      ? connectAsync({ connector })
                       : window.open(getConnectorDiscovery(connector.id))
                   }
                 >
                   <div className="flex items-center justify-center">
                     <WalletIcons id={connector.id} />
 
-                    {!connector.available() ? "Install " : ""}
+                    {!connector.available ? "Install " : ""}
                     {connectorInfo?.name
                       ? `${connectorInfo.name}`
                       : "Login with Email"}

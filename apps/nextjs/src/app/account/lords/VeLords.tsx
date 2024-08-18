@@ -29,6 +29,7 @@ import {
 import { useVeLords } from "@/hooks/staking/useVeLords";
 import type { BlockNumber } from "starknet";
 import { BlockTag } from "starknet";
+import { VeLordsPieChart } from './VeLordsPieChart'
 
 export const VeLords = () => {
   const veLordsAddress = StakingAddresses.velords[SUPPORTED_L2_CHAIN_ID];
@@ -43,7 +44,6 @@ export const VeLords = () => {
     token: veLordsAddress as Address,
     watch: true,
     blockIdentifier: BlockTag.PENDING as BlockNumber,
-
   });
   const { data: totalSupply, isFetching, error } = useReadContract({
     address: veLordsAddress as Address,
@@ -145,6 +145,9 @@ export const VeLords = () => {
                   <li>Be rewarded with dLords (dependant on lock time)</li>
                 </ul>
               </CardContent>
+            </Card>
+            <Card>
+              <VeLordsPieChart />
             </Card>
             <Card>
               <CardHeader>

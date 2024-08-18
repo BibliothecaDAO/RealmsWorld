@@ -44,6 +44,17 @@ export {
   CardDescription,
   CardContent,
 } from "./src/components/ui/card";
+
+export {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+  ChartStyle,
+} from "./src/components/ui/chart";
+export type { ChartConfig } from "./src/components/ui/chart";
+
 export {
   Collapsible,
   CollapsibleTrigger,
