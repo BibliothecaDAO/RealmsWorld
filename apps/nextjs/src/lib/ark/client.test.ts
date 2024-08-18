@@ -3,7 +3,7 @@ import { ArkClient } from "./client";
 
 describe('ArkClient', () => {
   it('should work', async () => {
-    const client = new ArkClient(() => ({ json: () => Promise.resolve({}) }));
+    const client = new ArkClient(() => ({ json: () => Promise.resolve({}) }), 'http://localhost:9999');
     expect(await client.fetch('shouldwork')).toEqual({});
   });
 });

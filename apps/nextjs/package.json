@@ -11,7 +11,8 @@
     "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "start": "bun with-env next start",
     "typecheck": "tsc --noEmit",
-    "with-env": "dotenv -e ../../.env --"
+    "with-env": "dotenv -e ../../.env --",
+    "test": "NODE_ENV=test vitest --config vitest.config.ts"
   },
   "dependencies": {
     "@ark-project/react": "1.0.2",
@@ -86,7 +87,9 @@
     "eslint": "^9.9.0",
     "prettier": "^3.3.3",
     "tailwindcss": "3.4.4",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.5",
+    "vitest-tsconfig-paths": "^3.4.1"
   },
   "overrides": {
     "react-is": "^19.0.0-beta-26f2496093-20240514"
