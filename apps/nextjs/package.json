@@ -12,7 +12,7 @@
     "start": "bun with-env next start",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --",
-    "test": "NODE_ENV=test vitest --config vitest.config.ts"
+    "test": "NODE_ENV=test dotenv -e ../../.env vitest --config vitest.config.ts"
   },
   "dependencies": {
     "@ark-project/react": "1.0.2",

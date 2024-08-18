@@ -15,6 +15,9 @@ import { getToken } from "./getToken";
 import { getTokenMarketdata } from "./getTokenMarketdata";
 import { getTokenActivity } from "./getTokenActivity";
 import { getTokenOffers } from "./getTokenOffers";
+import { FetchMultipleAssetMarketDataRequest } from "mobula-sdk/dist/sdk/models/operations";
+import { MultiDataResponse } from "mobula-sdk/dist/sdk/models/shared";
+import { getPrices } from "./getPrices";
 
 // import { getPrices } from "./getPrices";
 // import { Mobula } from "mobula-sdk";
@@ -32,6 +35,23 @@ import { getTokenOffers } from "./getTokenOffers";
 //   },
 // })
 // );
+
+vi.mock("mobula-sdk", () => {
+  return {
+    Mobula: vi.fn().mockImplementation(() => {
+      return {
+        fetchMultipleAssetMarketData: vi.fn().mockImplementation(() => Promise.resolve({
+          multiDataResponse: {
+            data: {
+              ethereum: { price: 0.001 },
+              starknet: { price: 0.002 },
+            },
+          },
+        }))
+      }
+    })
+  }
+})
 
 describe('ArkApi', () => {
   let fetchMock: Fetcher<any>;
@@ -87,14 +107,14 @@ describe('ArkApi', () => {
     expect(fetchMock.mock.calls.length).toBe(1)
   });
 
-  // it('should get prices', async () => {
-  //   const prices = await getPrices()
-  //
-  //   expect(prices).toBe({
-  //     ethereum: { price: 0.001 },
-  //     starknet: { price: 0.002 },
-  //   })
-  // });
+  it('should get prices', async () => {
+    const prices = await getPrices()
+
+    expect(prices).toStrictEqual({
+      ethereum: { price: 0.001 },
+      starknet: { price: 0.002 },
+    })
+  });
 
   it('should get system status', async () => {
     const _ = await getSystemStatus({ client })
