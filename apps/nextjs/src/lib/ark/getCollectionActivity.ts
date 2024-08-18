@@ -10,21 +10,17 @@ export interface CollectionActivityApiResponse {
 interface GetCollectionActivityParams {
   client: ArkClient
   collectionAddress: string
-  page: number
+  page?: number
   itemsPerPage?: number
 }
 
-export async function getCollectionActivity({ client, page, collectionAddress, itemsPerPage = 10 }: GetCollectionActivityParams) {
+export async function getCollectionActivity({ client, collectionAddress, page = 1, itemsPerPage = 10 }: GetCollectionActivityParams): Promise<CollectionActivityApiResponse> {
   try {
-    const queryParams = [`items_per_page=${itemsPerPage}`];
-
-    if (page !== undefined) {
-      queryParams.push(`page=${page}`);
-    }
+    const queryParams = [`items_per_page=${itemsPerPage}`, `page=${page}`];
 
     return await client.fetch(`/collections/${collectionAddress}/activity?${queryParams.join("&")}`);
 
   } catch (error) {
-    throw new Error("failed to fetch collection activity : " + error)
+    throw new Error("failed to fetch collection activity : " + (error as string))
   }
 }

@@ -18,6 +18,9 @@
         "name": "next"
       }
     ],
+    "types": [
+      "vitest/globals"
+    ],
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "module": "esnext"
   },

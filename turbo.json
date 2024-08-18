@@ -3,27 +3,50 @@
   "ui": "tui",
   "tasks": {
     "topo": {
-      "dependsOn": ["^topo"]
+      "dependsOn": [
+        "^topo"
+      ]
     },
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".cache/tsbuildinfo.json", "dist/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "next-env.d.ts",
+        ".expo/**",
+        ".output/**",
+        ".vercel/output/**"
+      ]
     },
     "dev": {
       "cache": false,
       "persistent": false
     },
     "format": {
-      "outputs": [".cache/.prettiercache"],
+      "outputs": [
+        "node_modules/.cache/.prettiercache"
+      ],
       "outputLogs": "new-only"
     },
     "lint": {
-      "dependsOn": ["^topo", "^build"],
-      "outputs": [".cache/.eslintcache"]
+      "dependsOn": [
+        "^topo",
+        "^build"
+      ],
+      "outputs": [
+        "node_modules/.cache/.eslintcache"
+      ]
     },
     "typecheck": {
-      "dependsOn": ["^topo", "^build"],
-      "outputs": [".cache/tsbuildinfo.json"]
+      "dependsOn": [
+        "^topo",
+        "^build"
+      ],
+      "outputs": [
+        "node_modules/.cache/tsbuildinfo.json"
+      ]
     },
     "clean": {
       "cache": false
@@ -42,6 +65,11 @@
     "ui-add": {
       "cache": false,
       "interactive": true
+    },
+    "test": {},
+    "test:watch": {
+      "cache": false,
+      "persistent": true
     }
   },
   "globalEnv": [
