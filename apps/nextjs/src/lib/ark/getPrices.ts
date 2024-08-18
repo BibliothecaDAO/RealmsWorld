@@ -11,6 +11,7 @@ export async function getPrices(): Promise<PricesResult> {
       assets: "ethereum,starknet",
     });
     return {
+      // TODO: add lords price
       ethereum: {
         price: response.multiDataResponse.data.ethereum?.price as number,
       },
