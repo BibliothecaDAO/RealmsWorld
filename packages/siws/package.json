@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "tsup",
-    "test": "vitest",
+    "test": "vitest --passWithNoTests",
     "build": "tsup",
     "gcp-build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
