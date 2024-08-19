@@ -1,4 +1,7 @@
-export interface BalanceData { contractAddress: string; tokenBalance: string }
+export interface BalanceData {
+  contractAddress: string;
+  tokenBalance: string;
+}
 export interface Metadata {
   decimals: number;
   name: string;

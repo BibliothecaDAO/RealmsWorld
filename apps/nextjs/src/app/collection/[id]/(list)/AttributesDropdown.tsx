@@ -74,7 +74,7 @@ export const AttributesDropdown = ({
                   <AccordionContent>
                     <div className="pt-1">
                       {attribute.kind === "string" && (
-                        <div className=" p-1">
+                        <div className="p-1">
                           {//@ts-expect-error trpc typings of drizzle sql
                           attribute.values?.map((a, i: number) => {
                             return (

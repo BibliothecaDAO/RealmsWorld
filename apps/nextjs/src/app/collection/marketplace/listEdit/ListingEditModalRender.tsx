@@ -54,8 +54,8 @@ interface ChildrenProps {
 interface Props {
   open: boolean;
   token?:
-  | RouterOutputs["erc721Tokens"]["byId"]
-  | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+    | RouterOutputs["erc721Tokens"]["byId"]
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   collectionId?: string;
   //normalizeRoyalties?: boolean;
   children: (props: ChildrenProps) => ReactNode;
@@ -109,9 +109,9 @@ export const ListingEditModalRender: FC<Props> = ({
   const totalUsd = usdPrice * (listing?.price?.amount?.decimal || 0);*/
   const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
     expirationOptions[5] ??
-    (() => {
-      throw new Error("Expiration option is undefined");
-    }),
+      (() => {
+        throw new Error("Expiration option is undefined");
+      }),
   );
 
   //TODO fetch actual royalty

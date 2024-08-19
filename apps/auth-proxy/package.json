@@ -7,6 +7,7 @@
     "clean": "git clean -xdf .cache .nitro .output .turbo .vercel node_modules",
     "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
+    "format:write": "prettier --check --write . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

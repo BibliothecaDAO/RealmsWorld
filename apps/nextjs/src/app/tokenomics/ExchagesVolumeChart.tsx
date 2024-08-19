@@ -5,7 +5,12 @@
 import React, { PureComponent } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
-const COLORS = ["rgb(42, 43, 36)", "rgb(251, 225, 187, 0.3)", "#FFBB28", "#FF8042"];
+const COLORS = [
+  "rgb(42, 43, 36)",
+  "rgb(251, 225, 187, 0.3)",
+  "#FFBB28",
+  "#FF8042",
+];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -39,13 +44,13 @@ interface ExchagesVolumeChartProps {
   exchangesVolume: {
     exchange: string;
     value: number;
-  }[]
+  }[];
 }
 
 export default class ExchagesVolumeChart extends PureComponent<ExchagesVolumeChartProps> {
   render() {
-    const {exchangesVolume} = this.props
-    
+    const { exchangesVolume } = this.props;
+
     return (
       <ResponsiveContainer width="100%" height="100%" maxHeight={500}>
         <PieChart width={400} height={400}>

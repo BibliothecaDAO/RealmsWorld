@@ -24,6 +24,7 @@
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "format:write": "prettier --check --write \"**/*.{mjs,ts,md,json}\"",
     "push": "bun with-env drizzle-kit push",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",

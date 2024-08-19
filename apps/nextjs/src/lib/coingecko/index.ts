@@ -23,11 +23,10 @@ export const getTokenPrices = async ({
       ",",
     )}&vs_currencies=${currency}`,
     { next: { revalidate: 120 } },
-  )    .then(response => {
+  ).then((response) => {
     if (!response.ok) {
       throw new Error(response.statusText);
     }
     return response.json() as Promise<Record<string, Record<string, number>>>;
   });
 };
-

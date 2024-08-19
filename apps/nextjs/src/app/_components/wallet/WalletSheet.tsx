@@ -5,7 +5,12 @@ import Link from "next/link";
 import { Account } from "@/app/bridge/Account";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { useAccount as useL2Account, useNetwork } from "@starknet-react/core";
+import {
+  useCall,
+  useAccount as useL2Account,
+  useNetwork,
+  useWalletRequest,
+} from "@starknet-react/core";
 
 import {
   Button,
@@ -36,8 +41,15 @@ export const WalletSheet = () => {
   } = useL2Account();
   const { chain } = useNetwork();
 
-  const isStarknetWrongNetwork = isL2Connected &&
-    chainId !== undefined && BigInt(chainId) !== chain.id;
+  const isStarknetWrongNetwork =
+    isL2Connected && data !== undefined && BigInt(data) !== chain.id;
+
+  // TODO refactor back to default Chain Id when starknet-react supports
+  useEffect(() => {
+    if (account?.address !== undefined) {
+      request();
+    }
+  }, [account?.address, request]);
 
   const { isAccountOpen, toggleAccount } = useUIStore((state) => state);
 

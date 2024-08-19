@@ -9,6 +9,7 @@
     "dev": "bun with-env next dev",
     "lint": "eslint",
     "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
+    "format:write": "prettier --check --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "start": "bun with-env next start",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --",

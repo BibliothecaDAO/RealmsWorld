@@ -53,7 +53,7 @@ export const Treasury = ({
               </div>
               {Object.entries(accounts).map(([key, account], index) => (
                 <div
-                  className={`table-row  ${selectedAccount === (key as DaoAccounts) ? "bg-bright-yellow/50" : "hover:bg-bright-yellow/20"}`}
+                  className={`table-row ${selectedAccount === (key as DaoAccounts) ? "bg-bright-yellow/50" : "hover:bg-bright-yellow/20"}`}
                   onClick={() => setSelectedAccount(key as DaoAccounts)}
                   onKeyDown={(event) =>
                     event.key === "Enter" &&

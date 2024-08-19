@@ -1,7 +1,7 @@
-import type { CollectionToken } from "@/types/ark"
-import type { ArkClient } from "./client";
-
+import type { CollectionToken } from "@/types/ark";
 import { createSearchParamsCache, parseAsStringLiteral } from "nuqs/server";
+
+import type { ArkClient } from "./client";
 
 export const collectionSortDirectionKey = "direction";
 export const collectionSortDirectionsValues = ["asc", "desc"] as const;
@@ -37,13 +37,27 @@ interface GetCollectionTokensParams {
   sortDirection?: string;
 }
 
-export async function getCollectionTokens({ client, collectionAddress, page = 1, itemsPerPage = 50, sortBy = "price", sortDirection = "asc" }: GetCollectionTokensParams): Promise<CollectionTokensApiResponse> {
-  const queryParams = [`items_per_page=${itemsPerPage}`, `sort=${sortBy}`, `direction=${sortDirection}`, `page=${page}`];
+export async function getCollectionTokens({
+  client,
+  collectionAddress,
+  page = 1,
+  itemsPerPage = 50,
+  sortBy = "price",
+  sortDirection = "asc",
+}: GetCollectionTokensParams): Promise<CollectionTokensApiResponse> {
+  const queryParams = [
+    `items_per_page=${itemsPerPage}`,
+    `sort=${sortBy}`,
+    `direction=${sortDirection}`,
+    `page=${page}`,
+  ];
 
   try {
-    return await client.fetch(`/collections/${collectionAddress}/0x534e5f4d41494e/tokens?${queryParams.join("&")}`);
+    return await client.fetch(
+      `/collections/${collectionAddress}/0x534e5f4d41494e/tokens?${queryParams.join("&")}`,
+    );
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return {
       data: [],
       next_page: null,

@@ -67,7 +67,7 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
       break;
   }
   return (
-    <div className="flex w-full flex-wrap border-b p-2 ">
+    <div className="flex w-full flex-wrap border-b p-2">
       <div className="mr-6 w-full flex-none self-center rounded px-4 py-1 font-semibold sm:w-1/12">
         {eventType === "Sale" && <Gavel />}
         {eventType === "Listing" && <NotebookPen />}
@@ -96,7 +96,7 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
               className="ml-3 flex-none self-center"
               href={`/collection/${getCollectionFromId(activity.collection_id)}/${activity.token.token_id}`}
             >
-              <span className="font-semibold ">
+              <span className="font-semibold">
                 <span className="text-xs opacity-50">
                   #{activity.token.token_id}
                 </span>{" "}

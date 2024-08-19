@@ -6,10 +6,10 @@ import StarknetLogo from "@/icons/starknet.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { shortenHex } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
+import { Loader } from "lucide-react";
 
 import type { buttonVariants } from "@realms-world/ui";
 import { Button } from "@realms-world/ui";
-import { Loader } from "lucide-react";
 
 export const StarknetLoginButton = ({
   openAccount = false,
@@ -47,9 +47,9 @@ export const StarknetLoginButton = ({
           {isConnecting && <Loader className="animate-spin" />}
           {account?.address ? (
             <>{shortenHex(account.address, 8)}</>
-          ) : (<>
-            {children ?? "Starknet"}</>)
-          }
+          ) : (
+            <>{children ?? "Starknet"}</>
+          )}
         </span>
       </span>
     </Button>

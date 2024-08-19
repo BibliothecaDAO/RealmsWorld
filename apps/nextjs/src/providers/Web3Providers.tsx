@@ -26,8 +26,8 @@ import { TransferLogProvider } from "./TransferLogProvider";
 
 const starkProvider = env.NEXT_PUBLIC_BLAST_API
   ? blastProvider({
-    apiKey: env.NEXT_PUBLIC_BLAST_API,
-  })
+      apiKey: env.NEXT_PUBLIC_BLAST_API,
+    })
   : starkPublicProvider();
 
 const starkConnectors = [

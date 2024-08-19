@@ -81,9 +81,9 @@ export const ListModalRenderer: FC<Props> = ({
   //const [quantity, setQuantity] = useState(1);
   const [expirationOption, setExpirationOption] = useState<ExpirationOption>(
     expirationOptions[5] ??
-    (() => {
-      throw new Error("Expiration option is undefined");
-    }),
+      (() => {
+        throw new Error("Expiration option is undefined");
+      }),
   );
 
   //TODO fetch actual royalty

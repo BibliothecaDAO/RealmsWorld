@@ -67,7 +67,7 @@ export default async function CollectionSummary({
       : null;*/
 
     return (
-      <div className=" px-2 pt-10 sm:flex sm:px-0">
+      <div className="px-2 pt-10 sm:flex sm:px-0">
         <div className="flex-none self-center sm:pr-10">
           {collection.image && (
             <Image
@@ -91,7 +91,7 @@ export default async function CollectionSummary({
             {contract_details.map((detail, index) => {
               return (
                 <div key={index} className="uppercase">
-                  <span className="opacity-50 ">{detail.title}</span>{" "}
+                  <span className="opacity-50">{detail.title}</span>{" "}
                   {detail.value}
                 </div>
               );
@@ -114,7 +114,7 @@ export default async function CollectionSummary({
           <div className="flex flex-wrap justify-start lg:space-x-2">
             {statistics.map((statistic, index) => {
               return (
-                <div key={index} className=" px-4 py-2  lg:px-5">
+                <div key={index} className="px-4 py-2 lg:px-5">
                   <div className="mb-1 text-xs text-white/40">
                     {statistic.title}
                   </div>

@@ -89,7 +89,7 @@ export const ProfileForm = ({
     { value: "starknet", label: "Starknet" },
     { value: "governance", label: "Governance" },
     { value: "finance", label: "Finance" },
-  ]
+  ];
 
   const requiresSignature = useMemo(() => {
     return !session?.user.name || padAddress(session.user.name) != delegateId;
@@ -104,7 +104,7 @@ export const ProfileForm = ({
             createDelegateProfile.mutate(data);
           })}
         >
-          <fieldset disabled={requiresSignature} className="space-y-8 ">
+          <fieldset disabled={requiresSignature} className="space-y-8">
             <FormField
               name="statement"
               render={({ field }) => (
@@ -134,10 +134,14 @@ export const ProfileForm = ({
                       type="multiple"
                       variant="outline"
                       size="sm"
-                      className="justify-start grid grid-cols-4 lg:grid-cols-6"
+                      className="grid grid-cols-4 justify-start lg:grid-cols-6"
                     >
                       {interests.map(({ value, label }) => (
-                        <ToggleGroupItem className="leading-none	" key={value} value={value}>
+                        <ToggleGroupItem
+                          className="leading-none"
+                          key={value}
+                          value={value}
+                        >
                           {label}
                         </ToggleGroupItem>
                       ))}

@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
 import { api } from "@/trpc/react";
 import { useAccount } from "@starknet-react/core";
@@ -15,14 +16,13 @@ import {
   Input,
 } from "@realms-world/ui";
 import { padAddress } from "@realms-world/utils";
-import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 
 export const DelegatesToolbar = () => {
   const { address } = useAccount();
   const { sendAsync: delegateRealms } = useDelegateRealms({
     delegatee: address,
   });
-  const { data: currentDelegate } = useCurrentDelegate()
+  const { data: currentDelegate } = useCurrentDelegate();
 
   /*const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(
     {
@@ -49,20 +49,22 @@ export const DelegatesToolbar = () => {
   const [searchAddress, setSearchAddress] = useState("");
   return (
     <>
-      {!currentDelegate &&
-      //TODO
-        /*parseInt(tokenHolder?.tokenBalanceRaw ?? "0") > 0 &&*/ (
-          <Alert variant={"warning"} className="mt-4">
-            <TriangleAlert className="h-5 w-5" />
-            <AlertTitle className="text-lg">
-              Your Realms are not earning Lords
-            </AlertTitle>
-            <AlertDescription>
-              Selected a delegate below or create your own delegate profile to
-              start earning
-            </AlertDescription>
-          </Alert>
-        )}
+      {!currentDelegate && (
+        //TODO
+        /*parseInt(tokenHolder?.tokenBalanceRaw ?? "0") > 0 &&*/ <Alert
+          variant={"warning"}
+          className="mt-4"
+        >
+          <TriangleAlert className="h-5 w-5" />
+          <AlertTitle className="text-lg">
+            Your Realms are not earning Lords
+          </AlertTitle>
+          <AlertDescription>
+            Selected a delegate below or create your own delegate profile to
+            start earning
+          </AlertDescription>
+        </Alert>
+      )}
       <div className="mt-8 flex items-center justify-between gap-4">
         <div className="relative sm:w-1/3">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4" />
@@ -85,11 +87,14 @@ export const DelegatesToolbar = () => {
           </form>
         </div>
         <div>
-
-          <Button size="sm" onClick={() => delegateRealms()} disabled={currentDelegate == padAddress(address)}>
-            <UserRoundPlus className="mr-2" /> Delegate{currentDelegate == padAddress(address) && 'd'} to Self
+          <Button
+            size="sm"
+            onClick={() => delegateRealms()}
+            disabled={currentDelegate == padAddress(address)}
+          >
+            <UserRoundPlus className="mr-2" /> Delegate
+            {currentDelegate == padAddress(address) && "d"} to Self
           </Button>
-
         </div>
       </div>
     </>

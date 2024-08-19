@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
 import React from "react";
+import PropTypes from "prop-types";
 
 const ErrorModal = ({ text }: { text: string }) => {
-  return <div className="mb-3 overflow-y-auto max-h-[300px]">{text}</div>;
+  return <div className="mb-3 max-h-[300px] overflow-y-auto">{text}</div>;
 };
 
 ErrorModal.propTypes = {

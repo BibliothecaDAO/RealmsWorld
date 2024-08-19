@@ -20,7 +20,8 @@
     "gcp-build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "lint": "eslint --ext .js,.ts .",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+    "format": "prettier --ignore-path .gitignore .",
+    "format:write": "prettier --ignore-path .gitignore --write ."
   },
   "author": "Nethermind",
   "license": "Apache-2.0",

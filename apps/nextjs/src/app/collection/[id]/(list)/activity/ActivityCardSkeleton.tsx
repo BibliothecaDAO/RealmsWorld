@@ -13,11 +13,11 @@ export const ActivityCardSkeleton = () => {
         </div>
       </div>
       <div className="w-1/4 sm:w-1/6 lg:w-1/6">
-        <div className=" mb-1 h-4 w-12 bg-black/20 opacity-50" />
+        <div className="mb-1 h-4 w-12 bg-black/20 opacity-50" />
         <div className="h-4 w-16 bg-black/20" />
       </div>
       <div className="w-1/4 sm:w-1/6 lg:w-1/6">
-        <div className=" mb-1 h-4 w-16 bg-black/20 opacity-50" />
+        <div className="mb-1 h-4 w-16 bg-black/20 opacity-50" />
         <div className="h-4 w-16 bg-black/20" />
       </div>
       <div className="flex w-1/2 self-center sm:w-1/6 sm:justify-end lg:w-1/6">

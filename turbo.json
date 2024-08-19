@@ -30,6 +30,7 @@
       ],
       "outputLogs": "new-only"
     },
+    "format:write": {},
     "lint": {
       "dependsOn": [
         "^topo",

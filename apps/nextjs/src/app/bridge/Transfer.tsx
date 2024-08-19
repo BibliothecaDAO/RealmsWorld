@@ -70,7 +70,7 @@ export const Transfer = ({ action }: { action: string }) => {
             <Badge variant={"secondary"} className="bg-background">
               {isWithdraw ? "From" : "To"}
             </Badge>
-            <div className="mb-4 mt-1 flex text-lg ">
+            <div className="mb-4 mt-1 flex text-lg">
               <div className="mr-2 h-[36px] w-[36px] self-center rounded-full bg-background">
                 {networkLogo}
               </div>
@@ -87,8 +87,8 @@ export const Transfer = ({ action }: { action: string }) => {
             }
             balance={
               isL2
-                ? balances.l2.lords ?? BigInt(0)
-                : balances.l1.lords ?? BigInt(0)
+                ? (balances.l2.lords ?? BigInt(0))
+                : (balances.l1.lords ?? BigInt(0))
             }
             symbol="Lords"
             isLoading={isL2 ? l2loading && !balances.l2.lords : false}
@@ -159,7 +159,7 @@ export const Transfer = ({ action }: { action: string }) => {
           </div>
         </Link>
 
-        <div className="relative mb-4  flex flex-col rounded border border-white/5 bg-white/10 p-4">
+        <div className="relative mb-4 flex flex-col rounded border border-white/5 bg-white/10 p-4">
           {action == "withdraw"
             ? renderL1Network(action)
             : renderL2Network(action)}

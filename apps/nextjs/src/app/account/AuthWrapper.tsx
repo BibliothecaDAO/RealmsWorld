@@ -1,12 +1,11 @@
 "use client";
 
-import {
-  useAccount as useStarknetAccount,
-} from "@starknet-react/core";
+import { useAccount as useStarknetAccount } from "@starknet-react/core";
 import {
   useAccount as useEthereumAccount,
   useSwitchChain as useSwitchEthereumChain,
 } from "wagmi";
+
 import { EthereumLoginButton } from "../_components/wallet/EthereumLoginButton";
 import { StarknetLoginButton } from "../_components/wallet/StarknetLoginButton";
 
@@ -22,11 +21,8 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const isEthereumRightNetwork = ethereumChainId === ethereumChains[0].id;
 
   const fullyConnected =
-    isStarknetConnected &&
-    isEthereumConnected &&
-    isEthereumRightNetwork /*&&
+    isStarknetConnected && isEthereumConnected && isEthereumRightNetwork; /*&&
     isStarknetRightNetwork;*/
-
 
   return (
     <>

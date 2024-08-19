@@ -1,4 +1,5 @@
 import type { Token } from "@/types/ark";
+
 import type { ArkClient } from "./client";
 
 export interface GetTokenApiResponse {
@@ -6,16 +7,22 @@ export interface GetTokenApiResponse {
 }
 
 interface GetTokenParams {
-  client: ArkClient
-  contractAddress: string
-  tokenId: number
+  client: ArkClient;
+  contractAddress: string;
+  tokenId: number;
 }
 
-export async function getToken({ client, contractAddress, tokenId }: GetTokenParams) {
+export async function getToken({
+  client,
+  contractAddress,
+  tokenId,
+}: GetTokenParams) {
   try {
-    return await client.fetch(`/tokens/${contractAddress}/0x534e5f4d41494e/${tokenId.toString()}`)
+    return await client.fetch(
+      `/tokens/${contractAddress}/0x534e5f4d41494e/${tokenId.toString()}`,
+    );
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return null;
   }
 }

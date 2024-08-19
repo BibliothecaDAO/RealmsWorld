@@ -41,7 +41,7 @@ function UnstakeStep({
   ] as `0x${string}`;
 
   return (
-    <div className="mt-4  w-full">
+    <div className="mt-4 w-full">
       <RealmsTable
         data={
           step.id === "unstake-galleon"
@@ -117,21 +117,21 @@ export const StakingMigration = () => {
   const steps = [
     ...(realmsData?.bridgedRealms.length
       ? [
-        {
-          label: `Unstake`,
-          description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Galleon`,
-          id: "unstake-galleon",
-        },
-      ]
+          {
+            label: `Unstake`,
+            description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Galleon`,
+            id: "unstake-galleon",
+          },
+        ]
       : []),
     ...(realmsData?.bridgedV2Realms.length
       ? [
-        {
-          label: `Unstake`,
-          description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Carrack`,
-          id: "unstake-carrack",
-        },
-      ]
+          {
+            label: `Unstake`,
+            description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Carrack`,
+            id: "unstake-carrack",
+          },
+        ]
       : []),
     {
       label: "Bridge",
@@ -158,8 +158,10 @@ export const StakingMigration = () => {
               <div className="my-2 flex items-center justify-center rounded-md border bg-secondary p-2 text-primary">
                 {(stepProps.id === "unstake-galleon" ||
                   stepProps.id === "unstake-carrack") &&
-                  realmsData && (<>
-                    <UnstakeStep step={stepProps} realmsData={realmsData} /></>
+                  realmsData && (
+                    <>
+                      <UnstakeStep step={stepProps} realmsData={realmsData} />
+                    </>
                   )}
                 {stepProps.id === "bridge" && (
                   <div className="mt-4">

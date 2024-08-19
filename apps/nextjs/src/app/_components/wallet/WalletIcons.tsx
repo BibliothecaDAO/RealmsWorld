@@ -1,5 +1,5 @@
-import React from "react";
 import type { FunctionComponent } from "react";
+import React from "react";
 import ArgentIcon from "@/icons/argent.svg";
 import BraavosIcon from "@/icons/braavos.svg";
 import { Mail } from "lucide-react";
@@ -18,7 +18,7 @@ const WalletIcons: FunctionComponent<WalletIconsProps> = ({ id }) => {
 
   if (id === "braavos") return <BraavosIcon width="26px" className="mr-3" />;
 
-  return <Mail className="mr-3 " />;
+  return <Mail className="mr-3" />;
 };
 
 export default WalletIcons;

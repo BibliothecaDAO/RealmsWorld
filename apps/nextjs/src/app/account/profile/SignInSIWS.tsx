@@ -22,7 +22,9 @@ export const SignInSIWS = () => {
     },
   );
   const requiresSignature = useMemo(() => {
-    return !session?.user.name || padAddress(session.user.name) != delegate?.user;
+    return (
+      !session?.user.name || padAddress(session.user.name) != delegate?.user
+    );
   }, [session?.user.name, delegate?.user]);
   return (
     <>

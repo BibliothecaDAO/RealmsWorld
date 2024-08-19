@@ -18,7 +18,7 @@ export const StudioCard = ({
   return (
     <BaseCard>
       <Link
-        className="group relative flex aspect-square flex-col items-center justify-center  text-center"
+        className="group relative flex aspect-square flex-col items-center justify-center text-center"
         href={`/studios/${studio.id}`} // navigate to a custom studio homepage if one is specified, default page otherwise
       >
         {studio.logoFormat && (

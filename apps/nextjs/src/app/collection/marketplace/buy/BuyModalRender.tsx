@@ -1,12 +1,13 @@
 import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useBuyToken } from "@/hooks/market/useBuyToken";
+import { useLordsBalance as useL2LordsBalance } from "@/hooks/token/starknet/useLordsBalance";
 import { useWalletsProviderContext } from "@/providers/WalletsProvider";
 import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 import { useAccount, useTransactionReceipt } from "@starknet-react/core";
 import { formatUnits } from "viem";
-import { useLordsBalance as useL2LordsBalance } from "@/hooks/token/starknet/useLordsBalance";
+
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
 
 export enum BuyStep {
@@ -43,8 +44,8 @@ interface ChildrenProps {
 interface Props {
   open: boolean;
   token:
-  | RouterOutputs["erc721Tokens"]["byId"]
-  | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+    | RouterOutputs["erc721Tokens"]["byId"]
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   tokenId?: string;
   defaultQuantity?: number;
   orderId?: number;
@@ -183,10 +184,12 @@ export const BuyModalRender: FC<Props> = ({
   useEffect(() => {
     if (
       // !lords or lords  balance < item total + gas
-      parseInt(formatUnits(l2LordsBalance?.value ?? 0n, 18)) < totalIncludingFees
+      parseInt(formatUnits(l2LordsBalance?.value ?? 0n, 18)) <
+      totalIncludingFees
     ) {
       const missingAmountToBuyAsset =
-        totalIncludingFees - parseInt(formatUnits(l2LordsBalance?.value ?? 0n, 18));
+        totalIncludingFees -
+        parseInt(formatUnits(l2LordsBalance?.value ?? 0n, 18));
       setMissingAmount(missingAmountToBuyAsset);
       setHasEnoughCurrency(false);
     } else {
