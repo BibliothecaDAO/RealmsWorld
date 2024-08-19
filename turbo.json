@@ -40,6 +40,11 @@
         "node_modules/.cache/.eslintcache"
       ]
     },
+    "lint:fix": {
+      "dependsOn": [
+        "^lint"
+      ]
+    },
     "typecheck": {
       "dependsOn": [
         "^topo",

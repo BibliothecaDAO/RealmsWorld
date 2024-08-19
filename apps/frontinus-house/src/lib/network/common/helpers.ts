@@ -1,6 +1,6 @@
-import { Connector, NetworkHelpers, StrategyConfig } from "@/lib/network/types";
+import type { Connector, NetworkHelpers, StrategyConfig } from "@/lib/network/types";
 import { getUrl } from "@/lib/utils";
-import { Choice, MetaTransaction, Space } from "@/types";
+import type { Choice, MetaTransaction, Space } from "@/types";
 import {
   getExecutionData as _getExecutionData,
   Choice as SdkChoice,

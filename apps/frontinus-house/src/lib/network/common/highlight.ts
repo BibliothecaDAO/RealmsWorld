@@ -1,21 +1,21 @@
-import { User, Vote } from "@/types";
+import type { User, Vote } from "@/types";
 import gql from "graphql-tag";
 
-import { ApiProposal, ApiSpace } from "./types";
+import type { ApiProposal, ApiSpace } from "./types";
 
-type HighlightSpace = {
+interface HighlightSpace {
   id: string;
   vote_count: number;
-};
+}
 
-type HighlightProposal = {
+interface HighlightProposal {
   id: string;
   scores_1: string;
   scores_2: string;
   scores_3: string;
   scores_total: string;
   vote_count: number;
-};
+}
 
 const SPACE_FRAGMENT = gql`
   fragment highlightSpaceFragment on SXSpace {

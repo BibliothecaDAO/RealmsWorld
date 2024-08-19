@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getNetwork } from "@/lib/network";
-import { Space } from "@/types";
+import type { Space } from "@/types";
 
-type SpaceProviderState = {
+interface SpaceProviderState {
   space?: Space | null;
   setSpace: (theme: Space) => void;
-};
+}
 
 const initialState: SpaceProviderState = {
   space: null,

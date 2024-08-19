@@ -4,7 +4,7 @@ import { abis } from '@/helpers/abis';
 import { getSalt } from '@/helpers/utils';*/
 /*import { Token } from '@/lib/alchemy';
 import { resolver } from '@/helpers/resolver';*/
-import {
+import type {
   MetaTransaction,
   /* SendTokenTransaction,
  SendNftTransaction,

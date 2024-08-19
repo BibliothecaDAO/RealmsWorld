@@ -7,12 +7,12 @@ import {
 } from "@apollo/client/core";
 import gql from "graphql-tag";
 
-type ApiDelegate = {
+interface ApiDelegate {
   id: string;
   delegatedVotes: string;
   delegatedVotesRaw: string;
   tokenHoldersRepresentedAmount: number;
-};
+}
 
 type Delegate = ApiDelegate & {
   name: string | null;
@@ -20,11 +20,11 @@ type Delegate = ApiDelegate & {
   votesPercentage: number;
 };
 
-type Governance = {
+interface Governance {
   delegatedVotes: string;
   totalTokenHolders: string;
   totalDelegates: string;
-};
+}
 
 const DELEGATES_LIMIT = 40;
 
@@ -59,7 +59,7 @@ function convertUrl(apiUrl: string) {
   const hostedPattern =
     /https:\/\/thegraph\.com\/hosted-service\/subgraph\/([\w-]+)\/([\w-]+)/;
 
-  const hostedMatch = apiUrl.match(hostedPattern);
+  const hostedMatch = hostedPattern.exec(apiUrl);
   if (hostedMatch) {
     return `https://api.thegraph.com/subgraphs/name/${hostedMatch[1]}/${hostedMatch[2]}`;
   }

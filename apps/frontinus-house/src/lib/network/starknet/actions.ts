@@ -31,10 +31,11 @@ import {
 import { getProvider } from "@/lib/provider";
 import { convertToMetaTransactions } from "@/lib/transactions";
 import { verifyNetwork } from "@/lib/utils";
+import type {
+  NetworkConfig} from "@snapshot-labs/sx";
 import {
   clients,
   getStarknetStrategy,
-  NetworkConfig,
   starknetMainnet,
   starknetSepolia,
 } from "@snapshot-labs/sx";
@@ -519,7 +520,7 @@ export function createActions(
       const { account }: { account: Account } = web3.provider;
 
       return account.execute({
-        contractAddress: contractAddress as string,
+        contractAddress: contractAddress!,
         entrypoint: "delegate",
         calldata: CallData.compile({
           delegatee,

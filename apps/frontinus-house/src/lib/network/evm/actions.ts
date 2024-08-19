@@ -29,11 +29,12 @@ import {
 import { convertToMetaTransactions } from "@/lib/transactions";
 import { verifyNetwork } from "@/lib/utils";
 import { Contract } from "@ethersproject/contracts";
-import { Provider } from "@ethersproject/providers";
+import type { Provider } from "@ethersproject/providers";
+import type {
+  EvmNetworkConfig} from "@snapshot-labs/sx";
 import {
   clients,
   evmMainnet,
-  EvmNetworkConfig,
   evmSepolia,
   getEvmStrategy,
 } from "@snapshot-labs/sx";

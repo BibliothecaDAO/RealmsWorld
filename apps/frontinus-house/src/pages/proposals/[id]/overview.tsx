@@ -1,7 +1,7 @@
 import { text } from "stream/consumers";
 import { Markdown } from "@/components/Markdown";
 import { _rt, getProposalId, shortenAddress } from "@/lib/utils";
-import { Proposal } from "@/types";
+import type { Proposal } from "@/types";
 import { Link, useLocation } from "react-router-dom";
 
 import {
@@ -14,7 +14,7 @@ import {
 } from "@realms-world/ui";
 
 export default function Overview({ proposal }: { proposal: Proposal }) {
-  let location = useLocation();
+  const location = useLocation();
 
   const currentUrl = `${window.location.origin}/#${location.pathname}`;
 

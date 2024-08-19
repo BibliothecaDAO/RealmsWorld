@@ -1,7 +1,7 @@
 import { BASIC_CHOICES } from "@/data/constants";
-import { NetworkApi, PaginationOpts, SpacesFilter } from "@/lib/network/types";
+import type { NetworkApi, PaginationOpts, SpacesFilter } from "@/lib/network/types";
 import { getNames } from "@/lib/stamp";
-import {
+import type {
   Follow,
   NetworkID,
   Proposal,
@@ -39,11 +39,11 @@ import {
   USER_VOTES_QUERY,
   VOTES_QUERY,
 } from "./queries";
-import { ApiProposal, ApiSpace, ApiStrategyParsedMetadata } from "./types";
+import type { ApiProposal, ApiSpace, ApiStrategyParsedMetadata } from "./types";
 
-type ApiOptions = {
+interface ApiOptions {
   highlightApiUrl?: string;
-};
+}
 
 function getProposalState(
   proposal: ApiProposal,
@@ -320,7 +320,7 @@ export function createApi(
     loadUserVotes: async (
       spaceIds: string[],
       voter: string,
-    ): Promise<{ [key: string]: Vote }> => {
+    ): Promise<Record<string, Vote>> => {
       const { data } = await apollo.query({
         query: USER_VOTES_QUERY,
         variables: {

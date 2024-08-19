@@ -1,6 +1,6 @@
 import { ETH_CONTRACT } from "@/data/constants";
 
-import {
+import type {
   GetBalancesResponse,
   GetTokenBalancesResponse,
   GetTokensMetadataResponse,

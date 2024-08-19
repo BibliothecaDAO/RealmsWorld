@@ -13,6 +13,7 @@
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "dev": "storybook dev -p 6006",
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "format:write": "prettier --check --write \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit",

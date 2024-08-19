@@ -1,6 +1,6 @@
 import type { Web3Provider } from "@ethersproject/providers";
 import { MAX_SYMBOL_LENGTH } from "@/data/constants";
-import { Proposal } from "@/types";
+import type { Proposal } from "@/types";
 import { getAddress } from "@ethersproject/address";
 import { validateAndParseAddress } from "starknet";
 
@@ -98,10 +98,10 @@ export async function verifyNetwork(
   }
 }
 export function _rt(date: number) {
-  var seconds = Math.floor(new Date().getTime() / 1000 - date);
-  var years = Math.floor(seconds / 31536000);
-  var months = Math.floor(seconds / 2592000);
-  var days = Math.floor(seconds / 86400);
+  const seconds = Math.floor(new Date().getTime() / 1000 - date);
+  const years = Math.floor(seconds / 31536000);
+  const months = Math.floor(seconds / 2592000);
+  const days = Math.floor(seconds / 86400);
   if (days > 548) {
     return years + " years ago";
   }
@@ -115,7 +115,7 @@ export function _rt(date: number) {
     return "a month ago";
   }
 
-  var hours = Math.floor(seconds / 3600);
+  const hours = Math.floor(seconds / 3600);
 
   if (hours >= 36 && days <= 25) {
     return days + " days ago";
@@ -124,7 +124,7 @@ export function _rt(date: number) {
     return "a day ago";
   }
 
-  var minutes = Math.floor(seconds / 60);
+  const minutes = Math.floor(seconds / 60);
 
   if (minutes >= 90 && hours <= 21) {
     return hours + " hours ago";

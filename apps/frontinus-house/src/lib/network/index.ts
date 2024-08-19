@@ -1,7 +1,7 @@
 import { createStarknetNetwork } from './starknet';
 import { createEvmNetwork } from './evm';
-import { NetworkID } from '@/types';
-import { ReadWriteNetwork } from './types';
+import type { NetworkID } from '@/types';
+import type { ReadWriteNetwork } from './types';
 
 
 const starknetNetwork = createStarknetNetwork('sn');

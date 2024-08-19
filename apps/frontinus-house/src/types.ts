@@ -41,26 +41,26 @@ export type VoteType =
   | "weighted"
   | "custom";
 
-export type SelectedStrategy = {
+export interface SelectedStrategy {
   address: string;
   type: string;
-};
+}
 
-export type SpaceMetadataTreasury = {
+export interface SpaceMetadataTreasury {
   name: string | null;
   network: NetworkID | null;
   address: string | null;
-};
+}
 
-export type SpaceMetadataDelegation = {
+export interface SpaceMetadataDelegation {
   name: string | null;
   apiType: string | null;
   apiUrl: string | null;
   contractNetwork: NetworkID | null;
   contractAddress: string | null;
-};
+}
 
-export type SpaceMetadata = {
+export interface SpaceMetadata {
   name: string;
   avatar: string;
   cover: string;
@@ -72,24 +72,24 @@ export type SpaceMetadata = {
   votingPowerSymbol: string;
   treasuries: SpaceMetadataTreasury[];
   delegations: SpaceMetadataDelegation[];
-};
+}
 
-export type SpaceSettings = {
+export interface SpaceSettings {
   votingDelay: number;
   minVotingDuration: number;
   maxVotingDuration: number;
-};
+}
 
-export type StrategyParsedMetadata = {
+export interface StrategyParsedMetadata {
   name: string;
   description: string;
   decimals: number;
   symbol: string;
   token: string | null;
   payload: string | null;
-};
+}
 
-export type Space = {
+export interface Space {
   id: string;
   network: NetworkID;
   verified: boolean;
@@ -135,9 +135,9 @@ export type Space = {
   vote_count: number;
   follower_count?: number;
   created: number;
-};
+}
 
-export type Proposal = {
+export interface Proposal {
   id: string;
   proposal_id: number | string;
   network: NetworkID;
@@ -196,29 +196,29 @@ export type Proposal = {
   cancelled: boolean;
   state: ProposalState;
   privacy: Privacy;
-};
+}
 
-export type User = {
+export interface User {
   id: string;
   proposal_count: number;
   vote_count: number;
   created: number;
   follows?: string[];
-};
+}
 
-export type Follow = {
+export interface Follow {
   id: string;
   follower: string;
   space: Space;
   created: number;
-};
+}
 
-export type Contact = {
+export interface Contact {
   address: string;
   name: string;
-};
+}
 
-export type Vote = {
+export interface Vote {
   id: string;
   voter: {
     id: string;
@@ -232,9 +232,9 @@ export type Vote = {
   vp: number;
   created: number;
   tx: string;
-};
+}
 
-export type Draft = {
+export interface Draft {
   proposalId: number | string | null;
   title: string;
   body: string;
@@ -244,23 +244,23 @@ export type Draft = {
   executionStrategy: SelectedStrategy | null;
   execution: Transaction[];
   updatedAt: number;
-};
+}
 
-export type Metadata = {
+export interface Metadata {
   title: string;
   body: string;
   discussion: string;
   execution: Transaction[];
-};
+}
 
 export type Drafts = Record<string, Draft>;
 
-export type BaseTransaction = {
+export interface BaseTransaction {
   to: string;
   data: string;
   value: string;
   salt: string;
-};
+}
 
 export type SendTokenTransaction = BaseTransaction & {
   _type: "sendToken";

@@ -1,4 +1,4 @@
-import { Connector } from '@/lib/network/types';
+import type { Connector } from '@/lib/network/types';
 
 export const EVM_CONNECTORS: Connector[] = ['injected', 'walletconnect', 'walletlink', 'gnosis'];
 

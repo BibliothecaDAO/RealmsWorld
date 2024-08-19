@@ -1,5 +1,5 @@
 declare module "highlightjs-solidity" {
-  import { HLJSApi, LanguageFn } from "highlight.js";
+  import type { HLJSApi, LanguageFn } from "highlight.js";
 
   export const solidity: LanguageFn;
   export const yul: LanguageFn;

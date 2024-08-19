@@ -7,13 +7,15 @@
     "dev": "vite",
     "clean": "git clean -xdf .next .turbo node_modules",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview"
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
     "@argent/get-starknet": "^6.4.7",
     "@iconify-json/heroicons-outline": "^1.1.10",
+    "@million/lint": "^1.0.0-rc.84",
     "@snapshot-labs/sx": "0.1.2",
     "@types/remarkable": "^2.0.8",
     "autoprefixer": "^10.4.19",

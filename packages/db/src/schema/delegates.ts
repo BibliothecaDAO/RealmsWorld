@@ -5,7 +5,6 @@ import {
   integer,
   numeric,
   pgTable,
-  primaryKey,
   serial,
   text,
   timestamp,

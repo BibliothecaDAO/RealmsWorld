@@ -1,10 +1,10 @@
-export type BalanceData = { contractAddress: string; tokenBalance: string };
-export type Metadata = {
+export interface BalanceData { contractAddress: string; tokenBalance: string }
+export interface Metadata {
   decimals: number;
   logo: string | null;
   name: string;
   symbol: string;
-};
+}
 export type Token = BalanceData &
   Metadata & {
     price: number;
@@ -12,10 +12,10 @@ export type Token = BalanceData &
     change: number;
   };
 
-export type GetTokenBalancesResponse = {
+export interface GetTokenBalancesResponse {
   address: string;
   tokenBalances: BalanceData[];
-};
+}
 
 export type GetTokensMetadataResponse = Metadata[];
 

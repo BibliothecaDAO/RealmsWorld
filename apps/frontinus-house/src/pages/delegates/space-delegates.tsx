@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDelegates } from "@/hooks/use-delegates";
 import { formatAddress, shorten } from "@/lib/utils";
-import { SpaceMetadataDelegation } from "@/types";
+import type { SpaceMetadataDelegation } from "@/types";
 
 export const SpaceDelegates = ({
   delegation,
@@ -18,7 +18,7 @@ export const SpaceDelegates = ({
     fetch,
     fetchMore,
     reset,
-  } = useDelegates(delegation.apiUrl as string);
+  } = useDelegates(delegation.apiUrl!);
 
   useEffect(() => {
     fetch();

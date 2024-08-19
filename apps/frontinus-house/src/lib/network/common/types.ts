@@ -1,4 +1,4 @@
-export type ApiStrategyParsedMetadata = {
+export interface ApiStrategyParsedMetadata {
   index: number;
   data: {
     name: string;
@@ -8,9 +8,9 @@ export type ApiStrategyParsedMetadata = {
     token: string | null;
     payload: string | null;
   };
-};
+}
 
-export type ApiSpace = {
+export interface ApiSpace {
   id: string;
   metadata: {
     name: string;
@@ -55,9 +55,9 @@ export type ApiSpace = {
   proposal_count: number;
   vote_count: number;
   created: number;
-};
+}
 
-export type ApiProposal = {
+export interface ApiProposal {
   id: string;
   proposal_id: number;
   metadata: {
@@ -112,4 +112,4 @@ export type ApiProposal = {
   vetoed: boolean;
   completed: boolean;
   cancelled: boolean;
-};
+}

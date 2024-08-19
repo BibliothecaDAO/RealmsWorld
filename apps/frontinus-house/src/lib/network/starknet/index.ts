@@ -1,7 +1,8 @@
-import { Network } from "@/lib/network/types";
-import { NetworkID } from "@/types";
+import type { Network } from "@/lib/network/types";
+import type { NetworkID } from "@/types";
+import type {
+  BigNumberish} from "starknet";
 import {
-  BigNumberish,
   constants as starknetConstants,
   TransactionExecutionStatus,
   TransactionFinalityStatus,
@@ -12,7 +13,7 @@ import { STARKNET_CONNECTORS } from "../common/constants";
 import { createActions } from "./actions";
 import { createProvider } from "./provider";
 
-type Metadata = {
+interface Metadata {
   name: string;
   chainId: string;
   baseChainId: number;
@@ -21,7 +22,7 @@ type Metadata = {
   ethRpcUrl: string;
   explorerUrl: string;
   apiUrl: string;
-};
+}
 
 export const METADATA: Partial<Record<NetworkID, Metadata>> = {
   sn: {

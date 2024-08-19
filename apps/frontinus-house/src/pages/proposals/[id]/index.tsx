@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Layout, LayoutBody } from "@/components/layout";
 import { getNetwork } from "@/lib/network";
 import { getProposalId, shorten } from "@/lib/utils";
-import { Proposal as ProposalType } from "@/types";
+import type { Proposal as ProposalType } from "@/types";
 
 import Overview from "./overview";
 

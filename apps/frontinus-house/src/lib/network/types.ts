@@ -11,13 +11,13 @@ import type {
   Vote,
 } from "@/types";
 import type { Web3Provider } from "@ethersproject/providers";
-import React from "react";
+import type React from "react";
 
-export type PaginationOpts = { limit: number; skip?: number };
-export type SpacesFilter = {
+export interface PaginationOpts { limit: number; skip?: number }
+export interface SpacesFilter {
   controller?: string;
   id_in?: string[];
-};
+}
 export type Connector =
   | "argentx"
   | "injected"
@@ -39,7 +39,7 @@ export type GeneratedMetadata =
       strategies_metadata: string[];
     };
 
-export type StrategyTemplate = {
+export interface StrategyTemplate {
   address: string;
   name: string;
   about?: string;
@@ -65,19 +65,19 @@ export type StrategyTemplate = {
     spaceAddress: string,
     params: Record<string, any>,
   ) => Promise<{ address: string; txId: string }>;
-};
+}
 
 export type StrategyConfig = StrategyTemplate & {
   id: string;
   params: Record<string, any>;
 };
 
-export type SnapshotInfo = {
+export interface SnapshotInfo {
   at: number | null;
   chainId?: number;
-};
+}
 
-export type VotingPower = {
+export interface VotingPower {
   address: string;
   value: bigint;
   decimals: number;
@@ -85,13 +85,13 @@ export type VotingPower = {
   symbol: string;
   chainId?: number;
   swapLink?: string;
-};
+}
 
 export type VotingPowerStatus = "loading" | "success" | "error";
 
 // TODO: make sx.js accept Signer instead of Web3Provider | Wallet
 
-export type ReadOnlyNetworkActions = {
+export interface ReadOnlyNetworkActions {
   getVotingPower(
     spaceId: string,
     strategiesAddresses: string[],
@@ -130,7 +130,7 @@ export type ReadOnlyNetworkActions = {
     choice: Choice,
   ): Promise<any>;
   send(envelope: any): Promise<any>;
-};
+}
 
 export type NetworkActions = ReadOnlyNetworkActions & {
   predictSpaceAddress(
@@ -157,7 +157,7 @@ export type NetworkActions = ReadOnlyNetworkActions & {
   ): Promise<any>;
 };
 
-export type NetworkApi = {
+export interface NetworkApi {
   loadProposalVotes(
     proposal: Proposal,
     paginationOpts: PaginationOpts,
@@ -167,7 +167,7 @@ export type NetworkApi = {
   loadUserVotes(
     spaceIds: string[],
     voter: string,
-  ): Promise<{ [key: string]: Vote }>;
+  ): Promise<Record<string, Vote>>;
   loadProposals(
     spaceIds: string[],
     paginationOpts: PaginationOpts,
@@ -196,21 +196,21 @@ export type NetworkApi = {
       | "proposal_count-asc",
   ): Promise<User[]>;
   loadFollows(userId?: string, spaceId?: string): Promise<Follow[]>;
-};
+}
 
-export type NetworkConstants = {
-  AUTHS: { [key: string]: string };
-  PROPOSAL_VALIDATIONS: { [key: string]: string };
-  STRATEGIES: { [key: string]: string };
-  EXECUTORS: { [key: string]: string };
+export interface NetworkConstants {
+  AUTHS: Record<string, string>;
+  PROPOSAL_VALIDATIONS: Record<string, string>;
+  STRATEGIES: Record<string, string>;
+  EXECUTORS: Record<string, string>;
   EDITOR_AUTHENTICATORS: StrategyTemplate[];
   EDITOR_PROPOSAL_VALIDATIONS: StrategyTemplate[];
   EDITOR_VOTING_STRATEGIES: StrategyTemplate[];
   EDITOR_PROPOSAL_VALIDATION_VOTING_STRATEGIES: StrategyTemplate[];
   EDITOR_EXECUTION_STRATEGIES: StrategyTemplate[];
-};
+}
 
-export type NetworkHelpers = {
+export interface NetworkHelpers {
   isAuthenticatorSupported(authenticator: string): boolean;
   isAuthenticatorContractSupported(authenticator: string): boolean;
   getRelayerAuthenticatorType(
@@ -228,9 +228,9 @@ export type NetworkHelpers = {
     type: "transaction" | "address" | "contract" | "strategy" | "token",
     chainId?: number,
   ): string;
-};
+}
 
-type BaseNetwork = {
+interface BaseNetwork {
   name: string;
   avatar: string;
   currentUnit: "block" | "second";
@@ -243,7 +243,7 @@ type BaseNetwork = {
   api: NetworkApi;
   constants: NetworkConstants;
   helpers: NetworkHelpers;
-};
+}
 
 export type ReadOnlyNetwork = BaseNetwork & {
   readOnly: true;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Layout, LayoutBody } from "@/components/layout";
 import { getNetwork } from "@/lib/network";
 import { getProposalId, shorten } from "@/lib/utils";
-import { Proposal } from "@/types";
+import type { Proposal } from "@/types";
 import { Link } from "react-router-dom";
 
 export default function Proposals() {

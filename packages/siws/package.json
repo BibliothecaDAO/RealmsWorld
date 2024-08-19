@@ -19,7 +19,8 @@
     "build": "tsup",
     "gcp-build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "lint": "eslint --ext .js,.ts .",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "format": "prettier --ignore-path .gitignore .",
     "format:write": "prettier --ignore-path .gitignore --write ."
   },

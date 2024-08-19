@@ -8,6 +8,7 @@
     "clean": "git clean -xdf .cache .nitro .output .turbo .vercel node_modules",
     "dev": "bun with-env next dev",
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "format:write": "prettier --check --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
     "start": "bun with-env next start",

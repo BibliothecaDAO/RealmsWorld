@@ -11,6 +11,7 @@
     "build": "tsup",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
     "tsc": "tsc --noEmit"

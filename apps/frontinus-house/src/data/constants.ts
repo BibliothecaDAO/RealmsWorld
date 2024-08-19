@@ -1,4 +1,4 @@
-import { VoteType } from '@/types';
+import type { VoteType } from '@/types';
 
 export const ETH_CONTRACT = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 

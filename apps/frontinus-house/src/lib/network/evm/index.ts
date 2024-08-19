@@ -1,13 +1,13 @@
 import networks from "@/data/networks.json";
-import { Network } from "@/lib/network/types";
+import type { Network } from "@/lib/network/types";
 import { getProvider } from "@/lib/provider";
-import { NetworkID } from "@/types";
+import type { NetworkID } from "@/types";
 
 import { createApi } from "../common";
 import { EVM_CONNECTORS } from "../common/constants";
 import { createActions } from "./actions";
 
-type Metadata = {
+interface Metadata {
   name: string;
   ticker?: string;
   chainId: number;
@@ -15,7 +15,7 @@ type Metadata = {
   apiUrl: string;
   avatar: string;
   blockTime: number;
-};
+}
 
 // shared for both ETH mainnet and ARB1
 const ETH_MAINNET_BLOCK_TIME = 12.09;
@@ -44,7 +44,7 @@ export const METADATA: Record<string, Metadata> = {
 export function createEvmNetwork(networkId: NetworkID): Network {
   const { name, chainId, currentChainId, apiUrl, avatar } = METADATA[
     networkId
-  ] as Metadata;
+  ]!;
 
   const provider = getProvider(chainId);
   const api = createApi(apiUrl, networkId, {
