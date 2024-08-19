@@ -3,7 +3,12 @@ import React from "react";
 import Image from "next/image";
 import Lords from "@/icons/lords.svg";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@realms-world/ui";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@realms-world/ui";
 import { formatNumber } from "@realms-world/utils";
 
 interface Props {

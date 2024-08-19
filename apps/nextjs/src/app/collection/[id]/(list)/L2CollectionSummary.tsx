@@ -148,7 +148,7 @@ export const ContractDetailsList = ({
       {contract_details.map((detail, index) => {
         return (
           <div key={index} className="uppercase">
-            <span className="opacity-50 ">{detail.title}</span> {detail.value}
+            <span className="opacity-50">{detail.title}</span> {detail.value}
           </div>
         );
       })}

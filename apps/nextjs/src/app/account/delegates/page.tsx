@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { api } from "@/trpc/server";
 
 import type { RouterInputs } from "@realms-world/api";
 
-import { DelegatesToolbar } from "./DelegatesToolbar";
-import { Suspense } from "react";
 import { DelegatesList } from "./DelegatesList";
+import { DelegatesToolbar } from "./DelegatesToolbar";
 
 export function generateMetadata(): Metadata {
   return {
@@ -35,8 +35,7 @@ export default function Page({
         </p>
       </div>
       <DelegatesToolbar />
-      <Suspense
-        fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
         <DelegatesList delegates={delegates} />
       </Suspense>
     </div>

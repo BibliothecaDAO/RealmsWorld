@@ -43,8 +43,8 @@ const ModalCopy = {
 
 interface Props {
   token?:
-  | RouterOutputs["erc721Tokens"]["byId"]
-  | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+    | RouterOutputs["erc721Tokens"]["byId"]
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   defaultQuantity?: number;
   orderId?: number;
   normalizeRoyalties?: boolean;

@@ -35,7 +35,7 @@ export const Partners = () => {
     },
   ];
   return (
-    <div className="flex justify-center  p-8">
+    <div className="flex justify-center p-8">
       <div className="flex flex-wrap justify-center sm:flex-row sm:space-x-8">
         {partners.map((partner, index) => (
           <a

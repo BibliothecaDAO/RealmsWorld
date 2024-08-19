@@ -12,7 +12,7 @@ export default function Error({ error, reset }: ErrorProps) {
       <div className="text-center">
         <h1 className="text-9xl">401</h1>
 
-        <p className="text-flamingo text-2xl font-bold tracking-tight sm:text-4xl">
+        <p className="text-2xl font-bold tracking-tight text-flamingo sm:text-4xl">
           Steady Lord!
         </p>
 

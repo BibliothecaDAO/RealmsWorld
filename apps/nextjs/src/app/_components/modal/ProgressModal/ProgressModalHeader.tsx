@@ -2,8 +2,8 @@ import React from "react";
 
 const ProgressModalHeader = ({ title }: { title?: string }) => {
   return (
-    <div className="flex items-center mt-3">
-      <div className="text-lg flex items-center">{title}</div>
+    <div className="mt-3 flex items-center">
+      <div className="flex items-center text-lg">{title}</div>
     </div>
   );
 };

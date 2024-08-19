@@ -22,8 +22,8 @@ export const ListingCard = ({ activity, token }: ActivityCardProps) => {
   };
 
   return (
-    <div className=" flex w-full flex-wrap border-b p-2">
-      <div className="flex w-1/2 self-center font-semibold sm:w-2/12 ">
+    <div className="flex w-full flex-wrap border-b p-2">
+      <div className="flex w-1/2 self-center font-semibold sm:w-2/12">
         <div className="flex items-center self-center">
           {activity.price ?? 0}
           <LordsIcon className="ml-2 h-5 w-5 fill-current" />

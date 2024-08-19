@@ -2,15 +2,22 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { RealmsABI } from "@/abi/L2/Realms";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
 import { api } from "@/trpc/react";
 import { padAddress, shortenHex } from "@/utils/utils";
-import { useAccount, useReadContract, useStarkProfile } from "@starknet-react/core";
+import {
+  useAccount,
+  useReadContract,
+  useStarkProfile,
+} from "@starknet-react/core";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 import { UserRoundPlus } from "lucide-react";
-import { SignInSIWS } from "./SignInSIWS";
 
 import type { RouterOutputs } from "@realms-world/api";
+import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import {
   Badge,
   Button,
@@ -19,11 +26,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@realms-world/ui";
-import { RealmsABI } from "@/abi/L2/Realms";
+
 import { ProfileForm } from "./ProfileForm";
-import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
-import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import { getCollectionAddresses, Collections } from "@realms-world/constants";
+import { SignInSIWS } from "./SignInSIWS";
 
 export const Profile = ({
   initialDelegate,
@@ -32,7 +37,7 @@ export const Profile = ({
 }) => {
   const l2RealmsAddress = getCollectionAddresses(Collections.REALMS)?.[
     SUPPORTED_L2_CHAIN_ID
-  ] as `0x${string}`
+  ] as `0x${string}`;
   const { address } = useAccount();
   const { data: delegate } = api.delegates.byId.useQuery(
     {
@@ -49,11 +54,14 @@ export const Profile = ({
   });
   //const { data: starkProfile, isLoading, isError, error } = useStarkProfile({ address: "0x037c6B561b367a85b68668e8663041b9E2F4199c346FBda97dc0c2167F7A6016" });
 
-  const { data: currentDelegate } = useCurrentDelegate()
+  const { data: currentDelegate } = useCurrentDelegate();
 
-  const { data: ownerTokens } = api.erc721Tokens.all.useQuery({ owner: address, limit: 1, contractAddress: l2RealmsAddress }, {
-    enabled: !!address,
-  });
+  const { data: ownerTokens } = api.erc721Tokens.all.useQuery(
+    { owner: address, limit: 1, contractAddress: l2RealmsAddress },
+    {
+      enabled: !!address,
+    },
+  );
   const { data: realmsBalance } = useReadContract({
     address: l2RealmsAddress,
     abi: RealmsABI,
@@ -99,14 +107,14 @@ export const Profile = ({
                       <span className="text-sm font-bold uppercase">
                         Delegation:
                       </span>
-                      <Badge variant="outline">
-                        {realmsBalance} Realms
-                      </Badge>
+                      <Badge variant="outline">{realmsBalance} Realms</Badge>
                       <span className="text-sm">delegated to</span>
                       <Badge variant="outline">
-                        {currentDelegate ? currentDelegate == address
-                          ? "self"
-                          : shortenHex(currentDelegate ?? "0x", 8) : null}
+                        {currentDelegate
+                          ? currentDelegate == address
+                            ? "self"
+                            : shortenHex(currentDelegate ?? "0x", 8)
+                          : null}
                       </Badge>
                     </div>
                   </div>
@@ -118,7 +126,7 @@ export const Profile = ({
                 </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4 max-w-full">
+            <CardContent className="flex max-w-full flex-col gap-4">
               <ProfileForm
                 delegateProfile={delegate.delegateProfile}
                 delegateId={delegate.user}
@@ -133,8 +141,7 @@ export const Profile = ({
             <CardContent>
               {ownerTokens?.items.length ? (
                 <>
-                  Delegate your Realms to yourself
-                  to create a delegate profile
+                  Delegate your Realms to yourself to create a delegate profile
                   <Button size="sm" onClick={() => delegateRealms()}>
                     <UserRoundPlus className="mr-2" /> Delegate to Self
                   </Button>
@@ -158,11 +165,13 @@ export const Profile = ({
           </>
         )}
       </Card>
-      {delegate && (<div className="sticky top-[5rem] col-span-2 h-[200px]">
-        <Card className="w-auto">
-          <SignInSIWS />
-        </Card>
-      </div>)}
+      {delegate && (
+        <div className="sticky top-[5rem] col-span-2 h-[200px]">
+          <Card className="w-auto">
+            <SignInSIWS />
+          </Card>
+        </div>
+      )}
     </div>
   );
 };

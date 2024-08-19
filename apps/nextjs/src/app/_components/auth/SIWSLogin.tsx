@@ -9,12 +9,12 @@ import { signIn, useSession } from "next-auth/react";
 
 //import { signIn } from "@realms-world/auth";
 import { Button } from "@realms-world/ui";
+import { padAddress } from "@realms-world/utils";
 
 import { StarknetLoginButton } from "../wallet/StarknetLoginButton";
 //import { SessionProvider, useSession } from "next-auth/react";
 
 import { createSiwsData } from "./createSiwsData";
-import { padAddress } from "@realms-world/utils";
 
 export function SIWSLogin({ buttonText }: { buttonText?: string }) {
   const { address } = useAccount();
@@ -65,7 +65,7 @@ export function SIWSLogin({ buttonText }: { buttonText?: string }) {
             <Loader className="mr-2 animate-spin" /> Signing...
           </>
         ) : (
-          buttonText ?? "Sign in with Starknet"
+          (buttonText ?? "Sign in with Starknet")
         )}
       </Button>
     </form>

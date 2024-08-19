@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { RealmsABI } from "@/abi/L2/Realms";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+//import { VeLords } from "./VeLords";
+import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 import { useL2LordsRewards } from "@/hooks/staking/useL2LordsRewards";
 //import { useLordship } from "@/hooks/staking/useLordship";
 import { useStaking } from "@/hooks/staking/useStaking";
@@ -35,8 +37,6 @@ import { padAddress } from "@realms-world/utils";
 import { ClaimsTable } from "./ClaimsTable";
 //import { FloatAnimation } from "./FloatAnimation";
 import { LegacyClaim } from "./LegacyClaim";
-//import { VeLords } from "./VeLords";
-import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 
 export const Overview = () => {
   const { address: l1Address } = useAccount();
@@ -76,25 +76,24 @@ export const Overview = () => {
     refetchInterval: 10000,
   });
 
-  const { data: currentDelegate } = useCurrentDelegate()
+  const { data: currentDelegate } = useCurrentDelegate();
 
   return (
     <div className="w-full">
-      {!currentDelegate &&
-        realmsBalance > 0 && (
-          <Alert variant={"warning"} className="mt-4">
-            <TriangleAlert className="h-5 w-5" />
-            <AlertTitle className="text-lg">
-              Your Realms are not earning Lords
-            </AlertTitle>
-            <AlertDescription>
-              You must delegate to yourself or others at
-              <Button asChild className="ml-2">
-                <Link href="/account/delegates">Delegates</Link>
-              </Button>
-            </AlertDescription>
-          </Alert>
-        )}
+      {!currentDelegate && realmsBalance > 0 && (
+        <Alert variant={"warning"} className="mt-4">
+          <TriangleAlert className="h-5 w-5" />
+          <AlertTitle className="text-lg">
+            Your Realms are not earning Lords
+          </AlertTitle>
+          <AlertDescription>
+            You must delegate to yourself or others at
+            <Button asChild className="ml-2">
+              <Link href="/account/delegates">Delegates</Link>
+            </Button>
+          </AlertDescription>
+        </Alert>
+      )}
       {l1Address && (
         <>
           <div className="flex gap-8">
@@ -128,7 +127,13 @@ export const Overview = () => {
                   <CardHeader>
                     <CardDescription>Inactive Realms</CardDescription>
                     <CardTitle className="text-3xl">
-                      {loading ? <Loader className="animate-spin" /> : totalL1Realms ? totalL1Realms : "0"}
+                      {loading ? (
+                        <Loader className="animate-spin" />
+                      ) : totalL1Realms ? (
+                        totalL1Realms
+                      ) : (
+                        "0"
+                      )}
                     </CardTitle>
                   </CardHeader>
                   <CardFooter>
@@ -183,13 +188,13 @@ export const Overview = () => {
                         data={[
                           ...(balance
                             ? [
-                              {
-                                amount: Number(formatEther(balance)).toFixed(
-                                  5,
-                                ),
-                                timestamp: null,
-                              },
-                            ]
+                                {
+                                  amount: Number(formatEther(balance)).toFixed(
+                                    5,
+                                  ),
+                                  timestamp: null,
+                                },
+                              ]
                             : []),
                           ...(lordsRewardsClaims ?? []),
                         ]}

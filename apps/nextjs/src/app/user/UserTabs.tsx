@@ -30,7 +30,7 @@ export const UserTabs = ({ address }: { address: string }) => {
     );
   }
   return (
-    <div className=" mb-4 flex w-full space-x-4 border-b py-3 text-xl">
+    <div className="mb-4 flex w-full space-x-4 border-b py-3 text-xl">
       {tabs.map((tab) => (
         <NavLink
           key={tab.name}

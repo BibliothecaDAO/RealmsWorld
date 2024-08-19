@@ -78,9 +78,9 @@ export const SwapTokens = ({
     const params = {
       sellTokenAddress: isBuyLords
         ? selectedTokenObj.address
-        : LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x",
+        : (LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x"),
       buyTokenAddress: isBuyLords
-        ? LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x"
+        ? (LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x")
         : selectedTokenObj.address,
       sellAmount: parseUnits("1", 18),
       takerAddress: address,
@@ -114,9 +114,9 @@ export const SwapTokens = ({
     const params = {
       sellTokenAddress: isBuyLords
         ? selectedTokenObj.address
-        : LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x",
+        : (LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x"),
       buyTokenAddress: isBuyLords
-        ? LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x"
+        ? (LORDS[SUPPORTED_L2_CHAIN_ID]?.address ?? "0x")
         : selectedTokenObj.address,
       sellAmount: parseUnits(
         sellAmount,
@@ -133,7 +133,9 @@ export const SwapTokens = ({
       .catch(() => setLoading(false));
   }, [address, isBuyLords, isDebouncing, selectedTokenObj, sellAmount]);
 
-  const sellBalance = !isBuyLords ? balances.l2.lords ?? 0 : data?.value ?? 0;
+  const sellBalance = !isBuyLords
+    ? (balances.l2.lords ?? 0)
+    : (data?.value ?? 0);
 
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     setErrorMessage("");
@@ -262,14 +264,14 @@ export const SwapTokens = ({
             onChange={handleChangeBuyInput}
             placeholder="0"
             type="text"
-            className="!bg-transparent text-xl border-0  placeholder:text-slate-400 focus:ring-0"
+            className="border-0 !bg-transparent text-xl placeholder:text-slate-400 focus:ring-0"
             disabled={loading}
             id="buy-amount"
             value={quotes[0] ? formatEther(quotes[0].buyAmount) : buyAmount}
           />
         ) : (
           <Input
-            className="flex-grow-1 mb-0 border-0  !bg-transparent text-xl focus:ring-0"
+            className="flex-grow-1 mb-0 border-0 !bg-transparent text-xl focus:ring-0"
             onChange={handleChangeInput}
             value={sellAmount}
             disabled={loading}

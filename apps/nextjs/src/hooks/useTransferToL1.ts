@@ -4,19 +4,18 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useTransferLog } from "@/providers/TransferLogProvider";
 import {
   CompleteTransferToL1Steps,
   stepOf,
   TransferError,
   TransferStep,
 } from "@/constants/transferSteps";
+import { useTransferLog } from "@/providers/TransferLogProvider";
 import { useAccount, useWaitForTransactionReceipt } from "wagmi";
 
 import { useWriteFinalizeWithdrawLords } from "./bridge/useWriteFinalizeWithdrawLords";
 import { useTransfer } from "./useTransfer";
 import { useTransferProgress } from "./useTransferProgress";
-
 
 export const useCompleteTransferToL1 = () => {
   const { address: l1Address, connector } = useAccount();

@@ -23,6 +23,6 @@ export async function getPrices(): Promise<PricesResult> {
     return {
       ethereum: { price: 0 },
       starknet: { price: 0 },
-    }
+    };
   }
 }

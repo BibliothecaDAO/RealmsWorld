@@ -30,9 +30,9 @@ export const TokenBalance = ({
     >
       <div className="flex justify-end">
         <div className="flex text-sm">
-        <span className="text-sm text-white/50 pr-1">Balance:</span>
+          <span className="pr-1 text-sm text-white/50">Balance:</span>
 
-          {isLoading ?? typeof balanceState != "bigint" ? (
+          {(isLoading ?? typeof balanceState != "bigint") ? (
             <Loader2 className="h-5 w-5 animate-spin" />
           ) : balanceState ? (
             formatBigInt(balanceState, 3)

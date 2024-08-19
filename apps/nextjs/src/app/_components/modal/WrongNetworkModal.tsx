@@ -17,7 +17,7 @@ export const WrongNetworkModal = () => {
   const { switchChain, data, error, isPending } = useSwitchChain({
     params: { chainId: constants.StarknetChainId.SN_SEPOLIA },
   });
-  const { disconnect } = useDisconnect()
+  const { disconnect } = useDisconnect();
   return (
     <AlertDialog open>
       <AlertDialogContent className="z-50 h-72 w-full">
@@ -25,7 +25,11 @@ export const WrongNetworkModal = () => {
           <AlertDialogTitle>Wrong Network</AlertDialogTitle>
         </AlertDialogHeader>
         <span>
-          {error && <Alert variant={'warning'} className="mb-6">{error.toString()}</Alert>}
+          {error && (
+            <Alert variant={"warning"} className="mb-6">
+              {error.toString()}
+            </Alert>
+          )}
           Realms.World currently supports{" "}
           <span>{CHAIN_IDS_TO_NAMES[SUPPORTED_L2_CHAIN_ID]}</span>, please
           change the connected network in your Starknet wallet, or:

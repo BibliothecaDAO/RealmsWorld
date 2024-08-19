@@ -1,14 +1,17 @@
 import type { SystemStatus } from "@/types/ark";
+
 import type { ArkClient } from "./client";
 
 interface GetSystemStatusParams {
-  client: ArkClient
-};
+  client: ArkClient;
+}
 
-export async function getSystemStatus({ client }: GetSystemStatusParams): Promise<SystemStatus> {
+export async function getSystemStatus({
+  client,
+}: GetSystemStatusParams): Promise<SystemStatus> {
   try {
-    return await client.fetch('');
+    return await client.fetch("");
   } catch (_) {
-    return { status: "error getting system status" }
+    return { status: "error getting system status" };
   }
 }

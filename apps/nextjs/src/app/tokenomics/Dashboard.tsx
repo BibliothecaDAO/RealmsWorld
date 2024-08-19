@@ -9,29 +9,28 @@ import { Button } from "@realms-world/ui";
 
 import type { EthplorerAddressInfoResponse, EthplorerToken } from "./page";
 import { BaseDashboardCard } from "./BaseDashboardCard";
-import { Treasury } from "./Treasury";
 import { ExchagesVolume } from "./ExchagesVolume";
 import { TotalValueLocked } from "./TotalValueLocked";
-
+import { Treasury } from "./Treasury";
 
 export const DashBoard = ({
   tokenInfo,
   totalValueLocked,
   exchangesVolume,
   totalStakedRealms,
-  realmNFTHolders
+  realmNFTHolders,
 }: {
-  tokenInfo: EthplorerAddressInfoResponse[]
+  tokenInfo: EthplorerAddressInfoResponse[];
   totalValueLocked: {
     exchange: string;
     valueUsd: number;
-  }[]
+  }[];
   exchangesVolume: {
     exchange: string;
     value: number;
-  }[]
-  totalStakedRealms: number
-  realmNFTHolders: number
+  }[];
+  totalStakedRealms: number;
+  realmNFTHolders: number;
 }) => {
   /* const url = `https://api.ethplorer.io/getTokenInfo/0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0?apiKey=${process.env.NEXT_PUBLIC_ETHPLORER_APIKEY}`;
   const lordsResult = await fetch(url)

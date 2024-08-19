@@ -35,7 +35,7 @@ export default function Page({ params }: { params: { id: string } }) {
         />
       )}
       <div className="py-4">
-        <span className={`rounded border px-2 py-1 `}>
+        <span className={`rounded border px-2 py-1`}>
           {event?.startDate} to {event?.endDate}
         </span>
       </div>

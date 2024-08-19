@@ -1,10 +1,10 @@
 "use client";
 
+import type { Address } from "@starknet-react/core";
 import React from "react";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import Starknet from "@/icons/starknet.svg";
 import { shortenHex } from "@/utils/utils";
-import type { Address } from "@starknet-react/core";
 import { useAccount, useDisconnect, useStarkName } from "@starknet-react/core";
 import { LogOut } from "lucide-react";
 
@@ -29,7 +29,10 @@ export const StarkAccount = () => {
       <div className="flex w-full justify-between border-t p-2">
         <div className="flex py-1 text-lg">
           <Starknet className="mr-3 w-7" />
-          <CopyButton text={account.address} displayText={displayStarkAddress} />
+          <CopyButton
+            text={account.address}
+            displayText={displayStarkAddress}
+          />
         </div>
         <div className="flex items-center space-x-2">
           <ExplorerLink

@@ -2,11 +2,11 @@ import type { Attributes } from "@/types";
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import Image from "next/image";
 import Link from "next/link";
-import { CollectionDetails } from "@realms-world/constants";
 import { shortenHex } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
+import { CollectionDetails } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
 import { ContractImage } from "./ContractImage";
@@ -31,11 +31,10 @@ export const TokenInformation = ({
   owner?: string | null;
   image?: string | null;
   attributes?:
-  | Attributes[]
-  | NonNullable<RouterOutputs["erc721Tokens"]["byId"]>["attributes"];
+    | Attributes[]
+    | NonNullable<RouterOutputs["erc721Tokens"]["byId"]>["attributes"];
   tokenId: number;
 }) => {
-
   return (
     <>
       <div className="mt-8 flex w-full flex-none flex-col sm:mt-16 md:w-1/3">
@@ -96,7 +95,11 @@ export const TokenInformation = ({
             <Link href={`/collection/${collectionId}`}>
               <ArrowLeft className="mr-2 w-4 self-center" />{" "}
               <span className="self-center">
-                {CollectionDetails[collectionId as keyof typeof CollectionDetails].displayName}
+                {
+                  CollectionDetails[
+                    collectionId as keyof typeof CollectionDetails
+                  ].displayName
+                }
               </span>
             </Link>
           </Button>

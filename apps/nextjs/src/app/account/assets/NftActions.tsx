@@ -10,11 +10,11 @@ import { Badge, Button } from "@realms-world/ui";
 
 type L1orL2Tokens =
   | NonNullable<
-    paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
-  >
+      paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
+    >
   | NonNullable<
-    paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
-  >
+      paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
+    >
   | RouterOutputs["erc721Tokens"]["all"]["items"];
 
 export const NftActions = ({

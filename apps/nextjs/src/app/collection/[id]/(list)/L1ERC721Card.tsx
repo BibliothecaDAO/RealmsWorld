@@ -13,12 +13,12 @@ import { BuyButton } from "../../reservoir/BuyModal";
 
 interface L1ERC721CardProps {
   token:
-  | NonNullable<
-    paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
-  >[0]
-  | NonNullable<
-    paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
-  >[0];
+    | NonNullable<
+        paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
+      >[0]
+    | NonNullable<
+        paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
+      >[0];
   collectionName: string;
   layout?: "grid" | "list";
   selectable?: boolean;
@@ -50,7 +50,7 @@ export const L1ERC721Card = ({
         "group flex transform border bg-background duration-300 hover:border-bright-yellow",
         isGrid ? "w-full flex-col" : "justify-between",
         isSelected &&
-        "border-2 border-accent-foreground hover:border-accent-foreground/50",
+          "border-2 border-accent-foreground hover:border-accent-foreground/50",
       )}
     >
       <div>

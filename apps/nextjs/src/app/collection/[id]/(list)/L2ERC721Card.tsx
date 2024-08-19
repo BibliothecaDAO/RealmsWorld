@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatedMap } from "@/app/_components/AnimatedMap";
 import { useLordsPrice } from "@/hooks/lords/useLordsPrice";
-
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
 import { findLowestPriceActiveListing } from "@/utils/getters";
@@ -33,7 +32,7 @@ export const L2ERC721Card = ({
         "group flex transform border bg-background duration-300 hover:border-bright-yellow",
         isGrid ? "w-full flex-col" : "justify-between",
         isSelected &&
-        "border-2 border-accent-foreground hover:border-accent-foreground/50",
+          "border-2 border-accent-foreground hover:border-accent-foreground/50",
       )}
     >
       <div>

@@ -2,8 +2,8 @@
 import Image from "next/image";
 import { ReadMore } from "@/app/_components/ReadMore";
 import { StarkName } from "@/app/_components/StarkName";
+import { useStarkName, useStarkProfile } from "@starknet-react/core";
 import { Github, Twitter } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "@realms-world/ui";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
@@ -13,11 +13,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "@realms-world/ui";
 
 import { SocialIcons } from "../../_components/SocialIcons";
 import { DelegateActions } from "./DelegateActions";
-import { useStarkName, useStarkProfile } from "@starknet-react/core";
 
 export function DelegateCard({
   delegate,
@@ -52,29 +54,45 @@ export function DelegateCard({
 
           {delegate.delegateProfile && (
             <div className="mb-2 flex gap-1">
-              {delegate.delegateProfile.interests?.slice(0, 3).map((interest, index) => (
-                <Badge key={index} variant={"outline"} className="px-1 py-0.5 text-xs">
-                  {interest}
-                </Badge>
-              ))}
-              {delegate.delegateProfile.interests && delegate.delegateProfile.interests.length > 3 && (
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Badge variant={"outline"} className="px-1 py-0.5 text-xs cursor-pointer">
-                      +{delegate.delegateProfile.interests.length - 3}
-                    </Badge>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-96">
-                    <div className="flex flex-wrap gap-1">
-                      {delegate.delegateProfile.interests.slice(3).map((interest, index) => (
-                        <Badge key={index} variant={"outline"} className="px-1 py-0.5 text-xs">
-                          {interest}
-                        </Badge>
-                      ))}
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              )}
+              {delegate.delegateProfile.interests
+                ?.slice(0, 3)
+                .map((interest, index) => (
+                  <Badge
+                    key={index}
+                    variant={"outline"}
+                    className="px-1 py-0.5 text-xs"
+                  >
+                    {interest}
+                  </Badge>
+                ))}
+              {delegate.delegateProfile.interests &&
+                delegate.delegateProfile.interests.length > 3 && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Badge
+                        variant={"outline"}
+                        className="cursor-pointer px-1 py-0.5 text-xs"
+                      >
+                        +{delegate.delegateProfile.interests.length - 3}
+                      </Badge>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-96">
+                      <div className="flex flex-wrap gap-1">
+                        {delegate.delegateProfile.interests
+                          .slice(3)
+                          .map((interest, index) => (
+                            <Badge
+                              key={index}
+                              variant={"outline"}
+                              className="px-1 py-0.5 text-xs"
+                            >
+                              {interest}
+                            </Badge>
+                          ))}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                )}
             </div>
           )}
         </CardTitle>
@@ -96,7 +114,7 @@ export function DelegateCard({
         <SocialIcons
           x={delegate.delegateProfile?.twitter ?? undefined}
           github={delegate.delegateProfile?.github ?? undefined}
-        //discord={delegate.delegateProfile?.discord ?? undefined}
+          //discord={delegate.delegateProfile?.discord ?? undefined}
         />
       </CardFooter>
     </Card>

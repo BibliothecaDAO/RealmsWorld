@@ -7,7 +7,12 @@ import { Account } from "@/app/bridge/Account";
 import { NETWORK_NAME } from "@/constants/env";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { useCall, useAccount as useL2Account, useNetwork, useWalletRequest } from "@starknet-react/core";
+import {
+  useCall,
+  useAccount as useL2Account,
+  useNetwork,
+  useWalletRequest,
+} from "@starknet-react/core";
 
 import {
   Button,
@@ -50,8 +55,8 @@ export const WalletSheet = () => {
     type: "wallet_requestChainId",
   });
 
-  const isStarknetWrongNetwork = isL2Connected &&
-    data !== undefined && BigInt(data) !== chain.id;
+  const isStarknetWrongNetwork =
+    isL2Connected && data !== undefined && BigInt(data) !== chain.id;
 
   // TODO refactor back to default Chain Id when starknet-react supports
   useEffect(() => {

@@ -6,8 +6,8 @@ export default function Loading() {
 export const LoadingSkeleton = () => {
   return (
     <div className="container mx-auto flex h-[592px] flex-wrap px-4 sm:px-8">
-      <div className="w-full flex-none  p-2 md:w-1/3">
-        <div className=" mx-auto h-96 w-full bg-bright-yellow " />
+      <div className="w-full flex-none p-2 md:w-1/3">
+        <div className="mx-auto h-96 w-full bg-bright-yellow" />
         {/* <div className="flex flex-wrap">
           {new Array(6).fill(0).map((index) => (
             <div key={index} className="w-1/2 ">

@@ -35,7 +35,7 @@ export const ExplorerLink = ({
   return (
     <Button key={text} variant={"outline"} size={"xs"} asChild>
       <Link href={explorerURL} target="_blank">
-        {text ?? isL1 ? "Etherscan" : "Starkscan"}
+        {(text ?? isL1) ? "Etherscan" : "Starkscan"}
         <ExternalLinkIcon className="h-4" />
       </Link>
     </Button>

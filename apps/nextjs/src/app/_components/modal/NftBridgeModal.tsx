@@ -1,6 +1,7 @@
 // ... existing imports ...
 "use client";
 
+import type { Address } from "@starknet-react/core";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
@@ -15,8 +16,11 @@ import StarknetLogo from "@/icons/starknet.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useTransactionManager } from "@/stores/useTransasctionManager";
 import { shortenHex } from "@/utils/utils";
-import type { Address } from "@starknet-react/core";
-import { useCall, useAccount as useL2Account, useNonceForAddress } from "@starknet-react/core";
+import {
+  useCall,
+  useAccount as useL2Account,
+  useNonceForAddress,
+} from "@starknet-react/core";
 import { Loader, MoveRightIcon, RefreshCcw } from "lucide-react";
 import { useAccount } from "wagmi";
 
@@ -59,7 +63,7 @@ const BridgeBadge = ({
       <span className="text-lg">
         {
           CHAIN_IDS_TO_NAMES[
-          isL1 ? SUPPORTED_L1_CHAIN_ID : SUPPORTED_L2_CHAIN_ID
+            isL1 ? SUPPORTED_L1_CHAIN_ID : SUPPORTED_L2_CHAIN_ID
           ]
         }
       </span>
@@ -73,7 +77,7 @@ const AccountErrorAlert = ({
   nonce,
   getNonce,
   interfaceError,
-  getInterface
+  getInterface,
 }: {
   nonce?: string;
   getNonce: () => void;
@@ -103,7 +107,10 @@ const AccountErrorAlert = ({
       {interfaceError && (
         <Alert variant={"destructive"} className="flex">
           <div>
-            <p className="text-lg font-bold mb-2">Your account must be upgraded in your wallet extension before you can bridge your Realms.</p>
+            <p className="mb-2 text-lg font-bold">
+              Your account must be upgraded in your wallet extension before you
+              can bridge your Realms.
+            </p>
             <ul>
               <li>
                 <Link
@@ -112,14 +119,18 @@ const AccountErrorAlert = ({
                   className="text-dark-green underline"
                 >
                   Follow the Argent X guide
-                </Link></li>
-              <li> <Link
-                href="https://braavos.app/cairo2-upgrade-starknet-airdrop/"
-                target="_blank"
-                className="text-dark-green underline"
-              >
-                Follow the Braavos guide
-              </Link></li>
+                </Link>
+              </li>
+              <li>
+                {" "}
+                <Link
+                  href="https://braavos.app/cairo2-upgrade-starknet-airdrop/"
+                  target="_blank"
+                  className="text-dark-green underline"
+                >
+                  Follow the Braavos guide
+                </Link>
+              </li>
             </ul>
           </div>
           <Button variant={"outline"} onClick={getInterface}>
@@ -180,15 +191,22 @@ const BridgeSteps = ({
   const { data: nonce, refetch: refetchNonce } = useNonceForAddress({
     address: l2Address,
   });
-  const { data: supportsInterface, refetch: refetchInterface, isError: isInterfaceError, isPending: isInterfacePending } = useCall({
+  const {
+    data: supportsInterface,
+    refetch: refetchInterface,
+    isError: isInterfaceError,
+    isPending: isInterfacePending,
+  } = useCall({
     abi: [
       {
         name: "supports_interface",
         type: "function",
-        inputs: [{
-          "name": "interface_id",
-          "type": "core::felt252"
-        }],
+        inputs: [
+          {
+            name: "interface_id",
+            type: "core::felt252",
+          },
+        ],
         outputs: [
           {
             type: "core::bool",
@@ -198,8 +216,8 @@ const BridgeSteps = ({
       },
     ],
     address: l2Address,
-    functionName: 'supports_interface',
-    args: ['0x2']
+    functionName: "supports_interface",
+    args: ["0x2"],
   });
 
   const onBridge = async () => {
@@ -257,7 +275,12 @@ const BridgeSteps = ({
                   address={isSourceL1 ? l2Address : l1Address}
                 />
               </div>
-              <AccountErrorAlert interfaceError={isInterfaceError} nonce={nonce} getNonce={refetchNonce} getInterface={refetchInterface} />
+              <AccountErrorAlert
+                interfaceError={isInterfaceError}
+                nonce={nonce}
+                getNonce={refetchNonce}
+                getInterface={refetchInterface}
+              />
               {stepProps.id == "bridge" && (
                 <Button
                   className="w-full"
@@ -392,24 +415,24 @@ export default function NftBridgeModal() {
 
   const steps = isSourceL1
     ? ([
-      {
-        label: "Approve",
-        description: `Allow Bridge Contract access to Realms`,
-        id: "approve",
-      },
-      {
-        label: "Bridge",
-        description: `Realms to Starknet`,
-        id: "bridge",
-      },
-    ] satisfies StepItem[])
+        {
+          label: "Approve",
+          description: `Allow Bridge Contract access to Realms`,
+          id: "approve",
+        },
+        {
+          label: "Bridge",
+          description: `Realms to Starknet`,
+          id: "bridge",
+        },
+      ] satisfies StepItem[])
     : ([
-      {
-        label: "Approve & Bridge",
-        description: `Realms to Ethereum`,
-        id: "bridge",
-      },
-    ] satisfies StepItem[]);
+        {
+          label: "Approve & Bridge",
+          description: `Realms to Ethereum`,
+          id: "bridge",
+        },
+      ] satisfies StepItem[]);
 
   if (isNftBridgeOpen) {
     return (
