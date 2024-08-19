@@ -5,7 +5,7 @@ import baseConfig, {
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: ["dist/**"],
+    ignores: ["dist/**", "drizzle/**"],
   },
   ...baseConfig,
   ...restrictEnvAccess,

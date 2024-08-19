@@ -14,6 +14,7 @@ export const governances = pgTable(
   {
     uid: uuid("uid").defaultRandom().primaryKey().notNull(),
     // TODO: failed to parse database type 'int8range'
+    // eslint-disable-next-line
     block_range: unknown("block_range").notNull(),
     id: varchar("id", { length: 256 }).notNull(),
     currentDelegates: integer("currentDelegates").notNull(),
@@ -55,6 +56,7 @@ export const delegates = pgTable(
   {
     uid: uuid("uid").defaultRandom().primaryKey().notNull(),
     // TODO: failed to parse database type 'int8range'
+    // eslint-disable-next-line
     block_range: unknown("block_range").notNull(),
     id: varchar("id", { length: 256 }).notNull(),
     governance: varchar("governance", { length: 256 }),

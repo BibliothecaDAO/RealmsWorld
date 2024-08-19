@@ -1,4 +1,4 @@
-import * as starknet from "starknet";
+import type { RpcProvider } from "starknet";
 
 export interface ISiwsDomain extends Record<string, unknown> {
   /** Chain ID to which the session is bound, and the network where
@@ -42,8 +42,8 @@ export interface ISiwsTypedData {
   message: ISiwsMessage;
   primaryType: string;
   types: {
-    Message: Array<{ name: string; type: string }>;
-    StarknetDomain: Array<{ name: string; type: string }>;
+    Message: { name: string; type: string }[];
+    StarknetDomain: { name: string; type: string }[];
   };
 }
 
@@ -141,5 +141,7 @@ export interface SignInWithStarknetResponse {
 
 export interface VerifyOpts {
   /** ethers provider to be used for EIP-1271 validation */
-  provider?: any;
+  // TODO: use proper type
+
+  provider: RpcProvider;
 }

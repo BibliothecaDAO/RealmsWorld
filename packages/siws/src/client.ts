@@ -1,26 +1,30 @@
-import {
+// TODO: use proper types instead of any
+// eslint-disable @typescript-eslint/no-explicit-any
+// eslint-disable @typescript-eslint/no-unsafe-assignment
+import type {
   BigNumberish,
+  TypedData
+} from "starknet";
+import {
   constants,
   Contract,
-  num,
   RpcProvider,
-  shortString,
-  TypedData,
   typedData,
 } from "starknet";
 import { z } from "zod";
 
 import abiAccountContract from "./account-contract-abi.json";
-import schema from "./sign-in-schema.json";
-import {
-  ErrorTypes,
+import type {
   ISiwsDomain,
   ISiwsMessage,
   ISiwsTypedData,
-  SignInWithStarknetError,
   SignInWithStarknetResponse,
   VerifyOpts,
-  VerifyParams,
+  VerifyParams
+} from "./types";
+import {
+  ErrorTypes,
+  SignInWithStarknetError
 } from "./types";
 
 import getMessageHash = typedData.getMessageHash;
@@ -57,48 +61,42 @@ const SiwsTypedDataSchema = z.object({
     .optional(),
 });
 
+export const defaultSiwsDataTypes = {
+  Message: [
+    { name: "address", type: "felt" },
+    { name: "statement", type: "string" },
+    { name: "uri", type: "string" },
+    { name: "nonce", type: "string" },
+    { name: "issuedAt", type: "string" },
+    { name: "version", type: "felt" },
+  ],
+  StarknetDomain: [
+    { name: "name", type: "string" },
+    { name: "chainId", type: "string" },
+    { name: "version", type: "string" },
+    { name: "revision", type: "string" },
+  ],
+};
+
 export class SiwsTypedData implements ISiwsTypedData {
   domain: ISiwsDomain;
   message: ISiwsMessage;
   primaryType: string;
   types: {
-    Message: Array<{ name: string; type: string }>;
-    StarknetDomain: Array<{ name: string; type: string }>;
+    Message: { name: string; type: string }[];
+    StarknetDomain: { name: string; type: string }[];
   };
 
   constructor(
     domain: ISiwsDomain,
     message: ISiwsMessage,
-    primaryType?: string,
-    types?: any,
+    primaryType = "Message",
+    types = defaultSiwsDataTypes,
   ) {
     this.domain = domain;
     this.message = message;
-    if (primaryType != null) {
-      this.primaryType = primaryType;
-    } else {
-      this.primaryType = "Message";
-    }
-    if (types != null) {
-      this.types = types;
-    } else {
-      this.types = {
-        Message: [
-          { name: "address", type: "felt" },
-          { name: "statement", type: "string" },
-          { name: "uri", type: "string" },
-          { name: "nonce", type: "string" },
-          { name: "issuedAt", type: "string" },
-          { name: "version", type: "felt" },
-        ],
-        StarknetDomain: [
-          { name: "name", type: "string" },
-          { name: "chainId", type: "string" },
-          { name: "version", type: "string" },
-          { name: "revision", type: "string" },
-        ],
-      };
-    }
+    this.primaryType = primaryType;
+    this.types = types;
 
     // Perform validation
     this.validateData();
@@ -125,7 +123,7 @@ export class SiwsTypedData implements ISiwsTypedData {
 
   // Static method to create an instance from a JSON blob
   public static fromJson(json: string): SiwsTypedData {
-    const obj = JSON.parse(json);
+    const obj: SiwsTypedData = JSON.parse(json) as SiwsTypedData;
     return new SiwsTypedData(
       obj.domain,
       obj.message,
@@ -158,7 +156,7 @@ export class SiwsTypedData implements ISiwsTypedData {
     signature: string[],
     provider: RpcProvider,
   ): Promise<boolean> {
-    const hash = await getMessageHash(data, this.message.address);
+    const hash = getMessageHash(data, this.message.address);
     return this.verifyMessageHash(hash, signature, provider);
   }
 
@@ -176,6 +174,7 @@ export class SiwsTypedData implements ISiwsTypedData {
 
       /** check network/chain Id */
       if (network && network !== this.domain.chainId) {
+        // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
         reject({
           success: false,
           data: this,
@@ -189,6 +188,7 @@ export class SiwsTypedData implements ISiwsTypedData {
 
       /** Domain binding */
       if (domain && domain !== this.domain.name) {
+        // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
         reject({
           success: false,
           data: this,
@@ -202,6 +202,7 @@ export class SiwsTypedData implements ISiwsTypedData {
 
       /** Nonce binding */
       if (nonce && nonce !== this.message.nonce) {
+        // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
         reject({
           success: false,
           data: this,
@@ -259,6 +260,7 @@ export class SiwsTypedData implements ISiwsTypedData {
       this.verifyMessage(this, signature, opts.provider)
         .then((valid) => {
           if (!valid)
+            // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
             return reject({
               success: false,
               data: this,
@@ -273,6 +275,7 @@ export class SiwsTypedData implements ISiwsTypedData {
           });
         })
         .catch(() => {
+          // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
           return reject({
             success: false,
             data: this,

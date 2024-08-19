@@ -5,7 +5,7 @@ import baseConfig, {
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: [".next/**", "src/.graphclient/**"],
+    ignores: [".next/**", "src/.graphclient/**", "dist/**"],
   },
   ...baseConfig,
   ...restrictEnvAccess,
