@@ -7,7 +7,7 @@ import { Account } from "@/app/bridge/Account";
 import { NETWORK_NAME } from "@/constants/env";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { useAccount as useL2Account, useNetwork, useWalletRequest } from "@starknet-react/core";
+import { useCall, useAccount as useL2Account, useNetwork, useWalletRequest } from "@starknet-react/core";
 
 import {
   Button,
@@ -46,9 +46,10 @@ export const WalletSheet = () => {
     sepolia: 393402133025997798000961n,
   };
 
-  const { request, data, isPending } = useWalletRequest({
+  const { request, data } = useWalletRequest({
     type: "wallet_requestChainId",
   });
+
   const isStarknetWrongNetwork = isL2Connected &&
     data !== undefined && BigInt(data) !== chain.id;
 
