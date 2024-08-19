@@ -11,7 +11,7 @@ import {
 } from "@realms-world/db/schema";
 
 //import { withCursorPagination } from "../cursorPagination";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { publicProcedure } from "../trpc";
 
 export const erc721AttributesRouter = {
   all: publicProcedure
