@@ -28,7 +28,7 @@ export default meta;
 
 type Story = StoryObj<typeof Dialog>;
 export const Base: Story = {
-  render: (args) => (
+  render: () => (
     <Dialog>
       <DialogTrigger asChild>
         <Button className="self-center" size={"lg"} variant={"outline"}>
@@ -55,7 +55,7 @@ export const Base: Story = {
 };
 
 export const DialogWithTableContent: Story = {
-  render: (args) => (
+  render: () => (
     <div className="bg-dark-green font-sans-serif text-bright-yellow">
       <Dialog>
         <DialogTrigger asChild>

@@ -40,7 +40,7 @@ export default meta;
 type Story = StoryObj<typeof NavigationMenu>;
 
 export const Base: Story = {
-  render: (args) => (
+  render: () => (
     <div className="hidden w-auto border-b-[3px] bg-dark-green p-3 pl-4 sm:flex sm:pl-8 md:pl-32">
       <div>
         <NavigationMenu>

@@ -14,7 +14,7 @@ export default meta;
 type Story = StoryObj<typeof Popover>;
 
 export const Base: Story = {
-  render: (args) => (
+  render: () => (
     <Popover>
       <PopoverTrigger>
         <Button>Open</Button>

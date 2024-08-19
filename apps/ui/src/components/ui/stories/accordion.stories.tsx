@@ -19,7 +19,7 @@ export default meta;
 
 type Story = StoryObj<typeof Accordion>;
 export const AttributeDropdownFullWidthButtons: Story = {
-  render: (args) => (
+  render: () => (
     <div className="font-sans-seri text-bright-yellow">
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
@@ -56,7 +56,7 @@ export const AttributeDropdownFullWidthButtons: Story = {
 };
 
 export const AttributeDropdownWithInput: Story = {
-  render: (args) => (
+  render: () => (
     <div className="font-sans-serif text-bright-yellow">
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">

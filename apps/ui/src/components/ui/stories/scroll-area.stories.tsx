@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { HammerIcon } from "lucide-react";
 
 import { Button } from "../button";
-import { ScrollArea, ScrollBar } from "../scroll-area";
+import { ScrollArea } from "../scroll-area";
 
 const meta: Meta<typeof ScrollArea> = {
   title: "Components/ScrollArea",
@@ -93,7 +93,7 @@ const menu = [
 ];
 
 export const Base: Story = {
-  render: (args) => (
+  render: () => (
     <div
       className={
         "z-100 group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col border-r-[3px] bg-dark-green transition-all duration-500 md:flex md:w-[102px] md:hover:w-60"

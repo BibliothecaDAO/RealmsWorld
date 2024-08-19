@@ -14,7 +14,7 @@ export default meta;
 type Story = StoryObj<typeof Tabs>;
 
 export const Base: Story = {
-  render: (args) => (
+  render: () => (
     <div className="bg-dark-green">
       <Tabs defaultValue={"click_me"} className="relative h-full min-h-0">
         <TabsList className="my-0 w-full justify-center py-2">

@@ -58,7 +58,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
     const stepCount = items.length;
 
     const isMobile = useMediaQuery(
-      `(max-width: ${mobileBreakpoint || "768px"})`,
+      `(max-width: ${mobileBreakpoint ?? "768px"})`,
     );
 
     const clickable = !!onClickStep;
@@ -81,7 +81,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
           clickable,
           stepCount,
           isVertical,
-          variant: variant || "circle",
+          variant: variant ?? "circle",
           expandVerticalSteps,
           steps,
           scrollTracking,
@@ -102,9 +102,9 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
           style={
             {
               "--step-icon-size":
-                variables?.["--step-icon-size"] ||
-                `${VARIABLE_SIZES[size || "md"]}`,
-              "--step-gap": variables?.["--step-gap"] || "8px",
+                variables?.["--step-icon-size"] ??
+                `${VARIABLE_SIZES[size ?? "md"]}`,
+              "--step-gap": variables?.["--step-gap"] ?? "8px",
             } as React.CSSProperties
           }
           {...rest}
@@ -135,7 +135,9 @@ const VerticalContent = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       {React.Children.map(children, (child, i) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const isCompletedStep =
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           (React.isValidElement(child) && child.props.isCompletedStep) ??
           i < activeStep;
         const isLastStep = i === stepCount - 1;
@@ -143,7 +145,7 @@ const VerticalContent = ({ children }: { children: React.ReactNode }) => {
 
         const stepProps = {
           index: i,
-          isCompletedStep,
+          isCompletedStep: isCompletedStep as boolean,
           isCurrentStep,
           isLastStep,
         };
@@ -171,8 +173,11 @@ const HorizontalContent = ({ children }: { children: React.ReactNode }) => {
         if (!React.isValidElement(node)) {
           return null;
         }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return React.Children.map(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           node.props.children,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           (childNode) => childNode,
         );
       })}

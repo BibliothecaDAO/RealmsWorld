@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type IconType = LucideIcon | React.ComponentType<any> | undefined;
 
 interface StepItem {

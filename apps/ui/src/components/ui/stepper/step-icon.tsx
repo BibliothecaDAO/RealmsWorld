@@ -112,7 +112,7 @@ const StepIcon = React.forwardRef<HTMLDivElement, StepIconProps>(
           key="label"
           className={cn("text-md text-center font-medium")}
         >
-          {(index || 0) + 1}
+          {(index ?? 0) + 1}
         </span>
       );
     }, [

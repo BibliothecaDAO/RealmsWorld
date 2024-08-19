@@ -20,7 +20,7 @@ export default meta;
 type Story = StoryObj<typeof Table>;
 
 export const Base: Story = {
-  render: (args) => (
+  render: () => (
     <Table>
       <TableHeader>
         {

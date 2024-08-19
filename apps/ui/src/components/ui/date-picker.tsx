@@ -344,7 +344,9 @@ const SingleDatePicker = ({
   };
 
   const onTimeChange = (time?: TimeValue) => {
-    time && setTime(time);
+    if (time) {
+      setTime(time);
+    }
 
     if (!date) {
       return;
@@ -623,9 +625,8 @@ const RangeDatePicker = ({
       return null;
     }
 
-    return `${range.from ? formatDate(range.from, showTimePicker) : ""} - ${
-      range.to ? formatDate(range.to, showTimePicker) : ""
-    }`;
+    return `${range.from ? formatDate(range.from, showTimePicker) : ""} - ${range.to ? formatDate(range.to, showTimePicker) : ""
+      }`;
   }, [range, showTimePicker]);
 
   const onApply = () => {
@@ -724,19 +725,19 @@ const RangeDatePicker = ({
 
 type DatePickerProps = (
   | {
-      mode?: "single";
-      presets?: DatePreset[];
-      defaultValue?: Date;
-      value?: Date;
-      onChange?: (date: Date | undefined) => void;
-    }
+    mode?: "single";
+    presets?: DatePreset[];
+    defaultValue?: Date;
+    value?: Date;
+    onChange?: (date: Date | undefined) => void;
+  }
   | {
-      mode: "range";
-      presets?: DateRangePreset[];
-      defaultValue?: DateRange;
-      value?: DateRange;
-      onChange?: (dateRange: DateRange | undefined) => void;
-    }
+    mode: "range";
+    presets?: DateRangePreset[];
+    defaultValue?: DateRange;
+    value?: DateRange;
+    onChange?: (dateRange: DateRange | undefined) => void;
+  }
 ) &
   PickerProps;
 

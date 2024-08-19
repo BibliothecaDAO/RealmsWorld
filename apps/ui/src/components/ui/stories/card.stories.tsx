@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../card";
@@ -21,7 +20,7 @@ export default meta;
 type Story = StoryObj<typeof Card>;
 
 export const Base: Story = {
-  render: (args) => (
+  render: () => (
     <Card>
       <CardHeader>
         <CardTitle>Upgrade to Pro</CardTitle>

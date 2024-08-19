@@ -29,10 +29,13 @@ const StepperContext = React.createContext<
   steps: [],
   activeStep: 0,
   initialStep: 0,
-  nextStep: () => {},
-  prevStep: () => {},
-  resetSteps: () => {},
-  setStep: () => {},
+  // TODO: check if those implementations are needed
+  /* eslint-disable @typescript-eslint/no-empty-function */
+  nextStep: () => { },
+  prevStep: () => { },
+  resetSteps: () => { },
+  setStep: () => { },
+  /* eslint-enable @typescript-eslint/no-empty-function */
 });
 
 const StepperProvider = ({ value, children }: StepperContextProviderProps) => {

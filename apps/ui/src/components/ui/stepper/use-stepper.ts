@@ -15,11 +15,7 @@ function usePrevious<T>(value: T): T | undefined {
 export function useStepper() {
   const context = React.useContext(StepperContext);
 
-  if (context === undefined) {
-    throw new Error("useStepper must be used within a StepperProvider");
-  }
-
-  const { children, className, ...rest } = context;
+  const { ...rest } = context;
 
   const isLastStep = context.activeStep === context.steps.length - 1;
   const hasCompletedAllSteps = context.activeStep === context.steps.length;

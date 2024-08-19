@@ -13,9 +13,10 @@ interface StepInternalConfig {
   isLastStep?: boolean;
 }
 
-interface FullStepProps extends StepProps, StepInternalConfig {}
+interface FullStepProps extends StepProps, StepInternalConfig { }
 
 const Step = React.forwardRef<HTMLLIElement, StepProps>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (props, ref: React.Ref<any>) => {
     const {
       children,
@@ -35,7 +36,7 @@ const Step = React.forwardRef<HTMLLIElement, StepProps>(
 
     const { isVertical, isError, isLoading, clickable } = useStepper();
 
-    const hasVisited = isCurrentStep || isCompletedStep;
+    const hasVisited = isCurrentStep ?? isCompletedStep;
 
     const sharedProps = {
       isLastStep,

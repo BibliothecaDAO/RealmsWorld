@@ -22,7 +22,7 @@ export default meta;
 type Story = StoryObj<typeof Sheet>;
 
 export const Base: Story = {
-  render: (args) => (
+  render: () => (
     <Sheet>
       <SheetTrigger>
         <Button className="self-center" size={"lg"} variant={"outline"}>
@@ -41,7 +41,7 @@ export const Base: Story = {
 };
 
 export const Left: Story = {
-  render: (args) => (
+  render: () => (
     <Sheet>
       <SheetTrigger>
         <Button className="self-center" size={"lg"} variant={"outline"}>
