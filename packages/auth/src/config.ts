@@ -1,14 +1,11 @@
 import type {
   DefaultSession,
   NextAuthConfig,
-  Session as NextAuthSession,
+  // Session as NextAuthSession,
 } from "next-auth";
 import { cookies } from "next/headers";
-import { skipCSRFCheck } from "@auth/core";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
-//import { getCsrfToken } from "next-auth/react";
-//import Discord from "next-auth/providers/discord";
 import { SiwsTypedData } from "siws";
 import { constants, RpcProvider } from "starknet";
 
@@ -77,7 +74,7 @@ export const authConfig = {
           const csrf = cookies()
             .get("next-auth.csrf-token")
             ?.value.split("|")[0];
-          let starknetProvider = sepoliaProvider;
+          let starknetProvider: RpcProvider = sepoliaProvider;
 
           if (chainId == constants.NetworkName.SN_MAIN) {
             starknetProvider = mainProvider;
@@ -95,7 +92,10 @@ export const authConfig = {
               nonce: csrf,
               network: chainId,
             },
-            { provider: starknetProvider as any },
+            // TODO: explore type differences although they have same `RpcProvider` type
+            // eslint-disable-next-line
+            // @ts-ignore
+            { provider: starknetProvider },
           );
 
           if (result.success) {
