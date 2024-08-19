@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDelegates } from "@/hooks/use-delegates";
-import { formatAddress, shorten } from "@/lib/utils";
+import { shorten } from "@/lib/utils";
 import type { SpaceMetadataDelegation } from "@/types";
 
 export const SpaceDelegates = ({
@@ -9,20 +9,13 @@ export const SpaceDelegates = ({
   delegation: SpaceMetadataDelegation;
 }) => {
   const {
-    loading,
-    loadingMore,
-    loaded,
-    failed,
-    hasMore,
     delegates,
     fetch,
-    fetchMore,
-    reset,
-  } = useDelegates(delegation.apiUrl!);
+  } = useDelegates(delegation.apiUrl ?? "");
 
   useEffect(() => {
-    fetch();
-  }, []);
+    fetch().catch(console.error);
+  }, [fetch]);
   return (
     <table className="w-full table-fixed text-left">
       <colgroup>
@@ -38,7 +31,7 @@ export const SpaceDelegates = ({
           <th className="hidden md:table-cell">
             <button
               className="hover:text-skin-link relative bottom-[1px] flex w-full min-w-0 items-center justify-end font-medium"
-              //onClick={handleSortChange("tokenHoldersRepresentedAmount")}
+            //onClick={handleSortChange("tokenHoldersRepresentedAmount")}
             >
               <span>Delegators</span>
               {/*} <IH-arrow-sm-down
@@ -54,7 +47,7 @@ export const SpaceDelegates = ({
           <th>
             <button
               className="hover:text-skin-link relative bottom-[1px] flex w-full min-w-0 items-center justify-end pr-4 font-medium"
-              //onClick="handleSortChange('delegatedVotes')"
+            //onClick="handleSortChange('delegatedVotes')"
             >
               <span className="truncate">Voting power</span>
               {/*} <IH-arrow-sm-down v-if="sortBy === 'delegatedVotes-desc'" className="ml-1" />
@@ -76,7 +69,7 @@ export const SpaceDelegates = ({
                   >
                     <div className="leading-[22px]">
                       <h4 className="text-skin-link mb-0 truncate">
-                        {delegate.name || shorten(delegate.id)}
+                        {delegate.name ?? shorten(delegate.id)}
                       </h4>
                       <div className="text-skin-text truncate text-[17px]">
                         {shorten(delegate.id)}

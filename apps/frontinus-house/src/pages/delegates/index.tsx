@@ -6,7 +6,7 @@ import { SpaceDelegates } from "./space-delegates";
 
 export default function Delegates() {
   const { space } = useSpace();
-  const [activeDelegationId, setActiveDelegationId] = useState(0);
+  const [activeDelegationId] = useState(0);
 
   const delegateData = space?.delegations[activeDelegationId];
 

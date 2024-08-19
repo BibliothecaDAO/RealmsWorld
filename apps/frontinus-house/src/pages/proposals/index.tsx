@@ -20,7 +20,7 @@ export default function Proposals() {
       );
       setProposals(proposalsData);
     };
-    fetchProposals();
+    fetchProposals().catch(console.error);
   }, []);
 
   console.log(proposals);
@@ -41,13 +41,13 @@ export default function Proposals() {
                       <div className="flex space-x-2">
                         <div className="my-1 items-center leading-6 md:flex md:min-w-0">
                           <h4 className="my-0">
-                            {proposal.title ?? `Proposal #${proposal.id}`}
+                            {`Proposal #${proposal.id}`}
                           </h4>
                         </div>
                       </div>
                       <div className="mr-4 inline">
                         {getProposalId(proposal)} by{" "}
-                        {proposal.author.name || shorten(proposal.author.id)}
+                        {proposal.author.name ?? shorten(proposal.author.id)}
                       </div>
                       <span>{proposal.vote_count} votes</span>
                     </div>

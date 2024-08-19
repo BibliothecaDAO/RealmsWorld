@@ -24,16 +24,16 @@ export function Markdown({ body }: { body: string }) {
     breaks: true,
     typographer: false,
     linkTarget: "_blank",
-    highlight: function (str: any, lang: any) {
+    highlight: function (str: string, lang: string) {
       if (lang && hljs.getLanguage(lang)) {
         try {
           return hljs.highlight(str, { language: lang }).value;
-        } catch (e) {}
+        } catch (e) { console.error(`failed to highlight code block ${e as string}`) }
       }
 
       try {
         return hljs.highlightAuto(str).value;
-      } catch (e) {}
+      } catch (e) { console.error(`failed to auto highlight ${e as string}`) }
 
       return "";
     },
@@ -70,7 +70,7 @@ export function Markdown({ body }: { body: string }) {
   const parsed = () => {
     const formattedBody = body.replace(
       /ipfs:\/\/(\w+)/g,
-      (value) => getUrl(value) || "#",
+      (value) => getUrl(value) ?? "#",
     );
 
     return remarkable.render(formattedBody);
@@ -82,7 +82,7 @@ export function Markdown({ body }: { body: string }) {
     if (!body) return;
 
     body.querySelectorAll("pre>code").forEach((code) => {
-      const parent = code.parentElement!;
+      const parent = code.parentElement;
 
       const copyButton = document.createElement("button");
       const copySvg = `<svg viewBox="0 0 24 24" width="20px" height="20px">${icons.icons.duplicate?.body}</svg>`;
@@ -107,11 +107,13 @@ export function Markdown({ body }: { body: string }) {
 
       const language = document.createElement("div");
       language.innerHTML =
-        code.getAttribute("class")?.split("language-")[1] || "";
+        code.getAttribute("class")?.split("language-")[1] ?? "";
 
       titleBar.append(language);
       titleBar.append(copyButton);
-      parent.prepend(titleBar);
+      if (parent !== null) {
+        parent.prepend(titleBar);
+      }
     });
   });
 

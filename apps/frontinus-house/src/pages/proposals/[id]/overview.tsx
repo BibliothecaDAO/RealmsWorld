@@ -1,4 +1,3 @@
-import { text } from "stream/consumers";
 import { Markdown } from "@/components/Markdown";
 import { _rt, getProposalId, shortenAddress } from "@/lib/utils";
 import type { Proposal } from "@/types";
@@ -10,7 +9,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  Tooltip,
 } from "@realms-world/ui";
 
 export default function Overview({ proposal }: { proposal: Proposal }) {
@@ -37,7 +35,7 @@ export default function Overview({ proposal }: { proposal: Proposal }) {
         >
           {/*<Stamp :id="proposal.author.id" :size="32" className="mr-1" />*/}
           <div className="ml-2 flex flex-col gap-1 leading-4">
-            {proposal.author.name || shortenAddress(proposal.author.id)}
+            {proposal.author.name ?? shortenAddress(proposal.author.id)}
             <span className="text-skin-text text-sm">
               In
               <Link

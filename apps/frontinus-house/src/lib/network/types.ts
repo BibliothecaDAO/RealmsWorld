@@ -1,3 +1,5 @@
+// TODO: change any to real types
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
   Choice,
   Follow,
@@ -5,7 +7,6 @@ import type {
   NetworkID,
   Proposal,
   Space,
-  SpaceMetadata,
   StrategyParsedMetadata,
   User,
   Vote,
@@ -26,19 +27,20 @@ export type Connector =
   | "gnosis";
 export type GeneratedMetadata =
   | {
-      name: string;
-      description?: string;
-      properties: {
-        symbol?: string;
-        decimals: number;
-        token?: string;
-        payload?: string;
-      };
-    }
-  | {
-      strategies_metadata: string[];
+    name: string;
+    description?: string;
+    properties: {
+      symbol?: string;
+      decimals: number;
+      token?: string;
+      payload?: string;
     };
+  }
+  | {
+    strategies_metadata: string[];
+  };
 
+type MetadataRecord = Record<string, string | number>;
 export interface StrategyTemplate {
   address: string;
   name: string;
@@ -46,16 +48,16 @@ export interface StrategyTemplate {
   icon?: React.ReactElement;
   type?: string;
   paramsDefinition: any;
-  validate?: (params: Record<string, any>) => boolean;
-  generateSummary?: (params: Record<string, any>) => string;
-  generateParams?: (params: Record<string, any>) => any[];
+  validate?: (params: MetadataRecord) => boolean;
+  generateSummary?: (params: MetadataRecord) => string;
+  generateParams?: (params: MetadataRecord) => any[];
   generateMetadata?: (
-    params: Record<string, any>,
+    params: MetadataRecord,
   ) => Promise<GeneratedMetadata>;
   parseParams?: (
     params: string,
     metadata: StrategyParsedMetadata | null,
-  ) => Promise<Record<string, any>>;
+  ) => Promise<Record<string, string | number>>;
   deployConnectors?: Connector[];
   deployNetworkId?: NetworkID;
   deploy?: (
@@ -63,7 +65,7 @@ export interface StrategyTemplate {
     web3: any,
     controller: string,
     spaceAddress: string,
-    params: Record<string, any>,
+    params: MetadataRecord,
   ) => Promise<{ address: string; txId: string }>;
 }
 

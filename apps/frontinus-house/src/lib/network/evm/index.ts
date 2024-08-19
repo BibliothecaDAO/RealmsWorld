@@ -7,6 +7,13 @@ import { createApi } from "../common";
 import { EVM_CONNECTORS } from "../common/constants";
 import { createActions } from "./actions";
 
+type JsonNetworks = Record<string, {
+  key: string;
+  chainId: number;
+  multicall: string;
+  explorer: string;
+}>
+
 interface Metadata {
   name: string;
   ticker?: string;
@@ -33,7 +40,7 @@ export const METADATA: Record<string, Metadata> = {
     name: "Ethereum Sepolia",
     chainId: 11155111,
     apiUrl:
-      import.meta.env.VITE_EVM_SEPOLIA_API ??
+      import.meta.env.VITE_EVM_SEPOLIA_API as string ||
       "https://api.studio.thegraph.com/query/23545/sx-sepolia/version/latest",
     avatar:
       "ipfs://bafkreid7ndxh6y2ljw2jhbisodiyrhcy2udvnwqgon5wgells3kh4si5z4",
@@ -42,23 +49,25 @@ export const METADATA: Record<string, Metadata> = {
 };
 
 export function createEvmNetwork(networkId: NetworkID): Network {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const { name, chainId, currentChainId, apiUrl, avatar } = METADATA[
     networkId
   ]!;
 
   const provider = getProvider(chainId);
   const api = createApi(apiUrl, networkId, {
-    highlightApiUrl: import.meta.env.VITE_HIGHLIGHT_URL,
+    highlightApiUrl: import.meta.env.VITE_HIGHLIGHT_URL as string,
   });
   const helpers = {
     waitForTransaction: (txId: string) => provider.waitForTransaction(txId),
-    getExplorerUrl: (id: any, type: string) => {
+    getExplorerUrl: (id: string | number, type: string) => {
       let dataType: "tx" | "address" | "token" = "tx";
       if (type === "token") dataType = "token";
       else if (["address", "contract", "strategy"].includes(type))
         dataType = "address";
-      //@ts-expect-error json
-      return `${networks[chainId].explorer}/${dataType}/${id}`;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return `${(networks as JsonNetworks)[chainId]!.explorer
+        }/ ${dataType}/${id}`;
     },
   };
 

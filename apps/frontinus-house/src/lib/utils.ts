@@ -5,7 +5,7 @@ import { getAddress } from "@ethersproject/address";
 import { validateAndParseAddress } from "starknet";
 
 const IPFS_GATEWAY: string =
-  import.meta.env.VITE_IPFS_GATEWAY || "https://cloudflare-ipfs.com";
+  import.meta.env.VITE_IPFS_GATEWAY as string || "https://cloudflare-ipfs.com";
 
 export function shorten(
   str: string,
@@ -84,15 +84,16 @@ export async function verifyNetwork(
       params: [{ chainId: encodedChainId }],
     });
   } catch (err) {
-    //@ts-expect-error
-    if (err.code !== 4902) throw new Error(err.message);
+    // @ts-expect-error throw error if code is not 4902
+    if (err.code !== 4902) throw new Error(err.message as string);
 
     const network = await web3Provider.getNetwork();
     if (network.chainId !== chainId) {
       const error = new Error(
         "User rejected network change after it being added",
       );
-      (error as any).code = 4001;
+      // @ts-expect-error code is not 4902
+      error.code = 4001;
       throw error;
     }
   }

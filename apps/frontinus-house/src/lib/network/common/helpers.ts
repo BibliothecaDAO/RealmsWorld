@@ -6,7 +6,6 @@ import {
   Choice as SdkChoice,
 } from "@snapshot-labs/sx";
 
-//import { MetaTransaction } from '@snapshot-labs/sx/dist/utils/encoding/execution-hash';
 import { EVM_CONNECTORS, STARKNET_CONNECTORS } from "./constants";
 
 type SpaceExecutionData = Pick<Space, "executors" | "executors_types">;
@@ -37,19 +36,21 @@ export function getExecutionData(
   ] as ExecutorType;
   return _getExecutionData(executorType, executionStrategy, {
     transactions,
-    destination: destinationAddress || undefined,
+    destination: destinationAddress ?? undefined,
   });
 }
 
-export async function parseStrategyMetadata(metadata: string | null) {
+export async function parseStrategyMetadata(metadata: string | null): Promise<Record<string, string | number> | null> {
   if (metadata === null) return null;
+  // TODO: add proper metadata type
+  // eslint-disable-next-line
   if (!metadata.startsWith("ipfs://")) return JSON.parse(metadata);
 
   const strategyUrl = getUrl(metadata);
   if (!strategyUrl) return null;
 
   const res = await fetch(strategyUrl);
-  return res.json();
+  return res.json() as unknown as Record<string, string | number>;
 }
 
 export async function buildMetadata(

@@ -1,12 +1,7 @@
 import {
-  Bell,
-  CircleUser,
   HandCoins,
   Home,
-  LineChart,
-  Menu,
   Package,
-  ShoppingCart,
   Users,
 } from "lucide-react";
 

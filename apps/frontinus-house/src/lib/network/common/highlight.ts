@@ -3,12 +3,12 @@ import gql from "graphql-tag";
 
 import type { ApiProposal, ApiSpace } from "./types";
 
-interface HighlightSpace {
+export interface HighlightSpace {
   id: string;
   vote_count: number;
 }
 
-interface HighlightProposal {
+export interface HighlightProposal {
   id: string;
   scores_1: string;
   scores_2: string;
@@ -43,6 +43,11 @@ export const SPACE_QUERY = gql`
   }
   ${SPACE_FRAGMENT}
 `;
+export interface HighlighSpaceQueryResult {
+  data: {
+    sxspace: HighlightSpace
+  }
+}
 
 export const SPACES_QUERY = gql`
   query ($ids: [String!]!) {
@@ -52,6 +57,11 @@ export const SPACES_QUERY = gql`
   }
   ${SPACE_FRAGMENT}
 `;
+export interface HighlighSpacesQueryResult {
+  data: {
+    sxspaces: HighlightSpace[]
+  }
+}
 
 export const PROPOSAL_QUERY = gql`
   query ($id: String!) {
@@ -61,6 +71,12 @@ export const PROPOSAL_QUERY = gql`
   }
   ${PROPOSAL_FRAGMENT}
 `;
+export interface HighlighProposalQueryResult {
+  data: {
+    sxproposal: HighlightProposal
+  }
+}
+
 
 export const PROPOSALS_QUERY = gql`
   query ($ids: [String!]!) {
@@ -70,6 +86,11 @@ export const PROPOSALS_QUERY = gql`
   }
   ${PROPOSAL_FRAGMENT}
 `;
+export interface HighlighProposalsQueryResult {
+  data: {
+    sxproposals: HighlightProposal[]
+  }
+}
 
 export const VOTES_QUERY = gql`
   query ($space: String!, $proposal: Int!) {
@@ -88,6 +109,11 @@ export const VOTES_QUERY = gql`
     }
   }
 `;
+export interface VotesQueryResult {
+  data: {
+    votes: Vote[]
+  }
+}
 
 export const USER_QUERY = gql`
   query ($id: String!) {
@@ -99,6 +125,11 @@ export const USER_QUERY = gql`
     }
   }
 `;
+export interface HighlightUserQueryResult {
+  data: {
+    sxuser: User
+  }
+}
 
 export function joinHighlightSpace(
   space: ApiSpace,
@@ -176,19 +207,19 @@ export function mixinHighlightVotes(
     !hasMore || thresholdValue === null
       ? { added: filteredHighlightVotes, remaining: [] }
       : filteredHighlightVotes.reduce(
-          (res, vote) => {
-            const valid =
-              orderDirection === "desc"
-                ? vote[orderBy] >= (thresholdValue ?? 0)
-                : vote[orderBy] < (thresholdValue ?? 0);
+        (res, vote) => {
+          const valid =
+            orderDirection === "desc"
+              ? vote[orderBy] >= (thresholdValue ?? 0)
+              : vote[orderBy] < (thresholdValue ?? 0);
 
-            if (valid) res.added.push(vote);
-            else res.remaining.push(vote);
+          if (valid) res.added.push(vote);
+          else res.remaining.push(vote);
 
-            return res;
-          },
-          { added: [] as Vote[], remaining: [] as Vote[] },
-        );
+          return res;
+        },
+        { added: [] as Vote[], remaining: [] as Vote[] },
+      );
 
   const result = [...votes, ...mixins.added].sort((a, b) =>
     orderDirection === "desc"

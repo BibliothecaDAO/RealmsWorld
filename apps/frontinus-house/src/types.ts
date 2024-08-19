@@ -59,6 +59,13 @@ export interface SpaceMetadataDelegation {
   contractNetwork: NetworkID | null;
   contractAddress: string | null;
 }
+export interface JSONStringSpaceMetadataDelegation {
+  name: string
+  api_type: string
+  api_url: string
+  contract: string
+}
+
 
 export interface SpaceMetadata {
   name: string;
@@ -119,6 +126,8 @@ export interface Space {
   voting_power_validation_strategies_parsed_metadata: StrategyParsedMetadata[];
   strategies_indicies: number[];
   strategies: string[];
+  // TODO: replace with real type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   strategies_params: any[];
   strategies_parsed_metadata: StrategyParsedMetadata[];
   authenticators: string[];
@@ -182,6 +191,8 @@ export interface Proposal {
   timelock_veto_guardian: string | null;
   strategies_indicies: number[];
   strategies: string[];
+  // TODO: replace with real type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   strategies_params: any[];
   created: number;
   edited: number | null;
@@ -218,12 +229,13 @@ export interface Contact {
   name: string;
 }
 
+export interface Voter {
+  id: string;
+  name?: string;
+}
 export interface Vote {
   id: string;
-  voter: {
-    id: string;
-    name?: string;
-  };
+  voter: Voter;
   space: {
     id: string;
   };
@@ -293,9 +305,13 @@ export type SendNftTransaction = BaseTransaction & {
 export type ContractCallTransaction = BaseTransaction & {
   _type: "contractCall";
   _form: {
+    // TODO: replace with real type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     abi: any[];
     recipient: string;
     method: string;
+    // TODO: replace with real type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     args: any;
     amount?: string;
   };
@@ -317,4 +333,14 @@ export interface MetaTransaction {
   data: string;
   operation: number;
   salt: bigint;
+}
+
+export interface Leaderboard {
+  id: string
+  user: {
+    id: string
+    created: string
+  }
+  proposal_count: number
+  vote_count: number
 }

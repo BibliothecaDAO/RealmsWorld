@@ -91,6 +91,14 @@ export function useDelegates(delegationApiUrl: string) {
     },
   });
 
+  interface DelegatesQueryResult {
+    data: {
+      delegates: ApiDelegate[];
+      governance: Governance;
+
+    }
+  }
+
   async function _fetch(
     overwrite: boolean,
     sortBy:
@@ -101,7 +109,7 @@ export function useDelegates(delegationApiUrl: string) {
   ) {
     const [orderBy, orderDirection] = sortBy.split("-");
 
-    const { data } = await apollo.query({
+    const { data }: DelegatesQueryResult = await apollo.query({
       query: DELEGATES_QUERY,
       variables: {
         orderBy,
@@ -113,8 +121,8 @@ export function useDelegates(delegationApiUrl: string) {
 
     console.log(data)
 
-    const governanceData = data.governance as Governance;
-    const delegatesData = data.delegates as ApiDelegate[];
+    const governanceData = data.governance;
+    const delegatesData = data.delegates;
     const addresses = delegatesData.map((delegate) => delegate.id);
 
     const names = await getNames(addresses);
@@ -127,10 +135,10 @@ export function useDelegates(delegationApiUrl: string) {
       const votesPercentage =
         (Number(delegate.delegatedVotes) /
           Number(governanceData.delegatedVotes)) *
-          100 || 0;
+        100 || 0;
 
       return {
-        name: names[delegate.id] || null,
+        name: names[delegate.id] ?? null,
         ...delegate,
         delegatorsPercentage,
         votesPercentage,
@@ -155,6 +163,7 @@ export function useDelegates(delegationApiUrl: string) {
 
       setLoaded(true);
     } catch (e) {
+      console.error(e)
       setFailed(true);
     } finally {
       setLoading(false);

@@ -1,12 +1,18 @@
+// TODO: fix types
+/* eslint-disable @typescript-eslint/no-unsafe-assignment,  @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call  */
 import { BASIC_CHOICES } from "@/data/constants";
 import type { NetworkApi, PaginationOpts, SpacesFilter } from "@/lib/network/types";
 import { getNames } from "@/lib/stamp";
 import type {
   Follow,
+  JSONStringSpaceMetadataDelegation,
+  Leaderboard,
   NetworkID,
   Proposal,
   ProposalState,
   Space,
+  SpaceMetadataDelegation,
+  SpaceMetadataTreasury,
   Transaction,
   User,
   Vote,
@@ -17,6 +23,14 @@ import {
   InMemoryCache,
 } from "@apollo/client/core";
 
+import type {
+  HighlighProposalQueryResult,
+  HighlighProposalsQueryResult,
+  HighlighSpaceQueryResult,
+  HighlighSpacesQueryResult,
+  HighlightProposal,
+  HighlightUserQueryResult
+} from "./highlight";
 import {
   PROPOSAL_QUERY as HIGHLIGHT_PROPOSAL_QUERY,
   PROPOSALS_QUERY as HIGHLIGHT_PROPOSALS_QUERY,
@@ -29,6 +43,15 @@ import {
   joinHighlightUser,
   mixinHighlightVotes,
 } from "./highlight";
+import type {
+  LeaderboardQueryResult,
+  ProposalQueryResult,
+  ProposalsQueryResult,
+  SpaceQueryResult,
+  SpacesQueryResult,
+  UserQueryResult,
+  VotesQueryResult
+} from "./queries";
 import {
   LEADERBOARD_QUERY,
   PROPOSAL_QUERY,
@@ -37,7 +60,7 @@ import {
   SPACES_QUERY,
   USER_QUERY,
   USER_VOTES_QUERY,
-  VOTES_QUERY,
+  VOTES_QUERY
 } from "./queries";
 import type { ApiProposal, ApiSpace, ApiStrategyParsedMetadata } from "./types";
 
@@ -63,11 +86,11 @@ function formatExecution(execution: string): Transaction[] {
   if (execution === "") return [];
 
   try {
-    const result = JSON.parse(execution);
+    const result = JSON.parse(execution) as Transaction[];
 
     return Array.isArray(result) ? result : [];
   } catch (e) {
-    console.log("Failed to parse execution");
+    console.log(`Failed to parse execution ${e as string}`);
     return [];
   }
 }
@@ -97,8 +120,8 @@ function processStrategiesMetadata(
   );
 
   strategiesIndicies =
-    strategiesIndicies || Array.from(Array(maxIndex + 1).keys());
-  return strategiesIndicies.map((index) => metadataMap[index]) || [];
+    strategiesIndicies ?? Array.from(Array(maxIndex + 1).keys());
+  return strategiesIndicies.map((index) => metadataMap[index]);
 }
 
 function formatSpace(space: ApiSpace, networkId: NetworkID): Space {
@@ -117,7 +140,7 @@ function formatSpace(space: ApiSpace, networkId: NetworkID): Space {
     discord: space.metadata.discord,
     voting_power_symbol: space.metadata.voting_power_symbol,
     treasuries: space.metadata.treasuries.map((treasury) => {
-      const { name, network, address } = JSON.parse(treasury);
+      const { name, network, address } = JSON.parse(treasury) as SpaceMetadataTreasury;
 
       return {
         name,
@@ -126,7 +149,7 @@ function formatSpace(space: ApiSpace, networkId: NetworkID): Space {
       };
     }),
     delegations: space.metadata.delegations.map((delegation) => {
-      const { name, api_type, api_url, contract } = JSON.parse(delegation);
+      const { name, api_type, api_url, contract } = JSON.parse(delegation) as JSONStringSpaceMetadataDelegation;
 
       const [network, address] = contract.split(":");
 
@@ -136,7 +159,7 @@ function formatSpace(space: ApiSpace, networkId: NetworkID): Space {
         apiUrl: api_url,
         contractNetwork: network === "null" ? null : network,
         contractAddress: address === "null" ? null : address,
-      };
+      } as SpaceMetadataDelegation;
     }),
     executors: space.metadata.executors,
     executors_types: space.metadata.executors_types,
@@ -217,16 +240,16 @@ export function createApi(
 
   const highlightApolloClient = opts.highlightApiUrl
     ? new ApolloClient({
-        link: createHttpLink({ uri: opts.highlightApiUrl }),
-        cache: new InMemoryCache({
-          addTypename: false,
-        }),
-        defaultOptions: {
-          query: {
-            fetchPolicy: "no-cache",
-          },
+      link: createHttpLink({ uri: opts.highlightApiUrl }),
+      cache: new InMemoryCache({
+        addTypename: false,
+      }),
+      defaultOptions: {
+        query: {
+          fetchPolicy: "no-cache",
         },
-      })
+      },
+    })
     : null;
 
   const highlightVotesCache = {
@@ -242,7 +265,7 @@ export function createApi(
       filter: "any" | "for" | "against" | "abstain" = "any",
       sortBy: "vp-desc" | "vp-asc" | "created-desc" | "created-asc" = "vp-desc",
     ): Promise<Vote[]> => {
-      const filters: Record<string, any> = {};
+      const filters: Record<string, string | number> = {};
       if (filter === "for") {
         filters.choice = 1;
       } else if (filter === "against") {
@@ -269,7 +292,7 @@ export function createApi(
             ...filters,
           },
         },
-      });
+      }) as VotesQueryResult;
 
       if (highlightApolloClient) {
         const cacheKey = `${proposal.space.id}/${proposal.proposal_id}`;
@@ -282,7 +305,7 @@ export function createApi(
               space: proposal.space.id,
               proposal: proposal.proposal_id,
             },
-          });
+          }) as VotesQueryResult;
 
           highlightVotesCache.key = cacheKey;
           highlightVotesCache.data = highlightData.votes;
@@ -306,13 +329,13 @@ export function createApi(
       }
 
       const addresses = data.votes.map(
-        (vote: { voter: { id: any } }) => vote.voter.id,
+        (vote: { voter: { id: string } }) => vote.voter.id,
       );
       const names = await getNames(addresses);
 
       return data.votes.map(
-        (vote: { voter: { name: string | null; id: string | number } }) => {
-          vote.voter.name = names[vote.voter.id] || null;
+        (vote: Vote) => {
+          vote.voter.name = names[vote.voter.id] ?? undefined;
           return vote;
         },
       );
@@ -327,10 +350,10 @@ export function createApi(
           spaceIds,
           voter,
         },
-      });
+      }) as VotesQueryResult;
 
       return Object.fromEntries(
-        (data.votes as Vote[]).map((vote) => [
+        (data.votes).map((vote) => [
           `${networkId}:${vote.space.id}/${vote.proposal}`,
           vote,
         ]),
@@ -343,7 +366,7 @@ export function createApi(
       filter: "any" | "active" | "pending" | "closed" = "any",
       searchQuery = "",
     ): Promise<Proposal[]> => {
-      const filters: Record<string, any> = {};
+      const filters: Record<string, string | number> = {};
       if (filter === "active") {
         filters.start_lte = current;
         filters.max_end_gte = current;
@@ -365,42 +388,45 @@ export function createApi(
             ...filters,
           },
         },
-      });
+      }) as ProposalsQueryResult;
       console.log(data);
 
       if (highlightApolloClient) {
         const { data: highlightData } = await highlightApolloClient.query({
           query: HIGHLIGHT_PROPOSALS_QUERY,
           variables: {
-            ids: data.proposals.map((proposal: { id: any }) => proposal.id),
+            ids: data.proposals.map((proposal: { id: string }) => proposal.id),
           },
-        });
+        }) as HighlighProposalsQueryResult;
 
-        data.proposals = data.proposals.map((proposal: any) => {
+        data.proposals = data.proposals.map((proposal) => {
+          // eslint-disable-next-line
+          // @ts-ignore
           const highlightProposal = highlightData.sxproposals.find(
-            (highlightProposal: any) => highlightProposal.id === proposal.id,
+            (highlightProposal: HighlightProposal) => highlightProposal.id === proposal.id,
           );
 
-          return joinHighlightProposal(proposal, highlightProposal);
+          return joinHighlightProposal(proposal, highlightProposal ?? null);
         });
       }
 
-      return data.proposals.map((proposal: any) =>
+      return data.proposals.map((proposal: ApiProposal) =>
         formatProposal(proposal, networkId, current),
       );
     },
+
     loadProposal: async (
       spaceId: string,
       proposalId: number,
       current: number,
     ): Promise<Proposal | null> => {
       const [{ data }, highlightResult] = await Promise.all([
-        apollo.query({
+        apollo.query<ProposalQueryResult>({
           query: PROPOSAL_QUERY,
           variables: { id: `${spaceId}/${proposalId}` },
         }),
         highlightApolloClient
-          ?.query({
+          ?.query<HighlighProposalQueryResult>({
             query: HIGHLIGHT_PROPOSAL_QUERY,
             variables: { id: `${spaceId}/${proposalId}` },
           })
@@ -429,63 +455,69 @@ export function createApi(
             metadata_: {},
           },
         },
-      });
+      }) as SpacesQueryResult;
 
       if (highlightApolloClient) {
-        const { data: highlightData } = await highlightApolloClient.query({
+        const { data: highlightData } = await highlightApolloClient.query<HighlighSpacesQueryResult>({
           query: HIGHLIGHT_SPACES_QUERY,
-          variables: { ids: data.spaces.map((space: any) => space.id) },
+          variables: { ids: data.spaces.map((space) => space.id) },
         });
+
 
         data.spaces = data.spaces.map((space: ApiSpace) => {
           const highlightSpace = highlightData.sxspaces.find(
-            (highlightSpace: any) => highlightSpace.id === space.id,
+            (highlightSpace) => highlightSpace.id === space.id,
           );
 
           return joinHighlightSpace(space, highlightSpace);
         });
       }
 
-      return data.spaces.map((space: any) => formatSpace(space, networkId));
+      // eslint-disable-next-line
+      // @ts-ignore
+      return data.spaces.map((space) => formatSpace(space, networkId));
     },
     loadSpace: async (id: string): Promise<Space | null> => {
       const [{ data }, highlightResult] = await Promise.all([
         apollo.query({
           query: SPACE_QUERY,
           variables: { id },
-        }),
+        }) as Promise<SpaceQueryResult>,
         highlightApolloClient
           ?.query({
             query: HIGHLIGHT_SPACE_QUERY,
             variables: { id },
           })
-          .catch(() => null),
+          .catch(() => null) as Promise<HighlighSpaceQueryResult | null>,
       ]);
 
       data.space = joinHighlightSpace(
         data.space,
+        // eslint-disable-next-line
+        // @ts-ignore
         highlightResult?.data.sxspace,
       );
 
       return formatSpace(data.space, networkId);
     },
     loadUser: async (id: string): Promise<User | null> => {
+
       const [{ data }, highlightResult] = await Promise.all([
         apollo.query({
           query: USER_QUERY,
           variables: { id },
-        }),
+        }) as Promise<UserQueryResult>,
         highlightApolloClient
           ?.query({
             query: HIGHLIGHT_USER_QUERY,
             variables: { id },
           })
-          .catch(() => null),
+          .catch(() => null) as Promise<HighlightUserQueryResult | null>,
       ]);
 
       return joinHighlightUser(
-        data.user ?? null,
-        highlightResult?.data?.sxuser ?? null,
+        data.user,
+        highlightResult?.data.sxuser ?? null,
       );
     },
     loadLeaderboard(
@@ -515,15 +547,16 @@ export function createApi(
             },
           },
         })
-        .then(({ data }) =>
-          data.leaderboards.map((leaderboard: any) => ({
+        .then(({ data }: LeaderboardQueryResult) =>
+          data.leaderboards.map((leaderboard: Leaderboard) => ({
             id: leaderboard.user.id,
             created: leaderboard.user.created,
             vote_count: leaderboard.vote_count,
             proposal_count: leaderboard.proposal_count,
           })),
-        );
+        ) as Promise<User[]>;
     },
+    // eslint-disable-next-line
     loadFollows: async () => {
       return [] as Follow[];
     },

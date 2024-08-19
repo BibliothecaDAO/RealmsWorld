@@ -1,4 +1,6 @@
+import type { Leaderboard, Space, Space, User, Vote } from "@/types";
 import gql from "graphql-tag";
+import type { ApiProposal, ApiSpace } from "./types";
 
 const SPACE_FRAGMENT = gql`
   fragment spaceFragment on Space {
@@ -146,6 +148,11 @@ export const PROPOSAL_QUERY = gql`
   }
   ${PROPOSAL_FRAGMENT}
 `;
+export interface ProposalQueryResult {
+  data: {
+    proposal: ApiProposal
+  }
+}
 
 export const PROPOSALS_QUERY = gql`
   query ($first: Int!, $skip: Int!, $where: Proposal_filter) {
@@ -161,6 +168,11 @@ export const PROPOSALS_QUERY = gql`
   }
   ${PROPOSAL_FRAGMENT}
 `;
+export interface ProposalsQueryResult {
+  data: {
+    proposals: ApiProposal[]
+  }
+}
 
 export const VOTES_QUERY = gql`
   query (
@@ -192,6 +204,11 @@ export const VOTES_QUERY = gql`
     }
   }
 `;
+export interface VotesQueryResult {
+  data: {
+    votes: Vote[];
+  }
+}
 
 export const USER_VOTES_QUERY = gql`
   query ($spaceIds: [String], $voter: String) {
@@ -219,6 +236,11 @@ export const SPACE_QUERY = gql`
   }
   ${SPACE_FRAGMENT}
 `;
+export interface SpaceQueryResult {
+  data: {
+    space: ApiSpace
+  }
+}
 
 export const SPACES_QUERY = gql`
   query ($first: Int!, $skip: Int!, $where: Space_filter) {
@@ -234,6 +256,11 @@ export const SPACES_QUERY = gql`
   }
   ${SPACE_FRAGMENT}
 `;
+export interface SpacesQueryResult {
+  data: {
+    spaces: Space[]
+  }
+}
 
 export const USER_QUERY = gql`
   query ($id: String!) {
@@ -245,6 +272,11 @@ export const USER_QUERY = gql`
     }
   }
 `;
+export interface UserQueryResult {
+  data: {
+    user: User
+  }
+}
 
 export const LEADERBOARD_QUERY = gql`
   query (
@@ -271,3 +303,12 @@ export const LEADERBOARD_QUERY = gql`
     }
   }
 `;
+export interface LeaderboardQueryResult {
+  data: {
+    leaderboards: Leaderboard[]
+  }
+}
+
+
+
+

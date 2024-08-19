@@ -1,20 +1,12 @@
 import { sidelinks } from "@/data/menuLinks";
 import {
-  Bell,
   CircleUser,
-  Home,
-  LineChart,
   Menu,
-  Package,
-  Package2,
   Search,
-  ShoppingCart,
-  Users,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import {
-  Badge,
   Button,
   Card,
   CardContent,

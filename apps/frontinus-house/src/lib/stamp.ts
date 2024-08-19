@@ -26,21 +26,26 @@ export async function getNames(
           params: unresolvedAddresses,
         }),
       });
+      // TODO: replace with type from api
+      // eslint-disable-next-line
       data = (await res.json()).result;
 
+
       unresolvedAddresses.forEach((formatted: string) => {
-        //@ts-expect-error
-        resolvedAddresses.set(formatted, data[formatted]);
+        // @ts-expect-error replace when data has proper type
+        resolvedAddresses.set(formatted, data[formatted] as string);
       });
     }
 
-    const entries: any = Object.entries(inputMapping)
+    const entries = Object.entries(inputMapping)
       .map(([address, formatted]) => [
         address,
-        resolvedAddresses.get(formatted) || null,
+        resolvedAddresses.get(formatted) ?? null,
       ])
       .filter(([, name]) => name);
 
+    // TODO: replace with real type
+    // eslint-disable-next-line
     return Object.fromEntries(entries);
   } catch (e) {
     console.error("Failed to resolve names", e);

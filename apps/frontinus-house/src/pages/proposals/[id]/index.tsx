@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Layout, LayoutBody } from "@/components/layout";
 import { getNetwork } from "@/lib/network";
-import { getProposalId, shorten } from "@/lib/utils";
 import type { Proposal as ProposalType } from "@/types";
 
 import Overview from "./overview";
@@ -18,7 +17,7 @@ export default function Proposal() {
       );
       setProposal(proposalsData);
     };
-    fetchProposals();
+    fetchProposals().catch(console.error);
   }, []);
 
   console.log(proposal);

@@ -8,7 +8,7 @@ import type {
 
 export * from "./types";
 
-const apiKey = import.meta.env.VITE_ALCHEMY_API_KEY;
+const apiKey = import.meta.env.VITE_ALCHEMY_API_KEY as string;
 
 const NETWORKS = {
   1: "eth-mainnet",
@@ -19,15 +19,17 @@ const NETWORKS = {
   42161: "arb-mainnet",
 };
 function getApiUrl(networkId: number) {
-  const network = NETWORKS[networkId as keyof typeof NETWORKS] ?? "mainnet";
+  const network = NETWORKS[networkId as keyof typeof NETWORKS];
 
   return `https://${network}.g.alchemy.com/v2/${apiKey}`;
 }
-export async function request(
+
+interface RpcResponse<T> { id: number; jsonrpc: "2.0"; result: T }
+export async function request<Req, Res>(
   method: string,
-  params: any[],
+  params: Req[],
   networkId: number,
-) {
+): Promise<Res> {
   const res = await fetch(getApiUrl(networkId), {
     method: "POST",
     body: JSON.stringify({
@@ -38,15 +40,15 @@ export async function request(
     }),
   });
 
-  const { result } = await res.json();
+  const response = await res.json() as RpcResponse<Res>;
 
-  return result;
+  return response.result;
 }
 
-export async function batchRequest(
-  requests: { method: string; params: any[] }[],
+export async function batchRequest<Req, Res>(
+  requests: { method: string; params: Req[] }[],
   networkId: number,
-) {
+): Promise<Res[]> {
   const res = await fetch(getApiUrl(networkId), {
     method: "POST",
     body: JSON.stringify(
@@ -59,9 +61,9 @@ export async function batchRequest(
     ),
   });
 
-  const response = await res.json();
+  const response = await res.json() as RpcResponse<Res>[];
 
-  return response.map((entry: { result: any }) => entry.result);
+  return response.map((entry: { result: Res }) => entry.result);
 }
 
 /**

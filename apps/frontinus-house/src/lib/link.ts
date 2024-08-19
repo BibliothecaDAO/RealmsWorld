@@ -1,4 +1,4 @@
-const UNISWAP_CHAINS_BY_NETWORK = {
+const UNISWAP_CHAINS_BY_NETWORK: Record<string, string> = {
   "1": "mainnet",
   "42161": "arbitrum",
   "10": "optimism",
@@ -30,8 +30,9 @@ export function getSwapLink(
       "erc20-balance-of-with-delegation",
     ].includes(strategy)
   ) {
-    //@ts-expect-error uniswap type network error
-    const chain = UNISWAP_CHAINS_BY_NETWORK[chainId];
+    if (!Object.hasOwn(UNISWAP_CHAINS_BY_NETWORK, chainId)) return;
+
+    const chain = UNISWAP_CHAINS_BY_NETWORK[chainId.toString()];
 
     return `https://app.uniswap.org/swap?inputCurrency=ETH&outputCurrency=${address}&chain=${chain}&ref=snapshot`;
   }

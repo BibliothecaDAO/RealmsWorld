@@ -49,6 +49,8 @@ export interface ApiSpace {
   voting_power_validation_strategies_parsed_metadata: ApiStrategyParsedMetadata[];
   strategies_indicies: number[];
   strategies: string[];
+  // TODO: replace with real type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   strategies_params: any[];
   strategies_parsed_metadata: ApiStrategyParsedMetadata[];
   authenticators: string[];
@@ -100,6 +102,8 @@ export interface ApiProposal {
   timelock_veto_guardian: string | null;
   strategies_indicies: number[];
   strategies: string[];
+  // TODO: replace with real type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   strategies_params: any[];
   created: number;
   edited: number | null;

@@ -1,3 +1,5 @@
+// TODO: fix those issues
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument */
 import type {
   Connector,
   NetworkActions,
@@ -12,7 +14,6 @@ import type {
   NetworkID,
   Proposal,
   Space,
-  SpaceMetadata,
   StrategyParsedMetadata,
 } from "@/types";
 import type { Account, RpcProvider } from "starknet";
@@ -32,7 +33,8 @@ import { getProvider } from "@/lib/provider";
 import { convertToMetaTransactions } from "@/lib/transactions";
 import { verifyNetwork } from "@/lib/utils";
 import type {
-  NetworkConfig} from "@snapshot-labs/sx";
+  NetworkConfig
+} from "@snapshot-labs/sx";
 import {
   clients,
   getStarknetStrategy,
@@ -520,6 +522,7 @@ export function createActions(
       const { account }: { account: Account } = web3.provider;
 
       return account.execute({
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         contractAddress: contractAddress!,
         entrypoint: "delegate",
         calldata: CallData.compile({
@@ -542,7 +545,7 @@ export function createActions(
             return { address, value: 0n, decimals: 0, token: null, symbol: "" };
 
           const strategyMetadata = await parseStrategyMetadata(
-            //@ts-expect-error
+            //@ts-expect-error this is ok
             strategiesMetadata[i].payload,
           );
 

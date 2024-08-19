@@ -1,4 +1,3 @@
-//@ts-nocheck
 import type {
   Connector,
   NetworkActions,
@@ -14,7 +13,6 @@ import type {
   Space,
   StrategyParsedMetadata,
 } from "@/types";
-//import { vote as highlightVote } from '@/helpers/highlight';
 import type { Web3Provider } from "@ethersproject/providers";
 import { CHAIN_IDS } from "@/data/constants";
 import { getSwapLink } from "@/lib/link";
@@ -31,7 +29,12 @@ import { verifyNetwork } from "@/lib/utils";
 import { Contract } from "@ethersproject/contracts";
 import type { Provider } from "@ethersproject/providers";
 import type {
-  EvmNetworkConfig} from "@snapshot-labs/sx";
+  Envelope,
+  EvmNetworkConfig,
+  Propose,
+  UpdateProposal,
+  Vote,
+} from "@snapshot-labs/sx";
 import {
   clients,
   evmMainnet,
@@ -79,6 +82,7 @@ export function createActions(
       space: Space,
       cid: string,
       executionStrategy: string | null,
+      executionDestinationAddress: string | null,
       transactions: MetaTransaction[],
     ) => {
       await verifyNetwork(web3, chainId);
@@ -99,7 +103,7 @@ export function createActions(
       if (executionStrategy) {
         selectedExecutionStrategy = {
           addr: executionStrategy,
-          params: getExecutionData(space, executionStrategy, transactions)
+          params: getExecutionData(space, executionStrategy, executionDestinationAddress, transactions)
             .executionParams[0],
         };
       } else {
@@ -111,15 +115,16 @@ export function createActions(
 
       const strategiesWithMetadata = await Promise.all(
         strategies.map(async (strategy) => {
-          const metadata = await parseStrategyMetadata(
-            space.voting_power_validation_strategies_parsed_metadata[
-              strategy.index
-            ].payload,
-          );
+          const m = space.voting_power_validation_strategies_parsed_metadata[
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            strategy.index!
+          ];
+          if (!m) return strategy;
 
           return {
             ...strategy,
-            metadata,
+
+            metadata: await parseStrategyMetadata(m.payload),
           };
         }),
       );
@@ -407,22 +412,27 @@ export function createActions(
       delegatee: string,
       delegationContract: string,
     ) => {
-      await verifyNetwork(web3, CHAIN_IDS[networkId]);
+      await verifyNetwork(web3, CHAIN_IDS[networkId as keyof typeof CHAIN_IDS]);
 
       const [, contractAddress] = delegationContract.split(":");
 
       const votesContract = new Contract(
-        contractAddress,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        contractAddress!,
         ["function delegate(address delegatee)"],
         web3.getSigner(),
       );
 
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
       return votesContract.delegate(delegatee);
     },
-    send: (envelope: any) => ethSigClient.send(envelope),
+
+    send: (envelope: Envelope<Propose | UpdateProposal | Vote>) => ethSigClient.send(envelope),
     getVotingPower: async (
       spaceId: string,
       strategiesAddresses: string[],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       strategiesParams: any[],
       strategiesMetadata: StrategyParsedMetadata[],
       voterAddress: string,
@@ -437,21 +447,26 @@ export function createActions(
           if (!strategy)
             return { address, value: 0n, decimals: 0, token: null, symbol: "" };
 
+          const metadata = strategiesMetadata[i];
+          const strategyParams: string = strategiesParams[i] as string;
+          if (!metadata) throw new Error("Metadata is missing");
+
           const strategyMetadata = await parseStrategyMetadata(
-            strategiesMetadata[i].payload,
+            metadata.payload,
           );
 
           const value = await strategy.getVotingPower(
             address,
             voterAddress,
             strategyMetadata,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             snapshotInfo.at!,
-            strategiesParams[i],
+            strategyParams,
             provider,
           );
 
           const token = ["comp", "ozVotes"].includes(strategy.type)
-            ? strategiesParams[i]
+            ? strategyParams
             : undefined;
           return {
             address,

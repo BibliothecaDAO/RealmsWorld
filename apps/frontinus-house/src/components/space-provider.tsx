@@ -24,9 +24,11 @@ export function SpaceProvider({ children }: { children: React.ReactNode }) {
       const spaceData = await getNetwork("sn-sep").api.loadSpace(
         "0x0011c8d7674bb371708933d29c5e2a4ea31a6535809950b863851373f1afc112",
       );
-      spaceData && setSpace(spaceData);
+      if (spaceData) {
+        setSpace(spaceData)
+      }
     };
-    fetchProposals();
+    fetchProposals().catch(console.error);
   }, []);
 
   const value = {
@@ -43,12 +45,6 @@ export function SpaceProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useSpace = () => {
-  const context = useContext(SpaceProviderContext);
-
-  if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider");
-
-  return context;
+  return useContext(SpaceProviderContext);
 };

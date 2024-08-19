@@ -10,7 +10,7 @@ const ethereumNetwork = createEvmNetwork('eth');
 const sepoliaNetwork = createEvmNetwork('sep');
 
 export const enabledNetworks: NetworkID[] = import.meta.env.VITE_ENABLED_NETWORKS
-  ? (import.meta.env.VITE_ENABLED_NETWORKS.split(',') as NetworkID[])
+  ? ((import.meta.env.VITE_ENABLED_NETWORKS as string).split(',') as NetworkID[])
   : ['eth', 'sep', 'sn', 'sn-sep'];
 
 export const evmNetworks: NetworkID[] = [

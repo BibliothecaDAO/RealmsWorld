@@ -11,16 +11,12 @@ import {
   CardTitle,
 } from "@realms-world/ui";
 
-interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
-  isCollapsed: boolean;
-  setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
-}
+// interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
+//   isCollapsed: boolean;
+//   setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+// }
 
-export default function Sidebar({
-  className,
-  isCollapsed,
-  setIsCollapsed,
-}: SidebarProps) {
+export default function Sidebar() {
   return (
     <div className="bg-muted/40 hidden border-r md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">

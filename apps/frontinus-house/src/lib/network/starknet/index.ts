@@ -1,7 +1,8 @@
 import type { Network } from "@/lib/network/types";
 import type { NetworkID } from "@/types";
 import type {
-  BigNumberish} from "starknet";
+  BigNumberish
+} from "starknet";
 import {
   constants as starknetConstants,
   TransactionExecutionStatus,
@@ -43,7 +44,7 @@ export const METADATA: Partial<Record<NetworkID, Metadata>> = {
     rpcUrl: `https://starknet-sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY}`,
     ethRpcUrl: `https://sepolia.infura.io/v3/${import.meta.env.VITE_INFURA_API_KEY}`,
     apiUrl:
-      import.meta.env.VITE_STARKNET_SEPOLIA_API ??
+      import.meta.env.VITE_STARKNET_SEPOLIA_API as string ||
       "https://testnet-api-1.snapshotx.xyz",
     explorerUrl: "https://sepolia.starkscan.co",
   },
@@ -72,13 +73,17 @@ export function createStarknetNetwork(networkId: NetworkID): Network {
       let retries = 0;
 
       return new Promise((resolve, reject) => {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         const timer = setInterval(async () => {
           let tx: Awaited<ReturnType<typeof provider.getTransactionReceipt>>;
           try {
             tx = await provider.getTransactionReceipt(txId);
+            // e
           } catch (e) {
+            console.error(e);
             if (retries > 20) {
               clearInterval(timer);
+              // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
               reject();
             }
 
@@ -92,19 +97,20 @@ export function createStarknetNetwork(networkId: NetworkID): Network {
             TransactionFinalityStatus.ACCEPTED_ON_L2,
           ];
 
-          if (successStates.includes(tx.finality_status as any)) {
+          if (successStates.includes(tx.finality_status as TransactionFinalityStatus)) {
             clearInterval(timer);
             resolve(tx);
           }
 
           if (tx.execution_status === TransactionExecutionStatus.REVERTED) {
             clearInterval(timer);
+            // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
             reject(tx);
           }
         }, 2000);
       });
     },
-    getExplorerUrl: (id: any, type: string) => {
+    getExplorerUrl: (id: string | number, type: string) => {
       let dataType: "tx" | "contract" | "token" = "tx";
       if (type === "token") dataType = "token";
       else if (["address", "contract", "strategy"].includes(type))
