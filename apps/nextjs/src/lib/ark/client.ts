@@ -7,9 +7,11 @@ export interface FetcherOpts {
 
 // ArkClient aims to ease the testing phase of api endpoints
 export class ArkClient {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fetcher: Fetcher<any>;
   source: string;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(fetcher: Fetcher<any>, source: string) {
     this.fetcher = fetcher;
     this.source = source;
@@ -22,8 +24,8 @@ export class ArkClient {
         ...options.headers,
         "Content-Type": "application/json",
       },
-    });
-    return await res.json();
+    }) as Response;
+    return await res.json() as T;
   }
 }
 

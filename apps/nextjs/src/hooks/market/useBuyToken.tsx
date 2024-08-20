@@ -18,10 +18,12 @@ export const useBuyToken = ({
   listingId?: number;
   price?: string | null;
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
     abi: MarketplaceABI,
     address: MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`,
   });
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract: lordsContract } = useContract({
     abi: L2_C1ERC20,
     address: LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`,
@@ -32,12 +34,15 @@ export const useBuyToken = ({
     if (!listingId || !price) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       lordsContract?.populate("approve", [
         MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`, //Marketplace address
         parseUnits(`${price}`, 18).toString(),
         0,
       ]),
 
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       contract?.populate("accept", [
         listingId,
         parseUnits(`${price}`, 18).toString(),

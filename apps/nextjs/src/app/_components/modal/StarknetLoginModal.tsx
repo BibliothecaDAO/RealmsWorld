@@ -3,6 +3,10 @@ import { useEffect } from "react";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount, useConnect } from "@starknet-react/core";
 
+//import { motion } from "framer-motion";
+
+//import getDiscoveryWallets from "get-starknet-core";
+
 import { Button, Dialog, DialogContent, DialogHeader } from "@realms-world/ui";
 
 import WalletIcons from "../wallet/WalletIcons";

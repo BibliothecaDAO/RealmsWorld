@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { useMemo, useState } from "react";
@@ -17,7 +15,7 @@ import { env } from "@/env";
 import {
   useAccount,
   useSendTransaction,
-  useWaitForTransaction,
+  useTransactionReceipt,
 } from "@starknet-react/core";
 import { ExternalLinkIcon, Loader2 } from "lucide-react";
 import { uint256 } from "starknet";
@@ -66,6 +64,7 @@ export default function Mint() {
       ...calls,
     ],
   });
+
   const {
     data: submittedData,
     isLoading: isTxLoading,
@@ -100,6 +99,7 @@ export default function Mint() {
                 className="mr-4"
                 disabled={isLoading}
                 size={"lg"}
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
                 onClick={() => write()}
               >
                 {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
@@ -147,9 +147,8 @@ export default function Mint() {
           </h1>
           <Button>
             <Link
-              href={`/collection/goldenToken/${
-                (submittedData as any)?.events[1]?.data[2]
-              }`}
+              href={`/collection/goldenToken/${(submittedData as any)?.events[1]?.data[2]
+                }`}
             >
               View Token
             </Link>

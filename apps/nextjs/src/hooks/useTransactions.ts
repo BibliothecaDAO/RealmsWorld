@@ -19,7 +19,7 @@ import { padAddress } from "@realms-world/utils";
 
 export interface CombinedTransaction
   extends Transaction,
-    Partial<RealmsWithdrawal> {
+  Partial<RealmsWithdrawal> {
   tokenIds?: string[];
 }
 
@@ -101,7 +101,7 @@ export const useTransactions = () => {
     });
 
     return map;
-  }, [l2BridgeTransactions, pendingWithdrawals, address]);
+  }, [l2BridgeTransactions, pendingWithdrawals, address, l2Address]);
 
   const combinedTransactions: CombinedTransaction[] = useMemo(() => {
     const transactionsMap = new Map<string, CombinedTransaction>();

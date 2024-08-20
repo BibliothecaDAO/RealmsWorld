@@ -30,7 +30,7 @@ function AssetL1CollectionPreview() {
   });
   // const { data: realmsData, isLoading: realmsDataIsLoading } = useUserActivity(address);
   const { toggleStakingMigration } = useUIStore((state) => state);
-  const { data, loading } = useStaking();
+  const { data } = useStaking();
 
   return (
     <div className="min-h-24">

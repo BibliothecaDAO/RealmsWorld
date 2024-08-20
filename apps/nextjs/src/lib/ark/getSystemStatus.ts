@@ -11,6 +11,7 @@ export async function getSystemStatus({
 }: GetSystemStatusParams): Promise<SystemStatus> {
   try {
     return await client.fetch("");
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_) {
     return { status: "error getting system status" };
   }

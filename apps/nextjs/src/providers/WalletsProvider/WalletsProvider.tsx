@@ -35,7 +35,7 @@ interface WalletsProviderContextValue {
       eth?: bigint;
     };
   };
-  //l2loading: boolean;
+  l2loading: boolean;
   refetch: () => void;
 }
 
@@ -72,11 +72,10 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   const { address: l2Account } = useL2Account();
 
   const {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     data: l2LordsBalance,
-    isFetching: l2LordsIsLoading,
-    refetch: l2LordsRefetch,
   } = useReadContract({
-    address: LORDS[SUPPORTED_L2_CHAIN_ID]?.address,
+    address: LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`,
     abi: L2_C1ERC20,
     functionName: "balance_of",
     enabled: !!l2Account,
@@ -84,8 +83,9 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     watch: true,
   });
 
-  const { data: l2EthBalance, isFetching: l2EthIsLoading } = useReadContract({
-    address: ETH[SUPPORTED_L2_CHAIN_ID]?.address,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { data: l2EthBalance } = useReadContract({
+    address: ETH[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`,
     abi: L2_ERC20,
     functionName: "balanceOf",
     enabled: !!l2Account,
@@ -135,10 +135,12 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
       },
       l2: {
         //@ts-expect-error incorrect SN react types
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         eth: l2EthBalance?.balance
           ? //@ts-expect-error incorrect SN react types
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            uint256.uint256ToBN(l2EthBalance.balance)
+
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
+          uint256.uint256ToBN(l2EthBalance.balance)
           : 0n,
         lords: l2LordsBalance as bigint,
       },

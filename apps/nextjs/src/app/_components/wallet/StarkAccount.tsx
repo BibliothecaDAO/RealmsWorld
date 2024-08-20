@@ -17,12 +17,11 @@ import { StarknetLoginButton } from "./StarknetLoginButton";
 
 export const StarkAccount = () => {
   const { disconnect } = useDisconnect();
-  const { status, account } = useAccount();
+  const { account } = useAccount();
 
   const { data } = useStarkName({ address: account?.address as Address });
   const displayStarkAddress = data ?? shortenHex(account?.address ?? "", 8);
 
-  const isConnected = status === "connected";
 
   if (account?.address) {
     return (

@@ -1,8 +1,7 @@
 // ... existing imports ...
 "use client";
 
-import type { Address } from "@starknet-react/core";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { TransactionType } from "@/constants/transactions";
@@ -63,7 +62,7 @@ const BridgeBadge = ({
       <span className="text-lg">
         {
           CHAIN_IDS_TO_NAMES[
-            isL1 ? SUPPORTED_L1_CHAIN_ID : SUPPORTED_L2_CHAIN_ID
+          isL1 ? SUPPORTED_L1_CHAIN_ID : SUPPORTED_L2_CHAIN_ID
           ]
         }
       </span>
@@ -182,17 +181,16 @@ const BridgeSteps = ({
   } = useBridgeL2Realms({ selectedTokenIds });
 
   const {
-    isApprovedForAll,
     approveForAll,
     isPending: isApprovePending,
     approveForAllLoading,
   } = useERC721Approval();
 
   const { data: nonce, refetch: refetchNonce } = useNonceForAddress({
-    address: l2Address,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    address: l2Address!,
   });
   const {
-    data: supportsInterface,
     refetch: refetchInterface,
     isError: isInterfaceError,
     isPending: isInterfacePending,
@@ -221,24 +219,21 @@ const BridgeSteps = ({
   });
 
   const onBridge = async () => {
-    let hash;
     if (isSourceL1) {
       if (!l2Address) throw new Error("Missing L2 Address");
-      hash = await depositRealms({
+      await depositRealms({
         tokenIds: selectedTokenIds.map((id) => BigInt(id)),
         l2Address: l2Address,
       });
     } else {
-      hash = await initiateWithdraw();
+      await initiateWithdraw();
     }
-    if (hash) {
-      toast({
-        title: "Bridge Realms",
-        description: isSourceL1
-          ? `${selectedTokenIds.length} Realms will be appear in your L2 wallet in a few minutes`
-          : `${selectedTokenIds.length} Realms will require a transction in ~6 hours to finalize your withdrawal`,
-      });
-    }
+    toast({
+      title: "Bridge Realms",
+      description: isSourceL1
+        ? `${selectedTokenIds.length} Realms will be appear in your L2 wallet in a few minutes`
+        : `${selectedTokenIds.length} Realms will require a transction in ~6 hours to finalize your withdrawal`,
+    });
   };
 
   return (
@@ -311,13 +306,11 @@ const BridgeSteps = ({
                   </p>
                   <Button
                     onClick={async () => {
-                      const hash = await approveForAll();
-                      if (hash) {
-                        toast({
-                          title: "Approved Realms",
-                          description: `You can now proceed to bridge your Realms`,
-                        });
-                      }
+                      await approveForAll();
+                      toast({
+                        title: "Approved Realms",
+                        description: `You can now proceed to bridge your Realms`,
+                      });
                     }}
                     disabled={isApprovePending || approveForAllLoading}
                     className="w-full"
@@ -415,24 +408,24 @@ export default function NftBridgeModal() {
 
   const steps = isSourceL1
     ? ([
-        {
-          label: "Approve",
-          description: `Allow Bridge Contract access to Realms`,
-          id: "approve",
-        },
-        {
-          label: "Bridge",
-          description: `Realms to Starknet`,
-          id: "bridge",
-        },
-      ] satisfies StepItem[])
+      {
+        label: "Approve",
+        description: `Allow Bridge Contract access to Realms`,
+        id: "approve",
+      },
+      {
+        label: "Bridge",
+        description: `Realms to Starknet`,
+        id: "bridge",
+      },
+    ] satisfies StepItem[])
     : ([
-        {
-          label: "Approve & Bridge",
-          description: `Realms to Ethereum`,
-          id: "bridge",
-        },
-      ] satisfies StepItem[]);
+      {
+        label: "Approve & Bridge",
+        description: `Realms to Ethereum`,
+        id: "bridge",
+      },
+    ] satisfies StepItem[]);
 
   if (isNftBridgeOpen) {
     return (

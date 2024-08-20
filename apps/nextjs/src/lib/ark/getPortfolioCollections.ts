@@ -28,6 +28,7 @@ export async function getPortfolioCollections({
     return await client.fetch(
       `/portfolio/${walletAddress}/collections?${queryParams.join("&")}`,
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_) {
     return {
       data: [],

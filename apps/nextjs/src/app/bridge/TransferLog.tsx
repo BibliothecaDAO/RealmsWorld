@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any */
 import type { DepositEvent, WithdrawalEvent } from "@/types/subgraph";
 import type {
   ChainTypeL2,
@@ -59,7 +56,7 @@ export const TransferLog = ({
     finishedTxHash: l1hash,
   }: DepositEvent | WithdrawalEvent = depositEvents?.[0] ??
   withdrawalEvents?.[0] ??
-  transfer;
+    transfer;
 
   useEffect(() => {
     const action = isL1 ? 1 : 2;
@@ -72,14 +69,14 @@ export const TransferLog = ({
       console.log(depositEvents);
       const hash = depositEvents?.[0].payload
         ? getTransactionHash(
-            TransactionHashPrefix.L1_HANDLER,
-            LORDS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] ?? "",
-            LORDS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID] ?? "",
-            "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
-            depositEvents?.[0].payload,
-            ("SN_" + NETWORK_NAME) as ChainTypeL2,
-            depositEvents?.[0].nonce,
-          )
+          TransactionHashPrefix.L1_HANDLER,
+          LORDS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] ?? "",
+          LORDS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID] ?? "",
+          "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
+          depositEvents?.[0].payload,
+          ("SN_" + NETWORK_NAME) as ChainTypeL2,
+          depositEvents?.[0].nonce,
+        )
         : transfer.hash;
       setL2hash(hash);
     };
@@ -147,11 +144,10 @@ export const TransferLog = ({
   return (
     <div className="m-1 flex flex-col rounded border p-2 sm:p-3">
       <div className="mb-1 flex justify-between">
-        <div className="text-xs font-semibold text-gray-600">{`${
-          transfer.timestamp
-            ? getFullTime(transfer.timestamp)
-            : getFullTime(createdTimestamp * 1000)
-        }`}</div>
+        <div className="text-xs font-semibold text-gray-600">{`${transfer.timestamp
+          ? getFullTime(transfer.timestamp)
+          : getFullTime(createdTimestamp * 1000)
+          }`}</div>
         {renderTransferStatus()}
       </div>
       <div className="flex w-full items-center justify-between gap-x-2 self-center">
@@ -162,7 +158,7 @@ export const TransferLog = ({
         )}
         <div className="flex font-semibold sm:text-xl">
           <span className="max-w-[120px] overflow-hidden text-ellipsis">
-            {transfer.amount ? amount : formatEther(amount ?? 0)}
+            {transfer.amount ? amount : formatEther(amount)}
           </span>
           <LordsIcon className="mx-1.5 h-5 w-5 self-center fill-white" />
         </div>

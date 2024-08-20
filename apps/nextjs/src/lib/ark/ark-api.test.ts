@@ -1,7 +1,6 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access */
 import { erc721Tokens } from "@/constants";
 import { ChainType } from "@/constants/tokens";
-import { FetchMultipleAssetMarketDataRequest } from "mobula-sdk/dist/sdk/models/operations";
-import { MultiDataResponse } from "mobula-sdk/dist/sdk/models/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { Fetcher } from "./client";
@@ -69,7 +68,7 @@ describe("ArkApi", () => {
   it("should get collections", async () => {
     const collectionAddress =
       erc721Tokens.beasts.contractAddresses.L2[ChainType.L2.MAIN]!;
-    const _ = await getCollections({ client, collectionAddress });
+    await getCollections({ client, collectionAddress });
 
     expect(fetchMock.mock.calls.length).toBe(1);
   });
@@ -77,7 +76,7 @@ describe("ArkApi", () => {
   it("should get collections activity", async () => {
     const collectionAddress =
       erc721Tokens.beasts.contractAddresses.L2[ChainType.L2.MAIN]!;
-    const _ = await getCollectionActivity({
+    await getCollectionActivity({
       client,
       collectionAddress,
       page: 10,
@@ -87,21 +86,22 @@ describe("ArkApi", () => {
   });
 
   it("should search collections", async () => {
-    const _ = await getCollectionSearch({ client, query: "Beast" });
+    await getCollectionSearch({ client, query: "Beast" });
 
     expect(fetchMock.mock.calls.length).toBe(1);
   });
 
   it("should get collection tokens", async () => {
     const collectionAddress =
+
       erc721Tokens.beasts.contractAddresses.L2[ChainType.L2.MAIN]!;
-    const _ = await getCollectionTokens({ client, collectionAddress });
+    await getCollectionTokens({ client, collectionAddress });
 
     expect(fetchMock.mock.calls.length).toBe(1);
   });
 
   it("should get portfolio activity", async () => {
-    const _ = await getPortfolioActivity({
+    await getPortfolioActivity({
       client,
       walletAddress: "0x1234567890123456789012345678901234567890",
     });
@@ -110,7 +110,7 @@ describe("ArkApi", () => {
   });
 
   it("should get portfolio collections", async () => {
-    const _ = await getPortfolioCollections({
+    await getPortfolioCollections({
       client,
       walletAddress: "0x1234567890123456789012345678901234567890",
     });
@@ -121,7 +121,7 @@ describe("ArkApi", () => {
   it("should get portfolio tokens", async () => {
     const collectionAddress =
       erc721Tokens.beasts.contractAddresses.L2[ChainType.L2.MAIN]!;
-    const _ = await getPortfolioTokens({
+    await getPortfolioTokens({
       client,
       walletAddress: "0x1234567890123456789012345678901234567890",
       collectionAddress,
@@ -140,13 +140,13 @@ describe("ArkApi", () => {
   });
 
   it("should get system status", async () => {
-    const _ = await getSystemStatus({ client });
+    await getSystemStatus({ client });
 
     expect(fetchMock.mock.calls.length).toBe(1);
   });
 
   it("should get token", async () => {
-    const _ = await getToken({
+    await getToken({
       client,
       contractAddress: "0x1234567890123456789012345678901234567890",
       tokenId: 0,
@@ -156,7 +156,7 @@ describe("ArkApi", () => {
   });
 
   it("should get token activity", async () => {
-    const _ = await getTokenActivity({
+    await getTokenActivity({
       client,
       contractAddress: "0x1234567890123456789012345678901234567890",
       tokenId: 0,
@@ -166,7 +166,7 @@ describe("ArkApi", () => {
   });
 
   it("should get token marketdata", async () => {
-    const _ = await getTokenMarketdata({
+    await getTokenMarketdata({
       client,
       contractAddress: "0x1234567890123456789012345678901234567890",
       tokenId: 0,
@@ -176,7 +176,7 @@ describe("ArkApi", () => {
   });
 
   it("should get token offers", async () => {
-    const _ = await getTokenOffers({
+    await getTokenOffers({
       client,
       contractAddress: "0x1234567890123456789012345678901234567890",
       tokenId: 0,

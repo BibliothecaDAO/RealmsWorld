@@ -88,9 +88,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   } = props;
   const createSortHandler =
     (property: keyof Pick<Realm, "id" | "name">) =>
-    (event: React.MouseEvent<unknown>) => {
-      onRequestSort(event, property);
-    };
+      (event: React.MouseEvent<unknown>) => {
+        onRequestSort(event, property);
+      };
 
   return (
     <TableHead>
@@ -267,7 +267,7 @@ export default function RealmsTable({
     setDense(event);
   };
 
-  const isSelected = (name: string) => selectedRealms.indexOf(name) !== -1;
+  const isSelected = (name: string) => selectedRealms.includes(name);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =

@@ -25,7 +25,7 @@ export const getAttributes = async ({
     const data = await res.json();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
-  } catch (error) {
-    throw new Error("Attributes Not Found");
+  } catch (e) {
+    throw new Error("Attributes Not Found" + (e as string));
   }
 };

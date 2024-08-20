@@ -4,9 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLordsPrice } from "@/hooks/lords/useLordsPrice";
 import Album from "@/icons/album.svg";
-import Bridge from "@/icons/bridge.svg";
 import Calender from "@/icons/calendar.svg";
-import Coins from "@/icons/coins.svg";
 import Crown from "@/icons/crown.svg";
 import Discord from "@/icons/discord.svg";
 import Gamepad from "@/icons/gamepad.svg";
@@ -77,9 +75,8 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`${
-        isSidebarOpen ? "bg-background" : "hidden"
-      } z-100 group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col border-r-[3px] bg-background transition-all duration-500 md:flex md:w-[102px] md:hover:w-60`}
+      className={`${isSidebarOpen ? "bg-background" : "hidden"
+        } z-100 group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col border-r-[3px] bg-background transition-all duration-500 md:flex md:w-[102px] md:hover:w-60`}
     >
       <div className="absolute mx-4">
         <SideHeaderImg className="w-full opacity-0 group-hover:opacity-100" />

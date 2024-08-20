@@ -71,6 +71,7 @@ async function fetchTokenData(): Promise<EthplorerAddressInfoResponse[]> {
   }
   const daoAddresses = getDaoAddressesArrayByChain(SUPPORTED_L1_CHAIN_ID);
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!daoAddresses) {
     throw new Error("DAO addresses are undefined");
   }

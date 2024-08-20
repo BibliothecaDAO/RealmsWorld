@@ -2,6 +2,7 @@
 
 import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
+import type { BigNumberish } from "starknet";
 import { num } from "starknet";
 
 import type { RouterOutputs } from "@realms-world/api";
@@ -16,10 +17,12 @@ export const DelegateActions = ({
   const { sendAsync: delegateRealms } = useDelegateRealms({
     delegatee: delegate.user,
   });
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data: currentDelegate } = useCurrentDelegate();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const isCurrentDelegate =
     currentDelegate &&
-    padAddress(num.toHexString(currentDelegate)) === delegate.user;
+    padAddress(num.toHexString(currentDelegate as BigNumberish)) === delegate.user;
 
   return (
     <Button
@@ -27,6 +30,7 @@ export const DelegateActions = ({
       size={"sm"}
       rel="noopener noreferrer"
       onClick={() => delegateRealms()}
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       disabled={isCurrentDelegate}
     >
       {isCurrentDelegate ? "Delegated" : "Delegate To"}

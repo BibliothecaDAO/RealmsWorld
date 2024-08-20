@@ -33,6 +33,7 @@ export async function getPortfolioTokens({
     return await client.fetch(
       `/portfolio/${walletAddress}?${queryParams.join("&")}`,
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_) {
     return {
       data: [],

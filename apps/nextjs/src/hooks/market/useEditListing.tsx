@@ -17,6 +17,7 @@ export const useEditListing = ({
   listingId?: number;
   price?: string | null;
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
     abi: MarketplaceABI,
     address: MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`,
@@ -27,6 +28,7 @@ export const useEditListing = ({
     if (!listingId || !price) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
+      //eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       contract?.populate("edit", [
         listingId,
         parseUnits(`${price}`, 18).toString(),

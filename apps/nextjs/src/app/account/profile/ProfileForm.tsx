@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useRef } from "react";
-import { SIWSLogin } from "@/app/_components/auth/SIWSLogin";
 import Discord from "@/icons/discord.svg";
 import Telegram from "@/icons/telegram.svg";
 import X from "@/icons/x.svg";
@@ -14,7 +13,6 @@ import { useForm } from "react-hook-form";
 import type { RouterOutputs } from "@realms-world/api";
 import { CreateDelegateProfileSchema } from "@realms-world/db/schema";
 import {
-  Alert,
   Button,
   Form,
   FormControl,
@@ -50,7 +48,8 @@ export const ProfileForm = ({
       discord: "",
       github: "",
     },
-    values: delegateProfile ?? undefined,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    values: delegateProfile,
   });
   const { data: session } = useSession();
 
@@ -101,6 +100,7 @@ export const ProfileForm = ({
         <form
           ref={formRef}
           onSubmit={form.handleSubmit((data) => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             createDelegateProfile.mutate(data);
           })}
         >

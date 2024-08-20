@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
-import { api } from "@/trpc/react";
 import { useAccount } from "@starknet-react/core";
 import { Search, TriangleAlert, UserRoundPlus } from "lucide-react";
 
@@ -22,6 +21,7 @@ export const DelegatesToolbar = () => {
   const { sendAsync: delegateRealms } = useDelegateRealms({
     delegatee: address,
   });
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data: currentDelegate } = useCurrentDelegate();
 
   /*const { data: tokenHolder } = api.delegates.tokenHolderById.useQuery(

@@ -1,9 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument */
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { RESERVOIR_API_URL } from "@/constants/env";
 import { env } from "@/env";
@@ -105,7 +100,7 @@ export const getToken = async ({
     const data = await res.json();
 
     return data;
-  } catch (error) {
-    throw new Error("Couldnt fetch tokens");
+  } catch (e) {
+    throw new Error("Couldnt fetch tokens" + (e as string));
   }
 };

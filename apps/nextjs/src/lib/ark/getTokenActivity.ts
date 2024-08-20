@@ -3,7 +3,7 @@ import type { TokenActivity } from "@/types/ark";
 import type { ArkClient } from "./client";
 
 export interface GetTokenActivityApiResponse {
-  data: Token;
+  data: TokenActivity;
 }
 
 interface GetTokenActivityParams {

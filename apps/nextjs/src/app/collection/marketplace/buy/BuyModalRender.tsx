@@ -2,7 +2,6 @@ import type { FC, ReactNode } from "react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useBuyToken } from "@/hooks/market/useBuyToken";
 import { useLordsBalance as useL2LordsBalance } from "@/hooks/token/starknet/useLordsBalance";
-import { useWalletsProviderContext } from "@/providers/WalletsProvider";
 import { api } from "@/trpc/react";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 import { useAccount, useTransactionReceipt } from "@starknet-react/core";
@@ -44,8 +43,8 @@ interface ChildrenProps {
 interface Props {
   open: boolean;
   token:
-    | RouterOutputs["erc721Tokens"]["byId"]
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  | RouterOutputs["erc721Tokens"]["byId"]
+  | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   tokenId?: string;
   defaultQuantity?: number;
   orderId?: number;
@@ -71,7 +70,6 @@ export const BuyModalRender: FC<Props> = ({
   const [missingAmount, setMissingAmount] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const lordsPrice = { usdPrice: 0.11 };
-  const { balances } = useWalletsProviderContext();
   const { data: l2LordsBalance } = useL2LordsBalance();
 
   /*  const blockExplorerBaseUrl =

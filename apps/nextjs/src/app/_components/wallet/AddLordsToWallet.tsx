@@ -5,7 +5,7 @@ import { LORDS } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 
 export const AddLordsToWallet = () => {
-  const { requestAsync, isPending, isError, error } = useWalletRequest({
+  const { requestAsync } = useWalletRequest({
     type: "wallet_watchAsset",
   });
 
@@ -19,6 +19,7 @@ export const AddLordsToWallet = () => {
               params: {
                 type: "ERC20",
                 options: {
+                  // @ts-expect-error address is defined
                   address: LORDS[SUPPORTED_L2_CHAIN_ID].address,
                   decimals: 18,
                   symbol: "LORDS",

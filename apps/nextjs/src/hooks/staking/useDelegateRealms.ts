@@ -9,6 +9,7 @@ export const useDelegateRealms = ({ delegatee }: { delegatee?: string }) => {
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
     abi: RealmsABI,
     address: l2RealmsAddress,
@@ -20,6 +21,7 @@ export const useDelegateRealms = ({ delegatee }: { delegatee?: string }) => {
     ...writeReturn
   } = useSendTransaction({
     calls: delegatee
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
       ? [contract?.populate("delegate", [delegatee])]
       : undefined,
   });

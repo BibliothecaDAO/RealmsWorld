@@ -27,11 +27,13 @@ export const useListToken = ({
   collectionId?: string;
   expirationTime?: string;
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
     abi: MarketplaceABI,
     address: MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract: collectionContract } = useContract({
     abi: ERC721ABI,
     address: collectionId as `0x${string}`,
@@ -50,10 +52,13 @@ export const useListToken = ({
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       collectionContract?.populate("set_approval_for_all", [
         MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`, //Marketplace address
         1,
       ]),
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       contract?.populate("create", [
         tokenId,
         marketplaceId,

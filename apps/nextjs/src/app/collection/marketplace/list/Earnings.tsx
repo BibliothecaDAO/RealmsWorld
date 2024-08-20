@@ -27,7 +27,6 @@ const Earnings: FC<EarningsBreakdownProps> = ({
   royaltiesBps,
 }) => {
   const profit = (1 - (royaltiesBps || 0) * 0.0001) * Number(price) * quantity;
-  100;
 
   if (Number(price) > 0 && royaltiesBps) {
     return (

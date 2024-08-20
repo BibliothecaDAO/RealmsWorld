@@ -28,7 +28,7 @@ export const Transfer = ({ action }: { action: string }) => {
   // const [toastOpen, setToastOpen] = useState(false);
   const [amount, setAmount] = useState<string>("0");
   const { balances, l2loading } = useWalletsProviderContext();
-  const { writeAsync: iniateWithdrawal } = useWriteInitiateWithdrawLords({
+  const { sendAsync: iniateWithdrawal } = useWriteInitiateWithdrawLords({
     amount,
   });
   const { handleData } = useTransfer(TransferToL1Steps);
@@ -146,15 +146,13 @@ export const Transfer = ({ action }: { action: string }) => {
 
         <Link
           className="w-full"
-          href={`/bridge?action=${
-            action == "deposit" ? "withdraw" : "deposit"
-          }`}
+          href={`/bridge?action=${action == "deposit" ? "withdraw" : "deposit"
+            }`}
         >
           <div className="absolute left-1/2 z-10 -ml-4 -mt-5 flex h-8 w-8 rounded-2xl border border-white/5 bg-bright-yellow/60 stroke-black hover:bg-white/90">
             <ArrowUpDown
-              className={`${
-                action == "deposit" ? "rotate-180" : ""
-              } m-auto h-4 w-4 transform self-center stroke-inherit duration-300`}
+              className={`${action == "deposit" ? "rotate-180" : ""
+                } m-auto h-4 w-4 transform self-center stroke-inherit duration-300`}
             />
           </div>
         </Link>

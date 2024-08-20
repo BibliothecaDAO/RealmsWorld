@@ -19,6 +19,7 @@ export const useWriteInitiateWithdrawLords = ({
   const { address: addressL1 } = useL1Account();
 
   const l2BridgeAddress = LORDS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID];
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
     abi: L2BridgeABI,
     address: l2BridgeAddress as `0x${string}`,
@@ -29,6 +30,7 @@ export const useWriteInitiateWithdrawLords = ({
     if (!amount || !addressL1) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       contract?.populate("initiate_withdrawal", [
         addressL1,
         {

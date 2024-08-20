@@ -1,5 +1,4 @@
 import type { CombinedTransaction } from "@/hooks/useTransactions";
-import type { Transaction } from "@/stores/useTransasctionManager";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { TransactionType } from "@/constants/transactions";
 

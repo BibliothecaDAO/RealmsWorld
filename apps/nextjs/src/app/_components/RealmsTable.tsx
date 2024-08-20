@@ -1,7 +1,7 @@
 "use client";
 
 import type { ColumnDef, SortingState } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
@@ -64,9 +64,9 @@ export function RealmsTable<TData>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   );
                 })}

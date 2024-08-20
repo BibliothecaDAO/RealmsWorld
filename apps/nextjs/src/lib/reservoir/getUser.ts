@@ -29,7 +29,7 @@ export const getUser = async ({
     const data = await res.json();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return data;
-  } catch (error) {
-    throw new Error("User Tokens not found");
+  } catch (e) {
+    throw new Error("User Tokens not found" + (e as string));
   }
 };

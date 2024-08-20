@@ -1,5 +1,4 @@
-import type { Realm, UsersRealmsQuery } from "@/types/subgraph";
-import type { ColumnDef } from "@tanstack/react-table";
+import type { UsersRealmsQuery } from "@/types/subgraph";
 import { useState } from "react";
 import Link from "next/link";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
@@ -54,7 +53,7 @@ function UnstakeStep({
       />
       <Button
         onClick={async () => {
-          const hash = await exitFunction({
+          await exitFunction({
             address:
               step.id === "unstake-galleon" ? galleonAddress : carrackAddress,
             abi:
@@ -73,13 +72,11 @@ function UnstakeStep({
                 .filter((id) => id !== undefined),
             ],
           });
-          if (hash) {
-            toast({
-              title: "Unstaked Realms",
-              description: `${Object.keys(selectedRows).length} Realms will soon be available to bridge`,
-            });
-            nextStep();
-          }
+          toast({
+            title: "Unstaked Realms",
+            description: `${Object.keys(selectedRows).length} Realms will soon be available to bridge`,
+          });
+          nextStep();
         }}
         disabled={!Object.keys(selectedRows).length || isPending}
         className="w-full"
@@ -117,21 +114,21 @@ export const StakingMigration = () => {
   const steps = [
     ...(realmsData?.bridgedRealms.length
       ? [
-          {
-            label: `Unstake`,
-            description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Galleon`,
-            id: "unstake-galleon",
-          },
-        ]
+        {
+          label: `Unstake`,
+          description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Galleon`,
+          id: "unstake-galleon",
+        },
+      ]
       : []),
     ...(realmsData?.bridgedV2Realms.length
       ? [
-          {
-            label: `Unstake`,
-            description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Carrack`,
-            id: "unstake-carrack",
-          },
-        ]
+        {
+          label: `Unstake`,
+          description: `${realmsData.wallet?.bridgedRealmsHeld} Realms from Carrack`,
+          id: "unstake-carrack",
+        },
+      ]
       : []),
     {
       label: "Bridge",

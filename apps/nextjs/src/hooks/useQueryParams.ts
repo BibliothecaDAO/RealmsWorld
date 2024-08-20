@@ -32,6 +32,7 @@ export const useQueryParams = () => {
         params.append(key, value);
       }
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       params.get(key) == value ? params.delete(key) : params.set(key, value);
     }
     console.log(params);

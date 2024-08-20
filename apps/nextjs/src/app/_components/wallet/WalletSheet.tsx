@@ -1,12 +1,12 @@
 "use client";
 
-import { Suspense } from "react";
+//import { shortenHex } from "@/utils/utils";
+import { Suspense, useEffect } from "react";
 import Link from "next/link";
 import { Account } from "@/app/bridge/Account";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import {
-  useCall,
   useAccount as useL2Account,
   useNetwork,
   useWalletRequest,
@@ -36,10 +36,15 @@ import { TransactionList } from "./transactions/TransactionList";
 
 export const WalletSheet = () => {
   const {
+    account,
     isConnected: isL2Connected,
-    chainId,
   } = useL2Account();
   const { chain } = useNetwork();
+
+
+  const { request, data } = useWalletRequest({
+    type: "wallet_requestChainId",
+  });
 
   const isStarknetWrongNetwork =
     isL2Connected && data !== undefined && BigInt(data) !== chain.id;

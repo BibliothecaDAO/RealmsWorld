@@ -1,8 +1,9 @@
 import type { PricesResult } from "@/types/ark";
 import { Mobula } from "mobula-sdk";
+import { env } from "@/env"
 
 const mobula = new Mobula({
-  apiKeyAuth: process.env.NEXT_PUBLIC_MOBULA_API_KEY,
+  apiKeyAuth: env.NEXT_PUBLIC_MOBULA_API_KEY,
 });
 
 export async function getPrices(): Promise<PricesResult> {
@@ -19,6 +20,7 @@ export async function getPrices(): Promise<PricesResult> {
         price: response.multiDataResponse.data.starknet?.price as number,
       },
     };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_) {
     return {
       ethereum: { price: 0 },

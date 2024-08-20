@@ -2,7 +2,6 @@ import React from "react";
 
 export default function UserLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
   params: { address: string };

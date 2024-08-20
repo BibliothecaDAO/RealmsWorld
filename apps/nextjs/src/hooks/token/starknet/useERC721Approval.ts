@@ -18,6 +18,7 @@ export const useERC721Approval = ({
 }) => {
   const { address: addressL1 } = useL1Account();
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
     abi: ERC721ABI,
     address: contractAddress as `0x${string}`,
@@ -28,6 +29,7 @@ export const useERC721Approval = ({
     if (!contractAddress || !operator || !addressL1) return [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
       contract?.populate("set_approval_for_all", [
         operator,
         removeApproval ? false : true,

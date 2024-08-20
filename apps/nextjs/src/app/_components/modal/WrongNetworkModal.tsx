@@ -14,7 +14,7 @@ import {
 } from "@realms-world/ui";
 
 export const WrongNetworkModal = () => {
-  const { switchChain, data, error, isPending } = useSwitchChain({
+  const { switchChain, error, isPending } = useSwitchChain({
     params: { chainId: constants.StarknetChainId.SN_SEPOLIA },
   });
   const { disconnect } = useDisconnect();

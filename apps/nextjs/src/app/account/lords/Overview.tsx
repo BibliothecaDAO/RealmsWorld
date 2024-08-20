@@ -42,7 +42,7 @@ export const Overview = () => {
   const { address: l1Address } = useAccount();
   const { address: l2Address } = useL2Account();
 
-  const { balance, claimRewards, isSubmitting, isFetching } =
+  const { balance, claimRewards, isSubmitting } =
     useL2LordsRewards();
 
   const { data, loading } = useStaking();
@@ -65,6 +65,7 @@ export const Overview = () => {
     BigInt(data?.wallet?.bridgedRealmsHeld ?? 0) +
     BigInt(data?.wallet?.bridgedV2RealmsHeld ?? 0);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data: realmsBalance } = useReadContract({
     address: getCollectionAddresses(Collections.REALMS)?.[
       SUPPORTED_L2_CHAIN_ID
@@ -76,6 +77,7 @@ export const Overview = () => {
     refetchInterval: 10000,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data: currentDelegate } = useCurrentDelegate();
 
   return (
@@ -118,6 +120,7 @@ export const Overview = () => {
                   <CardHeader>
                     <CardDescription>Your Realms</CardDescription>
                     <CardTitle className="text-3xl">
+                      {/* eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access*/}
                       {realmsBalance?.toString()}
                     </CardTitle>
                   </CardHeader>
@@ -188,13 +191,13 @@ export const Overview = () => {
                         data={[
                           ...(balance
                             ? [
-                                {
-                                  amount: Number(formatEther(balance)).toFixed(
-                                    5,
-                                  ),
-                                  timestamp: null,
-                                },
-                              ]
+                              {
+                                amount: Number(formatEther(balance)).toFixed(
+                                  5,
+                                ),
+                                timestamp: null,
+                              },
+                            ]
                             : []),
                           ...(lordsRewardsClaims ?? []),
                         ]}

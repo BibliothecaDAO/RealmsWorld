@@ -10,6 +10,7 @@ import {
 import { MarketplaceContract } from "@realms-world/constants";
 
 export const useCancelListing = ({ listingId }: { listingId?: number }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
     abi: MarketplaceABI,
     address: MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`,
@@ -18,7 +19,7 @@ export const useCancelListing = ({ listingId }: { listingId?: number }) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const calls: Call[] = useMemo(() => {
     if (!listingId) return [];
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     return [contract?.populate("cancel", [listingId])];
   }, [contract, listingId]);
 

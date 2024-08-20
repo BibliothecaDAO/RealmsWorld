@@ -11,7 +11,6 @@ import { padAddress, shortenHex } from "@/utils/utils";
 import {
   useAccount,
   useReadContract,
-  useStarkProfile,
 } from "@starknet-react/core";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 import { UserRoundPlus } from "lucide-react";
@@ -54,6 +53,7 @@ export const Profile = ({
   });
   //const { data: starkProfile, isLoading, isError, error } = useStarkProfile({ address: "0x037c6B561b367a85b68668e8663041b9E2F4199c346FBda97dc0c2167F7A6016" });
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data: currentDelegate } = useCurrentDelegate();
 
   const { data: ownerTokens } = api.erc721Tokens.all.useQuery(
@@ -62,6 +62,7 @@ export const Profile = ({
       enabled: !!address,
     },
   );
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data: realmsBalance } = useReadContract({
     address: l2RealmsAddress,
     abi: RealmsABI,
@@ -113,7 +114,7 @@ export const Profile = ({
                         {currentDelegate
                           ? currentDelegate == address
                             ? "self"
-                            : shortenHex(currentDelegate ?? "0x", 8)
+                            : shortenHex(currentDelegate as string, 8)
                           : null}
                       </Badge>
                     </div>
@@ -128,6 +129,7 @@ export const Profile = ({
             </CardHeader>
             <CardContent className="flex max-w-full flex-col gap-4">
               <ProfileForm
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 delegateProfile={delegate.delegateProfile}
                 delegateId={delegate.user}
               />

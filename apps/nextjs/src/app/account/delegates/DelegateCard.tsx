@@ -1,9 +1,8 @@
-//import { useState } from "react";
+// TODO: fix types on delegate.delegateProfileL54+
+/* eslint-disable @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment */
 import Image from "next/image";
 import { ReadMore } from "@/app/_components/ReadMore";
 import { StarkName } from "@/app/_components/StarkName";
-import { useStarkName, useStarkProfile } from "@starknet-react/core";
-import { Github, Twitter } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
@@ -54,9 +53,11 @@ export function DelegateCard({
 
           {delegate.delegateProfile && (
             <div className="mb-2 flex gap-1">
+              { }
               {delegate.delegateProfile.interests
                 ?.slice(0, 3)
-                .map((interest, index) => (
+
+                .map((interest, index: number) => (
                   <Badge
                     key={index}
                     variant={"outline"}
@@ -114,7 +115,7 @@ export function DelegateCard({
         <SocialIcons
           x={delegate.delegateProfile?.twitter ?? undefined}
           github={delegate.delegateProfile?.github ?? undefined}
-          //discord={delegate.delegateProfile?.discord ?? undefined}
+        //discord={delegate.delegateProfile?.discord ?? undefined}
         />
       </CardFooter>
     </Card>

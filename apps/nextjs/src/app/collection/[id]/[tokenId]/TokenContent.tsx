@@ -1,6 +1,5 @@
 "use client";
 
-import type { Token } from "@/types";
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { BuyButton } from "@/app/collection/reservoir/BuyModal";
 import { ListingModal } from "@/app/collection/reservoir/ListingModal";

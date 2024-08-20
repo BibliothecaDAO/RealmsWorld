@@ -1,4 +1,4 @@
-import { auth, signIn, signOut } from "@realms-world/auth";
+import { auth, signOut } from "@realms-world/auth";
 
 import { SIWSLogin } from "./SIWSLogin";
 

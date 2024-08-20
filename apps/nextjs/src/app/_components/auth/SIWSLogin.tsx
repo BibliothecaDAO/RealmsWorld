@@ -19,7 +19,7 @@ import { createSiwsData } from "./createSiwsData";
 export function SIWSLogin({ buttonText }: { buttonText?: string }) {
   const { address } = useAccount();
   const [signInData, setSignInData] = useState<SiwsTypedData>();
-  const { data: session } = useSession();
+  useSession();
 
   useEffect(() => {
     const createSignInData = async () => {

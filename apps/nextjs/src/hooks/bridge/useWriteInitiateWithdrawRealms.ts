@@ -1,10 +1,9 @@
-import type { Abi, Call } from "starknet";
+import type { Call } from "starknet";
 import { useMemo } from "react";
 import { RealmsBridge } from "@/abi/L2/RealmsBridge";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
   useContract,
-  useNetwork,
   useSendTransaction,
 } from "@starknet-react/core";
 import { useAccount as useL1Account } from "wagmi";
@@ -18,16 +17,19 @@ export const useWriteInitiateWithdrawRealms = ({
 }) => {
   const { address: addressL1 } = useL1Account();
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
     abi: RealmsBridge,
-    address: REALMS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID],
+    address: REALMS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID] as `0x${string}`,
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const calls: Call[] = useMemo(() => {
     if (!selectedTokenIds.length || !addressL1) return [];
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return [
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       contract?.populate("deposit_tokens", [
         Date.now(),
         addressL1,

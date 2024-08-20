@@ -28,6 +28,7 @@ export const useL2LordsRewards = () => {
   const [previousBalance, setPreviousBalance] = useState<bigint | null>(null);
   const [easedBalance, setEasedBalance] = useState<bigint | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data: balance, isFetching } = useReadContract({
     address: l2RealmsAddress,
     abi: RealmsABI,
@@ -40,7 +41,9 @@ export const useL2LordsRewards = () => {
 
   useEffect(() => {
     if (balance !== undefined && balance !== previousBalance) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const start = previousBalance ?? balance;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const end = balance;
       const duration = 1000; // duration of the easing in ms
       const startTime = Date.now();
@@ -49,14 +52,17 @@ export const useL2LordsRewards = () => {
         const now = Date.now();
         const elapsed = now - startTime;
         const progress = Math.min(elapsed / duration, 1);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const easedValue =
           start + BigInt(Math.round(Number(end - start) * progress));
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setEasedBalance(easedValue);
 
         if (progress < 1) {
           requestAnimationFrame(ease);
         } else {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setPreviousBalance(balance);
         }
       };
@@ -65,6 +71,7 @@ export const useL2LordsRewards = () => {
     }
   }, [balance, previousBalance, isFetching]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
     abi: RealmsABI,
     address: l2RealmsAddress,
@@ -73,7 +80,7 @@ export const useL2LordsRewards = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const calls: Call[] = useMemo(() => {
     if (!l2Address) return [];
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     return [contract?.populate("reward_claim", [])];
   }, [l2Address, contract]);
 

@@ -1,9 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access */
 import { useCallback, useEffect, useState } from "react";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import {
@@ -31,8 +26,8 @@ export const TransferError = {
   MAX_TOTAL_BALANCE_ERROR: 1,
 };
 
-export const stepOf = (step: any, steps: any) => {
-  return steps.indexOf(step);
+export const stepOf = (step: any, steps: any): boolean => {
+  return steps.includes(step);
 };
 
 export const useTransferToL2 = () => {
@@ -111,12 +106,12 @@ export const useTransferToL2 = () => {
       );
       const hash = l2Address
         ? await writeAsync({
-            amount: parseUnits(amount, 18),
-            l2Address: l2Address,
-          })
+          amount: parseUnits(amount, 18),
+          l2Address: l2Address,
+        })
         : null;
 
-      hash && onTransactionHash(error, hash, amount);
+      onTransactionHash(error, hash as string, amount);
     },
     [connector?.name, handleProgress, progressOptions, writeAsync, error],
   );

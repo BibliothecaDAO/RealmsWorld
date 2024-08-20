@@ -14,7 +14,6 @@ import {
   getCollectionAddresses,
   REALMS_BRIDGE_ADDRESS,
 } from "@realms-world/constants";
-import { toast } from "@realms-world/ui";
 
 import { useERC721Approval } from "../token/starknet/useERC721Approval";
 import useStore from "../useStore";
@@ -31,6 +30,7 @@ export function useBridgeL2Realms({
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data: isApprovedForAll } = useReadContract({
     abi: ERC721ABI,
     address: l2RealmsAddress,
@@ -76,6 +76,7 @@ export function useBridgeL2Realms({
   }, [sendAsync, transactions]);
 
   return {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     isApprovedForAll,
     initiateWithdraw,
     ...writeReturn,

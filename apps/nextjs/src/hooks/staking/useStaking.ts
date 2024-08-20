@@ -48,18 +48,15 @@ export const useStaking = () => {
     });
   const { numTokens, balance, claimAirdrop: claimPoolV2 } = useAirdropClaim();
   const {
-    isPending: isGalleonClaimLoading,
     writeContract: claimGalleon,
     error: galleonClaimError,
   } = useWriteContract();
   const {
-    isPending: isCarrackClaimLoading,
     writeContract: claimCarrack,
     error: carrackClaimError,
   } = useWriteContract();
 
   const {
-    isPending: isPoolClaimLoading,
     writeContract: claimPoolV1,
     error: poolClaimError,
   } = useWriteContract();

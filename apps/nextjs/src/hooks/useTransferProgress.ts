@@ -1,9 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
 
 import { useMemo } from "react";
 
@@ -15,13 +10,14 @@ const evaluate = (template: any, model: any) => {
       let value =
         // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         model[key] !== undefined && model[key] !== null ? model[key] : "";
-      if (typeof value === "string" && value.indexOf('"') > -1) {
+      if (typeof value === "string" && value.includes('"')) {
         value = value.replace(/"/g, '\\"');
       }
       reg_1 = new RegExp("{{".concat(key, "}}"), "g");
       res_1 = res_1.replace(reg_1, value);
     });
     return res_1;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (ex) {
     return "";
   }
