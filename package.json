@@ -29,20 +29,18 @@
     "ui-add": "turbo run ui-add",
     "test": "vitest"
   },
+  "prettier": "@realms-world/prettier-config",
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
     "@turbo/gen": "^2.0.14",
     "million": "^3.1.11",
+    "mobula-sdk": "^1.6.0",
     "npm-check-updates": "^17.0.6",
+    "nuqs": "^1.17.8",
     "prettier": "^3.3.3",
     "tsup": "^8.2.4",
     "turbo": "2.0.12",
-    "mobula-sdk": "^1.6.0",
-    "nuqs": "^1.17.8",
-    "typescript": "^5.5.4"
-  },
-  "prettier": "@realms-world/prettier-config",
-  "devDependencies": {
+    "typescript": "^5.5.4",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.0.5",
     "vitest-tsconfig-paths": "^3.4.1"
