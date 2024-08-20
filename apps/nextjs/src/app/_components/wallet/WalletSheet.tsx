@@ -1,13 +1,11 @@
 "use client";
 
-//import { shortenHex } from "@/utils/utils";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import Link from "next/link";
 import { Account } from "@/app/bridge/Account";
-import { NETWORK_NAME } from "@/constants/env";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { useCall, useAccount as useL2Account, useNetwork, useWalletRequest } from "@starknet-react/core";
+import { useAccount as useL2Account, useNetwork } from "@starknet-react/core";
 
 import {
   Button,
@@ -33,32 +31,13 @@ import { TransactionList } from "./transactions/TransactionList";
 
 export const WalletSheet = () => {
   const {
-    account,
-    address: l2Address,
     isConnected: isL2Connected,
     chainId,
   } = useL2Account();
   const { chain } = useNetwork();
-  const [isWrongNetwork, setIsWrongNetwork] = useState(false);
-
-  const NETWORK_ID = {
-    mainnet: 23448594291968334n,
-    sepolia: 393402133025997798000961n,
-  };
-
-  const { request, data } = useWalletRequest({
-    type: "wallet_requestChainId",
-  });
 
   const isStarknetWrongNetwork = isL2Connected &&
-    data !== undefined && BigInt(data) !== chain.id;
-
-  // TODO refactor back to default Chain Id when starknet-react supports
-  useEffect(() => {
-    if (account?.address !== undefined) {
-      request();
-    }
-  }, [account?.address, request]);
+    chainId !== undefined && BigInt(chainId) !== chain.id;
 
   const { isAccountOpen, toggleAccount } = useUIStore((state) => state);
 
@@ -105,7 +84,6 @@ export const WalletSheet = () => {
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button
-                      //disabled={!realms?.length}
                       className="self-center"
                       size={"sm"}
                       variant={"outline"}

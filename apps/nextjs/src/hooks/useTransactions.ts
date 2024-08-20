@@ -39,7 +39,6 @@ export const useTransactions = () => {
     }),
     [address, l2Address],
   );
-  console.log(filters);
 
   const { data: l2BridgeTransactions } = api.erc721Bridge.all.useQuery(
     filters,
