@@ -3,13 +3,7 @@
   "engines": {
     "node": ">=20.16.0"
   },
-  "packageManager": "bun@1.1.24",
-  "workspaces": [
-    "apps/*",
-    "config/*",
-    "packages/*",
-    "tooling/*"
-  ],
+  "packageManager": "pnpm@9.7.1",
   "scripts": {
     "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
@@ -32,10 +26,15 @@
     "@turbo/gen": "^2.0.14",
     "million": "^3.1.11",
     "npm-check-updates": "^17.0.6",
-    "prettier": "^3.3.3",
+    "prettier": "catalog:",
     "tsup": "^8.2.4",
     "turbo": "2.0.14",
-    "typescript": "^5.5.4"
+    "typescript": "catalog:"
+  },
+  "pnpm": {
+    "overrides": {
+      "react-is": "catalog:react19"
+    }
   },
   "prettier": "@realms-world/prettier-config"
 }

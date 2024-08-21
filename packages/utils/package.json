@@ -23,9 +23,9 @@
     "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
-    "@realms-world/tsconfig": "*",
+    "@realms-world/tsconfig": "workspace:*",
     "@types/node": "^20.14.9",
-    "typescript": "^5.5.4"
+    "typescript": "catalog:"
   },
   "publishConfig": {
     "access": "restricted"
