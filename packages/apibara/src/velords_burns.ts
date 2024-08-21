@@ -1,5 +1,5 @@
 import type { Config } from "https://esm.sh/@apibara/indexer";
-import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
+//import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import type { Postgres } from "https://esm.sh/@apibara/indexer/sink/postgres";
 //import type { Webhook } from "https://esm.sh/@apibara/indexer/sink/webhook";
 import type { Block, Starknet } from "https://esm.sh/@apibara/indexer/starknet";
@@ -13,7 +13,7 @@ function eventKey(name: string) {
 
 const REWARD_RECEIVED = eventKey("RewardReceived");
 
-export const config: Config<Starknet, Console> = {
+export const config: Config<Starknet, Postgres> = {
   streamUrl: Deno.env.get("STREAM_URL"),
   startingBlock: Number(Deno.env.get("VELORDS_STARTING_BLOCK")),
   network: "starknet",
@@ -30,8 +30,12 @@ export const config: Config<Starknet, Console> = {
       },
     ],
   },
-  sinkType: "console",
-  sinkOptions: {},
+  sinkType: "postgres",
+  sinkOptions: {
+    connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
+    tableName: "velords_burns",
+    entityMode: false,
+  },
 };
 
 export default function transform({ header, events }: Block) {
