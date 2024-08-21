@@ -1,5 +1,5 @@
 import type { Config } from "https://esm.sh/@apibara/indexer";
-//import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
+import type { Console } from "https://esm.sh/@apibara/indexer/sink/console";
 import type { Postgres } from "https://esm.sh/@apibara/indexer/sink/postgres";
 //import type { Webhook } from "https://esm.sh/@apibara/indexer/sink/webhook";
 import type { Block, Starknet } from "https://esm.sh/@apibara/indexer/starknet";
@@ -13,7 +13,7 @@ function eventKey(name: string) {
 
 const REWARD_RECEIVED = eventKey("RewardReceived");
 
-export const config: Config<Starknet, Postgres> = {
+export const config: Config<Starknet, Console> = {
   streamUrl: Deno.env.get("STREAM_URL"),
   startingBlock: Number(Deno.env.get("VELORDS_STARTING_BLOCK")),
   network: "starknet",
@@ -30,24 +30,22 @@ export const config: Config<Starknet, Postgres> = {
       },
     ],
   },
-  sinkType: "postgres",
-  sinkOptions: {
-    connectionString: Deno.env.get("POSTGRES_CONNECTION_STRING"),
-    tableName: "velords_burns",
-    entityMode: false,
-  },
+  sinkType: "console",
+  sinkOptions: {},
 };
 
 export default function transform({ header, events }: Block) {
   return events?.flatMap(({ event, transaction }) => {
     const transactionHash = transaction.meta.hash;
-
+    const [amountLow, amountHigh] = event.data;
+    const amountRaw = uint256.uint256ToBN({ low: amountLow, high: amountHigh });
+    const amount = formatUnits(amountRaw, 18);
     switch (event.keys[0]) {
       case REWARD_RECEIVED: {
         return {
           hash: transactionHash,
           sender: event.keys[0],
-          amount: event.data[0],
+          amount: amount,
           timestamp: header?.timestamp,
         };
       }
