@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access */
 import { useCallback, useEffect, useState } from "react";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import {
@@ -26,9 +26,16 @@ export const TransferError = {
   MAX_TOTAL_BALANCE_ERROR: 1,
 };
 
-export const stepOf = (step: any, steps: any): boolean => {
+export const stepOf = (step: string, steps: string[]): boolean => {
   return steps.includes(step);
 };
+export const getStep = (step: string, steps: string[]): string => {
+  const activeStep = steps.find((s) => s === step);
+  if (!activeStep) {
+    throw new Error(`Step ${step} not found in steps ${steps.join(",")}`);
+  }
+  return activeStep;
+}
 
 export const useTransferToL2 = () => {
   const [amount, setAmount] = useState("");
@@ -93,7 +100,7 @@ export const useTransferToL2 = () => {
             progressOptions.deposit(
               amount,
               "Lords",
-              stepOf(TransferStep.DEPOSIT, TransferToL2Steps),
+              getStep(TransferStep.DEPOSIT, TransferToL2Steps),
             ),
           );
         }
@@ -101,7 +108,7 @@ export const useTransferToL2 = () => {
       handleProgress(
         progressOptions.waitForConfirm(
           connector?.name ?? "Wallet",
-          stepOf(TransferStep.CONFIRM_TX, TransferToL2Steps),
+          getStep(TransferStep.CONFIRM_TX, TransferToL2Steps),
         ),
       );
       const hash = l2Address
@@ -143,7 +150,7 @@ export const useTransferToL2 = () => {
         handleProgress(
           progressOptions.approval(
             "Lords",
-            stepOf(TransferStep.APPROVE, TransferToL2Steps),
+            getStep(TransferStep.APPROVE, TransferToL2Steps),
           ),
         );
         console.log("Current allow value", formatEther(allowance ?? BigInt(0)));

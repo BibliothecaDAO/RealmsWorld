@@ -21,6 +21,7 @@ export const useWriteInitiateWithdrawLords = ({
   const l2BridgeAddress = LORDS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID];
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
+    // @ts-expect-error check starknet-react type
     abi: L2BridgeABI,
     address: l2BridgeAddress as `0x${string}`,
   });

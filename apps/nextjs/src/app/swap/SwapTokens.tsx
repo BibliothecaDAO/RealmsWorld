@@ -47,7 +47,7 @@ export const SwapTokens = ({
   const [errorMessage, setErrorMessage] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
   const { address, account } = useAccount();
-  const { balances, l2loading } = useWalletsProviderContext();
+  const { balances } = useWalletsProviderContext();
   const [selectedToken, setSelectedToken] = useState("ETH");
 
   const getTokenBySymbol = (symbol: string) => {
@@ -62,7 +62,7 @@ export const SwapTokens = ({
 
   const { data } = useBalance({
     address,
-    token: selectedTokenObj?.address,
+    token: selectedTokenObj?.address as `0x${string}`,
     watch: false,
   });
   const isDebouncing = useDebounce(sellAmount, 350) !== sellAmount;
@@ -176,11 +176,12 @@ export const SwapTokens = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBuyLords, selectedTokenObj, isBuyInputDebouncing, buyAmount]);
 
-  const handleSwap = () => {
+  const handleSwap = useEffect(() => {
     if (!account || !sellAmount || !quotes[0]) return;
     setErrorMessage("");
     setSuccessMessage("");
     setLoading(true);
+    // @ts-expect-error TODO
     executeSwap(account, quotes[0], {}, AVNU_OPTIONS)
       .then(() => {
         setSuccessMessage("success");
@@ -191,7 +192,7 @@ export const SwapTokens = ({
         setLoading(false);
         setErrorMessage(error.message);
       });
-  };
+  }, [account, quotes, sellAmount]);
 
   /*if (!account) {
     return <button onClick={handleConnect}>Connect Wallet</button>
@@ -220,9 +221,9 @@ export const SwapTokens = ({
             value={
               quotes[0]
                 ? formatUnits(
-                    quotes[0].buyAmount,
-                    selectedTokenObj?.decimals ?? 18,
-                  )
+                  quotes[0].buyAmount,
+                  selectedTokenObj?.decimals ?? 18,
+                )
                 : buyAmount
             }
           />
@@ -314,7 +315,7 @@ export const SwapTokens = ({
             onClick={() => setSellAmount(formatEther(BigInt(sellBalance)))}
             balance={sellBalance}
             symbol=""
-            isLoading={l2loading && !balances.l2.lords}
+            isLoading={!balances.l2.lords}
           />
         </div>
       </div>
@@ -325,9 +326,8 @@ export const SwapTokens = ({
           tabIndex={0}
         >
           <ArrowUpDown
-            className={`${
-              isBuyLords ? "rotate-180" : ""
-            } m-auto h-4 w-4 transform self-center stroke-inherit duration-300`}
+            className={`${isBuyLords ? "rotate-180" : ""
+              } m-auto h-4 w-4 transform self-center stroke-inherit duration-300`}
           />
         </button>
       )}
@@ -345,7 +345,7 @@ export const SwapTokens = ({
           disabled={
             loading || !sellAmount || parseEther(sellAmount) > sellBalance
           }
-          onClick={handleSwap}
+          onClick={() => handleSwap}
           className="mt-2 w-full"
         >
           {buttonContent()}

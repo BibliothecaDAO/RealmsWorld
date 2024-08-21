@@ -31,16 +31,13 @@ export const ContractImage = ({
     functionName: "token_uri",
     args: [tokenId],
     abi: L2_C1ERC20,
-    address: tokenAddress,
+    address: tokenAddress as `0x${string}`,
     watch: true,
   });
   const tokenUriData = useMemo(() => {
-    //@ts-expect-error data does have length
     if (data?.length) {
       const value = [];
-      //@ts-expect-error data does have length
       for (let i = 1; i < data.length; i++) {
-        //@ts-expect-error data does have length
         const result = shortString.decodeShortString(data[i]);
         value.push(result);
       }

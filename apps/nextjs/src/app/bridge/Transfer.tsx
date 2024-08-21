@@ -27,7 +27,7 @@ export const Transfer = ({ action }: { action: string }) => {
   const { address: l2Address } = useAccount();
   // const [toastOpen, setToastOpen] = useState(false);
   const [amount, setAmount] = useState<string>("0");
-  const { balances, l2loading } = useWalletsProviderContext();
+  const { balances } = useWalletsProviderContext();
   const { sendAsync: iniateWithdrawal } = useWriteInitiateWithdrawLords({
     amount,
   });
@@ -91,7 +91,7 @@ export const Transfer = ({ action }: { action: string }) => {
                 : (balances.l1.lords ?? BigInt(0))
             }
             symbol="Lords"
-            isLoading={isL2 ? l2loading && !balances.l2.lords : false}
+            isLoading={isL2 ? !balances.l2.lords : false}
           />
         </div>
       </>

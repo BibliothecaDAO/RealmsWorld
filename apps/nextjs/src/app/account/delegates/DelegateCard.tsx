@@ -1,5 +1,5 @@
 // TODO: fix types on delegate.delegateProfileL54+
-/* eslint-disable @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-assignment */
+
 import Image from "next/image";
 import { ReadMore } from "@/app/_components/ReadMore";
 import { StarkName } from "@/app/_components/StarkName";
@@ -20,11 +20,19 @@ import {
 import { SocialIcons } from "../../_components/SocialIcons";
 import { DelegateActions } from "./DelegateActions";
 
+interface DelegateCardProps {
+  delegate: RouterOutputs["delegates"]["all"]["items"][0] & {
+    delegateProfile?: NonNullable<{
+      interests: string[];
+      statement: string;
+      github: string;
+      twitter: string;
+    }>;
+  }
+}
 export function DelegateCard({
   delegate,
-}: {
-  delegate: RouterOutputs["delegates"]["all"]["items"][0];
-}) {
+}: DelegateCardProps) {
   //const { data, isLoading, isError } = useStarkProfile({ address: delegate.id });
 
   //const starkName = useStarkDisplayName(delegate.id);
@@ -51,51 +59,55 @@ export function DelegateCard({
             </div>
           </div>
 
-          {delegate.delegateProfile && (
-            <div className="mb-2 flex gap-1">
-              { }
-              {delegate.delegateProfile.interests
-                ?.slice(0, 3)
+          {
+            delegate.delegateProfile && (
+              <div className="mb-2 flex gap-1">
+                {
+                  delegate.delegateProfile.interests
+                    .slice(0, 3)
 
-                .map((interest, index: number) => (
-                  <Badge
-                    key={index}
-                    variant={"outline"}
-                    className="px-1 py-0.5 text-xs"
-                  >
-                    {interest}
-                  </Badge>
-                ))}
-              {delegate.delegateProfile.interests &&
-                delegate.delegateProfile.interests.length > 3 && (
-                  <Popover>
-                    <PopoverTrigger asChild>
+                    .map((interest: string, index: number) => (
                       <Badge
+                        key={index}
                         variant={"outline"}
-                        className="cursor-pointer px-1 py-0.5 text-xs"
+                        className="px-1 py-0.5 text-xs"
                       >
-                        +{delegate.delegateProfile.interests.length - 3}
+                        {interest}
                       </Badge>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-96">
-                      <div className="flex flex-wrap gap-1">
-                        {delegate.delegateProfile.interests
-                          .slice(3)
-                          .map((interest, index) => (
-                            <Badge
-                              key={index}
-                              variant={"outline"}
-                              className="px-1 py-0.5 text-xs"
-                            >
-                              {interest}
-                            </Badge>
-                          ))}
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                )}
-            </div>
-          )}
+                    ))}
+                {
+                  delegate.delegateProfile.interests.length > 3 && (
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Badge
+                          variant={"outline"}
+                          className="cursor-pointer px-1 py-0.5 text-xs"
+                        >
+                          +{
+                            delegate.delegateProfile.interests.length - 3}
+                        </Badge>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-96">
+                        <div className="flex flex-wrap gap-1">
+                          {
+                            delegate.delegateProfile.interests
+                              .slice(3)
+                              .map((interest: string, index: number) => (
+                                <Badge
+                                  key={index}
+                                  variant={"outline"}
+                                  className="px-1 py-0.5 text-xs"
+                                >
+                                  {interest}
+                                </Badge>
+                              ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  )}
+              </div>
+            )
+          }
         </CardTitle>
       </CardHeader>
       {delegate.delegateProfile && (

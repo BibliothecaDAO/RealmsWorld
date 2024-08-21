@@ -191,3 +191,16 @@ export interface TokenOffer {
   price: string;
   source: string;
 }
+
+export interface Token {
+  collection_image: string;
+  collection_name: string;
+  collection_address: string;
+  last_price?: string;
+  metadata?: TokenMetadata;
+  owner: string;
+  price?: string;
+  top_offer?: string;
+  token_id: string;
+}
+

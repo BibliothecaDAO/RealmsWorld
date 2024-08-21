@@ -29,7 +29,7 @@ export const VeLords = () => {
   const { address } = useAccount();
   const { isLoading, data } = useBalance({
     address,
-    token: LORDS[SUPPORTED_L2_CHAIN_ID]?.address,
+    token: LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`,
     watch: true,
   });
   const [amount, setAmount] = useState<string>();

@@ -11,9 +11,9 @@ export const RenderExplorers = ({ isL1 = true }) => {
   const { address } = useAccount();
   const { address: l2address } = useL2Account();
 
-  const explorersL1 = [{ text: address, url: ETHERSCAN_ACCOUNT_URL(address) }];
+  const explorersL1 = [{ text: address, url: ETHERSCAN_ACCOUNT_URL(address as string) }];
   const explorersL2 = [
-    { text: l2address, url: STARKSCAN_ACCOUNT_URL(l2address) },
+    { text: l2address, url: STARKSCAN_ACCOUNT_URL(l2address as string) },
   ];
   const explorers = isL1 ? explorersL1 : explorersL2;
 

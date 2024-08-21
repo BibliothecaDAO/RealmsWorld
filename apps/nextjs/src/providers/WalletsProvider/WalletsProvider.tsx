@@ -35,7 +35,6 @@ interface WalletsProviderContextValue {
       eth?: bigint;
     };
   };
-  l2loading: boolean;
   refetch: () => void;
 }
 
@@ -126,7 +125,6 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     accountHash,
     tokens,
     // updateTokenBalance,
-    //l2loading: l2LordsIsLoading || l2EthIsLoading,
     refetch: refetch,
     balances: {
       l1: {
@@ -134,11 +132,9 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
         lords: l1LordsBalance?.value,
       },
       l2: {
-        //@ts-expect-error incorrect SN react types
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         eth: l2EthBalance?.balance
-          ? //@ts-expect-error incorrect SN react types
-
+          ?
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
           uint256.uint256ToBN(l2EthBalance.balance)
           : 0n,

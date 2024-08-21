@@ -34,6 +34,7 @@ const TransactionSubmittedModalButton = ({
   const { type, l2hash, l1hash } = transfer;
   const isTransferCompleted = l1hash && l2hash;
 
+  if (l1hash === undefined || l2hash === undefined) return null;
   let explorers;
 
   if (type === ActionType.TRANSFER_TO_L2 || isTransferCompleted) {

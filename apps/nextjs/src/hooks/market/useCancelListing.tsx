@@ -12,6 +12,7 @@ import { MarketplaceContract } from "@realms-world/constants";
 export const useCancelListing = ({ listingId }: { listingId?: number }) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
+    // @ts-expect-error check starknet-react type
     abi: MarketplaceABI,
     address: MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`,
   });

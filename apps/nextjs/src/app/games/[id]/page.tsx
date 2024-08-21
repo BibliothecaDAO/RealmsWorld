@@ -258,7 +258,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               </div>
 
               <div className="flex-col space-y-2">
-                {game.playable && (
+                {game.playable && game.links.homepage && (
                   <Button
                     size={"lg"}
                     variant={"default"}

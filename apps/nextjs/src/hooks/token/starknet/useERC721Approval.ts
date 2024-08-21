@@ -20,6 +20,7 @@ export const useERC721Approval = ({
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
+    // @ts-expect-error check starknet-react type
     abi: ERC721ABI,
     address: contractAddress as `0x${string}`,
   });

@@ -49,7 +49,8 @@ export default function Mint() {
 
   const {
     data: mintData,
-    write,
+    // FIX: this may wont work
+    send: write,
     isPending: isTxSubmitting,
   } = useSendTransaction({
     calls: [
@@ -99,7 +100,7 @@ export default function Mint() {
                 className="mr-4"
                 disabled={isLoading}
                 size={"lg"}
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
+
                 onClick={() => write()}
               >
                 {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
@@ -125,21 +126,23 @@ export default function Mint() {
                     high: (submittedData as any)?.events[1]?.data[3],
                   })
                   .toString()}
-                <Button
-                  className="justify-between normal-case"
-                  size={"xs"}
-                  variant={"outline"}
-                  rel="noopener noreferrer"
-                  asChild
-                >
-                  <Link
-                    target="_blank"
-                    href={STARKSCAN_TX_URL(mintData?.transaction_hash)}
+                {mintData?.transaction_hash &&
+                  <Button
+                    className="justify-between normal-case"
+                    size={"xs"}
+                    variant={"outline"}
+                    rel="noopener noreferrer"
+                    asChild
                   >
-                    <span>View Tx Explorer</span>
-                    <ExternalLinkIcon className="ml-2 h-3 w-3" />
-                  </Link>
-                </Button>
+                    <Link
+                      target="_blank"
+                      href={STARKSCAN_TX_URL(mintData.transaction_hash)}
+                    >
+                      <span>View Tx Explorer</span>
+                      <ExternalLinkIcon className="ml-2 h-3 w-3" />
+                    </Link>
+                  </Button>
+                }
               </>
             ) : (
               <Loader2 className="ml-2 h-8 w-8 animate-spin" />

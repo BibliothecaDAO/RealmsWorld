@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion,@typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-non-null-assertion,@typescript-eslint/no-explicit-any */
 import { erc721Tokens } from "@/constants";
 import { ChainType } from "@/constants/tokens";
+import type { Mock } from "vitest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { Fetcher } from "./client";
@@ -56,13 +57,15 @@ vi.mock("mobula-sdk", () => {
 });
 
 describe("ArkApi", () => {
-  let fetchMock: Fetcher<any>;
+  let fetchMock: Mock<Fetcher<any>>;
   let client: ArkClient;
   beforeEach(() => {
+
+    // @ts-expect-error testing mock may not cause type errors...
     fetchMock = vi.fn(() => ({
       json: () => Promise.resolve({}),
-    })) as Fetcher<any>;
-    client = new ArkClient(fetchMock);
+    }));
+    client = new ArkClient(fetchMock, "http://localhost:9999");
   });
 
   it("should get collections", async () => {

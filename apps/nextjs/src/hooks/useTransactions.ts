@@ -76,13 +76,12 @@ export const useTransactions = () => {
             TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM;
           matchingTransaction.chainId = SUPPORTED_L1_CHAIN_ID;
         } else {
+          const hash = withdrawal.withdrawalEvents[0] === undefined ? "" : withdrawal.withdrawalEvents[0].finishedTxHash ?? withdrawal.withdrawalEvents[0].createdTxHash;
           map.set(BigInt(withdrawal.req_hash), {
             ...withdrawal,
             chainId: SUPPORTED_L1_CHAIN_ID,
             req_hash: withdrawal.req_hash.toString(),
-            hash:
-              withdrawal.withdrawalEvents[0]?.finishedTxHash ??
-              withdrawal.withdrawalEvents[0]?.createdTxHash,
+            hash,
             l1Account: padAddress(address),
             l2Account: padAddress(l2Address),
             timestamp: new Date(
@@ -115,7 +114,7 @@ export const useTransactions = () => {
     // Add transactions to the map, deduplicating by hash
     transactionsArray.forEach((tx) => {
       if (tx.hash && !transactionsMap.has(tx.hash)) {
-        transactionsMap.set(tx.hash, tx);
+        transactionsMap.set(tx.hash, tx as CombinedTransaction);
       }
     });
 

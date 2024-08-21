@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-const evaluate = (template: any, model: any) => {
+const evaluateTemplateVars = (template: any, model: any) => {
   try {
     let reg_1;
     let res_1 = template;
@@ -51,7 +51,7 @@ const transferProgressStrings = {
 export const useTransferProgress = () => {
   return useMemo(
     () => ({
-      approval: (symbol: string, activeStep: number) => {
+      approval: (symbol: string, activeStep: string) => {
         const { approval } = transferProgressStrings;
         const message = approval.message;
         return {
@@ -60,9 +60,9 @@ export const useTransferProgress = () => {
           activeStep,
         };
       },
-      deposit: (amount: string, symbol: string, activeStep: number) => {
+      deposit: (amount: string, symbol: string, activeStep: string) => {
         const { deposit } = transferProgressStrings;
-        const message = evaluate(deposit.message, { amount, symbol });
+        const message = evaluateTemplateVars(deposit.message, { amount, symbol });
         return {
           type: deposit.type,
           message,
@@ -75,26 +75,26 @@ export const useTransferProgress = () => {
         activeStep: number,
       ) => {
         const { initiateWithdraw } = transferProgressStrings;
-        const message = evaluate(initiateWithdraw.message, { amount, symbol });
+        const message = evaluateTemplateVars(initiateWithdraw.message, { amount, symbol });
         return {
           type: initiateWithdraw.type,
           message,
           activeStep,
         };
       },
-      waitForConfirm: (walletName: string, activeStep: number) => {
+      waitForConfirm: (walletName: string, activeStep: string) => {
         const { waitForConfirm } = transferProgressStrings;
-        const type = evaluate(waitForConfirm.type, { walletName });
-        const message = evaluate(waitForConfirm.message, { walletName });
+        const type = evaluateTemplateVars(waitForConfirm.type, { walletName });
+        const message = evaluateTemplateVars(waitForConfirm.message, { walletName });
         return {
           type,
           message,
           activeStep,
         };
       },
-      withdraw: (amount: number, symbol: string, activeStep: number) => {
+      withdraw: (amount: number, symbol: string, activeStep: string) => {
         const { withdraw } = transferProgressStrings;
-        const message = evaluate(withdraw.message, { amount, symbol });
+        const message = evaluateTemplateVars(withdraw.message, { amount, symbol });
         return {
           type: withdraw.type,
           message,

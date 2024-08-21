@@ -116,6 +116,7 @@ export const TransferLog = ({
         disabled={!l1hash}
         asChild
       >
+        {/* @ts-expect-error button is disabled if l1hash is not defined */}
         <Link href={STARKSCAN_ETH_TX_URL(l1hash)} target="_blank">
           <span>{`${NetworkType.L1} Tx`}</span>
           <ExternalLinkIcon className="ml-2 h-3 w-3" />

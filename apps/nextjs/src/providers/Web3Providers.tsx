@@ -26,8 +26,8 @@ import { TransferLogProvider } from "./TransferLogProvider";
 
 const starkProvider = env.NEXT_PUBLIC_BLAST_API
   ? blastProvider({
-      apiKey: env.NEXT_PUBLIC_BLAST_API,
-    })
+    apiKey: env.NEXT_PUBLIC_BLAST_API,
+  })
   : starkPublicProvider();
 
 const starkConnectors = [
@@ -65,45 +65,48 @@ export function Web3Providers({ children }: { children: ReactElement }) {
     // Randomize the order of the connectors.
     order: "alphabetical",
   });*/
-  return (
-    <StarknetConfig
-      autoConnect
-      chains={[
+  // @ts-expect-error check starknet-react types
+  return <StarknetConfig
+    autoConnect
+    chains={
+      [
         ...(env.NEXT_PUBLIC_IS_TESTNET === "true"
           ? [starkSepolia]
           : [starkMainnet]),
-      ]}
-      provider={starkProvider}
-      connectors={starkConnectors}
-    >
-      <WagmiProvider config={config}>
-        <RainbowKitProvider>
-          <TransferLogProvider>
-            <ReservoirKitProvider
-              options={{
-                apiKey: env.NEXT_PUBLIC_RESERVOIR_API_KEY,
-                chains: [
-                  {
-                    id: 1,
-                    name: "mainnet",
-                    baseApiUrl: "https://api.reservoir.tools",
-                    active: true,
-                  },
-                  {
-                    id: 11155111,
-                    name: "sepolia",
-                    baseApiUrl: "https://api-sepolia.reservoir.tools",
-                    active: true,
-                  },
-                ],
-              }}
-              theme={theme}
-            >
-              {children}
-            </ReservoirKitProvider>
-          </TransferLogProvider>
-        </RainbowKitProvider>
-      </WagmiProvider>
-    </StarknetConfig>
-  );
+      ]
+    }
+    provider={starkProvider}
+    // @ts-expect-error check starknet-react types
+    connectors={starkConnectors}
+  >
+    <WagmiProvider config={config}>
+      <RainbowKitProvider>
+        <TransferLogProvider>
+          <ReservoirKitProvider
+            options={{
+              apiKey: env.NEXT_PUBLIC_RESERVOIR_API_KEY,
+              chains: [
+                {
+                  id: 1,
+                  name: "mainnet",
+                  baseApiUrl: "https://api.reservoir.tools",
+                  active: true,
+                },
+                {
+                  id: 11155111,
+                  name: "sepolia",
+                  baseApiUrl: "https://api-sepolia.reservoir.tools",
+                  active: true,
+                },
+              ],
+            }}
+            theme={theme}
+          >
+            {children}
+          </ReservoirKitProvider>
+        </TransferLogProvider>
+      </RainbowKitProvider>
+    </WagmiProvider>
+  </StarknetConfig>
+    ;
 }

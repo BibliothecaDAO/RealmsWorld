@@ -11,13 +11,16 @@ export async function getPrices(): Promise<PricesResult> {
     const response = await mobula.fetchMultipleAssetMarketData({
       assets: "ethereum,starknet",
     });
+
     return {
       // TODO: add lords price
       ethereum: {
-        price: response.multiDataResponse.data.ethereum?.price as number,
+        // @ts-expect-error check mobula type but if response is undefined I expect fetch to throw error
+        price: response.multiDataResponse.data.ethereum.price as number,
       },
       starknet: {
-        price: response.multiDataResponse.data.starknet?.price as number,
+        // @ts-expect-error check mobula type but if response is undefined I expect fetch to throw error
+        price: response.multiDataResponse.data.starknet.price as number,
       },
     };
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

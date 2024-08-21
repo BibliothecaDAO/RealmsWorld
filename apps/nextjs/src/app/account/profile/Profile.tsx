@@ -29,6 +29,19 @@ import {
 import { ProfileForm } from "./ProfileForm";
 import { SignInSIWS } from "./SignInSIWS";
 
+export interface DelegateProfile {
+  statement: string,
+  interests: string[],
+  twitter: string,
+  telegram: string,
+  discord: string,
+  github: string,
+}
+interface DelegatesById {
+  data: RouterOutputs["delegates"]["byId"] & {
+    delegateProfile: DelegateProfile,
+  }
+}
 export const Profile = ({
   initialDelegate,
 }: {
@@ -38,7 +51,7 @@ export const Profile = ({
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;
   const { address } = useAccount();
-  const { data: delegate } = api.delegates.byId.useQuery(
+  const { data: delegate }: DelegatesById = api.delegates.byId.useQuery(
     {
       user: address ?? "0x",
     },
@@ -81,99 +94,104 @@ export const Profile = ({
     },
   );*/
 
+  // I do not trust api return type
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (delegate === null) {
+    <div className="grid flex-1 grid-cols-5 gap-x-6">
+      <Card className="col-span-3 auto-rows-max items-start">
+        <>
+          <CardHeader>
+            <CardTitle>No delegate found</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {ownerTokens?.items.length ? (
+              <>
+                Delegate your Realms to yourself to create a delegate profile
+                <Button size="sm" onClick={() => delegateRealms()}>
+                  <UserRoundPlus className="mr-2" /> Delegate to Self
+                </Button>
+              </>
+            ) : (
+              <>
+                <p className="mb-4">
+                  You must have at least one Realm on Starknet to create a
+                  delegate profile. Either bridge a Realm from Etherum or
+                  purchase on the marketplace to get started
+                </p>
+                <Button asChild className="mr-4">
+                  <Link href="/account/assets">Bridge</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/collection/realms">Marketplace</Link>
+                </Button>
+              </>
+            )}
+          </CardContent>
+        </>
+      </Card>
+    </div>
+  }
+
+
   return (
     <div className="grid flex-1 grid-cols-5 gap-x-6">
       <Card className="col-span-3 auto-rows-max items-start">
-        {delegate ? (
-          <>
-            <CardHeader>
-              <CardTitle className="flex gap-2">
-                <Image
-                  alt="profile image"
-                  width={16}
-                  height={16}
-                  src="/pink_crown.gif"
-                  className="h-16 w-16 rounded-full"
-                />
-                <div className="flex w-full justify-between">
-                  <div>
-                    <div className="mb-1">{shortenAddress(delegate.user)}</div>
-                    <div className="mb-1 flex items-center text-sm font-bold uppercase text-muted-foreground">
-                      Voting Power:
-                      <Badge variant="outline" className="ml-2">
-                        {delegate.delegatedVotesRaw} Realms
-                      </Badge>
-                    </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <span className="text-sm font-bold uppercase">
-                        Delegation:
-                      </span>
-                      <Badge variant="outline">{realmsBalance} Realms</Badge>
-                      <span className="text-sm">delegated to</span>
-                      <Badge variant="outline">
-                        {currentDelegate
-                          ? currentDelegate == address
-                            ? "self"
-                            : shortenHex(currentDelegate as string, 8)
-                          : null}
-                      </Badge>
-                    </div>
-                  </div>
-                  {currentDelegate != padAddress(address) && (
-                    <Button size="sm" onClick={() => delegateRealms()}>
-                      <UserRoundPlus className="mr-2" /> Delegate to Self
-                    </Button>
-                  )}
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex max-w-full flex-col gap-4">
-              <ProfileForm
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                delegateProfile={delegate.delegateProfile}
-                delegateId={delegate.user}
+        <>
+          <CardHeader>
+            <CardTitle className="flex gap-2">
+              <Image
+                alt="profile image"
+                width={16}
+                height={16}
+                src="/pink_crown.gif"
+                className="h-16 w-16 rounded-full"
               />
-            </CardContent>
-          </>
-        ) : (
-          <>
-            <CardHeader>
-              <CardTitle>No delegate found</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {ownerTokens?.items.length ? (
-                <>
-                  Delegate your Realms to yourself to create a delegate profile
+              <div className="flex w-full justify-between">
+                <div>
+                  <div className="mb-1">{shortenAddress(delegate.user)}</div>
+                  <div className="mb-1 flex items-center text-sm font-bold uppercase text-muted-foreground">
+                    Voting Power:
+                    <Badge variant="outline" className="ml-2">
+                      {delegate.delegatedVotesRaw} Realms
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <span className="text-sm font-bold uppercase">
+                      Delegation:
+                    </span>
+                    <Badge variant="outline">{realmsBalance} Realms</Badge>
+                    <span className="text-sm">delegated to</span>
+                    <Badge variant="outline">
+                      {currentDelegate
+                        ? currentDelegate == address
+                          ? "self"
+                          : shortenHex(currentDelegate as string, 8)
+                        : null}
+                    </Badge>
+                  </div>
+                </div>
+                {currentDelegate != padAddress(address) && (
                   <Button size="sm" onClick={() => delegateRealms()}>
                     <UserRoundPlus className="mr-2" /> Delegate to Self
                   </Button>
-                </>
-              ) : (
-                <>
-                  <p className="mb-4">
-                    You must have at least one Realm on Starknet to create a
-                    delegate profile. Either bridge a Realm from Etherum or
-                    purchase on the marketplace to get started
-                  </p>
-                  <Button asChild className="mr-4">
-                    <Link href="/account/assets">Bridge</Link>
-                  </Button>
-                  <Button asChild>
-                    <Link href="/collection/realms">Marketplace</Link>
-                  </Button>
-                </>
-              )}
-            </CardContent>
-          </>
-        )}
+                )}
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex max-w-full flex-col gap-4">
+            <ProfileForm
+
+              delegateProfile={delegate.delegateProfile}
+              delegateId={delegate.user}
+            />
+          </CardContent>
+        </>
       </Card>
-      {delegate && (
-        <div className="sticky top-[5rem] col-span-2 h-[200px]">
-          <Card className="w-auto">
-            <SignInSIWS />
-          </Card>
-        </div>
-      )}
+      <div className="sticky top-[5rem] col-span-2 h-[200px]">
+        <Card className="w-auto">
+          <SignInSIWS />
+        </Card>
+      </div>
     </div>
   );
 };

@@ -18,8 +18,11 @@ export function TransactionStatusL2({ hash }: { hash: string }) {
         ? "Loading..."
         : isError
           ? error?.message
+          // @ts-expect-error TODO: check types with apibara
           : data?.status === "REJECTED"
+            // @ts-expect-error TODO: check types with apibara
             ? `${data.status}`
+            // @ts-expect-error TODO: check types with apibara
             : `${data?.execution_status}`}
     </Badge>
   );

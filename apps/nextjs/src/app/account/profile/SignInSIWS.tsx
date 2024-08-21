@@ -14,6 +14,7 @@ export const SignInSIWS = () => {
   const { address } = useAccount();
   const { data: delegate } = api.delegates.byId.useQuery(
     {
+      // @ts-expect-error this is ok
       user: address,
     },
     {

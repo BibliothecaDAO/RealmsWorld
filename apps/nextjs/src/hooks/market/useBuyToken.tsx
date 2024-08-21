@@ -20,11 +20,13 @@ export const useBuyToken = ({
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract } = useContract({
+    // @ts-expect-error check starknet-react type
     abi: MarketplaceABI,
     address: MarketplaceContract[SUPPORTED_L2_CHAIN_ID] as `0x${string}`,
   });
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { contract: lordsContract } = useContract({
+    // @ts-expect-error check starknet-react type
     abi: L2_C1ERC20,
     address: LORDS[SUPPORTED_L2_CHAIN_ID]?.address as `0x${string}`,
   });

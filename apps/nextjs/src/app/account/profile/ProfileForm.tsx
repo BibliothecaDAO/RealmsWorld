@@ -10,7 +10,8 @@ import { Github, Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 
-import type { RouterOutputs } from "@realms-world/api";
+import type { DelegateProfile } from "@/app/account/profile/Profile";
+
 import { CreateDelegateProfileSchema } from "@realms-world/db/schema";
 import {
   Button,
@@ -33,9 +34,7 @@ export const ProfileForm = ({
   delegateProfile,
 }: {
   delegateId: string;
-  delegateProfile?: NonNullable<
-    RouterOutputs["delegates"]["byId"]
-  >["delegateProfile"];
+  delegateProfile?: NonNullable<DelegateProfile>;
 }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const form = useForm({
@@ -48,7 +47,6 @@ export const ProfileForm = ({
       discord: "",
       github: "",
     },
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     values: delegateProfile,
   });
   const { data: session } = useSession();
@@ -100,7 +98,6 @@ export const ProfileForm = ({
         <form
           ref={formRef}
           onSubmit={form.handleSubmit((data) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             createDelegateProfile.mutate(data);
           })}
         >

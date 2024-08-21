@@ -11,7 +11,7 @@ export function useStarkDisplayName(address?: string) {
   }, [address]);
 
   const { data: starkName, refetch } = useStarkName({
-    address: address,
+    address: address as `0x${string}`,
   });
 
   useEffect(() => {

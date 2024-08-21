@@ -5,7 +5,8 @@ import { useContract, useSendTransaction } from "@starknet-react/core";
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 
 export const useDelegateRealms = ({ delegatee }: { delegatee?: string }) => {
-  const l2RealmsAddress = getCollectionAddresses(Collections.REALMS)[
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const l2RealmsAddress = getCollectionAddresses(Collections.REALMS)![
     SUPPORTED_L2_CHAIN_ID
   ] as `0x${string}`;
 

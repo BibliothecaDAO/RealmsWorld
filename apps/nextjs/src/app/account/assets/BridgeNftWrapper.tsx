@@ -23,13 +23,14 @@ import {
 
 import AssetL1CollectionPreview from "./AssetL1CollectionPreview";
 import AssetL2CollectionPreview from "./AssetL2CollectionPreview";
+import { TransactionFinalityStatus } from "starknet";
 
 export const BridgeNftWrapper = () => {
   const [activeChain, setActiveChain] = useState("l1");
   const { address } = useAccount();
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({
     address,
-    status: "ACCEPTED_ON_L1",
+    status: TransactionFinalityStatus.ACCEPTED_ON_L1,
   });
   const { toggleAccount } = useUIStore((state) => state);
 

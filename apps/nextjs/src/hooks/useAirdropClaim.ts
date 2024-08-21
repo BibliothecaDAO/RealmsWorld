@@ -18,7 +18,7 @@ import airdrop from "../constants/airdrop.json";
 function generateLeaf(address: string, value: string): Buffer {
   return Buffer.from(
     // Hash in appropriate Merkle format
-    keccak256(encodePacked(["address", "uint256"], [address, value])).slice(2),
+    keccak256(encodePacked(["address", "uint256"], [address as `0x${string}`, BigInt(value)])).slice(2),
     "hex",
   );
 }

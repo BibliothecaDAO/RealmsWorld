@@ -154,6 +154,9 @@ const Price = ({
   const { lordsPrice } = useLordsPrice();
   const listing = findLowestPriceActiveListing(token.listings, token.owner);
 
+  if (!listing) return null;
+  if (!listing.price) return null;
+
   return (
     <div className="flex justify-between">
       {token.price && listing?.price && (
