@@ -42,6 +42,14 @@ export const useVeLords = () => {
     isPending: claimIsSubmitting,
   } = useSendTransaction({});
 
+  const {
+    sendAsync: withdraw,
+    data: withdrawHash,
+    isPending: withdrawsSubmitting,
+  } = useSendTransaction({
+    calls: veLords && address ? [veLords?.populate("withdraw", [])] : undefined,
+  });
+
   const manageLock = async (amount: bigint, unlockTime: number) => {
     console.log(unlockTime);
     console.log(amount);
@@ -65,8 +73,6 @@ export const useVeLords = () => {
     }
     return await claimRewards([rewardPool?.populate("claim", [endRecipient])]);
   };
-  const withdraw = async () => {
-    return await claimRewards([veLords?.populate("withdraw", [])]);
-  };
+
   return { manageLock, claim, withdraw };
 };
