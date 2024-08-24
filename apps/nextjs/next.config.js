@@ -104,6 +104,11 @@ const config = {
     return [
       // Basic redirect
       {
+        source: "/amma",
+        destination: "/AMMA",
+        permanent: true,
+      },
+      {
         source: "/amma/",
         destination: "/AMMA/",
         permanent: true,
