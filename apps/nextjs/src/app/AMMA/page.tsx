@@ -47,20 +47,21 @@ export const metadata = {
 export default function Page() {
   return (
     <PageLayout>
-      <div className="relative sm:mx-auto text-center mb-24 max-w-[960px] w-[100vw] sm:w-auto -mx-4 -mt-7">
-        <div className="h-72 bg-gradient-to-r from-[#4295CD] to-[#326EC9] sm:hidden"></div>
+      <div className="overflow-x-hidden relative sm:mx-auto text-center mb-24 max-w-[960px] w-[100vw] sm:w-auto -mx-4 -mt-7">
+        <div className="sm:rounded-[30px] h-[30rem] sm:h-72 bg-gradient-to-r from-[#4295CD] to-[#326EC9] -mb-48 sm:-mb-64"></div>
         {/* Main image */}
         <Image
-          className="sm:rounded-[30px]  h-auto"
+          className="sm:rounded-b-[30px]  h-auto"
           alt="AMMA Welcome"
-          src='/blog/amma/mainimage.png'
+          src='/blog/amma/mainimg.png'
           width={960}
-          height={605}
+          height={542}
+          unoptimized={true}
           priority
         />
 
         <div className="absolute bottom-0 left-0 right-0 flex justify-between items-end mb-12 sm:px-4">
-          <div className="relative animate-slide-in-left">
+          <div className="relative animate-slide-in-left max-sm:-ml-8">
             <Image
               className="absolute -top-8 right-0 animate-bounce"
               alt="AMMA Welcome"
@@ -71,14 +72,14 @@ export default function Page() {
             <Image
               alt="AMMA Welcome"
               src='/blog/amma/blobert1.png'
-              className="w-48 sm:w-auto  hover:animate-wiggle"
+              className="w-44 sm:w-auto  hover:animate-wiggle"
               width={220}
               height={220}
             />
           </div>
-          <div className="animate-slide-in-right">
+          <div className="animate-slide-in-right max-sm:-mr-8">
             <Image
-              className="object-contain  w-48 sm:w-auto animate-float hover:animate-wiggle"
+              className="object-contain  w-44 sm:w-auto"
               alt="AMMA Welcome"
               src='/blog/amma/blobert2.png'
               width={220}
@@ -86,7 +87,7 @@ export default function Page() {
             /></div>
         </div>
 
-        <div className="absolute top-0 left-0 right-0 text-center mt-12 md:mt-24 text-white">
+        <div className="absolute top-0 left-0 right-0 text-center mt-20 text-white">
           <h1 className="font-sans-serif text-3xl font-bold tracking-[0.7em] uppercase text-primary">Welcome</h1>
           <h2 className="text-4xl tracking-wide">AMMA X Realms</h2>
           <p className="max-w-[300px] mx-auto text-xl mt-8 tracking-widest font-semibold">Realms is an online high-fantasy <span className="text-primary font-bold">Game Publisher</span> with dozens of games
@@ -94,7 +95,7 @@ export default function Page() {
 
           <Link href={"/games"}>
             <Button
-              className="mt-8 relative px-0"
+              className="mt-36 sm:mt-8 relative px-0"
               variant={'ghost'}
             >
               <Stamp />
