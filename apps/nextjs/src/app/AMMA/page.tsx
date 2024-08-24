@@ -1,10 +1,12 @@
 import { Button } from "@realms-world/ui";
 import { PageLayout } from "../_components/PageLayout";
 import Image from "next/image"
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Play } from "lucide-react";
 import Link from "next/link";
 import { HeraldSignup } from "../_components/HeraldSignup";
 import Starknet from "@/icons/starknet.svg";
+import Stamp from "@/icons/stamp.svg";
+import { HeraldCarousel } from "./HeraldCarousel";
 
 // Constants for repeated values
 const ZIGZAG_IMAGE = '/blog/amma/zigzag.png';
@@ -17,9 +19,14 @@ const DoubleChevronDown = () => (
     <ChevronDown className="-mt-4" />
   </div>
 );
-
 // Extracted component for game links
-const GameLink = ({ href, imageSrc, alt }) => (
+interface GameLinkProps {
+  href: string;
+  imageSrc: string;
+  alt: string;
+}
+
+const GameLink: React.FC<GameLinkProps> = ({ href, imageSrc, alt }) => (
   <Link href={href}>
     <Image
       className="transition-all duration-200 mx-auto hover:-translate-y-1.5 mb-5"
@@ -34,7 +41,7 @@ const GameLink = ({ href, imageSrc, alt }) => (
 
 export const metadata = {
   title: "AMMA Event",
-  description: "AMMA - Created for adventurers by Bibliotheca DAO",
+  description: "AMMA x Realms Partnership - Created for adventurers by Bibliotheca DAO",
 };
 
 export default function Page() {
@@ -56,17 +63,38 @@ export default function Page() {
           <h2 className="text-4xl tracking-wide">AMMA X Realms</h2>
           <p className="max-w-[300px] mx-auto text-xl mt-8 tracking-widest font-semibold">Realms is an online high-fantasy <span className="text-primary font-bold">Game Publisher</span> with dozens of games
             in Beta</p>
-          <Button className="mt-8 bg-[#74C9FE] border-[#2C428E] h-18 px-8 border-2 text-black" variant={'ghost'}>Explore</Button>
+          <Link href={"/games"}>
+            <Button
+              /*className="
+                mt-8 bg-[#74C9FE] border-[#2C428E] h-18 px-8 border-2 text-black 
+                relative before:absolute before:inset-0 before:border-2 before:border-[#2C428E] 
+                before:-m-1 after:absolute after:inset-0 after:border-2 after:border-[#2C428E] 
+                after:m-1 hover:before:-m-1.5 hover:after:m-1.5 transition-all duration-200
+              "*/
+
+              className="mt-8 relative px-0"
+              variant={'ghost'}
+            >
+              <Stamp />
+              <span className="absolute top-0 left-0 mt-2.5 tracking-widest w-full">
+                Explore</span>
+            </Button>
+          </Link>
         </div>
       </div>
       <div className="text-center w-full">
-        <h2 className="mx-auto text-xl uppercase max-w-[300px] mb-4">Learn more about realms world & our partnership</h2>
+        <h2 className="mx-auto text-xl uppercase max-w-[350px] mb-4">Learn more about AMMA, Realms World & our partnership</h2>
         <DoubleChevronDown />
 
-        <Link href="https://www.youtube.com/watch?v=dKrKvCJs5UY" target="_blank">
-          <Image className="mx-auto rounded-[30px] mb-4" alt="AMMA Welcome" src='/blog/amma/videolink.png' width={960} height={605} /></Link>
+        <Link href="https://www.youtube.com/watch?v=dKrKvCJs5UY" target="_blank" className="group relative inline-block">
+          <Image className="mx-auto rounded-[30px] mb-4" alt="AMMA Welcome" src='/blog/amma/video-link.png' width={960} height={605} />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="bg-black bg-opacity-50 rounded-full p-4 group-hover:bg-primary/75">
+              <Play className="w-12 h-12 text-white group-hover:text-accent  group-hover:fill-accent" />
+            </div>
+          </div>
+        </Link>
         <div className='text-center'>
-          <p className="mb-4 text-xl"><span className="text-[#74C9FE]">1h:30m</span> interview with NEJ</p>
           <Image className="mx-auto mb-12" alt="AMMA Welcome" src={ZIGZAG_IMAGE} width={280} height={16} />
 
           <h2 className={`text-3xl uppercase ${PRIMARY_COLOR} mb-4`}>Our Games</h2>
@@ -81,10 +109,8 @@ export default function Page() {
           <Image className="mx-auto mb-12" alt="AMMA Welcome" src={ZIGZAG_IMAGE} width={280} height={16} />
           <h2 className={`text-3xl uppercase ${PRIMARY_COLOR} mb-8`}>Sign up to our newsletter "The Herald"</h2>
           <div className="flex items-start gap-x-4 container">
-            <Link href="https://thelootherald.substack.com/p/realms-revelry-arcades-ales-and-adventures" target="_blank">
-              <Image className="" alt="Herald Image 1" src='/blog/amma/herald1.png' width={479} height={345} /></Link>
-            <Link href="https://thelootherald.substack.com/p/zkorp-and-grugs-lair-rule-dojo-game" target="_blank">
-              <Image className="" alt="Herald Image 2" src='/blog/amma/herald2.png' width={479} height={345} /></Link></div>
+            <HeraldCarousel />
+          </div>
           <p className="text-white mt-6">Get only game important news from our Eternum ecosystem:</p>
           <div className="flex max-w-prose mx-auto">
             <HeraldSignup />
