@@ -47,18 +47,19 @@ export const metadata = {
 export default function Page() {
   return (
     <PageLayout>
-      <div className="relative mx-auto text-center mb-24 max-w-[960px]">
+      <div className="relative sm:mx-auto text-center mb-24 max-w-[960px] w-[100vw] sm:w-auto -mx-4 -mt-7">
+        <div className="h-72 bg-gradient-to-r from-[#4295CD] to-[#326EC9] sm:hidden"></div>
         {/* Main image */}
         <Image
-          className="rounded-[30px] w-full h-auto"
+          className="sm:rounded-[30px] w-[100vw] h-auto"
           alt="AMMA Welcome"
-          src='/blog/amma/main_image.jpg'
+          src='/blog/amma/mainimage.png'
           width={960}
           height={605}
           priority
         />
 
-        <div className="absolute bottom-0 left-0 right-0 flex justify-between items-end mb-12 px-4">
+        <div className="absolute bottom-0 left-0 right-0 flex justify-between items-end mb-12 sm:px-4">
           <div className="relative">
             <Image
               className="absolute -top-8 right-0"
@@ -70,6 +71,7 @@ export default function Page() {
             <Image
               alt="AMMA Welcome"
               src='/blog/amma/blobert1.png'
+              className="w-48"
               width={220}
               height={220}
             />
@@ -83,11 +85,12 @@ export default function Page() {
           />
         </div>
 
-        <div className="absolute top-[100%] md:top-0 left-0 right-0 text-center mt-12 md:mt-24 text-white">
+        <div className="absolute top-0 left-0 right-0 text-center mt-12 md:mt-24 text-white">
           <h1 className="font-sans-serif text-3xl font-bold tracking-[0.7em] uppercase text-primary">Welcome</h1>
           <h2 className="text-4xl tracking-wide">AMMA X Realms</h2>
           <p className="max-w-[300px] mx-auto text-xl mt-8 tracking-widest font-semibold">Realms is an online high-fantasy <span className="text-primary font-bold">Game Publisher</span> with dozens of games
             in Beta</p>
+
           <Link href={"/games"}>
             <Button
               className="mt-8 relative px-0"
@@ -100,7 +103,7 @@ export default function Page() {
           </Link>
         </div>
       </div>
-      <div className="mt-96 md:mt-0 text-center w-full">
+      <div className="text-center w-full">
         <h2 className="mx-auto text-xl uppercase max-w-[350px] mb-4">Learn more about AMMA, Realms World & our partnership</h2>
         <DoubleChevronDown />
 

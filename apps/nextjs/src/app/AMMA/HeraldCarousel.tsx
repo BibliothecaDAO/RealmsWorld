@@ -42,7 +42,7 @@ export const HeraldCarousel = () => {
     return (
         <Carousel className="w-full mx-auto" plugins={[
             Autoplay({
-                delay: 2000,
+                delay: 4000,
             })]}>
             <CarouselContent>
                 {heraldImages.map((image, index) => (
