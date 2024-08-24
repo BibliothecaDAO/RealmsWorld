@@ -100,6 +100,16 @@ const config = {
       },
     ];
   },
+  async redirects() {
+    return [
+      // Basic redirect
+      {
+        source: "/amma/",
+        destination: "/AMMA/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 const withMDX = createMDX({
