@@ -51,7 +51,7 @@ export default function Page() {
         <div className="h-72 bg-gradient-to-r from-[#4295CD] to-[#326EC9] sm:hidden"></div>
         {/* Main image */}
         <Image
-          className="sm:rounded-[30px] w-[100vw] h-auto"
+          className="sm:rounded-[30px]  h-auto"
           alt="AMMA Welcome"
           src='/blog/amma/mainimage.png'
           width={960}
@@ -60,9 +60,9 @@ export default function Page() {
         />
 
         <div className="absolute bottom-0 left-0 right-0 flex justify-between items-end mb-12 sm:px-4">
-          <div className="relative">
+          <div className="relative animate-slide-in-left">
             <Image
-              className="absolute -top-8 right-0"
+              className="absolute -top-8 right-0 animate-bounce"
               alt="AMMA Welcome"
               src='/blog/amma/gm-bubble.png'
               width={103}
@@ -71,18 +71,19 @@ export default function Page() {
             <Image
               alt="AMMA Welcome"
               src='/blog/amma/blobert1.png'
-              className="w-48"
+              className="w-48 sm:w-auto  hover:animate-wiggle"
               width={220}
               height={220}
             />
           </div>
-          <Image
-            className="object-contain"
-            alt="AMMA Welcome"
-            src='/blog/amma/blobert2.png'
-            width={220}
-            height={220}
-          />
+          <div className="animate-slide-in-right">
+            <Image
+              className="object-contain  w-48 sm:w-auto animate-float hover:animate-wiggle"
+              alt="AMMA Welcome"
+              src='/blog/amma/blobert2.png'
+              width={220}
+              height={220}
+            /></div>
         </div>
 
         <div className="absolute top-0 left-0 right-0 text-center mt-12 md:mt-24 text-white">
@@ -101,6 +102,7 @@ export default function Page() {
                 Explore</span>
             </Button>
           </Link>
+
         </div>
       </div>
       <div className="text-center w-full">
