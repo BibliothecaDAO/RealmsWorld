@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { StatusDot } from "@/app/_components/StatusDot";
 import { env } from "@/env";
-import { ChevronLeft } from "lucide-react";
 
 import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
 import {
@@ -15,6 +14,10 @@ import {
   BreadcrumbSeparator,
   Button,
   Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
   Tabs,
   TabsContent,
   TabsList,
@@ -85,7 +88,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const isImageFound = async (imageName: string) => {
     return await fetch(
       (env.VERCEL_URL ? "https://" + env.VERCEL_URL : "http://localhost:3000") +
-        imageName,
+      imageName,
       {
         method: "HEAD",
       },
@@ -229,13 +232,23 @@ export default async function Page({ params }: { params: { id: string } }) {
           <>
             <div className="w-full sm:w-9/12 sm:pr-8">
               {game.screenshotLength && (
-                <Carousel
-                  className="h-96 w-full sm:max-h-[750px] sm:min-h-[750px]"
-                  images={list}
-                  autoPlay
-                  showPreview
-                  cover
-                />
+                <Carousel className="h-96 w-full sm:max-h-[750px] sm:min-h-[750px]">
+                  <CarouselContent>
+                    {list.map((image, index) => (
+                      <CarouselItem key={index}>
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          width={1096}
+                          height={750}
+                          className="h-full w-full object-cover"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
               )}
             </div>
 
