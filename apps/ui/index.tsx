@@ -34,7 +34,13 @@ export {
 export { Button, buttonVariants } from "./src/components/ui/button";
 export type { ButtonProps } from "./src/components/ui/button";
 export { Calendar } from "./src/components/ui/calendar";
-export { Carousel } from "./src/components/ui/carousel";
+export {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext
+} from "./src/components/ui/carousel";
 
 export {
   Card,

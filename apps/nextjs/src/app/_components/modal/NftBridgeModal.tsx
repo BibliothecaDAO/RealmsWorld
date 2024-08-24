@@ -86,7 +86,7 @@ const AccountErrorAlert = ({
         <Alert variant={"destructive"} className="flex">
           <div>
             Your account must be deployed on Starknet before bridging your
-            Realms.{" "}
+            Realms.
             <Link
               href="https://support.argent.xyz/hc/en-us/articles/8802319054237-How-to-activate-deploy-my-Argent-X-wallet"
               target="_blank"
