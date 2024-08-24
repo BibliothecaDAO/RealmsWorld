@@ -47,31 +47,49 @@ export const metadata = {
 export default function Page() {
   return (
     <PageLayout>
-      <div className="relative text-center mb-24">
+      <div className="relative mx-auto text-center mb-24 max-w-[960px]">
         {/* Main image */}
-        <Image className="mx-auto rounded-[30px]" alt="AMMA Welcome" src='/blog/amma/main_image.jpg' width={960} height={605} priority />
+        <Image
+          className="rounded-[30px] w-full h-auto"
+          alt="AMMA Welcome"
+          src='/blog/amma/main_image.jpg'
+          width={960}
+          height={605}
+          priority
+        />
 
-        <div className="absolute bottom-0 w-full flex mb-12 px-24">
-          <div className="mx-auto relative">
-            <Image className="right-0 absolute -top-8" alt="AMMA Welcome" src='/blog/amma/gm-bubble.png' width={103} height={53} />
-            <Image className="" alt="AMMA Welcome" src='/blog/amma/blobert1.png' width={220} height={220} />
+        <div className="absolute bottom-0 left-0 right-0 flex justify-between items-end mb-12 px-4">
+          <div className="relative">
+            <Image
+              className="absolute -top-8 right-0"
+              alt="AMMA Welcome"
+              src='/blog/amma/gm-bubble.png'
+              width={103}
+              height={53}
+            />
+            <Image
+              alt="AMMA Welcome"
+              src='/blog/amma/blobert1.png'
+              width={220}
+              height={220}
+            />
           </div>
-          <Image className="mx-auto object-contain" alt="AMMA Welcome" src='/blog/amma/blobert2.png' width={220} height={220} />
+          <Image
+            className="object-contain"
+            alt="AMMA Welcome"
+            src='/blog/amma/blobert2.png'
+            width={220}
+            height={220}
+          />
         </div>
-        <div className="w-full absolute top-0 left-0 text-center mt-24 text-white">
+
+        <div className="absolute top-[100%] md:top-0 left-0 right-0 text-center mt-12 md:mt-24 text-white">
           <h1 className="font-sans-serif text-3xl font-bold tracking-[0.7em] uppercase text-primary">Welcome</h1>
           <h2 className="text-4xl tracking-wide">AMMA X Realms</h2>
           <p className="max-w-[300px] mx-auto text-xl mt-8 tracking-widest font-semibold">Realms is an online high-fantasy <span className="text-primary font-bold">Game Publisher</span> with dozens of games
             in Beta</p>
           <Link href={"/games"}>
             <Button
-              /*className="
-                mt-8 bg-[#74C9FE] border-[#2C428E] h-18 px-8 border-2 text-black 
-                relative before:absolute before:inset-0 before:border-2 before:border-[#2C428E] 
-                before:-m-1 after:absolute after:inset-0 after:border-2 after:border-[#2C428E] 
-                after:m-1 hover:before:-m-1.5 hover:after:m-1.5 transition-all duration-200
-              "*/
-
               className="mt-8 relative px-0"
               variant={'ghost'}
             >
@@ -82,7 +100,7 @@ export default function Page() {
           </Link>
         </div>
       </div>
-      <div className="text-center w-full">
+      <div className="mt-96 md:mt-0 text-center w-full">
         <h2 className="mx-auto text-xl uppercase max-w-[350px] mb-4">Learn more about AMMA, Realms World & our partnership</h2>
         <DoubleChevronDown />
 
@@ -100,11 +118,13 @@ export default function Page() {
           <h2 className={`text-3xl uppercase ${PRIMARY_COLOR} mb-4`}>Our Games</h2>
           <DoubleChevronDown />
           <div className="transition-all duration-1000 mb-12">
-            <GameLink href="/games/realms-eternum" imageSrc='/blog/amma/CA1.png' alt="Realms Eternum" />
-            <GameLink href="/games/loot-survivor" imageSrc='/blog/amma/CA2.png' alt="Loot Survivor" />
-            <GameLink href="/games/pistols" imageSrc='/blog/amma/CA3.png' alt="Pistols" />
-            <GameLink href="/games/underdark" imageSrc='/blog/amma/CA4.png' alt="Underdark" />
-            <GameLink href="/games/loot-underworld" imageSrc='/blog/amma/CA5.png' alt="Loot Underworld" />
+            <div className="transition-all duration-1000 mb-12">
+              <GameLink href="/games/realms-eternum" imageSrc='/blog/amma/CA1.png' alt="Realms Eternum" />
+              <GameLink href="/games/loot-survivor" imageSrc='/blog/amma/CA2.png' alt="Loot Survivor" />
+              <GameLink href="/games/pistols" imageSrc='/blog/amma/CA3.png' alt="Pistols" />
+              <GameLink href="/games/underdark" imageSrc='/blog/amma/CA4.png' alt="Underdark" />
+              <GameLink href="/games/loot-underworld" imageSrc='/blog/amma/CA5.png' alt="Loot Underworld" />
+            </div>
           </div>
           <Image className="mx-auto mb-12" alt="AMMA Welcome" src={ZIGZAG_IMAGE} width={280} height={16} />
           <h2 className={`text-3xl uppercase ${PRIMARY_COLOR} mb-8`}>Sign up to our newsletter "The Herald"</h2>
