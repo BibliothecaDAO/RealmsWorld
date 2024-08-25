@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nitro build",
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "git clean -xdf .cache .nitro .output .turbo .vercel node_modules",
     "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
@@ -17,7 +17,7 @@
     "@realms-world/prettier-config": "*",
     "@realms-world/tailwind-config": "*",
     "@realms-world/tsconfig": "*",
-    "eslint": "^9.7.0",
+    "eslint": "^9.9.0",
     "nitropack": "2.9.7",
     "prettier": "^3.3.3",
     "typescript": "^5.5.3"

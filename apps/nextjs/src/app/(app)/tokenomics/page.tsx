@@ -95,7 +95,8 @@ const totalStakedRealmsData: TotalStakedRealmsData = (await getWalletRealmsHeld(
 )) as TotalStakedRealmsData;
 
 const totalStakedRealms: number =
-  totalStakedRealmsData.wallets?.reduce(
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  totalStakedRealmsData?.wallets?.reduce(
     (total: number, wallet: { realmsHeld: string }) => {
       return total + parseInt(wallet.realmsHeld, 10);
     },

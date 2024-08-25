@@ -45,7 +45,7 @@ export const Overview = () => {
   const { balance, claimRewards, isSubmitting, isFetching } =
     useL2LordsRewards();
 
-  const { data } = useStaking();
+  const { data, loading } = useStaking();
   //const delegateData = useLordship(l1Address);
   const { toggleStakingMigration } = useUIStore((state) => state);
   const { data: lordsRewardsClaims } = api.lordsRewards.all.useQuery(
@@ -128,7 +128,7 @@ export const Overview = () => {
                   <CardHeader>
                     <CardDescription>Inactive Realms</CardDescription>
                     <CardTitle className="text-3xl">
-                      {totalL1Realms ? totalL1Realms : "0"}
+                      {loading ? <Loader className="animate-spin" /> : totalL1Realms ? totalL1Realms : "0"}
                     </CardTitle>
                   </CardHeader>
                   <CardFooter>
@@ -159,7 +159,7 @@ export const Overview = () => {
                         <Button
                           onClick={() => claimRewards()}
                           className="w-full"
-                          disabled={isSubmitting}
+                          disabled={isSubmitting || !balance || balance <= 0n}
                         >
                           {isSubmitting ? (
                             <Loader className="animate-spin" />

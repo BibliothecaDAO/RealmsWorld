@@ -51,6 +51,7 @@ export async function POST(request: Request) {
   const skip = searchParams.get("skip");
 
   const res = await fetch(env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME, {
+
     method: "POST",
     headers: {
       "content-type": "application/json",

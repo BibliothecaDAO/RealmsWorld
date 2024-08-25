@@ -21,7 +21,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "push": "bun with-env drizzle-kit push",
@@ -44,8 +44,8 @@
     "@realms-world/prettier-config": "*",
     "@realms-world/tsconfig": "*",
     "dotenv-cli": "^7.4.2",
-    "drizzle-kit": "^0.23.0",
-    "eslint": "^9.7.0",
+    "drizzle-kit": "^0.22.8",
+    "eslint": "^9.9.0",
     "postgres-range": "^1.1.4",
     "prettier": "^3.3.3",
     "typescript": "^5.5.3"

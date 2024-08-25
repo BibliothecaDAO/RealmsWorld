@@ -64,7 +64,6 @@ export const usePendingRealmsWithdrawals = ({
       })
         .then((res) => res.json())
         .then((res: { data?: { withdrawals: RealmsWithdrawal[] } }) => {
-          console.log(res);
           return res.data?.withdrawals;
         }),
     enabled: !!address,

@@ -2,7 +2,7 @@ import type { Attributes } from "@/types";
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import Image from "next/image";
 import Link from "next/link";
-import { erc721Tokens } from "@/constants/erc721Tokens";
+import { CollectionDetails } from "@realms-world/constants";
 import { shortenHex } from "@/utils/utils";
 import { ArrowLeft } from "lucide-react";
 
@@ -31,10 +31,11 @@ export const TokenInformation = ({
   owner?: string | null;
   image?: string | null;
   attributes?:
-    | Attributes[]
-    | NonNullable<RouterOutputs["erc721Tokens"]["byId"]>["attributes"];
+  | Attributes[]
+  | NonNullable<RouterOutputs["erc721Tokens"]["byId"]>["attributes"];
   tokenId: number;
 }) => {
+
   return (
     <>
       <div className="mt-8 flex w-full flex-none flex-col sm:mt-16 md:w-1/3">
@@ -95,7 +96,7 @@ export const TokenInformation = ({
             <Link href={`/collection/${collectionId}`}>
               <ArrowLeft className="mr-2 w-4 self-center" />{" "}
               <span className="self-center">
-                {erc721Tokens[collectionId as keyof typeof erc721Tokens].name}
+                {CollectionDetails[collectionId as keyof typeof CollectionDetails].displayName}
               </span>
             </Link>
           </Button>

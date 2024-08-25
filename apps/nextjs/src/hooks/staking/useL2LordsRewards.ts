@@ -1,4 +1,4 @@
-import type { Call } from "starknet";
+import type { BlockNumber, Call } from "starknet";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { RealmsABI } from "@/abi/L2/Realms";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
@@ -10,6 +10,7 @@ import {
   useReadContract,
   useSendTransaction,
 } from "@starknet-react/core";
+import { BlockTag } from "starknet";
 import { formatEther } from "viem";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
@@ -32,8 +33,9 @@ export const useL2LordsRewards = () => {
     abi: RealmsABI,
     functionName: "get_reward_balance_for",
     enabled: !!l2Address,
+    watch: true,
     args: l2Address ? [l2Address] : undefined,
-    refetchInterval: 5000,
+    blockIdentifier: BlockTag.PENDING as BlockNumber,
   });
 
   useEffect(() => {
@@ -61,7 +63,7 @@ export const useL2LordsRewards = () => {
 
       ease();
     }
-  }, [balance, previousBalance]);
+  }, [balance, previousBalance, isFetching]);
 
   const { contract } = useContract({
     abi: RealmsABI,

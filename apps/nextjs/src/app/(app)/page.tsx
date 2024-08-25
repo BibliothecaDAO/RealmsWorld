@@ -5,16 +5,16 @@ import Starknet from "@/icons/starknet.svg";
 
 import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
-import { Carousel } from "@realms-world/ui";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@realms-world/ui";
 
 import { PageLayout } from "../_components/PageLayout";
 import { Partners } from "../_components/Partners";
 import PostGrid from "./blog/PostGrid";
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
-
+import Image from "next/image"
 export default function Home() {
-  const carouselImages = games
+  const carouselItems = games
     .filter((a) => a.status === "beta" || a.status === "mainnet")
     .map((game: Game) => ({
       alt: game.name,
@@ -38,16 +38,31 @@ export default function Home() {
         Realms.World is a fantasy multiverse filled with fully onchain games
       </div>
 
-      <Carousel
-        className="left-0 top-0 h-[700px] sm:w-full"
-        // showPreview
-        images={carouselImages}
-        cover
-        options={{
-          loop: true,
-        }}
-        autoPlay
-      />
+      <Carousel className="w-full">
+        <CarouselContent>
+          {carouselItems.map((item, index) => (
+            <CarouselItem key={index}>
+              <Link href={item.href}>
+                <div className="relative h-[700px]">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    width={1900}
+                    height={1200}
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 text-white">
+                    <h2 className="text-2xl font-bold">{item.title}</h2>
+                    <p>{item.description}</p>
+                  </div>
+                </div>
+              </Link>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
 
       <Partners />
 

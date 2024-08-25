@@ -71,6 +71,26 @@ export const ProfileForm = ({
     },
   });
 
+  const interests = [
+    { value: "gaming", label: "Gaming" },
+    { value: "game-design", label: "Game Design" },
+    { value: "game-development", label: "Game Development" },
+    { value: "dao", label: "DAO" },
+    { value: "defi", label: "DeFi" },
+    { value: "autonomous-worlds", label: "Autonomous Worlds" },
+    { value: "cybersecurity", label: "Cybersecurity" },
+    { value: "esports", label: "Esports" },
+    { value: "encryption", label: "Encryption" },
+    { value: "ai-in-gaming", label: "AI in Gaming" },
+    { value: "nfts", label: "NFTs" },
+    { value: "economics", label: "Economics" },
+    { value: "cryptography", label: "Cryptography" },
+    { value: "scaling", label: "Scaling" },
+    { value: "starknet", label: "Starknet" },
+    { value: "governance", label: "Governance" },
+    { value: "finance", label: "Finance" },
+  ]
+
   const requiresSignature = useMemo(() => {
     return !session?.user.name || padAddress(session.user.name) != delegateId;
   }, [session?.user.name, delegateId]);
@@ -84,7 +104,7 @@ export const ProfileForm = ({
             createDelegateProfile.mutate(data);
           })}
         >
-          <fieldset disabled={requiresSignature} className="space-y-8">
+          <fieldset disabled={requiresSignature} className="space-y-8 ">
             <FormField
               name="statement"
               render={({ field }) => (
@@ -110,22 +130,17 @@ export const ProfileForm = ({
                   <FormControl>
                     <ToggleGroup
                       {...field}
-                      //value={field.value}
                       onValueChange={field.onChange}
-                      type={"multiple"}
+                      type="multiple"
                       variant="outline"
-                      size={"sm"}
-                      className="justify-start"
+                      size="sm"
+                      className="justify-start grid grid-cols-4 lg:grid-cols-6"
                     >
-                      <ToggleGroupItem value="gaming">Gaming</ToggleGroupItem>
-                      <ToggleGroupItem value="game-design">
-                        Game Design
-                      </ToggleGroupItem>
-                      <ToggleGroupItem value="dao">DAO</ToggleGroupItem>
-                      <ToggleGroupItem value="defi">DeFi</ToggleGroupItem>
-                      <ToggleGroupItem value="autonomous-worlds">
-                        Autonomous Worlds
-                      </ToggleGroupItem>
+                      {interests.map(({ value, label }) => (
+                        <ToggleGroupItem className="leading-none	" key={value} value={value}>
+                          {label}
+                        </ToggleGroupItem>
+                      ))}
                     </ToggleGroup>
                   </FormControl>
                   <FormMessage />

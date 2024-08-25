@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatedMap } from "@/app/_components/AnimatedMap";
 import { useLordsPrice } from "@/hooks/lords/useLordsPrice";
+
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
 import { findLowestPriceActiveListing } from "@/utils/getters";
@@ -153,9 +154,10 @@ const Price = ({
 }) => {
   const { lordsPrice } = useLordsPrice();
   const listing = findLowestPriceActiveListing(token.listings, token.owner);
+
   return (
     <div className="flex justify-between">
-      {listing?.price && (
+      {token?.price && (
         <div>
           <div className="flex text-lg">
             {listing.price}

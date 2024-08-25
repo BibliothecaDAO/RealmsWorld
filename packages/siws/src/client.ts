@@ -1,5 +1,6 @@
 import {
   BigNumberish,
+  constants,
   Contract,
   num,
   RpcProvider,
@@ -157,10 +158,7 @@ export class SiwsTypedData implements ISiwsTypedData {
     signature: string[],
     provider: RpcProvider,
   ): Promise<boolean> {
-    console.log(data);
-    console.log(this.message);
     const hash = await getMessageHash(data, this.message.address);
-    console.log(hash);
     return this.verifyMessageHash(hash, signature, provider);
   }
 
@@ -251,7 +249,12 @@ export class SiwsTypedData implements ISiwsTypedData {
           });
         }
       }
-      console.log("here");
+      /*TODO dont hardcode mainnet provider */
+      if (this.domain.chainId == constants.NetworkName.SN_MAIN) {
+        opts.provider = new RpcProvider({
+          nodeUrl: "https://starknet-mainnet.public.blastapi.io",
+        });
+      }
 
       this.verifyMessage(this, signature, opts.provider)
         .then((valid) => {

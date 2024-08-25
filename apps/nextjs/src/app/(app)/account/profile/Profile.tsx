@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
 import { api } from "@/trpc/react";
 import { padAddress, shortenHex } from "@/utils/utils";
-import { useAccount, useReadContract } from "@starknet-react/core";
+import { useAccount, useReadContract, useStarkProfile } from "@starknet-react/core";
 import { shortenAddress } from "@starkware-industries/commons-js-utils";
 import { UserRoundPlus } from "lucide-react";
 import { SignInSIWS } from "./SignInSIWS";
@@ -30,10 +30,13 @@ export const Profile = ({
 }: {
   initialDelegate?: RouterOutputs["delegates"]["byId"];
 }) => {
+  const l2RealmsAddress = getCollectionAddresses(Collections.REALMS)?.[
+    SUPPORTED_L2_CHAIN_ID
+  ] as `0x${string}`
   const { address } = useAccount();
   const { data: delegate } = api.delegates.byId.useQuery(
     {
-      user: address,
+      user: address ?? "0x",
     },
     {
       refetchInterval: 60000,
@@ -44,15 +47,15 @@ export const Profile = ({
   const { sendAsync: delegateRealms } = useDelegateRealms({
     delegatee: address,
   });
+  //const { data: starkProfile, isLoading, isError, error } = useStarkProfile({ address: "0x037c6B561b367a85b68668e8663041b9E2F4199c346FBda97dc0c2167F7A6016" });
+
   const { data: currentDelegate } = useCurrentDelegate()
 
-  const { data: ownerTokens } = api.erc721Tokens.all.useQuery({ owner: address, limit: 1 }, {
+  const { data: ownerTokens } = api.erc721Tokens.all.useQuery({ owner: address, limit: 1, contractAddress: l2RealmsAddress }, {
     enabled: !!address,
   });
   const { data: realmsBalance } = useReadContract({
-    address: getCollectionAddresses(Collections.REALMS)?.[
-      SUPPORTED_L2_CHAIN_ID
-    ] as `0x${string}`,
+    address: l2RealmsAddress,
     abi: RealmsABI,
     functionName: "balance_of",
     enabled: !!address,
@@ -68,9 +71,10 @@ export const Profile = ({
       enabled: !!address,
     },
   );*/
+
   return (
-    <div className="grid grid-cols-5 gap-x-6">
-      <Card className="col-span-3">
+    <div className="grid flex-1 grid-cols-5 gap-x-6">
+      <Card className="col-span-3 auto-rows-max items-start">
         {delegate ? (
           <>
             <CardHeader>
@@ -79,7 +83,7 @@ export const Profile = ({
                   alt="profile image"
                   width={16}
                   height={16}
-                  src="https://avatars.githubusercontent.com/u/1?v=4"
+                  src="/pink_crown.gif"
                   className="h-16 w-16 rounded-full"
                 />
                 <div className="flex w-full justify-between">
@@ -114,7 +118,7 @@ export const Profile = ({
                 </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-4">
+            <CardContent className="flex flex-col gap-4 max-w-full">
               <ProfileForm
                 delegateProfile={delegate.delegateProfile}
                 delegateId={delegate.user}

@@ -1,13 +1,7 @@
 "use client";
-
-//import { Mail } from "lucide-react";
 import { useEffect } from "react";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { useAccount, useConnect, useWalletRequest } from "@starknet-react/core";
-
-//import { motion } from "framer-motion";
-
-//import getDiscoveryWallets from "get-starknet-core";
+import { useAccount, useConnect } from "@starknet-react/core";
 
 import { Button, Dialog, DialogContent, DialogHeader } from "@realms-world/ui";
 
@@ -83,7 +77,7 @@ export const StarknetLoginModal = () => {
   useEffect(() => {
     if (isConnected && isStarknetLoginOpen) {
       toggleStarknetLogin();
-      !isAccountOpen && toggleAccount();
+      if (!isAccountOpen) toggleAccount();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);

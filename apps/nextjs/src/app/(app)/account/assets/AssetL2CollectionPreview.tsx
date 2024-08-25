@@ -23,7 +23,7 @@ function AssetL2CollectionPreview({
   return (
     <div>
       {!hideTitle && (
-        <div className="mb-4 flex flex-col items-center justify-center space-x-4 border-b pb-3 text-4xl md:flex-row md:justify-start">
+        <div className="mb-4 flex flex-col capitalize items-center justify-center space-x-4 border-b pb-3 text-4xl md:flex-row md:justify-start">
           <h2>
             {collectionName === "goldentoken" ? "Golden Token" : collectionName}
           </h2>
@@ -39,11 +39,11 @@ function AssetL2CollectionPreview({
               <ScrollArea>
                 <L2ERC721Table
                   contractAddress={collectionAddress}
-                  infiniteScroll={false}
-                  limit={10}
+                  infiniteScroll={true}
+                  limit={200}
                   ownerAddress={l2address}
                   loadMoreAssetName={collectionName}
-                  selectable
+                  selectable={collectionName == "realms"}
                 />
               </ScrollArea>
             )}
