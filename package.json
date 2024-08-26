@@ -33,7 +33,7 @@
   },
   "pnpm": {
     "overrides": {
-      "react-is": "catalog:react19"
+      "react-is": "19.0.0-rc-fb9a90fa48-20240614"
     }
   },
   "prettier": "@realms-world/prettier-config"

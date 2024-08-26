@@ -62,6 +62,8 @@ function formatBN(
       : +formatUnits(BigInt(amount), decimals || 18);
 
   const amountFraction = `${amount}`.split(".")[1];
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const isSafari = isSafariBrowser();
   const formatOptions: Intl.NumberFormatOptions = {
     minimumFractionDigits: 0,
