@@ -3,7 +3,7 @@
   "engines": {
     "node": ">=20.16.0"
   },
-  "packageManager": "pnpm@9.7.1",
+  "packageManager": "pnpm@9.8.0",
   "scripts": {
     "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
@@ -17,7 +17,7 @@
     "format:fix": "turbo format --continue -- --write --cache --cache-location='.cache/.prettiercache' --no-error-on-unmatched-pattern",
     "lint": "turbo lint --continue -- --cache --cache-location '.cache/.eslintcache' && manypkg check",
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location '.cache/.eslintcache' && manypkg fix",
-    "lint:ws": "bunx sherif@latest -r root-package-private-field",
+    "lint:ws": "pnpm sherif@latest -r root-package-private-field",
     "typecheck": "turbo run typecheck",
     "ui-add": "turbo run ui-add"
   },

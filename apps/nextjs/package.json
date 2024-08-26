@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bun with-env next build",
+    "build": "pnpm with-env next build",
     "clean": "git clean -xdf .cache .nitro .output .turbo .vercel node_modules",
-    "dev": "bun with-env next dev",
+    "dev": "pnpm with-env next dev",
     "lint": "eslint",
     "format": "prettier --check \"**/*.{js,cjs,mjs,ts,tsx,md,json}\"",
-    "start": "bun with-env next start",
+    "start": "pnpm with-env next start",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --"
   },
@@ -68,11 +68,11 @@
     "server-only": "0.0.1",
     "siws": "workspace:*",
     "starknet": "6.11.0",
-    "starknetkit": "^2.2.25",
+    "starknetkit": "^2.2.26",
     "superjson": "2.2.1",
     "viem": "^2.19.8",
     "wagmi": "^2.12.7",
-    "zod": "^3.23.8"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "workspace:*",

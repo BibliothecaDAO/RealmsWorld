@@ -15,7 +15,7 @@
     "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit",
-    "ui-add": "bun x shadcn-ui add && prettier src --write --list-different"
+    "ui-add": "pnpm shadcn-ui add && prettier src --write --list-different"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

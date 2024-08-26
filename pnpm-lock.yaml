@@ -349,8 +349,8 @@ importers:
         specifier: 6.11.0
         version: 6.11.0(encoding@0.1.13)
       starknetkit:
-        specifier: ^2.2.25
-        version: 2.2.25(bufferutil@4.0.8)(ioredis@5.4.1)(starknet@6.11.0(encoding@0.1.13))(utf-8-validate@5.0.10)
+        specifier: ^2.2.26
+        version: 2.2.26(bufferutil@4.0.8)(ioredis@5.4.1)(starknet@6.11.0(encoding@0.1.13))(utf-8-validate@5.0.10)
       superjson:
         specifier: 2.2.1
         version: 2.2.1
@@ -361,7 +361,7 @@ importers:
         specifier: ^2.12.7
         version: 2.12.7(@tanstack/query-core@5.52.0)(@tanstack/react-query@5.52.0(react@19.0.0-rc-fb9a90fa48-20240614))(@types/react@18.3.4)(bufferutil@4.0.8)(encoding@0.1.13)(ioredis@5.4.1)(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react-native@0.75.2(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))(@types/react@18.3.4)(bufferutil@4.0.8)(encoding@0.1.13)(react@19.0.0-rc-fb9a90fa48-20240614)(typescript@5.5.4)(utf-8-validate@5.0.10))(react@19.0.0-rc-fb9a90fa48-20240614)(rollup@4.21.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.19.8(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.23.8))(zod@3.23.8)
       zod:
-        specifier: ^3.23.8
+        specifier: 'catalog:'
         version: 3.23.8
     devDependencies:
       '@realms-world/eslint-config':
@@ -980,6 +980,9 @@ importers:
       tailwind-merge:
         specifier: ^2.5.2
         version: 2.5.2
+      viem:
+        specifier: ^2.19.8
+        version: 2.19.8(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.23.8)
     devDependencies:
       '@realms-world/tsconfig':
         specifier: workspace:*
@@ -14540,8 +14543,8 @@ packages:
   starknet@6.11.0:
     resolution: {integrity: sha512-u50KrGDi9fbu1Ogu7ynwF/tSeFlp3mzOg1/Y5x50tYFICImo3OfY4lOz9OtYDk404HK4eUujKkhov9tG7GAKlg==}
 
-  starknetkit@2.2.25:
-    resolution: {integrity: sha512-6zPkfm9dLQ1dkAtjt4dhU2nKekQBPLx66+E6dpAB0dCxg+ton1CZvCsPTAw4UEKRwA5PypqjmeqbeGeXTm60jQ==}
+  starknetkit@2.2.26:
+    resolution: {integrity: sha512-X5sWwhp652oUbH9Y8x0UXFzUu95OI8VzCoLX62axyVKy5vRWuQ92tR1gwI2padiWTBrdhYQD0Ku5b++UrpU2Sw==}
     peerDependencies:
       starknet: ^6.9.0
 
@@ -23733,7 +23736,7 @@ snapshots:
       '@walletconnect/safe-json': 1.0.2
       '@walletconnect/time': 1.0.2
       tslib: 1.14.1
-      uint8arrays: 3.1.0
+      uint8arrays: 3.1.1
 
   '@walletconnect/safe-json@1.0.2':
     dependencies:
@@ -33804,7 +33807,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  starknetkit@2.2.25(bufferutil@4.0.8)(ioredis@5.4.1)(starknet@6.11.0(encoding@0.1.13))(utf-8-validate@5.0.10):
+  starknetkit@2.2.26(bufferutil@4.0.8)(ioredis@5.4.1)(starknet@6.11.0(encoding@0.1.13))(utf-8-validate@5.0.10):
     dependencies:
       '@starknet-io/get-starknet': 4.0.0
       '@starknet-io/get-starknet-core': 4.0.0
