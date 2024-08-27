@@ -19,6 +19,7 @@ import { Web3Providers } from "@/providers/Web3Providers";
 import { TRPCReactProvider } from "@/trpc/react";
 
 import { Toaster, TooltipProvider } from "@realms-world/ui";
+import { ArkClientProvider } from "@/lib/ark/useArkClient";
 
 const silkscreen = Jost({
   subsets: ["latin"],
@@ -52,25 +53,27 @@ export default function Layout(props: { children: React.ReactNode }) {
         className={`${inconsolata.variable} ${silkscreen.variable} dark`}
       >
         <TRPCReactProvider headersPromise={getHeaders()}>
-          <UIStoreProvider>
-            <Web3Providers>
-              <WalletsProvider>
-                <TooltipProvider>
-                  <main className="flex-wrap md:flex">
-                    <Sidebar />
-                    <div className="z-10 flex flex-grow flex-col">
-                      <TopNav />
-                      <div className="flex-grow">{props.children}</div>
-                    </div>
-                  </main>
-                  <Footer />
-                  <Toaster />
-                  <StarknetLoginModal />
-                  <WalletSheet />
-                </TooltipProvider>
-              </WalletsProvider>
-            </Web3Providers>
-          </UIStoreProvider>
+          <ArkClientProvider>
+            <UIStoreProvider>
+              <Web3Providers>
+                <WalletsProvider>
+                  <TooltipProvider>
+                    <main className="flex-wrap md:flex">
+                      <Sidebar />
+                      <div className="z-10 flex flex-grow flex-col">
+                        <TopNav />
+                        <div className="flex-grow">{props.children}</div>
+                      </div>
+                    </main>
+                    <Footer />
+                    <Toaster />
+                    <StarknetLoginModal />
+                    <WalletSheet />
+                  </TooltipProvider>
+                </WalletsProvider>
+              </Web3Providers>
+            </UIStoreProvider>
+          </ArkClientProvider>
         </TRPCReactProvider>
         <Analytics />
       </body>

@@ -26,6 +26,7 @@
     "@turbo/gen": "^2.1.0",
     "million": "^3.1.11",
     "npm-check-updates": "^17.1.0",
+    "nuqs": "^1.17.8",
     "prettier": "catalog:",
     "tsup": "^8.2.4",
     "turbo": "2.1.0",

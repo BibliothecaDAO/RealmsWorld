@@ -41,6 +41,9 @@ export const env = createEnv({
     NEXT_PUBLIC_ALCHEMY_API: z.string(),
     NEXT_PUBLIC_ETHPLORER_APIKEY: z.string(),
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_ARK_MARKETPLACE_API: z.string().url(),
+    NEXT_PUBLIC_ARK_ORDERBOOK_API: z.string().url(),
+    NEXT_PUBLIC_MOBULA_API_KEY: z.string(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -66,6 +69,10 @@ export const env = createEnv({
     NEXT_PUBLIC_ETHPLORER_APIKEY: process.env.NEXT_PUBLIC_ETHPLORER_APIKEY,
     NEXT_PUBLIC_RESERVOIR_API_KEY: process.env.NEXT_PUBLIC_RESERVOIR_API_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+    NEXT_PUBLIC_ARK_MARKETPLACE_API:
+      process.env.NEXT_PUBLIC_ARK_MARKETPLACE_API,
+    NEXT_PUBLIC_ARK_ORDERBOOK_API: process.env.NEXT_PUBLIC_ARK_ORDERBOOK_API,
+    NEXT_PUBLIC_MOBULA_API_KEY: process.env.NEXT_PUBLIC_MOBULA_API_KEY,
   },
   skipValidation:
     !!process.env.CI ||

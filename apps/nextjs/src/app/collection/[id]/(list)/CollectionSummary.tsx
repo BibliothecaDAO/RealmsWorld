@@ -21,7 +21,9 @@ export default async function CollectionSummary({
 
   if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
     return <L2CollectionSummary collectionId={collectionId as Collections} />;
-  } else if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
+  }
+
+  if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
     const { collections } = await getCollections([
       { contract: tokenAddresses[SUPPORTED_L1_CHAIN_ID] ?? "0x" },
     ]);

@@ -8,14 +8,16 @@ import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import useNftSelection from "@/hooks/useNftSelection";
 import { cleanQuery } from "@/lib/reservoir/getToken";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { api } from "@/trpc/react";
 import { useInView } from "framer-motion";
 
 import type { RouterInputs } from "@realms-world/api";
 import { getCollectionFromAddress } from "@realms-world/constants";
+import { getCollectionTokens } from "@/lib/ark/getCollectionTokens";
 
 import { TokenCardSkeleton } from "../../TokenCardSkeleton";
 import { L2ERC721Card } from "./L2ERC721Card";
+import { useArkClient } from "@/lib/ark/useArkClient";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 const L2ERC721Table = ({
   contractAddress,
@@ -64,17 +66,17 @@ const L2ERC721Table = ({
     filters.owner = ownerAddress;
   }
 
-  const [erc721Tokens, { fetchNextPage, hasNextPage, isFetching }] =
-    api.erc721Tokens.all.useSuspenseInfiniteQuery(filters, {
-      getNextPageParam(lastPage) {
-        return lastPage.nextCursor;
-      },
-      refetchInterval: 30000,
-    });
+  const { marketplace: arkClient } = useArkClient();
+  const { data: erc721Tokens, fetchNextPage, hasNextPage, isFetching } = useSuspenseInfiniteQuery({
+    queryKey: ['erc721Tokens', contractAddress, ownerAddress, filters],
+    queryFn: async ({ pageParam }) => {
+      return await getCollectionTokens({ client: arkClient, collectionAddress: contractAddress, page: pageParam ?? 1, ...filters });
+    },
+    getNextPageParam: (lastPage) => lastPage.next_page,
+  });
 
   const isInView = useInView(ref, { once: false });
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     if (isInView && infiniteScroll) fetchNextPage();
   }, [fetchNextPage, infiniteScroll, isInView]);
 
@@ -88,67 +90,69 @@ const L2ERC721Table = ({
     selectedTokenIds,
   } = useNftSelection({ userAddress: ownerAddress as `0x${string}` });
 
+  if (erc721Tokens.pages[0]?.data.length === 0) {
+    return <>No Assets Found</>;
+  }
+
   return (
     <>
-      {selectable && erc721Tokens.pages[0]?.items.length ? (
+      {selectable &&
         <NftActions
           selectedTokenIds={selectedTokenIds}
           totalSelectedNfts={totalSelectedNfts}
           selectBatchNfts={selectBatchNfts}
-          tokens={erc721Tokens.pages[0]?.items}
+          tokens={erc721Tokens.pages[0]?.data}
           deselectAllNfts={deselectAllNfts}
           sourceChain={SUPPORTED_L2_CHAIN_ID}
         />
-      ) : null}
+      }
       <div className={isGrid ? grid : list}>
-        {erc721Tokens.pages[0]?.items.length
-          ? erc721Tokens.pages.map((page) =>
-              page.items.map((token, index) => {
-                const isSelected = isNftSelected(
-                  token.token_id.toString(),
-                  token.contract_address ?? "0x",
-                );
-                return (
-                  <>
-                    {selectable ? (
-                      <button
-                        key={index}
-                        onClick={() =>
-                          toggleNftSelection(
-                            token.token_id.toString(),
-                            token.contract_address ?? "0x",
-                          )
-                        }
-                      >
-                        <L2ERC721Card
-                          selectable
-                          isSelected={isSelected}
-                          token={token}
-                          layout={isGrid ? "grid" : "list"}
-                        />
-                      </button>
-                    ) : (
-                      <Link
-                        href={`/collection/${token.contract_address && getCollectionFromAddress(token.contract_address)}/${
-                          token.token_id
-                        }`}
-                        className={`${isGrid ? "" : "flex"}`}
-                      >
-                        <L2ERC721Card
-                          key={index}
-                          token={token}
-                          layout={isGrid ? "grid" : "list"}
-                        />
-                      </Link>
-                    )}
-                  </>
-                );
-              }),
-            )
-          : "No Assets Found"}
+        {erc721Tokens.pages.map((page) =>
+          page.data.map((token, index) => {
+            const isSelected = isNftSelected(
+              token.token_id.toString(),
+              token.collection_address ?? "0x",
+            );
+            if (selectable) {
+              return (
+                <button
+                  key={index}
+                  onClick={() =>
+                    toggleNftSelection(
+                      token.token_id.toString(),
+                      token.collection_address ?? "0x",
+                    )
+                  }
+                >
+                  selectable
+                  <L2ERC721Card
+                    isSelected={isSelected}
+                    token={token}
+                    layout={isGrid ? "grid" : "list"}
+                  />
+                </button>
+              )
+            }
+
+            return (
+              <Link
+                key={index}
+                href={`/collection/${token.collection_address && getCollectionFromAddress(token.collection_address)}/${token.token_id
+                  }`}
+                className={`${isGrid ? "" : "flex"}`}
+              >
+                <L2ERC721Card
+                  key={index}
+                  token={token}
+                  layout={isGrid ? "grid" : "list"}
+                />
+              </Link>
+            );
+          }),
+        )}
         {!infiniteScroll &&
-          erc721Tokens.pages[0]?.items.length !== undefined &&
-          erc721Tokens.pages[0]?.items.length > 9 && (
+          erc721Tokens.pages[0]?.data.length !== undefined &&
+          erc721Tokens.pages[0]?.data.length > 9 && (
             <Link href={`/user/${ownerAddress}/${loadMoreAssetName}`}>
               <div
                 className={`group flex min-h-[454px] transform cursor-pointer items-center justify-center border-2 bg-dark-green duration-300 hover:border-bright-yellow`}

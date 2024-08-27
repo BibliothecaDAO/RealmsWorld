@@ -8,18 +8,21 @@ import { padAddress } from "@realms-world/utils";
 import { BuyModal } from "../../marketplace/buy/BuyModal";
 import { ListModal } from "../../marketplace/list/ListModal";
 import { ListingEditModal } from "../../marketplace/listEdit/ListingEditModal";
+import type { CollectionToken } from "@/types/ark";
+import { useTokenListing } from "@/hooks/market/useTokenListing";
 
 export const CardAction = ({
   token,
 }: {
-  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token: RouterOutputs["erc721Tokens"]["all"]["items"][number] | CollectionToken;
 }) => {
   const { address } = useAccount();
-  const listing = findLowestPriceActiveListing(token.listings, token.owner);
+  const listing = useTokenListing(token);
+  if (undefined === listing || null === listing) return null;
 
   return (
     <>
-      {listing &&
+      {
         (token.owner !== padAddress(address?.toLowerCase()) ? (
           <BuyModal
             trigger={
