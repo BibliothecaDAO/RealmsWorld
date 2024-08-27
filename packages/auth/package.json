@@ -27,7 +27,7 @@
     "next": "^15.0.0-rc.0",
     "next-auth": "5.0.0-beta.19",
     "react": "^19.0.0-rc.0",
-    "react-dom": "18.3.1",
+    "react-dom": "^19.0.0-rc.0",
     "siws": "*",
     "zod": "^3.23.8"
   },
@@ -37,7 +37,7 @@
     "@realms-world/tsconfig": "*",
     "eslint": "^9.9.0",
     "prettier": "^3.3.3",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.3"
   },
   "prettier": "@realms-world/prettier-config"
 }
