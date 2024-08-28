@@ -35,6 +35,7 @@ interface GetCollectionTokensParams {
   itemsPerPage?: number;
   sortBy?: string;
   sortDirection?: string;
+  buyNowOnly?: boolean;
 }
 
 export async function getCollectionTokens({
@@ -44,12 +45,14 @@ export async function getCollectionTokens({
   itemsPerPage = 50,
   sortBy = "price",
   sortDirection = "asc",
+  buyNowOnly = false,
 }: GetCollectionTokensParams): Promise<CollectionTokensApiResponse> {
   const queryParams = [
     `items_per_page=${itemsPerPage}`,
     `sort=${sortBy}`,
     `direction=${sortDirection}`,
     `page=${page}`,
+    `buy_now=${buyNowOnly ? "true" : "false"}`,
   ];
 
   try {

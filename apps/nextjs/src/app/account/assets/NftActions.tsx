@@ -81,7 +81,6 @@ export const NftActions = ({
         <Badge variant={"outline"} className="h-6 font-bold">
           {totalSelectedNfts} Realms
         </Badge>
-
         {isAllSelected ? (
           <Button
             variant={"secondary"}

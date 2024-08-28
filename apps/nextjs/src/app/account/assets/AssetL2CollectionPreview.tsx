@@ -20,35 +20,43 @@ function AssetL2CollectionPreview({
   const { address: l2address } = useL2Account();
   const collectionAddress =
     getCollectionAddresses(collectionName)?.[SUPPORTED_L2_CHAIN_ID];
+
+  if (!hideTitle) {
+    return <div>
+      <div className="mb-4 flex flex-col capitalize items-center justify-center space-x-4 border-b pb-3 text-4xl md:flex-row md:justify-start">
+        <h2>
+          {collectionName === "goldentoken" ? "Golden Token" : collectionName}
+        </h2>
+        <StarknetLoginButton />
+      </div>
+    </div>
+  }
+
+  if (!l2address) {
+    return <div>
+      <div className="min-h-24">
+        <h3>Please connect your starknet wallet</h3>
+      </div>
+    </div>
+  }
+
   return (
     <div>
-      {!hideTitle && (
-        <div className="mb-4 flex flex-col capitalize items-center justify-center space-x-4 border-b pb-3 text-4xl md:flex-row md:justify-start">
-          <h2>
-            {collectionName === "goldentoken" ? "Golden Token" : collectionName}
-          </h2>
-          <StarknetLoginButton />
-        </div>
-      )}
       <div className="min-h-24">
-        {!l2address ? (
-          <h3>Please connect your starknet wallet</h3>
-        ) : (
-          <Suspense fallback={<LoadingSkeletonGrid />}>
-            {collectionAddress && (
-              <ScrollArea>
-                <L2ERC721Table
-                  contractAddress={collectionAddress}
-                  infiniteScroll={true}
-                  limit={200}
-                  ownerAddress={l2address}
-                  loadMoreAssetName={collectionName}
-                  selectable={collectionName == "realms"}
-                />
-              </ScrollArea>
-            )}
-          </Suspense>
-        )}
+        <Suspense fallback={<LoadingSkeletonGrid />}>
+          {collectionAddress && (
+            <ScrollArea>
+              <L2ERC721Table
+                contractAddress={collectionAddress}
+                infiniteScroll={true}
+                limit={200}
+                ownerAddress={l2address}
+                loadMoreAssetName={collectionName}
+                selectable={collectionName == "realms"}
+              />
+            </ScrollArea>
+          )}
+        </Suspense>
       </div>
     </div>
   );

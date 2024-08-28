@@ -6,6 +6,7 @@ import { ArrowRightLeft, Ban, Gavel, NotebookPen } from "lucide-react";
 
 import { getCollectionFromId } from "@realms-world/constants/src/Marketplace";
 import type { CollectionActivity } from "@/types/ark";
+import { useMemo } from "react";
 
 interface ActivityCardProps {
   activity: CollectionActivity;
@@ -13,14 +14,10 @@ interface ActivityCardProps {
 }
 
 export const L2ActivityCard = ({ activity, collectionId }: ActivityCardProps) => {
-  // convert unix to time
-  const date =
-    "updated_at" in activity && activity.updated_at
-      ? new Date(activity.updated_at)
-      : null;
-
-  function getElapsedTime() {
-    // get time difference from now
+  // convert unix to date
+  // *1000 is to convert starknet timestamp to milliseconds
+  const date = useMemo(() => activity.time_stamp ? new Date(activity.time_stamp * 1000) : null, [activity.time_stamp]);
+  const elapsedTime = useMemo(() => {
     if (date) {
       const timeDiff = Math.abs(Date.now() - date.getTime());
 
@@ -44,10 +41,10 @@ export const L2ActivityCard = ({ activity, collectionId }: ActivityCardProps) =>
       if (months < 12) return `${months} month${months === 1 ? "" : "s"} ago`;
       return `${years} year${years === 1 ? "" : "s"} ago`;
     }
-  }
-  const getLocalizedDate = () => {
-    return date?.toLocaleString();
-  };
+
+  }, [date]);
+  const localizedDate = useMemo(() => date ? date.toLocaleString() : null, [date]);
+
 
   return (
     <div className="flex w-full flex-wrap border-b p-2 ">
@@ -73,10 +70,10 @@ export const L2ActivityCard = ({ activity, collectionId }: ActivityCardProps) =>
             className="self-start rounded-lg"
           />
         )}
-        {activity.token_id && activity.collection_id && (
+        {activity.token_id && (
           <Link
             className="ml-3 flex-none self-center"
-            href={`/collection/${getCollectionFromId(activity.collection_id)}/${activity.token.token_id}`}
+            href={`/collection/${getCollectionFromId(collectionId)}/${activity.token_id}`}
           >
             <span className="font-semibold ">
               <span className="text-xs opacity-50">
@@ -137,9 +134,9 @@ export const L2ActivityCard = ({ activity, collectionId }: ActivityCardProps) =>
         <div className="flex space-x-4 self-center px-4">
           <span
             className="flex-none rounded bg-black/50 px-4 py-1"
-            title={getLocalizedDate()}
+            title={localizedDate}
           >
-            {getElapsedTime()}
+            {elapsedTime}
           </span>
         </div>
       </div>

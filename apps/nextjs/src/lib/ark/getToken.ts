@@ -20,7 +20,7 @@ export async function getToken({
   try {
     return await client.fetch(
       `/tokens/${contractAddress}/0x534e5f4d41494e/${tokenId.toString()}`,
-    );
+    )
   } catch (error) {
     console.error(error);
     return null;
