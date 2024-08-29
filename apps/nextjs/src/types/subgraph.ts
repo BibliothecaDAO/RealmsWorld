@@ -56,6 +56,27 @@ export interface Realm {
   bridgedV2Owner?: Maybe<Wallet>;
 }
 
+export interface ClaimEvent {
+  rewardsAddressL1: Scalars["Bytes"];
+  rewardsAddressL2: Scalars["Bytes"];
+  status: TransferStatus;
+  payload: [Scalars["BigInt"]];
+  nonce: Scalars["BigInt"];
+  createdAtBlock: Scalars["Bytes"];
+  createdTxHash: Scalars["Bytes"];
+  finishedAtBlock: Scalars["BigInt"];
+  finishedAtDate: Maybe<Scalars["BigInt"]>;
+  finishedTxHash: Maybe<Scalars["Bytes"]>;
+}
+
+export interface Claim {
+  claimId: Scalars["BigInt"];
+  claimEvents: ClaimEvent[];
+  l1Sender: Scalars["Bytes"];
+  l2Recipient: Scalars["Bytes"];
+  createdTimestamp: Scalars["BigInt"];
+}
+
 export interface UsersRealmsQuery {
   realms: Pick<Realm, "id" | "name">[];
   bridgedRealms: Pick<Realm, "id" | "name">[];

@@ -15,8 +15,22 @@
   },
   "mainnet": {
     "StarknetMessaging": {
-      "address": "0xtest",
-      "startBlock": 10
+      "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "startBlock": 20433152
+    },
+    "context": {
+      "l1_bridge_address": {
+        "data": "0xA425Fa1678f7A5DaFe775bEa3F225c4129cdbD25"
+      },
+      "l2_bridge_address ": {
+        "data": "0x068171a6e631a779b888ddb106c430bbac3ce4cc2b5805410411504f758b60e4"
+      },
+      "l1_legacy_rewards_address": {
+        "data": ""
+      },
+      "l2_legacy_rewards_address ": {
+        "data": ""
+      }
     }
   }
 }

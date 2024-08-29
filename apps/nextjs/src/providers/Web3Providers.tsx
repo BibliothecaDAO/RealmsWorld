@@ -16,13 +16,13 @@ import {
   publicProvider as starkPublicProvider,
   //useInjectedConnectors,
 } from "@starknet-react/core";
-import { ArgentMobileConnector } from "starknetkit/argentMobile";
+import { ArgentMobileConnector, isInArgentMobileAppBrowser } from "starknetkit/argentMobile";
 import { InjectedConnector } from "starknetkit/injected";
 import { WebWalletConnector } from "starknetkit/webwallet";
 import { http, WagmiProvider } from "wagmi";
 import { mainnet, sepolia } from "wagmi/chains";
-
 import { TransferLogProvider } from "./TransferLogProvider";
+import { constants } from "starknet";
 
 const starkProvider = env.NEXT_PUBLIC_BLAST_API
   ? blastProvider({
@@ -30,16 +30,33 @@ const starkProvider = env.NEXT_PUBLIC_BLAST_API
   })
   : starkPublicProvider();
 
-const starkConnectors = [
-  new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
-  new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
-  new WebWalletConnector({
-    url: "https://web.argent.xyz",
-  }),
-  new ArgentMobileConnector(),
-];
-
 const isTestnet = env.NEXT_PUBLIC_IS_TESTNET === "true";
+
+const starkConnectors = isInArgentMobileAppBrowser()
+  ? [
+    ArgentMobileConnector.init({
+      options: {
+        url: typeof window !== "undefined" ? window.location.href : "",
+        dappName: "Realms.World",
+        chainId: isTestnet ? constants.NetworkName.SN_SEPOLIA : constants.NetworkName.SN_MAIN,
+      },
+    }),
+  ]
+  : [
+    new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
+    new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
+    new WebWalletConnector({
+      url: "https://web.argent.xyz",
+    }),
+    ArgentMobileConnector.init({
+      options: {
+        url: typeof window !== "undefined" ? window.location.href : "",
+        dappName: "Realms.World",
+        chainId: isTestnet ? constants.NetworkName.SN_SEPOLIA : constants.NetworkName.SN_MAIN,
+      },
+    }),
+  ];
+
 
 const theme = darkTheme({
   headlineFont: "Sans Serif",
@@ -67,7 +84,6 @@ export function Web3Providers({ children }: { children: ReactElement }) {
   });*/
   return (
     <StarknetConfig
-      autoConnect
       chains={[
         ...(env.NEXT_PUBLIC_IS_TESTNET === "true"
           ? [starkSepolia]

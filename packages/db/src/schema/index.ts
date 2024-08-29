@@ -9,6 +9,7 @@ import * as erc721MarketEvents from "./erc721_market_events";
 import * as erc721TokenAttributes from "./erc721_token_attributes";
 import * as erc721Tokens from "./erc721_tokens";
 import * as lordsRewards from "./lords_rewards";
+import * as velordsBurns from "./velords_burns";
 
 export * from "./auth";
 export * from "./bridge";
@@ -21,6 +22,8 @@ export * from "./erc721_tokens";
 export * from "./delegates";
 export * from "./erc721_bridge";
 export * from "./lords_rewards";
+export * from "./velords_burns";
+
 export const schema = {
   ...auth,
   ...bridge,
@@ -33,4 +36,5 @@ export const schema = {
   ...erc721Tokens,
   ...erc721TokenAttributes,
   ...lordsRewards,
+  ...velordsBurns,
 };

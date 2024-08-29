@@ -32,20 +32,20 @@
   ],
   "homepage": "https://github.com/nethermindeth",
   "dependencies": {
-    "starknet": "^6.9.0",
+    "starknet": "^6.11.0",
     "uri-js": "^4.4.1",
     "valid-url": "^1.0.9",
-    "zod": "^3.23.8"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.14.9",
-    "@realms-world/eslint-config": "*",
-    "@realms-world/prettier-config": "*",
-    "@realms-world/tsconfig": "*",
-    "eslint": "^9.9.0",
-    "prettier": "^3.3.3",
-    "typescript": "^5.5.3",
+    "@types/node": "^22.3.0",
+    "@realms-world/eslint-config": "workspace:*",
+    "@realms-world/prettier-config": "workspace:*",
+    "@realms-world/tsconfig": "workspace:*",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.5",
     "tsdx": "^0.14.1"

@@ -76,7 +76,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
           //   stdio: "inherit",
           // });
           execSync(
-            `bun prettier --write packages/${answers.name}/** --list-different`,
+            `pnpm prettier --write packages/${answers.name}/** --list-different`,
           );
           return "Package scaffolded";
         }
