@@ -1,6 +1,7 @@
 import type { TokenOffer } from "@/types/ark";
 
 import type { ArkClient } from "./client";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 
 export interface GetTokenOffersApiResponse {
   data: TokenOffer[];
@@ -26,7 +27,7 @@ export async function getTokenOffers({
   try {
     const queryParams = [`items_per_page=${itemsPerPage}`, `page=${page}`];
     return await client.fetch(
-      `/tokens/${contractAddress}/0x534e5f4d41494e/${tokenId.toString()}/offers?${queryParams.join("&")}`,
+      `/tokens/${contractAddress}/${SUPPORTED_L2_CHAIN_ID}/${tokenId.toString()}/offers?${queryParams.join("&")}`,
     );
   } catch (error) {
     throw new Error("failed to fetch token offers : " + (error as string));

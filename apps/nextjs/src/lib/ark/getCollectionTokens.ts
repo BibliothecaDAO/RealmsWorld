@@ -2,6 +2,7 @@ import type { CollectionToken } from "@/types/ark";
 import { createSearchParamsCache, parseAsStringLiteral } from "nuqs/server";
 
 import type { ArkClient } from "./client";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 
 export const collectionSortDirectionKey = "direction";
 export const collectionSortDirectionsValues = ["asc", "desc"] as const;
@@ -57,7 +58,7 @@ export async function getCollectionTokens({
 
   try {
     return await client.fetch(
-      `/collections/${collectionAddress}/0x534e5f4d41494e/tokens?${queryParams.join("&")}`,
+      `/collections/${collectionAddress}/${SUPPORTED_L2_CHAIN_ID}/tokens?${queryParams.join("&")}`,
     );
   } catch (error) {
     console.error(error);

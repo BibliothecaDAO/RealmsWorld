@@ -1,6 +1,7 @@
 import type { Token } from "@/types/ark";
 
 import type { ArkClient } from "./client";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 
 export interface GetTokenApiResponse {
   data: Token;
@@ -19,7 +20,7 @@ export async function getToken({
 }: GetTokenParams) {
   try {
     return await client.fetch(
-      `/tokens/${contractAddress}/0x534e5f4d41494e/${tokenId.toString()}`,
+      `/tokens/${contractAddress}/${SUPPORTED_L2_CHAIN_ID}/${tokenId.toString()}`,
     )
   } catch (error) {
     console.error(error);
