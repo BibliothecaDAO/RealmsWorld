@@ -40,9 +40,10 @@ export const StakingAddresses: {
       "0x5d748db07d5d307a9ba2ada904209278eb50816cf238f8195dfbc266113a703",
   },
   [StakingContracts.LEGACY_REWARD]: {
-    [ChainId.MAINNET]: "",
+    [ChainId.MAINNET]: "0x7Ad94e71308Bb65c6bc9dF35cc69Cc9f953D69E5",
     [ChainId.SEPOLIA]: "0x5C209C96733BA71Fb09772D22d12Fc6f8CB980cA",
-    [ChainId.SN_MAIN]: "",
+    [ChainId.SN_MAIN]:
+      "0x38862e1b15526eda31ed6fd26805c40748458db8e420cb3be3bc65c332c023b",
     [ChainId.SN_SEPOLIA]:
       "0x48c774a0f71120aeffcb520fa4a08e1659c17abb46a792ea1e1bbbcf5ef38f3",
   },

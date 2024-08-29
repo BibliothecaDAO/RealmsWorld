@@ -52,7 +52,11 @@ export const LegacyClaim = () => {
   const { reward, loading, claim, writeReturn } = useLegacyReward();
   const data = useLegacyRewardData({ address: l1Address });
 
+
   const isLegacyClaimed = data.data?.[0]?.claimEvents.some(event => event.status === 'ACCEPTED_ON_L2');
+
+  const totalClaimableincLegacy = totalClaimable + ((reward?.amount && !isLegacyClaimed) ? parseInt(reward.amount) : 0)
+
   return (
     <Collapsible
       className="col-span-full"
@@ -64,7 +68,7 @@ export const LegacyClaim = () => {
           Legacy (L1) Claimable Lords:
           <span className="ml-8 flex items-center">
             <LordsIcon className="mr-3 h-5 w-5 fill-primary" />
-            {totalClaimable.toString()}
+            {totalClaimableincLegacy.toString()}
           </span>
         </div>
       </CollapsibleTrigger>
