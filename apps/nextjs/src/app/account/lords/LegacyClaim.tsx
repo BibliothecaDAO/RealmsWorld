@@ -3,6 +3,7 @@ import { useStaking } from "@/hooks/staking/useStaking";
 import LordsIcon from "@/icons/lords.svg";
 import {
   Alert,
+  Badge,
   Button,
   Card,
   CardDescription,
@@ -153,9 +154,14 @@ export const LegacyClaim = () => {
                           </CardHeader>
                         </Card>
                         <Button disabled={writeReturn.isPending} className='w-full' onClick={() => claim({ claimId: reward.id, l2Address })}>Claim</Button>
-                        {writeReturn.error && <Alert className='text-wrap overflow-y-auto' variant={"destructive"}>{writeReturn.error.message}</Alert>}
-                      </>) : <><DialogTitle>Claim Sent</DialogTitle><p>Claim sent to Starknet <ExplorerLink type='tx' chainId={SUPPORTED_L1_CHAIN_ID} hash={writeReturn.data} /></p>
-                        <p>{data[0].claimEvents[0].status}</p>
+                        {writeReturn.error &&
+                          <Alert className='text-wrap overflow-y-auto' variant={"destructive"}>{writeReturn.error.message}
+                          </Alert>
+                        }
+                      </>) : <>
+                        <DialogTitle>Claim Sent</DialogTitle><p>Claim sent to Starknet <ExplorerLink type='tx' chainId={SUPPORTED_L1_CHAIN_ID} hash={writeReturn.data} /></p>
+                        <p>Your Lords will be transferred to your L2 wallet in the next few minutes</p>
+                        <p>Status: <Badge className='ml-2' variant="secondary">{data.data?.[0]?.claimEvents[0]?.status}</Badge> </p>
                       </>}
                     </DialogContent>
                   </Dialog>

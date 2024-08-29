@@ -16,7 +16,7 @@ export function GET(
 
     if (claimId != -1) {
       return NextResponse.json({
-        id: claimId,
+        id: claimId + 1,
         amount: UserClaims[claimId]?.amount,
       });
     } else {
