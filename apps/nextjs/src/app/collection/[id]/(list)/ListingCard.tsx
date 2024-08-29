@@ -3,37 +3,38 @@ import { useTimeDiff } from "@/hooks/useTimeDiff";
 import LordsIcon from "@/icons/lords.svg";
 import { shortenHex } from "@/utils/utils";
 
-import type { RouterOutputs } from "@realms-world/api";
 import { Button } from "@realms-world/ui";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";
+import type { Token, TokenActivity } from "@/types/ark";
+import { useMemo } from "react";
 
 interface ActivityCardProps {
-  activity: RouterOutputs["erc721MarketEvents"]["all"]["items"][number];
-  token?: RouterOutputs["erc721Tokens"]["byId"];
+  listing: TokenActivity;
+  token?: Token;
 }
 
-export const ListingCard = ({ activity, token }: ActivityCardProps) => {
+export const ListingCard = ({ listing, token }: ActivityCardProps) => {
   // convert unix to time
 
-  const expiryDiff = useTimeDiff(activity.expiration ?? Date.now());
-  const getLocalizedDate = () => {
+  const expiryDiff = useTimeDiff(listing.listing.end_date * 1000 ?? Date.now());
+  const getLocalizedDate = useMemo(() => {
     return expiryDiff.toLocaleString();
-  };
+  }, [expiryDiff]);
 
   return (
     <div className=" flex w-full flex-wrap border-b p-2">
       <div className="flex w-1/2 self-center font-semibold sm:w-2/12 ">
         <div className="flex items-center self-center">
-          {activity.price ?? 0}
+          {listing.listing.start_amount ?? 0}
           <LordsIcon className="ml-2 h-5 w-5 fill-current" />
         </div>
       </div>
       <div className="w-1/2 sm:w-1/12">
         <span className="text-xs opacity-50">from:</span> <br />
-        {activity.created_by ? (
-          <Link href={`/user/${activity.created_by}`}>
-            {activity.created_by ? shortenHex(activity.created_by) : ""}
+        {listing.owner ? (
+          <Link href={`/user/${listing.owner}`}>
+            {listing.owner ? shortenHex(listing.owner) : ""}
           </Link>
         ) : (
           "-"
@@ -44,7 +45,7 @@ export const ListingCard = ({ activity, token }: ActivityCardProps) => {
         <div className="flex space-x-4 self-center px-4">
           <span
             className="flex-none rounded bg-black/50 px-4 py-1"
-            title={getLocalizedDate()}
+            title={getLocalizedDate}
           >
             {expiryDiff}
           </span>

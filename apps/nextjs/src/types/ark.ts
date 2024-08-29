@@ -50,7 +50,7 @@ export interface CollectionActivity {
   time_stamp: number;
   to: string;
   token_id: string;
-  token_metadata: TokenMetadata;
+  token_metadata: TokenMetadata | null;
   transaction_hash: string | null;
 }
 export interface AccountSearchResult {

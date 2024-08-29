@@ -24,6 +24,7 @@ import { useArkClient } from "@/lib/ark/useArkClient";
 import { getTokenMarketdata } from "@/lib/ark/getTokenMarketdata";
 import { getTokenActivity } from "@/lib/ark/getTokenActivity";
 import { useTimeDiff } from "@/hooks/useTimeDiff";
+import { useTokenPrice } from "@/hooks/market/useTokenPrice";
 
 export const L2Token = ({
   contractAddress,
@@ -118,7 +119,7 @@ export const L2Token = ({
             <AccordionContent className="-mt-4 w-full flex-wrap gap-x-2">
               {listing.is_listed ? (
                 <ListingCard
-                  activity={listing}
+                  listing={listing}
                   token={token}
                 />
               )

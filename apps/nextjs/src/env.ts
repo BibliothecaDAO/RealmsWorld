@@ -44,6 +44,9 @@ export const env = createEnv({
     NEXT_PUBLIC_ARK_MARKETPLACE_API: z.string().url(),
     NEXT_PUBLIC_ARK_ORDERBOOK_API: z.string().url(),
     NEXT_PUBLIC_MOBULA_API_KEY: z.string(),
+    NEXT_PUBLIC_TESTNET_RPC_URL: z.string().url(),
+    NEXT_PUBLIC_MAINNET_RPC_URL: z.string().url(),
+    NEXT_PUBLIC_RPC_API_KEY: z.string(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -73,6 +76,10 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_ARK_MARKETPLACE_API,
     NEXT_PUBLIC_ARK_ORDERBOOK_API: process.env.NEXT_PUBLIC_ARK_ORDERBOOK_API,
     NEXT_PUBLIC_MOBULA_API_KEY: process.env.NEXT_PUBLIC_MOBULA_API_KEY,
+    NEXT_PUBLIC_TESTNET_RPC_URL: process.env.NEXT_PUBLIC_TESTNET_RPC_URL,
+    NEXT_PUBLIC_MAINNET_RPC_URL: process.env.NEXT_PUBLIC_MAINNET_RPC_URL,
+    NEXT_PUBLIC_RPC_API_KEY: process.env.NEXT_PUBLIC_RPC_API_KEY,
+
   },
   skipValidation:
     !!process.env.CI ||

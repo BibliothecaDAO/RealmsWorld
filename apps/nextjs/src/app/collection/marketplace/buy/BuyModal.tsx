@@ -84,7 +84,7 @@ export function BuyModal({
   const [open, setOpen] = useState(false);
 
   const { isConnected } = useAccount();
-  //const { balances } = useWalletsProviderContext();
+  const price = useTokenPrice(listing?.listing.start_amount, listing?.listing.currency_address);
 
   return (
     <BuyModalRender
@@ -112,7 +112,6 @@ export function BuyModal({
       }) => {
         const title = titleForStep(buyStep, copy, loading, isOwner);
 
-        const price = listing?.price ?? 0;
 
         return (
           <Dialog

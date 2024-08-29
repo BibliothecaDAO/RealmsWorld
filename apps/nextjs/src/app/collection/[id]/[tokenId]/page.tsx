@@ -83,8 +83,8 @@ const L2TokenData = async ({
     <>
       {erc721Token && (
         <TokenInformation
-          name={erc721Token.metadata.name}
-          image={erc721Token.metadata.image}
+          name={erc721Token.metadata?.name}
+          image={erc721Token.metadata?.image}
           tokenId={erc721Token.token_id}
           owner={erc721Token.owner}
           attributes={erc721Token.attributes}

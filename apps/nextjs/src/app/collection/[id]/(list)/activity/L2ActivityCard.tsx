@@ -57,7 +57,7 @@ export const L2ActivityCard = ({ activity, collectionId }: ActivityCardProps) =>
         {activity.activity_type}
       </div>
       <div className="flex w-full flex-wrap justify-start sm:w-3/12">
-        {activity.token_metadata.image && (
+        {activity.token_metadata?.image && (
           <Image
             src={
               activity.token_metadata.image
@@ -80,7 +80,7 @@ export const L2ActivityCard = ({ activity, collectionId }: ActivityCardProps) =>
                 #{activity.token_id}
               </span>{" "}
               <br />
-              {decodeURIComponent(activity.token_metadata.name ?? "")}
+              {decodeURIComponent(activity.token_metadata?.name ?? "")}
             </span>
           </Link>
         )}
