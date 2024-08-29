@@ -157,7 +157,7 @@ const Price = ({
 
   return (
     <div className="flex justify-between">
-      {token?.price && (
+      {token.price && listing?.price && (
         <div>
           <div className="flex text-lg">
             {listing.price}
