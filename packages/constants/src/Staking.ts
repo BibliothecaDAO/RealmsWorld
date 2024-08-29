@@ -7,6 +7,7 @@ export enum StakingContracts {
   PAYMENT_POOL_V2 = "paymentpoolv2",
   VE_LORDS = "velords",
   REWARD_POOL = "rewardpool",
+  LEGACY_REWARD = "legacyreward",
 }
 
 export const StakingAddresses: {
@@ -37,5 +38,12 @@ export const StakingAddresses: {
     [ChainId.SN_MAIN]: "",
     [ChainId.SN_SEPOLIA]:
       "0x5d748db07d5d307a9ba2ada904209278eb50816cf238f8195dfbc266113a703",
+  },
+  [StakingContracts.LEGACY_REWARD]: {
+    [ChainId.MAINNET]: "",
+    [ChainId.SEPOLIA]: "0x5C209C96733BA71Fb09772D22d12Fc6f8CB980cA",
+    [ChainId.SN_MAIN]: "",
+    [ChainId.SN_SEPOLIA]:
+      "0x48c774a0f71120aeffcb520fa4a08e1659c17abb46a792ea1e1bbbcf5ef38f3",
   },
 };

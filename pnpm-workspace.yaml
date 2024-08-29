@@ -3,6 +3,7 @@ packages:
   - config/*
   - packages/*
   - tooling/*
+  - packages/subgraph/*
 
 catalog:
   "@tanstack/react-query": ^5.51.23

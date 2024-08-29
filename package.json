@@ -3,7 +3,7 @@
   "engines": {
     "node": ">=20.16.0"
   },
-  "packageManager": "pnpm@9.8.0",
+  "packageManager": "pnpm@9.9.0",
   "scripts": {
     "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
@@ -23,12 +23,12 @@
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
-    "@turbo/gen": "^2.0.14",
+    "@turbo/gen": "^2.1.0",
     "million": "^3.1.11",
     "npm-check-updates": "^17.1.0",
     "prettier": "catalog:",
     "tsup": "^8.2.4",
-    "turbo": "2.0.14",
+    "turbo": "2.1.0",
     "typescript": "catalog:"
   },
   "pnpm": {

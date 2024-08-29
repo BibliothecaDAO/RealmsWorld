@@ -41,7 +41,7 @@
     "@realms-world/prettier-config": "workspace:*",
     "@realms-world/tsconfig": "workspace:*",
     "dotenv-cli": "^7.4.2",
-    "drizzle-kit": "^0.24.0",
+    "drizzle-kit": "^0.24.2",
     "eslint": "catalog:",
     "postgres-range": "^1.1.4",
     "prettier": "catalog:",

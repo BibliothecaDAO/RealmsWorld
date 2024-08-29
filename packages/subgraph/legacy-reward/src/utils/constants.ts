@@ -9,13 +9,6 @@ export class TransferStatus {
   static ACCEPTED_ON_L2: string = "ACCEPTED_ON_L2";
 }
 
-export const l1BridgeAddress: Bytes = Bytes.fromByteArray(
-  dataSource.context().getBytes("l1_bridge_address"),
-);
-
-export const l2BridgeAddress: Bytes = Bytes.fromByteArray(
-  dataSource.context().getBytes("l2_bridge_address"),
-);
 export const l1LegacyRewardsAddress: Bytes = Bytes.fromByteArray(
   dataSource.context().getBytes("l1_legacy_rewards_address"),
 );
