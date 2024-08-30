@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Upcoming Events in the Realms Autonomous World- Created for adventurers by Bibliotheca DAO",
 };
 
-export default function Page() {
+export default async function Page() {
   return (
     <PageLayout title="Events">
       <div className="pb-8 md:text-2xl">Events from across Realms.World</div>

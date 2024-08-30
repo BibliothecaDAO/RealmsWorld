@@ -34,28 +34,21 @@ export default config({
         genres: fields.array(fields.text({ label: "Genre" }), {
           label: "Genres",
         }),
+
+        whitepaper: fields.text({ label: "Whitepaper URL" }),
         description: fields.text({ label: "Description" }),
         content: fields.markdoc({ label: "Content" }),
-        links: fields.object(
-          {
-            homepage: fields.url({ label: "Website" }),
-            discord: fields.url({ label: "Discord" }),
-            twitter: fields.text({ label: "Twitter" }),
-            telegram: fields.url({ label: "Telegram" }),
-            github: fields.url({ label: "Github" }),
-          },
-          { label: "Links" },
-        ),
         operatingSystems: fields.array(fields.text({ label: "OS" }), {
           label: "Operating Systems",
         }),
         lords: fields.text({
           label: "Lords Usage",
-          description: " How the Lords Token is used in the game",
+          description: "How the Lords Token is used in the game",
         }),
         chains: fields.array(fields.text({ label: "Chain ID" }), {
           label: "Chains",
         }),
+
         collections: fields.array(fields.text({ label: "Collection" }), {
           label: "Collections",
         }),
@@ -76,6 +69,18 @@ export default config({
             directory: "public/content/games",
           }),
           { label: "Screenshots" },
+        ),
+        links: fields.object(
+          {
+            homepage: fields.url({ label: "Website" }),
+            discord: fields.url({ label: "Discord" }),
+            twitter: fields.text({ label: "Twitter" }),
+            telegram: fields.url({ label: "Telegram" }),
+            github: fields.url({ label: "Github" }),
+            mainnet: fields.url({ label: "Mainnet" }),
+            testnet: fields.url({ label: "Testnet" }),
+          },
+          { label: "Links" },
         ),
         playable: fields.checkbox({ label: "Playable" }),
       },

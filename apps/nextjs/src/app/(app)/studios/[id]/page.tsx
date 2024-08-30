@@ -108,11 +108,11 @@ export default async function Page({ params }: { params: { id: string } }) {
             />
           </div>
           <SocialIcons
-            github={studio.links.github}
-            telegram={studio.links.telegram}
-            website={studio.links.homepage}
-            x={studio.links.twitter}
-            discord={studio.links.discord}
+            github={studio.links.github || ''}
+            telegram={studio.links.telegram || ''}
+            website={studio.links.homepage || ''}
+            x={studio.links.twitter || ''}
+            discord={studio.links.discord || ''}
           />
 
           <div className="mb-2 flex-col space-y-2">

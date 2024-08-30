@@ -1,5 +1,4 @@
 
-import type { Event } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,8 +7,8 @@ import type { CollectionEntry } from "@/utils/keystatic";
 
 export const EventCard = ({ event, slug }: { event: CollectionEntry<'events'>, slug: string }) => {
   const today = new Date();
-  const start = new Date(event.startDate);
-  const end = new Date(event.endDate);
+  const start = new Date(event.startDate || '');
+  const end = new Date(event.endDate || '');
   const isToday = today >= start && today <= end;
 
   return (

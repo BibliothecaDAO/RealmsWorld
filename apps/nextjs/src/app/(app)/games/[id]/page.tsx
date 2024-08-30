@@ -3,7 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { StatusDot } from "@/app/_components/StatusDot";
 import { env } from "@/env";
-
+import { reader } from "@/utils/keystatic";
+import Markdoc from "@markdoc/markdoc";
+import React from "react";
 import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
 import {
   Badge,
@@ -24,33 +26,45 @@ import {
   TabsTrigger,
 } from "@realms-world/ui";
 
-export function generateMetadata({
+
+
+export async function generateMetadata({
   params,
 }: {
   params: { id: string };
-}): Metadata {
-  const name = games.find((game) => game.id === params.id)?.name ?? "Game";
-
+}): Promise<Metadata> {
+  let game = await reader.collections.games.read(params.id);
   return {
-    title: `${name}`,
+    title: `${game?.title}`,
     description: `${params.id} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const game = games.find((game) => game.id === params.id);
+  const keyStaticGame = await reader.collections.games.read(params.id);
 
-  const screenshotList = new Array(game?.screenshotLength);
+  if (!keyStaticGame) return;
+  console.log(keyStaticGame)
+  const { node } = await keyStaticGame.content()
+  const errors = Markdoc.validate(node);
+  if (errors.length) {
+    console.error(errors);
+    throw new Error('Invalid content');
+  }
+  const renderable = Markdoc.transform(node);
+
+
+  const screenshotList = new Array(keyStaticGame?.screenshots.length);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const list = [...screenshotList].map((image, index) => ({
     src: `/games/${params.id}/screenshots/${index + 1}.png`,
-    alt: `${game?.name} Screenshot ${index + 1}`,
+    alt: `${keyStaticGame?.title} Screenshot ${index + 1}`,
   }));
 
   const tabs = [
     {
       name: "Details",
-      content: <div className="leading-relaxed">{game?.longform}</div>,
+      content: <div className="leading-relaxed">{Markdoc.renderers.react(renderable, React)}</div>,
     },
 
     {
@@ -59,7 +73,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div>
           <div className="flex gap-x-2">
             <div className="flex flex-wrap">
-              {game?.tokens?.map((token, index) => (
+              {keyStaticGame?.tokens?.map((token, index) => (
                 //token === Tokens.LORDS ? (
                 <Link href="/swap">
                   <Button key={index}>{token}</Button>
@@ -71,7 +85,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                   </Button>
                 ),*/
               ))}
-              {game?.collections?.map((collection, index) => (
+              {keyStaticGame?.collections?.map((collection, index) => (
                 <Link href={`/collection/${collection}`}>
                   <Button key={index}>{collection}</Button>
                 </Link>
@@ -83,7 +97,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     },
   ];
 
-  const gameIconPng = `/games/${game?.id}/icon.png`;
+  const gameIcon = `/games/${params.id}/${keyStaticGame?.icon}`;
 
   const isImageFound = async (imageName: string) => {
     return await fetch(
@@ -94,29 +108,29 @@ export default async function Page({ params }: { params: { id: string } }) {
       },
     );
   };
-  let imageName;
-  const result = await isImageFound(gameIconPng);
+  let imageName: string;
+  const result = await isImageFound(gameIcon);
   if (result.status === 200) {
-    imageName = gameIconPng;
+    imageName = gameIcon;
   } else {
-    imageName = `/games/${game?.id}/icon.svg`;
+    imageName = ``;
   }
 
   const tableData = [
     {
       key: "Studio",
       value: (
-        <Link href={`/studios/${game?.developer ?? ""}`}>
-          {game?.developer}
+        <Link href={`/studios/${keyStaticGame?.developer ?? ""}`}>
+          {keyStaticGame?.developer}
         </Link>
       ),
     },
-    { key: "Status", value: game?.status },
+    { key: "Status", value: keyStaticGame?.status },
     {
       key: "Chain",
       value: (
         <div className="flex justify-end">
-          {game?.chains.map((a, i) =>
+          {keyStaticGame?.chains.map((a, i) =>
             String(a) === "420" ? (
               <Link key={i} href="/network" className="h-full self-center">
                 {" "}
@@ -141,7 +155,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "Category",
       value: (
         <div className="flex flex-wrap justify-end">
-          {game?.genres?.map((a, i) => (
+          {keyStaticGame?.genres?.map((a, i) => (
             <Badge key={i} variant={"outline"}>
               {a}
             </Badge>
@@ -149,14 +163,14 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
       ),
     },
-    { key: "Token", value: game?.tokens },
+    { key: "Token", value: keyStaticGame?.tokens },
     {
       key: "White Paper",
       value: (
         <>
-          {game?.links.whitepaper ? (
+          {keyStaticGame?.whitepaper ? (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
-              <Link href={game.links.whitepaper}>White paper</Link>
+              <Link href={keyStaticGame?.whitepaper}>White paper</Link>
             </Button>
           ) : (
             "No whitepaper available"
@@ -168,9 +182,9 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "Mainnet",
       value: (
         <>
-          {game?.links.mainnet && (
+          {keyStaticGame?.links.mainnet && (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
-              <Link href={game.links.mainnet}> Mainnet build</Link>
+              <Link href={keyStaticGame?.links.mainnet}> Mainnet build</Link>
             </Button>
           )}
         </>
@@ -180,9 +194,9 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "Testnet",
       value: (
         <>
-          {game?.links.testnet && (
+          {keyStaticGame?.links.testnet && (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
-              <Link href={game.links.testnet}>Testnet Build</Link>
+              <Link href={keyStaticGame?.links.testnet}>Testnet Build</Link>
             </Button>
           )}
         </>
@@ -192,9 +206,9 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "Homepage",
       value: (
         <>
-          {game?.links.homepage && (
+          {keyStaticGame?.links.homepage && (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
-              <Link href={game.links.homepage}> {game.name}</Link>
+              <Link href={`${keyStaticGame?.links.homepage}`}> {keyStaticGame?.title}</Link>
             </Button>
           )}
         </>
@@ -218,20 +232,20 @@ export default async function Page({ params }: { params: { id: string } }) {
 
       <div className="flex flex-wrap">
         <div className="my-4 w-full">
-          <h1 className="text-4xl font-bold">{game?.name}</h1>
+          <h1 className="text-4xl font-bold">{keyStaticGame?.title}</h1>
         </div>
 
         <div className="mb-8 flex w-full space-x-2 font-sans uppercase">
           <Badge variant={"outline"}>
-            {StatusDot(game?.status)}
-            {game?.status}
+            {StatusDot(keyStaticGame?.status)}
+            {keyStaticGame?.status}
           </Badge>
         </div>
 
-        {game && (
+        {keyStaticGame && (
           <>
             <div className="w-full sm:w-9/12 sm:pr-8">
-              {game.screenshotLength && (
+              {keyStaticGame.screenshots.length && (
                 <Carousel className="h-96 w-full sm:max-h-[750px] sm:min-h-[750px]">
                   <CarouselContent>
                     {list.map((image, index) => (
@@ -258,14 +272,14 @@ export default async function Page({ params }: { params: { id: string } }) {
               </div>
 
               <div className="flex-col space-y-2">
-                {game.playable && (
+                {keyStaticGame?.playable && (
                   <Button
                     size={"lg"}
                     variant={"default"}
                     asChild
                     className="w-full"
                   >
-                    <Link href={game.links.homepage}> Play {game.name}</Link>
+                    <Link href={`${keyStaticGame?.links.homepage}`}> Play {keyStaticGame?.title}</Link>
                   </Button>
                 )}
 
