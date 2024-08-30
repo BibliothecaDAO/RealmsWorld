@@ -110,7 +110,6 @@ export const useLegacyRewardData = ({ address }: { address?: string }) => {
       })
         .then((res) => res.json())
         .then((res: { data?: { claims: Claim[] } }) => {
-          console.log(res);
           return res.data?.claims;
         }),
     enabled: !!address,

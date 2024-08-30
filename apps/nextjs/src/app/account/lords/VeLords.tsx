@@ -31,38 +31,46 @@ import type { BlockNumber } from "starknet";
 import { BlockTag } from "starknet";
 import { VeLordsRewardsChart } from './VeLordsRewardsChart'
 import { api } from "@/trpc/react";
+import { formatDistanceToNow } from 'date-fns';
+import {
+  differenceInSeconds,
+  getUnixTime,
+  fromUnixTime
+} from 'date-fns';
 
-const WEEK = 7 * 24 * 60 * 60; // 1 week in seconds
-const YEAR = 365 * 24 * 60 * 60; // 1 year in seconds
+const WEEK_IN_SECONDS = 7 * 24 * 60 * 60; // 1 week in seconds
+const YEAR_IN_SECONDS = 365 * 24 * 60 * 60; // 1 year in seconds
+
 export function toTime(time: number | string | undefined) {
   return Number(time ?? 0);
 }
-function toSeconds(timestamp: number): number {
-  return Math.floor(timestamp / 1000);
-}
+
 export function getTimeUntil(time?: number): number {
-  const duration = toTime(time) - Date.now();
-  return duration < 0 ? 0 : duration;
-}
-export function toWeeks(time?: number): number {
-  return Math.floor(toTime(time) / WEEK);
-}
-export function roundToWeek(time) {
-  return Math.floor(toTime(time) / WEEK) * WEEK;
+  if (!time) return 0;
+  const duration = differenceInSeconds(fromUnixTime(time), new Date());
+  return Math.max(duration, 0);
 }
 
-export const MAX_LOCK = roundToWeek(YEAR * 4);
+export function toWeeks(time?: number): number {
+  return Math.floor(toTime(time) / WEEK_IN_SECONDS);
+}
+
+export function roundToWeek(time: number) {
+  return Math.floor(toTime(time) / WEEK_IN_SECONDS) * WEEK_IN_SECONDS;
+}
+
+export const MAX_LOCK = roundToWeek(4 * YEAR_IN_SECONDS); // 4 years from now
 
 function getVotingPower(lockAmount: bigint, unlockTime: number): number {
-  const duration = roundToWeek(unlockTime) - toSeconds(Date.now());
+  const duration = roundToWeek(unlockTime) - Math.floor(new Date().getTime() / 1000);
   if (duration <= 0) {
     return 0;
   }
   if (duration >= MAX_LOCK) {
     return Number(lockAmount);
   }
-  const result = (Number(lockAmount) / (MAX_LOCK)) * (duration);
-  return result
+  const result = (Number(lockAmount) / (MAX_LOCK)) * duration;
+  return result;
 }
 
 interface LockInfo {
@@ -87,6 +95,11 @@ function calculatePenalty(lockInfo: LockInfo): bigint {
     return (lockInfo.amount * penaltyRatio) / SCALE;
   }
   return 0n;
+}
+
+function formatLockEndTime(timestamp: number): string {
+  const date = new Date(timestamp * 1000);
+  return `${date.toLocaleDateString()} (${formatDistanceToNow(date, { addSuffix: true })})`;
 }
 
 export const VeLords = () => {
@@ -128,8 +141,8 @@ export const VeLords = () => {
   const [amount, setAmount] = useState<string>("");
   const [lockWeeks, setLockWeeks] = useState<string>("");
   const unlockTime = useMemo(() => {
-    const currentTime = Date.now() / 1000;
-    const additionalLockTime = parseInt(lockWeeks || '0') * 7 * 24 * 60 * 60;
+    const currentTime = getUnixTime(new Date());
+    const additionalLockTime = parseInt(lockWeeks || '0') * WEEK_IN_SECONDS;
     if (ownerLordsLock?.end_time) {
       return Math.max(Number(ownerLordsLock.end_time), currentTime) + additionalLockTime;
     } else {
@@ -137,7 +150,7 @@ export const VeLords = () => {
     }
   }, [ownerLordsLock?.end_time, lockWeeks]);
 
-  const timeUntilUnlock = ownerLordsLock?.end_time ? getTimeUntil(ownerLordsLock?.end_time) : undefined;
+  const timeUntilUnlock = ownerLordsLock?.end_time ? getTimeUntil(Number(ownerLordsLock?.end_time)) : undefined;
   const weeksToUnlock = toWeeks(timeUntilUnlock);
 
   const votingPower = useMemo(() => {
@@ -157,6 +170,16 @@ export const VeLords = () => {
   }, [ownerLordsLock]);
 
   const { claim, manageLock, withdraw } = useVeLords()
+
+  const newLockEndTime = useMemo(() => {
+    const currentTime = getUnixTime(new Date());
+    const additionalLockTime = parseInt(lockWeeks || '0') * WEEK_IN_SECONDS;
+    if (ownerLordsLock?.end_time) {
+      return Math.max(Number(ownerLordsLock.end_time), currentTime) + additionalLockTime;
+    } else {
+      return currentTime + additionalLockTime;
+    }
+  }, [ownerLordsLock?.end_time, lockWeeks]);
 
   return (
     <div className="mt-4 grid grid-cols-3 gap-4 md:grid-cols-5">
@@ -247,7 +270,7 @@ export const VeLords = () => {
               <CardContent>
                 {ownerLordsLock?.amount ? (<div className="w-full mb-4">
                   <p>Your Lock:</p>
-                  <span className="flex"><LordsIcon className="w-4 mr-2" />{formatEther(ownerLordsLock.amount)} until {ownerLordsLock?.end_time && new Date(Number(ownerLordsLock.end_time) * 1000).toLocaleString()}</span></div>
+                  <span className="flex"><LordsIcon className="w-4 mr-2" />{formatEther(ownerLordsLock.amount)} until {ownerLordsLock?.end_time && formatLockEndTime(Number(ownerLordsLock.end_time))}</span></div>
                 ) : null}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -274,7 +297,12 @@ export const VeLords = () => {
                       className="h-14 p-4 text-xl"
                       value={lockWeeks}
                       onChange={(event) => setLockWeeks(event.target.value)}
-                    ></Input>
+                    />
+                    {lockWeeks && (
+                      <p className="mt-2 text-sm text-muted">
+                        New lock end: <span className="text-muted-foreground">{formatLockEndTime(newLockEndTime)}</span>
+                      </p>
+                    )}
                   </div>
                   <div>
                     <Label>Total veLords</Label>
@@ -287,7 +315,7 @@ export const VeLords = () => {
                 </div>
               </CardContent>
               <CardFooter className="flex gap-x-4">
-                <Button onClick={() => amount && manageLock(parseEther(amount), Math.round((Date.now() / 1000) + parseInt(lockWeeks) * 7 * 24 * 60 * 60))} className="w-full">{ownerLordsLock?.amount ? "Update Lock" : "Stake Lords"}</Button>
+                <Button onClick={() => amount && manageLock(parseEther(amount), newLockEndTime)} className="w-full">{ownerLordsLock?.amount ? "Update Lock" : "Stake Lords"}</Button>
               </CardFooter>
             </Card>
             {ownerLordsLock?.amount ? (
@@ -299,9 +327,9 @@ export const VeLords = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="mb-4">Pay a penalty determined by lock duration to withdraw your locked Lords early</p>
-                  <div className="grid grid-cols-2">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label>Your veLords</Label>
+                      <Label>Your Locked Lords</Label>
                       <TokenInput
                         disabled
                         amount={formatEther(ownerLordsLock.amount)}
@@ -310,10 +338,10 @@ export const VeLords = () => {
                     </div>
                     <div>
                       <Label>Current lock time (weeks)</Label>
-                      <Input value={weeksToUnlock} disabled />
+                      <Input className="h-14" value={weeksToUnlock} disabled />
                     </div>
                     <div>
-                      <Label>Penalty</Label>
+                      <Label>After Withdrawal Penalty</Label>
                       <TokenInput
                         disabled
                         amount={formatEther(ownerLordsLock.amount - penalty)}
