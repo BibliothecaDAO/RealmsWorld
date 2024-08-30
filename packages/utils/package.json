@@ -20,12 +20,13 @@
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
-    "tailwind-merge": "^2.4.0"
+    "tailwind-merge": "^2.5.2",
+    "viem": "^2.19.8"
   },
   "devDependencies": {
-    "@realms-world/tsconfig": "*",
-    "@types/node": "^20.14.11",
-    "typescript": "^5.5.3"
+    "@realms-world/tsconfig": "workspace:*",
+    "@types/node": "^20.14.9",
+    "typescript": "catalog:"
   },
   "publishConfig": {
     "access": "restricted"

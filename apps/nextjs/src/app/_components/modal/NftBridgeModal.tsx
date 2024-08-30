@@ -42,7 +42,7 @@ import TransactionSubmittedModalBody from "./TransactionSubmittedModal/Transacti
 import TransactionSubmittedModalButton from "./TransactionSubmittedModal/TransactionSubmittedModalButton";
 
 // BridgeBadge Component
-const BridgeBadge = ({
+export const BridgeBadge = ({
   isL1,
   address,
 }: {
