@@ -3,6 +3,7 @@ import { evaluate } from "@starkware-industries/commons-js-utils";
 
 import { ChainId } from "@realms-world/constants";
 import { RpcProvider } from "starknet";
+import { networks } from "@ark-project/core"
 
 export const ETHERSCAN_URL = env.NEXT_PUBLIC_ETHERSCAN_URL;
 export const ETHERSCAN_TX_URL = (tx: string) =>
@@ -56,4 +57,15 @@ function buildRpcProvider(nodeUrl: string): RpcProvider {
       "Content-Type": "application/json",
     }
   });
+}
+
+export function getArkNetwork(): string {
+  switch (SUPPORTED_L2_CHAIN_ID) {
+    case ChainId.SN_MAIN:
+      return networks.mainnet;
+    case ChainId.SN_SEPOLIA:
+      return networks.sepolia;
+    default:
+      return networks.sepolia;
+  }
 }

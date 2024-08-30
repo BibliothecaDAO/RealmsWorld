@@ -53,10 +53,10 @@ export default function Layout(props: { children: React.ReactNode }) {
         className={`${inconsolata.variable} ${silkscreen.variable} dark`}
       >
         <TRPCReactProvider headersPromise={getHeaders()}>
-          <ArkClientProvider>
-            <UIStoreProvider>
-              <Web3Providers>
-                <WalletsProvider>
+          <UIStoreProvider>
+            <Web3Providers>
+              <WalletsProvider>
+                <ArkClientProvider>
                   <TooltipProvider>
                     <main className="flex-wrap md:flex">
                       <Sidebar />
@@ -70,10 +70,10 @@ export default function Layout(props: { children: React.ReactNode }) {
                     <StarknetLoginModal />
                     <WalletSheet />
                   </TooltipProvider>
-                </WalletsProvider>
-              </Web3Providers>
-            </UIStoreProvider>
-          </ArkClientProvider>
+                </ArkClientProvider>
+              </WalletsProvider>
+            </Web3Providers>
+          </UIStoreProvider>
         </TRPCReactProvider>
         <Analytics />
       </body>

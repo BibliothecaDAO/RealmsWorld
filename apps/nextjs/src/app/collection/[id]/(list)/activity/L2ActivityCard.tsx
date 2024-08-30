@@ -7,6 +7,7 @@ import { ArrowRightLeft, Ban, Gavel, NotebookPen } from "lucide-react";
 import { getCollectionFromId } from "@realms-world/constants/src/Marketplace";
 import type { CollectionActivity } from "@/types/ark";
 import { useMemo } from "react";
+import { useTokenPrice } from "@/hooks/market/useTokenPrice";
 
 interface ActivityCardProps {
   activity: CollectionActivity;
@@ -14,6 +15,8 @@ interface ActivityCardProps {
 }
 
 export const L2ActivityCard = ({ activity, collectionId }: ActivityCardProps) => {
+  const price = useTokenPrice(activity.price, null, 10);
+
   // convert unix to date
   // *1000 is to convert starknet timestamp to milliseconds
   const date = useMemo(() => activity.time_stamp ? new Date(activity.time_stamp * 1000) : null, [activity.time_stamp]);
@@ -126,7 +129,7 @@ export const L2ActivityCard = ({ activity, collectionId }: ActivityCardProps) =>
             </div>
           ) : (*/}
         <div className="flex items-center self-center">
-          {activity.price ?? 0}
+          {price}
           <LordsIcon className="ml-2 h-5 w-5 fill-current" />
         </div>
       </div>

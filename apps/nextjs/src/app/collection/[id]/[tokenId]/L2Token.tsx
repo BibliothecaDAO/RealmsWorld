@@ -60,7 +60,9 @@ export const L2Token = ({
 
   });
   const { address } = useAccount();
-  const expiryDiff = useTimeDiff(listing?.data?.listing.end_date * 1000 ?? 0);
+  const expiryDiff = useTimeDiff(listing?.data?.listing.end_date ?? 0);
+
+  const price = useTokenPrice(listing?.data?.listing?.start_amount, listing?.data?.listing?.currency_address);
 
   if (!erc721Token?.data || !listing?.data) return <div>Token Information Loading</div>;
   erc721Token = erc721Token.data
@@ -80,7 +82,7 @@ export const L2Token = ({
             <>
               <div className="mb-4 flex w-full gap-x-2">
                 <div className="flex max-w-[140px]">
-                  <span className="truncate text-3xl">{listing.listing.start_amount}</span>
+                  <span className="truncate text-3xl">{price}</span>
                 </div>
                 <Lords className="w-8 fill-current pr-2" />
               </div>

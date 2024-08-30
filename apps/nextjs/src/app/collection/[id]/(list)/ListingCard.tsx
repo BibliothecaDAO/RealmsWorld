@@ -8,6 +8,7 @@ import { Button } from "@realms-world/ui";
 import { BuyModal } from "../../marketplace/buy/BuyModal";
 import type { Token, TokenActivity } from "@/types/ark";
 import { useMemo } from "react";
+import { useTokenPrice } from "@/hooks/market/useTokenPrice";
 
 interface ActivityCardProps {
   listing: TokenActivity;
@@ -17,16 +18,17 @@ interface ActivityCardProps {
 export const ListingCard = ({ listing, token }: ActivityCardProps) => {
   // convert unix to time
 
-  const expiryDiff = useTimeDiff(listing.listing.end_date * 1000 ?? Date.now());
+  const expiryDiff = useTimeDiff(listing.listing.end_date ?? Date.now());
   const getLocalizedDate = useMemo(() => {
     return expiryDiff.toLocaleString();
   }, [expiryDiff]);
+  const price = useTokenPrice(listing.listing.start_amount, listing.listing.currency_address);
 
   return (
     <div className=" flex w-full flex-wrap border-b p-2">
       <div className="flex w-1/2 self-center font-semibold sm:w-2/12 ">
         <div className="flex items-center self-center">
-          {listing.listing.start_amount ?? 0}
+          {price}
           <LordsIcon className="ml-2 h-5 w-5 fill-current" />
         </div>
       </div>
