@@ -24,6 +24,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
       - name: Setup
         uses: ./tooling/github/setup
 
@@ -32,23 +37,33 @@ jobs:
         run: cp .env.example .env
 
       - name: Lint
-        run: bun lint && bun lint:ws
+        run: pnpm lint && pnpm ws
 
   format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
       - name: Setup
         uses: ./tooling/github/setup
 
       - name: Format
-        run: bun format
+        run: pnpm format
 
   typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
 
       - name: Setup
         uses: ./tooling/github/setup
