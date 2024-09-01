@@ -18,7 +18,7 @@ export const GameCard = async ({ game }: GameCardProps) => {
   const isImageFound = async (imageName: string) => {
     return await fetch(
       (env.VERCEL_URL ? "https://" + env.VERCEL_URL : "http://localhost:3000") +
-        imageName,
+      imageName,
       {
         method: "HEAD",
       },
@@ -53,7 +53,7 @@ export const GameCard = async ({ game }: GameCardProps) => {
           alt={game.name}
           width={800}
           height={400}
-          className="absolute bottom-0 top-0 h-full w-full object-cover brightness-75 transition-all duration-300 group-hover:filter-none"
+          className="absolute bottom-0 rounded top-0 h-full w-full object-cover brightness-75 transition-all duration-300 group-hover:filter-none"
         />
         <div className="relative flex h-full max-w-full flex-col items-center justify-center  object-contain">
           <Image
@@ -66,7 +66,7 @@ export const GameCard = async ({ game }: GameCardProps) => {
           <p className="mt-2  text-lg font-semibold">{game.description}</p>
         </div>
         <div className="invisible z-10 opacity-0 duration-300 group-hover:visible group-hover:-translate-y-3 group-hover:opacity-100">
-          <Button variant={"default"}>Explore</Button>
+          <Button variant={"outline"}>Explore</Button>
         </div>
       </Link>
     </BaseCard>

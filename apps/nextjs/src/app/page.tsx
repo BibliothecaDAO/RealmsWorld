@@ -31,18 +31,18 @@ export default function Home() {
           {carouselItems.map((item, index) => (
             <CarouselItem key={index}>
               <Link href={item.href}>
-                <div className="relative h-[700px]">
+                <div className="relative h-[700px] border rounded">
                   <Image
                     src={item.src}
                     alt={item.alt}
                     width={1900}
                     height={1200}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover rounded"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-8 ">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-black to-transparent p-8 rounded">
                     <h2 className="text-4xl">{item.title}</h2>
                     <p className="text-xl mb-4">{item.description}</p>
-                    <Button variant="default">View game</Button>
+                    <Button variant="outline">View game</Button>
                   </div>
                 </div>
               </Link>

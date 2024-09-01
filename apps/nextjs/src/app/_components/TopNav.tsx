@@ -6,7 +6,7 @@ import PieChart from "@/icons/pie-chart.svg";
 import RealmsL3 from "@/icons/realms_l3.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { HammerIcon, Menu /*, ShieldQuestion*/ } from "lucide-react";
-
+import Crown from "@/icons/crown.svg";
 import {
   Button,
   NavigationMenu,
@@ -65,10 +65,11 @@ export const TopNav = () => {
       id="topnav"
       className={`fixed z-[100] w-full border-b-[3px] bg-background p-3 pl-4 sm:pl-8 md:pl-32`}
     >
-      <div className="flex justify-between">
+      <div className="flex justify-between w-full">
         <Button className="md:hidden" onClick={toggleSidebar}>
           <Menu className="w-8" />
         </Button>
+        <Crown className="sm:hidden w-14 group-hover:opacity-0" />
       </div>
       <div className="hidden w-auto justify-end sm:flex">
         <div className="mr-12">

@@ -230,9 +230,9 @@ export default async function Page({ params }: { params: { id: string } }) {
 
         {game && (
           <>
-            <div className="w-full sm:w-9/12 sm:pr-8">
+            <div className="w-full sm:w-9/12 sm:pr-8 px-12">
               {game.screenshotLength && (
-                <Carousel className="h-96 w-full sm:max-h-[750px] sm:min-h-[750px]">
+                <Carousel className="sm:h-96 w-full sm:max-h-[750px] sm:min-h-[750px]">
                   <CarouselContent>
                     {list.map((image, index) => (
                       <CarouselItem key={index}>
@@ -241,7 +241,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                           alt={image.alt}
                           width={1096}
                           height={750}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover rounded border"
                         />
                       </CarouselItem>
                     ))}
