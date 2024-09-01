@@ -19,7 +19,8 @@
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location '.cache/.eslintcache' && manypkg fix",
     "lint:ws": "pnpm sherif@latest -r root-package-private-field",
     "typecheck": "turbo run typecheck",
-    "ui-add": "turbo run ui-add"
+    "ui-add": "turbo run ui-add",
+    "knip": "npx knip --exclude binaries,dependencies"
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
