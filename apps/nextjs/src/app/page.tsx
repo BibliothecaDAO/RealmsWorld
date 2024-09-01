@@ -5,7 +5,7 @@ import Starknet from "@/icons/starknet.svg";
 
 import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@realms-world/ui";
+import { Button, Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@realms-world/ui";
 
 import { PageLayout } from "./_components/PageLayout";
 import { Partners } from "./_components/Partners";
@@ -26,18 +26,6 @@ export default function Home() {
 
   return (
     <PageLayout>
-      <div className="my-4 flex w-fit flex-wrap p-1 text-xl">
-        <span className="align-center">Powered by </span>
-        <Link href={"https://dojoengine.org/"}>
-          <DojoDark className="mx-2 w-12" />
-        </Link>
-        <span>on</span>
-        <Link href={"https://www.starknet.io/en"}>
-          <Starknet className="mx-2 w-8" />
-        </Link>
-        Realms.World is a fantasy multiverse filled with fully onchain games
-      </div>
-
       <Carousel className="w-full">
         <CarouselContent>
           {carouselItems.map((item, index) => (
@@ -51,9 +39,10 @@ export default function Home() {
                     height={1200}
                     className="h-full w-full object-cover"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 text-white">
-                    <h2 className="text-2xl font-bold">{item.title}</h2>
-                    <p>{item.description}</p>
+                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-8 ">
+                    <h2 className="text-4xl">{item.title}</h2>
+                    <p className="text-xl mb-4">{item.description}</p>
+                    <Button variant="default">View game</Button>
                   </div>
                 </div>
               </Link>
@@ -66,29 +55,31 @@ export default function Home() {
 
       <Partners />
 
-      <div className="my-24">
-        <hr />
-        <h3 className="mb-4 text-xl">Events</h3>
-        <EventGrid isHomepage={true} />
-      </div>
-      <hr />
 
-      <h3 className="mb-4 text-xl">All Games</h3>
+
+
+      <h2 className="mb-4 text-2xl sm:text-3xl font-sans">All Games</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {games.map((game: Game, index) => (
           <GameCard key={index} game={game} />
         ))}
       </div>
 
-      <hr />
+
       <div className="my-24">
-        <h3 className="mb-4 text-xl">News</h3>
+        <h2 className="mb-4 text-2xl sm:text-3xl font-sans">News</h2>
         <PostGrid />
+      </div>
+
+      <div className="my-24">
+
+        <h2 className="mb-4 text-2xl sm:text-3xl font-sans">Events</h2>
+        <EventGrid isHomepage={true} />
       </div>
 
       <hr className="my-8 border" />
       <div className="my-20">
-        <h3 className="mb-4 text-xl">Featured Collections</h3>
+        <h2 className="mb-4 text-2xl sm:text-3xl font-sans">Featured Collections</h2>
         <CollectionsList />
       </div>
     </PageLayout>

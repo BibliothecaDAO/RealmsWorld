@@ -203,7 +203,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   ];
 
   return (
-    <main className="container mx-auto px-4">
+    <main className="container mx-auto px-8">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -218,7 +218,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
       <div className="flex flex-wrap">
         <div className="my-4 w-full">
-          <h1 className="text-4xl font-bold">{game?.name}</h1>
+          <h1 className="text-3xl sm:text-5xl">{game?.name}</h1>
         </div>
 
         <div className="mb-8 flex w-full space-x-2 font-sans uppercase">

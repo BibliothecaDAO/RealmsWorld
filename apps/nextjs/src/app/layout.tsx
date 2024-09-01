@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inconsolata, Jost } from "next/font/google";
+import { Bebas_Neue, Inconsolata, Jost, Space_Mono } from "next/font/google";
 import Sidebar from "@/app/_components/SideMenu";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -21,14 +21,14 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster, TooltipProvider } from "@realms-world/ui";
 import { ArkClientProvider } from "@/lib/ark/useArkClient";
 
-const silkscreen = Jost({
+const silkscreen = Bebas_Neue({
   subsets: ["latin"],
   variable: "--font-silkscreen",
   weight: ["400"],
   display: "swap",
 });
 
-const inconsolata = Inconsolata({
+const inconsolata = Space_Mono({
   subsets: ["latin"],
   variable: "--font-inconsolata",
   weight: "400",
