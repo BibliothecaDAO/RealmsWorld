@@ -70,3 +70,19 @@ jobs:
 
       - name: Typecheck
         run: turbo typecheck
+
+  knip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Knip
+        run: pnpm knip
