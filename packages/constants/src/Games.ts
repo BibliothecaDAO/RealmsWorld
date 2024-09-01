@@ -54,7 +54,7 @@ export const games: Game[] = [
     chains: [ChainId.REALMS_L3],
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
-    screenshotLength: 2,
+    screenshotLength: 4,
     playable: false,
   },
   {
