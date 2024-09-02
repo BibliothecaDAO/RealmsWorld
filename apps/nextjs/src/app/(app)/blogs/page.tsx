@@ -11,8 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
     return (
-        <PageLayout title="Blogs">
-            <div className="pb-8 md:text-2xl">Realms World Blog</div>
+        <PageLayout title="Realms World Blog">
             <BlogGrid />
         </PageLayout>
     );
