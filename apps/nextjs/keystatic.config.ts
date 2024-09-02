@@ -153,5 +153,23 @@ export default config({
         ),
       },
     }),
+    blogs: collection({
+      label: "Blogs",
+      slugField: "title",
+      path: "src/content/blogs/*",
+      format: { contentField: "content" },
+      columns: ["title", "subtitle"],
+      schema: {
+        author: fields.text({ label: "Author" }),
+        publishDate: fields.datetime({ label: "Published Date" }),
+        title: fields.slug({ name: { label: "Title" } }),
+        image: fields.image({
+          label: "Banner Image",
+          directory: "public/content/blogs",
+        }),
+        subtitle: fields.text({ label: "Subtitle" }),
+        content: fields.markdoc({ label: "Content" }),
+      },
+    }),
   },
 });

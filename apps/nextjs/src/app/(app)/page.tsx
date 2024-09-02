@@ -7,12 +7,11 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 
 import { PageLayout } from "../_components/PageLayout";
 import { Partners } from "../_components/Partners";
-import PostGrid from "./blog/PostGrid";
+import { BlogGrid } from "./blogs/BlogGrid";
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
 import Image from "next/image"
 import { reader } from "@/utils/keystatic";
-
 
 export default async function Home() {
   const games = await reader.collections.games.all();
@@ -83,7 +82,7 @@ export default async function Home() {
       <hr />
       <div className="my-24">
         <h3 className="mb-4 text-xl">News</h3>
-        <PostGrid />
+        <BlogGrid />
       </div>
 
       <hr className="my-8 border" />

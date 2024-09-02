@@ -4,20 +4,18 @@ import Link from "next/link";
 import { PageLayout } from "@/app/_components/PageLayout";
 import React from "react";
 import Markdoc from "@markdoc/markdoc";
-
-import { games } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 import { reader } from "@/utils/keystatic";
 
-export function generateMetadata({
+
+export async function generateMetadata({
   params,
 }: {
   params: { id: string };
-}): Metadata {
-  const name = games.find((game) => game.id === params.id)?.name ?? "Game";
-
+}): Promise<Metadata> {
+  let event = await reader.collections.events.read(params.id);
   return {
-    title: `${name}`,
+    title: `${event?.name}`,
     description: `${params.id} - Created for Adventurers by Bibliotheca DAO`,
   };
 }

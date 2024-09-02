@@ -8,9 +8,6 @@ import { ChevronLeft } from "lucide-react";
 import { reader } from "@/utils/keystatic";
 import Markdoc from "@markdoc/markdoc";
 import React from "react";
-
-import type { Game } from "@realms-world/constants";
-import { getGamesByStudio, studios } from "@realms-world/constants";
 import {
   Button,
   Tabs,
@@ -19,25 +16,22 @@ import {
   TabsTrigger,
 } from "@realms-world/ui";
 
-export function generateMetadata({
+
+export async function generateMetadata({
   params,
 }: {
   params: { id: string };
-}): Metadata {
-  const name = Object.values(studios).find(
-    (studio) => studio.id === params.id,
-  )?.name;
-
+}): Promise<Metadata> {
+  let studio = await reader.collections.studios.read(params.id);
   return {
-    title: `${name}`,
-    description: `${name} Profile - A game studio of the Realms Autonomous World`,
+    title: `${studio?.title}`,
+    description: `${params.id} Profile - A game studio of the Realms Autonomous World`,
     openGraph: {
-      title: `${name}`,
-      description: `${name} Profile - A studio of the Realms Autonomous World`,
+      title: `${studio?.title}`,
+      description: `${params.id} Profile - A game studio of the Realms Autonomous World`,
     },
   };
 }
-
 export default async function Page({ params }: { params: { id: string } }) {
   const studio = await reader.collections.studios.read(params.id);
 
@@ -53,7 +47,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const studioGames = await Promise.all(studio.games.map(async (game) => {
     return (await reader.collections.games.read(game ?? "")) ?? "";
   }));
-  console.log(studioGames)
+
   const tabs = [
     {
       name: "Details",
