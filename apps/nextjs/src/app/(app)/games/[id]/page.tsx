@@ -52,10 +52,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     throw new Error('Invalid content');
   }
   const renderable = Markdoc.transform(node);
-
-
   const screenshotList = new Array(keyStaticGame?.screenshots.length);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const list = [...screenshotList].map((image, index) => ({
     src: `/games/${params.id}/screenshots/${index + 1}.png`,
     alt: `${keyStaticGame?.title} Screenshot ${index + 1}`,

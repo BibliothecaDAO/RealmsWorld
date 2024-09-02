@@ -24,7 +24,6 @@ export function generateMetadata({
 
 
 export default async function Page({ params }: { params: { id: string } }) {
-  //const event = events.find((event) => event.slug === params.id);
   const event = await reader.collections.events.read(params.id);
   if (!event) {
     return <div>No Event Found</div>;

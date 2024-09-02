@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { GameCard } from "@/app/(app)/games/GameCard";
 
-import type { Game } from "@realms-world/constants";
 import { reader } from "@/utils/keystatic";
 
 import { PageLayout } from "../../_components/PageLayout";
@@ -18,7 +17,7 @@ export default async function Page() {
   return (
     <PageLayout title="Onchain Games">
       <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {games.map((game: Game, index) => (
+        {games.map((game, index) => (
           <GameCard key={index} game={game.entry} slug={game.slug} />
         ))}
       </div>
