@@ -65,7 +65,7 @@ export default async function L2CollectionSummary({
     : [];
 
   return (
-    <div className="px-4 sm:mt-10 sm:flex">
+    <div className="px-4 sm:flex">
       <div className="flex-none self-center sm:pr-10">
         <Image
           src={`/collections/${collectionId}.svg`}
@@ -77,7 +77,7 @@ export default async function L2CollectionSummary({
       </div>
 
       <div>
-        <h1>{CollectionDetails[collectionId as Collections].displayName}</h1>
+        <h1 className="text-3xl sm:text-4xl">{CollectionDetails[collectionId as Collections].displayName}</h1>
         <ContractDetailsList contract_details={contract_details} />
 
         {compatibleGames.length > 0 && (
@@ -126,9 +126,9 @@ export const StatisticsBox = ({
         <span className="flex space-x-3">
           {value
             ? Number(value).toLocaleString("en-US", {
-                style: "decimal",
-                maximumFractionDigits: 2,
-              })
+              style: "decimal",
+              maximumFractionDigits: 2,
+            })
             : null}{" "}
           <span className="ml-2 self-center">{icon && icon}</span>
         </span>
