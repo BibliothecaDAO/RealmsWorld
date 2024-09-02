@@ -16,8 +16,7 @@ import { reader } from "@/utils/keystatic";
 export default async function Home() {
   const games = await reader.collections.games.all();
   const carouselItems = games
-    // not sure why this filter is needed. commenting it out for now.
-    // .filter((a) => a.entry.status === "beta" || a.entry.status === "mainnet")
+    .filter((a) => a.entry.status === "beta" || a.entry.status === "mainnet")
     .map((game) => ({
       alt: game.entry.title,
       src: `/games/${game.slug}/cover.webp`,
