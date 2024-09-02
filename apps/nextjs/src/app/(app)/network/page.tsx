@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { Button } from "@realms-world/ui";
 
-import { PageLayout } from "../_components/PageLayout";
+import { PageLayout } from "../../_components/PageLayout";
 
 export const metadata: Metadata = {
   title: "Realms L3",

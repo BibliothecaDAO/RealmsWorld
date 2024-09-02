@@ -168,7 +168,15 @@ export default config({
           directory: "public/content/blogs",
         }),
         subtitle: fields.text({ label: "Subtitle" }),
-        content: fields.markdoc({ label: "Content" }),
+        content: fields.markdoc({
+          label: "Content",
+          options: {
+            image: {
+              directory: "public/content/blogs",
+              publicPath: "/content/blogs",
+            },
+          },
+        }),
       },
     }),
   },

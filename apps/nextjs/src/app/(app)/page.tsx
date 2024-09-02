@@ -72,18 +72,16 @@ export default async function Home() {
         <h3 className="mb-4 text-xl">Events</h3>
         <EventGrid isHomepage={true} />
       </div>
-      <hr />
       <div className="my-24">
         <hr />
         <h3 className="mb-4 text-xl">All Games</h3>
         <GameGrid />
       </div>
-      <hr />
       <div className="my-24">
+        <hr />
         <h3 className="mb-4 text-xl">News</h3>
         <BlogGrid />
       </div>
-
       <hr className="my-8 border" />
       <div className="my-20">
         <h3 className="mb-4 text-xl">Featured Collections</h3>
