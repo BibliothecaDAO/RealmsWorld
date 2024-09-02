@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { GameCard } from "@/app/(app)/games/GameCard";
+import { GameGrid } from "@/app/(app)/games/GameGrid";
 import DojoDark from "@/icons/mark-dark.svg";
 import Starknet from "@/icons/starknet.svg";
 
-import type { Game } from "@realms-world/constants";
-import { games } from "@realms-world/constants";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@realms-world/ui";
 
 import { PageLayout } from "../_components/PageLayout";
@@ -13,15 +11,20 @@ import PostGrid from "./blog/PostGrid";
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
 import Image from "next/image"
-export default function Home() {
+import { reader } from "@/utils/keystatic";
+
+
+export default async function Home() {
+  const games = await reader.collections.games.all();
   const carouselItems = games
-    .filter((a) => a.status === "beta" || a.status === "mainnet")
-    .map((game: Game) => ({
-      alt: game.name,
-      src: `/games/${game.id}/cover.webp`,
-      description: game.description,
-      href: `/games/${game.id}`,
-      title: game.name,
+    // not sure why this filter is needed. commenting it out for now.
+    // .filter((a) => a.entry.status === "beta" || a.entry.status === "mainnet")
+    .map((game) => ({
+      alt: game.entry.title,
+      src: `/games/${game.slug}/cover.webp`,
+      description: game.entry.description,
+      href: `/games/${game.slug}`,
+      title: game.entry.title,
     }));
 
   return (
@@ -72,14 +75,11 @@ export default function Home() {
         <EventGrid isHomepage={true} />
       </div>
       <hr />
-
-      <h3 className="mb-4 text-xl">All Games</h3>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {games.map((game: Game, index) => (
-          <GameCard key={index} game={game} />
-        ))}
+      <div className="my-24">
+        <hr />
+        <h3 className="mb-4 text-xl">All Games</h3>
+        <GameGrid />
       </div>
-
       <hr />
       <div className="my-24">
         <h3 className="mb-4 text-xl">News</h3>

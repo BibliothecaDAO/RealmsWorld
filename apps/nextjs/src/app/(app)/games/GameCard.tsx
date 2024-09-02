@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { env } from "@/env";
 
-import type { Game } from "@realms-world/constants";
 import { Badge, Button } from "@realms-world/ui";
 
 import { BaseCard } from "../../_components/BaseCard";
