@@ -92,7 +92,9 @@ export default config({
       format: { contentField: "content" },
       columns: ["name", "endDate"],
       schema: {
-        name: fields.slug({ name: { label: "Name" } }),
+        name: fields.slug({
+          name: { label: "Name" },
+        }),
         description: fields.text({ label: "Description" }),
         startDate: fields.datetime({ label: "Start" }),
         endDate: fields.datetime({ label: "End" }),
@@ -120,7 +122,9 @@ export default config({
       format: { contentField: "content" },
       columns: ["title", "description"],
       schema: {
-        title: fields.slug({ name: { label: "Title" } }),
+        title: fields.slug({
+          name: { label: "Title" },
+        }),
         description: fields.text({ label: "Description" }),
         content: fields.markdoc({ label: "Content" }),
         links: fields.object(
