@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GameGrid } from "@/app/(app)/games/GameGrid";
+import { GameCard } from "@/app/(app)/games/GameCard";
 import DojoDark from "@/icons/mark-dark.svg";
 import Starknet from "@/icons/starknet.svg";
 
@@ -56,21 +56,25 @@ export default async function Home() {
 
       <Partners />
 
-      <div className="my-24">
-        <hr />
-        <h3 className="mb-4 text-xl">Events</h3>
-        <EventGrid isHomepage={true} />
+      <h2 className="mb-4 text-2xl sm:text-3xl font-sans">All Games</h2>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {games.map((game, index) => (
+          <GameCard key={index} game={game.entry} slug={game.slug} />
+        ))}
       </div>
+
+
       <div className="my-24">
-        <hr />
-        <h3 className="mb-4 text-xl">All Games</h3>
-        <GameGrid />
-      </div>
-      <div className="my-24">
-        <hr />
-        <h3 className="mb-4 text-xl">News</h3>
+        <h2 className="mb-4 text-2xl sm:text-3xl font-sans">News</h2>
         <BlogGrid />
       </div>
+
+      <div className="my-24">
+
+        <h2 className="mb-4 text-2xl sm:text-3xl font-sans">Events</h2>
+        <EventGrid isHomepage={true} />
+      </div>
+
       <hr className="my-8 border" />
       <div className="my-20">
         <h2 className="mb-4 text-2xl sm:text-3xl font-sans">Featured Collections</h2>
