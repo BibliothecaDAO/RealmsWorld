@@ -19,8 +19,8 @@ const PostPreview = (props: PostMetadata) => {
         <div className="align-center p-4">
           <Badge> {props.date}</Badge>
 
-          <h4 className="my-4 text-2xl">{props.title}</h4>
-          <p>{props.subtitle}</p>
+          <h4 className="my-4 text-2xl font-sans">{props.title}</h4>
+          <p className="text-opacity-60">{props.subtitle}</p>
         </div>
       </Link>
     </Card>

@@ -18,7 +18,7 @@ export default function RootLayout({
     ")";
   return (
     <div
-      className="mt-32 h-full w-full"
+      className="mt-24 h-full w-full"
       style={
         {
           "--image-url": imageUrl,

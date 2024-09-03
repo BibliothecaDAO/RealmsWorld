@@ -1,11 +1,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-
-import { Badge, Button, Card, CardContent } from "@realms-world/ui";
 import type { CollectionEntry } from "@/utils/keystatic";
+import { Badge, Button, Card, CardContent } from "@realms-world/ui";
 
 export const EventCard = ({ event, slug }: { event: CollectionEntry<'events'>, slug: string }) => {
+
+
   const today = new Date();
   const start = new Date(event.startDate || '');
   const end = new Date(event.endDate || '');
@@ -34,7 +35,7 @@ export const EventCard = ({ event, slug }: { event: CollectionEntry<'events'>, s
           </Badge>
         </div>
 
-        <h5 className="mb-3 text-2xl">{event.name}</h5>
+        <h5 className="mb-3 text-2xl font-display">{event.name}</h5>
         <p>{event.description}</p>
         <div className="mt-auto flex w-full justify-between self-end">
           <Button asChild size={"xs"} variant="default">

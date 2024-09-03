@@ -23,10 +23,10 @@ const baseLayerWrapperVariants = cva([], {
 
 export const PageLayout = ({ title, children, size }: PageLayoutProps) => {
   return (
-    <div className="relative flex w-full flex-col space-y-6 pt-24 sm:pl-32">
+    <div className="relative flex w-full flex-col space-y-6 pt-24 sm:pl-32 ">
       <div
         className={cn(
-          "container mx-auto px-4",
+          "container mx-auto px-8",
           baseLayerWrapperVariants({ size }),
         )}
       >
