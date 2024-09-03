@@ -30,7 +30,7 @@ export const EventCard = ({ event, slug }: { event: CollectionEntry<'events'>, s
               className={`h-3 w-3 self-center rounded-full bg-green-600 ${isToday ? "animate-pulse" : ""}`}
             />
             <div className="self-center px-2">
-              {event.startDate} to {event.endDate}
+              {new Date(event?.startDate || '').toLocaleDateString()} to {new Date(event?.endDate || '').toLocaleDateString()}
             </div>
           </Badge>
         </div>
@@ -41,7 +41,7 @@ export const EventCard = ({ event, slug }: { event: CollectionEntry<'events'>, s
           <Button asChild size={"xs"} variant="default">
             {event.website && <Link href={event.website}>
               {" "}
-              {event.type == "play" ? "Play Game" : "Mint"}
+              {event.type.includes("play") ? "Play Game" : "Mint"}
             </Link>}
           </Button>
           <Button asChild size={"xs"} variant="outline">

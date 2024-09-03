@@ -19,7 +19,7 @@ export default async function Home() {
     .filter((a) => a.entry.status === "beta" || a.entry.status === "mainnet")
     .map((game) => ({
       alt: game.entry.title,
-      src: `/games/${game.slug}/cover.webp`,
+      src: `/content/games/${game.slug}/${game?.entry.coverImage}`,
       description: game.entry.description,
       href: `/games/${game.slug}`,
       title: game.entry.title,

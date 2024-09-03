@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       )}
       <div className="py-4">
         <span className={`rounded border px-2 py-1 `}>
-          {event.startDate ? new Date(event.startDate).toLocaleString() : ''} to {event.endDate ? new Date(event.endDate).toLocaleString() : ''}
+          {new Date(event?.startDate || '').toLocaleDateString()} to {new Date(event?.endDate || '').toLocaleDateString()}
         </span>
       </div>
 
