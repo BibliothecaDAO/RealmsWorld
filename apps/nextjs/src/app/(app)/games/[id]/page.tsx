@@ -57,6 +57,10 @@ export default async function Page({ params }: { params: { id: string } }) {
     alt: `${keyStaticGame?.title} Screenshot ${index}`,
   }));
 
+  const studio = await reader.collections.studios.read(keyStaticGame?.developer || '')
+
+
+
   const tabs = [
     {
       name: "Details",
@@ -99,7 +103,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       key: "Studio",
       value: (
         <Link href={`/studios/${keyStaticGame?.developer ?? ""}`}>
-          {keyStaticGame?.developer}
+          {studio?.title}
         </Link>
       ),
     },
