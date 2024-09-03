@@ -13,6 +13,7 @@ import {
   getCollectionAddresses,
 } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
+import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 
 export default async function L2CollectionSummary({
   collectionId,
@@ -96,6 +97,8 @@ export default async function L2CollectionSummary({
             );
           })}
         </div>
+        <ViewOnMarketplace collection={l2CollectionAddress} />
+
       </div>
     </div>
   );
