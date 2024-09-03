@@ -44,7 +44,6 @@ export default function RootLayout({
             <NavLink
               key={tab.name}
               variant={"link"}
-              className="hover:text-flamingo/70"
               size={"sm"}
               exact
               href={`/collection/${params.id}${tab.link && "/" + tab.link}`}
