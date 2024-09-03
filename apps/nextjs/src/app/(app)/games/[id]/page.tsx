@@ -57,6 +57,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     alt: `${keyStaticGame?.title} Screenshot ${index}`,
   }));
 
+  // grab studio via developer slug from game so we can spit out the studio's title instead of its slug
   const studio = await reader.collections.studios.read(keyStaticGame?.developer || '')
 
 
