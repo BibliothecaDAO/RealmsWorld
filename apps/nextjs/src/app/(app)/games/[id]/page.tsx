@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { StatusDot } from "@/app/_components/StatusDot";
-import { env } from "@/env";
 import { reader } from "@/utils/keystatic";
 import Markdoc from "@markdoc/markdoc";
 import React from "react";
@@ -52,10 +51,10 @@ export default async function Page({ params }: { params: { id: string } }) {
     throw new Error('Invalid content');
   }
   const renderable = Markdoc.transform(node);
-  const screenshotList = new Array(keyStaticGame?.screenshots.length);
+  const screenshotList = keyStaticGame?.screenshots;
   const list = [...screenshotList].map((image, index) => ({
-    src: `/games/${params.id}/screenshots/${index + 1}.png`,
-    alt: `${keyStaticGame?.title} Screenshot ${index + 1}`,
+    src: `/content/games/${params.id}/${image}`,
+    alt: `${keyStaticGame?.title} Screenshot ${index}`,
   }));
 
   const tabs = [
@@ -94,24 +93,6 @@ export default async function Page({ params }: { params: { id: string } }) {
     },
   ];
 
-  const gameIcon = `/games/${params.id}/${keyStaticGame?.icon}`;
-
-  const isImageFound = async (imageName: string) => {
-    return await fetch(
-      (env.VERCEL_URL ? "https://" + env.VERCEL_URL : "http://localhost:3000") +
-      imageName,
-      {
-        method: "HEAD",
-      },
-    );
-  };
-  let imageName: string;
-  const result = await isImageFound(gameIcon);
-  if (result.status === 200) {
-    imageName = gameIcon;
-  } else {
-    imageName = ``;
-  }
 
   const tableData = [
     {
@@ -265,7 +246,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
             <div className="pl-4 sm:w-3/12">
               <div className="flex justify-center py-8">
-                <Image alt="" src={imageName} width={250} height={100} />
+                <Image alt="" src={`/content/games/${params.id}/${keyStaticGame?.icon}`} width={250} height={100} />
               </div>
 
               <div className="flex-col space-y-2">

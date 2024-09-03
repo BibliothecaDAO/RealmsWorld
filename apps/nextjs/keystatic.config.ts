@@ -137,10 +137,6 @@ export default config({
           label: "Logo",
           directory: "public/content/studios",
         }),
-        image: fields.image({
-          label: "Image",
-          directory: "public/content/studios",
-        }),
         games: fields.array(
           fields.relationship({
             label: "Games",
