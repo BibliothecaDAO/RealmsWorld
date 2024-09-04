@@ -39,7 +39,7 @@ export const EventCard = ({ event }: { event: Event }) => {
           </Badge>
         </div>
 
-        <h5 className="mb-3 text-2xl">{event.name}</h5>
+        <h5 className="mb-3 text-2xl font-display">{event.name}</h5>
         <p>{event.description}</p>
         <div className="mt-auto flex w-full justify-between self-end">
           <Button asChild size={"xs"} variant="default">

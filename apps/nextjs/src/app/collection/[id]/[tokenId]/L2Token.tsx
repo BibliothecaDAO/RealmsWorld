@@ -7,6 +7,7 @@ import { findLowestPriceActiveListing } from "@/utils/getters";
 import { padAddress } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 import { Clock } from "lucide-react";
+import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
@@ -61,7 +62,10 @@ export const L2Token = ({
   const price = lowestPriceActiveListing?.price;
 
   return (
-    <>
+    <div className="mt-6">
+      <ViewOnMarketplace collection={erc721Token.contract_address ?? ""} tokenId={erc721Token.token_id} /></div>
+  )
+  {/*<>
       {lowestPriceActiveListing?.expiration && (
         <div className="my-2 flex items-center py-4 text-xs opacity-60">
           <Clock className="mr-2 w-6" />
@@ -140,6 +144,6 @@ export const L2Token = ({
           </div>
         </AccordionItem>
       </Accordion>
-    </>
-  );
+    </>*/}
+
 };

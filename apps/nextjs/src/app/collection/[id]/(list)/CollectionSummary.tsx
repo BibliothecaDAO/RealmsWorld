@@ -8,6 +8,7 @@ import type { Collections } from "@realms-world/constants";
 import { getCollectionAddresses } from "@realms-world/constants";
 
 import L2CollectionSummary from "./L2CollectionSummary";
+import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 
 export default async function CollectionSummary({
   collectionId,
@@ -123,7 +124,7 @@ export default async function CollectionSummary({
               );
             })}
           </div>
-
+          <ViewOnMarketplace collection={collection.id} />
           {/* <p
               dangerouslySetInnerHTML={{ __html: collection.description }}
               className="hidden sm:block"

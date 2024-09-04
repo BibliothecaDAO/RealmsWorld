@@ -40,7 +40,7 @@ export const games: Game[] = [
     developer: Studios.BIBLIO_DAO,
     genres: ["Economic Strategy", "PvP", "Raiding", "Economy"],
     color: "#f5f5f5",
-    status: "development",
+    status: "beta",
     description: "The Economic Seed of the Realms World",
     longform:
       "Eternum represents the culmination of two years of dedicated effort, aimed at crafting a world that transcends the bounds of its creators. It's not just a game; it's a sophisticated fusion of economic and social frameworks, forming the backbone of a burgeoning digital society. Eternum is designed to evolve and grow, offering a dynamic experience far removed from the conventional notion of a 'finished game' like Civilization 6. Think of it as a living, breathing digital ecosystem, constantly evolving and inviting endless exploration.",
@@ -54,7 +54,7 @@ export const games: Game[] = [
     chains: [ChainId.REALMS_L3],
     collections: [Collections.REALMS],
     tokens: [Tokens.LORDS],
-    screenshotLength: 2,
+    screenshotLength: 4,
     playable: false,
   },
   {
@@ -86,14 +86,14 @@ export const games: Game[] = [
     developer: Studios.BIBLIO_DAO,
     genres: ["Play to Die", "Roguelike"],
     color: "#f5f5f5",
-    status: "development",
+    status: "mainnet",
     description: "Play to Die",
     longform:
       "Survivors is the first Loot adventure game exploring the Play2Die mechanic. It is a game of onchain survival where you must defeat beasts and collect gear in the fight to stay alive and make it to the top of the leaderboard.",
     links: {
-      homepage: "https://survivor.realms.world/",
-      mainnet: "https://survivor.realms.world/",
-      testnet: "https://beta-survivor.realms.world/",
+      homepage: "https://lootsurvivor.io/",
+      mainnet: "https://lootsurvivor.io/",
+      testnet: "https://sepolia.lootsurvivor.io/",
       discord: "https://discord.gg/realmsworld",
       twitter: "https://twitter.com/LootRealms",
     },

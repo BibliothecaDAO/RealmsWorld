@@ -203,7 +203,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   ];
 
   return (
-    <main className="container mx-auto px-4">
+    <main className="container mx-auto px-8">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -218,7 +218,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
       <div className="flex flex-wrap">
         <div className="my-4 w-full">
-          <h1 className="text-4xl font-bold">{game?.name}</h1>
+          <h1 className="text-3xl sm:text-5xl">{game?.name}</h1>
         </div>
 
         <div className="mb-8 flex w-full space-x-2 font-sans uppercase">
@@ -230,9 +230,9 @@ export default async function Page({ params }: { params: { id: string } }) {
 
         {game && (
           <>
-            <div className="w-full sm:w-9/12 sm:pr-8">
+            <div className="w-full sm:w-9/12 sm:pr-8 px-12">
               {game.screenshotLength && (
-                <Carousel className="h-96 w-full sm:max-h-[750px] sm:min-h-[750px]">
+                <Carousel className="sm:h-96 w-full sm:max-h-[750px] sm:min-h-[750px]">
                   <CarouselContent>
                     {list.map((image, index) => (
                       <CarouselItem key={index}>
@@ -241,7 +241,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                           alt={image.alt}
                           width={1096}
                           height={750}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover rounded border"
                         />
                       </CarouselItem>
                     ))}
@@ -258,7 +258,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               </div>
 
               <div className="flex-col space-y-2">
-                {game.playable && (
+                {game.playable && game.links.homepage && (
                   <Button
                     size={"lg"}
                     variant={"default"}

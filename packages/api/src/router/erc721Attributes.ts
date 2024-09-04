@@ -1,9 +1,8 @@
 import type { TRPCRouterRecord } from "@trpc/server";
-import { sql } from "drizzle-orm";
 import { z } from "zod";
 
 import type { SQL } from "@realms-world/db";
-import { and, eq } from "@realms-world/db";
+import { and, eq, sql } from "@realms-world/db";
 import {
   erc721AttributeKeys,
   erc721Attributes,
@@ -11,7 +10,7 @@ import {
 } from "@realms-world/db/schema";
 
 //import { withCursorPagination } from "../cursorPagination";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { publicProcedure } from "../trpc";
 
 export const erc721AttributesRouter = {
   all: publicProcedure

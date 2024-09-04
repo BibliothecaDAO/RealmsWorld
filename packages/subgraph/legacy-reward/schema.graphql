@@ -1,0 +1,48 @@
+###############
+### CLAIM ###
+###############
+
+type ClaimEvent @entity {
+  "uniq ID"
+  id: ID!
+  rewardsAddressL1: Bytes!
+  rewardsAddressL2: Bytes!
+  status: TransferStatus!
+  payload: [BigInt!]
+  nonce: BigInt
+  createdAtBlock: BigInt!
+  createdTxHash: Bytes!
+  finishedAtBlock: BigInt
+  finishedAtDate: BigInt
+  finishedTxHash: Bytes
+}
+
+type Claim @entity {
+  "[l1LegacyRewardsAddress, ...payload].join('-')"
+  id: ID!
+  claimId: Int!
+  claimEvents: [ClaimEvent!]!
+  #createdTxHash: Bytes!
+  l1Sender: Bytes!
+  l2Recipient: Bytes!
+  createdTimestamp: BigInt
+}
+
+#############
+### OTHER ###
+#############
+
+enum TransferStatus {
+  PENDING
+  FINISHED
+  ACCEPTED_ON_L1
+  ACCEPTED_ON_L2
+}
+
+type Token @entity {
+  "address"
+  id: ID!
+  name: String!
+  symbol: String!
+  decimals: Int!
+}

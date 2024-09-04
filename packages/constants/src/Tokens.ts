@@ -110,19 +110,19 @@ export const SUPPORTED_TOKENS: { [chainId in ChainId]: Token[] } = {
     USDC[ChainId.SN_MAIN],
     ETH[ChainId.SN_MAIN],
     STRK[ChainId.SN_MAIN],
-  ].filter((token) => token !== undefined) as Token[],
+  ].filter((token) => token !== undefined),
   [ChainId.SN_SEPOLIA]: [
     LORDS[ChainId.SN_SEPOLIA],
     USDC[ChainId.SN_SEPOLIA],
     ETH[ChainId.SN_SEPOLIA],
     STRK[ChainId.SN_SEPOLIA],
-  ].filter((token) => token !== undefined) as Token[],
+  ].filter((token) => token !== undefined),
   [ChainId.MAINNET]: [LORDS[ChainId.MAINNET]].filter(
     (token) => token !== undefined,
-  ) as Token[],
+  ),
   [ChainId.SEPOLIA]: [LORDS[ChainId.SEPOLIA]].filter(
     (token) => token !== undefined,
-  ) as Token[],
+  ),
   [ChainId.MISSISSIPPI_TESTNET]: [],
   [ChainId.REALMS_L3]: [],
   [ChainId.SLOT_TESTNET]: [],

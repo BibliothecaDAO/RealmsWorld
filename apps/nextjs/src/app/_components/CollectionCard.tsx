@@ -27,9 +27,9 @@ export const CollectionCard = ({ name, link, price, symbol, image }: Props) => {
       <div className="flex flex-grow justify-between pl-4">
         <h5 className="self-center text-2xl">{name}</h5>
       </div>
-      <div className="self-center">
+      {/*<div className="self-center">
         {price} {symbol}
-      </div>
+      </div>*/}
     </Link>
   );
 };

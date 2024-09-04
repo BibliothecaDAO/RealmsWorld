@@ -10,10 +10,10 @@ Any component/data that can be rendered/fetched on the server should be rendered
 
 ## Getting Started
 
-We use [bun](https://bun.sh/) as package manager so you will need it installed if you don't already have it.
+We use [pnpm](https://pnpm.io/) as package manager so you will need it installed if you don't already have it.
 
 ```bash
-curl -fsSL https://bun.sh/install | bash
+curl -fsSL https://get.pnpm.io/install.sh | sh -
 ```
 
 Depending on which enviroment you want to run, either copy the values from `.env.sepolia` or `.env.mainnet` into your `.env` file.
@@ -26,14 +26,14 @@ cp .env.sepolia .env
 cp .env.mainnet .env
 ```
 
-Once bun and your .env is setup, run:
+Once pnpm and your .env is setup, run:
 
 ```bash
-bun i
+pnpm install
 ```
 
 ```bash
-bun run dev
+pnpm dev
 ```
 
 ## Indexers
