@@ -32,8 +32,8 @@ import {
   DialogTrigger,
 } from "@realms-world/ui";
 
-import { PaymentPoolV2 } from "../_components/staking/PaymentPoolV2";
-import { EthereumLoginButton } from "../_components/wallet/EthereumLoginButton";
+import { PaymentPoolV2 } from "../../_components/staking/PaymentPoolV2";
+import { EthereumLoginButton } from "../../_components/wallet/EthereumLoginButton";
 import RealmsTable from "./RealmsTable";
 
 const galleonAddress = stakingAddresses[NETWORK_NAME]

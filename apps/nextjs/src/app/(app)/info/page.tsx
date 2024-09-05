@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PageLayout } from "../_components/PageLayout";
+import { PageLayout } from "../../_components/PageLayout";
 
 export const metadata: Metadata = {
   title: "Games of the Realms",
