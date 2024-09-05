@@ -129,7 +129,7 @@ export const LegacyClaim: React.FC = () => {
                 )}
               </dd>
             </div>
-            <div className="flex items-center justify-between">
+            {/*<div className="flex items-center justify-between">
               <dt className="text-muted-foreground">Epoch 109-142:</dt>
               <dd className='flex items-center'>
                 {isLegacyClaimed ? 'Claimed' : (reward?.amount ?? 0).toLocaleString()}
@@ -183,7 +183,7 @@ export const LegacyClaim: React.FC = () => {
                   </Dialog>
                 )}
               </dd>
-            </div>
+            </div>*/}
           </dl>
           <div className="mt-4 font-sans text-xl font-semibold">Carrack</div>
           <dl className="grid gap-1">
