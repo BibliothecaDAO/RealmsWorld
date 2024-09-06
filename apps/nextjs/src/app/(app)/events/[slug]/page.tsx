@@ -64,5 +64,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 export async function generateStaticParams() {
   const eventSlugs = await reader.collections.events.list()
+  console.log(eventSlugs)
   return eventSlugs.map((eventSlug) => ({ slug: eventSlug }))
 }
