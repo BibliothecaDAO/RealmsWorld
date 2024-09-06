@@ -1,9 +1,9 @@
 import { Button } from "@realms-world/ui";
-import { PageLayout } from "../_components/PageLayout";
+import { PageLayout } from "../../_components/PageLayout";
 import Image from "next/image"
 import { ChevronDown, Play } from "lucide-react";
 import Link from "next/link";
-import { HeraldSignup } from "../_components/HeraldSignup";
+import { HeraldSignup } from "../../_components/HeraldSignup";
 import Starknet from "@/icons/starknet.svg";
 import Stamp from "@/icons/stamp.svg";
 import { HeraldCarousel } from "./HeraldCarousel";
