@@ -53,7 +53,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const renderable = Markdoc.transform(node);
   const screenshotList = keyStaticGame?.screenshots;
   const list = [...screenshotList].map((image, index) => ({
-    src: `/content/games/${params.id}/${image}`,
+    src: `/content/games/${params.slug}/${image}`,
     alt: `${keyStaticGame?.title} Screenshot ${index}`,
   }));
 
