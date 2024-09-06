@@ -45,8 +45,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const blog = await reader.collections.blogs.read(params.id);
+export default async function Page({ params }: { params: { slug: string } }) {
+  const blog = await reader.collections.blogs.read(params.slug);
   if (!blog) {
     return <div>No Blog Found</div>;
   }
