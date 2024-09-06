@@ -11,7 +11,7 @@ export default config({
     games: collection({
       label: "Games",
       slugField: "title",
-      path: "src/content/games/*",
+      path: "content/games/*",
       format: { contentField: "content" },
       columns: ["title", "icon"],
       schema: {
@@ -88,7 +88,7 @@ export default config({
     events: collection({
       label: "Events",
       slugField: "name",
-      path: "src/content/events/*",
+      path: "content/events/*",
       format: { contentField: "content" },
       columns: ["name", "endDate"],
       schema: {
@@ -118,7 +118,7 @@ export default config({
     studios: collection({
       label: "Studios",
       slugField: "title",
-      path: "src/content/studios/*",
+      path: "content/studios/*",
       format: { contentField: "content" },
       columns: ["title", "description"],
       schema: {
@@ -156,7 +156,7 @@ export default config({
     blogs: collection({
       label: "Blogs",
       slugField: "title",
-      path: "src/content/blogs/*",
+      path: "content/blogs/*",
       format: { contentField: "content" },
       columns: ["title", "subtitle"],
       schema: {

@@ -21,8 +21,8 @@ export async function generateMetadata({
 }
 
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const event = await reader.collections.events.read(params.id);
+export default async function Page({ params }: { params: { slug: string } }) {
+  const event = await reader.collections.events.read(params.slug);
   if (!event) {
     return <div>No Event Found</div>;
   }
@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           className="w-96"
           width={350}
           height={350}
-          src={"/content/events/" + params.id + "/" + event.image}
+          src={"/content/events/" + params.slug + "/" + event.image}
           alt=""
         />
       )}

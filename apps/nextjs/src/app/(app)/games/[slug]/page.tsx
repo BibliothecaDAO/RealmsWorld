@@ -39,8 +39,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const keyStaticGame = await reader.collections.games.read(params.id);
+export default async function Page({ params }: { params: { slug: string } }) {
+  const keyStaticGame = await reader.collections.games.read(params.slug);
 
   if (!keyStaticGame) return;
   console.log(keyStaticGame)

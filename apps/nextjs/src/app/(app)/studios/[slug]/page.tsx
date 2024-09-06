@@ -32,8 +32,8 @@ export async function generateMetadata({
     },
   };
 }
-export default async function Page({ params }: { params: { id: string } }) {
-  const studio = await reader.collections.studios.read(params.id);
+export default async function Page({ params }: { params: { slug: string } }) {
+  const studio = await reader.collections.studios.read(params.slug);
 
   if (!studio) return;
   console.log(studio)
@@ -96,7 +96,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           <div className="flex justify-center py-8">
             <Image
               alt=""
-              src={`/content/studios/${params.id}/${studio.logo}`}
+              src={`/content/studios/${params.slug}/${studio.logo}`}
               width={250}
               height={100}
             />
