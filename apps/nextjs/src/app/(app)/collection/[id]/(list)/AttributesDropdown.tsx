@@ -66,7 +66,7 @@ export const AttributesDropdown = ({
             return (
               <Accordion key={index} type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger className="bg-primary px-2 py-2 text-sm">
+                  <AccordionTrigger className="bg-background px-2 py-2 text-sm capitalize">
                     {attribute.key} (
                     {Array.isArray(attribute.values) && attribute.values.length}
                     )
@@ -76,29 +76,29 @@ export const AttributesDropdown = ({
                       {attribute.kind === "string" && (
                         <div className=" p-1">
                           {//@ts-expect-error trpc typings of drizzle sql
-                          attribute.values?.map((a, i: number) => {
-                            return (
-                              <Button
-                                key={i}
-                                size={"sm"}
-                                variant={
-                                  isAttributeInQuery(attribute.key, a.value)
-                                    ? "default"
-                                    : "outline"
-                                }
-                                onClick={() =>
-                                  handleAttributeClick(
-                                    attribute.key,
-                                    a.value,
-                                    attribute.key == "Resource",
-                                  )
-                                }
-                                className={`font-body my-1 mr-1 ${attribute.key == "Status" && "w-full"}`}
-                              >
-                                {a.value} {a.tokenCount && `(${a.tokenCount})`}
-                              </Button>
-                            );
-                          })}
+                            attribute.values?.map((a, i: number) => {
+                              return (
+                                <Button
+                                  key={i}
+                                  size={"sm"}
+                                  variant={
+                                    isAttributeInQuery(attribute.key, a.value)
+                                      ? "default"
+                                      : "outline"
+                                  }
+                                  onClick={() =>
+                                    handleAttributeClick(
+                                      attribute.key,
+                                      a.value,
+                                      attribute.key == "Resource",
+                                    )
+                                  }
+                                  className={`font-body my-1 mr-1 ${attribute.key == "Status" && "w-full"}`}
+                                >
+                                  {a.value} {a.tokenCount && `(${a.tokenCount})`}
+                                </Button>
+                              );
+                            })}
                         </div>
                       )}
 
