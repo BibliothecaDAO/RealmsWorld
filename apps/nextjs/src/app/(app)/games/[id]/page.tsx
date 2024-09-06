@@ -306,3 +306,9 @@ export default async function Page({ params }: { params: { id: string } }) {
     </main>
   );
 }
+
+
+export async function generateStaticParams() {
+  const gameSlugs = await reader.collections.games.list()
+  return gameSlugs.map((gameSlug) => ({ slug: gameSlug }))
+}

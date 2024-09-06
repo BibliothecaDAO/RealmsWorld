@@ -156,3 +156,9 @@ export default async function Page({ params }: { params: { id: string } }) {
     </PageLayout>
   );
 }
+
+
+export async function generateStaticParams() {
+  const studioSlugs = await reader.collections.studios.list()
+  return studioSlugs.map((studioSlug) => ({ slug: studioSlug }))
+}

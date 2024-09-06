@@ -60,3 +60,9 @@ export default async function Page({ params }: { params: { id: string } }) {
     </PageLayout>
   );
 }
+
+
+export async function generateStaticParams() {
+  const eventSlugs = await reader.collections.events.list()
+  return eventSlugs.map((eventSlug) => ({ slug: eventSlug }))
+}
