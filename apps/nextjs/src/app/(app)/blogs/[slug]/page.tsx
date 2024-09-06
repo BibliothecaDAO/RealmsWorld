@@ -86,7 +86,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
         <Image
           alt={blog?.title}
-          src={`/content/blogs/${params.id}/${blog?.image}`}
+          src={`/content/blogs/${params.slug}/${blog?.image}`}
           width={900}
           className="w-full object-cover"
           height={600}

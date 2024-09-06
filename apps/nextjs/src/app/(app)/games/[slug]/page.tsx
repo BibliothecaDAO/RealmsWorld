@@ -251,7 +251,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
             <div className="pl-4 sm:w-3/12">
               <div className="flex justify-center py-8">
-                <Image alt="" src={`/content/games/${params.id}/${keyStaticGame?.icon}`} width={250} height={100} />
+                <Image alt="" src={`/content/games/${params.slug}/${keyStaticGame?.icon}`} width={250} height={100} />
               </div>
 
               <div className="flex-col space-y-2">
