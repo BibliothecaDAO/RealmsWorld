@@ -3,7 +3,7 @@ import { collection, config, fields } from "@keystatic/core";
 export default config({
   storage: {
     kind: "github",
-    repo: "4eyes52/RealmsWorld",
+    repo: "4eyes52/RealmsWorld/tree/keystatic",
     pathPrefix: 'apps/nextjs'
   },
   ui: {
