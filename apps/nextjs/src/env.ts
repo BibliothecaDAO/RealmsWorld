@@ -19,6 +19,9 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     INNGEST_EVENT_KEY: z.string().optional(),
+    KEYSTATIC_GITHUB_CLIENT_ID: z.string(),
+    KEYSTATIC_GITHUB_CLIENT_SECRET: z.string(),
+    KEYSTATIC_SECRET: z.string()
   },
 
   /**
@@ -41,6 +44,7 @@ export const env = createEnv({
     NEXT_PUBLIC_ALCHEMY_API: z.string(),
     NEXT_PUBLIC_ETHPLORER_APIKEY: z.string(),
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    //NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: z.string()
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
