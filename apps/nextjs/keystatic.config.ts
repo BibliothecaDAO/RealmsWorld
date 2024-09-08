@@ -1,28 +1,10 @@
-import {
-  collection,
-  config,
-  fields,
-  GitHubConfig,
-  LocalConfig,
-} from "@keystatic/core";
-
-// // Storage strategy
-// const storage: LocalConfig['storage'] | GitHubConfig['storage'] =
-//   process.env.NODE_ENV === 'development'
-//     ? { kind: 'local' }
-//     : {
-//         kind: 'github',
-//         repo: {
-//           owner: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_OWNER!,
-//           name: process.env.NEXT_PUBLIC_VERCEL_GIT_REPO_SLUG!,
-//         },
-//         pathPrefix: 'apps/nextjs'
-//       }
+import { env } from "@/env";
+import { collection, config, fields } from "@keystatic/core";
 
 export default config({
   storage: {
     kind: "github",
-    repo: "4eyes52/RealmsWorld",
+    repo: `${env.KEYSTATIC_GITHUB_REPO_OWNER}/${env.KEYSTATIC_GITHUB_REPO_NAME}`,
     pathPrefix: "apps/nextjs",
   },
 
