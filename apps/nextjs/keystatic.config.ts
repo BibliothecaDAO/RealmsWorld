@@ -13,6 +13,8 @@ import { collection, config, fields, LocalConfig, GitHubConfig } from "@keystati
 //         pathPrefix: 'apps/nextjs'
 //       }
 
+
+
   const keystaticConfig = config({
     storage: {
       kind: "github",
