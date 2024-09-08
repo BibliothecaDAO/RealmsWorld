@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { GameCard } from "@/app/(app)/games/GameCard";
-import { env } from "@/env";
 import { reader } from "@/utils/keystatic";
 
 import { PageLayout } from "../../_components/PageLayout";
