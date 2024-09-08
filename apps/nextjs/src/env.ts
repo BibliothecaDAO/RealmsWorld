@@ -14,8 +14,6 @@ export const env = createEnv({
     KEYSTATIC_GITHUB_CLIENT_ID: z.string().optional(),
     KEYSTATIC_GITHUB_CLIENT_SECRET: z.string().optional(),
     KEYSTATIC_SECRET: z.string().optional(),
-    KEYSTATIC_GITHUB_REPO_OWNER: z.string().optional(),
-    KEYSTATIC_GITHUB_REPO_NAME: z.string().optional(),
   },
   /**
    * Specify your server-side environment variables schema here.
@@ -77,8 +75,6 @@ export const env = createEnv({
     KEYSTATIC_GITHUB_CLIENT_ID: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
     KEYSTATIC_GITHUB_CLIENT_SECRET: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
     KEYSTATIC_SECRET: process.env.KEYSTATIC_SECRET,
-    KEYSTATIC_GITHUB_REPO_OWNER: process.env.KEYSTATIC_GITHUB_REPO_OWNER,
-    KEYSTATIC_GITHUB_REPO_NAME: process.env.KEYSTATIC_GITHUB_REPO_NAME,
   },
   skipValidation:
     !!process.env.CI ||
