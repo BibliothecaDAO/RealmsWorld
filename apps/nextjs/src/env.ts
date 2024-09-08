@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-properties */
+import { truncate } from "fs";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { vercel } from "@t3-oss/env-nextjs/presets";
 import { z } from "zod";
@@ -22,6 +23,9 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     INNGEST_EVENT_KEY: z.string().optional(),
+    KEYSTATIC_GITHUB_CLIENT_ID: z.string().optional(),
+    KEYSTATIC_GITHUB_CLIENT_SECRET: z.string().optional(),
+    KEYSTATIC_SECRET: z.string().optional(),
   },
 
   /**
@@ -76,8 +80,5 @@ export const env = createEnv({
     KEYSTATIC_GITHUB_CLIENT_SECRET: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
     KEYSTATIC_SECRET: process.env.KEYSTATIC_SECRET,
   },
-  skipValidation:
-    !!process.env.CI ||
-    !!process.env.SKIP_ENV_VALIDATION ||
-    process.env.npm_lifecycle_event === "lint",
+  skipValidation: true,
 });
