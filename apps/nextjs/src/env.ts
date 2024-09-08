@@ -11,6 +11,9 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
+    KEYSTATIC_GITHUB_CLIENT_ID: z.string(),
+    KEYSTATIC_GITHUB_CLIENT_SECRET: z.string(),
+    KEYSTATIC_SECRET: z.string(),
   },
   /**
    * Specify your server-side environment variables schema here.
@@ -19,9 +22,6 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     INNGEST_EVENT_KEY: z.string().optional(),
-    KEYSTATIC_GITHUB_CLIENT_ID: z.string(),
-    KEYSTATIC_GITHUB_CLIENT_SECRET: z.string(),
-    KEYSTATIC_SECRET: z.string(),
   },
 
   /**
@@ -72,6 +72,9 @@ export const env = createEnv({
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG:
       process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG,
+    KEYSTATIC_GITHUB_CLIENT_ID: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
+    KEYSTATIC_GITHUB_CLIENT_SECRET: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
+    KEYSTATIC_SECRET: process.env.KEYSTATIC_SECRET,
   },
   skipValidation:
     !!process.env.CI ||
