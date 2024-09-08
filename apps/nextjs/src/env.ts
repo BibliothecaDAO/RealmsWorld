@@ -11,9 +11,9 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
-    KEYSTATIC_GITHUB_CLIENT_ID: z.string(),
-    KEYSTATIC_GITHUB_CLIENT_SECRET: z.string(),
-    KEYSTATIC_SECRET: z.string(),
+    KEYSTATIC_GITHUB_CLIENT_ID: z.string().optional(),
+    KEYSTATIC_GITHUB_CLIENT_SECRET: z.string().optional(),
+    KEYSTATIC_SECRET: z.string().optional(),
   },
   /**
    * Specify your server-side environment variables schema here.
