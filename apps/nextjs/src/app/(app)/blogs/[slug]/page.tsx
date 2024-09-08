@@ -112,7 +112,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 
 
-export async function generateStaticParams() {
-  const blogSlugs = await reader.collections.blogs.list()
-  return blogSlugs.map((blogSlug) => ({ slug: blogSlug }))
-}
+// export async function generateStaticParams() {
+//   const blogSlugs = await reader.collections.blogs.list()
+//   return blogSlugs.map((blogSlug) => ({ slug: blogSlug }))
+// }
