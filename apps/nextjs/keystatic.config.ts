@@ -1,10 +1,9 @@
-import { env } from "@/env";
 import { collection, config, fields } from "@keystatic/core";
 
 export default config({
   storage: {
     kind: "github",
-    repo: `${env.KEYSTATIC_GITHUB_REPO_OWNER}/${env.KEYSTATIC_GITHUB_REPO_NAME}`,
+    repo: `${process.env.KEYSTATIC_GITHUB_REPO_OWNER}/${process.env.KEYSTATIC_GITHUB_REPO_NAME}`,
     pathPrefix: "apps/nextjs",
   },
 
