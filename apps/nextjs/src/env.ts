@@ -22,9 +22,6 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     INNGEST_EVENT_KEY: z.string().optional(),
-    KEYSTATIC_GITHUB_CLIENT_ID: z.string().optional(),
-    KEYSTATIC_GITHUB_CLIENT_SECRET: z.string().optional(),
-    KEYSTATIC_SECRET: z.string().optional(),
   },
 
   /**
@@ -49,11 +46,10 @@ export const env = createEnv({
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
     NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: z.string().optional(),
   },
-
-  runtimeEnv: {
-    KEYSTATIC_GITHUB_CLIENT_ID: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
-    KEYSTATIC_GITHUB_CLIENT_SECRET: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
-    KEYSTATIC_SECRET: process.env.KEYSTATIC_SECRET,
+  /**
+   * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
+   */
+  experimental__runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_IS_TESTNET: process.env.NEXT_PUBLIC_IS_TESTNET,
     NEXT_PUBLIC_ETHERSCAN_URL: process.env.NEXT_PUBLIC_ETHERSCAN_URL,
@@ -76,21 +72,12 @@ export const env = createEnv({
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG:
       process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG,
-    DATABASE_URL: process.env.DATABASE_URL,
-    INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY,
+    KEYSTATIC_GITHUB_CLIENT_ID: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
+    KEYSTATIC_GITHUB_CLIENT_SECRET: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
+    KEYSTATIC_SECRET: process.env.KEYSTATIC_SECRET,
   },
-  /**
-   * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
-   */
-  // experimental__runtimeEnv: {
-
-  // },
   skipValidation:
     !!process.env.CI ||
     !!process.env.SKIP_ENV_VALIDATION ||
-    !!process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG ||
-    !!process.env.KEYSTATIC_GITHUB_CLIENT_ID ||
-    !!process.env.KEYSTATIC_GITHUB_CLIENT_SECRET ||
-    !!process.env.KEYSTATIC_SECRET ||
     process.env.npm_lifecycle_event === "lint",
 });
