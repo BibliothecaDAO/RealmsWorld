@@ -1,4 +1,4 @@
-import { makeRouteHandler } from "@keystatic/next/route-handler";
+import { makeAPIRouteHandler } from '@keystatic/next/api'
 
 import keyStaticConfig from "../../../../../keystatic.config";
 export const config = {
@@ -10,7 +10,7 @@ export const config = {
     
   },
 }
-export const { POST, GET } = makeRouteHandler({
+export default makeAPIRouteHandler({
   clientId: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
     clientSecret: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
     secret: process.env.KEYSTATIC_SECRET,
