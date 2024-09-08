@@ -1,4 +1,10 @@
-import { collection, config, fields, LocalConfig, GitHubConfig } from "@keystatic/core";
+import {
+  collection,
+  config,
+  fields,
+  GitHubConfig,
+  LocalConfig,
+} from "@keystatic/core";
 
 // // Storage strategy
 // const storage: LocalConfig['storage'] | GitHubConfig['storage'] =
@@ -13,15 +19,13 @@ import { collection, config, fields, LocalConfig, GitHubConfig } from "@keystati
 //         pathPrefix: 'apps/nextjs'
 //       }
 
+export default config({
+  storage: {
+    kind: "github",
+    repo: "4eyes52/RealmsWorld",
+    pathPrefix: "apps/nextjs",
+  },
 
-
-  const keystaticConfig = config({
-    storage: {
-      kind: "github",
-      repo: "4eyes52/RealmsWorld",
-      pathPrefix: 'apps/nextjs'
-    },
-    
   ui: {
     brand: { name: "Realms.World" },
   },
@@ -199,5 +203,3 @@ import { collection, config, fields, LocalConfig, GitHubConfig } from "@keystati
     }),
   },
 });
-
-export default keystaticConfig;
