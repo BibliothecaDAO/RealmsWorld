@@ -22,6 +22,9 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     INNGEST_EVENT_KEY: z.string().optional(),
+    KEYSTATIC_GITHUB_CLIENT_ID: z.string().optional(),
+    KEYSTATIC_GITHUB_CLIENT_SECRET: z.string().optional(),
+    KEYSTATIC_SECRET: z.string().optional(),
   },
 
   /**
