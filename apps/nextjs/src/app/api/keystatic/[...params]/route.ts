@@ -4,8 +4,8 @@ import config from "../../../../../keystatic.config";
 import { env } from "../../../../env";
 
 export const { POST, GET } = makeRouteHandler({
-  clientId: "Iv23liWEhighTBlYtJld",
-  clientSecret: "6e1f200daa8cd50768cb0efbe32d295c3628189f",
-  secret: "gibberish",
+  clientId: env.KEYSTATIC_GITHUB_CLIENT_ID,
+  clientSecret: env.KEYSTATIC_GITHUB_CLIENT_SECRET,
+  secret: env.KEYSTATIC_SECRET,
   config,
 });
