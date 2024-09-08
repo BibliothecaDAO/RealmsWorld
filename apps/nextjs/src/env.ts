@@ -1,5 +1,4 @@
 /* eslint-disable no-restricted-properties */
-import { truncate } from "fs";
 import { createEnv } from "@t3-oss/env-nextjs";
 import { vercel } from "@t3-oss/env-nextjs/presets";
 import { z } from "zod";
@@ -50,10 +49,11 @@ export const env = createEnv({
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
     NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: z.string().optional(),
   },
-  /**
-   * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
-   */
-  experimental__runtimeEnv: {
+
+  runtimeEnv: {
+    KEYSTATIC_GITHUB_CLIENT_ID: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
+    KEYSTATIC_GITHUB_CLIENT_SECRET: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
+    KEYSTATIC_SECRET: process.env.KEYSTATIC_SECRET,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_IS_TESTNET: process.env.NEXT_PUBLIC_IS_TESTNET,
     NEXT_PUBLIC_ETHERSCAN_URL: process.env.NEXT_PUBLIC_ETHERSCAN_URL,
@@ -76,9 +76,21 @@ export const env = createEnv({
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG:
       process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG,
-    KEYSTATIC_GITHUB_CLIENT_ID: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
-    KEYSTATIC_GITHUB_CLIENT_SECRET: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
-    KEYSTATIC_SECRET: process.env.KEYSTATIC_SECRET,
+    DATABASE_URL: process.env.DATABASE_URL,
+    INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY,
   },
-  skipValidation: true,
+  /**
+   * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
+   */
+  // experimental__runtimeEnv: {
+
+  // },
+  skipValidation:
+    !!process.env.CI ||
+    !!process.env.SKIP_ENV_VALIDATION ||
+    !!process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG ||
+    !!process.env.KEYSTATIC_GITHUB_CLIENT_ID ||
+    !!process.env.KEYSTATIC_GITHUB_CLIENT_SECRET ||
+    !!process.env.KEYSTATIC_SECRET ||
+    process.env.npm_lifecycle_event === "lint",
 });
