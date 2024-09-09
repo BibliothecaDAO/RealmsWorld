@@ -16,9 +16,9 @@ import { reader } from "@/utils/keystatic";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: { slug: string };
 }): Promise<Metadata> {
-  let blog = await reader.collections.blogs.read(params.id);
+  let blog = await reader.collections.blogs.read(params.slug);
 
   return {
     title: `${blog?.title}`,
@@ -27,7 +27,7 @@ export async function generateMetadata({
       title: `${blog?.title} - Created for Adventurers by Bibliotheca DAO`,
       images: [
         {
-          url: `/content/blogs/${params.id}/${blog?.image}`,
+          url: `/content/blogs/${params.slug}/${blog?.image}`,
           width: 800,
           height: 600,
         },

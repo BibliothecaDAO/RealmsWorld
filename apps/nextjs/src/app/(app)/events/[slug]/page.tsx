@@ -11,12 +11,12 @@ import { reader } from "@/utils/keystatic";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: { slug: string };
 }): Promise<Metadata> {
-  let event = await reader.collections.events.read(params.id);
+  let event = await reader.collections.events.read(params.slug);
   return {
     title: `${event?.name}`,
-    description: `${params.id} - Created for Adventurers by Bibliotheca DAO`,
+    description: `${params.slug} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 

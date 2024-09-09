@@ -20,15 +20,15 @@ import {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: { slug: string };
 }): Promise<Metadata> {
-  let studio = await reader.collections.studios.read(params.id);
+  let studio = await reader.collections.studios.read(params.slug);
   return {
     title: `${studio?.title}`,
-    description: `${params.id} Profile - A game studio of the Realms Autonomous World`,
+    description: `${params.slug} Profile - A game studio of the Realms Autonomous World`,
     openGraph: {
       title: `${studio?.title}`,
-      description: `${params.id} Profile - A game studio of the Realms Autonomous World`,
+      description: `${params.slug} Profile - A game studio of the Realms Autonomous World`,
     },
   };
 }

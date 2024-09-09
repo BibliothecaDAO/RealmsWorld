@@ -30,12 +30,12 @@ import {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: { slug: string };
 }): Promise<Metadata> {
-  let game = await reader.collections.games.read(params.id);
+  let game = await reader.collections.games.read(params.slug);
   return {
     title: `${game?.title}`,
-    description: `${params.id} - Created for Adventurers by Bibliotheca DAO`,
+    description: `${params.slug} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
