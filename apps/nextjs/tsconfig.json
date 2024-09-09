@@ -1,15 +1,18 @@
 {
   "extends": "@realms-world/tsconfig/base.json",
   "compilerOptions": {
-    "lib": ["es2022", "dom", "dom.iterable"],
+    "lib": ["ES2022", "dom", "dom.iterable"],
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "plugins": [{ "name": "next" }],
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "module": "ES2015"
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "module": "esnext"
   },
   "include": [".", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

@@ -21,32 +21,31 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "lint": "eslint",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
-    "push": "bun with-env drizzle-kit push",
+    "push": "pnpm with-env drizzle-kit push",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@neondatabase/serverless": "0.9.4",
-    "@t3-oss/env-nextjs": "^0.10.1",
-    "@t3-oss/env-core": "^0.10.1",
-    "drizzle-orm": "^0.31.2",
+    "@t3-oss/env-nextjs": "^0.11.0",
+    "drizzle-orm": "^0.33.0",
     "drizzle-zod": "^0.5.1",
-    "zod": "^3.23"
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@realms-world/eslint-config": "*",
-    "@realms-world/prettier-config": "*",
-    "@realms-world/tsconfig": "*",
+    "@realms-world/eslint-config": "workspace:*",
+    "@realms-world/prettier-config": "workspace:*",
+    "@realms-world/tsconfig": "workspace:*",
     "dotenv-cli": "^7.4.2",
-    "drizzle-kit": "^0.22.8",
-    "eslint": "^9.6.0",
+    "drizzle-kit": "^0.24.2",
+    "eslint": "catalog:",
     "postgres-range": "^1.1.4",
-    "prettier": "^3.3.2",
-    "typescript": "^5.5.3"
+    "prettier": "catalog:",
+    "typescript": "catalog:"
   },
   "prettier": "@realms-world/prettier-config"
 }

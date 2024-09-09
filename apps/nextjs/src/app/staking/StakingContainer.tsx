@@ -263,7 +263,7 @@ export const StakingContainer = () => {
           </div>
         </div>
         {realmsData?.bridgedV2Realms.length ??
-        (carrackLordsAvailableData && carrackLordsAvailableData[0] > 0n) ? (
+          (carrackLordsAvailableData && carrackLordsAvailableData[0] > 0n) ? (
           <div className="mt-10 flex flex-col">
             <h3>Carrack</h3>
             <div className="pb-2 text-lg">
@@ -409,17 +409,17 @@ const StakingModal = ({
       const exitFunction =
         shipType === "galleon"
           ? exitGalleon({
-              address: galleonAddress,
-              abi: GalleonStaking,
-              functionName: "exitShip",
-              args: [selectedRealms.map(BigInt)],
-            })
+            address: galleonAddress,
+            abi: GalleonStaking,
+            functionName: "exitShip",
+            args: [selectedRealms.map(BigInt)],
+          })
           : exitCarrack({
-              address: carrackAddress,
-              abi: CarrackStaking,
-              functionName: "exitShip",
-              args: [selectedRealms.map(BigInt)],
-            });
+            address: carrackAddress,
+            abi: CarrackStaking,
+            functionName: "exitShip",
+            args: [selectedRealms.map(BigInt)],
+          });
       await exitFunction;
     }
     setSelectedRealms([]);

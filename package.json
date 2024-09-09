@@ -1,15 +1,9 @@
 {
   "name": "@realms-world/monorepo",
   "engines": {
-    "node": ">=20.12.0"
+    "node": ">=20.16.0"
   },
-  "packageManager": "bun@1.1.12",
-  "workspaces": [
-    "apps/*",
-    "config/*",
-    "packages/*",
-    "tooling/*"
-  ],
+  "packageManager": "pnpm@9.9.0",
   "scripts": {
     "build": "turbo run build",
     "clean": "git clean -xdf node_modules",
@@ -19,23 +13,28 @@
     "deps:update": "ncu -i --deep --install never",
     "dev": "turbo watch dev",
     "dev:next": "turbo watch dev -F @realms-world/nextjs...",
-    "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
-    "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache' --no-error-on-unmatched-pattern",
-    "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
-    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg fix",
-    "lint:ws": "bunx sherif@latest -r root-package-private-field",
+    "format": "turbo format --continue -- --cache --cache-location='.cache/.prettiercache' --no-error-on-unmatched-pattern",
+    "format:fix": "turbo format --continue -- --write --cache --cache-location='.cache/.prettiercache' --no-error-on-unmatched-pattern",
+    "lint": "turbo lint --continue -- --cache --cache-location '.cache/.eslintcache' && manypkg check",
+    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location '.cache/.eslintcache' && manypkg fix",
+    "lint:ws": "pnpm sherif@latest -r root-package-private-field",
     "typecheck": "turbo run typecheck",
     "ui-add": "turbo run ui-add"
   },
   "dependencies": {
     "@manypkg/cli": "^0.21.4",
-    "@turbo/gen": "^2.0.6",
+    "@turbo/gen": "^2.1.0",
     "million": "^3.1.11",
-    "npm-check-updates": "^16.14.20",
-    "prettier": "^3.3.2",
-    "tsup": "^8.1.0",
-    "turbo": "2.0.6",
-    "typescript": "^5.5.3"
+    "npm-check-updates": "^17.1.0",
+    "prettier": "catalog:",
+    "tsup": "^8.2.4",
+    "turbo": "2.1.0",
+    "typescript": "catalog:"
+  },
+  "pnpm": {
+    "overrides": {
+      "react-is": "19.0.0-rc-fb9a90fa48-20240614"
+    }
   },
   "prettier": "@realms-world/prettier-config"
 }

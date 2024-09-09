@@ -46,7 +46,7 @@ export const ListCancelModalRender: FC<Props> = ({ open, children, token }) => {
 
   const {
     data,
-    writeAsync,
+    sendAsync,
     error: writeError,
     // isLoading: isTxSubmitting,
   } = useCancelListing({ listingId: listing?.id });
@@ -81,8 +81,8 @@ export const ListCancelModalRender: FC<Props> = ({ open, children, token }) => {
 
     setCancelStep(CancelStep.Approving);
 
-    await writeAsync();
-  }, [listing, writeAsync]);
+    await sendAsync();
+  }, [listing, sendAsync]);
 
   useEffect(() => {
     if (!open) {

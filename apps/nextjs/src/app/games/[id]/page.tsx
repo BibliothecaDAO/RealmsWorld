@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { StatusDot } from "@/app/_components/StatusDot";
 import { env } from "@/env";
-import { ChevronLeft } from "lucide-react";
 
 import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
 import {
@@ -15,6 +14,10 @@ import {
   BreadcrumbSeparator,
   Button,
   Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
   Tabs,
   TabsContent,
   TabsList,
@@ -85,7 +88,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const isImageFound = async (imageName: string) => {
     return await fetch(
       (env.VERCEL_URL ? "https://" + env.VERCEL_URL : "http://localhost:3000") +
-        imageName,
+      imageName,
       {
         method: "HEAD",
       },
@@ -200,7 +203,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   ];
 
   return (
-    <main className="container mx-auto px-4">
+    <main className="container mx-auto px-8">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -215,7 +218,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
       <div className="flex flex-wrap">
         <div className="my-4 w-full">
-          <h1 className="text-4xl font-bold">{game?.name}</h1>
+          <h1 className="text-3xl sm:text-5xl">{game?.name}</h1>
         </div>
 
         <div className="mb-8 flex w-full space-x-2 font-sans uppercase">
@@ -227,15 +230,25 @@ export default async function Page({ params }: { params: { id: string } }) {
 
         {game && (
           <>
-            <div className="w-full sm:w-9/12 sm:pr-8">
+            <div className="w-full sm:w-9/12 sm:pr-8 px-12">
               {game.screenshotLength && (
-                <Carousel
-                  className="h-96 w-full sm:max-h-[750px] sm:min-h-[750px]"
-                  images={list}
-                  autoPlay
-                  showPreview
-                  cover
-                />
+                <Carousel className="sm:h-96 w-full sm:max-h-[750px] sm:min-h-[750px]">
+                  <CarouselContent>
+                    {list.map((image, index) => (
+                      <CarouselItem key={index}>
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          width={1096}
+                          height={750}
+                          className="h-full w-full object-cover rounded border"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
               )}
             </div>
 
@@ -245,7 +258,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               </div>
 
               <div className="flex-col space-y-2">
-                {game.playable && (
+                {game.playable && game.links.homepage && (
                   <Button
                     size={"lg"}
                     variant={"default"}

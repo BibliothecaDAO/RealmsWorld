@@ -5,7 +5,7 @@ export default function Loading() {
   return (
     <div className="mx-auto flex h-screen w-full flex-wrap justify-center px-4 sm:px-10">
       <Image
-        src="/pink_crown.svg"
+        src="/pink_crown.gif"
         className="self-center"
         alt="logo"
         width={100}

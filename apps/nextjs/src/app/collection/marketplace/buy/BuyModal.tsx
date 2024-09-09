@@ -43,8 +43,8 @@ const ModalCopy = {
 
 interface Props {
   token?:
-    | RouterOutputs["erc721Tokens"]["byId"]
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  | RouterOutputs["erc721Tokens"]["byId"]
+  | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   defaultQuantity?: number;
   orderId?: number;
   normalizeRoyalties?: boolean;
@@ -83,7 +83,7 @@ export function BuyModal({
   const copy: typeof ModalCopy = { ...ModalCopy, ...copyOverrides };
   const [open, setOpen] = useState(false);
 
-  const { address } = useAccount();
+  const { isConnected } = useAccount();
   //const { balances } = useWalletsProviderContext();
 
   return (
@@ -189,7 +189,7 @@ export function BuyModal({
                     </div>
                   </div>
                   <div className="w-full">
-                    {!address ? (
+                    {!isConnected ? (
                       <StarknetLoginButton
                         openAccount={false}
                         buttonClass="w-full mt-4"

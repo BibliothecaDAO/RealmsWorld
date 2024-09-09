@@ -27,13 +27,13 @@ export default function RootLayout({
       link: "mint",
     });
   }
-  tabs.push(
+  /*tabs.push(
     { name: "Analytics", link: "analytics" },
     {
       name: "Activity",
       link: "activity",
     },
-  );
+  );*/
 
   return (
     <div className=" w-full pt-24 sm:pl-32 sm:pt-24">
@@ -44,7 +44,6 @@ export default function RootLayout({
             <NavLink
               key={tab.name}
               variant={"link"}
-              className="hover:text-flamingo/70"
               size={"sm"}
               exact
               href={`/collection/${params.id}${tab.link && "/" + tab.link}`}

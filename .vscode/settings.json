@@ -13,6 +13,7 @@
     { "pattern": "packages/*/" },
     { "pattern": "tooling/*/" }
   ],
+  "eslint.runtime": "node",
   "tailwindCSS.experimental.configFile": "./tooling/tailwind/index.ts",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib",
@@ -26,6 +27,7 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
   }
+
   /*"deno.enable": true,
   "deno.lint": true,
   "deno.unstable": true*/

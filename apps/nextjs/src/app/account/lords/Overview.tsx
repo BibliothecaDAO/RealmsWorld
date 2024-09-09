@@ -35,17 +35,17 @@ import { padAddress } from "@realms-world/utils";
 import { ClaimsTable } from "./ClaimsTable";
 //import { FloatAnimation } from "./FloatAnimation";
 import { LegacyClaim } from "./LegacyClaim";
-//import { VeLords } from "./VeLords";
 import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
+import { VeLords } from "./VeLords";
 
 export const Overview = () => {
   const { address: l1Address } = useAccount();
   const { address: l2Address } = useL2Account();
 
-  const { balance, claimRewards, isSubmitting, isFetching } =
+  const { balance, claimRewards, isSubmitting } =
     useL2LordsRewards();
 
-  const { data } = useStaking();
+  const { data, loading } = useStaking();
   //const delegateData = useLordship(l1Address);
   const { toggleStakingMigration } = useUIStore((state) => state);
   const { data: lordsRewardsClaims } = api.lordsRewards.all.useQuery(
@@ -128,7 +128,7 @@ export const Overview = () => {
                   <CardHeader>
                     <CardDescription>Inactive Realms</CardDescription>
                     <CardTitle className="text-3xl">
-                      {totalL1Realms ? totalL1Realms : "0"}
+                      {loading ? <Loader className="animate-spin" /> : totalL1Realms ? totalL1Realms : "0"}
                     </CardTitle>
                   </CardHeader>
                   <CardFooter>
@@ -159,7 +159,7 @@ export const Overview = () => {
                         <Button
                           onClick={() => claimRewards()}
                           className="w-full"
-                          disabled={isSubmitting}
+                          disabled={isSubmitting || !balance || balance <= 0n}
                         >
                           {isSubmitting ? (
                             <Loader className="animate-spin" />
@@ -201,7 +201,7 @@ export const Overview = () => {
               </div>
             </div>
           </div>
-          {/*<div className="mt-24 w-full">
+          <div className="mt-24 w-full">
             <div className="w-full">
               <span className="mb-2 flex w-fit items-center pb-4 font-sans text-3xl">
                 <LordsIcon className="mx-auto mr-2 h-7 w-7 fill-bright-yellow" />
@@ -209,7 +209,7 @@ export const Overview = () => {
               </span>
               <VeLords />
             </div>
-                      </div>*/}
+          </div>
         </>
       )}
     </div>

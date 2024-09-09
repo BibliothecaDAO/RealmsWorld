@@ -30,10 +30,10 @@ interface WalletsProviderContextValue {
       lords?: bigint;
       eth?: bigint;
     };
-    /*l2: {
+    l2: {
       lords?: bigint;
       eth?: bigint;
-    };*/
+    };
   };
   //l2loading: boolean;
   refetch: () => void;
@@ -71,7 +71,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
   const { address: l1Account } = useL1Account();
   const { address: l2Account } = useL2Account();
 
-  /*const {
+  const {
     data: l2LordsBalance,
     isFetching: l2LordsIsLoading,
     refetch: l2LordsRefetch,
@@ -91,7 +91,7 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
     enabled: !!l2Account,
     args: l2Account ? [l2Account] : undefined,
     watch: true,
-  });*/
+  });
 
   const l1ERC20Contract = {
     address: LORDS[SUPPORTED_L1_CHAIN_ID]?.address,
@@ -133,15 +133,15 @@ export const WalletsProvider: React.FC<WalletsContextProviderProps> = ({
         eth: l1EthBalance?.value,
         lords: l1LordsBalance?.value,
       },
-      /* l2: {
+      l2: {
         //@ts-expect-error incorrect SN react types
         eth: l2EthBalance?.balance
           ? //@ts-expect-error incorrect SN react types
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            uint256.uint256ToBN(l2EthBalance.balance)
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          uint256.uint256ToBN(l2EthBalance.balance)
           : 0n,
         lords: l2LordsBalance as bigint,
-      },*/
+      },
     },
   };
 

@@ -10,6 +10,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 //import { getCsrfToken } from "next-auth/react";
 //import Discord from "next-auth/providers/discord";
 import { SiwsTypedData } from "siws";
+import { constants, RpcProvider } from "starknet";
 
 import { db } from "@realms-world/db/client";
 import { Account, Session, User } from "@realms-world/db/schema";
@@ -65,19 +66,36 @@ export const authConfig = {
           const signindata = SiwsTypedData.fromJson(
             credentials.message as string,
           );
+          const chainId = signindata.domain.chainId;
+          const sepoliaProvider = new RpcProvider({
+            nodeUrl: "https://starknet-sepolia.public.blastapi.io",
+          });
 
+          const mainProvider = new RpcProvider({
+            nodeUrl: "https://starknet-mainnet.public.blastapi.io",
+          });
           const csrf = cookies()
             .get("next-auth.csrf-token")
             ?.value.split("|")[0];
-          console.log(req.headers.get("host"));
-          console.log(credentials);
+          let starknetProvider = sepoliaProvider;
+
+          if (chainId == constants.NetworkName.SN_MAIN) {
+            starknetProvider = mainProvider;
+            console.log("mainProvider");
+          } else if (chainId == constants.NetworkName.SN_SEPOLIA) {
+            starknetProvider = sepoliaProvider;
+          } else {
+            throw new Error("Invalid chainId");
+          }
+
           const result = await signindata.verify(
             {
               signature: (credentials.signature as string).split(","),
               domain: req.headers.get("host") ?? "http://localhost:3000", //nextAuthUrl.host,
               nonce: csrf,
+              network: chainId,
             },
-            {},
+            { provider: starknetProvider as any },
           );
 
           if (result.success) {

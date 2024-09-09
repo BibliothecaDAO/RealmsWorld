@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "clean": "rimraf -rf dist",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "lint": "eslint",
     "prepack": "clean-package",
     "postpack": "clean-package restore",
@@ -20,12 +20,13 @@
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.5.2",
+    "viem": "^2.19.8"
   },
   "devDependencies": {
-    "@realms-world/tsconfig": "*",
+    "@realms-world/tsconfig": "workspace:*",
     "@types/node": "^20.14.9",
-    "typescript": "^5.5.3"
+    "typescript": "catalog:"
   },
   "publishConfig": {
     "access": "restricted"

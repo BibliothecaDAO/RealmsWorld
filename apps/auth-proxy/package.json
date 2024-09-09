@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nitro build",
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "git clean -xdf .cache .nitro .output .turbo .vercel node_modules",
     "lint": "eslint",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "typecheck": "tsc --noEmit"
@@ -13,14 +13,14 @@
     "@auth/core": "^0.34.1"
   },
   "devDependencies": {
-    "@realms-world/eslint-config": "*",
-    "@realms-world/prettier-config": "*",
-    "@realms-world/tailwind-config": "*",
-    "@realms-world/tsconfig": "*",
-    "eslint": "^9.6.0",
+    "@realms-world/eslint-config": "workspace:*",
+    "@realms-world/prettier-config": "workspace:*",
+    "@realms-world/tailwind-config": "workspace:*",
+    "@realms-world/tsconfig": "workspace:*",
+    "eslint": "catalog:",
     "nitropack": "2.9.7",
-    "prettier": "^3.3.2",
-    "typescript": "^5.5.3"
+    "prettier": "catalog:",
+    "typescript": "catalog:"
   },
   "prettier": "@realms-world/prettier-config"
 }

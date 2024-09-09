@@ -7,18 +7,18 @@
     ".": "./index.js"
   },
   "scripts": {
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "git clean -xdf .cache .turbo node_modules",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.3.0",
-    "prettier": "^3.3.2",
-    "prettier-plugin-tailwindcss": "^0.6.5"
+    "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
+    "prettier": "catalog:",
+    "prettier-plugin-tailwindcss": "^0.6.6"
   },
   "devDependencies": {
-    "@realms-world/tsconfig": "*",
-    "typescript": "^5.5.3"
+    "@realms-world/tsconfig": "workspace:*",
+    "typescript": "catalog:"
   },
   "prettier": "@realms-world/prettier-config"
 }

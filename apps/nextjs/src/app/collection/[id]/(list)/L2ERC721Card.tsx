@@ -12,6 +12,7 @@ import { Button } from "@realms-world/ui";
 import { cn } from "@realms-world/utils";
 
 import { CardAction } from "./CardAction";
+import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 
 export const L2ERC721Card = ({
   token,
@@ -61,7 +62,8 @@ export const L2ERC721Card = ({
               token={token}
               attributeKeys={["type", "tier", "level", "health"]}
             />
-            {!selectable && <CardAction token={token} />}
+            {!selectable && <ViewOnMarketplace collection={token.contract_address ?? ""} tokenId={token.token_id} />
+/* <CardAction token={token} />*/}
           </div>
         </div>
       </div>
@@ -134,13 +136,13 @@ const GridDetails = ({
     </div>
 
     <div className="flex justify-between font-sans">
-      <Price token={token} />
+      {/*<Price token={token} />
       {token.lastPrice && (
         <span className="flex text-bright-yellow/50">
           {token.lastPrice}
           <LordsIcon className="ml-2 h-4 w-4 self-center fill-current" />
         </span>
-      )}
+      )}*/}
     </div>
   </div>
 );
@@ -157,7 +159,7 @@ const Price = ({
 
   return (
     <div className="flex justify-between">
-      {token?.price && (
+      {token.price && listing?.price && (
         <div>
           <div className="flex text-lg">
             {listing.price}
