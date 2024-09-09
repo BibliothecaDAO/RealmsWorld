@@ -30,12 +30,14 @@ export const StakingAddresses: {
     [ChainId.SEPOLIA]: "",
   },
   [StakingContracts.VE_LORDS]: {
-    [ChainId.SN_MAIN]: "",
+    [ChainId.SN_MAIN]:
+      "0x47230028629128ac5bfbb384d32f925e70e329b624fc5d82e9c60f5746795cd",
     [ChainId.SN_SEPOLIA]:
       "0x38306182f5f04496efc0db2e533874d41c9ae298af9a42405218bf58f8e57d2",
   },
   [StakingContracts.REWARD_POOL]: {
-    [ChainId.SN_MAIN]: "",
+    [ChainId.SN_MAIN]:
+      "0x91b13b83e5c34112aa066a844d4cbe6af99b3d134293829ca1730ea4869a71",
     [ChainId.SN_SEPOLIA]:
       "0x5d748db07d5d307a9ba2ada904209278eb50816cf238f8195dfbc266113a703",
   },

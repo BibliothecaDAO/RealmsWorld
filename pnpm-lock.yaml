@@ -247,11 +247,11 @@ importers:
         specifier: ^2.5.16
         version: 2.7.13(@tanstack/react-query@5.52.2(react@19.0.0-rc-fb9a90fa48-20240614))(@types/react-dom@18.3.0)(@types/react@18.3.4)(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)(viem@2.19.8(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.23.8))(wagmi@2.12.7(@tanstack/query-core@5.52.2)(@tanstack/react-query@5.52.2(react@19.0.0-rc-fb9a90fa48-20240614))(@types/react@18.3.4)(bufferutil@4.0.8)(encoding@0.1.13)(ioredis@5.4.1)(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react-native@0.75.2(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))(@types/react@18.3.4)(bufferutil@4.0.8)(encoding@0.1.13)(react@19.0.0-rc-fb9a90fa48-20240614)(typescript@5.5.4)(utf-8-validate@5.0.10))(react@19.0.0-rc-fb9a90fa48-20240614)(rollup@4.21.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.19.8(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)(zod@3.23.8))(zod@3.23.8))
       '@starknet-react/chains':
-        specifier: ^3.0.0-beta.2
-        version: 3.0.0-beta.2
+        specifier: ^3.0.0-beta.3
+        version: 3.0.0-beta.3
       '@starknet-react/core':
-        specifier: ^3.0.0-beta.2
-        version: 3.0.0-beta.2(bufferutil@4.0.8)(get-starknet-core@3.3.3(starknet@6.11.0(encoding@0.1.13)))(react@19.0.0-rc-fb9a90fa48-20240614)(starknet@6.11.0(encoding@0.1.13))(typescript@5.5.4)(utf-8-validate@5.0.10)
+        specifier: ^3.0.0-beta.3
+        version: 3.0.0-beta.3(bufferutil@4.0.8)(get-starknet-core@3.3.3(starknet@6.11.0(encoding@0.1.13)))(react@19.0.0-rc-fb9a90fa48-20240614)(starknet@6.11.0(encoding@0.1.13))(typescript@5.5.4)(utf-8-validate@5.0.10)
       '@starkware-industries/commons-js-enums':
         specifier: ^1.2.0
         version: 1.2.0
@@ -5626,8 +5626,8 @@ packages:
   '@starknet-react/chains@0.1.7':
     resolution: {integrity: sha512-UNh97I1SvuJKaAhKOmpEk8JcWuZWMlPG/ba2HcvFYL9x/47BKndJ+Da9V+iJFtkHUjreVnajT1snsaz1XMG+UQ==}
 
-  '@starknet-react/chains@3.0.0-beta.2':
-    resolution: {integrity: sha512-ig/IxmNPfaBWOGSBcMKqzElXt6ksNt4VjEgHrFO4oaRw0xl9YVQuw32GbN9ju37CxTyNC32eFX+DGOyOCGaBcg==}
+  '@starknet-react/chains@3.0.0-beta.3':
+    resolution: {integrity: sha512-Xq59vvSctzQmYLATRBdqouiW3bdI+dyYUviBIF0G2k70niPatJsSNa8N8NsJCk5yHo1xLnfoYvo9ufVp+BQrUQ==}
 
   '@starknet-react/core@2.9.0':
     resolution: {integrity: sha512-UdRo454/g2lb0YsNAUJohJ2w21LlahcEXQlkWrddoKFubRY6Q0b39hec0eZOCqfU0Z1Sh7kF1XYvI5t9xL4yTQ==}
@@ -5636,12 +5636,12 @@ packages:
       react: ^18.0
       starknet: ^5.25.0
 
-  '@starknet-react/core@3.0.0-beta.2':
-    resolution: {integrity: sha512-6ETF7TjQFaFs3EMLhrACu9jd0ZJ0lvUeg6PmQ+W4KIHM2VjpvdmTqu8uwmxWDJmVCF4u7+Biy6DrQTAbPQAbJQ==}
+  '@starknet-react/core@3.0.0-beta.3':
+    resolution: {integrity: sha512-J8VS4Ou4VRATDTpWwFjp2P7WzSkpSFc3qa7TA6mcHMaD50T/53VegoqnNO5EfhB0OSUIgEKaN7JnRyg26UGybg==}
     peerDependencies:
-      get-starknet-core: ^4.0.0-next.5
+      get-starknet-core: ^4.0.0
       react: ^18.0
-      starknet: ^6.12.1
+      starknet: ^6.11.0
 
   '@starkware-industries/commons-js-enums@1.2.0':
     resolution: {integrity: sha512-/LOa2unbitvjpcWy+sU9RPdeMkQsOMUep5Har0kTL2NYxUUdRizXK5EkccGg0EczOyrAQNjK0v3iO404nybc2Q==}
@@ -21983,7 +21983,7 @@ snapshots:
 
   '@starknet-react/chains@0.1.7': {}
 
-  '@starknet-react/chains@3.0.0-beta.2': {}
+  '@starknet-react/chains@3.0.0-beta.3': {}
 
   '@starknet-react/core@2.9.0(get-starknet-core@3.3.3(starknet@6.11.0(encoding@0.1.13)))(react@18.3.1)(starknet@6.11.0(encoding@0.1.13))':
     dependencies:
@@ -21996,10 +21996,10 @@ snapshots:
       starknet: 6.11.0(encoding@0.1.13)
       zod: 3.23.8
 
-  '@starknet-react/core@3.0.0-beta.2(bufferutil@4.0.8)(get-starknet-core@3.3.3(starknet@6.11.0(encoding@0.1.13)))(react@19.0.0-rc-fb9a90fa48-20240614)(starknet@6.11.0(encoding@0.1.13))(typescript@5.5.4)(utf-8-validate@5.0.10)':
+  '@starknet-react/core@3.0.0-beta.3(bufferutil@4.0.8)(get-starknet-core@3.3.3(starknet@6.11.0(encoding@0.1.13)))(react@19.0.0-rc-fb9a90fa48-20240614)(starknet@6.11.0(encoding@0.1.13))(typescript@5.5.4)(utf-8-validate@5.0.10)':
     dependencies:
       '@starknet-io/types-js': 0.7.7
-      '@starknet-react/chains': 3.0.0-beta.2
+      '@starknet-react/chains': 3.0.0-beta.3
       '@tanstack/react-query': 5.52.2(react@19.0.0-rc-fb9a90fa48-20240614)
       eventemitter3: 5.0.1
       get-starknet-core: 3.3.3(starknet@6.11.0(encoding@0.1.13))
@@ -23195,16 +23195,16 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@typescript-eslint/eslint-plugin@2.34.0(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@6.8.0)(typescript@3.9.10)':
+  '@typescript-eslint/eslint-plugin@2.34.0(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)':
     dependencies:
       '@typescript-eslint/experimental-utils': 2.34.0(eslint@6.8.0)(typescript@3.9.10)
       '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@3.9.10)
-      eslint: 6.8.0
+      eslint: 9.9.0(jiti@1.21.6)
       functional-red-black-tree: 1.0.1
       regexpp: 3.2.0
       tsutils: 3.21.0(typescript@3.9.10)
     optionalDependencies:
-      typescript: 3.9.10
+      typescript: 5.5.4
     transitivePeerDependencies:
       - supports-color
 
@@ -26765,9 +26765,9 @@ snapshots:
       eslint: 6.8.0
       get-stdin: 6.0.0
 
-  eslint-config-react-app@5.2.1(@typescript-eslint/eslint-plugin@2.34.0(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(babel-eslint@10.1.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-flowtype@3.13.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-jsx-a11y@6.9.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-react-hooks@2.5.1(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-react@7.35.0(eslint@9.9.0(jiti@1.21.6)))(eslint@6.8.0)(typescript@3.9.10):
+  eslint-config-react-app@5.2.1(@typescript-eslint/eslint-plugin@2.34.0(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@6.8.0)(typescript@3.9.10))(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(babel-eslint@10.1.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-flowtype@3.13.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-jsx-a11y@6.9.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-react-hooks@2.5.1(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-react@7.35.0(eslint@9.9.0(jiti@1.21.6)))(eslint@6.8.0)(typescript@3.9.10):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 2.34.0(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@6.8.0)(typescript@3.9.10)
+      '@typescript-eslint/eslint-plugin': 2.34.0(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)
       '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@3.9.10)
       babel-eslint: 10.1.0(eslint@6.8.0)
       confusing-browser-globals: 1.0.11
@@ -29432,7 +29432,7 @@ snapshots:
       jest-environment-jsdom: 25.5.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       jest-environment-node: 25.5.0
       jest-get-type: 25.2.6
-      jest-jasmine2: 25.5.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      jest-jasmine2: 25.5.4
       jest-regex-util: 25.2.6
       jest-resolve: 25.5.1
       jest-util: 25.5.0
@@ -29585,7 +29585,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  jest-jasmine2@25.5.4(bufferutil@4.0.8)(utf-8-validate@5.0.10):
+  jest-jasmine2@25.5.4:
     dependencies:
       '@babel/traverse': 7.25.3
       '@jest/environment': 25.5.0
@@ -29605,10 +29605,7 @@ snapshots:
       pretty-format: 25.5.0
       throat: 5.0.0
     transitivePeerDependencies:
-      - bufferutil
-      - canvas
       - supports-color
-      - utf-8-validate
 
   jest-leak-detector@25.5.0:
     dependencies:
@@ -29728,7 +29725,7 @@ snapshots:
       jest-config: 25.5.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       jest-docblock: 25.3.0
       jest-haste-map: 25.5.1
-      jest-jasmine2: 25.5.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      jest-jasmine2: 25.5.4
       jest-leak-detector: 25.5.0
       jest-message-util: 25.5.0
       jest-resolve: 25.5.1
@@ -34778,7 +34775,7 @@ snapshots:
       '@rollup/plugin-node-resolve': 9.0.0(rollup@1.32.1)
       '@rollup/plugin-replace': 2.4.2(rollup@1.32.1)
       '@types/jest': 25.2.3
-      '@typescript-eslint/eslint-plugin': 2.34.0(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@6.8.0)(typescript@3.9.10)
+      '@typescript-eslint/eslint-plugin': 2.34.0(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)
       '@typescript-eslint/parser': 2.34.0(eslint@6.8.0)(typescript@3.9.10)
       ansi-escapes: 4.3.2
       asyncro: 3.0.0
@@ -34793,7 +34790,7 @@ snapshots:
       enquirer: 2.4.1
       eslint: 6.8.0
       eslint-config-prettier: 6.15.0(eslint@6.8.0)
-      eslint-config-react-app: 5.2.1(@typescript-eslint/eslint-plugin@2.34.0(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(babel-eslint@10.1.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-flowtype@3.13.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-jsx-a11y@6.9.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-react-hooks@2.5.1(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-react@7.35.0(eslint@9.9.0(jiti@1.21.6)))(eslint@6.8.0)(typescript@3.9.10)
+      eslint-config-react-app: 5.2.1(@typescript-eslint/eslint-plugin@2.34.0(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@6.8.0)(typescript@3.9.10))(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(babel-eslint@10.1.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-flowtype@3.13.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-jsx-a11y@6.9.0(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-react-hooks@2.5.1(eslint@9.9.0(jiti@1.21.6)))(eslint-plugin-react@7.35.0(eslint@9.9.0(jiti@1.21.6)))(eslint@6.8.0)(typescript@3.9.10)
       eslint-plugin-flowtype: 3.13.0(eslint@6.8.0)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@2.34.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@6.8.0)
       eslint-plugin-jsx-a11y: 6.9.0(eslint@6.8.0)

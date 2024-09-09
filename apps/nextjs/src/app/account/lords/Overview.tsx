@@ -35,7 +35,6 @@ import { padAddress } from "@realms-world/utils";
 import { ClaimsTable } from "./ClaimsTable";
 //import { FloatAnimation } from "./FloatAnimation";
 import { LegacyClaim } from "./LegacyClaim";
-//import { VeLords } from "./VeLords";
 import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 import { VeLords } from "./VeLords";
 
@@ -202,7 +201,7 @@ export const Overview = () => {
               </div>
             </div>
           </div>
-          {/*<div className="mt-24 w-full">
+          <div className="mt-24 w-full">
             <div className="w-full">
               <span className="mb-2 flex w-fit items-center pb-4 font-sans text-3xl">
                 <LordsIcon className="mx-auto mr-2 h-7 w-7 fill-bright-yellow" />
@@ -210,7 +209,7 @@ export const Overview = () => {
               </span>
               <VeLords />
             </div>
-          </div>*/}
+          </div>
         </>
       )}
     </div>
