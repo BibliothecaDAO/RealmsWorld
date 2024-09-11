@@ -13,7 +13,7 @@ import {
   SUPPORTED_L2_CHAIN_ID,
 } from "@/constants/env";
 import { ChainType, tokens } from "@/constants/tokens";
-import { env } from "@/env";
+import { env } from "env";
 import {
   useAccount,
   useSendTransaction,
@@ -147,9 +147,8 @@ export default function Mint() {
           </h1>
           <Button>
             <Link
-              href={`/collection/goldenToken/${
-                (submittedData as any)?.events[1]?.data[2]
-              }`}
+              href={`/collection/goldenToken/${(submittedData as any)?.events[1]?.data[2]
+                }`}
             >
               View Token
             </Link>

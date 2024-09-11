@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { env } from "@/env";
+import { env } from "env";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";

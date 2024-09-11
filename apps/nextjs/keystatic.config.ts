@@ -1,9 +1,10 @@
 import { collection, config, fields } from "@keystatic/core";
+import { env } from "env";
 
 export default config({
   storage: {
     kind: "github",
-    repo: "4eyes52/RealmsWorld",
+    repo: `${env.NEXT_PUBLIC_GITHUB_REPO_OWNER}/${env.NEXT_PUBLIC_GITHUB_REPO_NAME}`,
     pathPrefix: "apps/nextjs",
   },
 

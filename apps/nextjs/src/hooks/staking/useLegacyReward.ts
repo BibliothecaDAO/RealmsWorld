@@ -3,8 +3,8 @@ import type { TransactionFinalityStatus } from "starknet";
 import { useEffect, useState } from "react";
 import { LegacyReward } from "@/abi/L1/LegacyReward";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
-import { env } from "@/env";
 import { useQuery } from "@tanstack/react-query";
+import { env } from "env";
 import { parseGwei } from "viem";
 import { useAccount as useL1Account, useWriteContract } from "wagmi";
 

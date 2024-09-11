@@ -1,6 +1,6 @@
 import React from "react";
 import CollectionSummary from "@/app/(app)/collection/[id]/(list)/CollectionSummary";
-import { env } from "@/env";
+import { env } from "env";
 
 import { Collections } from "@realms-world/constants";
 import { NavLink } from "@realms-world/ui";

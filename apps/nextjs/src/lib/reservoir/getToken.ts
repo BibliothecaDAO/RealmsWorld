@@ -6,7 +6,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { RESERVOIR_API_URL } from "@/constants/env";
-import { env } from "@/env";
+import { env } from "env";
 
 function buildQueryString(queryObject: any) {
   const queryParams = Object.entries(queryObject)

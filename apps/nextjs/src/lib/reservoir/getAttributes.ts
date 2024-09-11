@@ -1,6 +1,6 @@
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { RESERVOIR_API_URL } from "@/constants/env";
-import { env } from "@/env";
+import { env } from "env";
 
 export const getAttributes = async ({
   collection,

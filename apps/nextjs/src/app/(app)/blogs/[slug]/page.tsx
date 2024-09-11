@@ -40,7 +40,7 @@ export async function generateMetadata({
       siteId: "1467726470533754880",
       creator: "@bibliothecadao",
       creatorId: "1467726470533754880",
-      images: [`/content/blogs/${params.id}/${blog?.image}`],
+      images: [`/content/blogs/${params.slug}/${blog?.image}`],
     },
   };
 }

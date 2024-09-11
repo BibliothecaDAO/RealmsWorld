@@ -1,5 +1,5 @@
-import { env } from "@/env";
 import { evaluate } from "@starkware-industries/commons-js-utils";
+import { env } from "env";
 
 import { ChainId } from "@realms-world/constants";
 

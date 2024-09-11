@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
-import { env } from "@/env";
+import { env } from "env";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import {

@@ -12,7 +12,7 @@ import { Footer } from "@/app/_components/Footer";
 import { StarknetLoginModal } from "@/app/_components/modal/StarknetLoginModal";
 import { TopNav } from "@/app/_components/TopNav";
 import { WalletSheet } from "@/app/_components/wallet/WalletSheet";
-import { env } from "@/env";
+import { env } from "env";
 import { UIStoreProvider } from "@/providers/UIStoreProvider";
 import { WalletsProvider } from "@/providers/WalletsProvider";
 import { Web3Providers } from "@/providers/Web3Providers";

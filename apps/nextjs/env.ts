@@ -44,7 +44,8 @@ export const env = createEnv({
     NEXT_PUBLIC_ALCHEMY_API: z.string(),
     NEXT_PUBLIC_ETHPLORER_APIKEY: z.string(),
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
-    NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: z.string().optional(),
+    NEXT_PUBLIC_GITHUB_REPO_NAME: z.string().optional(),
+    NEXT_PUBLIC_GITHUB_REPO_OWNER: z.string().optional(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -70,8 +71,8 @@ export const env = createEnv({
     NEXT_PUBLIC_ETHPLORER_APIKEY: process.env.NEXT_PUBLIC_ETHPLORER_APIKEY,
     NEXT_PUBLIC_RESERVOIR_API_KEY: process.env.NEXT_PUBLIC_RESERVOIR_API_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
-    NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG:
-      process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG,
+    NEXT_PUBLIC_GITHUB_REPO_NAME: process.env.NEXT_PUBLIC_GITHUB_REPO_NAME,
+    NEXT_PUBLIC_GITHUB_REPO_OWNER: process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER,
     KEYSTATIC_GITHUB_CLIENT_ID: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
     KEYSTATIC_GITHUB_CLIENT_SECRET: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
     KEYSTATIC_SECRET: process.env.KEYSTATIC_SECRET,
@@ -81,3 +82,6 @@ export const env = createEnv({
     !!process.env.SKIP_ENV_VALIDATION ||
     process.env.npm_lifecycle_event === "lint",
 });
+
+console.log(env.NEXT_PUBLIC_GITHUB_REPO_OWNER);
+console.log(env.NEXT_PUBLIC_GITHUB_REPO_NAME);

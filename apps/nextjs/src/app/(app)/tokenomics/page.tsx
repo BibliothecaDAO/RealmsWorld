@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { NETWORK_NAME, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
-import { env } from "@/env";
+import { env } from "env";
 import { getRealmNFTHolders } from "@/lib/subgraph/getRealmNFTHolders";
 import { getWalletRealmsHeld } from "@/lib/subgraph/getWalletRealmsHeld";
 
