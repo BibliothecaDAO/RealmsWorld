@@ -25,6 +25,8 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
+  Slider,
+  Badge,
 } from "@realms-world/ui";
 import { useVeLords } from "@/hooks/staking/useVeLords";
 import type { BlockNumber } from "starknet";
@@ -37,6 +39,7 @@ import {
   getUnixTime,
   fromUnixTime
 } from 'date-fns';
+import { motion } from "framer-motion";
 
 const WEEK_IN_SECONDS = 7 * 24 * 60 * 60; // 1 week in seconds
 const YEAR_IN_SECONDS = 365 * 24 * 60 * 60; // 1 year in seconds
@@ -67,9 +70,9 @@ function getVotingPower(lockAmount: bigint, unlockTime: number): number {
     return 0;
   }
   if (duration >= MAX_LOCK) {
-    return Number(lockAmount);
+    return Number(formatEther(lockAmount));
   }
-  const result = (Number(lockAmount) / (MAX_LOCK)) * duration;
+  const result = (Number(formatEther(lockAmount)) / (MAX_LOCK)) * duration;
   return result;
 }
 
@@ -139,10 +142,12 @@ export const VeLords = () => {
   const { data: veLordsBurns } = api.veLordsBurns.sumByWeek.useQuery();
 
   const [amount, setAmount] = useState<string>("");
-  const [lockWeeks, setLockWeeks] = useState<string>("");
+  const [lockWeeks, setLockWeeks] = useState<number>(0);
+  const maxLockWeeks = 4 * 52; // 4 years in weeks
+
   const unlockTime = useMemo(() => {
     const currentTime = getUnixTime(new Date());
-    const additionalLockTime = parseInt(lockWeeks || '0') * WEEK_IN_SECONDS;
+    const additionalLockTime = lockWeeks * WEEK_IN_SECONDS;
     if (ownerLordsLock?.end_time) {
       return Math.max(Number(ownerLordsLock.end_time), currentTime) + additionalLockTime;
     } else {
@@ -154,9 +159,10 @@ export const VeLords = () => {
   const weeksToUnlock = toWeeks(timeUntilUnlock);
 
   const votingPower = useMemo(() => {
-    return getVotingPower((ownerLordsLock?.amount ? BigInt(formatEther(ownerLordsLock?.amount)) : 0n) + BigInt(amount), unlockTime)
-
-  }, [ownerLordsLock?.end_time, amount, unlockTime]);
+    const currentLockAmount = ownerLordsLock?.amount ? BigInt(ownerLordsLock.amount) : 0n;
+    const additionalAmount = amount ? parseEther(amount) : 0n;
+    return getVotingPower(currentLockAmount + additionalAmount, unlockTime);
+  }, [ownerLordsLock?.amount, amount, unlockTime]);
 
   const penalty = useMemo(() => {
     if (ownerLordsLock) {
@@ -173,13 +179,21 @@ export const VeLords = () => {
 
   const newLockEndTime = useMemo(() => {
     const currentTime = getUnixTime(new Date());
-    const additionalLockTime = parseInt(lockWeeks || '0') * WEEK_IN_SECONDS;
+    const additionalLockTime = lockWeeks * WEEK_IN_SECONDS;
     if (ownerLordsLock?.end_time) {
       return Math.max(Number(ownerLordsLock.end_time), currentTime) + additionalLockTime;
     } else {
       return currentTime + additionalLockTime;
     }
   }, [ownerLordsLock?.end_time, lockWeeks]);
+
+  const handleManageLock = async () => {
+    if (amount || lockWeeks) {
+      await manageLock(parseEther(amount), newLockEndTime);
+      setAmount("");
+      setLockWeeks(0);
+    }
+  };
 
   return (
     <div className="mt-4 grid grid-cols-3 gap-4 md:grid-cols-5">
@@ -243,14 +257,27 @@ export const VeLords = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Lock your Lords for veLords and:</p>
-                <ul className="ml-5 list-disc">
-                  <li>
-                    Direct Lords emissions from the DAO to scale successful
-                    games
-                  </li>
-                  <li>Be rewarded with dLords (dependant on lock time)</li>
-                </ul>
+                <div className="prose text-primary">            <p>Lock your Lords for veLords and:</p>
+                  <ul className="ml-5 list-disc">
+                    <li>
+
+                      Direct Lords emissions from the DAO to scale successful
+                      games
+                    </li>
+                    <li>Be rewarded with dLords (dependant on lock time)</li>
+                  </ul>
+
+                  <p>This is phase one of rolling releases of the lordship protocol. This initial release focuses on funneling game fees.</p>
+
+                  <p>The following releases will include:</p>
+
+                  <ul className="ml-5 list-disc">
+                    <li>
+                      LP fee capture within the system </li>
+                    <li>
+                      Game incentives </li>
+                    <li>
+                      dLORDS distribution mechanism </li></ul></div>
               </CardContent>
             </Card>
             <Card>
@@ -268,12 +295,24 @@ export const VeLords = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {ownerLordsLock?.amount ? (<div className="w-full mb-4">
-                  <p>Your Lock:</p>
-                  <span className="flex"><LordsIcon className="w-4 mr-2" />{formatEther(ownerLordsLock.amount)} until {ownerLordsLock?.end_time && formatLockEndTime(Number(ownerLordsLock.end_time))}</span></div>
+                {ownerLordsLock?.amount ? (<div className="mb-4">
+                  <p className="mb-2">Your Lock:</p>
+                  <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Badge className="py-3 px-4 text-lg font-medium bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors duration-200">
+                      <LordsIcon className="w-6 h-6 mr-3" />
+                      <span className="mr-2">{Number(formatEther(ownerLordsLock.amount)).toFixed(2)} LORDS</span>
+                      <span className="text-sm opacity-80">
+                        until {ownerLordsLock?.end_time && formatLockEndTime(Number(ownerLordsLock.end_time))}
+                      </span>
+                    </Badge>
+                  </motion.div></div>
                 ) : null}
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
+                <div className="grid grid-cols-5 gap-6">
+                  <div className="col-span-2">
                     <Label>{ownerLordsLock?.amount ? "Add " : null}Lords</Label>
                     <TokenInput
                       onChange={(event) => {
@@ -291,20 +330,34 @@ export const VeLords = () => {
                       isLoading={isLoading}
                     />
                   </div>
-                  <div>
-                    <Label>{ownerLordsLock?.amount ? "Extend " : null}Lock Period (weeks)</Label>
-                    <Input
-                      className="h-14 p-4 text-xl"
-                      value={lockWeeks}
-                      onChange={(event) => setLockWeeks(event.target.value)}
-                    />
-                    {lockWeeks && (
+                  <div className="col-span-3">
+                    <Label className="mb-2">{ownerLordsLock?.amount ? "Extend " : null}Lock Period (weeks)</Label>
+                    <div className="flex space-x-2">
+                      <Slider
+                        min={0}
+                        max={maxLockWeeks - weeksToUnlock}
+                        step={1}
+                        value={[lockWeeks]}
+                        onValueChange={(value) => setLockWeeks(value[0] ?? 0)}
+                      />
+                      <Input
+                        className="h-14 w-24 p-4 text-xl"
+                        value={lockWeeks}
+                        onChange={(event) => {
+                          const value = parseInt(event.target.value);
+                          if (!isNaN(value) && value >= 0 && value <= maxLockWeeks) {
+                            setLockWeeks(value);
+                          }
+                        }}
+                      />
+                    </div>
+                    {lockWeeks > 0 && (
                       <p className="mt-2 text-sm text-muted">
                         New lock end: <span className="text-muted-foreground">{formatLockEndTime(newLockEndTime)}</span>
                       </p>
                     )}
                   </div>
-                  <div>
+                  <div className="col-span-2">
                     <Label>Total veLords</Label>
                     <Input
                       disabled
@@ -315,7 +368,7 @@ export const VeLords = () => {
                 </div>
               </CardContent>
               <CardFooter className="flex gap-x-4">
-                <Button onClick={() => amount && manageLock(parseEther(amount), newLockEndTime)} className="w-full">{ownerLordsLock?.amount ? "Update Lock" : "Stake Lords"}</Button>
+                <Button onClick={handleManageLock} disabled={!amount && !lockWeeks} className="w-full">{ownerLordsLock?.amount ? "Update Lock" : "Stake Lords"}</Button>
               </CardFooter>
             </Card>
             {ownerLordsLock?.amount ? (
@@ -368,20 +421,16 @@ export const VeLords = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Your Lords Earnt</p>
-
+                <p>Lords fees distributed to the DAO from various games are accumulated in your balance, and are claimable at the end of each epoch (weekly)</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
                 <CardTitle>Claim Lords</CardTitle>
-                <CardDescription>
-                  Lock
-                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex gap-4">
-                  These are your rewards
+                  You have <span className="font-bold text-3xl">0</span> Lords to claim
                 </div>
               </CardContent>
               <CardFooter>
