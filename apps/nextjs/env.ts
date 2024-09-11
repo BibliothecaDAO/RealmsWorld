@@ -82,6 +82,3 @@ export const env = createEnv({
     !!process.env.SKIP_ENV_VALIDATION ||
     process.env.npm_lifecycle_event === "lint",
 });
-
-console.log(env.NEXT_PUBLIC_GITHUB_REPO_OWNER);
-console.log(env.NEXT_PUBLIC_GITHUB_REPO_NAME);
