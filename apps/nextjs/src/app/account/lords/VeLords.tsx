@@ -264,7 +264,7 @@ export const VeLords = () => {
                       Direct Lords emissions from the DAO to scale successful
                       games
                     </li>
-                    <li>Be rewarded with dLords (dependant on lock time)</li>
+                    <li>Be rewarded with Lords (dependant on lock time)</li>
                   </ul>
 
                   <p>This is phase one of rolling releases of the lordship protocol. This initial release focuses on funneling game fees.</p>
@@ -277,7 +277,7 @@ export const VeLords = () => {
                     <li>
                       Game incentives </li>
                     <li>
-                      dLORDS distribution mechanism </li></ul></div>
+                      LORDS distribution mechanism </li></ul></div>
               </CardContent>
             </Card>
             <Card>

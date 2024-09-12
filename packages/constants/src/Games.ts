@@ -267,7 +267,7 @@ export const games: Game[] = [
     genres: ["Last Man Standing", "Strategy"],
     color: "#f5f5f5",
     status: "development",
-    description: "Turn based battle game",
+    description: "Last man standing game",
     longform:
       "Rising Revenant is an immersive last man standing strategy game built on Starknet and powered by Dojo. The game unfolds in two distinct stages. In the preparation phase, players meticulously plan their strategies, allocate resources, and invest in critical upgrades. Once preparations are complete, the game transitions into the action-packed game phase, where players unleash their reinforcements, trade and engage in intense events. Success in Rising Revenant hinges on strategic planning and tactical prowess, with performance in both phases determining the rewards. The ultimate objective: to be the last Revenant standing.",
     links: {
