@@ -230,14 +230,14 @@ export const VeLords = () => {
           <CardDescription>Your share of Pool</CardDescription>
         </CardFooter>
       </Card>
-      <Card>
+      {/*<Card>
         <CardHeader>
           <CardTitle className="flex items-center">X.XX%</CardTitle>
         </CardHeader>
         <CardFooter>
           <CardDescription>veLords max vAPR</CardDescription>
         </CardFooter>
-      </Card>
+      </Card>*/}
       <Tabs defaultValue={"staking"} className="col-span-full">
         <TabsList>
           <TabsTrigger className="font-sans text-xl" value="staking">
@@ -264,7 +264,7 @@ export const VeLords = () => {
                       Direct Lords emissions from the DAO to scale successful
                       games
                     </li>
-                    <li>Be rewarded with dLords (dependant on lock time)</li>
+                    <li>Be rewarded with Lords (dependant on lock time)</li>
                   </ul>
 
                   <p>This is phase one of rolling releases of the lordship protocol. This initial release focuses on funneling game fees.</p>
@@ -277,7 +277,7 @@ export const VeLords = () => {
                     <li>
                       Game incentives </li>
                     <li>
-                      dLORDS distribution mechanism </li></ul></div>
+                      LORDS distribution mechanism </li></ul></div>
               </CardContent>
             </Card>
             <Card>
@@ -288,10 +288,9 @@ export const VeLords = () => {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Earn veLords</CardTitle>
+                <CardTitle>Lords ⇆ veLords</CardTitle>
                 <CardDescription>
-                  Lock your Lords to veLords for a period to direct Lords to
-                  Game Vaults and
+                  Lock your Lords in return for veLords - entitling to a share of Lords fees from ecosystem games and marketplaces, and participate in future liquidity provision. Claimable on weekly epochs
                 </CardDescription>
               </CardHeader>
               <CardContent>

@@ -9,7 +9,6 @@ import { Loader, MoveRightIcon } from 'lucide-react';
 import LordsIcon from "@/icons/lords.svg";
 import { BridgeBadge } from '@/app/_components/modal/NftBridgeModal';
 import { ExplorerLink } from '@/app/_components/wallet/ExplorerLink';
-import { ClaimButton } from '@/app/_components/ClaimButton'; // New component
 
 import { paymentPoolAbi } from "@/abi/L1/PaymentPool";
 import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
@@ -90,7 +89,7 @@ export const LegacyClaim: React.FC = () => {
               <dt className="text-muted-foreground">Epoch 0-10:</dt>
               <dd>
                 {galleonLordsAvailable ? formatEther(galleonLordsAvailable).toLocaleString() : 0}
-                {galleonLordsAvailable && galleonLordsAvailable > 0 && (
+                {galleonLordsAvailable && galleonLordsAvailable > 0 ? (
                   <Button onClick={() => claimGalleon({
                     address: StakingAddresses.galleon[SUPPORTED_L1_CHAIN_ID] as `0x${string}`,
                     abi: GalleonStaking,
@@ -98,13 +97,13 @@ export const LegacyClaim: React.FC = () => {
                   })} className="ml-3" size="xs">
                     Claim
                   </Button>
-                )}
+                ) : null}
               </dd>
             </div>
             <div className="flex items-center justify-between">
               <dt className="text-muted-foreground">Epoch 11-35:</dt>
               <dd>{poolV1Balance ? formatEther(poolV1Balance).toLocaleString() : 0}
-                {poolV1Balance && paymentPoolV1?.proof && (
+                {poolV1Balance && paymentPoolV1?.proof ? (
                   <Button
                     onClick={() => {
                       claimPoolV1({
@@ -116,20 +115,20 @@ export const LegacyClaim: React.FC = () => {
                     }} className="ml-3" size="xs">
                     Claim
                   </Button>
-                )}
+                ) : null}
               </dd>
             </div>
             <div className="flex items-center justify-between">
               <dt className="text-muted-foreground">Epoch 36-109:</dt>
               <dd>{poolV2Balance.toLocaleString()}
-                {poolV2Balance && poolV2Balance > 0 && (
+                {poolV2Balance && poolV2Balance > 0 ? (
                   <Button onClick={claimPoolV2} className="ml-3" size="xs">
                     Claim
                   </Button>
-                )}
+                ) : null}
               </dd>
             </div>
-            {/*<div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <dt className="text-muted-foreground">Epoch 109-142:</dt>
               <dd className='flex items-center'>
                 {isLegacyClaimed ? 'Claimed' : (reward?.amount ?? 0).toLocaleString()}
@@ -183,7 +182,7 @@ export const LegacyClaim: React.FC = () => {
                   </Dialog>
                 )}
               </dd>
-            </div>*/}
+            </div>
           </dl>
           <div className="mt-4 font-sans text-xl font-semibold">Carrack</div>
           <dl className="grid gap-1">
