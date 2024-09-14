@@ -113,6 +113,6 @@ export const useLegacyRewardData = ({ address }: { address?: string }) => {
           return res.data?.claims;
         }),
     enabled: !!address,
-    refetchInterval: 20000,
+    refetchInterval: 10000,
   });
 };
