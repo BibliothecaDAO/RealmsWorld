@@ -4,12 +4,10 @@ subtitle: "The Lordship Protocol is the core economic foundation of the Realms W
 date: "2024-09-14"
 tags: ["lordship protocol", "veLords"]
 author: Secretive
-image: "/blog/velords-gov.png"
+image: "/blog/veLords.png"
 ---
 
 # The Lordship Protocol and the final 'legacy' $Lords unlock
-
-The Lordship Protocol is the core economic foundation of the Realms World. Today it is live and all legacy $Lords are unlocked for instant staking into the protocol.
 
 ## Introducing The Lordship Protocol and veLords
 
@@ -43,3 +41,7 @@ The veLords contract to add to your Starknet wallet is:
 ```
 0x47230028629128ac5bfbb384d32f925e70e329b624fc5d82e9c60f5746795cd
 ```
+
+To review the Lords Tokenomics, click [here](/tokenomics).
+
+![veLords Governance](/blog/velords-gov.png)
