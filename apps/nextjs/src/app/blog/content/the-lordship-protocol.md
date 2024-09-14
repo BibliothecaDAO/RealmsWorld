@@ -11,7 +11,7 @@ image: "/blog/veLords.png"
 
 ## Introducing The Lordship Protocol and veLords
 
-Inspired by Yearn, the protocol has a bespoke architecture to promote the growth and alignment of the Realms World ecosystem. The system has been custom-built on Starknet by Realms contributors and is already receiving fees from game entries. You can read the details of the veLords system [here](https://github.com/Calcutatator/TLP).
+The protocol has a bespoke architecture to promote the growth and alignment of the Realms World ecosystem. The system has been custom-built on Starknet by Realms contributors and is already receiving fees from game entries. You can read the details of the veLords system including voting power, emissions and early withdrawal penalties [here](https://github.com/Calcutatator/TLP/blob/main/Document/How%20to%20/End%20User/Lords%20Lock.md).
 
 ## What it means for protocol users
 
@@ -31,9 +31,9 @@ The first game to support veLords is Loot Survivor. A percentage of $Lords token
 
 ## How to claim and stake
 
-1. Go to the accounts page on [Realms.World](/account/lords) and follow the instructions.
+1. Go to the accounts page on [Realms.World](/account/lords) and follow the [instructions](https://github.com/Calcutatator/TLP/blob/main/Document/How%20to%20/End%20User/Lords%20Holders.md).
 2. You will need an L2 wallet for Starknet - both Argent and Braavos are supported.
-3. The longer you lock the more $Lords rewards. There is a linear relationship between lock duration and protocol emissions.
+3. The longer you lock the more $Lords rewards and more voting power. There is a linear relationship between lock duration and protocol emissions.
 4. The contracts have been peer reviewed, and a member of the development team is by trade an auditor.
 
 The veLords contract to add to your Starknet wallet is:
