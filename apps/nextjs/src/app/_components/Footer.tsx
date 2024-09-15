@@ -95,7 +95,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="https://x.com/realmsworld"
+                    href="https://x.com/lootrealms"
                     className="hover:underline"
                   >
                     Twitter
