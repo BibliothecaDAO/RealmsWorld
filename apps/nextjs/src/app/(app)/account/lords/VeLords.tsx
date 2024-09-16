@@ -83,7 +83,7 @@ interface LockInfo {
 
 const MAX_LOCK_DURATION = 4 * 365 * 24 * 60 * 60; // 4 years in seconds
 const SCALE = 10000n;
-const MAX_PENALTY_RATIO = 5000n; // 50%
+const MAX_PENALTY_RATIO = 7500n; // 50%
 
 function calculatePenalty(lockInfo: LockInfo): bigint {
   if (lockInfo.amount === 0n) return 0n;
@@ -290,7 +290,9 @@ export const VeLords = () => {
               <CardHeader>
                 <CardTitle>Lords ⇆ veLords</CardTitle>
                 <CardDescription>
-                  Lock your Lords in return for veLords - entitling to a share of Lords fees from ecosystem games and marketplaces, and participate in future liquidity provision. Claimable on weekly epochs
+                  Lock your Lords in return for veLords - entitling to a share of Lords fees from ecosystem games and marketplaces, and participate in future liquidity provision. Claimable at weekly epochs.
+
+                  Note: there is a maximum penalty of 75% for early withdrawal (if withdrawn immediately after locking for 4 years)
                 </CardDescription>
               </CardHeader>
               <CardContent>
