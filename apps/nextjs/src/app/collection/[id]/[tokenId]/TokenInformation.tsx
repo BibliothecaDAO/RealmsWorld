@@ -90,7 +90,7 @@ export const TokenInformation = ({
           ""
         )}
       </div>
-      <div className="my-1 w-full px-4 md:w-2/3 md:px-4">
+      <div className="my-1 w-full px-4 md:w-2/3 md:px-4 mt-16">
         <div className="mb-8 flex justify-between">
           <Button size={"sm"} variant={"default"} asChild>
             <Link href={`/collection/${collectionId}`}>

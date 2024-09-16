@@ -1,8 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
-import { sum } from "drizzle-orm";
 import { z } from "zod";
 
-import { and, asc, eq, gt, min, sql } from "@realms-world/db";
+import { and, asc, eq, gt, min, sql, sum } from "@realms-world/db";
 import { erc721Collections, erc721MarketEvents } from "@realms-world/db/schema";
 
 import { publicProcedure } from "../trpc";

@@ -95,7 +95,7 @@ export const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="https://x.com/realmsworld"
+                    href="https://x.com/lootrealms"
                     className="hover:underline"
                   >
                     Twitter
@@ -106,14 +106,14 @@ export const Footer = () => {
           </div>
         </div>
         <hr className="my-6 border sm:mx-auto lg:my-8 " />
-        <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm sm:text-center">
+        <div className="flex  sm:items-center justify-between">
+          <span className="text-sm sm:text-center  self-center">
             © {new Date().getFullYear()}{" "}
             <a href="https://flowbite.com/" className="hover:underline">
               BibliothecaDAO
             </a>
           </span>
-          <div className="mt-4 flex sm:mt-0 sm:justify-center">
+          <div className="mt-4 flex sm:mt-0 sm:justify-center self-center">
             <a href="https://discord.gg/realmsworld" className="ms-5 ">
               <svg
                 className="h-4 w-4"

@@ -9,7 +9,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@realms-world/utils";
 
 const buttonVariants = cva(
-  "inline-flex whitespace-nowrap active:scale-95 inline-flex items-center justify-center transition-colors  disabled:opacity-50 disabled:pointer-events-none uppercase font-sans focus-visible:ring-1 focus-visible:ring-ring",
+  "inline-flex whitespace-nowrap active:scale-95 inline-flex rounded items-center justify-center transition-colors  disabled:opacity-50 disabled:pointer-events-none uppercase font-sans focus-visible:ring-1 focus-visible:ring-ring",
   {
     variants: {
       variant: {
@@ -41,7 +41,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 

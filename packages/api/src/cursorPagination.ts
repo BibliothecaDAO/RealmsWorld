@@ -1,5 +1,5 @@
-import type { AnyColumn, SQL } from "drizzle-orm";
-import { and, asc, desc, eq, gt, lt, or } from "drizzle-orm";
+import type { AnyColumn, SQL } from "@realms-world/db";
+import { and, asc, desc, eq, gt, lt, or } from "@realms-world/db";
 
 // With multiple cursors
 export function withCursorPagination<

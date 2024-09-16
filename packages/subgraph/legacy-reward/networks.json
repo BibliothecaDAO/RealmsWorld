@@ -1,0 +1,30 @@
+{
+  "sepolia": {
+    "StarknetMessaging": {
+      "address": "0xe2bb56ee936fd6433dc0f6e7e3b8365c906aa057",
+      "startBlock": 6578003
+    },
+    "context": {
+      "l1_legacy_rewards_address": {
+        "data": "0x5C209C96733BA71Fb09772D22d12Fc6f8CB980cA"
+      },
+      "l2_legacy_rewards_address ": {
+        "data": "0x048c774a0f71120aeffcb520fa4a08e1659c17abb46a792ea1e1bbbcf5ef38f3"
+      }
+    }
+  },
+  "mainnet": {
+    "StarknetMessaging": {
+      "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "startBlock": 10
+    },
+    "context": {
+      "l1_legacy_rewards_address": {
+        "data": "0x7Ad94e71308Bb65c6bc9dF35cc69Cc9f953D69E5"
+      },
+      "l2_legacy_rewards_address ": {
+        "data": "0x038862e1b15526eda31ed6fd26805c40748458db8e420cb3be3bc65c332c023b"
+      }
+    }
+  }
+}

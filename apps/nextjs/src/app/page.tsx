@@ -5,16 +5,16 @@ import Starknet from "@/icons/starknet.svg";
 
 import type { Game } from "@realms-world/constants";
 import { games } from "@realms-world/constants";
-import { Carousel } from "@realms-world/ui";
+import { Button, Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@realms-world/ui";
 
 import { PageLayout } from "./_components/PageLayout";
 import { Partners } from "./_components/Partners";
 import PostGrid from "./blog/PostGrid";
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
-
+import Image from "next/image"
 export default function Home() {
-  const carouselImages = games
+  const carouselItems = games
     .filter((a) => a.status === "beta" || a.status === "mainnet")
     .map((game: Game) => ({
       alt: game.name,
@@ -26,54 +26,60 @@ export default function Home() {
 
   return (
     <PageLayout>
-      <div className="my-4 flex w-fit flex-wrap p-1 text-xl">
-        <span className="align-center">Powered by </span>
-        <Link href={"https://dojoengine.org/"}>
-          <DojoDark className="mx-2 w-12" />
-        </Link>
-        <span>on</span>
-        <Link href={"https://www.starknet.io/en"}>
-          <Starknet className="mx-2 w-8" />
-        </Link>
-        Realms.World is a fantasy multiverse filled with fully onchain games
-      </div>
-
-      <Carousel
-        className="left-0 top-0 h-[700px] sm:w-full"
-        // showPreview
-        images={carouselImages}
-        cover
-        options={{
-          loop: true,
-        }}
-        autoPlay
-      />
+      <Carousel className="w-full">
+        <CarouselContent>
+          {carouselItems.map((item, index) => (
+            <CarouselItem key={index}>
+              <Link href={item.href}>
+                <div className="relative h-[700px] border rounded">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    width={1900}
+                    height={1200}
+                    className="h-full w-full object-cover rounded"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-black to-transparent p-8 rounded">
+                    <h2 className="text-4xl">{item.title}</h2>
+                    <p className="text-xl mb-4">{item.description}</p>
+                    <Button variant="outline">View game</Button>
+                  </div>
+                </div>
+              </Link>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
 
       <Partners />
 
-      <div className="my-24">
-        <hr />
-        <h3 className="mb-4 text-xl">Events</h3>
-        <EventGrid isHomepage={true} />
-      </div>
-      <hr />
 
-      <h3 className="mb-4 text-xl">All Games</h3>
+
+
+      <h2 className="mb-4 text-2xl sm:text-3xl font-sans">All Games</h2>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {games.map((game: Game, index) => (
           <GameCard key={index} game={game} />
         ))}
       </div>
 
-      <hr />
+
       <div className="my-24">
-        <h3 className="mb-4 text-xl">News</h3>
+        <h2 className="mb-4 text-2xl sm:text-3xl font-sans">News</h2>
         <PostGrid />
+      </div>
+
+      <div className="my-24">
+
+        <h2 className="mb-4 text-2xl sm:text-3xl font-sans">Events</h2>
+        <EventGrid isHomepage={true} />
       </div>
 
       <hr className="my-8 border" />
       <div className="my-20">
-        <h3 className="mb-4 text-xl">Featured Collections</h3>
+        <h2 className="mb-4 text-2xl sm:text-3xl font-sans">Featured Collections</h2>
         <CollectionsList />
       </div>
     </PageLayout>

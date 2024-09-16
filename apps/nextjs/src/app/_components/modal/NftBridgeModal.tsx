@@ -15,7 +15,8 @@ import StarknetLogo from "@/icons/starknet.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useTransactionManager } from "@/stores/useTransasctionManager";
 import { shortenHex } from "@/utils/utils";
-import { useAccount as useL2Account } from "@starknet-react/core";
+import type { Address } from "@starknet-react/core";
+import { useCall, useAccount as useL2Account, useNonceForAddress } from "@starknet-react/core";
 import { Loader, MoveRightIcon, RefreshCcw } from "lucide-react";
 import { useAccount } from "wagmi";
 
@@ -41,7 +42,7 @@ import TransactionSubmittedModalBody from "./TransactionSubmittedModal/Transacti
 import TransactionSubmittedModalButton from "./TransactionSubmittedModal/TransactionSubmittedModalButton";
 
 // BridgeBadge Component
-const BridgeBadge = ({
+export const BridgeBadge = ({
   isL1,
   address,
 }: {
@@ -68,12 +69,16 @@ const BridgeBadge = ({
 );
 
 // NonceAlert Component
-const NonceAlert = ({
+const AccountErrorAlert = ({
   nonce,
   getNonce,
+  interfaceError,
+  getInterface
 }: {
   nonce?: string;
   getNonce: () => void;
+  interfaceError?: boolean;
+  getInterface: () => void;
 }) => {
   return (
     <>
@@ -81,16 +86,43 @@ const NonceAlert = ({
         <Alert variant={"destructive"} className="flex">
           <div>
             Your account must be deployed on Starknet before bridging your
-            Realms.{" "}
+            Realms.
             <Link
               href="https://support.argent.xyz/hc/en-us/articles/8802319054237-How-to-activate-deploy-my-Argent-X-wallet"
               target="_blank"
-              className="text-bright-yellow underline"
+              className="text-dark-green underline"
             >
               Follow the Argent X guide to deploy your account
             </Link>
           </div>
           <Button variant={"outline"} onClick={getNonce}>
+            <RefreshCcw className="w-8" />
+          </Button>
+        </Alert>
+      )}
+      {interfaceError && (
+        <Alert variant={"destructive"} className="flex">
+          <div>
+            <p className="text-lg font-bold mb-2">Your account must be upgraded in your wallet extension before you can bridge your Realms.</p>
+            <ul>
+              <li>
+                <Link
+                  href="https://support.argent.xyz/hc/en-us/articles/8960161907357-Upgrading-wallet-on-StarkNet"
+                  target="_blank"
+                  className="text-dark-green underline"
+                >
+                  Follow the Argent X guide
+                </Link></li>
+              <li> <Link
+                href="https://braavos.app/cairo2-upgrade-starknet-airdrop/"
+                target="_blank"
+                className="text-dark-green underline"
+              >
+                Follow the Braavos guide
+              </Link></li>
+            </ul>
+          </div>
+          <Button variant={"outline"} onClick={getInterface}>
             <RefreshCcw className="w-8" />
           </Button>
         </Alert>
@@ -112,7 +144,7 @@ const BridgeSteps = ({
   l1Address: string;
 }) => {
   const transactions = useStore(useTransactionManager, (state) => state);
-  const { address: l2Address, account } = useL2Account();
+  const { address: l2Address } = useL2Account();
   const {
     writeAsync: depositRealms,
     isPending: isDepositPending,
@@ -145,6 +177,31 @@ const BridgeSteps = ({
     approveForAllLoading,
   } = useERC721Approval();
 
+  const { data: nonce, refetch: refetchNonce } = useNonceForAddress({
+    address: l2Address,
+  });
+  const { data: supportsInterface, refetch: refetchInterface, isError: isInterfaceError, isPending: isInterfacePending } = useCall({
+    abi: [
+      {
+        name: "supports_interface",
+        type: "function",
+        inputs: [{
+          "name": "interface_id",
+          "type": "core::felt252"
+        }],
+        outputs: [
+          {
+            type: "core::bool",
+          },
+        ],
+        state_mutability: "view",
+      },
+    ],
+    address: l2Address,
+    functionName: 'supports_interface',
+    args: ['0x2']
+  });
+
   const onBridge = async () => {
     let hash;
     if (isSourceL1) {
@@ -165,25 +222,7 @@ const BridgeSteps = ({
       });
     }
   };
-  const [nonce, setNonce] = useState<string | undefined>();
 
-  const getNonce = useCallback(async () => {
-    if (l2Address && account) {
-      console.log("getting " + l2Address);
-      try {
-        const nonce = await account.getNonce();
-        setNonce(nonce);
-      } catch {
-        setNonce(undefined);
-      }
-    }
-  }, [l2Address, account]);
-  useEffect(() => {
-    if (l2Address) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      getNonce();
-    }
-  }, [getNonce, l2Address]);
   return (
     <Stepper
       initialStep={0}
@@ -218,15 +257,17 @@ const BridgeSteps = ({
                   address={isSourceL1 ? l2Address : l1Address}
                 />
               </div>
-              <NonceAlert nonce={nonce} getNonce={getNonce} />
+              <AccountErrorAlert interfaceError={isInterfaceError} nonce={nonce} getNonce={refetchNonce} getInterface={refetchInterface} />
               {stepProps.id == "bridge" && (
                 <Button
                   className="w-full"
                   onClick={() => onBridge()}
                   disabled={
                     (isSourceL1 && !nonce) ||
+                    isInterfaceError ||
                     isDepositPending ||
-                    isWithdrawPending
+                    isWithdrawPending ||
+                    isInterfacePending
                   }
                 >
                   {isDepositPending || isWithdrawPending ? (

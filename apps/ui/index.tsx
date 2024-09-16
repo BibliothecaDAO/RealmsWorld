@@ -16,7 +16,7 @@ export {
   AlertDialogCancel,
 } from "./src/components/ui/alert-dialog";
 export { Alert, AlertTitle, AlertDescription } from "./src/components/ui/alert";
-export { AspectRatio } from "./src/components/ui/aspect-ratio";
+//export { AspectRatio } from "./src/components/ui/aspect-ratio";
 export {
   Avatar,
   AvatarImage,
@@ -34,7 +34,13 @@ export {
 export { Button, buttonVariants } from "./src/components/ui/button";
 export type { ButtonProps } from "./src/components/ui/button";
 export { Calendar } from "./src/components/ui/calendar";
-export { Carousel } from "./src/components/ui/carousel";
+export {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext
+} from "./src/components/ui/carousel";
 
 export {
   Card,
@@ -44,6 +50,17 @@ export {
   CardDescription,
   CardContent,
 } from "./src/components/ui/card";
+
+export {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  ChartLegend,
+  ChartLegendContent,
+  ChartStyle,
+} from "./src/components/ui/chart";
+export type { ChartConfig } from "./src/components/ui/chart";
+
 export {
   Collapsible,
   CollapsibleTrigger,

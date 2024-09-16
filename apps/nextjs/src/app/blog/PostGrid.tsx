@@ -15,7 +15,7 @@ const PostGrid = () => {
   ));
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-4">{postPreviews}</div>
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">{postPreviews}</div>
   );
 };
 
