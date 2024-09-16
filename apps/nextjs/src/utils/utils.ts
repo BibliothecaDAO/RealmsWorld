@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { tokens } from "@/constants/tokens";
 import { formatUnits } from "viem";
 
 import type { RouterOutputs } from "@realms-world/api";
+
+import { tokens } from "../constants/tokens";
 
 export const isEth = (symbol: string) => {
   return symbol === tokens.L1.ETH.symbol;
