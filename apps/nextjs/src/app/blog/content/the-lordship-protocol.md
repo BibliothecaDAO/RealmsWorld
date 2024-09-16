@@ -4,7 +4,7 @@ subtitle: "The Lordship Protocol is the core economic foundation of the Realms W
 date: "2024-09-14"
 tags: ["lordship protocol", "veLords"]
 author: Secretive
-image: "/blog/veLords.png"
+image: "/blog/LordshipProtocol.png"
 ---
 
 # The Lordship Protocol and the final 'legacy' $Lords unlock
