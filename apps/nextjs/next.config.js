@@ -1,5 +1,4 @@
 import { fileURLToPath } from "url";
-import withMarkdoc from "@markdoc/next.js";
 import MillionLint from "@million/lint";
 import createMDX from "@next/mdx";
 import createJiti from "jiti";
@@ -8,9 +7,7 @@ import createJiti from "jiti";
 createJiti(fileURLToPath(import.meta.url))("./env");
 
 /** @type {import("next").NextConfig} */
-withMarkdoc(/* options */)({
-  pageExtensions: ["md", "mdoc", "js", "jsx", "ts", "tsx"],
-});
+
 const config = {
   reactStrictMode: true,
   /** Enables hot reloading for local packages without a build step */
