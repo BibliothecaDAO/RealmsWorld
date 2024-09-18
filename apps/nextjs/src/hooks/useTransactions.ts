@@ -24,14 +24,15 @@ export interface CombinedTransaction
 }
 
 export const useTransactions = () => {
-  const transactions = useStore(
-    useTransactionManager,
-    (state) => state.transactions,
-  );
+  const transactionState = useStore(useTransactionManager, (state) => state);
+  const transactions = transactionState?.transactions;
+  // const transactionsProcessed = transactionState?.allTransacationsProcessed;
+
   const { address } = useAccount();
   const { address: l2Address } = useStarknetAccount();
 
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({ address });
+
   const filters: RouterInputs["erc721Bridge"]["all"] = useMemo(
     () => ({
       l1Account: padAddress(address),
@@ -39,7 +40,6 @@ export const useTransactions = () => {
     }),
     [address, l2Address],
   );
-
   const { data: l2BridgeTransactions } = api.erc721Bridge.all.useQuery(
     filters,
     {
@@ -120,11 +120,13 @@ export const useTransactions = () => {
     });
 
     // Add any additional transactions that might not be in the l2TransactionsMap
-    (transactions ?? []).forEach((tx) => {
-      if (tx.hash && !transactionsMap.has(tx.hash)) {
-        transactionsMap.set(tx.hash, tx);
-      }
-    });
+    if (transactions?.length) {
+      transactions.forEach((tx) => {
+        if (tx.hash && !transactionsMap.has(tx.hash)) {
+          transactionsMap.set(tx.hash, tx);
+        }
+      });
+    }
 
     // Convert the map back to an array
     const deduplicatedArray = Array.from(transactionsMap.values());
@@ -138,6 +140,8 @@ export const useTransactions = () => {
 
     return deduplicatedArray;
   }, [l2TransactionsMap, transactions]);
+
+  transactionState?.updateAllTransacationsProcessed;
   return {
     transactions: combinedTransactions,
   };
