@@ -15,6 +15,7 @@ export interface Transaction {
 }
 
 interface TransactionState {
+  newTransactionCount: number;
   transactions: Transaction[];
   addTx: (tx: Transaction) => void;
   allTransacationsProcessed: boolean;
@@ -28,24 +29,26 @@ export const useTransactionManager = create<
   persist(
     (set) => ({
       transactions: [],
+      newTransactionCount: 0,
       allTransacationsProcessed: false,
       addTx: (tx: Transaction) => {
-        console.log(tx);
         const paddedHash: string = isStarknetAddress(tx.hash)
           ? padAddress(tx.hash)
           : tx.hash;
         const updatedTransaction = {
           ...tx,
           hash: paddedHash,
-          transactionDataFetched: true,
         };
         return set((state) => ({
           transactions: [...state.transactions, updatedTransaction],
+          newTransactionCount: state.newTransactionCount + 1,
+          allTransacationsProcessed: false,
         }));
       },
       updateAllTransacationsProcessed: () => {
         return set((state) => ({
-          allTransacationsProcessed: (state.allTransacationsProcessed = true),
+          allTransacationsProcessed: true,
+          newTransactionCount: 0,
         }));
       },
     }),

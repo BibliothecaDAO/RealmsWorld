@@ -1,6 +1,6 @@
 import type { Transaction } from "@/stores/useTransasctionManager";
 import type { RealmsWithdrawal, RealmsWithdrawalEvent } from "@/types/subgraph";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
   BridgeTransactionType,
@@ -26,7 +26,7 @@ export interface CombinedTransaction
 export const useTransactions = () => {
   const transactionState = useStore(useTransactionManager, (state) => state);
   const transactions = transactionState?.transactions;
-  // const transactionsProcessed = transactionState?.allTransacationsProcessed;
+  const transactionsProcessed = transactionState?.allTransacationsProcessed;
 
   const { address } = useAccount();
   const { address: l2Address } = useStarknetAccount();
@@ -67,6 +67,7 @@ export const useTransactions = () => {
         },
       ]),
     );
+
     pendingWithdrawals?.forEach((withdrawal) => {
       if (withdrawal.req_hash) {
         const matchingTransaction = map.get(withdrawal.req_hash);
@@ -113,6 +114,7 @@ export const useTransactions = () => {
       }),
     );
     // Add transactions to the map, deduplicating by hash
+
     transactionsArray.forEach((tx) => {
       if (tx.hash && !transactionsMap.has(tx.hash)) {
         transactionsMap.set(tx.hash, tx);
@@ -141,7 +143,10 @@ export const useTransactions = () => {
     return deduplicatedArray;
   }, [l2TransactionsMap, transactions]);
 
-  transactionState?.updateAllTransacationsProcessed;
+  useEffect(() => {
+    transactionState?.updateAllTransacationsProcessed();
+  }, [combinedTransactions]);
+
   return {
     transactions: combinedTransactions,
   };
