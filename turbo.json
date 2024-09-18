@@ -50,7 +50,10 @@
     "AUTH_DISCORD_SECRET",
     "AUTH_REDIRECT_PROXY_URL",
     "AUTH_SECRET",
-    "PORT"
+    "PORT",
+    "KEYSTATIC_GITHUB_CLIENT_ID",
+    "KEYSTATIC_GITHUB_CLIENT_SECRET",
+    "KEYSTATIC_SECRET"
   ],
   "globalPassThroughEnv": [
     "NODE_ENV",

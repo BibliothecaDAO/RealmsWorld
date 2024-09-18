@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 //import { ETH_CONTRACT } from '@/helpers/constants';
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
-import { env } from "@/env";
+import { env } from "env";
 
 import type {
   GetBalancesResponse,

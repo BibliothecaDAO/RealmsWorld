@@ -1,4 +1,4 @@
-import { env } from "@/env";
+import { env } from "env";
 import { EventSchemas, Inngest } from "inngest";
 
 interface Events {

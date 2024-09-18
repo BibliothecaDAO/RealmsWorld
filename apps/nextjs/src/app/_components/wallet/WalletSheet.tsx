@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import Link from "next/link";
-import { Account } from "@/app/bridge/Account";
+import { Account } from "@/app/(app)/bridge/Account";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount as useL2Account, useNetwork } from "@starknet-react/core";

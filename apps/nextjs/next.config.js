@@ -4,9 +4,10 @@ import createMDX from "@next/mdx";
 import createJiti from "jiti";
 
 // Import env files to validate at build time. Use jiti so we can load .ts files in here.
-createJiti(fileURLToPath(import.meta.url))("./src/env");
+createJiti(fileURLToPath(import.meta.url))("./env");
 
 /** @type {import("next").NextConfig} */
+
 const config = {
   reactStrictMode: true,
   /** Enables hot reloading for local packages without a build step */
@@ -45,6 +46,7 @@ const config = {
     config.resolve.fallback = { fs: false, net: false, tls: false };
     return config;
   },
+
   experimental: {
     turbo: {
       rules: {

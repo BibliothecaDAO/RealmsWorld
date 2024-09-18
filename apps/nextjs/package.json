@@ -18,6 +18,9 @@
     "@avnu/avnu-sdk": "^2.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@keystatic/core": "^0.5.30",
+    "@keystatic/next": "^5.0.1",
+    "@markdoc/markdoc": "^0.4.0",
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "@million/lint": "1.0.0-rc.75",
@@ -73,7 +76,8 @@
     "superjson": "2.2.1",
     "viem": "^2.19.8",
     "wagmi": "^2.12.7",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "zustand": "5.0.0-rc.2"
   },
   "devDependencies": {
     "@realms-world/eslint-config": "workspace:*",

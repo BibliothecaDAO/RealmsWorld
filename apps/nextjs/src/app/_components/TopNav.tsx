@@ -50,7 +50,7 @@ export const TopNav = () => {
     },
     {
       title: "Blog",
-      href: "/blog",
+      href: "/blogs",
       icon: <Bookmark className="w-5" />,
     },
     {

@@ -1,7 +1,7 @@
 import type { RealmsWithdrawal } from "@/types/subgraph";
 import type { TransactionFinalityStatus } from "starknet";
-import { env } from "@/env";
 import { useQuery } from "@tanstack/react-query";
+import { env } from "env";
 
 const query = `query Withdrawals(
     $l1Address: String

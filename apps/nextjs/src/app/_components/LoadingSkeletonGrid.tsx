@@ -1,4 +1,4 @@
-import { TokenCardSkeleton } from "../collection/TokenCardSkeleton";
+import { TokenCardSkeleton } from "../(app)/collection/TokenCardSkeleton";
 
 export const LoadingSkeletonGrid = () => {
   return (
