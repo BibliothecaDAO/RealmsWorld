@@ -147,8 +147,10 @@ export const useTransactions = () => {
   }, [l2TransactionsMap, transactions]);
 
   useEffect(() => {
-    transactionState?.updateAllTransacationsProcessed();
-  }, [combinedTransactions]);
+    if (allTransactionsProcessed === false) {
+      transactionState?.updateAllTransacationsProcessed();
+    }
+  }, [allTransactionsProcessed, transactionState, combinedTransactions]);
 
   return {
     transactions: combinedTransactions,
