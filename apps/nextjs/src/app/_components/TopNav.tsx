@@ -6,8 +6,11 @@ import PieChart from "@/icons/pie-chart.svg";
 import RealmsL3 from "@/icons/realms_l3.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { HammerIcon, Menu /*, ShieldQuestion*/ } from "lucide-react";
+import useStore from "@/hooks/useStore";
+import { useTransactionManager } from "@/stores/useTransasctionManager";
 import Crown from "@/icons/crown.svg";
 import {
+  Badge,
   Button,
   NavigationMenu,
   NavigationMenuContent,
@@ -21,8 +24,11 @@ import { EthereumLoginButton } from "./wallet/EthereumLoginButton";
 import { LordsDropdown } from "./wallet/LordsDropdown";
 import { StarknetLoginButton } from "./wallet/StarknetLoginButton";
 
+
 export const TopNav = () => {
   const { toggleSidebar } = useUIStore((state) => state);
+  const transactionState = useStore(useTransactionManager, (state) => state);
+  const newTransactionCount = transactionState?.newTransactionCount;
 
   const aboutLinks = [
     /*{
@@ -144,9 +150,11 @@ export const TopNav = () => {
             textClass="group-hover:block"
           />
           <StarknetLoginButton
+            buttonClass="relative"
             textClass="group-hover:block"
             variant={"default"}
             openAccount
+            newTransactionCount={newTransactionCount}
           />
         </div>
       </div>

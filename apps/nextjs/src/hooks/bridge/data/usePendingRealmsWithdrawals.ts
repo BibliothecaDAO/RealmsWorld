@@ -41,7 +41,7 @@ export const usePendingRealmsWithdrawals = (
     address?: string;
     status?: TransactionFinalityStatus;
   },
-  transactionsProcessed: boolean | undefined,
+  allTransactionsProcessed?: boolean,
 ) => {
   const variables: { l1Address?: string; status?: string[] } = {};
   if (address) {
@@ -70,6 +70,6 @@ export const usePendingRealmsWithdrawals = (
           return res.data?.withdrawals;
         }),
     enabled: !!address,
-    refetchInterval: transactionsProcessed === false ? 20000 : false,
+    refetchInterval: allTransactionsProcessed === false ? 20000 : false,
   });
 };
