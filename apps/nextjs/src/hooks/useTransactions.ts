@@ -27,11 +27,15 @@ export const useTransactions = () => {
   const transactionState = useStore(useTransactionManager, (state) => state);
   const transactions = transactionState?.transactions;
   const transactionsProcessed = transactionState?.allTransacationsProcessed;
+  console.log(transactionsProcessed);
 
   const { address } = useAccount();
   const { address: l2Address } = useStarknetAccount();
 
-  const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({ address });
+  const { data: pendingWithdrawals } = usePendingRealmsWithdrawals(
+    { address },
+    transactionsProcessed,
+  );
 
   const filters: RouterInputs["erc721Bridge"]["all"] = useMemo(
     () => ({
@@ -43,7 +47,7 @@ export const useTransactions = () => {
   const { data: l2BridgeTransactions } = api.erc721Bridge.all.useQuery(
     filters,
     {
-      refetchInterval: 30000,
+      refetchInterval: transactionsProcessed === false ? 20000 : false,
       enabled: !!address || !!l2Address,
     },
   );

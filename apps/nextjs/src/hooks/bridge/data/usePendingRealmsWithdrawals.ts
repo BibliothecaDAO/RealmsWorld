@@ -33,13 +33,16 @@ const query = `query Withdrawals(
   }
   `;
 
-export const usePendingRealmsWithdrawals = ({
-  address,
-  status,
-}: {
-  address?: string;
-  status?: TransactionFinalityStatus;
-}) => {
+export const usePendingRealmsWithdrawals = (
+  {
+    address,
+    status,
+  }: {
+    address?: string;
+    status?: TransactionFinalityStatus;
+  },
+  transactionsProcessed: boolean | undefined,
+) => {
   const variables: { l1Address?: string; status?: string[] } = {};
   if (address) {
     variables.l1Address = address.toLowerCase();
@@ -67,6 +70,6 @@ export const usePendingRealmsWithdrawals = ({
           return res.data?.withdrawals;
         }),
     enabled: !!address,
-    refetchInterval: 20000,
+    refetchInterval: transactionsProcessed === false ? 20000 : false,
   });
 };
