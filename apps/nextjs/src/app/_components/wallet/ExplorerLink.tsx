@@ -6,7 +6,7 @@ import {
   STARKSCAN_TX_URL,
   SUPPORTED_L1_CHAIN_ID,
 } from "@/constants/env";
-import { ExternalLinkIcon } from "lucide-react";
+import { ExternalLinkIcon, Text } from "lucide-react";
 
 import type { ChainId } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
@@ -35,7 +35,7 @@ export const ExplorerLink = ({
   return (
     <Button key={text} variant={"outline"} size={"xs"} asChild>
       <Link href={explorerURL} target="_blank">
-        {text ?? isL1 ? "Etherscan" : "Starkscan"}
+        {text}
         <ExternalLinkIcon className="h-4" />
       </Link>
     </Button>
