@@ -21,7 +21,7 @@
     "@auth/core": "^0.34.2",
     "@auth/drizzle-adapter": "^1.4.2",
     "@realms-world/db": "workspace:*",
-    "@t3-oss/env-nextjs": "^0.11.0",
+    "@t3-oss/env-nextjs": "^0.11.1",
     "next": "^15.0.0-rc.0",
     "next-auth": "5.0.0-beta.19",
     "react": "catalog:react19",
