@@ -54,7 +54,7 @@ export const StarknetLoginButton = ({
           }
         </span>
       </span>
-      {newTransactionCount && newTransactionCount > 0 ? <span
+      {(isConnected && newTransactionCount) && newTransactionCount > 0 ? <span
         className={'bg-green-500 w-[20px] absolute -top-1.5 -right-1.5 rounded-full text-black-600'}
       >{newTransactionCount}</span> : null}
     </Button>

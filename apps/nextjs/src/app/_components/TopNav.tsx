@@ -10,7 +10,6 @@ import useStore from "@/hooks/useStore";
 import { useTransactionManager } from "@/stores/useTransasctionManager";
 import Crown from "@/icons/crown.svg";
 import {
-  Badge,
   Button,
   NavigationMenu,
   NavigationMenuContent,
