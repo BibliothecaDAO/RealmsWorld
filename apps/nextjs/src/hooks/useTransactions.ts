@@ -34,21 +34,21 @@ export const useTransactions = () => {
   const { address } = useAccount();
   const { address: l2Address } = useStarknetAccount();
 
-  // grabs all pending realm withdrawals with status of accepted_on_l1
+  // grabs all pending realm withdrawals
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals(
     { address },
     allTransactionsProcessed,
   );
 
+  // finds all of the finishedWithdrawals
   const finishedWithdrawals = pendingWithdrawals?.map((withdrawal) => {
     if (withdrawal.withdrawalEvents[0]?.status === "FINISHED") {
       return withdrawal;
     }
   });
 
-  // grabs all pending realms withdrawals if status is finished.
   // executes if the user does not have all of their finished transactions already stored in local storage.
-  // or if user has a new finished transaction that is not yet in localstorage
+  // or if user has a finished transaction that is not yet in localstorage
   if (!finishedRealmsWithdrawalsProcessed) {
     console.log(finishedWithdrawals);
     finishedWithdrawals?.forEach((withdrawal, i) => {
@@ -60,7 +60,6 @@ export const useTransactions = () => {
         timestamp: new Date(Number(withdrawal?.createdTimestamp ?? 0n) * 1000),
       };
       if (!transactions?.includes(finishedTransaction)) {
-        console.log(finishedTransaction);
         transactionState?.addTx(finishedTransaction);
       }
       if (i === finishedWithdrawals?.length - 1) {
@@ -84,8 +83,6 @@ export const useTransactions = () => {
     },
   );
 
-  console.log(pendingWithdrawals);
-  //console.log(l2BridgeTransactions);
   const l2TransactionsMap = useMemo(() => {
     const map = new Map<
       bigint,

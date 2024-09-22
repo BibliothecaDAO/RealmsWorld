@@ -10,7 +10,7 @@ import { Loader } from "lucide-react";
 import { Button, toast } from "@realms-world/ui";
 
 export const TransactionAction = ({ tx }: { tx: CombinedTransaction }) => {
-  const { writeAsync, isPending, isSuccess } = useWriteFinalizeWithdrawRealms();
+  const { writeAsync, isPending } = useWriteFinalizeWithdrawRealms();
   const transactions = useStore(useTransactionManager, (state) => state);
   const finalizeWithdraw = useCallback(async () => {
     const tokenIds = tx.withdrawalEvents?.[0]?.tokenIds;
@@ -25,8 +25,7 @@ export const TransactionAction = ({ tx }: { tx: CombinedTransaction }) => {
         l2Address: tx.l2Sender,
         tokenIds,
       }));
-    console.log(tx)
-    if (isSuccess) {
+    if (txHash) {
       transactions?.addTx({
         hash: txHash || '',
         type: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
