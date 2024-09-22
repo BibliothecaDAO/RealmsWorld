@@ -51,7 +51,7 @@ export const usePendingRealmsWithdrawals = (
   if (status) {
     variables.status = [status];
   } else {
-    variables.status = ["ACCEPTED_ON_L1"];
+    variables.status = ["ACCEPTED_ON_L1", "FINISHED"];
   }
   console.log(address);
   return useQuery({

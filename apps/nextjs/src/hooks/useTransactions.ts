@@ -36,18 +36,21 @@ export const useTransactions = () => {
 
   // grabs all pending realm withdrawals with status of accepted_on_l1
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals(
-    { address: address, status: "ACCEPTED_ON_L1" },
+    { address },
     allTransactionsProcessed,
   );
+
+  const finishedWithdrawals = pendingWithdrawals?.map((withdrawal) => {
+    if (withdrawal.withdrawalEvents[0]?.status === "FINISHED") {
+      return withdrawal;
+    }
+  });
 
   // grabs all pending realms withdrawals if status is finished.
   // executes if the user does not have all of their finished transactions already stored in local storage.
   // or if user has a new finished transaction that is not yet in localstorage
   if (!finishedRealmsWithdrawalsProcessed) {
-    const { data: finishedWithdrawals } = usePendingRealmsWithdrawals(
-      { address: address, status: "FINISHED" },
-      allTransactionsProcessed,
-    );
+    console.log(finishedWithdrawals);
     finishedWithdrawals?.forEach((withdrawal, i) => {
       let finishedTransaction: Transaction = {
         status: "complete",
@@ -57,6 +60,7 @@ export const useTransactions = () => {
         timestamp: new Date(Number(withdrawal?.createdTimestamp ?? 0n) * 1000),
       };
       if (!transactions?.includes(finishedTransaction)) {
+        console.log(finishedTransaction);
         transactionState?.addTx(finishedTransaction);
       }
       if (i === finishedWithdrawals?.length - 1) {
