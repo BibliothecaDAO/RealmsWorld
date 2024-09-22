@@ -1,3 +1,4 @@
+import { timeStamp } from "console";
 import type { Transaction } from "@/stores/useTransasctionManager";
 import type { RealmsWithdrawal, RealmsWithdrawalEvent } from "@/types/subgraph";
 import { useEffect, useMemo } from "react";
@@ -14,7 +15,7 @@ import { useAccount as useStarknetAccount } from "@starknet-react/core";
 import { useAccount } from "wagmi";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
-import type { ChainId } from "@realms-world/constants";
+import { ChainId } from "@realms-world/constants";
 import { padAddress } from "@realms-world/utils";
 
 export interface CombinedTransaction
@@ -27,14 +28,42 @@ export const useTransactions = () => {
   const transactionState = useStore(useTransactionManager, (state) => state);
   const transactions = transactionState?.transactions;
   const allTransactionsProcessed = transactionState?.allTransacationsProcessed;
+  const finishedRealmsWithdrawalsProcessed =
+    transactionState?.finishedRealmsWithdrawalsProcessed;
 
   const { address } = useAccount();
   const { address: l2Address } = useStarknetAccount();
 
+  // grabs all pending realm withdrawals with status of accepted_on_l1
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals(
-    { address },
+    { address: address, status: "ACCEPTED_ON_L1" },
     allTransactionsProcessed,
   );
+
+  // grabs all pending realms withdrawals if status is finished.
+  // executes if the user does not have all of their finished transactions already stored in local storage.
+  // or if user has a new finished transaction that is not yet in localstorage
+  if (!finishedRealmsWithdrawalsProcessed) {
+    const { data: finishedWithdrawals } = usePendingRealmsWithdrawals(
+      { address: address, status: "FINISHED" },
+      allTransactionsProcessed,
+    );
+    finishedWithdrawals?.forEach((withdrawal, i) => {
+      let finishedTransaction: Transaction = {
+        status: "complete",
+        type: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
+        chainId: SUPPORTED_L2_CHAIN_ID,
+        hash: withdrawal?.withdrawalEvents[0]?.finishedTxHash || "",
+        timestamp: new Date(Number(withdrawal?.createdTimestamp ?? 0n) * 1000),
+      };
+      if (!transactions?.includes(finishedTransaction)) {
+        transactionState?.addTx(finishedTransaction);
+      }
+      if (i === finishedWithdrawals?.length - 1) {
+        transactionState?.updateFinishedRealmsWithdrawalsProcessed();
+      }
+    });
+  }
 
   const filters: RouterInputs["erc721Bridge"]["all"] = useMemo(
     () => ({

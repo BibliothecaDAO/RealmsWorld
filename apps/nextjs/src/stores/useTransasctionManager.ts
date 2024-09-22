@@ -18,8 +18,10 @@ interface TransactionState {
   newTransactionCount: number;
   transactions: Transaction[];
   addTx: (tx: Transaction) => void;
+  finishedRealmsWithdrawalsProcessed: boolean;
   allTransacationsProcessed: boolean;
   updateAllTransacationsProcessed: () => void;
+  updateFinishedRealmsWithdrawalsProcessed: () => void;
 }
 
 export const useTransactionManager = create<
@@ -30,6 +32,7 @@ export const useTransactionManager = create<
     (set) => ({
       transactions: [],
       newTransactionCount: 0,
+      finishedRealmsWithdrawalsProcessed: false,
       allTransacationsProcessed: false,
       addTx: (tx: Transaction) => {
         const paddedHash: string = isStarknetAddress(tx.hash)
@@ -39,10 +42,20 @@ export const useTransactionManager = create<
           ...tx,
           hash: paddedHash,
         };
+
         return set((state) => ({
           transactions: [...state.transactions, updatedTransaction],
           newTransactionCount: state.newTransactionCount + 1,
           allTransacationsProcessed: false,
+          finishedRealmsWithdrawalsProcessed:
+            updatedTransaction.type == "Finalise Realms Withdrawal to L1"
+              ? false
+              : true,
+        }));
+      },
+      updateFinishedRealmsWithdrawalsProcessed: () => {
+        return set((state) => ({
+          finishedRealmsWithdrawalsProcessed: true,
         }));
       },
       updateAllTransacationsProcessed: () => {
