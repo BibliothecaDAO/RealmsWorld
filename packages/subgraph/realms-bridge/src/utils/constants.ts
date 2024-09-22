@@ -16,13 +16,6 @@ export const l1BridgeAddress: Bytes = Bytes.fromByteArray(
 export const l2BridgeAddress: Bytes = Bytes.fromByteArray(
   dataSource.context().getBytes("l2_bridge_address"),
 );
-export const l1LegacyRewardsAddress: Bytes = Bytes.fromByteArray(
-  dataSource.context().getBytes("l1_legacy_rewards_address"),
-);
-
-export const l2LegacyRewardsAddress: Bytes = Bytes.fromByteArray(
-  dataSource.context().getBytes("l2_legacy_rewards_address"),
-);
 
 export const L1BRIDGE_DEPOSIT_SIG =
   "0x9dbb0e7dda3e09710ce75b801addc87cf9d9c6c581641b3275fca409ad086c62";

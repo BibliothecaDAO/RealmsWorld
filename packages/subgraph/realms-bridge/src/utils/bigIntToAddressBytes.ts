@@ -1,4 +1,4 @@
-import { BigInt, Bytes } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes, log } from "@graphprotocol/graph-ts";
 
 const STARK_ADDRESS_LENGTH = 64;
 const ETHEREUM_ADDRESS_LENGTH = 40;
@@ -10,7 +10,7 @@ export enum ADDRESS_TYPE {
 
 export function bigIntToAddressBytes(
   address: BigInt,
-  type: ADDRESS_TYPE
+  type: ADDRESS_TYPE,
 ): Bytes {
   let unprefixedHex = address.toHexString().slice(2);
   let addressLength =
@@ -19,6 +19,6 @@ export function bigIntToAddressBytes(
       : STARK_ADDRESS_LENGTH;
 
   return Bytes.fromHexString(
-    "0x" + "0".repeat(addressLength - unprefixedHex.length) + unprefixedHex
+    "0x" + "0".repeat(addressLength - unprefixedHex.length) + unprefixedHex,
   ) as Bytes;
 }

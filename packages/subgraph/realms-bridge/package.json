@@ -4,7 +4,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ realms-bridge",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ realms-bridge-main",
     "create-local": "graph create --node http://localhost:8020/ realms-bridge",
     "remove-local": "graph remove --node http://localhost:8020/ realms-bridge",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 realms-bridge",
