@@ -72,6 +72,7 @@ export const useTransactions = () => {
     );
 
     pendingWithdrawals?.forEach((withdrawal) => {
+      console.log(map);
       if (withdrawal.req_hash) {
         const matchingTransaction = map.get(withdrawal.req_hash);
         if (matchingTransaction) {

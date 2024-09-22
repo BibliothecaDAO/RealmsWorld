@@ -31,7 +31,7 @@ export const TransactionAction = ({ tx }: { tx: CombinedTransaction }) => {
         type: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
         chainId: SUPPORTED_L2_CHAIN_ID,
         status: "complete",
-        timestamp: new Date().getTime(),
+        timestamp: new Date(Date.now())
       });
       toast({
         title: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
