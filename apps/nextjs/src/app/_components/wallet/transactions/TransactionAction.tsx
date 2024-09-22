@@ -10,7 +10,7 @@ import { Loader } from "lucide-react";
 import { Button, toast } from "@realms-world/ui";
 
 export const TransactionAction = ({ tx }: { tx: CombinedTransaction }) => {
-  const { writeAsync, isPending } = useWriteFinalizeWithdrawRealms();
+  const { writeAsync, isPending, isSuccess } = useWriteFinalizeWithdrawRealms();
   const transactions = useStore(useTransactionManager, (state) => state);
   const finalizeWithdraw = useCallback(async () => {
     const tokenIds = tx.withdrawalEvents?.[0]?.tokenIds;
@@ -26,9 +26,9 @@ export const TransactionAction = ({ tx }: { tx: CombinedTransaction }) => {
         tokenIds,
       }));
     console.log(tx)
-    if (txHash) {
+    if (isSuccess) {
       transactions?.addTx({
-        hash: txHash,
+        hash: txHash || '',
         type: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
         chainId: SUPPORTED_L2_CHAIN_ID,
         status: "complete",
@@ -36,7 +36,7 @@ export const TransactionAction = ({ tx }: { tx: CombinedTransaction }) => {
       });
       toast({
         title: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
-        description: `${tokenIds.length} Realms are being withdrawn to your L1 wallet`,
+        description: `${tokenIds?.length} Realms are being withdrawn to your L1 wallet`,
       });
     }
   }, [writeAsync, transactions, tx]);

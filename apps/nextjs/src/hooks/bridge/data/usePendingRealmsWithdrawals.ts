@@ -43,6 +43,7 @@ export const usePendingRealmsWithdrawals = (
   },
   allTransactionsProcessed?: boolean,
 ) => {
+  console.log(status);
   const variables: { l1Address?: string; status?: string[] } = {};
   if (address) {
     variables.l1Address = address.toLowerCase();
@@ -50,8 +51,9 @@ export const usePendingRealmsWithdrawals = (
   if (status) {
     variables.status = [status];
   } else {
-    variables.status = ["ACCEPTED_ON_L1", "FINISHED"];
+    variables.status = ["ACCEPTED_ON_L1"];
   }
+  console.log(address);
   return useQuery({
     queryKey: ["pendingRealmsWithdrawals" + address + status],
     queryFn: async () =>
