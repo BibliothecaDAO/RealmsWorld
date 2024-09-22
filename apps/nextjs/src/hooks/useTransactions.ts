@@ -51,6 +51,8 @@ export const useTransactions = () => {
     },
   );
 
+  console.log(pendingWithdrawals);
+  //console.log(l2BridgeTransactions);
   const l2TransactionsMap = useMemo(() => {
     const map = new Map<
       bigint,

@@ -25,6 +25,7 @@ export const TransactionAction = ({ tx }: { tx: CombinedTransaction }) => {
         l2Address: tx.l2Sender,
         tokenIds,
       }));
+    console.log(tx)
     if (txHash) {
       transactions?.addTx({
         hash: txHash,
