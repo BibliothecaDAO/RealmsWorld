@@ -1,6 +1,5 @@
-import { timeStamp } from "console";
-import type { Transaction } from "@/stores/useTransasctionManager";
-import type { RealmsWithdrawal, RealmsWithdrawalEvent } from "@/types/subgraph";
+import type { CombinedTransaction } from "@/stores/useTransasctionManager";
+import type { RealmsWithdrawalEvent } from "@/types/subgraph";
 import { useEffect, useMemo } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
@@ -18,18 +17,10 @@ import type { RouterInputs, RouterOutputs } from "@realms-world/api";
 import { ChainId } from "@realms-world/constants";
 import { padAddress } from "@realms-world/utils";
 
-export interface CombinedTransaction
-  extends Transaction,
-    Partial<RealmsWithdrawal> {
-  tokenIds?: string[];
-}
-
 export const useTransactions = () => {
   const transactionState = useStore(useTransactionManager, (state) => state);
   const transactions = transactionState?.transactions;
   const allTransactionsProcessed = transactionState?.allTransacationsProcessed;
-  const finishedRealmsWithdrawalsProcessed =
-    transactionState?.finishedRealmsWithdrawalsProcessed;
 
   const { address } = useAccount();
   const { address: l2Address } = useStarknetAccount();
@@ -39,34 +30,6 @@ export const useTransactions = () => {
     { address },
     allTransactionsProcessed,
   );
-
-  // finds all of the finishedWithdrawals
-  const finishedWithdrawals = pendingWithdrawals?.map((withdrawal) => {
-    if (withdrawal.withdrawalEvents[0]?.status === "FINISHED") {
-      return withdrawal;
-    }
-  });
-
-  // executes if the user does not have all of their finished transactions already stored in local storage.
-  // or if user has a finished transaction that is not yet in localstorage
-  if (!finishedRealmsWithdrawalsProcessed) {
-    console.log(finishedWithdrawals);
-    finishedWithdrawals?.forEach((withdrawal, i) => {
-      let finishedTransaction: Transaction = {
-        status: "complete",
-        type: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
-        chainId: SUPPORTED_L2_CHAIN_ID,
-        hash: withdrawal?.withdrawalEvents[0]?.finishedTxHash || "",
-        timestamp: new Date(Number(withdrawal?.createdTimestamp ?? 0n) * 1000),
-      };
-      if (!transactions?.includes(finishedTransaction)) {
-        transactionState?.addTx(finishedTransaction);
-      }
-      if (i === finishedWithdrawals?.length - 1) {
-        transactionState?.updateFinishedRealmsWithdrawalsProcessed();
-      }
-    });
-  }
 
   const filters: RouterInputs["erc721Bridge"]["all"] = useMemo(
     () => ({
@@ -104,7 +67,6 @@ export const useTransactions = () => {
     );
 
     pendingWithdrawals?.forEach((withdrawal) => {
-      console.log(map);
       if (withdrawal.req_hash) {
         const matchingTransaction = map.get(withdrawal.req_hash);
         if (matchingTransaction) {
@@ -146,7 +108,7 @@ export const useTransactions = () => {
     const transactionsArray = Array.from(l2TransactionsMap.values()).map(
       (tx) => ({
         ...tx,
-        req_hash: tx.req_hash ? BigInt(tx.req_hash) : undefined,
+        req_hash: tx.req_hash ? tx.req_hash : undefined,
       }),
     );
     // Add transactions to the map, deduplicating by hash
@@ -181,7 +143,7 @@ export const useTransactions = () => {
 
   useEffect(() => {
     if (allTransactionsProcessed === false) {
-      transactionState?.updateAllTransacationsProcessed();
+      transactionState?.updateAllTransacationsProcessed(combinedTransactions);
     }
   }, [allTransactionsProcessed, transactionState, combinedTransactions]);
 

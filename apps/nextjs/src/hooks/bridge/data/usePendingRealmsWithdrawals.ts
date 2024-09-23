@@ -1,3 +1,4 @@
+import type { TransactionState } from "@/stores/useTransasctionManager";
 import type { RealmsWithdrawal } from "@/types/subgraph";
 import type { TransactionFinalityStatus } from "starknet";
 import { useQuery } from "@tanstack/react-query";
@@ -43,7 +44,6 @@ export const usePendingRealmsWithdrawals = (
   },
   allTransactionsProcessed?: boolean,
 ) => {
-  console.log(status);
   const variables: { l1Address?: string; status?: string[] } = {};
   if (address) {
     variables.l1Address = address.toLowerCase();
@@ -53,7 +53,7 @@ export const usePendingRealmsWithdrawals = (
   } else {
     variables.status = ["ACCEPTED_ON_L1", "FINISHED"];
   }
-  console.log(address);
+
   return useQuery({
     queryKey: ["pendingRealmsWithdrawals" + address + status],
     queryFn: async () =>

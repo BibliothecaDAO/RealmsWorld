@@ -1,4 +1,5 @@
 import type { TransactionType } from "@/constants/transactions";
+import type { RealmsWithdrawal, RealmsWithdrawalEvent } from "@/types/subgraph";
 import { isStarknetAddress } from "@/utils/utils";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -13,15 +14,21 @@ export interface Transaction {
   hash: string;
   timestamp: Date | string;
 }
+export interface CombinedTransaction
+  extends Transaction,
+    Partial<RealmsWithdrawal> {
+  tokenIds?: string[];
+}
 
-interface TransactionState {
+export interface TransactionState {
   newTransactionCount: number;
   transactions: Transaction[];
+  combinedTransactions: CombinedTransaction[];
   addTx: (tx: Transaction) => void;
-  finishedRealmsWithdrawalsProcessed: boolean;
   allTransacationsProcessed: boolean;
-  updateAllTransacationsProcessed: () => void;
-  updateFinishedRealmsWithdrawalsProcessed: () => void;
+  updateAllTransacationsProcessed: (
+    combinedTransactions: CombinedTransaction[],
+  ) => void;
 }
 
 export const useTransactionManager = create<
@@ -31,8 +38,8 @@ export const useTransactionManager = create<
   persist(
     (set) => ({
       transactions: [],
+      combinedTransactions: [],
       newTransactionCount: 0,
-      finishedRealmsWithdrawalsProcessed: false,
       allTransacationsProcessed: false,
       addTx: (tx: Transaction) => {
         const paddedHash: string = isStarknetAddress(tx.hash)
@@ -47,21 +54,15 @@ export const useTransactionManager = create<
           transactions: [...state.transactions, updatedTransaction],
           newTransactionCount: state.newTransactionCount + 1,
           allTransacationsProcessed: false,
-          finishedRealmsWithdrawalsProcessed:
-            updatedTransaction.type == "Finalise Realms Withdrawal to L1"
-              ? false
-              : true,
         }));
       },
-      updateFinishedRealmsWithdrawalsProcessed: () => {
+
+      updateAllTransacationsProcessed: (combinedTransactions) => {
         return set((state) => ({
-          finishedRealmsWithdrawalsProcessed: true,
-        }));
-      },
-      updateAllTransacationsProcessed: () => {
-        return set((state) => ({
+          ...state,
           allTransacationsProcessed: true,
           newTransactionCount: 0,
+          combinedTransactions: [...combinedTransactions],
         }));
       },
     }),

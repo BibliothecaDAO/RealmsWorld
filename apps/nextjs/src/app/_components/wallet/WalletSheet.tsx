@@ -6,7 +6,8 @@ import { Account } from "@/app/(app)/bridge/Account";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount as useL2Account, useNetwork } from "@starknet-react/core";
-
+import useStore from "@/hooks/useStore";
+import { useTransactionManager } from "@/stores/useTransasctionManager";
 import {
   Button,
   Dialog,
@@ -27,9 +28,11 @@ import {
 import { WrongNetworkModal } from "../modal/WrongNetworkModal";
 import EthereumAccount from "./EthereumAccount";
 import StarkAccount from "./StarkAccount";
-import { TransactionList } from "./transactions/TransactionList";
+import { QueryTransactionList, LocalStorageTransactionList } from "./transactions/TransactionList";
 
 export const WalletSheet = () => {
+  const transactionState = useStore(useTransactionManager, (state) => state);
+  const allTransactionsProcessed = transactionState?.allTransacationsProcessed;
   const {
     isConnected: isL2Connected,
     chainId,
@@ -124,7 +127,7 @@ export const WalletSheet = () => {
                 </Dialog>
               </div>
             </div>
-            <TransactionList />
+            {allTransactionsProcessed ? <LocalStorageTransactionList /> : <QueryTransactionList />}
           </div>
         </SheetContent>
       </Sheet>

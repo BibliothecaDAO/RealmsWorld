@@ -1,4 +1,4 @@
-import type { CombinedTransaction } from "@/hooks/useTransactions";
+import type { CombinedTransaction } from "@/stores/useTransasctionManager";
 import { useCallback } from "react";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { TransactionType } from "@/constants/transactions";
