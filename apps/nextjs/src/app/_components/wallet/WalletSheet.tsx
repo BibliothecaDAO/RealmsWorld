@@ -54,8 +54,8 @@ export const WalletSheet = () => {
     return ref.current;
   }
 
-  console.log(newTransactionCount, allTransactionsProcessed)
-  //after user closes wallet sheet, reset transactioncount in localstorage
+
+  //after user closes wallet sheet, reset transactioncount and alltransactionsprocessed in localstorage
   const previousAccountOpenState = usePrevious(isAccountOpen)
   useEffect(() => {
     if (isAccountOpen === false && previousAccountOpenState === true) {
@@ -146,6 +146,8 @@ export const WalletSheet = () => {
                 </Dialog>
               </div>
             </div>
+            {/* if newTransactioncount is greater than zero, toggle querylist to add new transaction to combinedTransactions */}
+            {/* alltrsansactionsprocessed === false handles the scenario where user has not opened their wallet sheet yet. IE incognito window, or the localstorage state isn't set yet */}
             {((newTransactionCount && newTransactionCount > 0) || allTransactionsProcessed === false) ? <QueryTransactionList /> : <LocalStorageTransactionList />}
           </div>
         </SheetContent>
