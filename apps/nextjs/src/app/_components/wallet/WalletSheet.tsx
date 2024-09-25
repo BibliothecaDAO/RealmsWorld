@@ -51,9 +51,9 @@ export const WalletSheet = () => {
   function usePrevious(isAccountOpen: boolean) {
     const ref = useRef<boolean>();
     useEffect(() => {
-      ref.current = isAccountOpen; //assign the value of ref to the argument
-    }, [isAccountOpen]); //this code will run when the value of 'value' changes
-    return ref.current; //in the end, return the current ref value.
+      ref.current = isAccountOpen;
+    }, [isAccountOpen]);
+    return ref.current;
   }
 
 
