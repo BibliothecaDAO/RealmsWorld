@@ -129,7 +129,7 @@ export const LegacyClaim: React.FC = () => {
               </dd>
             </div>
             <div className="flex items-center justify-between">
-              <dt className="text-muted-foreground">Epoch 109-142:</dt>
+              <dt className="text-muted-foreground">Epoch 109-141:</dt>
               <dd className='flex items-center'>
                 {isLegacyClaimed ? 'Claimed' : (reward?.amount ?? 0).toLocaleString()}
                 {reward?.amount && parseInt(reward.amount) > 0 && !isLegacyClaimed && (
@@ -145,7 +145,7 @@ export const LegacyClaim: React.FC = () => {
                       {!writeReturn.data ? (
                         <>
                           <DialogTitle>Claim Galleon Lords</DialogTitle>
-                          <p>Lords from Epoch 110-142 are now claimable on Starknet</p>
+                          <p>Lords from Epoch 110-141 are now claimable on Starknet</p>
                           <div className="flex w-full justify-between">
                             <BridgeBadge
                               isL1={true}
