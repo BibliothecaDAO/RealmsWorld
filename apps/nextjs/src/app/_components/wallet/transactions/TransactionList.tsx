@@ -9,7 +9,7 @@ import { useEffect } from "react";
 export const QueryTransactionList = () => {
   const { transactions } = useTransactions();
   const transactionState = useStore(useTransactionManager, (state) => state);
-  // after useTransactions fires, update stored transactions in localstorage that useTransactions returns
+  // after useTransactions fires, update stored combinedtransactions in localstorage
   useEffect(() => {
     transactionState?.updateCombinedTransactions(transactions);
   }, [transactions]);

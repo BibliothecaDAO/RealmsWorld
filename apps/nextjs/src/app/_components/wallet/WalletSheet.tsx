@@ -54,7 +54,7 @@ export const WalletSheet = () => {
   }
 
 
-  //after user closes wallet sheet, reset transactions and transactioncount in localstorage
+  //after user closes wallet sheet, reset transactioncount in localstorage
   const previousAccountOpenState = usePrevious(isAccountOpen)
   useEffect(() => {
     if (isAccountOpen === false && previousAccountOpenState === true) {
