@@ -20,16 +20,12 @@ import { padAddress } from "@realms-world/utils";
 export const useTransactions = () => {
   const transactionState = useStore(useTransactionManager, (state) => state);
   const transactions = transactionState?.transactions;
-  const allTransactionsProcessed = transactionState?.allTransacationsProcessed;
 
   const { address } = useAccount();
   const { address: l2Address } = useStarknetAccount();
 
   // grabs all pending realm withdrawals
-  const { data: pendingWithdrawals } = usePendingRealmsWithdrawals(
-    { address },
-    allTransactionsProcessed,
-  );
+  const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({ address });
 
   const filters: RouterInputs["erc721Bridge"]["all"] = useMemo(
     () => ({
@@ -41,7 +37,6 @@ export const useTransactions = () => {
   const { data: l2BridgeTransactions } = api.erc721Bridge.all.useQuery(
     filters,
     {
-      refetchInterval: allTransactionsProcessed === false ? 20000 : false,
       enabled: !!address || !!l2Address,
     },
   );
@@ -112,7 +107,6 @@ export const useTransactions = () => {
       }),
     );
     // Add transactions to the map, deduplicating by hash
-
     transactionsArray.forEach((tx) => {
       if (tx.hash && !transactionsMap.has(tx.hash)) {
         transactionsMap.set(tx.hash, tx);
@@ -140,12 +134,6 @@ export const useTransactions = () => {
 
     return deduplicatedArray;
   }, [l2TransactionsMap, transactions]);
-
-  useEffect(() => {
-    if (allTransactionsProcessed === false) {
-      transactionState?.updateAllTransacationsProcessed(combinedTransactions);
-    }
-  }, [allTransactionsProcessed, transactionState, combinedTransactions]);
 
   return {
     transactions: combinedTransactions,

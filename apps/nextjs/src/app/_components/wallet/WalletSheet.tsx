@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Account } from "@/app/(app)/bridge/Account";
 import Bridge from "@/icons/bridge.svg";
@@ -32,7 +32,8 @@ import { QueryTransactionList, LocalStorageTransactionList } from "./transaction
 
 export const WalletSheet = () => {
   const transactionState = useStore(useTransactionManager, (state) => state);
-  const allTransactionsProcessed = transactionState?.allTransacationsProcessed;
+  const newTransactionCount = transactionState?.newTransactionCount;
+
   const {
     isConnected: isL2Connected,
     chainId,
@@ -42,7 +43,26 @@ export const WalletSheet = () => {
   const isStarknetWrongNetwork = isL2Connected &&
     chainId !== undefined && BigInt(chainId) !== chain.id;
 
+
   const { isAccountOpen, toggleAccount } = useUIStore((state) => state);
+
+
+
+  function usePrevious(isAccountOpen: boolean) {
+    const ref = useRef<boolean>();
+    useEffect(() => {
+      ref.current = isAccountOpen; //assign the value of ref to the argument
+    }, [isAccountOpen]); //this code will run when the value of 'value' changes
+    return ref.current; //in the end, return the current ref value.
+  }
+
+
+  const previousAccountOpenState = usePrevious(isAccountOpen)
+  useEffect(() => {
+    if (isAccountOpen === false && previousAccountOpenState === true) {
+      transactionState?.resetTransacationCount()
+    }
+  }, [isAccountOpen])
 
   const tabs = [
     {
@@ -127,7 +147,7 @@ export const WalletSheet = () => {
                 </Dialog>
               </div>
             </div>
-            {allTransactionsProcessed ? <LocalStorageTransactionList /> : <QueryTransactionList />}
+            {newTransactionCount && newTransactionCount > 0 ? <QueryTransactionList /> : <LocalStorageTransactionList />}
           </div>
         </SheetContent>
       </Sheet>

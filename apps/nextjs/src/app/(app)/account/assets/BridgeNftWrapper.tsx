@@ -27,14 +27,13 @@ import AssetL1CollectionPreview from "./AssetL1CollectionPreview";
 import AssetL2CollectionPreview from "./AssetL2CollectionPreview";
 
 export const BridgeNftWrapper = () => {
-  const transactionState = useStore(useTransactionManager, (state) => state);
-  const allTransactionsProcessed = transactionState?.allTransacationsProcessed;
+
   const [activeChain, setActiveChain] = useState("l1");
   const { address } = useAccount();
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({
     address,
     status: TransactionFinalityStatus.ACCEPTED_ON_L1,
-  }, allTransactionsProcessed);
+  });
   const { toggleAccount } = useUIStore((state) => state);
 
   return (

@@ -1,4 +1,3 @@
-import type { TransactionState } from "@/stores/useTransasctionManager";
 import type { RealmsWithdrawal } from "@/types/subgraph";
 import type { TransactionFinalityStatus } from "starknet";
 import { useQuery } from "@tanstack/react-query";
@@ -34,16 +33,13 @@ const query = `query Withdrawals(
   }
   `;
 
-export const usePendingRealmsWithdrawals = (
-  {
-    address,
-    status,
-  }: {
-    address?: string;
-    status?: TransactionFinalityStatus;
-  },
-  allTransactionsProcessed?: boolean,
-) => {
+export const usePendingRealmsWithdrawals = ({
+  address,
+  status,
+}: {
+  address?: string;
+  status?: TransactionFinalityStatus;
+}) => {
   const variables: { l1Address?: string; status?: string[] } = {};
   if (address) {
     variables.l1Address = address.toLowerCase();
@@ -72,6 +68,5 @@ export const usePendingRealmsWithdrawals = (
           return res.data?.withdrawals;
         }),
     enabled: !!address,
-    refetchInterval: allTransactionsProcessed === false ? 20000 : false,
   });
 };

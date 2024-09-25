@@ -25,8 +25,8 @@ export interface TransactionState {
   transactions: Transaction[];
   combinedTransactions: CombinedTransaction[];
   addTx: (tx: Transaction) => void;
-  allTransacationsProcessed: boolean;
-  updateAllTransacationsProcessed: (
+  resetTransacationCount: () => void;
+  updateCombinedTransactions: (
     combinedTransactions: CombinedTransaction[],
   ) => void;
 }
@@ -41,6 +41,7 @@ export const useTransactionManager = create<
       combinedTransactions: [],
       newTransactionCount: 0,
       allTransacationsProcessed: false,
+
       addTx: (tx: Transaction) => {
         const paddedHash: string = isStarknetAddress(tx.hash)
           ? padAddress(tx.hash)
@@ -56,19 +57,19 @@ export const useTransactionManager = create<
           allTransacationsProcessed: false,
         }));
       },
-
-      updateAllTransacationsProcessed: (combinedTransactions) => {
+      resetTransacationCount: () => {
         return set((state) => ({
-          ...state,
-          allTransacationsProcessed: true,
           newTransactionCount: 0,
-          combinedTransactions: [...combinedTransactions],
+        }));
+      },
+      updateCombinedTransactions: (combinedTransactions) => {
+        return set((state) => ({
+          combinedTransactions: combinedTransactions,
         }));
       },
     }),
     {
-      name: "starknetTransactions", // unique name for localStorage key
-      //storage: createJSONStorage(() => localStorage),
+      name: "starknetTransactions",
     },
   ),
 );
