@@ -24,6 +24,7 @@ export interface TransactionState {
   newTransactionCount: number;
   transactions: Transaction[];
   combinedTransactions: CombinedTransaction[];
+  allTransactionsProcessed: boolean;
   addTx: (tx: Transaction) => void;
   resetTransacationCount: () => void;
   updateCombinedTransactions: (
@@ -40,8 +41,7 @@ export const useTransactionManager = create<
       transactions: [],
       combinedTransactions: [],
       newTransactionCount: 0,
-      allTransacationsProcessed: false,
-
+      allTransactionsProcessed: false,
       addTx: (tx: Transaction) => {
         const paddedHash: string = isStarknetAddress(tx.hash)
           ? padAddress(tx.hash)
@@ -52,13 +52,14 @@ export const useTransactionManager = create<
         };
 
         return set((state) => ({
+          allTransactionsProcessed: false,
           transactions: [...state.transactions, updatedTransaction],
           newTransactionCount: state.newTransactionCount + 1,
-          allTransacationsProcessed: false,
         }));
       },
       resetTransacationCount: () => {
         return set((state) => ({
+          allTransactionsProcessed: true,
           newTransactionCount: 0,
         }));
       },

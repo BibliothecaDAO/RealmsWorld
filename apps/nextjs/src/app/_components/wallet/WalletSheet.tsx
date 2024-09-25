@@ -33,7 +33,7 @@ import { QueryTransactionList, LocalStorageTransactionList } from "./transaction
 export const WalletSheet = () => {
   const transactionState = useStore(useTransactionManager, (state) => state);
   const newTransactionCount = transactionState?.newTransactionCount;
-  const combinedtransactions = transactionState?.combinedTransactions;
+  const allTransactionsProcessed = transactionState?.allTransactionsProcessed
 
   const {
     isConnected: isL2Connected,
@@ -54,7 +54,7 @@ export const WalletSheet = () => {
     return ref.current;
   }
 
-
+  console.log(newTransactionCount, allTransactionsProcessed)
   //after user closes wallet sheet, reset transactioncount in localstorage
   const previousAccountOpenState = usePrevious(isAccountOpen)
   useEffect(() => {
@@ -146,7 +146,7 @@ export const WalletSheet = () => {
                 </Dialog>
               </div>
             </div>
-            {(newTransactionCount && newTransactionCount > 0) || !combinedtransactions ? <QueryTransactionList /> : <LocalStorageTransactionList />}
+            {((newTransactionCount && newTransactionCount > 0) || allTransactionsProcessed === false) ? <QueryTransactionList /> : <LocalStorageTransactionList />}
           </div>
         </SheetContent>
       </Sheet>
