@@ -43,10 +43,7 @@ export const WalletSheet = () => {
   const isStarknetWrongNetwork = isL2Connected &&
     chainId !== undefined && BigInt(chainId) !== chain.id;
 
-
   const { isAccountOpen, toggleAccount } = useUIStore((state) => state);
-
-
 
   function usePrevious(isAccountOpen: boolean) {
     const ref = useRef<boolean>();
@@ -57,6 +54,7 @@ export const WalletSheet = () => {
   }
 
 
+  //after user closes wallet sheet, reset transactions and transactioncount in localstorage
   const previousAccountOpenState = usePrevious(isAccountOpen)
   useEffect(() => {
     if (isAccountOpen === false && previousAccountOpenState === true) {

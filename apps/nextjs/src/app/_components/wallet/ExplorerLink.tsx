@@ -6,7 +6,7 @@ import {
   STARKSCAN_TX_URL,
   SUPPORTED_L1_CHAIN_ID,
 } from "@/constants/env";
-import { ExternalLinkIcon, Text } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 
 import type { ChainId } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";

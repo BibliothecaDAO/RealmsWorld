@@ -9,6 +9,7 @@ import { useEffect } from "react";
 export const QueryTransactionList = () => {
   const { transactions } = useTransactions();
   const transactionState = useStore(useTransactionManager, (state) => state);
+  // after useTransactions fires, update stored transactions in localstorage that useTransactions returns
   useEffect(() => {
     transactionState?.updateCombinedTransactions(transactions);
   }, [transactions]);
@@ -26,6 +27,7 @@ export const QueryTransactionList = () => {
 
 
 export const LocalStorageTransactionList = () => {
+  // if newTransactioncount is 0, use localstorage transactions instead
   const { transactions } = useLocalStorageTransactions();
   return (
     <div className="mt-2 flex h-full w-full flex-grow flex-col border-b p-2">

@@ -8,7 +8,7 @@ import { shortenHex } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 
 import type { buttonVariants } from "@realms-world/ui";
-import { Button, Badge } from "@realms-world/ui";
+import { Button } from "@realms-world/ui";
 import { Loader } from "lucide-react";
 
 export const StarknetLoginButton = ({
@@ -55,7 +55,7 @@ export const StarknetLoginButton = ({
         </span>
       </span>
       {(isConnected && newTransactionCount) && newTransactionCount > 0 ? <span
-        className={'bg-green-500 w-[20px] absolute -top-1.5 -right-1.5 rounded-full text-black-600'}
+        className={'bg-green-600 w-[20px] absolute -top-1.5 -right-1.5 rounded-full text-black'}
       >{newTransactionCount}</span> : null}
     </Button>
   );
