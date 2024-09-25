@@ -33,6 +33,7 @@ import { QueryTransactionList, LocalStorageTransactionList } from "./transaction
 export const WalletSheet = () => {
   const transactionState = useStore(useTransactionManager, (state) => state);
   const newTransactionCount = transactionState?.newTransactionCount;
+  const combinedtransactions = transactionState?.combinedTransactions;
 
   const {
     isConnected: isL2Connected,
@@ -145,7 +146,7 @@ export const WalletSheet = () => {
                 </Dialog>
               </div>
             </div>
-            {newTransactionCount && newTransactionCount > 0 ? <QueryTransactionList /> : <LocalStorageTransactionList />}
+            {(newTransactionCount && newTransactionCount > 0) || !combinedtransactions ? <QueryTransactionList /> : <LocalStorageTransactionList />}
           </div>
         </SheetContent>
       </Sheet>
