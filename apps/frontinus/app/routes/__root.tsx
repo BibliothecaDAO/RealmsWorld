@@ -45,10 +45,8 @@ export const Route = createRootRouteWithContext<{
   ],
   links: () => [
     { rel: 'stylesheet', href: appCss },
-    // Preconnect to Google Fonts to improve loading speed
     { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
     { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: "" },
-    // Load the desired Google Font(s)
     {
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap',
@@ -66,47 +64,48 @@ export const Route = createRootRouteWithContext<{
 })
 
 function RootComponent() {
-  const chains = [sepolia];
-  const provider = publicProvider();
-  const connectors = [braavos(), argent()];
+
   return (
     <RootDocument>
-      <StarknetConfig chains={chains} provider={provider} connectors={connectors}>
-        <Outlet />
-      </StarknetConfig>
+      <Outlet />
     </RootDocument>
   )
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const cookies = Route.useLoaderData()
-
+  const chains = [sepolia];
+  const provider = publicProvider();
+  const connectors = [braavos(), argent()];
   return (
     <Html>
       <Head>
         <Meta />
       </Head>
-      <ThemeProvider
-        defaultTheme="dark" storageKey="vite-ui-theme"
-      >
-        <Body>
-          <SidebarLayout
-            defaultOpen={cookies === "true"}
-          >
-            <AppSidebar />
-            <main className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
-              <div className="border-b w-full flex justify-between h-[3.05rem] items-center px-4">
-                <SidebarTrigger />
-                <ModeToggle />
-              </div>
-              {children}
-            </main>
-          </SidebarLayout>
+      <StarknetConfig chains={chains} provider={provider} connectors={connectors}>
+        <ThemeProvider
+          defaultTheme="dark" storageKey="vite-ui-theme"
+        >
+          <Body>
+            <SidebarLayout
+              defaultOpen={cookies === "true"}
+            >
+              <AppSidebar />
+              <main className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
+                <div className="border-b w-full flex justify-between h-[3.05rem] items-center px-4">
+                  <SidebarTrigger />
+                  <ModeToggle />
+                </div>
+                {children}
+              </main>
+            </SidebarLayout>
 
-          <ScrollRestoration />
-          <Scripts />
-        </Body>
-      </ThemeProvider>
+            <ScrollRestoration />
+            <Scripts />
+          </Body>
+        </ThemeProvider>
+      </StarknetConfig>
+
     </Html>
   )
 }
