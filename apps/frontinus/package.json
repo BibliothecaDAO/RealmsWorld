@@ -23,6 +23,7 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "dependencies": {
+    "@realms-world/styles": "workspace:*",
     "@realms-world/ui": "workspace:*",
     "@starknet-react/chains": "^3.0.0",
     "@starknet-react/core": "^3.0.1-beta.0",
