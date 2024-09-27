@@ -104,6 +104,9 @@ importers:
 
   apps/frontinus:
     dependencies:
+      '@realms-world/constants':
+        specifier: workspace:*
+        version: link:../../packages/constants
       '@realms-world/styles':
         specifier: workspace:*
         version: link:../../config/styles

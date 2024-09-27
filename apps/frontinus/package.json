@@ -23,6 +23,7 @@
     "vite-tsconfig-paths": "^5.0.1"
   },
   "dependencies": {
+    "@realms-world/constants": "workspace:*",
     "@realms-world/styles": "workspace:*",
     "@realms-world/ui": "workspace:*",
     "@realms-world/utils": "workspace:*",
