@@ -1,7 +1,7 @@
 import React from "react";
 import LordsIcon from "@/icons/lords.svg";
 
-import { Input } from "@realms-world/ui";
+import { Input } from "@realms-world/ui/components/ui/input";
 
 export interface TokenInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

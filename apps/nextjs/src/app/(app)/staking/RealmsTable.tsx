@@ -20,7 +20,7 @@ import Typography from "@mui/material/Typography";
 import { visuallyHidden } from "@mui/utils";
 import { ListFilter, Trash } from "lucide-react";
 
-import { Switch } from "@realms-world/ui";
+import { Switch } from "@realms-world/ui/components/ui/switch";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -88,9 +88,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   } = props;
   const createSortHandler =
     (property: keyof Pick<Realm, "id" | "name">) =>
-    (event: React.MouseEvent<unknown>) => {
-      onRequestSort(event, property);
-    };
+      (event: React.MouseEvent<unknown>) => {
+        onRequestSort(event, property);
+      };
 
   return (
     <TableHead>

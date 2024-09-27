@@ -15,7 +15,8 @@ import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
 import { Github, Twitter, User } from "lucide-react";
 
-import { Button, ScrollArea } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { ScrollArea } from "@realms-world/ui/components/ui/scroll-area";
 
 import { useUIStore } from "../../providers/UIStoreProvider";
 

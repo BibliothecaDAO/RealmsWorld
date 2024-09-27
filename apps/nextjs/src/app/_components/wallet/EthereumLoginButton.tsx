@@ -6,9 +6,8 @@ import EthereumLogo from "@/icons/ethereum.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useConnect } from "wagmi";
-
-import type { buttonVariants } from "@realms-world/ui";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
+import type { buttonVariants } from "@realms-world/ui/components/ui/button";
 
 export const EthereumLoginButton = ({
   // openAccount = false,

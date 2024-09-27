@@ -1,4 +1,4 @@
-// ... existing imports ...
+// ... rest of the code ...
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
@@ -20,21 +20,17 @@ import { useCall, useAccount as useL2Account, useNonceForAddress } from "@starkn
 import { Loader, MoveRightIcon, RefreshCcw } from "lucide-react";
 import { useAccount } from "wagmi";
 
-import type { StepItem } from "@realms-world/ui";
+import type { StepItem } from "@realms-world/ui/components/ui/stepper/index";
 import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
-import {
-  Alert,
-  Badge,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  ScrollArea,
-  Step,
-  Stepper,
-  toast,
-  useStepper,
-} from "@realms-world/ui";
+import { Alert } from "@realms-world/ui/components/ui/alert";
+import { Badge } from "@realms-world/ui/components/ui/badge";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "@realms-world/ui/components/ui/dialog";
+import { ScrollArea } from "@realms-world/ui/components/ui/scroll-area";
+import { Step } from "@realms-world/ui/components/ui/stepper/index";
+import { Stepper } from "@realms-world/ui/components/ui/stepper/index";
+import { toast } from "@realms-world/ui/components/ui/use-toast";
+import { useStepper } from "@realms-world/ui/components/ui/stepper/index";
 
 import { EthereumLoginButton } from "../wallet/EthereumLoginButton";
 import { StarknetLoginButton } from "../wallet/StarknetLoginButton";
