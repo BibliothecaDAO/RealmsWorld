@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 import { PageLayout } from "../../_components/PageLayout";
 

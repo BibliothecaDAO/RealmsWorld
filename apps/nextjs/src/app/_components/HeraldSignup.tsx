@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import Link from "next/link";
 //import { useState } from "react";
 import Stamp from "@/icons/stamp.svg";

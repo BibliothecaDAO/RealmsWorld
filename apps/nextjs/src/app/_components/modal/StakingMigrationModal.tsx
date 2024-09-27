@@ -8,7 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   ScrollArea,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/dialog";
 
 export const StakingMigrationModal = () => {
   const { isStakingMigrationOpen, toggleStakingMigration } = useUIStore(

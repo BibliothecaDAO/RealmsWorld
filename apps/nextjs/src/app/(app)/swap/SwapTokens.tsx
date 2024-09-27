@@ -14,16 +14,16 @@ import { formatEther, formatUnits, parseEther, parseUnits } from "viem";
 
 import { LORDS } from "@realms-world/constants";
 import { SUPPORTED_TOKENS } from "@realms-world/constants/src/Tokens";
+
 import {
-  Button,
-  Input,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from "@realms-world/ui";
-
+  SelectValue
+} from "@realms-world/ui/components/ui/select";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Input } from "@realms-world/ui/components/ui/input";
 import { StarknetLoginButton } from "../../_components/wallet/StarknetLoginButton";
 import { useWalletsProviderContext } from "../../../providers/WalletsProvider";
 import { TokenBalance } from "../bridge/TokenBalance";

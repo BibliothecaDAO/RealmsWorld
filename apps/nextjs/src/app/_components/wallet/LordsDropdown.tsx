@@ -9,14 +9,14 @@ import StarknetLogo from "@/icons/starknet.svg";
 import { ArrowLeftRight } from "lucide-react";
 import { formatEther } from "viem";
 
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/dropdown-menu";
 
 export const LordsDropdown = () => {
   const { data: l1Data } = useLordsBalance();

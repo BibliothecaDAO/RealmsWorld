@@ -7,15 +7,15 @@ import RealmsL3 from "@/icons/realms_l3.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { HammerIcon, Menu /*, ShieldQuestion*/ } from "lucide-react";
 import Crown from "@/icons/crown.svg";
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Button,
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/navigation-menu";
 
 import { EthereumLoginButton } from "./wallet/EthereumLoginButton";
 import { LordsDropdown } from "./wallet/LordsDropdown";
