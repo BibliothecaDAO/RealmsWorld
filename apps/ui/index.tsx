@@ -97,6 +97,11 @@ export {
 } from "./src/components/ui/context-menu";
 export { DatePicker } from "./src/components/ui/date-picker";
 export {
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+} from "./src/components/ui/drawer"
+export {
   Dialog,
   DialogTrigger,
   DialogPortal,
@@ -189,6 +194,14 @@ export {
   SelectItem,
   SelectSeparator,
 } from "./src/components/ui/select";
+export {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarItem,
+  SidebarLabel,
+} from "./src/components/ui/sidebar"
 export { Separator } from "./src/components/ui/separator";
 export {
   Sheet,
@@ -248,3 +261,6 @@ export type {
   StepperProps,
   StepItem,
 } from "./src/components/ui/stepper";
+
+export { useIsMobile } from "./src/hooks/use-mobile.jsx"
+export { useSidebar } from "./src/hooks/use-sidebar.jsx"
