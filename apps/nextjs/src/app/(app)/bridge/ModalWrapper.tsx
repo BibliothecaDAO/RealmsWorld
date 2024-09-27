@@ -13,7 +13,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/dialog";
 
 import { useHideModal, useModal } from "../../../providers/ModalProvider";
 

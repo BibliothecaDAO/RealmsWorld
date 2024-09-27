@@ -6,26 +6,13 @@ import { reader } from "@/utils/keystatic";
 import Markdoc from "@markdoc/markdoc";
 import React from "react";
 import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
-import {
-  Badge,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-  Button,
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@realms-world/ui";
 
-
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Badge } from "@realms-world/ui/components/ui/badge";
+import { Tabs } from "@mui/material";
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@realms-world/ui/components/ui/breadcrumb";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@realms-world/ui/components/ui/carousel";
+import { TabsList, TabsTrigger, TabsContent } from "@realms-world/ui/components/ui/tabs";
 
 export async function generateMetadata({
   params,

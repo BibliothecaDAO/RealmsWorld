@@ -1,7 +1,7 @@
 'use client';
 
 import Autoplay from "embla-carousel-autoplay"
-import { Carousel, CarouselContent, CarouselItem/*, CarouselNext, CarouselPrevious*/ } from "@realms-world/ui";
+import { Carousel, CarouselContent, CarouselItem/*, CarouselNext, CarouselPrevious*/ } from "@realms-world/ui/components/ui/carousel";
 
 import Image from "next/image"
 import Link from "next/link";

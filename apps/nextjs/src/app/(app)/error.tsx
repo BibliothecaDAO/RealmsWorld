@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 interface ErrorProps {
   error: Error;

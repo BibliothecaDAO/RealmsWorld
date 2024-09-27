@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-
-import { Badge, Card } from "@realms-world/ui";
+import { Badge } from "@realms-world/ui/components/ui/badge";
+import { Card } from "@realms-world/ui/components/ui/card";
 import type { CollectionEntry } from "@/utils/keystatic";
 
 

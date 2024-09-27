@@ -7,7 +7,8 @@ import useStore from "@/hooks/useStore";
 import { useTransactionManager } from "@/stores/useTransasctionManager";
 import { Loader } from "lucide-react";
 
-import { Button, toast } from "@realms-world/ui";
+import { toast } from "@realms-world/ui/components/ui/use-toast";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const TransactionAction = ({ tx }: { tx: CombinedTransaction }) => {
   const { writeAsync, isPending } = useWriteFinalizeWithdrawRealms();

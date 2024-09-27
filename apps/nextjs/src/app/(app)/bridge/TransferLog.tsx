@@ -36,7 +36,7 @@ import {
 import { formatEther } from "viem";
 
 import { LORDS_BRIDGE_ADDRESS } from "@realms-world/constants";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { cn } from "@realms-world/utils";
 
 export const TransferLog = ({
@@ -59,7 +59,7 @@ export const TransferLog = ({
     finishedTxHash: l1hash,
   }: DepositEvent | WithdrawalEvent = depositEvents?.[0] ??
   withdrawalEvents?.[0] ??
-  transfer;
+    transfer;
 
   useEffect(() => {
     const action = isL1 ? 1 : 2;
@@ -72,14 +72,14 @@ export const TransferLog = ({
       console.log(depositEvents);
       const hash = depositEvents?.[0].payload
         ? getTransactionHash(
-            TransactionHashPrefix.L1_HANDLER,
-            LORDS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] ?? "",
-            LORDS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID] ?? "",
-            "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
-            depositEvents?.[0].payload,
-            ("SN_" + NETWORK_NAME) as ChainTypeL2,
-            depositEvents?.[0].nonce,
-          )
+          TransactionHashPrefix.L1_HANDLER,
+          LORDS_BRIDGE_ADDRESS[SUPPORTED_L1_CHAIN_ID] ?? "",
+          LORDS_BRIDGE_ADDRESS[SUPPORTED_L2_CHAIN_ID] ?? "",
+          "0x02d757788a8d8d6f21d1cd40bce38a8222d70654214e96ff95d8086e684fbee5",
+          depositEvents?.[0].payload,
+          ("SN_" + NETWORK_NAME) as ChainTypeL2,
+          depositEvents?.[0].nonce,
+        )
         : transfer.hash;
       setL2hash(hash);
     };
@@ -147,11 +147,10 @@ export const TransferLog = ({
   return (
     <div className="m-1 flex flex-col rounded border p-2 sm:p-3">
       <div className="mb-1 flex justify-between">
-        <div className="text-xs font-semibold text-gray-600">{`${
-          transfer.timestamp
+        <div className="text-xs font-semibold text-gray-600">{`${transfer.timestamp
             ? getFullTime(transfer.timestamp)
             : getFullTime(createdTimestamp * 1000)
-        }`}</div>
+          }`}</div>
         {renderTransferStatus()}
       </div>
       <div className="flex w-full items-center justify-between gap-x-2 self-center">

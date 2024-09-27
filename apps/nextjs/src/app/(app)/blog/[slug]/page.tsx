@@ -9,9 +9,8 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-  Button,
-} from "@realms-world/ui";
-
+} from "@realms-world/ui/components/ui/breadcrumb";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { getArticleData } from "../getArticles";
 
 async function getData({ id }: { id: string }) {

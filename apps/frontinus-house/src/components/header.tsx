@@ -13,25 +13,29 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { Badge } from "@realms-world/ui/components/ui/badge";
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Badge,
-  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
+} from "@realms-world/ui/components/ui/card";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  Input,
+} from "@realms-world/ui/components/ui/dropdown-menu";
+import { Input } from "@realms-world/ui/components/ui/input";
+import {
   Sheet,
   SheetContent,
   SheetTrigger,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/sheet";
 
 export default function Header() {
   return (

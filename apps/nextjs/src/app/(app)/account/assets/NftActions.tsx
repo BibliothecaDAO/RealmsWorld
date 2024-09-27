@@ -6,7 +6,8 @@ import { XIcon } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
 import type { ChainId } from "@realms-world/constants";
-import { Badge, Button } from "@realms-world/ui";
+import { Badge } from "@realms-world/ui/components/ui/badge";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 type L1orL2Tokens =
   | NonNullable<

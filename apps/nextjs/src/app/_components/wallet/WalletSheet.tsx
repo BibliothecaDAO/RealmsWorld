@@ -7,23 +7,11 @@ import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount as useL2Account, useNetwork } from "@starknet-react/core";
 
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-  ScrollArea,
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@realms-world/ui";
-
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@realms-world/ui/components/ui/dialog";
+import { ScrollArea } from "@realms-world/ui/components/ui/scroll-area";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@realms-world/ui/components/ui/sheet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@realms-world/ui/components/ui/tabs";
 import { WrongNetworkModal } from "../modal/WrongNetworkModal";
 import EthereumAccount from "./EthereumAccount";
 import StarkAccount from "./StarkAccount";

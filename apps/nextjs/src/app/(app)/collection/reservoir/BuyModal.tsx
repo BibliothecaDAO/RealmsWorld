@@ -4,8 +4,8 @@ import type { VariantProps } from "class-variance-authority";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { BuyModal } from "@reservoir0x/reservoir-kit-ui";
 
-import type { buttonVariants } from "@realms-world/ui";
-import { Button } from "@realms-world/ui";
+import type { buttonVariants } from "@realms-world/ui/components/ui/button";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const BuyButton = ({
   address,

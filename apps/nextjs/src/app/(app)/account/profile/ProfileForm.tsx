@@ -13,21 +13,23 @@ import { useForm } from "react-hook-form";
 
 import type { RouterOutputs } from "@realms-world/api";
 import { CreateDelegateProfileSchema } from "@realms-world/db/schema";
+import { Alert } from "@realms-world/ui/components/ui/alert";
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Alert,
-  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
-  Textarea,
-  toast,
+} from "@realms-world/ui/components/ui/form";
+import { Input } from "@realms-world/ui/components/ui/input";
+import { Textarea } from "@realms-world/ui/components/ui/textarea";
+import { toast } from "@realms-world/ui/components/ui/use-toast";
+import {
   ToggleGroup,
   ToggleGroupItem,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/toggle-group";
 import { padAddress } from "@realms-world/utils";
 
 export const ProfileForm = ({

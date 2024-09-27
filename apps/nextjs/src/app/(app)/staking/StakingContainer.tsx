@@ -24,14 +24,13 @@ import {
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import {
-  Alert,
-  Button,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTrigger,
-} from "@realms-world/ui";
-
+} from "@realms-world/ui/components/ui/dialog";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Alert } from "@realms-world/ui/components/ui/alert";
 import { PaymentPoolV2 } from "../../_components/staking/PaymentPoolV2";
 import { EthereumLoginButton } from "../../_components/wallet/EthereumLoginButton";
 import RealmsTable from "./RealmsTable";

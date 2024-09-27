@@ -9,17 +9,15 @@ import { TriangleAlert } from "lucide-react";
 import { useAccount } from "wagmi";
 
 import { Collections } from "@realms-world/constants";
+import { Alert, AlertDescription, AlertTitle } from "@realms-world/ui/components/ui/alert";
+import { Badge } from "@realms-world/ui/components/ui/badge";
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  Badge,
-  Button,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/tabs";
 
 import AssetL1CollectionPreview from "./AssetL1CollectionPreview";
 import AssetL2CollectionPreview from "./AssetL2CollectionPreview";

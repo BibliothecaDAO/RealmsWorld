@@ -9,7 +9,7 @@ import { useAccount, useDisconnect, useStarkName } from "@starknet-react/core";
 import { LogOut } from "lucide-react";
 
 import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 import { CopyButton } from "../CopyButton";
 import { ExplorerLink } from "./ExplorerLink";

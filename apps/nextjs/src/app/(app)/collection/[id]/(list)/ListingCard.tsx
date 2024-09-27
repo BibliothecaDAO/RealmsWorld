@@ -4,7 +4,7 @@ import LordsIcon from "@/icons/lords.svg";
 import { shortenHex } from "@/utils/utils";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";
 

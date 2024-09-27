@@ -18,8 +18,8 @@ import { WalletsProvider } from "@/providers/WalletsProvider";
 import { Web3Providers } from "@/providers/Web3Providers";
 import { TRPCReactProvider } from "@/trpc/react";
 
-import { Toaster, TooltipProvider } from "@realms-world/ui";
-
+import { Toaster } from "@realms-world/ui/components/ui/toaster";
+import { TooltipProvider } from "@realms-world/ui/components/ui/tooltip";
 const bebas_neue = Bebas_Neue({
   subsets: ["latin"],
   variable: "--font-bebas-neue",

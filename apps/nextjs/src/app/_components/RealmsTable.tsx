@@ -9,7 +9,14 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Table } from "@realms-world/ui/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@realms-world/ui/components/ui/table";
 import { Checkbox } from "@realms-world/ui/components/ui/checkbox";
 
 interface DataTableProps<TData> {

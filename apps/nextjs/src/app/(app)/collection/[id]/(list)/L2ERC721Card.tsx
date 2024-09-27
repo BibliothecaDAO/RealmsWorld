@@ -8,7 +8,7 @@ import LordsIcon from "@/icons/lords.svg";
 import { findLowestPriceActiveListing } from "@/utils/getters";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { cn } from "@realms-world/utils";
 
 import { CardAction } from "./CardAction";

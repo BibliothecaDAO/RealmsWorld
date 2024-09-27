@@ -2,7 +2,7 @@ import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useWalletRequest } from "@starknet-react/core";
 
 import { LORDS } from "@realms-world/constants";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const AddLordsToWallet = () => {
   const { requestAsync, isPending, isError, error } = useWalletRequest({

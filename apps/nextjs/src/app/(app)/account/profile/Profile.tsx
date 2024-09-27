@@ -11,14 +11,14 @@ import { UserRoundPlus } from "lucide-react";
 import { SignInSIWS } from "./SignInSIWS";
 
 import type { RouterOutputs } from "@realms-world/api";
+import { Badge } from "@realms-world/ui/components/ui/badge";
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Badge,
-  Button,
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/card";
 import { RealmsABI } from "@/abi/L2/Realms";
 import { ProfileForm } from "./ProfileForm";
 import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";

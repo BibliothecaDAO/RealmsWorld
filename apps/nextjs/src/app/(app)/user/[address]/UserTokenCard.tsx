@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatedMap } from "@/app/_components/AnimatedMap";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { cn } from "@realms-world/utils";
 
 function UserTokenCard({

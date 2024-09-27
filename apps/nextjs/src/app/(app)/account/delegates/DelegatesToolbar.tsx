@@ -10,10 +10,14 @@ import { Search, TriangleAlert, UserRoundPlus } from "lucide-react";
 import {
   Alert,
   AlertDescription,
-  AlertTitle,
-  Button,
-  Input,
-} from "@realms-world/ui";
+  AlertTitle
+} from "@realms-world/ui/components/ui/alert";
+import {
+  Button
+} from "@realms-world/ui/components/ui/button";
+import {
+  Input
+} from "@realms-world/ui/components/ui/input";
 import { padAddress } from "@realms-world/utils";
 import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 

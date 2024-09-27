@@ -9,13 +9,12 @@ import { reader } from "@/utils/keystatic";
 import Markdoc from "@markdoc/markdoc";
 import React from "react";
 import {
-  Button,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@realms-world/ui";
-
+} from "@realms-world/ui/components/ui/tabs";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export async function generateMetadata({
   params,

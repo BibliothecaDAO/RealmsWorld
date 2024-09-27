@@ -7,8 +7,8 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-  Button,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/breadcrumb";
+import { Button } from "@realms-world/ui/components/ui/button";
 import React from "react";
 import Markdoc from "@markdoc/markdoc";
 import { reader } from "@/utils/keystatic";

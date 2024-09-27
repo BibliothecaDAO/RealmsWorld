@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Badge, Button } from "@realms-world/ui";
-
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Badge } from "@realms-world/ui/components/ui/badge";
 import { BaseCard } from "../../_components/BaseCard";
 import { StatusDot } from "../../_components/StatusDot";
 import type { CollectionEntry } from "@/utils/keystatic";

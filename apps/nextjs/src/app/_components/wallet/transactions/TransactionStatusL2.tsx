@@ -1,6 +1,6 @@
 import { useTransactionReceipt } from "@starknet-react/core";
 
-import { Badge } from "@realms-world/ui";
+import { Badge } from "@realms-world/ui/components/ui/badge";
 
 export function TransactionStatusL2({ hash }: { hash: string }) {
   const { data, error, isLoading, isError } = useTransactionReceipt({

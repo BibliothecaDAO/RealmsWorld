@@ -2,7 +2,10 @@
 
 import { useDelegateRealms } from "@/hooks/staking/useDelegateRealms";
 import type { RouterOutputs } from "@realms-world/api";
-import { Button } from "@realms-world/ui";
+
+import {
+  Button
+} from "@realms-world/ui/components/ui/button";
 import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
 import { num } from "starknet";
 import { padAddress } from "@realms-world/utils";

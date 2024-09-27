@@ -6,7 +6,7 @@ import { NETWORK_NAME } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
 import { shortenHex } from "@/utils/utils";
 
-import { ScrollArea } from "@realms-world/ui";
+import { ScrollArea } from "@realms-world/ui/components/ui/scroll-area";
 
 export const TopOwners = ({
   owners,
@@ -30,7 +30,7 @@ export const TopOwners = ({
                 {owner.address === stakingAddresses[NETWORK_NAME].v1Galleon
                   ? "Galleon Staking"
                   : owner.address ===
-                      stakingAddresses[NETWORK_NAME].v2Carrack.toLowerCase()
+                    stakingAddresses[NETWORK_NAME].v2Carrack.toLowerCase()
                     ? "Carrack Staking"
                     : shortenHex(owner.address ?? "", 8)}
               </Link>

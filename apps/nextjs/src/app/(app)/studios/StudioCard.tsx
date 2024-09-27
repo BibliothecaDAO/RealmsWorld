@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 import { BaseCard } from "../../_components/BaseCard";
 import type { CollectionEntry } from "@/utils/keystatic";

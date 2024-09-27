@@ -11,9 +11,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useAccount, useWriteContract } from "wagmi";
 
-import type { StepItem } from "@realms-world/ui";
+import type { StepItem } from "@realms-world/ui/components/ui/stepper/index";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Step, Stepper, useStepper } from "@realms-world/ui/components/ui/stepper/index";
+import { toast } from "@realms-world/ui/components/ui/use-toast";
+
 import { StakingAddresses, StakingContracts } from "@realms-world/constants";
-import { Button, Step, Stepper, toast, useStepper } from "@realms-world/ui";
 
 function UnstakeStep({
   step,

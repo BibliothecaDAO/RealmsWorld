@@ -11,14 +11,15 @@ import { useQueryParams } from "@/hooks/useQueryParams";
 import { api } from "@/trpc/react";
 
 import type { RouterOutputs } from "@realms-world/api";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { ScrollArea } from "@realms-world/ui/components/ui/scroll-area";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  Button,
-  ScrollArea,
-} from "@realms-world/ui";
+
+} from "@realms-world/ui/components/ui/accordion";
 
 export const AttributesDropdown = ({
   address,

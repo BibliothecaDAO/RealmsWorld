@@ -2,7 +2,7 @@ import { findLowestPriceActiveListing } from "@/utils/getters";
 import { useAccount } from "@starknet-react/core";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { padAddress } from "@realms-world/utils";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";

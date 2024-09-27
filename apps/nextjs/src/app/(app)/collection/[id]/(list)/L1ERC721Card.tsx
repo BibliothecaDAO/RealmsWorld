@@ -4,7 +4,7 @@ import Link from "next/link";
 import { AnimatedMap } from "@/app/_components/AnimatedMap";
 import { formatEther } from "viem";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { cn } from "@realms-world/utils";
 
 import { BuyButton } from "../../reservoir/BuyModal";

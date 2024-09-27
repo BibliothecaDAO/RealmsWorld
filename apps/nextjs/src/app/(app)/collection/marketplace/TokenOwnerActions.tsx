@@ -5,7 +5,7 @@ import { findLowestPriceActiveListing } from "@/utils/getters";
 import { RefreshCw, Trash2 } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 import { ListCancelModal } from "./cancel/ListCancelModal";
 import { ListModal } from "./list/ListModal";

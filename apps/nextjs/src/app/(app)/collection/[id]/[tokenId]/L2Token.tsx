@@ -10,13 +10,6 @@ import { Clock } from "lucide-react";
 import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 
 import type { RouterOutputs } from "@realms-world/api";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-  Button,
-} from "@realms-world/ui";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";
 import TokenOwnerActions from "../../marketplace/TokenOwnerActions";

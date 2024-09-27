@@ -12,17 +12,11 @@ import { Loader } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
 import {
-  Alert,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-  Input,
-  Progress,
   Tooltip,
   TooltipContent,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/tooltip";
+
+
 import { formatNumber } from "@realms-world/utils";
 
 import ERC721LineItem from "../ERC721LineItem";
@@ -35,6 +29,12 @@ import {
   EditListingStep,
   ListingEditModalRender,
 } from "./ListingEditModalRender";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@realms-world/ui/components/ui/dialog";
+import { Alert } from "@realms-world/ui/components/ui/alert";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Input } from "@realms-world/ui/components/ui/input";
+
+import { Progress } from "@realms-world/ui/components/ui/progress";
 
 const ModalCopy = {
   title: "Edit Listing",
@@ -50,8 +50,8 @@ interface Props {
   openState?: [boolean, Dispatch<SetStateAction<boolean>>];
   listingId?: number;
   token?:
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
-    | RouterOutputs["erc721Tokens"]["byId"];
+  | RouterOutputs["erc721Tokens"]["all"]["items"][number]
+  | RouterOutputs["erc721Tokens"]["byId"];
   collectionId?: string;
   normalizeRoyalties?: boolean;
   copyOverrides?: Partial<typeof ModalCopy>;
@@ -158,11 +158,11 @@ export function ListingEditModal({
               }
               setOpen(open);
             }}
-            /*onPointerDownOutside={(e) => {
-              if (onPointerDownOutside) {
-                onPointerDownOutside(e);
-              }
-            }}*/
+          /*onPointerDownOutside={(e) => {
+            if (onPointerDownOutside) {
+              onPointerDownOutside(e);
+            }
+          }}*/
           >
             <DialogTrigger asChild>{trigger}</DialogTrigger>
             <DialogContent>
@@ -245,18 +245,18 @@ export function ListingEditModal({
                             <span className="text-red">
                               {maximumAmount !== Infinity
                                 ? `Amount must be between ${formatNumber(
-                                    minimumAmount,
-                                  )} - ${formatNumber(maximumAmount)}`
+                                  minimumAmount,
+                                )} - ${formatNumber(maximumAmount)}`
                                 : `Amount must be higher than ${formatNumber(
-                                    minimumAmount,
-                                  )}`}
+                                  minimumAmount,
+                                )}`}
                             </span>
                           </div>
                         ) : null}
 
                         {collection &&
                           collection?.floorAsk?.price?.amount?.native !==
-                            undefined &&
+                          undefined &&
                           canPurchase &&
                           price < collection?.floorAsk?.price.amount.native && (
                             <div>
@@ -268,8 +268,8 @@ export function ListingEditModal({
                                     ((collection.floorAsk.price.amount.native +
                                       price) /
                                       2)) *
-                                    100 *
-                                    1000,
+                                  100 *
+                                  1000,
                                 ) / 1000}
                                 % below the floor
                               </span>

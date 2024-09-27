@@ -12,7 +12,7 @@ import {
   games,
   getCollectionAddresses,
 } from "@realms-world/constants";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 
 export default async function L2CollectionSummary({

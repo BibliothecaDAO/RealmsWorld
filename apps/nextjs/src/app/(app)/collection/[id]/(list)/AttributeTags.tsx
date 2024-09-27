@@ -3,7 +3,7 @@
 import { useQueryParams } from "@/hooks/useQueryParams";
 import { X } from "lucide-react";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const AttributeTags = () => {
   const { handleAttributeClick, getQueriesFromUrl } = useQueryParams();

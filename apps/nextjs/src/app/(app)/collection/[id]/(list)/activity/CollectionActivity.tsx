@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { Switch } from "@realms-world/ui";
+import { Switch } from "@realms-world/ui/components/ui/switch";
 
 export const CollectionActivity = ({
   searchAttributes = ["sale", "transfer", "bid", "ask"],

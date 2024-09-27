@@ -1,4 +1,4 @@
-import { Button } from "@realms-world/ui"
+import { Button } from "@realms-world/ui/components/ui/button";
 import Link from "next/link"
 
 export const ViewOnMarketplace = ({ collection, tokenId }: { collection: string, tokenId?: number }) => {

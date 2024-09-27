@@ -6,7 +6,7 @@ import { api } from "@/trpc/react";
 import { useAccount } from "@starknet-react/core";
 import { useSession } from "next-auth/react";
 
-import { CardContent, CardHeader } from "@realms-world/ui";
+import { CardContent, CardHeader } from "@realms-world/ui/components/ui/card";
 import { padAddress } from "@realms-world/utils";
 
 export const SignInSIWS = () => {

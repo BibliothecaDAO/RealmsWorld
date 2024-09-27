@@ -11,20 +11,22 @@ import { Loader } from "lucide-react";
 import type { RouterOutputs } from "@realms-world/api";
 //import { formatUnits, zeroAddress } from "viem";
 
+import { Alert } from "@realms-world/ui/components/ui/alert";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { DatePicker } from "@realms-world/ui/components/ui/date-picker";
 import {
-  Alert,
-  Button,
-  DatePicker,
   Dialog,
   DialogContent,
   DialogTrigger,
-  Input,
+} from "@realms-world/ui/components/ui/dialog";
+import { Input } from "@realms-world/ui/components/ui/input";
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/select";
 import { formatNumber } from "@realms-world/utils";
 
 import Earnings from "./Earnings";
@@ -42,8 +44,8 @@ const ModalCopy = {
 
 interface Props {
   token:
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number]
-    | RouterOutputs["erc721Tokens"]["byId"];
+  | RouterOutputs["erc721Tokens"]["all"]["items"][number]
+  | RouterOutputs["erc721Tokens"]["byId"];
   trigger?: React.ReactNode;
 }
 
@@ -87,9 +89,9 @@ export function ListModal({ token, trigger }: Props): ReactElement {
           if (expirationOption.relativeTime) {
             const newExpirationTime = expirationOption.relativeTimeUnit
               ? dayjs().add(
-                  expirationOption.relativeTime,
-                  expirationOption.relativeTimeUnit,
-                )
+                expirationOption.relativeTime,
+                expirationOption.relativeTimeUnit,
+              )
               : dayjs.unix(expirationOption.relativeTime);
             return newExpirationTime.toDate();
           }
@@ -146,7 +148,7 @@ export function ListModal({ token, trigger }: Props): ReactElement {
 
               setOpen(open);
             }}
-            //loading={loading}
+          //loading={loading}
           >
             <DialogTrigger>{trigger}</DialogTrigger>
             <DialogContent>
@@ -223,11 +225,11 @@ export function ListModal({ token, trigger }: Props): ReactElement {
                           <span className="text-red-400">
                             {maximumAmount !== Infinity
                               ? `Amount must be between ${formatNumber(
-                                  minimumAmount,
-                                )} - ${formatNumber(maximumAmount)}`
+                                minimumAmount,
+                              )} - ${formatNumber(maximumAmount)}`
                               : `Amount must be higher than ${formatNumber(
-                                  minimumAmount,
-                                )}`}
+                                minimumAmount,
+                              )}`}
                           </span>
                         </div>
                       )}

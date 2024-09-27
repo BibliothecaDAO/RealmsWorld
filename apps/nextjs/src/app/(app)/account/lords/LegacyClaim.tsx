@@ -15,23 +15,26 @@ import { GalleonStaking } from "@/abi/L1/v1GalleonStaking";
 import { CarrackStaking } from "@/abi/L1/v2CarrackStaking";
 import { StakingAddresses } from "@realms-world/constants";
 import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
-
 import {
-  Alert,
-  Badge,
-  Button,
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogTitle,
+} from "@realms-world/ui/components/ui/dialog";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@realms-world/ui/components/ui/collapsible";
+import { Alert } from "@realms-world/ui/components/ui/alert";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Badge } from "@realms-world/ui/components/ui/badge";
+import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/card";
 
 export const LegacyClaim: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
