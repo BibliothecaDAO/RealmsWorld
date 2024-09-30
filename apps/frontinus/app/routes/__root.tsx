@@ -8,13 +8,13 @@ import type { QueryClient } from '@tanstack/react-query'
 
 import { cookieParser } from '@/utils/cookies'
 
-/*import { sepolia } from "@starknet-react/chains";
+import { sepolia, mainnet } from "@starknet-react/chains";
 import {
   StarknetConfig,
   publicProvider,
   argent,
   braavos,
-} from "@starknet-react/core";*/
+} from "@starknet-react/core";
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { DefaultCatchBoundary } from '@/components/layout/DefaultCatchBoundary'
 import { NotFound } from '@/components/layout/NotFound'
@@ -23,6 +23,7 @@ import appCss from '@/App.css?url'
 import { AppSidebar } from '@/components/layout/sidebar/app-sidebar';
 import { SidebarLayout, SidebarTrigger } from '@realms-world/ui/components/ui/sidebar';
 import { ModeToggle } from '@/components/layout/mode-toggle';
+import { isClient } from '@/utils/env';
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
@@ -65,29 +66,44 @@ export const Route = createRootRouteWithContext<{
 })
 
 function RootComponent() {
+  let chains
+  let provider
+  let connectors
 
-  return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
+  if (isClient()) {
+    chains = [sepolia, mainnet];
+    provider = publicProvider();
+    connectors = [braavos(), argent()];
+  }
+  return (<>
+    {isClient() ?
+      <StarknetConfig chains={[sepolia, mainnet]} provider={publicProvider()} connectors={[braavos(), argent()]}>
+        <RootDocument>
+          <Outlet />
+        </RootDocument>
+      </StarknetConfig>
+      : (
+        <RootDocument>
+          <Outlet />
+        </RootDocument>)}</>
   )
+
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const cookies = Route.useLoaderData()
-  /*const chains = [sepolia];
-  const provider = publicProvider();
-  const connectors = [braavos(), argent()];*/
   return (
     <Html>
       <Head>
         <Meta />
       </Head>
-      {/*<StarknetConfig chains={chains} provider={provider} connectors={connectors}>*/}
+
       <ThemeProvider
         defaultTheme="dark" storageKey="vite-ui-theme"
       >
+
         <Body>
+
           <SidebarLayout
             defaultOpen={cookies === "true"}
           >
@@ -105,7 +121,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <Scripts />
         </Body>
       </ThemeProvider>
-      {/*</StarknetConfig>*/}
 
     </Html>
   )
