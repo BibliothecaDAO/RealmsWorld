@@ -5,9 +5,7 @@ import {
 } from '@tanstack/react-router'
 import { Body, Head, Html, Meta, Scripts } from '@tanstack/start'
 import type { QueryClient } from '@tanstack/react-query'
-
 import { cookieParser } from '@/utils/cookies'
-
 import { sepolia, mainnet } from "@starknet-react/chains";
 import {
   StarknetConfig,
@@ -66,15 +64,6 @@ export const Route = createRootRouteWithContext<{
 })
 
 function RootComponent() {
-  let chains
-  let provider
-  let connectors
-
-  if (isClient()) {
-    chains = [sepolia, mainnet];
-    provider = publicProvider();
-    connectors = [braavos(), argent()];
-  }
   return (<>
     {isClient() ?
       <StarknetConfig chains={[sepolia, mainnet]} provider={publicProvider()} connectors={[braavos(), argent()]}>
@@ -97,16 +86,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <Head>
         <Meta />
       </Head>
-
-      <ThemeProvider
-        defaultTheme="dark" storageKey="vite-ui-theme"
-      >
-
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Body>
-
-          <SidebarLayout
-            defaultOpen={cookies === "true"}
-          >
+          <SidebarLayout defaultOpen={cookies === "true"}>
             <AppSidebar />
             <main className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
               <div className="border-b w-full flex justify-between h-[3.05rem] items-center px-4">
@@ -116,12 +98,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               {children}
             </main>
           </SidebarLayout>
-
           <ScrollRestoration />
           <Scripts />
         </Body>
       </ThemeProvider>
-
     </Html>
   )
 }

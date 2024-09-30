@@ -6,6 +6,7 @@
   "packageManager": "pnpm@9.11.0",
   "scripts": {
     "build": "turbo run build",
+    "build:fh": "turbo run build -F @realms-world/frontinus...",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
     "db:push": "turbo -F @realms-world/db push",

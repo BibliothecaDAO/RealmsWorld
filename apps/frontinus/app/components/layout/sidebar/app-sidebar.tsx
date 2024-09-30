@@ -32,6 +32,7 @@ import {
   SidebarItem,
   SidebarLabel,
 } from "@realms-world/ui/components/ui/sidebar"
+import { isClient } from "@/utils/env"
 const data = {
   teams: [
     {
@@ -228,7 +229,6 @@ export function AppSidebar() {
         </div>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
   )
