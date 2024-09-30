@@ -8,10 +8,6 @@ import { routerWithQueryClient } from '@tanstack/react-router-with-query'
 import { DefaultCatchBoundary } from './components/layout/DefaultCatchBoundary'
 import { NotFound } from './components/layout/NotFound'
 
-import "@realms-world/styles/globals.css";
-import "./App.css";
-
-
 export function createRouter() {
     if (typeof document !== 'undefined') {
         notifyManager.setScheduler(window.requestAnimationFrame)

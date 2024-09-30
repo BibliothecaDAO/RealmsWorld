@@ -18,7 +18,7 @@ import {
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { DefaultCatchBoundary } from '@/components/layout/DefaultCatchBoundary'
 import { NotFound } from '@/components/layout/NotFound'
-
+import "@realms-world/styles/globals.css?url";
 import appCss from '@/App.css?url'
 import { AppSidebar } from '@/components/layout/sidebar/app-sidebar';
 import { SidebarLayout, SidebarTrigger } from '@realms-world/ui/components/ui/sidebar';
