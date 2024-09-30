@@ -82,29 +82,29 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <Head>
         <Meta />
       </Head>
-      <StarknetConfig chains={chains} provider={provider} connectors={connectors}>
-        <ThemeProvider
-          defaultTheme="dark" storageKey="vite-ui-theme"
-        >
-          <Body>
-            <SidebarLayout
-              defaultOpen={cookies === "true"}
-            >
-              <AppSidebar />
-              <main className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
-                <div className="border-b w-full flex justify-between h-[3.05rem] items-center px-4">
-                  <SidebarTrigger />
-                  <ModeToggle />
-                </div>
-                {children}
-              </main>
-            </SidebarLayout>
+      {/*<StarknetConfig chains={chains} provider={provider} connectors={connectors}>*/}
+      <ThemeProvider
+        defaultTheme="dark" storageKey="vite-ui-theme"
+      >
+        <Body>
+          <SidebarLayout
+            defaultOpen={cookies === "true"}
+          >
+            <AppSidebar />
+            <main className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
+              <div className="border-b w-full flex justify-between h-[3.05rem] items-center px-4">
+                <SidebarTrigger />
+                <ModeToggle />
+              </div>
+              {children}
+            </main>
+          </SidebarLayout>
 
-            <ScrollRestoration />
-            <Scripts />
-          </Body>
-        </ThemeProvider>
-      </StarknetConfig>
+          <ScrollRestoration />
+          <Scripts />
+        </Body>
+      </ThemeProvider>
+      {/*</StarknetConfig>*/}
 
     </Html>
   )
