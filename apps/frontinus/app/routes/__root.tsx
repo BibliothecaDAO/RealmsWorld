@@ -8,13 +8,13 @@ import type { QueryClient } from '@tanstack/react-query'
 
 import { cookieParser } from '@/utils/cookies'
 
-import { sepolia } from "@starknet-react/chains";
+/*import { sepolia } from "@starknet-react/chains";
 import {
   StarknetConfig,
   publicProvider,
   argent,
   braavos,
-} from "@starknet-react/core";
+} from "@starknet-react/core";*/
 import { ThemeProvider } from "@/components/layout/theme-provider"
 import { DefaultCatchBoundary } from '@/components/layout/DefaultCatchBoundary'
 import { NotFound } from '@/components/layout/NotFound'
@@ -74,9 +74,9 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const cookies = Route.useLoaderData()
-  const chains = [sepolia];
+  /*const chains = [sepolia];
   const provider = publicProvider();
-  const connectors = [braavos(), argent()];
+  const connectors = [braavos(), argent()];*/
   return (
     <Html>
       <Head>
