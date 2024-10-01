@@ -4,6 +4,7 @@ import AssetL2CollectionPreview from "@/app/(app)/account/assets/AssetL2Collecti
 import { Collections } from "@realms-world/constants";
 
 import { BridgeNftWrapper } from "./BridgeNftWrapper";
+import { Portfolio } from "./Portfolio";
 
 export function generateMetadata(): Metadata {
   return {
@@ -16,11 +17,12 @@ export default function Page() {
   return (
     <>
       <div className="mt-8 h-full w-full space-y-20">
-        <BridgeNftWrapper /*collection={Collections.REALMS}*/ />
+        <Portfolio />
+        {/*<BridgeNftWrapper collection={Collections.REALMS} />
         <AssetL2CollectionPreview collectionName={Collections.GOLDEN_TOKEN} />
         <AssetL2CollectionPreview collectionName={Collections.BEASTS} />
         <AssetL2CollectionPreview collectionName={Collections.BLOBERT} />
-        <AssetL2CollectionPreview collectionName={Collections.BANNERS} />
+        <AssetL2CollectionPreview collectionName={Collections.BANNERS} />*/}
       </div>
     </>
   );

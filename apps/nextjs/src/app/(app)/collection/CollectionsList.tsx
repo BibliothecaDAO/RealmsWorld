@@ -3,9 +3,9 @@ import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 
 import { CollectionAddresses } from "@realms-world/constants";
 
-import { getCollections } from "../../lib/reservoir/getCollections";
+import { getCollections } from "@/lib/reservoir/getCollections";
 import { REALMS_L2_COLLECTIONS } from "@realms-world/constants/src/Collections";
-import { ArkCollectionCardFetcher } from "../_components/ArkCollectionCardFetcher";
+import { ArkCollectionCardFetcher } from "@/app/_components/ArkCollectionCardFetcher";
 
 export const metadata = {
   title: "Lootverse Collections",

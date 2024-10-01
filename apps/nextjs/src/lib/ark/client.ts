@@ -1,4 +1,4 @@
-import { env } from "@/env";
+import { env } from "env";
 
 export type Fetcher<T> = (url: string, options?: FetcherOpts) => Promise<T>;
 export interface FetcherOpts {
@@ -18,30 +18,30 @@ export class ArkClient {
   }
 
   public async fetch<T>(url: string, options: FetcherOpts = {}): Promise<T> {
-    const res = await this.fetcher(this.source + url, {
+    const res = (await this.fetcher(this.source + url, {
       ...options,
       headers: {
         ...options.headers,
         "Content-Type": "application/json",
       },
-    }) as Response;
-    return await res.json() as T;
+    })) as Response;
+    return (await res.json()) as T;
   }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const buildArkClient = (fetcher: Fetcher<any>, url: string) => {
   return new ArkClient(fetcher, url);
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const marketPlaceClientBuilder = (fetcher: Fetcher<any>) => {
   return buildArkClient(fetcher, env.NEXT_PUBLIC_ARK_MARKETPLACE_API);
-}
+};
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const orderbookClientBuilder = (fetcher: Fetcher<any>) => {
   return buildArkClient(fetcher, env.NEXT_PUBLIC_ARK_ORDERBOOK_API);
-}
+};
 
 export const ArkMarketplaceClientFetch = marketPlaceClientBuilder(fetch);
 export const ArkOrderbookFetch = orderbookClientBuilder(fetch);

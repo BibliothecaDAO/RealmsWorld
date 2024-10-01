@@ -39,11 +39,14 @@ export function ArkClientProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <ArkProvider config={config}>
-      <ArkClientContext.Provider value={{ marketplace, orderbook }}>
-        {children}
-      </ArkClientContext.Provider>
-    </ArkProvider>
+    < ArkClientContext.Provider value={{ marketplace, orderbook }
+    }>
+      {children}
+      {/*<ArkProvider config={config}>*/}
+
+      {/*</ArkProvider>*/}
+    </ArkClientContext.Provider >
+
   );
 }
 

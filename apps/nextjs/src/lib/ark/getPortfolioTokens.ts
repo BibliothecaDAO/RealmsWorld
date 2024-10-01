@@ -11,7 +11,7 @@ export interface PortfolioCollectionApiResponse {
 interface GetPortfolioActivityParams {
   client: ArkClient;
   walletAddress: string;
-  collectionAddress: string;
+  collectionAddress?: string;
   page?: number;
   itemsPerPage?: number;
 }
@@ -21,12 +21,12 @@ export async function getPortfolioTokens({
   walletAddress,
   collectionAddress,
   page = 1,
-  itemsPerPage = 10,
+  itemsPerPage = 50,
 }: GetPortfolioActivityParams): Promise<PortfolioCollectionApiResponse> {
   const queryParams = [
     `items_per_page=${itemsPerPage}`,
     `page=${page}`,
-    `collection=${collectionAddress}`,
+    collectionAddress && `collection=${collectionAddress}`,
   ];
 
   try {

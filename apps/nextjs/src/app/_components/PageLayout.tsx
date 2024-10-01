@@ -12,8 +12,9 @@ interface PageLayoutProps
 const baseLayerWrapperVariants = cva([], {
   variants: {
     size: {
-      default: "container",
-      sm: "max-w-7xl w-full",
+      default: "w-full",
+      sm: "max-w-7xl container",
+      full: "w-full",
     },
   },
   defaultVariants: {
@@ -26,7 +27,7 @@ export const PageLayout = ({ title, children, size }: PageLayoutProps) => {
     <div className="relative flex w-full flex-col space-y-6 pt-24 sm:pl-32 ">
       <div
         className={cn(
-          "container mx-auto px-8",
+          "mx-auto px-8",
           baseLayerWrapperVariants({ size }),
         )}
       >

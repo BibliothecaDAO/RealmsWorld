@@ -15,14 +15,15 @@ import { CardAction } from "./CardAction";
 import { useTokenListing } from "@/hooks/market/useTokenListing";
 import { useTokenMetadata } from "@/hooks/market/useTokenMetadata";
 import { ViewOnMarketplace } from "../../ViewOnMarketplace";
-
+import Media from "@/app/_components/Media";
+import { Token } from "@/types/ark";
 export const L2ERC721Card = ({
   token,
   layout = "grid",
   selectable = false,
   isSelected = false,
 }: {
-  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token: Token;
   layout?: "grid" | "list";
   selectable?: boolean;
   isSelected?: boolean;
@@ -43,9 +44,10 @@ export const L2ERC721Card = ({
         <div className={` ${!isGrid && "p-1"} relative`}>
           <div className="absolute z-0 h-full w-full from-black/50 transition-all duration-150 group-hover:bg-gradient-to-t"></div>
           {token.metadata?.image ? (
-            <Image
+            <Media
               src={token.metadata.image}
               alt={token.metadata.name ?? `beasts-${token.token_id}`}
+              mediaKey={token.metadata?.image_key}
               className={isGrid ? "mx-auto" : ""}
               width={imageSize}
               height={imageSize}
@@ -132,12 +134,12 @@ const TokenAttributes = ({
 const GridDetails = ({
   token,
 }: {
-  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token: CollectionToken;
   address?: string;
 }) => (
   <div className="flex h-full w-full flex-col justify-between p-3">
     <div className="flex justify-between pb-2">
-      <span className="truncate">{decodeURIComponent(token.metadata?.name ?? "")}</span>
+      <span className="truncate">{token.metadata?.name ?? ""}</span>
     </div>
 
     <div className="flex justify-between font-sans">
@@ -187,13 +189,13 @@ const ListDetails = ({
   token,
   address,
 }: {
-  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token: CollectionToken;
   address?: string;
 }) => {
   return (
     <div className="flex w-full justify-between space-x-6 self-center px-3">
       <div className="mr-auto flex justify-between self-center">
-        <span className="">{decodeURIComponent(token.name ?? "")}</span>
+        <span className="">{decodeURIComponent(token.metadata?.name ?? "")}</span>
       </div>
       <div className="mr-auto flex self-center font-sans">
         {token.price}

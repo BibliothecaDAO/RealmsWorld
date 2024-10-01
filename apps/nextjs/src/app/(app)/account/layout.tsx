@@ -44,7 +44,7 @@ export default function RootLayout({
 
   return (
     <SessionProvider>
-      <PageLayout size={"sm"} title="Account">
+      <PageLayout>
         <div className="mb-4 flex w-full space-x-4 border-b text-xl">
           {tabs.map((tab) => (
             <NavLink

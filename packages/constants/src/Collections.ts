@@ -139,3 +139,14 @@ export const REALMS_L2_COLLECTIONS: RealmsL2CollectionInfo[] = [
     addresses: CollectionAddresses[Collections.BANNERS],
   },
 ];
+export function getAddressesForChainId(chainId: ChainId): string[] {
+  const addresses: string[] = [];
+  for (const collection in CollectionAddresses) {
+    const chainAddresses = CollectionAddresses[collection as Collections];
+    const address = chainAddresses[chainId];
+    if (address) {
+      addresses.push(address);
+    }
+  }
+  return addresses;
+}

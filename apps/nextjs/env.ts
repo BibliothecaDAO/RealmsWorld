@@ -50,7 +50,10 @@ export const env = createEnv({
     NEXT_PUBLIC_MOBULA_API_KEY: z.string(),
     NEXT_PUBLIC_TESTNET_RPC_URL: z.string().url(),
     NEXT_PUBLIC_MAINNET_RPC_URL: z.string().url(),
+    NEXT_PUBLIC_IPFS_GATEWAY: z.string().url(),
     NEXT_PUBLIC_RPC_API_KEY: z.string(),
+    NEXT_PUBLIC_IMAGE_PROXY_URL: z.string().url(),
+    NEXT_PUBLIC_IMAGE_CDN_URL: z.string().url(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -88,7 +91,9 @@ export const env = createEnv({
     NEXT_PUBLIC_TESTNET_RPC_URL: process.env.NEXT_PUBLIC_TESTNET_RPC_URL,
     NEXT_PUBLIC_MAINNET_RPC_URL: process.env.NEXT_PUBLIC_MAINNET_RPC_URL,
     NEXT_PUBLIC_RPC_API_KEY: process.env.NEXT_PUBLIC_RPC_API_KEY,
-
+    NEXT_PUBLIC_IPFS_GATEWAY: process.env.NEXT_PUBLIC_IPFS_GATEWAY,
+    NEXT_PUBLIC_IMAGE_PROXY_URL: process.env.NEXT_PUBLIC_IMAGE_PROXY_URL,
+    NEXT_PUBLIC_IMAGE_CDN_URL: process.env.NEXT_PUBLIC_IMAGE_CDN_URL,
   },
   skipValidation:
     !!process.env.CI ||

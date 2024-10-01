@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 import React, { useState } from "react";
 import Image from "next/image";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
-import { SwapTokens } from "@/app/swap/SwapTokens";
+import { SwapTokens } from "@/app/(app)/swap/SwapTokens";
 import Lords from "@/icons/lords.svg";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,9 +22,11 @@ import { formatNumber } from "@realms-world/utils";
 
 import ERC721LineItem from "../ERC721LineItem";
 import { BuyModalRender, BuyStep } from "./BuyModalRender";
-import { useTokenPrice } from "@/hooks/market/useTokenPrice";
+/*import { useTokenPrice } from "@/hooks/market/useTokenPrice";
 import { useArkClient } from "@/lib/ark/useArkClient";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";*/
+
+const price = 0
 
 const ModalCopy = {
   titleInsufficientFunds: "Add Funds",
