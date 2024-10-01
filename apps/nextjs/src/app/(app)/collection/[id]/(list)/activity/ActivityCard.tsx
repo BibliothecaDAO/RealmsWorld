@@ -2,6 +2,7 @@ import type { Activity } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { shortenHex } from "@/utils/utils";
+import { useMemo } from "react";
 
 interface ActivityCardProps {
   activity: Activity;
@@ -9,9 +10,9 @@ interface ActivityCardProps {
 
 export const ActivityCard = ({ activity }: ActivityCardProps) => {
   // convert unix to time
-  const date = new Date(activity.timestamp * 1000);
+  const date = useMemo(() => new Date(activity.timestamp * 1000), [activity]);
 
-  function getElapsedTime() {
+  const getElapsedTime = useMemo(() => {
     // get time difference from now
     const timeDiff = Math.abs(Date.now() - date.getTime());
 
@@ -32,11 +33,11 @@ export const ActivityCard = ({ activity }: ActivityCardProps) => {
     if (weeks < 4) return `${weeks} week${weeks === 1 ? "" : "s"} ago`;
     if (months < 12) return `${months} month${months === 1 ? "" : "s"} ago`;
     return `${years} year${years === 1 ? "" : "s"} ago`;
-  }
+  }, [date])
 
-  const getLocalizedDate = () => {
+  const getLocalizedDate = useMemo(() => {
     return date.toLocaleString();
-  };
+  }, [date]);
 
   return (
     <div className=" flex w-full flex-wrap border-b p-2">

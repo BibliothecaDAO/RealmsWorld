@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { api } from "@/trpc/react";
 import { useInView } from "framer-motion";
 
 import type { RouterInputs } from "@realms-world/api";
 import type { Collections } from "@realms-world/constants";
-import { MarketplaceCollectionIds } from "@realms-world/constants";
+import { getCollectionAddresses, MarketplaceCollectionIds } from "@realms-world/constants";
 
 import { L2ActivityCard } from "./L2ActivityCard";
+import { getCollectionActivity } from "@/lib/ark/getCollectionActivity";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { useArkClient } from "@/lib/ark/useArkClient";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 
 export const L2ActivityTable = ({
   searchParams,
@@ -17,6 +20,10 @@ export const L2ActivityTable = ({
   searchParams: { types?: string[] | string };
   collectionId: string;
 }) => {
+
+  const tokenAddresses = getCollectionAddresses(collectionId);
+  const collectionAddress = tokenAddresses[SUPPORTED_L2_CHAIN_ID] as `0x${string}`;
+
   const ref = useRef(null);
 
   const statusArray =
@@ -38,29 +45,29 @@ export const L2ActivityTable = ({
     limit: 16,
   };
   if (statusArray) filters.status = status;
-  const [erc721MarketEvents, { fetchNextPage, hasNextPage, isFetching }] =
-    api.erc721MarketEvents.all.useSuspenseInfiniteQuery(filters, {
-      getNextPageParam(lastPage) {
-        return lastPage.nextCursor;
-      },
-      refetchInterval: 0,
-    });
+
+  const { marketplace: arkClient } = useArkClient();
+  const { data: erc721MarketEvents, fetchNextPage, hasNextPage, isFetching } = useSuspenseInfiniteQuery({
+    queryKey: ['erc721Tokens', collectionAddress, filters],
+    queryFn: async ({ pageParam }) => {
+      return await getCollectionActivity({ client: arkClient, collectionAddress: collectionAddress, page: pageParam ?? 1, ...filters });
+    },
+    getNextPageParam: (lastPage) => lastPage.next_page,
+  });
 
   const isInView = useInView(ref, { once: false });
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+
     if (isInView) fetchNextPage();
   }, [fetchNextPage, isInView]);
 
   return (
     <div className="w-full">
       <div id="activity-container" className="grid flex-grow grid-cols-1">
-        {erc721MarketEvents.pages.map((page) =>
-          page.items.map((activity, index: number) => {
-            return <L2ActivityCard key={index} activity={activity} />;
-          }),
-        )}
+        {erc721MarketEvents.pages[0].data.map((activity, index) => {
+          return <L2ActivityCard key={index} activity={activity} collectionId={collectionId} />;
+        })}
         {isFetching &&
           hasNextPage &&
           Array.from({ length: 3 }).map((_, index) => (

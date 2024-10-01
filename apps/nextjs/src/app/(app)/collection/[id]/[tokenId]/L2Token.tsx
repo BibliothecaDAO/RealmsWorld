@@ -1,15 +1,11 @@
 "use client";
 
-import { useTimeDiff } from "@/hooks/useTimeDiff";
 import Lords from "@/icons/lords.svg";
-import { api } from "@/trpc/react";
-import { findLowestPriceActiveListing } from "@/utils/getters";
 import { padAddress } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 import { Clock } from "lucide-react";
 import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 
-import type { RouterOutputs } from "@realms-world/api";
 import {
   Accordion,
   AccordionContent,
@@ -22,6 +18,14 @@ import { BuyModal } from "../../marketplace/buy/BuyModal";
 import TokenOwnerActions from "../../marketplace/TokenOwnerActions";
 import { L2ActivityCard } from "../(list)/activity/L2ActivityCard";
 import { ListingCard } from "../(list)/ListingCard";
+import type { Token, TokenActivity } from "@/types/ark";
+import { useQuery } from "@tanstack/react-query";
+import { getToken } from "@/lib/ark/getToken";
+import { useArkClient } from "@/lib/ark/useArkClient";
+import { getTokenMarketdata } from "@/lib/ark/getTokenMarketdata";
+import { getTokenActivity } from "@/lib/ark/getTokenActivity";
+import { useTimeDiff } from "@/hooks/useTimeDiff";
+import { useTokenPrice } from "@/hooks/market/useTokenPrice";
 
 export const L2Token = ({
   contractAddress,
@@ -30,43 +34,44 @@ export const L2Token = ({
 }: {
   contractAddress: string;
   tokenId: string;
-  token: RouterOutputs["erc721Tokens"]["byId"];
+  token: Token;
 }) => {
-  const { data: erc721Token } = api.erc721Tokens.byId.useQuery(
-    {
-      id: contractAddress + ":" + tokenId,
+  const { marketplace: arkClient } = useArkClient();
+  let { data: erc721Token } = useQuery({
+    queryKey: ["erc721Token", contractAddress, tokenId],
+    queryFn: async () => {
+      return await getToken({ client: arkClient, contractAddress, tokenId: parseInt(tokenId) })
     },
-    { refetchInterval: 10000, initialData: token },
-  );
+    refetchInterval: 10000,
+    initialData: { data: token },
+  })
+  let { data: listing } = useQuery({
+    queryKey: ["erc721Listings", contractAddress, tokenId],
+    queryFn: async () => {
+      return await getTokenMarketdata({ client: arkClient, contractAddress, tokenId: parseInt(tokenId) })
+    },
+    refetchInterval: 5000,
+  });
+  const { data: activities } = useQuery({
+    queryKey: ["erc721Activities", contractAddress, tokenId],
+    queryFn: async () => {
+      return await getTokenActivity({ client: arkClient, contractAddress, tokenId: parseInt(tokenId) })
+    },
+    refetchInterval: 5000,
+
+  });
   const { address } = useAccount();
+  const expiryDiff = useTimeDiff(listing?.data?.listing.end_date ?? 0);
 
-  //if (isLoading) return <LoadingSkeleton />;
-  if (!erc721Token) return <div>Token Information Loading</div>;
+  const price = useTokenPrice(listing?.data?.listing?.start_amount, listing?.data?.listing?.currency_address);
 
-  const activeListings = erc721Token.listings.filter(
-    (
-      listing: NonNullable<
-        RouterOutputs["erc721Tokens"]["byId"]
-      >["listings"][number],
-    ) => listing.active && listing.created_by == erc721Token.owner,
-  );
-
-  const lowestPriceActiveListing = findLowestPriceActiveListing(
-    erc721Token.listings,
-    erc721Token.owner,
-  );
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const expiryDiff = useTimeDiff(lowestPriceActiveListing?.expiration ?? 0);
-
-  const price = lowestPriceActiveListing?.price;
+  if (!erc721Token?.data || !listing?.data) return <div>Token Information Loading</div>;
+  erc721Token = erc721Token.data
+  listing = listing.data
 
   return (
-    <div className="mt-6">
-      <ViewOnMarketplace collection={erc721Token.contract_address ?? ""} tokenId={erc721Token.token_id} /></div>
-  )
-  {/*<>
-      {lowestPriceActiveListing?.expiration && (
+    <>
+      {listing.is_listed && (
         <div className="my-2 flex items-center py-4 text-xs opacity-60">
           <Clock className="mr-2 w-6" />
           <span>Listing ends in {expiryDiff}</span>
@@ -74,16 +79,14 @@ export const L2Token = ({
       )}
       <div className="mt-4 flex flex-wrap items-center justify-between border bg-background p-4">
         <div className="flex flex-wrap gap-x-2 text-lg">
-          {price ? (
+          {listing.is_listed ? (
             <>
-              {price && (
-                <div className="mb-4 flex w-full gap-x-2">
-                  <div className="flex max-w-[140px]">
-                    <span className="truncate text-3xl">{price}</span>
-                  </div>
-                  <Lords className="w-8 fill-current pr-2" />
+              <div className="mb-4 flex w-full gap-x-2">
+                <div className="flex max-w-[140px]">
+                  <span className="truncate text-3xl">{price}</span>
                 </div>
-              )}
+                <Lords className="w-8 fill-current pr-2" />
+              </div>
             </>
           ) : (
             "Not listed"
@@ -92,7 +95,7 @@ export const L2Token = ({
             <TokenOwnerActions token={token} />
           ) : (
             <div>
-              {price && (
+              {listing.is_listed && (
                 <BuyModal
                   trigger={
                     <Button className="w-full" size={"lg"}>
@@ -117,16 +120,12 @@ export const L2Token = ({
           <div className="mt-4 border bg-background px-4">
             <AccordionTrigger className="text-lg">Listings</AccordionTrigger>
             <AccordionContent className="-mt-4 w-full flex-wrap gap-x-2">
-              {activeListings.length
-                ? activeListings.map((listing, index) => {
-                    return (
-                      <ListingCard
-                        key={index}
-                        activity={listing}
-                        token={token}
-                      />
-                    );
-                  })
+              {listing.is_listed ? (
+                <ListingCard
+                  listing={listing}
+                  token={token}
+                />
+              )
                 : "No Active Listings"}
             </AccordionContent>
           </div>
@@ -137,8 +136,8 @@ export const L2Token = ({
               Token Activity
             </AccordionTrigger>
             <AccordionContent className="-mt-4 w-full flex-wrap gap-x-2">
-              {erc721Token.listings.map((listing, index) => {
-                return <L2ActivityCard key={index} activity={listing} />;
+              {activities?.data.map((activity: TokenActivity, index: number) => {
+                return <L2ActivityCard key={index} activity={activity} />;
               })}
             </AccordionContent>
           </div>

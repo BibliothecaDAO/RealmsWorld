@@ -1,12 +1,9 @@
 import type { ReactElement } from "react";
 import React, { useState } from "react";
 import Image from "next/image";
-//import NumberSelect from "@/app/_components/NumberSelect";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
-import { SwapTokens } from "@/app/(app)/swap/SwapTokens";
-//import { useWalletsProviderContext } from "@/app/providers/WalletsProvider";
+import { SwapTokens } from "@/app/swap/SwapTokens";
 import Lords from "@/icons/lords.svg";
-// import Progress from '../Progress'
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAccount } from "@starknet-react/core";
@@ -25,6 +22,9 @@ import { formatNumber } from "@realms-world/utils";
 
 import ERC721LineItem from "../ERC721LineItem";
 import { BuyModalRender, BuyStep } from "./BuyModalRender";
+import { useTokenPrice } from "@/hooks/market/useTokenPrice";
+import { useArkClient } from "@/lib/ark/useArkClient";
+import { useQuery } from "@tanstack/react-query";
 
 const ModalCopy = {
   titleInsufficientFunds: "Add Funds",
@@ -84,7 +84,6 @@ export function BuyModal({
   const [open, setOpen] = useState(false);
 
   const { isConnected } = useAccount();
-  //const { balances } = useWalletsProviderContext();
 
   return (
     <BuyModalRender
@@ -111,8 +110,6 @@ export function BuyModal({
         buyToken,
       }) => {
         const title = titleForStep(buyStep, copy, loading, isOwner);
-
-        const price = listing?.price ?? 0;
 
         return (
           <Dialog

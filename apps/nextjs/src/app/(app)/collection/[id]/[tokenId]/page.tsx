@@ -1,10 +1,7 @@
-import type { TokenMarketData } from "@/types";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getCollections } from "@/lib/reservoir/getCollections";
-import { getToken } from "@/lib/reservoir/getToken";
-import { api } from "@/trpc/server";
 import { formatEther } from "viem";
 
 import type { Collections } from "@realms-world/constants";
@@ -17,6 +14,8 @@ import { L2Token } from "./L2Token";
 import { LoadingSkeleton } from "./loading";
 import { TokenContent } from "./TokenContent";
 import { TokenInformation } from "./TokenInformation";
+import { marketPlaceClientBuilder } from "@/lib/ark/client";
+import { getToken } from "@/lib/ark/getToken";
 
 export function generateMetadata({
   params: { tokenId, id },
@@ -55,7 +54,8 @@ export default function Page({
         />
       </Suspense>
     );
-  } else if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
+  }
+  if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
     return (
       <L1TokenData
         collectionId={params.id}
@@ -76,17 +76,15 @@ const L2TokenData = async ({
   tokenId: string;
   collectionId: string;
 }) => {
-  const erc721Token = await api.erc721Tokens.byId({
-    id: contractAddress + ":" + tokenId,
-  });
-  console.log(erc721Token);
+  const client = marketPlaceClientBuilder(fetch);
+  const { data: erc721Token } = await getToken({ client, contractAddress, tokenId: parseInt(tokenId) });
 
   return (
     <>
       {erc721Token && (
         <TokenInformation
-          name={erc721Token.name}
-          image={erc721Token.image}
+          name={erc721Token.metadata?.name}
+          image={erc721Token.metadata?.image}
           tokenId={erc721Token.token_id}
           owner={erc721Token.owner}
           attributes={erc721Token.attributes}

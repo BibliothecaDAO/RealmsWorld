@@ -44,8 +44,13 @@ export const env = createEnv({
     NEXT_PUBLIC_ALCHEMY_API: z.string(),
     NEXT_PUBLIC_ETHPLORER_APIKEY: z.string(),
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
-    NEXT_PUBLIC_GITHUB_REPO_NAME: z.string().optional(),
     NEXT_PUBLIC_GITHUB_REPO_OWNER: z.string().optional(),
+    NEXT_PUBLIC_ARK_MARKETPLACE_API: z.string().url(),
+    NEXT_PUBLIC_ARK_ORDERBOOK_API: z.string().url(),
+    NEXT_PUBLIC_MOBULA_API_KEY: z.string(),
+    NEXT_PUBLIC_TESTNET_RPC_URL: z.string().url(),
+    NEXT_PUBLIC_MAINNET_RPC_URL: z.string().url(),
+    NEXT_PUBLIC_RPC_API_KEY: z.string(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -76,6 +81,14 @@ export const env = createEnv({
     KEYSTATIC_GITHUB_CLIENT_ID: process.env.KEYSTATIC_GITHUB_CLIENT_ID,
     KEYSTATIC_GITHUB_CLIENT_SECRET: process.env.KEYSTATIC_GITHUB_CLIENT_SECRET,
     KEYSTATIC_SECRET: process.env.KEYSTATIC_SECRET,
+    NEXT_PUBLIC_ARK_MARKETPLACE_API:
+      process.env.NEXT_PUBLIC_ARK_MARKETPLACE_API,
+    NEXT_PUBLIC_ARK_ORDERBOOK_API: process.env.NEXT_PUBLIC_ARK_ORDERBOOK_API,
+    NEXT_PUBLIC_MOBULA_API_KEY: process.env.NEXT_PUBLIC_MOBULA_API_KEY,
+    NEXT_PUBLIC_TESTNET_RPC_URL: process.env.NEXT_PUBLIC_TESTNET_RPC_URL,
+    NEXT_PUBLIC_MAINNET_RPC_URL: process.env.NEXT_PUBLIC_MAINNET_RPC_URL,
+    NEXT_PUBLIC_RPC_API_KEY: process.env.NEXT_PUBLIC_RPC_API_KEY,
+
   },
   skipValidation:
     !!process.env.CI ||

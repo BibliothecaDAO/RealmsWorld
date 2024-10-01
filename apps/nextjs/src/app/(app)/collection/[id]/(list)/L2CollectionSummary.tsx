@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import LordsIcon from "@/icons/lords.svg";
-import { api } from "@/trpc/server";
 import { getGamesByContract } from "@/utils/getters";
 
 import type { Collections, Game } from "@realms-world/constants";
@@ -14,6 +13,8 @@ import {
 } from "@realms-world/constants";
 import { Button } from "@realms-world/ui";
 import { ViewOnMarketplace } from "../../ViewOnMarketplace";
+import { getCollections } from "@/lib/ark/getCollection";
+import { marketPlaceClientBuilder } from "@/lib/ark/client";
 
 export default async function L2CollectionSummary({
   collectionId,
@@ -26,9 +27,9 @@ export default async function L2CollectionSummary({
   if (!l2CollectionAddress) {
     return "No Collection";
   }
-  const erc721Collection = await api.erc721Collections.byId({
-    id: l2CollectionAddress,
-  });
+  // in server components, we can directly get client with server builder
+  const client = marketPlaceClientBuilder(fetch);
+  const erc721Collection = await getCollections({ client, collectionAddress: l2CollectionAddress });
 
   const contract_details: ContractDetails[] = [
     {
@@ -54,7 +55,7 @@ export default async function L2CollectionSummary({
     },*/
     //{ value: collection.onSaleCount, title: "Listed" },
     {
-      value: erc721Collection[0]?.volume,
+      value: erc721Collection.data.total_volume,
       title: "Total Volume",
       icon: <LordsIcon className="w-5 fill-current" />,
     },

@@ -4,24 +4,23 @@ import LordsIcon from "@/icons/lords.svg";
 import { shortenHex } from "@/utils/utils";
 import { ArrowRightLeft, Ban, Gavel, NotebookPen } from "lucide-react";
 
-import type { RouterOutputs } from "@realms-world/api";
 import { getCollectionFromId } from "@realms-world/constants/src/Marketplace";
+import type { CollectionActivity } from "@/types/ark";
+import { useMemo } from "react";
+import { useTokenPrice } from "@/hooks/market/useTokenPrice";
 
 interface ActivityCardProps {
-  activity: RouterOutputs["erc721MarketEvents"]["all"]["items"][number] & {
-    token?: RouterOutputs["erc721Tokens"]["byId"];
-  };
+  activity: CollectionActivity;
+  collectionId: string;
 }
 
-export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
-  // convert unix to time
-  const date =
-    "updated_at" in activity && activity.updated_at
-      ? new Date(activity.updated_at)
-      : null;
+export const L2ActivityCard = ({ activity, collectionId }: ActivityCardProps) => {
+  const price = useTokenPrice(activity.price, null, 10);
 
-  function getElapsedTime() {
-    // get time difference from now
+  // convert unix to date
+  // *1000 is to convert starknet timestamp to milliseconds
+  const date = useMemo(() => activity.time_stamp ? new Date(activity.time_stamp * 1000) : null, [activity.time_stamp]);
+  const elapsedTime = useMemo(() => {
     if (date) {
       const timeDiff = Math.abs(Date.now() - date.getTime());
 
@@ -45,68 +44,50 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
       if (months < 12) return `${months} month${months === 1 ? "" : "s"} ago`;
       return `${years} year${years === 1 ? "" : "s"} ago`;
     }
-  }
-  const getLocalizedDate = () => {
-    return date?.toLocaleString();
-  };
 
-  let eventType;
+  }, [date]);
+  const localizedDate = useMemo(() => date ? date.toLocaleString() : null, [date]);
 
-  switch (activity.status) {
-    case "filled":
-      eventType = "Sale";
-      break;
-    case "open":
-      eventType = "Listing";
-      break;
-    case "cancelled":
-      eventType = "Cancelled Listing";
-      break;
-    default:
-      eventType = "Unknown";
-      break;
-  }
+
   return (
     <div className="flex w-full flex-wrap border-b p-2 ">
       <div className="mr-6 w-full flex-none self-center rounded px-4 py-1 font-semibold sm:w-1/12">
-        {eventType === "Sale" && <Gavel />}
-        {eventType === "Listing" && <NotebookPen />}
-        {eventType === "Cancelled Listing" && <Ban />}
-        {eventType === "Unknown" && <ArrowRightLeft />}
+        {activity.activity_type === "SALE" && <Gavel />}
+        {activity.activity_type === "LISTING" && <NotebookPen />}
+        {activity.activity_type === "CANCELLED" && <Ban />}
+        {activity.activity_type === "UNKNOWN" && <ArrowRightLeft />}
 
-        {eventType}
+        {activity.activity_type}
       </div>
-      {activity.token && (
-        <div className="flex w-full flex-wrap justify-start sm:w-3/12">
-          {activity.token.image && (
-            <Image
-              src={
-                activity.token.image
-                /*? activity.token.image
-                : activity.collection.collectionImage*/
-              }
-              alt="An example image"
-              width={60}
-              height={60}
-              className="self-start rounded-lg"
-            />
-          )}
-          {activity.token.token_id && activity.collection_id && (
-            <Link
-              className="ml-3 flex-none self-center"
-              href={`/collection/${getCollectionFromId(activity.collection_id)}/${activity.token.token_id}`}
-            >
-              <span className="font-semibold ">
-                <span className="text-xs opacity-50">
-                  #{activity.token.token_id}
-                </span>{" "}
-                <br />
-                {decodeURIComponent(activity.token.name ?? "")}
-              </span>
-            </Link>
-          )}
-        </div>
-      )}
+      <div className="flex w-full flex-wrap justify-start sm:w-3/12">
+        {activity.token_metadata?.image && (
+          <Image
+            src={
+              activity.token_metadata.image
+              /*? activity.token.image
+              : activity.collection.collectionImage*/
+            }
+            alt="An example image"
+            width={60}
+            height={60}
+            className="self-start rounded-lg"
+          />
+        )}
+        {activity.token_id && (
+          <Link
+            className="ml-3 flex-none self-center"
+            href={`/collection/${getCollectionFromId(collectionId)}/${activity.token_id}`}
+          >
+            <span className="font-semibold ">
+              <span className="text-xs opacity-50">
+                #{activity.token_id}
+              </span>{" "}
+              <br />
+              {decodeURIComponent(activity.token_metadata?.name ?? "")}
+            </span>
+          </Link>
+        )}
+      </div>
       {/*activity.toAddress && (
         <div className="w-1/2 sm:w-1/12">
           <span className="text-xs opacity-50">to:</span> <br />
@@ -117,21 +98,21 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
       )*/}
       <div className="w-1/2 sm:w-2/12">
         <span className="text-xs opacity-50">from:</span> <br />
-        {activity.created_by ? (
-          <Link href={`/user/${activity.created_by}`}>
-            {activity.created_by ? shortenHex(activity.created_by) : ""}
+        {activity.from ? (
+          <Link href={`/user/${activity.from}`}>
+            {activity.from ? shortenHex(activity.from) : ""}
           </Link>
         ) : (
           "-"
         )}
       </div>
       <div className="w-1/2 sm:w-2/12">
-        {activity.purchaser && (
+        {activity.to && (
           <>
             <span className="text-xs opacity-50">to:</span> <br />
-            {activity.created_by ? (
-              <Link href={`/user/${activity.purchaser}`}>
-                {activity.purchaser ? shortenHex(activity.purchaser) : ""}
+            {activity.to ? (
+              <Link href={`/user/${activity.to}`}>
+                {activity.to ? shortenHex(activity.to) : ""}
               </Link>
             ) : (
               "-"
@@ -148,7 +129,7 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
             </div>
           ) : (*/}
         <div className="flex items-center self-center">
-          {activity.price ?? 0}
+          {price}
           <LordsIcon className="ml-2 h-5 w-5 fill-current" />
         </div>
       </div>
@@ -156,9 +137,9 @@ export const L2ActivityCard = ({ activity }: ActivityCardProps) => {
         <div className="flex space-x-4 self-center px-4">
           <span
             className="flex-none rounded bg-black/50 px-4 py-1"
-            title={getLocalizedDate()}
+            title={localizedDate}
           >
-            {getElapsedTime()}
+            {elapsedTime}
           </span>
         </div>
       </div>

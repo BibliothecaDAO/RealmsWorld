@@ -2,16 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatedMap } from "@/app/_components/AnimatedMap";
 import { useLordsPrice } from "@/hooks/lords/useLordsPrice";
+import type { CollectionToken } from "@/types/ark";
 
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
-import { findLowestPriceActiveListing } from "@/utils/getters";
 
 import type { RouterOutputs } from "@realms-world/api";
 import { Button } from "@realms-world/ui";
 import { cn } from "@realms-world/utils";
 
 import { CardAction } from "./CardAction";
+import { useTokenListing } from "@/hooks/market/useTokenListing";
+import { useTokenMetadata } from "@/hooks/market/useTokenMetadata";
 import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 
 export const L2ERC721Card = ({
@@ -40,10 +42,10 @@ export const L2ERC721Card = ({
       <div>
         <div className={` ${!isGrid && "p-1"} relative`}>
           <div className="absolute z-0 h-full w-full from-black/50 transition-all duration-150 group-hover:bg-gradient-to-t"></div>
-          {token.image ? (
+          {token.metadata?.image ? (
             <Image
-              src={token.image}
-              alt={token.name ?? `beasts-${token.token_id}`}
+              src={token.metadata.image}
+              alt={token.metadata.name ?? `beasts-${token.token_id}`}
               className={isGrid ? "mx-auto" : ""}
               width={imageSize}
               height={imageSize}
@@ -92,7 +94,7 @@ const TokenDetails = ({
   isGrid,
   address,
 }: {
-  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token: CollectionToken,
   isGrid: boolean;
   address?: string;
 }) =>
@@ -106,13 +108,16 @@ const TokenAttributes = ({
   token,
   attributeKeys,
 }: {
-  token: RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token: CollectionToken | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   attributeKeys: string[];
-}) => (
+}) => {
+  const metadata = useTokenMetadata(token);
+  if (!metadata?.attributes) return null;
+
   <table className="min-w-full bg-black font-sans text-xs">
     <tbody>
       {attributeKeys.map((key: string) => {
-        const attribute = token.attributes.find((trait) => trait.key === key);
+        const attribute = metadata.attributes.find((trait) => trait.key === key);
         return attribute ? (
           <tr className="hover:bright-yellow hover:bg-theme-gray" key={key}>
             <td className="w-1/3 border px-2 py-1 uppercase">{key}</td>
@@ -122,7 +127,7 @@ const TokenAttributes = ({
       })}
     </tbody>
   </table>
-);
+};
 
 const GridDetails = ({
   token,
@@ -132,7 +137,7 @@ const GridDetails = ({
 }) => (
   <div className="flex h-full w-full flex-col justify-between p-3">
     <div className="flex justify-between pb-2">
-      <span className="truncate">{decodeURIComponent(token.name ?? "")}</span>
+      <span className="truncate">{decodeURIComponent(token.metadata?.name ?? "")}</span>
     </div>
 
     <div className="flex justify-between font-sans">
@@ -155,11 +160,12 @@ const Price = ({
   };
 }) => {
   const { lordsPrice } = useLordsPrice();
-  const listing = findLowestPriceActiveListing(token.listings, token.owner);
+  const listing = useTokenListing(token);
+  if (undefined === listing || null === listing) return null;
 
   return (
     <div className="flex justify-between">
-      {token.price && listing?.price && (
+      {token.price && listing.price && (
         <div>
           <div className="flex text-lg">
             {listing.price}

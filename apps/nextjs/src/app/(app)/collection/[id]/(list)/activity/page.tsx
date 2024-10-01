@@ -24,8 +24,8 @@ export default async function Page({
     typeof searchParams.types === "string"
       ? [{ types: searchParams.types }]
       : searchParams.types?.map((q: string) => {
-          return { types: q };
-        });
+        return { types: q };
+      });
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { activities }: { activities: Activity[] } = await getActivity({
@@ -46,7 +46,9 @@ export default async function Page({
         />
       </div>
     );
-  } else if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
+  }
+
+  if (tokenAddresses[SUPPORTED_L1_CHAIN_ID]) {
     return (
       <div className="flex">
         <CollectionActivity />

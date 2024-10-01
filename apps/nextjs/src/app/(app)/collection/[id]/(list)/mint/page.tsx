@@ -17,7 +17,6 @@ import { env } from "env";
 import {
   useAccount,
   useSendTransaction,
-  useWaitForTransaction,
 } from "@starknet-react/core";
 import { ExternalLinkIcon, Loader2 } from "lucide-react";
 import { uint256 } from "starknet";
