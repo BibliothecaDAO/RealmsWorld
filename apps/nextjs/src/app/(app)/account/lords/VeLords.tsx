@@ -11,23 +11,26 @@ import { VeLords as VeLordsABI } from "@/abi/L2/VeLords";
 import LordsIcon from "@/icons/lords.svg";
 
 import { LORDS, StakingAddresses } from "@realms-world/constants";
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Button,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-  Input,
-  Label,
+} from "@realms-world/ui/components/ui/card";
+import { Input } from "@realms-world/ui/components/ui/input";
+import { Label } from "@realms-world/ui/components/ui/label";
+import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-  Slider,
-  Badge,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/tabs";
+import { Slider } from "@realms-world/ui/components/ui/slider";
+import { Badge } from "@realms-world/ui/components/ui/badge";
+
 import { useVeLords } from "@/hooks/staking/useVeLords";
 import type { BlockNumber } from "starknet";
 import { BlockTag } from "starknet";

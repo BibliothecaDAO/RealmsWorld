@@ -11,8 +11,14 @@ import { CollectionAddresses } from "@realms-world/constants";
 import {
   Alert,
   AlertDescription,
-  AlertTitle, Button, ScrollArea
-} from "@realms-world/ui";
+  AlertTitle
+} from "@realms-world/ui/components/ui/alert";
+import {
+  Button
+} from "@realms-world/ui/components/ui/button";
+import {
+  ScrollArea
+} from "@realms-world/ui/components/ui/scroll-area";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { TriangleAlert } from "lucide-react";
 import { useStaking } from "@/hooks/staking/useStaking";

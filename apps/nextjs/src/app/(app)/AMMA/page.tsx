@@ -1,4 +1,4 @@
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { PageLayout } from "../../_components/PageLayout";
 import Image from "next/image"
 import { ChevronDown, Play } from "lucide-react";

@@ -1,7 +1,7 @@
 import { useAirdropClaim } from "@/hooks/useAirdropClaim";
 import Lords from "@/icons/lords.svg";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const PaymentPoolV2 = () => {
   const { numTokens, claimAirdrop, balance } = useAirdropClaim();

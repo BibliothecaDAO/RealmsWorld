@@ -3,7 +3,7 @@ import { StakingMigrationModal } from "@/app/_components/modal/StakingMigrationM
 import { PageLayout } from "@/app/_components/PageLayout";
 import { SessionProvider } from "next-auth/react";
 
-import { NavLink } from "@realms-world/ui";
+import { NavLink } from "@realms-world/ui/components/ui/nav-link";
 
 import { AuthWrapper } from "./AuthWrapper";
 

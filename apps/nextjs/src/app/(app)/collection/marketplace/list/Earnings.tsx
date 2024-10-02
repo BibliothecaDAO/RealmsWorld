@@ -4,13 +4,15 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
-  Button,
+  Tooltip,
+  TooltipContent,
+} from "@realms-world/ui/components/ui/tooltip";
+import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  Tooltip,
-  TooltipContent,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/collapsible";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { formatBN } from "@realms-world/utils";
 
 interface EarningsBreakdownProps {

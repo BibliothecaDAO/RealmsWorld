@@ -18,19 +18,18 @@ import { WalletsProvider } from "@/providers/WalletsProvider";
 import { Web3Providers } from "@/providers/Web3Providers";
 import { TRPCReactProvider } from "@/trpc/react";
 
-import { Toaster, TooltipProvider } from "@realms-world/ui";
-import { ArkClientProvider } from "@/lib/ark/useArkClient";
-
-const silkscreen = Bebas_Neue({
+import { Toaster } from "@realms-world/ui/components/ui/toaster";
+import { TooltipProvider } from "@realms-world/ui/components/ui/tooltip";
+const bebas_neue = Bebas_Neue({
   subsets: ["latin"],
-  variable: "--font-silkscreen",
+  variable: "--font-bebas-neue",
   weight: ["400"],
   display: "swap",
 });
 
-const inconsolata = Space_Mono({
+const space_mono = Space_Mono({
   subsets: ["latin"],
-  variable: "--font-inconsolata",
+  variable: "--font-space-mono",
   weight: "400",
   display: "swap",
 });
@@ -51,7 +50,7 @@ export default function Layout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body
         style={backgroundImageStyle}
-        className={`${inconsolata.variable} ${silkscreen.variable} dark`}
+        className={`${bebas_neue.variable} ${space_mono.variable} dark`}
       >
         <TRPCReactProvider headersPromise={getHeaders()}>
           <UIStoreProvider>

@@ -34,27 +34,16 @@ export function handleLogMessageToL2(event: LogMessageToL2): void {
 
   const depositEvent = createDepositEvent(event);
   log.debug("got deposit event of {} ", [depositEvent.tokenIds.toString()]);
+  log.debug("payload 0 is {}", [event.params.payload[0].toHex()]);
+  log.debug("payload 1 is {}", [event.params.payload[1].toHex()]);
+  log.debug("payload 2 is {}", [event.params.payload[2].toHex()]);
+  log.debug("payload 3 is {}", [event.params.payload[3].toHex()]);
 
-  log.debug("got here", [
-    ethereum
-      .decode(
-        "address",
-        Bytes.fromByteArray(Bytes.fromBigInt(event.params.payload[3])),
-      )!
-      .toAddress()
-      .toHexString(),
-  ]);
-  log.debug("deposit log topic is {}", [event.params.payload[4].toHexString()]);
   const deposit = loadOrCreateDeposit(
     makeIdFromPayload(bridgeL1Address, event.params.payload),
-    ethereum
-      .decode(
-        "address",
-        Bytes.fromByteArray(Bytes.fromBigInt(event.params.payload[3])),
-      )!
-      .toAddress(),
+    bigIntToAddressBytes(event.params.payload[2], ADDRESS_TYPE.ETHEREUM),
     event.block.timestamp,
-    bigIntToAddressBytes(event.params.payload[0], ADDRESS_TYPE.STARKNET),
+    bigIntToAddressBytes(event.params.payload[3], ADDRESS_TYPE.STARKNET),
   );
 
   deposit.depositEvents = addUniq(deposit.depositEvents, depositEvent.id);

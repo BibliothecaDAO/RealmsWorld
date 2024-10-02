@@ -1,10 +1,10 @@
-import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 
 import { Deposit } from "../../generated/schema";
 
 export function loadOrCreateDeposit(
   id: string,
-  l1Sender: Address,
+  l1Sender: Bytes,
   createdTimestamp: BigInt,
   l2Recipient: Bytes,
 ): Deposit {

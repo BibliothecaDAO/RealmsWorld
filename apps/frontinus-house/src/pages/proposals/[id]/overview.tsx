@@ -3,15 +3,14 @@ import { Markdown } from "@/components/Markdown";
 import { _rt, getProposalId, shortenAddress } from "@/lib/utils";
 import { Proposal } from "@/types";
 import { Link, useLocation } from "react-router-dom";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 import {
-  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  Tooltip,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/dropdown-menu";
 
 export default function Overview({ proposal }: { proposal: Proposal }) {
   let location = useLocation();

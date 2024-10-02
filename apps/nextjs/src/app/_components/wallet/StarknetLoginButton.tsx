@@ -7,8 +7,8 @@ import { useUIStore } from "@/providers/UIStoreProvider";
 import { shortenHex } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 
-import type { buttonVariants } from "@realms-world/ui";
-import { Button } from "@realms-world/ui";
+import type { buttonVariants } from "@realms-world/ui/components/ui/button";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { Loader } from "lucide-react";
 
 export const StarknetLoginButton = ({

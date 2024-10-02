@@ -9,15 +9,16 @@ import {
 } from "@tanstack/react-table";
 
 import {
-  Button,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from "@realms-world/ui";
-
+} from "@realms-world/ui/components/ui/table";
+import {
+  Button
+} from "@realms-world/ui/components/ui/button";
 interface Claim {
   timestamp?: Date | null;
   //realms: number;
@@ -83,9 +84,9 @@ export function ClaimsTable({ data }: DataTableProps<Claim>) {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   );
                 })}

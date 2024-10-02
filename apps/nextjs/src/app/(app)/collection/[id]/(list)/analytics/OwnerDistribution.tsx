@@ -2,7 +2,7 @@
 
 import type { paths } from "@reservoir0x/reservoir-sdk";
 
-import { Progress } from "@realms-world/ui";
+import { Progress } from "@realms-world/ui/components/ui/progress";
 
 //import PieChart from "@/homepages/realms-eternum/components/PieChart";
 

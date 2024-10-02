@@ -21,17 +21,21 @@ import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import {
   Alert,
   AlertDescription,
-  AlertTitle,
-  Button,
+  AlertTitle
+} from "@realms-world/ui/components/ui/alert";
+import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/card";
 import { padAddress } from "@realms-world/utils";
 
+import {
+  Button
+} from "@realms-world/ui/components/ui/button";
 import { ClaimsTable } from "./ClaimsTable";
 //import { FloatAnimation } from "./FloatAnimation";
 import { LegacyClaim } from "./LegacyClaim";

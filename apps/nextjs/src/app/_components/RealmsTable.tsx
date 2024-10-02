@@ -16,7 +16,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/table";
+import { Checkbox } from "@realms-world/ui/components/ui/checkbox";
 
 interface DataTableProps<TData> {
   data: TData[];
@@ -64,9 +65,9 @@ export function RealmsTable<TData>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   );
                 })}

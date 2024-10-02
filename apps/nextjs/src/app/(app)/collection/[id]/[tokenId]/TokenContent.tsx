@@ -9,7 +9,7 @@ import { getGamesByContract } from "@/utils/getters";
 import { useAccount } from "wagmi";
 
 import { games } from "@realms-world/constants";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@realms-world/ui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@realms-world/ui/components/ui/tabs";
 
 import { TokenActivity } from "./TokenActivity";
 

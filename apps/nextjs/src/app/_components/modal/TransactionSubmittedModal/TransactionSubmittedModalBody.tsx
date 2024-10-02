@@ -3,7 +3,7 @@ import React from "react";
 import { ActionType } from "@/constants/transferSteps";
 import PropTypes from "prop-types";
 
-import { Alert } from "@realms-world/ui";
+import { Alert } from "@realms-world/ui/components/ui/alert";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TransactionSubmittedModalBody = ({ transfer }: { transfer: any }) => {

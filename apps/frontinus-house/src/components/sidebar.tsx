@@ -2,14 +2,15 @@ import { sidelinks } from "@/data/menuLinks";
 import { Bell, Package2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Button,
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/card";
+
 
 interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   isCollapsed: boolean;

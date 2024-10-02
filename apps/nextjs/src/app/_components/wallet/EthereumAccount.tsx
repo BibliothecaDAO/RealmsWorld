@@ -7,7 +7,7 @@ import { LogOut } from "lucide-react";
 import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
 
 import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 import { CopyButton } from "../CopyButton";
 import { EthereumLoginButton } from "./EthereumLoginButton";

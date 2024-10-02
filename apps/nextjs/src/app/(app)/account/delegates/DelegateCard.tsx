@@ -3,17 +3,17 @@ import Image from "next/image";
 import { ReadMore } from "@/app/_components/ReadMore";
 import { StarkName } from "@/app/_components/StarkName";
 import { Github, Twitter } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "@realms-world/ui";
+import { Popover, PopoverContent, PopoverTrigger } from "@realms-world/ui/components/ui/popover";
 
 import type { RouterOutputs } from "@realms-world/api";
+import { Badge } from "@realms-world/ui/components/ui/badge";
 import {
-  Badge,
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/card";
 
 import { SocialIcons } from "../../../_components/SocialIcons";
 import { DelegateActions } from "./DelegateActions";

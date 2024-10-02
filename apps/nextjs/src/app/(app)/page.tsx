@@ -2,8 +2,9 @@ import Link from "next/link";
 import { GameCard } from "@/app/(app)/games/GameCard";
 import DojoDark from "@/icons/mark-dark.svg";
 import Starknet from "@/icons/starknet.svg";
+import { Button } from "@realms-world/ui/components/ui/button";
 
-import { Button, Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@realms-world/ui";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@realms-world/ui/components/ui/carousel";
 
 import { PageLayout } from "../_components/PageLayout";
 import { Partners } from "../_components/Partners";

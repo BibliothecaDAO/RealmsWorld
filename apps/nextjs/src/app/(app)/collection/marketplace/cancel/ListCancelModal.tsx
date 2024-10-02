@@ -4,14 +4,14 @@ import { useTimeDiff } from "@/hooks/useTimeDiff";
 import { Loader } from "lucide-react";
 
 import type { RouterOutputs } from "@realms-world/api";
+import { Alert } from "@realms-world/ui/components/ui/alert";
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Alert,
-  Button,
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/dialog";
 
 import ERC721LineItem from "../ERC721LineItem";
 import { CancelStep, ListCancelModalRender } from "./ListCancelModalRender";

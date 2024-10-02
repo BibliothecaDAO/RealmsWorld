@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PageLayout } from "@/app/_components/PageLayout";
 import React from "react";
 import Markdoc from "@markdoc/markdoc";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { reader } from "@/utils/keystatic";
 
 

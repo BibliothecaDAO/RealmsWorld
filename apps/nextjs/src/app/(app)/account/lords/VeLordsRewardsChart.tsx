@@ -3,8 +3,8 @@
 import { Line, LineChart, CartesianGrid, YAxis, XAxis } from "recharts"
 import LordsIcon from "@/icons/lords.svg";
 
-import type { ChartConfig } from "@realms-world/ui";
-import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@realms-world/ui"
+import type { ChartConfig } from "@realms-world/ui/components/ui/chart"
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@realms-world/ui/components/ui/chart"
 
 const chartConfig = {
     total_amount: {

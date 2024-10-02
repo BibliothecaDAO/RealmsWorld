@@ -3,7 +3,8 @@ import { useTimeDiff } from "@/hooks/useTimeDiff";
 import LordsIcon from "@/icons/lords.svg";
 import { shortenHex } from "@/utils/utils";
 
-import { Button } from "@realms-world/ui";
+import type { RouterOutputs } from "@realms-world/api";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 import { BuyModal } from "../../marketplace/buy/BuyModal";
 import type { Token, TokenActivity } from "@/types/ark";

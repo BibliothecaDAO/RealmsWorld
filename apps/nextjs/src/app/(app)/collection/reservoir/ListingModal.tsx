@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { ListModal } from "@reservoir0x/reservoir-kit-ui";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ListingModal = ({ address, id }: any) => {

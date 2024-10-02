@@ -3,7 +3,7 @@ import type { paths } from "@reservoir0x/reservoir-sdk";
 import { useCallback, useMemo, useState } from "react";
 
 import type { RouterOutputs } from "@realms-world/api";
-import { toast } from "@realms-world/ui";
+import { toast } from "@realms-world/ui/components/ui/use-toast";
 
 export const MAX_SELECTED_ITEMS = 30;
 

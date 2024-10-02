@@ -3,7 +3,7 @@ import CollectionSummary from "@/app/(app)/collection/[id]/(list)/CollectionSumm
 import { env } from "env";
 
 import { Collections } from "@realms-world/constants";
-import { NavLink } from "@realms-world/ui";
+import { NavLink } from "@realms-world/ui/components/ui/nav-link";
 
 export default function RootLayout({
   children,

@@ -11,7 +11,7 @@ import {
   games,
   getCollectionAddresses,
 } from "@realms-world/constants";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 import { getCollections } from "@/lib/ark/getCollection";
 import { marketPlaceClientBuilder } from "@/lib/ark/client";

@@ -5,7 +5,7 @@ import { SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { formatUnits } from "viem";
 
 import { DaoAddresses } from "@realms-world/constants";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 import type { EthplorerAddressInfoResponse, EthplorerToken } from "./page";
 import { BaseDashboardCard } from "./BaseDashboardCard";

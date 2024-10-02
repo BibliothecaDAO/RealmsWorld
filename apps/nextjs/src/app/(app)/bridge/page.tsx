@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { NavLink } from "@realms-world/ui";
+import { NavLink } from "@realms-world/ui/components/ui/nav-link";
 import { cn } from "@realms-world/utils";
 
 import { Transfer } from "./Transfer";

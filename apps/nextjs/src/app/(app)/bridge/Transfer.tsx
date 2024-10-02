@@ -16,9 +16,9 @@ import { useAccount } from "@starknet-react/core";
 import { ArrowUpDown } from "lucide-react";
 import { formatEther } from "viem";
 import { useAccount as useL1Account } from "wagmi";
-
-import { Badge, Button, Input } from "@realms-world/ui";
-
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Input } from "@realms-world/ui/components/ui/input";
+import { Badge } from "@realms-world/ui/components/ui/badge";
 import { useWalletsProviderContext } from "../../../providers/WalletsProvider";
 import { TokenBalance } from "./TokenBalance";
 

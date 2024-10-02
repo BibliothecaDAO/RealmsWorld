@@ -1,6 +1,6 @@
 import { useTransactions } from "@/hooks/useTransactions";
 
-import { ScrollArea } from "@realms-world/ui";
+import { ScrollArea } from "@realms-world/ui/components/ui/scroll-area";
 
 import { TransactionItem } from "./TransactionItem";
 

@@ -5,13 +5,13 @@ import { sortDirection, sortOptions } from "@/constants";
 import { useQueryParams } from "@/hooks/useQueryParams";
 import { Filter, Grid, List } from "lucide-react";
 
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/dropdown-menu";
 
 export const TradeFilters = () => {
   const { handleAttributeClick } = useQueryParams();

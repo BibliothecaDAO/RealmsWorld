@@ -2,8 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { CollectionEntry } from "@/utils/keystatic";
-import { Badge, Button, Card, CardContent } from "@realms-world/ui";
-
+import { Card, CardContent } from "@realms-world/ui/components/ui/card";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Badge } from "@realms-world/ui/components/ui/badge";
 export const EventCard = ({ event, slug }: { event: CollectionEntry<'events'>, slug: string }) => {
 
 

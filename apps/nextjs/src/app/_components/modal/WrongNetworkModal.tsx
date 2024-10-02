@@ -4,15 +4,14 @@ import { constants } from "starknet";
 
 import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
 import {
-  Alert,
   AlertDialog,
   AlertDialogAction,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@realms-world/ui";
-
+} from "@realms-world/ui/components/ui/alert-dialog";
+import { Alert } from "@realms-world/ui/components/ui/alert";
 export const WrongNetworkModal = () => {
   const { switchChain, data, error, isPending } = useSwitchChain({
     params: { chainId: constants.StarknetChainId.SN_SEPOLIA },

@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { useAccount, useConnect } from "@starknet-react/core";
 
-import { Button, Dialog, DialogContent, DialogHeader } from "@realms-world/ui";
-
+import { Dialog, DialogContent, DialogHeader } from "@realms-world/ui/components/ui/dialog";
+import { Button } from "@realms-world/ui/components/ui/button";
 import WalletIcons from "../wallet/WalletIcons";
 
 export const StarknetLoginModal = () => {

@@ -9,7 +9,7 @@ import {
 import { ExternalLinkIcon } from "lucide-react";
 
 import type { ChainId } from "@realms-world/constants";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const ExplorerLink = ({
   chainId,

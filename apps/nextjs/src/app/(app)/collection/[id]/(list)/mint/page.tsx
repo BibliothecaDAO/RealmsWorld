@@ -23,8 +23,8 @@ import { uint256 } from "starknet";
 import { formatEther } from "viem";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
-import { Button, Input } from "@realms-world/ui";
-
+import { Input } from "@realms-world/ui/components/ui/input";
+import { Button } from "@realms-world/ui/components/ui/button";
 // MAINNET TODO: UPDATE PRICE
 
 const MINT_COST =

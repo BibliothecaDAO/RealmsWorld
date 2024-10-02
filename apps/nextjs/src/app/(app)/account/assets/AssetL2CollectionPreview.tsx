@@ -8,7 +8,9 @@ import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useAccount as useL2Account } from "@starknet-react/core";
 
 import { getCollectionAddresses } from "@realms-world/constants";
-import { ScrollArea } from "@realms-world/ui";
+import {
+  ScrollArea
+} from "@realms-world/ui/components/ui/scroll-area";
 
 function AssetL2CollectionPreview({
   collectionName,

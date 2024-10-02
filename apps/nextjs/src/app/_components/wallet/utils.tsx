@@ -5,7 +5,7 @@ import { useAccount as useL2Account } from "@starknet-react/core";
 import { ExternalLinkIcon } from "lucide-react";
 import { useAccount } from "wagmi";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const RenderExplorers = ({ isL1 = true }) => {
   const { address } = useAccount();

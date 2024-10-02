@@ -1,4 +1,5 @@
 import RWLogo from "@/icons/rw-logo.svg";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const Footer = () => {
   return (

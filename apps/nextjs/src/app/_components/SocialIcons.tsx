@@ -4,7 +4,7 @@ import Telegram from "@/icons/telegram.svg";
 import X from "@/icons/x.svg";
 import { ExternalLink, GithubIcon, Globe } from "lucide-react";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const SocialIcons = ({
   x,
