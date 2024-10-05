@@ -11,7 +11,7 @@ export function generateMetadata(): Metadata {
 
 export default function Page() {
   return (
-    <div>
+    <div className="px-4 pt-4 md:px-6">
       <div className="w-full">
         <h4 className="my-4 text-3xl">Delegate Profile</h4>
 

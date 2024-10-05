@@ -2,95 +2,149 @@
 
 import { useMemo, useState, useEffect, useRef } from "react";
 import { usePendingRealmsWithdrawals } from "@/hooks/bridge/data/usePendingRealmsWithdrawals";
-import { useUIStore } from "@/providers/UIStoreProvider";
-import { TriangleAlert } from "lucide-react";
 import { useAccount } from "wagmi";
 import { useAccount as useL2Account } from "@starknet-react/core";
 
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
-import { getPortfolioTokens, PortfolioCollectionApiResponse } from "@/lib/ark/getPortfolioTokens";
+import type { PortfolioCollectionApiResponse } from "@/lib/ark/getPortfolioTokens";
+import { getPortfolioTokens } from "@/lib/ark/getPortfolioTokens";
 import { useArkClient } from "@/lib/ark/useArkClient";
-import Media from "@/app/_components/Media";
 import { PortfolioItemsGrid } from "./PortfolioItemsGrid";
-import { ChainId, CollectionAddresses } from "@realms-world/constants";
+import { ChainId } from "@realms-world/constants";
 import { getAddressesForChainId } from "@realms-world/constants/src/Collections";
-import { ViewType } from "@/app/_components/ViewToggleGroup";
-import PortfolioItemsToolsBar from "./PortfolioItemsFilter";
+import type { ViewType } from "@/app/_components/ViewToggleGroup";
+import PortfolioItemsToolsBar from "./PortfolioItemsToolsBar";
 import { useInView } from "framer-motion";
+import PortfolioItemsFiltersPanel from "./PortfolioItemsFiltersPanel";
+import { StarknetAccountLogin } from "../_components/StarknetAccountLogin";
 
-export const Portfolio = () => {
-    const [itemsFiltersOpen, setItemsFiltersOpen] = useState(false);
-    const [viewType, setViewType] = useState<ViewType>("large-grid");
+import useNftSelection from "@/hooks/useNftSelection";
 
-    const [activeChain, setActiveChain] = useState("l1");
-    const { address } = useAccount();
-    const { address: l2Address } = useL2Account();
+export const Portfolio = ({
+  collectionAddress,
+  selectable,
+}: {
+  collectionAddress?: string;
+  selectable?: boolean;
+}) => {
+  const [itemsFiltersOpen, setItemsFiltersOpen] = useState(false);
+  const [viewType, setViewType] = useState<ViewType>("large-grid");
 
-    const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({
-        address,
-        status: "ACCEPTED_ON_L1",
-    });
-    const { toggleAccount } = useUIStore((state) => state);
-    const { marketplace: arkClient } = useArkClient();
+  const [activeChain, setActiveChain] = useState("l1");
+  const { address } = useAccount();
+  const { address: l2Address } = useL2Account();
 
-    const {
-        data: infiniteData,
-        fetchNextPage,
-        hasNextPage,
-        isFetchingNextPage,
-    } = useInfiniteQuery({
-        queryKey: ["walletTokens"/*, collectionFilter*/, l2Address],
-        refetchInterval: 10_000,
-        placeholderData: keepPreviousData,
-        getNextPageParam: (lastPage: PortfolioCollectionApiResponse) => lastPage.next_page,
-        // initialData: isSSR
-        //   ? {
-        //       pages: [walletTokensInitialData],
-        //       pageParams: [],
-        //     }
-        //   : undefined,
-        initialPageParam: undefined,
-        queryFn: ({ pageParam }) =>
-            getPortfolioTokens({
-                client: arkClient,
-                page: pageParam,
-                walletAddress: l2Address ? l2Address : "",
-                //collectionAddress: collectionFilter,
-            }),
-    });
-    const portoflioItemsCount = infiniteData?.pages[0]?.token_count ?? 0;
+  const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({
+    address,
+    status: "ACCEPTED_ON_L1",
+  });
+  const { marketplace: arkClient } = useArkClient();
 
-    const walletTokens = useMemo(
-        () => infiniteData?.pages.flatMap((page) => page.data) ?? [],
-        [infiniteData],
-    );
+  const {
+    data: infiniteData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["walletTokens", collectionAddress, l2Address],
+    refetchInterval: 10_000,
+    placeholderData: keepPreviousData,
+    enabled: !!l2Address,
+    getNextPageParam: (lastPage: PortfolioCollectionApiResponse) =>
+      lastPage.next_page,
+    // initialData: isSSR
+    //   ? {
+    //       pages: [walletTokensInitialData],
+    //       pageParams: [],
+    //     }
+    //   : undefined,
+    initialPageParam: undefined,
+    queryFn: ({ pageParam }) =>
+      getPortfolioTokens({
+        client: arkClient,
+        page: pageParam,
+        walletAddress: l2Address ? l2Address : "",
+        collectionAddress: collectionAddress,
+      }),
+  });
+  const portoflioItemsCount = infiniteData?.pages[0]?.token_count ?? 0;
 
-    const allCollectionAddresses = getAddressesForChainId(ChainId.SN_MAIN);
+  const walletTokens = useMemo(
+    () => infiniteData?.pages.flatMap((page) => page.data) ?? [],
+    [infiniteData],
+  );
 
-    const filteredWalletTokens = walletTokens.filter((token) => {
-        return allCollectionAddresses.includes(token.collection_address);
-    });
+  const allCollectionAddresses = getAddressesForChainId(ChainId.SN_MAIN);
 
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: false });
-    useEffect(() => {
-        if (isInView) fetchNextPage();
-    }, [fetchNextPage, isInView]);
+  const filteredWalletTokens = walletTokens.filter((token) => {
+    return allCollectionAddresses.includes(token.collection_address);
+  });
 
-    return (
-        <div>
-            <PortfolioItemsToolsBar
+  const viewRef = useRef(null);
+  const isInView = useInView(viewRef);
+  useEffect(() => {
+    if (isInView) fetchNextPage();
+  }, [isInView, fetchNextPage]);
+  const {
+    deselectAllNfts,
+    isNftSelected,
+    selectBatchNfts,
+    //selectedCollectionAddress,
+    toggleNftSelection,
+    totalSelectedNfts,
+    selectedTokenIds,
+  } = useNftSelection({ userAddress: l2Address! });
+  return (
+    <>
+      {l2Address ? (
+        <div className="flex w-full">
+          <PortfolioItemsFiltersPanel
+            walletAddress={l2Address}
+            filtersOpen={itemsFiltersOpen}
+            className="sticky top-[var(--site-header-height)] hidden h-[calc(100vh-var(--site-header-height))] sm:block"
+            selectable
+            // walletCollectionsInitialData={walletCollectionsInitialData}
+          />
+          <div className="flex-1">
+            <div className="sticky top-[var(--site-header-height)] z-10 mb-6 border-b border-border bg-background px-5 pb-4 sm:pt-2 lg:mb-0 lg:border-none">
+              <PortfolioItemsToolsBar
                 filtersOpen={itemsFiltersOpen}
                 walletAddress={l2Address}
                 // walletCollectionsInitialData={walletCollectionsInitialData}
                 toggleFiltersOpen={() =>
-                    setItemsFiltersOpen((previous) => !previous)
+                  setItemsFiltersOpen((previous) => !previous)
                 }
                 setViewType={setViewType}
                 viewType={viewType}
-            />
-            <PortfolioItemsGrid walletTokens={filteredWalletTokens} viewType={viewType} />
-            <div className="w-full" ref={ref} />
+                selectable={selectable}
+                selectedTokenIds={selectedTokenIds}
+                totalSelectedNfts={totalSelectedNfts}
+                selectBatchNfts={selectBatchNfts}
+                batchTokenIds={filteredWalletTokens
+                  .slice(0, 140)
+                  .map((token) => token.token_id)}
+                deselectAllNfts={deselectAllNfts}
+              />
+            </div>
+            {filteredWalletTokens.length ? (
+              <>
+                <PortfolioItemsGrid
+                  walletTokens={filteredWalletTokens}
+                  viewType={viewType}
+                  selectable={selectable}
+                  isNftSelected={isNftSelected}
+                  toggleNftSelection={toggleNftSelection}
+                />
+              </>
+            ) : null}
+          </div>
         </div>
-    );
+      ) : (
+        <div className="mx-auto mt-20 md:w-1/2">
+          <StarknetAccountLogin />
+        </div>
+      )}
+      <div className="z-50 h-2 w-full" ref={viewRef} />
+    </>
+  );
 };

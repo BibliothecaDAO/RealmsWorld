@@ -1,28 +1,17 @@
-import type { paths } from "@reservoir0x/reservoir-sdk";
 import { MAX_SELECTED_ITEMS } from "@/hooks/useNftSelection";
 import Bridge from "@/icons/bridge.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { XIcon } from "lucide-react";
-
-import type { RouterOutputs } from "@realms-world/api";
+import { CollectionAddresses } from "@realms-world/constants";
 import type { ChainId } from "@realms-world/constants";
 import { Badge } from "@realms-world/ui/components/ui/badge";
 import { Button } from "@realms-world/ui/components/ui/button";
-
-type L1orL2Tokens =
-  | NonNullable<
-    paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
-  >
-  | NonNullable<
-    paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
-  >
-  | RouterOutputs["erc721Tokens"]["all"]["items"];
 
 export const NftActions = ({
   selectedTokenIds,
   selectBatchNfts,
   totalSelectedNfts,
-  tokens,
+  batchTokenIds,
   sourceChain,
   deselectAllNfts,
 }: {
@@ -30,7 +19,7 @@ export const NftActions = ({
   selectBatchNfts: (contractAddress: string, tokenIds: string[]) => void;
   sourceChain: ChainId;
   totalSelectedNfts: number;
-  tokens: L1orL2Tokens;
+  batchTokenIds?: string[];
   deselectAllNfts: () => void;
 }) => {
   const { toggleNftBridge, setNftBridgeModalProps } = useUIStore(
@@ -38,18 +27,19 @@ export const NftActions = ({
   );
   const isAllSelected =
     totalSelectedNfts === MAX_SELECTED_ITEMS ||
-    totalSelectedNfts === tokens.length;
-  const hasMoreThanMaxSelectNfts = tokens.length > MAX_SELECTED_ITEMS;
+    totalSelectedNfts === batchTokenIds?.length;
+  const hasMoreThanMaxSelectNfts =
+    batchTokenIds && batchTokenIds.length > MAX_SELECTED_ITEMS;
 
   let batchData: { contractAddress: string; tokenIds: string[] };
-  if (tokens[0]) {
-    let contractAddress = "0x";
+  if (batchTokenIds?.[0] && CollectionAddresses.realms[sourceChain]) {
+    /*let contractAddress = "0x";
     if ("token" in tokens[0]) {
       contractAddress = tokens[0]?.token?.contract ?? "0x";
     } else if ("contract_address" in tokens[0]) {
       contractAddress = tokens[0]?.contract_address ?? "0x";
-    }
-    const tokenIds = tokens.map((token) => {
+    }*/
+    /*const tokenIds = tokens.map((token) => {
       if ("token" in token) {
         return token.token?.tokenId ?? "";
       } else if ("contract_address" in token) {
@@ -57,8 +47,11 @@ export const NftActions = ({
       } else {
         return "";
       }
-    });
-    batchData = { contractAddress, tokenIds };
+    });*/
+    batchData = {
+      contractAddress: CollectionAddresses.realms[sourceChain],
+      tokenIds: batchTokenIds,
+    };
   }
   return (
     <div className="my-2 flex w-full justify-between">

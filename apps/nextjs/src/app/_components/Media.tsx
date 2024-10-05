@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import { env } from "env";
 import { cn } from "@realms-world/utils";
-import { Skeleton } from "@realms-world/ui";
+import { Skeleton } from "@realms-world/ui/components/ui/skeleton";
 import { AnimatedMap } from "./AnimatedMap";
 
 interface MediaProps {

@@ -24,7 +24,7 @@ export const StarknetLoginButton = ({
   buttonClass?: string;
   children?: React.ReactNode;
 }) => {
-  const { account, isConnected, isConnecting } = useAccount();
+  const { address, isConnected, isConnecting } = useAccount();
   const { toggleAccount, toggleStarknetLogin } = useUIStore((state) => state);
 
   const onConnectClick = () => {
@@ -45,8 +45,8 @@ export const StarknetLoginButton = ({
         <StarknetLogo className="h-6 w-6" />
         <span className={`pl-2 ${textClass ?? "sm:block"}`}>
           {isConnecting && <Loader className="animate-spin" />}
-          {account?.address ? (
-            <>{shortenHex(account.address, 8)}</>
+          {address ? (
+            <>{shortenHex(address, 8)}</>
           ) : (<>
             {children ?? "Starknet"}</>)
           }

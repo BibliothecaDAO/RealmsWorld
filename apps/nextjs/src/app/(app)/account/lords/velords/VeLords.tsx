@@ -34,15 +34,12 @@ import { Badge } from "@realms-world/ui/components/ui/badge";
 import { useVeLords } from "@/hooks/staking/useVeLords";
 import type { BlockNumber } from "starknet";
 import { BlockTag } from "starknet";
-import { VeLordsRewardsChart } from './VeLordsRewardsChart'
+import { VeLordsRewardsChart } from "./VeLordsRewardsChart";
 import { api } from "@/trpc/react";
-import { formatDistanceToNow } from 'date-fns';
-import {
-  differenceInSeconds,
-  getUnixTime,
-  fromUnixTime
-} from 'date-fns';
+import { formatDistanceToNow } from "date-fns";
+import { differenceInSeconds, getUnixTime, fromUnixTime } from "date-fns";
 import { motion } from "framer-motion";
+import { formatNumber } from "@realms-world/utils";
 
 const WEEK_IN_SECONDS = 7 * 24 * 60 * 60; // 1 week in seconds
 const YEAR_IN_SECONDS = 365 * 24 * 60 * 60; // 1 year in seconds
@@ -68,14 +65,15 @@ export function roundToWeek(time: number) {
 export const MAX_LOCK = roundToWeek(4 * YEAR_IN_SECONDS); // 4 years from now
 
 function getVotingPower(lockAmount: bigint, unlockTime: number): number {
-  const duration = roundToWeek(unlockTime) - Math.floor(new Date().getTime() / 1000);
+  const duration =
+    roundToWeek(unlockTime) - Math.floor(new Date().getTime() / 1000);
   if (duration <= 0) {
     return 0;
   }
   if (duration >= MAX_LOCK) {
     return Number(formatEther(lockAmount));
   }
-  const result = (Number(formatEther(lockAmount)) / (MAX_LOCK)) * duration;
+  const result = (Number(formatEther(lockAmount)) / MAX_LOCK) * duration;
   return result;
 }
 
@@ -93,11 +91,15 @@ function calculatePenalty(lockInfo: LockInfo): bigint {
 
   const currentTime = Math.floor(Date.now() / 1000);
   if (lockInfo.end > currentTime) {
-    const timeLeft = BigInt(Math.min(lockInfo.end - currentTime, MAX_LOCK_DURATION));
-    const penaltyRatio = BigInt(Math.min(
-      Number((timeLeft * SCALE) / BigInt(MAX_LOCK_DURATION)),
-      Number(MAX_PENALTY_RATIO)
-    ));
+    const timeLeft = BigInt(
+      Math.min(lockInfo.end - currentTime, MAX_LOCK_DURATION),
+    );
+    const penaltyRatio = BigInt(
+      Math.min(
+        Number((timeLeft * SCALE) / BigInt(MAX_LOCK_DURATION)),
+        Number(MAX_PENALTY_RATIO),
+      ),
+    );
     return (lockInfo.amount * penaltyRatio) / SCALE;
   }
   return 0n;
@@ -122,12 +124,16 @@ export const VeLords = () => {
     watch: true,
     blockIdentifier: BlockTag.PENDING as BlockNumber,
   });
-  const { data: totalSupply, isFetching, error } = useReadContract({
+  const {
+    data: totalSupply,
+    isFetching,
+    error,
+  } = useReadContract({
     address: veLordsAddress as Address,
     abi: VeLordsABI,
     functionName: "total_supply",
     //enabled: !!l2Address,
-    args: []
+    args: [],
     // args: l2Address ? [l2Address] : undefined,
     //blockIdentifier: BlockTag.PENDING as BlockNumber,
   });
@@ -152,17 +158,24 @@ export const VeLords = () => {
     const currentTime = getUnixTime(new Date());
     const additionalLockTime = lockWeeks * WEEK_IN_SECONDS;
     if (ownerLordsLock?.end_time) {
-      return Math.max(Number(ownerLordsLock.end_time), currentTime) + additionalLockTime;
+      return (
+        Math.max(Number(ownerLordsLock.end_time), currentTime) +
+        additionalLockTime
+      );
     } else {
       return currentTime + additionalLockTime;
     }
   }, [ownerLordsLock?.end_time, lockWeeks]);
 
-  const timeUntilUnlock = ownerLordsLock?.end_time ? getTimeUntil(Number(ownerLordsLock?.end_time)) : undefined;
+  const timeUntilUnlock = ownerLordsLock?.end_time
+    ? getTimeUntil(Number(ownerLordsLock?.end_time))
+    : undefined;
   const weeksToUnlock = toWeeks(timeUntilUnlock);
 
   const votingPower = useMemo(() => {
-    const currentLockAmount = ownerLordsLock?.amount ? BigInt(ownerLordsLock.amount) : 0n;
+    const currentLockAmount = ownerLordsLock?.amount
+      ? BigInt(ownerLordsLock.amount)
+      : 0n;
     const additionalAmount = amount ? parseEther(amount) : 0n;
     return getVotingPower(currentLockAmount + additionalAmount, unlockTime);
   }, [ownerLordsLock?.amount, amount, unlockTime]);
@@ -178,13 +191,16 @@ export const VeLords = () => {
     return 0n;
   }, [ownerLordsLock]);
 
-  const { claim, manageLock, withdraw } = useVeLords()
+  const { claim, manageLock, withdraw } = useVeLords();
 
   const newLockEndTime = useMemo(() => {
     const currentTime = getUnixTime(new Date());
     const additionalLockTime = lockWeeks * WEEK_IN_SECONDS;
     if (ownerLordsLock?.end_time) {
-      return Math.max(Number(ownerLordsLock.end_time), currentTime) + additionalLockTime;
+      return (
+        Math.max(Number(ownerLordsLock.end_time), currentTime) +
+        additionalLockTime
+      );
     } else {
       return currentTime + additionalLockTime;
     }
@@ -199,11 +215,12 @@ export const VeLords = () => {
   };
 
   return (
-    <div className="mt-4 grid grid-cols-3 gap-4 md:grid-cols-5">
+    <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            {ownerLordsLock?.amount && Number(formatEther(ownerLordsLock?.amount)).toFixed(4)}
+            {ownerLordsLock?.amount &&
+              formatNumber(Number(formatEther(ownerLordsLock?.amount)))}
             <LordsIcon className="ml-2 h-7 w-7 fill-current" />
           </CardTitle>
         </CardHeader>
@@ -215,7 +232,7 @@ export const VeLords = () => {
         {error?.message}
         <CardHeader>
           <CardTitle className="flex items-center">
-            {Number(veLordsData?.formatted).toFixed(4)}
+            {formatNumber(Number(veLordsData?.formatted))}
             <LordsIcon className="ml-2 h-7 w-7 fill-current" />
           </CardTitle>
         </CardHeader>
@@ -226,7 +243,12 @@ export const VeLords = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            {totalSupply && veLordsData && ((Number(veLordsData.value) / Number(totalSupply)) * 100).toFixed(2)}%
+            {totalSupply &&
+              veLordsData &&
+              ((Number(veLordsData.value) / Number(totalSupply)) * 100).toFixed(
+                2,
+              )}
+            %
           </CardTitle>
         </CardHeader>
         <CardFooter>
@@ -252,7 +274,7 @@ export const VeLords = () => {
         </TabsList>
 
         <TabsContent value={"staking"}>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -260,60 +282,76 @@ export const VeLords = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="prose text-primary">            <p>Lock your Lords for veLords and:</p>
+                <div className="prose text-primary">
+                  {" "}
+                  <p>Lock your Lords for veLords and:</p>
                   <ul className="ml-5 list-disc">
                     <li>
-
                       Direct Lords emissions from the DAO to scale successful
                       games
                     </li>
                     <li>Be rewarded with Lords (dependant on lock time)</li>
                   </ul>
-
-                  <p>This is phase one of rolling releases of the lordship protocol. This initial release focuses on funneling game fees.</p>
-
+                  <p>
+                    This is phase one of rolling releases of the lordship
+                    protocol. This initial release focuses on funneling game
+                    fees.
+                  </p>
                   <p>The following releases will include:</p>
-
                   <ul className="ml-5 list-disc">
-                    <li>
-                      LP fee capture within the system </li>
-                    <li>
-                      Game incentives </li>
-                    <li>
-                      LORDS distribution mechanism </li></ul></div>
+                    <li>LP fee capture within the system </li>
+                    <li>Game incentives </li>
+                    <li>LORDS distribution mechanism </li>
+                  </ul>
+                </div>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
                 <CardTitle>Lords Distributions</CardTitle>
               </CardHeader>
-              <VeLordsRewardsChart totalSupply={totalSupply && Number(formatEther(totalSupply))} data={veLordsBurns} />
+              <VeLordsRewardsChart
+                totalSupply={totalSupply && Number(formatEther(totalSupply))}
+                data={veLordsBurns}
+              />
             </Card>
             <Card>
               <CardHeader>
                 <CardTitle>Lords ⇆ veLords</CardTitle>
                 <CardDescription>
-                  Lock your Lords in return for veLords - entitling to a share of Lords fees from ecosystem games and marketplaces, and participate in future liquidity provision. Claimable at weekly epochs.
-
-                  Note: there is a maximum penalty of 75% for early withdrawal (if withdrawn immediately after locking for 4 years)
+                  Lock your Lords in return for veLords - entitling to a share
+                  of Lords fees from ecosystem games and marketplaces, and
+                  participate in future liquidity provision. Claimable at weekly
+                  epochs. Note: there is a maximum penalty of 75% for early
+                  withdrawal (if withdrawn immediately after locking for 4
+                  years)
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {ownerLordsLock?.amount ? (<div className="mb-4">
-                  <p className="mb-2">Your Lock:</p>
-                  <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Badge className="py-3 px-4 text-lg font-medium bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors duration-200">
-                      <LordsIcon className="w-6 h-6 mr-3" />
-                      <span className="mr-2">{Number(formatEther(ownerLordsLock.amount)).toFixed(2)} LORDS</span>
-                      <span className="text-sm opacity-80">
-                        until {ownerLordsLock?.end_time && formatLockEndTime(Number(ownerLordsLock.end_time))}
-                      </span>
-                    </Badge>
-                  </motion.div></div>
+                {ownerLordsLock?.amount ? (
+                  <div className="mb-4">
+                    <p className="mb-2">Your Lock:</p>
+                    <motion.div
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Badge className="bg-primary px-4 py-3 font-sans text-lg font-medium text-primary-foreground shadow-lg transition-colors duration-200 hover:bg-primary/90">
+                        <LordsIcon className="mr-3 h-6 w-6" />
+                        <span className="mr-2">
+                          {formatNumber(
+                            Number(formatEther(ownerLordsLock.amount)),
+                          )}{" "}
+                          LORDS
+                        </span>
+                        <span className="text-sm opacity-80">
+                          until{" "}
+                          {ownerLordsLock?.end_time &&
+                            formatLockEndTime(Number(ownerLordsLock.end_time))}
+                        </span>
+                      </Badge>
+                    </motion.div>
+                  </div>
                 ) : null}
                 <div className="grid grid-cols-5 gap-6">
                   <div className="col-span-2">
@@ -335,7 +373,10 @@ export const VeLords = () => {
                     />
                   </div>
                   <div className="col-span-3">
-                    <Label className="mb-2">{ownerLordsLock?.amount ? "Extend " : null}Lock Period (weeks)</Label>
+                    <Label className="mb-2">
+                      {ownerLordsLock?.amount ? "Extend " : null}Lock Period
+                      (weeks)
+                    </Label>
                     <div className="flex space-x-2">
                       <Slider
                         min={0}
@@ -349,7 +390,11 @@ export const VeLords = () => {
                         value={lockWeeks}
                         onChange={(event) => {
                           const value = parseInt(event.target.value);
-                          if (!isNaN(value) && value >= 0 && value <= maxLockWeeks) {
+                          if (
+                            !isNaN(value) &&
+                            value >= 0 &&
+                            value <= maxLockWeeks
+                          ) {
                             setLockWeeks(value);
                           }
                         }}
@@ -357,7 +402,10 @@ export const VeLords = () => {
                     </div>
                     {lockWeeks > 0 && (
                       <p className="mt-2 text-sm text-muted">
-                        New lock end: <span className="text-muted-foreground">{formatLockEndTime(newLockEndTime)}</span>
+                        New lock end:{" "}
+                        <span className="text-muted-foreground">
+                          {formatLockEndTime(newLockEndTime)}
+                        </span>
                       </p>
                     )}
                   </div>
@@ -372,9 +420,16 @@ export const VeLords = () => {
                 </div>
               </CardContent>
               <CardFooter className="flex gap-x-4">
-                <Button onClick={handleManageLock} disabled={!amount && !lockWeeks} className="w-full">{ownerLordsLock?.amount ? "Update Lock" : "Stake Lords"}</Button>
+                <Button
+                  onClick={handleManageLock}
+                  disabled={!amount && !lockWeeks}
+                  className="w-full"
+                >
+                  {ownerLordsLock?.amount ? "Update Lock" : "Stake Lords"}
+                </Button>
               </CardFooter>
             </Card>
+
             {ownerLordsLock?.amount ? (
               <Card>
                 <CardHeader>
@@ -383,7 +438,10 @@ export const VeLords = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="mb-4">Pay a penalty determined by lock duration to withdraw your locked Lords early</p>
+                  <p className="mb-4">
+                    Pay a penalty determined by lock duration to withdraw your
+                    locked Lords early
+                  </p>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label>Your Locked Lords</Label>
@@ -404,20 +462,28 @@ export const VeLords = () => {
                         amount={formatEther(ownerLordsLock.amount - penalty)}
                         icon={<LordsIcon />}
                       />
-                      <span className="text-muted text-sm">Penalty: {(Number(penalty) / Number(ownerLordsLock.amount) * 100).toFixed(2)}%</span>
+                      <span className="text-sm text-red-300/60">
+                        Penalty:{" "}
+                        {(
+                          (Number(penalty) / Number(ownerLordsLock.amount)) *
+                          100
+                        ).toFixed(2)}
+                        %
+                      </span>
                     </div>
-
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button onClick={() => withdraw()} className="w-full">Withdraw Lords</Button>
+                  <Button onClick={() => withdraw()} className="w-full">
+                    Withdraw Lords
+                  </Button>
                 </CardFooter>
               </Card>
             ) : null}
           </div>
         </TabsContent>
         <TabsContent value={"rewards"}>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -425,7 +491,11 @@ export const VeLords = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Lords fees distributed to the DAO from various games are accumulated in your balance, and are claimable at the end of each epoch (weekly)</p>
+                <p>
+                  Lords fees distributed to the DAO from various games are
+                  accumulated in your balance, and are claimable at the end of
+                  each epoch (weekly)
+                </p>
               </CardContent>
             </Card>
             <Card>
@@ -434,11 +504,14 @@ export const VeLords = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex gap-4">
-                  You have <span className="font-bold text-3xl">0</span> Lords to claim
+                  You have <span className="text-3xl font-bold">0</span> Lords
+                  to claim
                 </div>
               </CardContent>
               <CardFooter>
-                <Button onClick={() => claim()} className="w-full">Claim Lords</Button>
+                <Button onClick={() => claim()} className="w-full">
+                  Claim Lords
+                </Button>
               </CardFooter>
             </Card>
           </div>

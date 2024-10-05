@@ -1,27 +1,28 @@
-'use client'
-import { Link } from '@tanstack/react-router'
-import { ChevronRight, Search, type LucideIcon } from "lucide-react"
+"use client";
 
-import { useIsMobile } from "@realms-world/ui/hooks/use-mobile"
+import { ChevronRight, Search, type LucideIcon } from "lucide-react";
+
+import { useIsMobile } from "@realms-world/ui/hooks/use-mobile";
 import { cn } from "@realms-world/utils";
-import { Button } from "@realms-world/ui/components/ui/button"
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@realms-world/ui/components/ui/collapsible"
+} from "@realms-world/ui/components/ui/collapsible";
 import {
   Drawer,
   DrawerContent,
   DrawerTrigger,
-} from "@realms-world/ui/components/ui/drawer"
-import { Input } from "@realms-world/ui/components/ui/input"
+} from "@realms-world/ui/components/ui/drawer";
+import { Input } from "@realms-world/ui/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@realms-world/ui/components/ui/popover"
-import { Separator } from "@realms-world/ui/components/ui/separator"
+} from "@realms-world/ui/components/ui/popover";
+import { Separator } from "@realms-world/ui/components/ui/separator";
+import Link from "next/link";
 
 export function NavMain({
   className,
@@ -29,32 +30,32 @@ export function NavMain({
   searchResults,
 }: {
   items: {
-    title: string
-    url: string
-    icon: LucideIcon
-    isActive?: boolean
+    title: string;
+    url: string;
+    icon: any /*LucideIcon | React.FC<React.SVGProps<SVGSVGElement>>*/;
+    isActive?: boolean;
     items?: {
-      title: string
-      url: string
-    }[]
-  }[]
-  searchResults: React.ComponentProps<typeof SidebarSearch>["results"]
+      title: string;
+      url: string;
+    }[];
+  }[];
+  searchResults: React.ComponentProps<typeof SidebarSearch>["results"];
 } & React.ComponentProps<"ul">) {
   return (
     <ul className={cn("grid gap-0.5", className)}>
-      <li>
-        <SidebarSearch results={searchResults} />
-      </li>
+      {/*<li>
+                <SidebarSearch results={searchResults} />
+    </li>*/}
       {items.map((item) => (
         <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
           <li>
             <div className="relative flex items-center">
               <Link
-                to={item.url}
-                className="min-w-8 flex h-8 flex-1 items-center gap-2 overflow-hidden rounded-md px-1.5 text-sm font-medium outline-none ring-ring transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2"
+                href={item.url}
+                className="flex h-8 min-w-8 flex-1 items-center gap-2 overflow-hidden rounded-md px-1.5 font-sans text-lg font-medium tracking-widest outline-none ring-ring transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2"
               >
                 <item.icon className="h-4 w-4 shrink-0" />
-                <div className="flex flex-1 overflow-hidden">
+                <div className="flex flex-1 overflow-hidden pt-1">
                   <div className="line-clamp-1 pr-6">{item.title}</div>
                 </div>
               </Link>
@@ -73,8 +74,8 @@ export function NavMain({
                 {item.items?.map((subItem) => (
                   <li key={subItem.title}>
                     <Link
-                      to={subItem.url}
-                      className="min-w-8 flex h-8 items-center gap-2 overflow-hidden rounded-md px-2 text-sm font-medium text-muted-foreground ring-ring transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2"
+                      href={subItem.url}
+                      className="flex h-8 min-w-8 items-center gap-2 overflow-hidden rounded-md px-2 font-medium text-muted-foreground ring-ring transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2"
                     >
                       <div className="line-clamp-1">{subItem.title}</div>
                     </Link>
@@ -86,24 +87,24 @@ export function NavMain({
         </Collapsible>
       ))}
     </ul>
-  )
+  );
 }
 
 function SidebarSearch({
   results,
 }: {
   results: {
-    title: string
-    teaser: string
-    url: string
-  }[]
+    title: string;
+    teaser: string;
+    url: string;
+  }[];
 }) {
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
       <Drawer>
-        <DrawerTrigger className="min-w-8 flex h-8 w-full flex-1 items-center gap-2 overflow-hidden rounded-md px-1.5 text-sm font-medium outline-none ring-ring transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground">
+        <DrawerTrigger className="flex h-8 w-full min-w-8 flex-1 items-center gap-2 overflow-hidden rounded-md px-1.5 text-sm font-medium outline-none ring-ring transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground">
           <Search className="h-4 w-4 shrink-0" />
           <div className="flex flex-1 overflow-hidden">
             <div className="line-clamp-1 pr-6">Search</div>
@@ -122,7 +123,7 @@ function SidebarSearch({
           <div className="grid gap-1 p-1.5 text-sm">
             {results.map((result) => (
               <Link
-                to={result.url}
+                href={result.url}
                 key={result.title}
                 className="rounded-md p-2.5 outline-none ring-ring hover:bg-accent hover:text-accent-foreground focus-visible:ring-2"
               >
@@ -134,7 +135,7 @@ function SidebarSearch({
             ))}
             <Separator className="my-1.5" />
             <Link
-              to="/"
+              href="/"
               className="rounded-md px-2.5 py-1 text-muted-foreground outline-none ring-ring hover:text-foreground focus-visible:ring-2"
             >
               See all results
@@ -142,12 +143,12 @@ function SidebarSearch({
           </div>
         </DrawerContent>
       </Drawer>
-    )
+    );
   }
 
   return (
     <Popover>
-      <PopoverTrigger className="min-w-8 flex h-8 w-full flex-1 items-center gap-2 overflow-hidden rounded-md px-1.5 text-sm font-medium outline-none ring-ring transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground">
+      <PopoverTrigger className="flex h-8 w-full min-w-8 flex-1 items-center gap-2 overflow-hidden rounded-md px-1.5 text-sm font-medium outline-none ring-ring transition-all hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground">
         <Search className="h-4 w-4 shrink-0" />
         <div className="flex flex-1 overflow-hidden">
           <div className="line-clamp-1 pr-6">Search</div>
@@ -171,7 +172,7 @@ function SidebarSearch({
         <div className="grid gap-1 p-1.5 text-sm">
           {results.map((result) => (
             <Link
-              to={result.url}
+              href={result.url}
               key={result.title}
               className="rounded-md p-2.5 outline-none ring-ring hover:bg-accent hover:text-accent-foreground focus-visible:ring-2"
             >
@@ -183,7 +184,7 @@ function SidebarSearch({
           ))}
           <Separator className="my-1.5" />
           <Link
-            to="."
+            href="."
             className="rounded-md px-2.5 py-1 text-muted-foreground outline-none ring-ring hover:text-foreground focus-visible:ring-2"
           >
             See all results
@@ -191,5 +192,5 @@ function SidebarSearch({
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

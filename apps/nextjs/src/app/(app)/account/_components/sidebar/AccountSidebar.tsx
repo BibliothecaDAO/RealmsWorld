@@ -1,9 +1,12 @@
+"use client";
+
 import {
   Atom,
   Bird,
   BookOpen,
   Bot,
   Code2,
+  Earth,
   Eclipse,
   Frame,
   History,
@@ -11,19 +14,19 @@ import {
   Map,
   PieChart,
   Rabbit,
-  Send,
+  UserRoundPen,
   Settings2,
   SquareTerminal,
   Star,
   Turtle,
-} from "lucide-react"
+} from "lucide-react";
+import LordsIcon from "@/icons/lords.svg";
 
-import { NavMain } from "./nav-main"
-import { NavProjects } from "./nav-projects"
+/*import { NavProjects } from "./nav-projects"
 import { NavSecondary } from "./nav-secondary"
 import { NavUser } from "./nav-user"
 import { StorageCard } from "./storage-card"
-import { TeamSwitcher } from "./team-switcher"
+import { TeamSwitcher } from "./team-switcher"*/
 import {
   Sidebar,
   SidebarContent,
@@ -31,80 +34,87 @@ import {
   SidebarHeader,
   SidebarItem,
   SidebarLabel,
-} from "@realms-world/ui/components/ui/sidebar"
-import { isClient } from "@/utils/env"
-const data = {
-  teams: [
-    {
-      name: "Frontinus House",
-      logo: Atom,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: Eclipse,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Rabbit,
-      plan: "Free",
-    },
-  ],
-  user: {
-    name: "redbeard.stark",
-    email: "0x23...3533",
-    avatar: "/avatars/shadcn.jpg",
-  },
+} from "@realms-world/ui/components/ui/sidebar";
+import { NavMain } from "./NavMain";
+import { NavUser } from "./NavUser";
+import { NavSecondary } from "./NavSecondary";
+
+export enum Layer {
+  "Ethereum",
+  "Starknet",
+}
+
+export const data = {
   navMain: [
     {
-      title: "Proposals",
-      url: "/proposals",
-      icon: SquareTerminal,
+      title: "Assets",
+      url: "/account/assets",
+      icon: Earth,
       isActive: true,
+      requiredWallets: [Layer.Starknet],
       items: [
         {
           title: "All",
-          url: "/about",
+          url: "/account/assets",
           icon: History,
           description: "View your recent prompts",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Realms",
+          url: "/account/assets/realms",
           icon: Star,
           description: "Browse your starred prompts",
         },
       ],
     },
     {
-      title: "Rounds",
-      url: "#",
-      icon: Bot,
+      title: "Lords",
+      url: "/account/lords",
+      icon: LordsIcon,
+      isActive: true,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "veLords",
+          url: "/account/lords/velords",
           icon: Rabbit,
           description: "Our fastest model for general use cases.",
+          requiredWallets: [Layer.Starknet],
+        },
+        {
+          title: "Realms Claims",
+          url: "/account/lords/claim",
+          icon: Rabbit,
+          description: "Our fastest model for general use cases.",
+          requiredWallets: [Layer.Starknet],
+        },
+        {
+          title: "Legacy Claims",
+          url: "/account/lords/legacy-claim",
+          icon: Rabbit,
+          description: "Our fastest model for general use cases.",
+          requiredWallets: [Layer.Ethereum],
         },
       ],
     },
     {
       title: "Delegates",
-      url: "#",
-      icon: Code2,
+      url: "/account/delegates",
+      icon: UserRoundPen,
+      isActive: true,
+      requiredWallets: [Layer.Starknet],
       items: [
         {
           title: "All",
-          url: "#",
+          url: "/account/delegates",
         },
         {
           title: "Your Profile",
-          url: "#",
+          url: "/account/delegates/profile",
         },
       ],
     },
+  ],
+  navSecondary: [
     {
       title: "Docs",
       url: "#",
@@ -138,19 +148,6 @@ const data = {
           url: "#",
         },
       ],
-    },
-  ],
-
-  navSecondary: [
-    {
-      title: "Support",
-      url: "#",
-      icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
     },
   ],
   projects: [
@@ -202,35 +199,34 @@ const data = {
       url: "#",
     },
   ],
-}
+};
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+    <Sidebar asideClassname="left-[var(--site-sidemenu-width)] top-[var(--site-header-height)]">
+      <SidebarHeader className="font-sans text-xl tracking-wide">
+        Your Account
+        {/*<TeamSwitcher teams={data.teams} />*/}
       </SidebarHeader>
       <SidebarContent>
-        <SidebarItem>
+        <SidebarItem className="py-1">
           <NavMain items={data.navMain} searchResults={data.searchResults} />
         </SidebarItem>
-        <SidebarItem className="mt-6">
-          <SidebarLabel>Projects</SidebarLabel>
-          <NavProjects projects={data.projects} />
+        {/*<SidebarItem className="mt-6">
+            <SidebarLabel>Projects</SidebarLabel>
+            <NavProjects projects={data.projects} />
+          </SidebarItem>*/}
+        <SidebarItem className="mt-10">
+          <SidebarLabel className="text-base">Help</SidebarLabel>
+          <NavSecondary items={data.navSecondary} />
         </SidebarItem>
-        <div className="h-full">
-          <SidebarItem className="mt-6">
-            <SidebarLabel>Help</SidebarLabel>
-            <NavSecondary items={data.navSecondary} />
-          </SidebarItem>
-          <SidebarItem>
-            <StorageCard />
-          </SidebarItem>
-        </div>
+        {/*<SidebarItem>
+                        <StorageCard />
+                    </SidebarItem>*/}
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

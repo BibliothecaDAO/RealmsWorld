@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ToggleGroup, ToggleGroupItem } from "@realms-world/ui";
+import { ToggleGroup, ToggleGroupItem } from "@realms-world/ui/components/ui/toggle-group";
 import { Grid2X2, Grid3X3, List } from "lucide-react";
 
 export const viewTypes = ["large-grid", "small-grid", "list"] as const;

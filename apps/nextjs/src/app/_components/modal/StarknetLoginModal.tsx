@@ -6,6 +6,7 @@ import { useAccount, useConnect } from "@starknet-react/core";
 import { Dialog, DialogContent, DialogHeader } from "@realms-world/ui/components/ui/dialog";
 import { Button } from "@realms-world/ui/components/ui/button";
 import WalletIcons from "../wallet/WalletIcons";
+import { Loader2 } from "lucide-react";
 
 export const StarknetLoginModal = () => {
   const { connectAsync, connectors } = useConnect();
@@ -15,7 +16,7 @@ export const StarknetLoginModal = () => {
     toggleAccount,
     isAccountOpen,
   } = useUIStore((state) => state);
-  const { isConnected } = useAccount();
+  const { isConnected, isConnecting } = useAccount();
 
 
 
@@ -115,7 +116,7 @@ export const StarknetLoginModal = () => {
                   }
                 >
                   <div className="flex items-center justify-center">
-                    <WalletIcons id={connector.id} />
+                    {isConnecting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <WalletIcons id={connector.id} />}
 
                     {!connector.available ? "Install " : ""}
                     {connectorInfo?.name

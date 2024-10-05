@@ -20,6 +20,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 
 import { Toaster } from "@realms-world/ui/components/ui/toaster";
 import { TooltipProvider } from "@realms-world/ui/components/ui/tooltip";
+import { ArkClientProvider } from "@/lib/ark/useArkClient";
 const bebas_neue = Bebas_Neue({
   subsets: ["latin"],
   variable: "--font-bebas-neue",
@@ -33,7 +34,6 @@ const space_mono = Space_Mono({
   weight: "400",
   display: "swap",
 });
-
 
 const backgroundImageStyle = {
   backgroundImage: `url(/backgrounds/map.svg)`,
@@ -62,10 +62,12 @@ export default function Layout(props: { children: React.ReactNode }) {
                       <Sidebar />
                       <div className="z-10 flex flex-grow flex-col">
                         <TopNav />
-                        <div className="flex-grow">{props.children}</div>
+                        <div className="flex-grow pt-[var(--site-header-height)] sm:mb-24 sm:pl-[var(--site-sidemenu-width)]">
+                          {props.children}
+                        </div>
+                        <Footer />
                       </div>
                     </main>
-                    <Footer />
                     <Toaster />
                     <StarknetLoginModal />
                     <WalletSheet />

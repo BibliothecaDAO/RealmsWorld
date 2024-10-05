@@ -3,61 +3,42 @@ import { StakingMigrationModal } from "@/app/_components/modal/StakingMigrationM
 import { PageLayout } from "@/app/_components/PageLayout";
 import { SessionProvider } from "next-auth/react";
 
-import { NavLink } from "@realms-world/ui/components/ui/nav-link";
+import {
+  SidebarLayout,
+  SidebarTrigger,
+} from "@realms-world/ui/components/ui/sidebar";
+//import { ModeToggle } from '@realms-world/ui/components/ui/mode-toggle';
+import { cookies } from "next/headers";
+import { AuthWrapper } from "./_components/AuthWrapper";
+import { AppSidebar } from "./_components/sidebar/AccountSidebar";
+import { cn } from "@realms-world/utils";
 
-import { AuthWrapper } from "./AuthWrapper";
+const SIDEBAR_STATE_COOKIE = "sidebar:state";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const tabs = [
-    {
-      name: "Assets",
-      link: "assets",
-    },
-    {
-      name: "Lords",
-      link: "lords",
-    },
-    // {
-    //   name: "Activity",
-    //   link: "activity",
-    // },
-    {
-      name: "Delegates",
-      link: "delegates",
-    },
-    {
-      name: "Profile",
-      link: "profile",
-    },
-  ];
-
   const NftBridgeModal = dynamic(
     () => import("@/app/_components/modal/NftBridgeModal"),
     {
       ssr: false,
     },
   );
+  const sidebarState = cookies().get(SIDEBAR_STATE_COOKIE)?.value ?? "true";
+  const isSidebarOpen = sidebarState === "true";
 
   return (
     <SessionProvider>
       <PageLayout>
-        <div className="mb-4 flex w-full space-x-4 border-b text-xl">
-          {tabs.map((tab) => (
-            <NavLink
-              key={tab.name}
-              exact
-              variant={"ghost"}
-              href={`/account${tab.link && "/" + tab.link}`}
-            >
-              {tab.name}
-            </NavLink>
-          ))}
-        </div>
-        <AuthWrapper>{children}</AuthWrapper>
+        <SidebarLayout defaultOpen={isSidebarOpen}>
+          <AppSidebar />
+          <SidebarTrigger className={cn("fixed top-6 z-50")} />
+          <div className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
+            <AuthWrapper>{children}</AuthWrapper>
+          </div>
+        </SidebarLayout>
       </PageLayout>
       <StakingMigrationModal />
       <NftBridgeModal />

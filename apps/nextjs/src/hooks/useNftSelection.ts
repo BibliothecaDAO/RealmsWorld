@@ -1,20 +1,13 @@
-//import { type Nft } from "~/server/api/types";
-import type { paths } from "@reservoir0x/reservoir-sdk";
 import { useCallback, useMemo, useState } from "react";
-
-import type { RouterOutputs } from "@realms-world/api";
 import { toast } from "@realms-world/ui/components/ui/use-toast";
 
-export const MAX_SELECTED_ITEMS = 30;
+export const MAX_SELECTED_ITEMS = 140;
 
 export default function useNftSelection({
   userAddress,
 }: {
   userAddress: `0x${string}`;
 }) {
-  //const { sourceChain } = useCurrentChain();
-  //const { address: userAddress } = useAccountFromChain(sourceChain);
-
   const [selectedTokensByUserAddress, setSelectedTokensByUserAddress] =
     useState<
       Record<

@@ -26,7 +26,7 @@ export default function Page({
   const delegates = api.delegates.all(filters);
 
   return (
-    <div>
+    <div className="px-4 pt-4 md:px-6">
       <div className="w-full">
         <h4 className="my-4 text-3xl">Delegates</h4>
         <p className="text-xl">
@@ -35,8 +35,7 @@ export default function Page({
         </p>
       </div>
       <DelegatesToolbar />
-      <Suspense
-        fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
         <DelegatesList delegates={delegates} />
       </Suspense>
     </div>

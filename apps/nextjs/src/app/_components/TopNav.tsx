@@ -63,7 +63,7 @@ export const TopNav = () => {
   return (
     <div
       id="topnav"
-      className={`fixed z-[100] w-full border-b-[3px] bg-background p-3 pl-4 sm:pl-8 md:pl-32`}
+      className={`fixed z-50 w-full border-b-[3px] bg-background p-3 pl-4 sm:pl-8 md:pl-32`}
     >
       <div className="flex justify-between w-full">
         <Button className="md:hidden" onClick={toggleSidebar}>

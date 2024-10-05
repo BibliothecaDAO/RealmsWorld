@@ -16,12 +16,12 @@ export const L1ERC721Table = ({
 }: {
   address: string;
   tokens:
-  | NonNullable<
-    paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
-  >
-  | NonNullable<
-    paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
-  >;
+    | NonNullable<
+        paths["/tokens/v7"]["get"]["responses"]["200"]["schema"]["tokens"]
+      >
+    | NonNullable<
+        paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"]["tokens"]
+      >;
   selectable?: boolean;
 }) => {
   const { isGrid } = useUIStore((state) => state);
@@ -47,7 +47,7 @@ export const L1ERC721Table = ({
           selectedTokenIds={selectedTokenIds}
           totalSelectedNfts={totalSelectedNfts}
           selectBatchNfts={selectBatchNfts}
-          tokens={tokens}
+          batchTokenIds={tokens.slice(0, 140).map((token) => token.tokenId)}
           deselectAllNfts={deselectAllNfts}
           sourceChain={SUPPORTED_L1_CHAIN_ID}
         />

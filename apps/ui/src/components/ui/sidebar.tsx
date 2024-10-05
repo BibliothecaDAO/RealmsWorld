@@ -1,3 +1,4 @@
+'use client'
 import * as React from "react"
 import { PanelLeft } from "lucide-react"
 
@@ -48,7 +49,7 @@ const SidebarLayout = React.forwardRef<
         data-sidebar={state}
         style={
           {
-            "--sidebar-width": "16rem",
+            "--sidebar-width": "18rem",
           } as React.CSSProperties
         }
         className={cn(
@@ -84,8 +85,8 @@ const SidebarTrigger = React.forwardRef<
 })
 SidebarTrigger.displayName = "SidebarTrigger"
 
-const Sidebar = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
-  ({ className, children }, ref) => {
+const Sidebar = React.forwardRef<HTMLDivElement, React.ComponentProps<"div"> & { asideClassname?: string }>(
+  ({ className, children, asideClassname }, ref) => {
     const isMobile = useIsMobile()
     const { open, onOpenChange } = useSidebar()
 
@@ -112,7 +113,7 @@ const Sidebar = React.forwardRef<HTMLDivElement, React.ComponentProps<"div">>(
     }
 
     return (
-      <aside className="fixed inset-y-0 left-0 z-10 hidden w-[--sidebar-width] transition-all duration-300 ease-in-out md:block [[data-sidebar=closed]_&]:left-[calc(var(--sidebar-width)*-1)]">
+      <aside className={cn("fixed inset-y-0 left-0 z-10 hidden w-[--sidebar-width] transition-all duration-300 ease-in-out md:block [[data-sidebar=closed]_&]:left-[calc(var(--sidebar-width)*-1)]", asideClassname)}>
         {sidebar}
       </aside>
     )

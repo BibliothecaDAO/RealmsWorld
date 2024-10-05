@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePendingRealmsWithdrawals } from "@/hooks/bridge/data/usePendingRealmsWithdrawals";
 import EthereumLogo from "@/icons/ethereum.svg";
 import StarknetLogo from "@/icons/starknet.svg";
@@ -8,32 +8,47 @@ import { useUIStore } from "@/providers/UIStoreProvider";
 import { TriangleAlert } from "lucide-react";
 import { useAccount } from "wagmi";
 
-import { Collections } from "@realms-world/constants";
-import { Alert, AlertDescription, AlertTitle } from "@realms-world/ui/components/ui/alert";
-import { Badge } from "@realms-world/ui/components/ui/badge";
-import { Button } from "@realms-world/ui/components/ui/button";
+import { CollectionAddresses, Collections } from "@realms-world/constants";
+
+import AssetL1CollectionPreview from "./AssetL1CollectionPreview";
+import AssetL2CollectionPreview from "./AssetL2CollectionPreview";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@realms-world/ui/components/ui/tabs";
-
-import AssetL1CollectionPreview from "./AssetL1CollectionPreview";
-import AssetL2CollectionPreview from "./AssetL2CollectionPreview";
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+} from "@realms-world/ui/components/ui/alert";
+import { Badge } from "@realms-world/ui/components/ui/badge";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { Portfolio } from "./Portfolio";
+import { useUserTokens } from "@/hooks/reservoir/useUserTokens";
 
 export const BridgeNftWrapper = () => {
-  const [activeChain, setActiveChain] = useState("l1");
-  const { address } = useAccount();
+  const [activeChain, setActiveChain] = useState("l2");
+  const { address: l1Address } = useAccount();
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({
-    address,
+    address: l1Address,
     status: "ACCEPTED_ON_L1",
   });
   const { toggleAccount } = useUIStore((state) => state);
-
+  const { tokens, isLoading } = useUserTokens({
+    address: l1Address,
+    //continuation: "",
+  });
+  useEffect(() => {
+    if (tokens?.tokens?.length) {
+      setActiveChain("l1");
+    }
+  }, [tokens]);
   return (
     <div>
-      <div className="flex flex-col items-center justify-center space-x-4 border-b pb-3 text-3xl md:flex-row md:justify-start">
+      <div className="flex flex-col items-center justify-center space-x-4 border-b p-3 text-3xl md:flex-row md:justify-start">
         <h2>Realms (for Adventurers)</h2>
         {/*!l1Address && <WalletSheet showStarknetLoginButton={false} />*/}
       </div>
@@ -42,8 +57,8 @@ export const BridgeNftWrapper = () => {
         onValueChange={(value) => setActiveChain(value)}
         className="col-span-full"
       >
-        <TabsList className="justify-center sm:space-x-1">
-          <TabsTrigger value="l1">
+        <TabsList className="mb-0 justify-center pb-2 sm:space-x-1">
+          <TabsTrigger disabled={!tokens?.tokens?.length} value="l1">
             <Badge
               variant={activeChain == "l1" ? "default" : "outline"}
               className="mr-2"
@@ -78,13 +93,15 @@ export const BridgeNftWrapper = () => {
           </Alert>
         ) : null}
 
-        <TabsContent value={"l1"}>
-          <AssetL1CollectionPreview />
+        <TabsContent className="mt-0" value={"l1"}>
+          <AssetL1CollectionPreview isLoading={isLoading} tokens={tokens} />
         </TabsContent>
-        <TabsContent value={"l2"}>
-          <AssetL2CollectionPreview
-            hideTitle
-            collectionName={Collections.REALMS}
+        <TabsContent className="mt-0" value={"l2"}>
+          <Portfolio
+            selectable
+            collectionAddress={
+              CollectionAddresses.realms[SUPPORTED_L2_CHAIN_ID]
+            }
           />
         </TabsContent>
       </Tabs>

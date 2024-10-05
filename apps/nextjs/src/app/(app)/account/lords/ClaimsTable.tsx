@@ -1,7 +1,6 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import type { ReactNode } from "react";
 import {
   flexRender,
   getCoreRowModel,
@@ -16,9 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from "@realms-world/ui/components/ui/table";
-import {
-  Button
-} from "@realms-world/ui/components/ui/button";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Badge } from "@realms-world/ui/components/ui/badge";
 interface Claim {
   timestamp?: Date | null;
   //realms: number;
@@ -31,7 +29,13 @@ export const columns: ColumnDef<Claim>[] = [
     id: "timestamp",
     header: () => <span className="font-sans">Claimed On</span>,
     cell: (cell) => {
-      return <span>{cell.getValue()?.toLocaleString()}</span>;
+      return (
+        <span>
+          {cell.getValue()?.toLocaleString() ?? (
+            <Badge variant={"outline"}>Unclaimed</Badge>
+          )}
+        </span>
+      );
     },
   },
   /*{
@@ -52,7 +56,11 @@ export const columns: ColumnDef<Claim>[] = [
     header: () => <span className="font-sans">Claim</span>,
     cell: (cell) => {
       if (!cell.getValue()) {
-        return <Button size={"xs"}>Claim</Button>;
+        return (
+          <Button size={"sm"} className="px-5">
+            Claim
+          </Button>
+        );
       } else {
         return <span>Claimed</span>;
       }
@@ -84,9 +92,9 @@ export function ClaimsTable({ data }: DataTableProps<Claim>) {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   );
                 })}

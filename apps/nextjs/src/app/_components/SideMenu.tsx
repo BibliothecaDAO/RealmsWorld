@@ -78,14 +78,15 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`${isSidebarOpen ? "bg-background" : "hidden"
-        } z-100 group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col sm:border-r-[3px] bg-background transition-all duration-500 md:flex md:w-[102px] md:hover:w-60`}
+      className={`${
+        isSidebarOpen ? "bg-background" : "hidden"
+      } z-100 group fixed bottom-0 top-0 z-20 h-screen w-screen flex-col bg-background transition-all duration-500 sm:border-r-[3px] md:flex md:w-[var(--site-sidemenu-width)] md:hover:w-60`}
     >
       <div className="absolute mx-4 hidden sm:block">
         <SideHeaderImg className="w-full opacity-0 group-hover:opacity-100" />
       </div>
       <Link
-        className="absolute z-20 mx-auto  w-full justify-center p-4 font-sans-serif text-xl font-semibold group-hover:pt-2.5 sm:text-2xl  hidden sm:flex"
+        className="absolute z-20 mx-auto hidden w-full justify-center p-4 font-sans-serif text-xl font-semibold group-hover:pt-2.5 sm:flex sm:text-2xl"
         href="/"
         onClick={toggleSidebar}
       >
@@ -93,8 +94,8 @@ const Sidebar = () => {
         <RWLogo className="absolute w-[152px] fill-white opacity-0 transition-all duration-500 group-hover:opacity-100" />
       </Link>
       <div className="mt-[60px] h-full w-full border-t-[3px] pb-3">
-        <div className="relative z-10 m-2 mt-0 h-full sm:border-[3px] border-t-0 border-solid border-transparent group-hover:!border-medium-dark-green">
-          <div className="relative flex h-full flex-col items-center mt-8">
+        <div className="relative z-10 m-2 mt-0 h-full border-solid border-transparent group-hover:!border-medium-dark-green sm:border-[3px] sm:border-t-0">
+          <div className="relative flex h-full flex-col items-center pt-8">
             <ScrollArea className="w-full">
               <div className="relative z-[2] inline-flex w-full flex-[0_0_auto] flex-col items-start justify-center gap-[17px] px-4 md:mb-6 md:mt-10">
                 {menu.map((item, index) => {
@@ -119,13 +120,13 @@ const Sidebar = () => {
               </div>
             </ScrollArea>
 
-            <div className="w-full px-2">
-              {/* <hr className="mb-4 sm:border-b-[3px]" /> */}
-            </div>
+            <div className="flex-grow" />
+            {/* <hr className="mb-4 sm:border-b-[3px]" /> */}
+
             <Button
               asChild
               variant={"outline"}
-              className="mt-3 flex h-16 flex-col p-2 sm:pt-3 font-sans  text-xl"
+              className="mb-2 mt-3 flex h-16 flex-col p-2 font-sans text-xl sm:pt-3"
             >
               <Link href="/swap">
                 <div className="h-8">

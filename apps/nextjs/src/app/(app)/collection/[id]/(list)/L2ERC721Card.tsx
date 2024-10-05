@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatedMap } from "@/app/_components/AnimatedMap";
 import { useLordsPrice } from "@/hooks/lords/useLordsPrice";
-import type { CollectionToken } from "@/types/ark";
+import type { CollectionToken, PortfolioToken } from "@/types/ark";
 
 import { useStarkDisplayName } from "@/hooks/useStarkName";
 import LordsIcon from "@/icons/lords.svg";
@@ -16,14 +16,13 @@ import { useTokenListing } from "@/hooks/market/useTokenListing";
 import { useTokenMetadata } from "@/hooks/market/useTokenMetadata";
 import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 import Media from "@/app/_components/Media";
-import { Token } from "@/types/ark";
 export const L2ERC721Card = ({
   token,
   layout = "grid",
   selectable = false,
   isSelected = false,
 }: {
-  token: Token;
+  token: PortfolioToken;
   layout?: "grid" | "list";
   selectable?: boolean;
   isSelected?: boolean;
@@ -37,7 +36,7 @@ export const L2ERC721Card = ({
         "group flex transform border bg-background duration-300 hover:border-bright-yellow",
         isGrid ? "w-full flex-col" : "justify-between",
         isSelected &&
-        "border-2 border-accent-foreground hover:border-accent-foreground/50",
+          "border-2 border-accent-foreground hover:border-accent-foreground/50",
       )}
     >
       <div>
@@ -47,13 +46,15 @@ export const L2ERC721Card = ({
             <Media
               src={token.metadata.image}
               alt={token.metadata.name ?? `beasts-${token.token_id}`}
-              mediaKey={token.metadata?.image_key}
+              mediaKey={token.metadata.image_key}
               className={isGrid ? "mx-auto" : ""}
               width={imageSize}
               height={imageSize}
             />
           ) : (
-            <AnimatedMap />
+            <div className="w-96">
+              <AnimatedMap />
+            </div>
           )}
           {isGrid && (
             <span className="absolute bottom-1 right-1 bg-black px-1 py-1 text-xs">
@@ -66,8 +67,15 @@ export const L2ERC721Card = ({
               token={token}
               attributeKeys={["type", "tier", "level", "health"]}
             />
-            {!selectable && <ViewOnMarketplace collection={token.contract_address ?? ""} tokenId={token.token_id} />
-/* <CardAction token={token} />*/}
+            {
+              !selectable && (
+                <ViewOnMarketplace
+                  collection={token.contract_address ?? ""}
+                  tokenId={token.token_id}
+                />
+              )
+              /* <CardAction token={token} />*/
+            }
           </div>
         </div>
       </div>
@@ -96,7 +104,7 @@ const TokenDetails = ({
   isGrid,
   address,
 }: {
-  token: CollectionToken,
+  token: CollectionToken;
   isGrid: boolean;
   address?: string;
 }) =>
@@ -110,7 +118,9 @@ const TokenAttributes = ({
   token,
   attributeKeys,
 }: {
-  token: CollectionToken | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token:
+    | CollectionToken
+    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
   attributeKeys: string[];
 }) => {
   const metadata = useTokenMetadata(token);
@@ -119,7 +129,9 @@ const TokenAttributes = ({
   <table className="min-w-full bg-black font-sans text-xs">
     <tbody>
       {attributeKeys.map((key: string) => {
-        const attribute = metadata.attributes.find((trait) => trait.key === key);
+        const attribute = metadata.attributes.find(
+          (trait) => trait.key === key,
+        );
         return attribute ? (
           <tr className="hover:bright-yellow hover:bg-theme-gray" key={key}>
             <td className="w-1/3 border px-2 py-1 uppercase">{key}</td>
@@ -128,7 +140,7 @@ const TokenAttributes = ({
         ) : null;
       })}
     </tbody>
-  </table>
+  </table>;
 };
 
 const GridDetails = ({
@@ -195,7 +207,9 @@ const ListDetails = ({
   return (
     <div className="flex w-full justify-between space-x-6 self-center px-3">
       <div className="mr-auto flex justify-between self-center">
-        <span className="">{decodeURIComponent(token.metadata?.name ?? "")}</span>
+        <span className="">
+          {decodeURIComponent(token.metadata?.name ?? "")}
+        </span>
       </div>
       <div className="mr-auto flex self-center font-sans">
         {token.price}

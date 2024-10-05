@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { RealmsABI } from "@/abi/L2/Realms";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useL2LordsRewards } from "@/hooks/staking/useL2LordsRewards";
-//import { useLordship } from "@/hooks/staking/useLordship";
 import { useStaking } from "@/hooks/staking/useStaking";
 import LordsIcon from "@/icons/lords.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
@@ -13,16 +11,11 @@ import {
   useAccount as useL2Account,
   useReadContract,
 } from "@starknet-react/core";
-import { Loader, TriangleAlert } from "lucide-react";
+import { Loader } from "lucide-react";
 import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle
-} from "@realms-world/ui/components/ui/alert";
 import {
   Card,
   CardContent,
@@ -31,26 +24,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@realms-world/ui/components/ui/card";
-import { padAddress } from "@realms-world/utils";
+import { formatNumber, padAddress } from "@realms-world/utils";
 
-import {
-  Button
-} from "@realms-world/ui/components/ui/button";
-import { ClaimsTable } from "./ClaimsTable";
-//import { FloatAnimation } from "./FloatAnimation";
-import { LegacyClaim } from "./LegacyClaim";
-import { useCurrentDelegate } from "@/hooks/staking/useCurrentDelegate";
-import { VeLords } from "./VeLords";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { ClaimsTable } from "../ClaimsTable";
+import { RealmDelegationWarning } from "../../_components/RealmDelegationWarning";
+import { StarknetAccountLogin } from "../../_components/StarknetAccountLogin";
 
 export const Overview = () => {
   const { address: l1Address } = useAccount();
   const { address: l2Address } = useL2Account();
 
-  const { balance, claimRewards, isSubmitting } =
-    useL2LordsRewards();
+  const { balance, claimRewards, isSubmitting } = useL2LordsRewards();
 
   const { data, loading } = useStaking();
-  //const delegateData = useLordship(l1Address);
   const { toggleStakingMigration } = useUIStore((state) => state);
   const { data: lordsRewardsClaims } = api.lordsRewards.all.useQuery(
     {
@@ -80,44 +67,35 @@ export const Overview = () => {
     refetchInterval: 10000,
   });
 
-  const { data: currentDelegate } = useCurrentDelegate()
-
   return (
     <div className="w-full">
-      {!currentDelegate &&
-        realmsBalance > 0 && (
-          <Alert variant={"warning"} className="mt-4">
-            <TriangleAlert className="h-5 w-5" />
-            <AlertTitle className="text-lg">
-              Your Realms are not earning Lords
-            </AlertTitle>
-            <AlertDescription>
-              You must delegate to yourself or others at
-              <Button asChild className="ml-2">
-                <Link href="/account/delegates">Delegates</Link>
-              </Button>
-            </AlertDescription>
-          </Alert>
-        )}
-      {l1Address && (
+      {realmsBalance && <RealmDelegationWarning />}
+      {l2Address ? (
         <>
           <div className="flex gap-8">
-            {/* <div className="mt-8 h-[400px] w-1/3"> */}
-            {/*<h2 className="mb-2 text-3xl">Realms</h2>
-              <RealmStakingTabs data={data} />*/}
-            {/* <FloatAnimation /> */}
-            {/* </div> */}
             <div className="w-full">
               <div className="mt-4 grid grid-cols-3 gap-4">
                 <Card>
                   <CardHeader>
-                    <CardDescription>Rewards</CardDescription>
-                    <CardTitle className="flex items-center text-3xl">
-                      49
-                      <LordsIcon className="ml-2 h-7 w-7 fill-current" />
+                    <CardDescription>Claimable Lords</CardDescription>
+                    <CardTitle className="flex items-center text-4xl">
+                      {balance && formatNumber(Number(formatEther(balance)))}
+                      <LordsIcon className="ml-3 h-7 w-7 fill-current" />
                     </CardTitle>
                   </CardHeader>
-                  <CardFooter>per Realm each week</CardFooter>
+                  <CardContent>
+                    <Button
+                      onClick={() => claimRewards()}
+                      className="w-full"
+                      disabled={isSubmitting || !balance || balance <= 0n}
+                    >
+                      {isSubmitting ? (
+                        <Loader className="animate-spin" />
+                      ) : (
+                        "Claim"
+                      )}
+                    </Button>
+                  </CardContent>
                 </Card>
                 <Card>
                   <CardHeader>
@@ -132,7 +110,13 @@ export const Overview = () => {
                   <CardHeader>
                     <CardDescription>Inactive Realms</CardDescription>
                     <CardTitle className="text-3xl">
-                      {loading ? <Loader className="animate-spin" /> : totalL1Realms ? totalL1Realms : "0"}
+                      {loading ? (
+                        <Loader className="animate-spin" />
+                      ) : totalL1Realms ? (
+                        totalL1Realms
+                      ) : (
+                        "0"
+                      )}
                     </CardTitle>
                   </CardHeader>
                   <CardFooter>
@@ -141,38 +125,18 @@ export const Overview = () => {
                       size={"xs"}
                       className="ml-2"
                       onClick={toggleStakingMigration}
+                      disabled={!(totalL1Realms >= BigInt(1))}
                     >
                       Bridge Now
                     </Button>
                   </CardFooter>
                 </Card>
+
                 <Card className="col-span-full">
                   <CardHeader>
-                    <CardTitle>Claims</CardTitle>
+                    <CardTitle>Past Claims</CardTitle>
                   </CardHeader>
                   <CardContent className="grid grid-cols-4 gap-4">
-                    <Card>
-                      <CardHeader>
-                        <CardDescription>Claimable Lords</CardDescription>
-                        <CardTitle className="flex items-center text-4xl">
-                          {balance && Number(formatEther(balance)).toFixed(4)}
-                          <LordsIcon className="ml-3 h-7 w-7 fill-current" />
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <Button
-                          onClick={() => claimRewards()}
-                          className="w-full"
-                          disabled={isSubmitting || !balance || balance <= 0n}
-                        >
-                          {isSubmitting ? (
-                            <Loader className="animate-spin" />
-                          ) : (
-                            "Claim"
-                          )}
-                        </Button>
-                      </CardContent>
-                    </Card>
                     <Card>
                       <CardHeader>
                         <CardDescription>Total Claimed</CardDescription>
@@ -187,13 +151,13 @@ export const Overview = () => {
                         data={[
                           ...(balance
                             ? [
-                              {
-                                amount: Number(formatEther(balance)).toFixed(
-                                  5,
-                                ),
-                                timestamp: null,
-                              },
-                            ]
+                                {
+                                  amount: Number(formatEther(balance)).toFixed(
+                                    2,
+                                  ),
+                                  timestamp: null,
+                                },
+                              ]
                             : []),
                           ...(lordsRewardsClaims ?? []),
                         ]}
@@ -201,20 +165,13 @@ export const Overview = () => {
                     </div>
                   </CardContent>
                 </Card>
-                <LegacyClaim />
               </div>
             </div>
           </div>
-          <div className="mt-24 w-full">
-            <div className="w-full">
-              <span className="mb-2 flex w-fit items-center pb-4 font-sans text-3xl">
-                <LordsIcon className="mx-auto mr-2 h-7 w-7 fill-bright-yellow" />
-                veLords
-              </span>
-              <VeLords />
-            </div>
-          </div>
+          <div className="mt-24 w-full"></div>
         </>
+      ) : (
+        <StarknetAccountLogin />
       )}
     </div>
   );

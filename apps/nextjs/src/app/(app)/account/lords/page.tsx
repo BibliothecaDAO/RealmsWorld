@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 
-import { Overview } from "./Overview";
-
 export function generateMetadata(): Metadata {
   return {
     title: `RAW Account`,
@@ -10,5 +8,5 @@ export function generateMetadata(): Metadata {
 }
 
 export default function Page() {
-  return <Overview />;
+  return <div>Lords is the fuel of the Realms Autonomous World</div>;
 }
