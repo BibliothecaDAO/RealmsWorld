@@ -11,9 +11,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  Button,
-} from "@realms-world/ui";
-
+} from "@realms-world/ui/components/ui/accordion";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { BuyModal } from "../../marketplace/buy/BuyModal";
 import TokenOwnerActions from "../../marketplace/TokenOwnerActions";
 import { L2ActivityCard } from "../(list)/activity/L2ActivityCard";
@@ -40,34 +39,49 @@ export const L2Token = ({
   let { data: erc721Token } = useQuery({
     queryKey: ["erc721Token", contractAddress, tokenId],
     queryFn: async () => {
-      return await getToken({ client: arkClient, contractAddress, tokenId: parseInt(tokenId) })
+      return await getToken({
+        client: arkClient,
+        contractAddress,
+        tokenId: parseInt(tokenId),
+      });
     },
     refetchInterval: 10000,
     initialData: { data: token },
-  })
+  });
   let { data: listing } = useQuery({
     queryKey: ["erc721Listings", contractAddress, tokenId],
     queryFn: async () => {
-      return await getTokenMarketdata({ client: arkClient, contractAddress, tokenId: parseInt(tokenId) })
+      return await getTokenMarketdata({
+        client: arkClient,
+        contractAddress,
+        tokenId: parseInt(tokenId),
+      });
     },
     refetchInterval: 5000,
   });
   const { data: activities } = useQuery({
     queryKey: ["erc721Activities", contractAddress, tokenId],
     queryFn: async () => {
-      return await getTokenActivity({ client: arkClient, contractAddress, tokenId: parseInt(tokenId) })
+      return await getTokenActivity({
+        client: arkClient,
+        contractAddress,
+        tokenId: parseInt(tokenId),
+      });
     },
     refetchInterval: 5000,
-
   });
   const { address } = useAccount();
   const expiryDiff = useTimeDiff(listing?.data?.listing.end_date ?? 0);
 
-  const price = useTokenPrice(listing?.data?.listing?.start_amount, listing?.data?.listing?.currency_address);
+  const price = useTokenPrice(
+    listing?.data?.listing?.start_amount,
+    listing?.data?.listing?.currency_address,
+  );
 
-  if (!erc721Token?.data || !listing?.data) return <div>Token Information Loading</div>;
-  erc721Token = erc721Token.data
-  listing = listing.data
+  if (!erc721Token?.data || !listing?.data)
+    return <div>Token Information Loading</div>;
+  erc721Token = erc721Token.data;
+  listing = listing.data;
 
   return (
     <>
@@ -121,12 +135,10 @@ export const L2Token = ({
             <AccordionTrigger className="text-lg">Listings</AccordionTrigger>
             <AccordionContent className="-mt-4 w-full flex-wrap gap-x-2">
               {listing.is_listed ? (
-                <ListingCard
-                  listing={listing}
-                  token={token}
-                />
-              )
-                : "No Active Listings"}
+                <ListingCard listing={listing} token={token} />
+              ) : (
+                "No Active Listings"
+              )}
             </AccordionContent>
           </div>
         </AccordionItem>
@@ -136,13 +148,15 @@ export const L2Token = ({
               Token Activity
             </AccordionTrigger>
             <AccordionContent className="-mt-4 w-full flex-wrap gap-x-2">
-              {activities?.data.map((activity: TokenActivity, index: number) => {
-                return <L2ActivityCard key={index} activity={activity} />;
-              })}
+              {activities?.data.map(
+                (activity: TokenActivity, index: number) => {
+                  return <L2ActivityCard key={index} activity={activity} />;
+                },
+              )}
             </AccordionContent>
           </div>
         </AccordionItem>
       </Accordion>
-    </>*/}
-
+    </>
+  );
 };

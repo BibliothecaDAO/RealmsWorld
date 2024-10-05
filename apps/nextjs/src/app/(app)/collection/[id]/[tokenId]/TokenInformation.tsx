@@ -11,6 +11,7 @@ import { Button } from "@realms-world/ui/components/ui/button";
 
 import { ContractImage } from "./ContractImage";
 import { TokenAttribute } from "./TokenAttribute";
+import Media from "@/app/_components/Media";
 
 export const TokenInformation = ({
   children,
@@ -21,6 +22,7 @@ export const TokenInformation = ({
   owner,
   image,
   attributes,
+  imageMediaKey,
 }: {
   collection?: NonNullable<
     paths["/collections/v5"]["get"]["responses"]["200"]["schema"]["collections"]
@@ -30,17 +32,18 @@ export const TokenInformation = ({
   name?: string | null;
   owner?: string | null;
   image?: string | null;
+  imageMediaKey?: string;
   attributes?:
-  | Attributes[]
-  | NonNullable<RouterOutputs["erc721Tokens"]["byId"]>["attributes"];
+    | Attributes[]
+    | NonNullable<RouterOutputs["erc721Tokens"]["byId"]>["attributes"];
   tokenId: number;
 }) => {
-
   return (
     <>
       <div className="mt-8 flex w-full flex-none flex-col sm:mt-16 md:w-1/3">
         {image ? (
-          <Image
+          <Media
+            mediaKey={imageMediaKey}
             src={image}
             alt={name ?? "token"}
             width={1000}
@@ -90,13 +93,17 @@ export const TokenInformation = ({
           ""
         )}
       </div>
-      <div className="my-1 w-full px-4 md:w-2/3 md:px-4 mt-16">
+      <div className="my-1 mt-16 w-full px-4 md:w-2/3 md:px-4">
         <div className="mb-8 flex justify-between">
           <Button size={"sm"} variant={"default"} asChild>
             <Link href={`/collection/${collectionId}`}>
               <ArrowLeft className="mr-2 w-4 self-center" />{" "}
               <span className="self-center">
-                {CollectionDetails[collectionId as keyof typeof CollectionDetails].displayName}
+                {
+                  CollectionDetails[
+                    collectionId as keyof typeof CollectionDetails
+                  ].displayName
+                }
               </span>
             </Link>
           </Button>

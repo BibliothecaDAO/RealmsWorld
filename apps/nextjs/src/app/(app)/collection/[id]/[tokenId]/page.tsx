@@ -77,7 +77,11 @@ const L2TokenData = async ({
   collectionId: string;
 }) => {
   const client = marketPlaceClientBuilder(fetch);
-  const { data: erc721Token } = await getToken({ client, contractAddress, tokenId: parseInt(tokenId) });
+  const { data: erc721Token } = await getToken({
+    client,
+    contractAddress,
+    tokenId: parseInt(tokenId),
+  });
 
   return (
     <>
@@ -90,6 +94,7 @@ const L2TokenData = async ({
           attributes={erc721Token.attributes}
           //collection={erc721Token}
           collectionId={collectionId}
+          imageMediaKey={erc721Token.metadata?.image_key}
         >
           <L2Token
             contractAddress={contractAddress}

@@ -28,8 +28,8 @@ export const PageLayout = ({ title, children, size }: PageLayoutProps) => {
       <div className={cn("", baseLayerWrapperVariants({ size }))}>
         {title && (
           <>
-            <h1 className="mb-8 text-4xl font-bold">{title}</h1>
-            <hr className="my-8 border" />
+            <h1 className="p-6 text-4xl font-bold">{title}</h1>
+            <hr className="mb-8 border" />
           </>
         )}
         {children}
