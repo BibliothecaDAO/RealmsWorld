@@ -21,7 +21,7 @@ export async function getPortfolioTokens({
   walletAddress,
   collectionAddress,
   page = 1,
-  itemsPerPage = 50,
+  itemsPerPage = 80,
 }: GetPortfolioActivityParams): Promise<PortfolioCollectionApiResponse> {
   const queryParams = [
     `items_per_page=${itemsPerPage}`,

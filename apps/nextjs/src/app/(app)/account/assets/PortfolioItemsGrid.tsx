@@ -20,6 +20,8 @@ import type { PortfolioToken } from "@/types/ark";
 import { L2ERC721Card } from "../../collection/[id]/(list)/L2ERC721Card";
 import { VirtuosoGrid } from "react-virtuoso";
 import type { ViewType } from "@/app/_components/ViewToggleGroup";
+import { TokenCardSkeleton } from "../../collection/TokenCardSkeleton";
+import { LoadingSkeletonGrid } from "@/app/_components/LoadingSkeletonGrid";
 
 const LargeGridContainer: Components["List"] = React.forwardRef(
   ({ style, children }, ref) => {
@@ -59,7 +61,9 @@ export const PortfolioItemsGrid = ({
   selectable,
   isNftSelected,
   toggleNftSelection,
+  isFetchingNextPage,
 }: {
+  isFetchingNextPage: boolean;
   walletTokens: PortfolioToken[];
   viewType: ViewType;
   selectable?: boolean;
@@ -75,6 +79,13 @@ export const PortfolioItemsGrid = ({
       components={{
         List:
           viewType === "large-grid" ? LargeGridContainer : SmallGridContainer,
+        Footer: isFetchingNextPage
+          ? () => (
+              <div>
+                <LoadingSkeletonGrid />
+              </div>
+            )
+          : undefined,
       }}
       itemContent={(index) => {
         const token = walletTokens[index];

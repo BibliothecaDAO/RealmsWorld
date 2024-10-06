@@ -1,7 +1,7 @@
 "use client";
 import useStore from "@/hooks/useStore";
 import { useTransactionManager } from "@/stores/useTransasctionManager";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePendingRealmsWithdrawals } from "@/hooks/bridge/data/usePendingRealmsWithdrawals";
 import EthereumLogo from "@/icons/ethereum.svg";
 import StarknetLogo from "@/icons/starknet.svg";
@@ -10,10 +10,9 @@ import { TriangleAlert } from "lucide-react";
 import { useAccount } from "wagmi";
 import { TransactionFinalityStatus } from "starknet";
 
-import { CollectionAddresses, Collections } from "@realms-world/constants";
+import { CollectionAddresses } from "@realms-world/constants";
 
 import AssetL1CollectionPreview from "./AssetL1CollectionPreview";
-import AssetL2CollectionPreview from "./AssetL2CollectionPreview";
 import {
   Tabs,
   TabsContent,
@@ -32,10 +31,10 @@ import { Portfolio } from "./Portfolio";
 import { useUserTokens } from "@/hooks/reservoir/useUserTokens";
 
 export const BridgeNftWrapper = () => {
-  const [activeChain, setActiveChain] = useState("l1");
-  const { address } = useAccount();
+  const [activeChain, setActiveChain] = useState("l2");
+  const { address: l1Address } = useAccount();
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({
-    address,
+    address: l1Address,
     status: TransactionFinalityStatus.ACCEPTED_ON_L1,
   });
   const { toggleAccount } = useUIStore((state) => state);

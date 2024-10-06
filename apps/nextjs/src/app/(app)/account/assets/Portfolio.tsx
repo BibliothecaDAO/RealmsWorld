@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect, useRef } from "react";
+import { useMemo, useState, useEffect, useRef, Suspense } from "react";
 import { usePendingRealmsWithdrawals } from "@/hooks/bridge/data/usePendingRealmsWithdrawals";
 import { useAccount } from "wagmi";
 import { useAccount as useL2Account } from "@starknet-react/core";
@@ -14,11 +14,12 @@ import { ChainId } from "@realms-world/constants";
 import { getAddressesForChainId } from "@realms-world/constants/src/Collections";
 import type { ViewType } from "@/app/_components/ViewToggleGroup";
 import PortfolioItemsToolsBar from "./PortfolioItemsToolsBar";
-import { useInView } from "framer-motion";
+import { inView, useInView } from "framer-motion";
 import PortfolioItemsFiltersPanel from "./PortfolioItemsFiltersPanel";
 import { StarknetAccountLogin } from "../_components/StarknetAccountLogin";
 
 import useNftSelection from "@/hooks/useNftSelection";
+import { CollectionItemsDataFallback } from "@/app/_components/LoadingSkeletonGrid";
 
 export const Portfolio = ({
   collectionAddress,
@@ -44,6 +45,7 @@ export const Portfolio = ({
     data: infiniteData,
     fetchNextPage,
     hasNextPage,
+    isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ["walletTokens", collectionAddress, l2Address],
@@ -83,7 +85,8 @@ export const Portfolio = ({
   const viewRef = useRef(null);
   const isInView = useInView(viewRef);
   useEffect(() => {
-    if (isInView) fetchNextPage();
+    console.log(isInView);
+    if (isInView && !isFetchingNextPage) fetchNextPage();
   }, [isInView, fetchNextPage]);
   const {
     deselectAllNfts,
@@ -126,17 +129,18 @@ export const Portfolio = ({
                 deselectAllNfts={deselectAllNfts}
               />
             </div>
-            {filteredWalletTokens.length ? (
-              <>
-                <PortfolioItemsGrid
-                  walletTokens={filteredWalletTokens}
-                  viewType={viewType}
-                  selectable={selectable}
-                  isNftSelected={isNftSelected}
-                  toggleNftSelection={toggleNftSelection}
-                />
-              </>
-            ) : null}
+            <Suspense
+              fallback={<CollectionItemsDataFallback viewType={viewType} />}
+            >
+              <PortfolioItemsGrid
+                walletTokens={filteredWalletTokens}
+                viewType={viewType}
+                selectable={selectable}
+                isNftSelected={isNftSelected}
+                toggleNftSelection={toggleNftSelection}
+                isFetchingNextPage={isFetchingNextPage}
+              />
+            </Suspense>
           </div>
         </div>
       ) : (

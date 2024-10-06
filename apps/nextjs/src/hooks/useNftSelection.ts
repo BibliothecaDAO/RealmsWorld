@@ -114,7 +114,6 @@ export default function useNftSelection({
     tokenIds: string[],
     // | RouterOutputs["erc721Tokens"]["all"]["items"],
   ) {
-    console.log(tokenIds);
     if (tokenIds.length === 0) {
       return;
     }

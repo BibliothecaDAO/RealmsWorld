@@ -23,7 +23,7 @@ export default async function CollectionsList() {
   ]);
 
   return (
-    <div className="grid w-full grid-cols-1 gap-6 px-4 sm:px-0">
+    <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 px-4 sm:px-0">
       {collections?.map((collection, index) => {
         return (
           <CollectionCard
@@ -36,7 +36,9 @@ export default async function CollectionsList() {
           />
         );
       })}
-      {REALMS_L2_COLLECTIONS.map((collection, index) => <ArkCollectionCardFetcher source={collection} key={index} />)}
+      {REALMS_L2_COLLECTIONS.map((collection, index) => (
+        <ArkCollectionCardFetcher source={collection} key={index} />
+      ))}
     </div>
   );
 }

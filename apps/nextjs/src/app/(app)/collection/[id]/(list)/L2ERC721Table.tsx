@@ -67,10 +67,20 @@ const L2ERC721Table = ({
   }
 
   const { marketplace: arkClient } = useArkClient();
-  const { data: erc721Tokens, fetchNextPage, hasNextPage, isFetching } = useSuspenseInfiniteQuery({
-    queryKey: ['erc721Tokens', contractAddress, ownerAddress, filters],
+  const {
+    data: erc721Tokens,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+  } = useSuspenseInfiniteQuery({
+    queryKey: ["erc721Tokens", contractAddress, ownerAddress, filters],
     queryFn: async ({ pageParam }) => {
-      return await getCollectionTokens({ client: arkClient, collectionAddress: contractAddress, page: pageParam ?? 1, ...filters });
+      return await getCollectionTokens({
+        client: arkClient,
+        collectionAddress: contractAddress,
+        page: pageParam ?? 1,
+        ...filters,
+      });
     },
     getNextPageParam: (lastPage) => lastPage.next_page,
   });
@@ -96,7 +106,7 @@ const L2ERC721Table = ({
 
   return (
     <>
-      {selectable &&
+      {selectable && (
         <NftActions
           selectedTokenIds={selectedTokenIds}
           totalSelectedNfts={totalSelectedNfts}
@@ -105,7 +115,7 @@ const L2ERC721Table = ({
           deselectAllNfts={deselectAllNfts}
           sourceChain={SUPPORTED_L2_CHAIN_ID}
         />
-      }
+      )}
       <div className={isGrid ? grid : list}>
         {erc721Tokens.pages.map((page) =>
           page.data.map((token, index) => {
@@ -124,29 +134,21 @@ const L2ERC721Table = ({
                     )
                   }
                 >
-                  selectable
                   <L2ERC721Card
                     isSelected={isSelected}
                     token={token}
                     layout={isGrid ? "grid" : "list"}
                   />
                 </button>
-              )
+              );
             }
 
             return (
-              <Link
+              <L2ERC721Card
                 key={index}
-                href={`/collection/${token.collection_address && getCollectionFromAddress(token.collection_address)}/${token.token_id
-                  }`}
-                className={`${isGrid ? "" : "flex"}`}
-              >
-                <L2ERC721Card
-                  key={index}
-                  token={token}
-                  layout={isGrid ? "grid" : "list"}
-                />
-              </Link>
+                token={token}
+                layout={isGrid ? "grid" : "list"}
+              />
             );
           }),
         )}
