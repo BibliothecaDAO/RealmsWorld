@@ -54,7 +54,12 @@ export function VeLordsRewardsChart({
         <YAxis
           yAxisId="apy"
           dataKey="apy"
-          label={{ value: "% APY", angle: -90, position: "insideLeft" }}
+          label={{
+            value: "% APY (4 year lock)",
+            angle: -90,
+            position: "insideLeft",
+            offset: 18,
+          }}
         />
         <YAxis
           yAxisId="total_amount"
@@ -64,7 +69,8 @@ export function VeLordsRewardsChart({
           label={{
             value: "Total Lords Rewards",
             angle: -90,
-            position: "outsideLeft",
+            position: "outside",
+            offset: 25,
           }}
         />
         <ChartTooltip content={<ChartTooltipContent />} />
