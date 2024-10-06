@@ -1,4 +1,4 @@
-import type { CombinedTransaction } from "@/hooks/useTransactions";
+import type { CombinedTransaction } from "@/stores/useTransasctionManager";
 import { useCallback } from "react";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { TransactionType } from "@/constants/transactions";
@@ -28,15 +28,15 @@ export const TransactionAction = ({ tx }: { tx: CombinedTransaction }) => {
       }));
     if (txHash) {
       transactions?.addTx({
-        hash: txHash,
+        hash: txHash || '',
         type: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
         chainId: SUPPORTED_L2_CHAIN_ID,
         status: "complete",
-        timestamp: new Date().getTime(),
+        timestamp: new Date(Date.now())
       });
       toast({
         title: TransactionType.BRIDGE_REALMS_L2_TO_L1_CONFIRM,
-        description: `${tokenIds.length} Realms are being withdrawn to your L1 wallet`,
+        description: `${tokenIds?.length} Realms are being withdrawn to your L1 wallet`,
       });
     }
   }, [writeAsync, transactions, tx]);

@@ -49,6 +49,7 @@ export const usePendingRealmsWithdrawals = ({
   } else {
     variables.status = ["ACCEPTED_ON_L1", "FINISHED"];
   }
+
   return useQuery({
     queryKey: ["pendingRealmsWithdrawals" + address + status],
     queryFn: async () =>
@@ -67,6 +68,5 @@ export const usePendingRealmsWithdrawals = ({
           return res.data?.withdrawals;
         }),
     enabled: !!address,
-    refetchInterval: 20000,
   });
 };

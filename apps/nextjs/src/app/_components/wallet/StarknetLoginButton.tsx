@@ -17,12 +17,14 @@ export const StarknetLoginButton = ({
   textClass,
   buttonClass,
   children,
+  newTransactionCount
 }: {
   openAccount?: boolean;
   variant?: VariantProps<typeof buttonVariants>["variant"];
   textClass?: string;
   buttonClass?: string;
-  children?: React.ReactNode;
+  children?: React.ReactNode,
+  newTransactionCount?: number
 }) => {
   const { address, isConnected, isConnecting } = useAccount();
   const { toggleAccount, toggleStarknetLogin } = useUIStore((state) => state);
@@ -52,6 +54,9 @@ export const StarknetLoginButton = ({
           }
         </span>
       </span>
+      {(isConnected && newTransactionCount) && newTransactionCount > 0 ? <span
+        className={'bg-green-600 w-[20px] absolute -top-1.5 -right-1.5 rounded-full text-black'}
+      >{newTransactionCount}</span> : null}
     </Button>
   );
 };

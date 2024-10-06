@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 
 
 export default async function Page() {
+
   const games = await reader.collections.games.all();
   return (
     <PageLayout title="Onchain Games">
@@ -24,5 +25,6 @@ export default async function Page() {
 
       </div>
     </PageLayout>
+
   );
 }
