@@ -12,8 +12,10 @@ export const metadata: Metadata = {
 export default async function Page() {
   return (
     <PageLayout title="Events">
-      <div className="pb-8 md:text-2xl">Events from across Realms.World</div>
-      <EventGrid />
+      <div className="px-4 sm:px-8">
+        <div className="pb-8 md:text-2xl">Events from across Realms.World</div>
+        <EventGrid />
+      </div>
     </PageLayout>
   );
 }

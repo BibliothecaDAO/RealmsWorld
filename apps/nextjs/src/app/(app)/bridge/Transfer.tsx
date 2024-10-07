@@ -28,7 +28,7 @@ export const Transfer = ({ action }: { action: string }) => {
   // const [toastOpen, setToastOpen] = useState(false);
   const [amount, setAmount] = useState<string>("0");
   const { balances, l2loading } = useWalletsProviderContext();
-  const { writeAsync: iniateWithdrawal } = useWriteInitiateWithdrawLords({
+  const { sendAsync: iniateWithdrawal } = useWriteInitiateWithdrawLords({
     amount,
   });
   const { handleData } = useTransfer(TransferToL1Steps);
@@ -70,7 +70,7 @@ export const Transfer = ({ action }: { action: string }) => {
             <Badge variant={"secondary"} className="bg-background">
               {isWithdraw ? "From" : "To"}
             </Badge>
-            <div className="mb-4 mt-1 flex text-lg ">
+            <div className="mb-4 mt-1 flex text-lg">
               <div className="mr-2 h-[36px] w-[36px] self-center rounded-full bg-background">
                 {networkLogo}
               </div>
@@ -87,8 +87,8 @@ export const Transfer = ({ action }: { action: string }) => {
             }
             balance={
               isL2
-                ? balances.l2.lords ?? BigInt(0)
-                : balances.l1.lords ?? BigInt(0)
+                ? (balances.l2.lords ?? BigInt(0))
+                : (balances.l1.lords ?? BigInt(0))
             }
             symbol="Lords"
             isLoading={isL2 ? l2loading && !balances.l2.lords : false}
@@ -146,18 +146,20 @@ export const Transfer = ({ action }: { action: string }) => {
 
         <Link
           className="w-full"
-          href={`/bridge?action=${action == "deposit" ? "withdraw" : "deposit"
-            }`}
+          href={`/bridge?action=${
+            action == "deposit" ? "withdraw" : "deposit"
+          }`}
         >
           <div className="absolute left-1/2 z-10 -ml-4 -mt-5 flex h-8 w-8 rounded-2xl border border-white/5 bg-bright-yellow/60 stroke-black hover:bg-white/90">
             <ArrowUpDown
-              className={`${action == "deposit" ? "rotate-180" : ""
-                } m-auto h-4 w-4 transform self-center stroke-inherit duration-300`}
+              className={`${
+                action == "deposit" ? "rotate-180" : ""
+              } m-auto h-4 w-4 transform self-center stroke-inherit duration-300`}
             />
           </div>
         </Link>
 
-        <div className="relative mb-4  flex flex-col rounded border border-white/5 bg-white/10 p-4">
+        <div className="relative mb-4 flex flex-col rounded border border-white/5 bg-white/10 p-4">
           {action == "withdraw"
             ? renderL1Network(action)
             : renderL2Network(action)}
