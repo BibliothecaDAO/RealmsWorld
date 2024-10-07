@@ -54,13 +54,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const errors = Markdoc.validate(node);
   if (errors.length) {
     console.error(errors);
-    throw new Error('Invalid content');
+    throw new Error("Invalid content");
   }
   const renderable = Markdoc.transform(node);
 
   return (
     <>
-      <div>
+      <div className="container mx-auto">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -77,8 +77,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <p className="mt-2 text-xl">{blog?.subtitle}</p>
           <div className="mt-8 text-xl font-bold">
             <span>Posted on </span>
-            <time dateTime={blog?.publishDate || ''}>
-              {new Date(blog?.publishDate || '').toLocaleDateString()}
+            <time dateTime={blog?.publishDate || ""}>
+              {new Date(blog?.publishDate || "").toLocaleDateString()}
             </time>
             <span> by </span>
             <span>{blog?.author}</span>
@@ -91,7 +91,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           className="w-full object-cover"
           height={600}
         />
-        <article className="prose prose-lg mx-auto mt-6 max-w-5xl px-6 pb-6 text-xl prose-headings:text-bright-yellow prose-p:font-thin prose-p:text-bright-yellow prose-a:text-flamingo prose-strong:text-bright-yellow prose-ul:text-bright-yellow prose-ol:text-bright-yellow md:mt-12">
+        <article className="prose prose-lg mx-auto mt-6 max-w-5xl px-6 pb-6 text-xl prose-headings:text-bright-yellow prose-p:font-thin prose-p:text-bright-yellow prose-a:text-flamingo prose-strong:text-bright-yellow prose-ol:text-bright-yellow prose-ul:text-bright-yellow md:mt-12">
           <div className="article-container">
             {Markdoc.renderers.react(renderable, React)}
           </div>
@@ -110,9 +110,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   );
 }
 
-
-
 export async function generateStaticParams() {
-  const blogSlugs = await reader.collections.blogs.list()
-  return blogSlugs.map((blogSlug) => ({ slug: blogSlug }))
+  const blogSlugs = await reader.collections.blogs.list();
+  return blogSlugs.map((blogSlug) => ({ slug: blogSlug }));
 }

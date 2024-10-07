@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import AssetL2CollectionPreview from "@/app/(app)/account/assets/AssetL2CollectionPreview";
 
 import { Collections } from "@realms-world/constants";
 
@@ -18,11 +17,6 @@ export default function Page() {
     <>
       <div className="h-full w-full space-y-20">
         <Portfolio />
-        {/*<BridgeNftWrapper collection={Collections.REALMS} />
-        <AssetL2CollectionPreview collectionName={Collections.GOLDEN_TOKEN} />
-        <AssetL2CollectionPreview collectionName={Collections.BEASTS} />
-        <AssetL2CollectionPreview collectionName={Collections.BLOBERT} />
-        <AssetL2CollectionPreview collectionName={Collections.BANNERS} />*/}
       </div>
     </>
   );

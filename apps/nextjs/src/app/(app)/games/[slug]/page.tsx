@@ -5,14 +5,30 @@ import { StatusDot } from "@/app/_components/StatusDot";
 import { reader } from "@/utils/keystatic";
 import Markdoc from "@markdoc/markdoc";
 import React from "react";
-import { CHAIN_IDS_TO_NAMES, games } from "@realms-world/constants";
+import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
 
 import { Button } from "@realms-world/ui/components/ui/button";
 import { Badge } from "@realms-world/ui/components/ui/badge";
-import { Tabs } from "@mui/material";
-import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@realms-world/ui/components/ui/breadcrumb";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@realms-world/ui/components/ui/carousel";
-import { TabsList, TabsTrigger, TabsContent } from "@realms-world/ui/components/ui/tabs";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from "@realms-world/ui/components/ui/breadcrumb";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@realms-world/ui/components/ui/carousel";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@realms-world/ui/components/ui/tabs";
 
 export async function generateMetadata({
   params,
@@ -30,12 +46,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const keyStaticGame = await reader.collections.games.read(params.slug);
 
   if (!keyStaticGame) return;
-  console.log(keyStaticGame)
-  const { node } = await keyStaticGame.content()
+  const { node } = await keyStaticGame.content();
   const errors = Markdoc.validate(node);
   if (errors.length) {
     console.error(errors);
-    throw new Error('Invalid content');
+    throw new Error("Invalid content");
   }
   const renderable = Markdoc.transform(node);
   const screenshotList = keyStaticGame?.screenshots;
@@ -45,14 +60,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }));
 
   // grab studio via developer slug from game so we can spit out the studio's title instead of its slug
-  const studio = await reader.collections.studios.read(keyStaticGame?.developer || '')
-
-
+  const studio = await reader.collections.studios.read(
+    keyStaticGame?.developer || "",
+  );
 
   const tabs = [
     {
       name: "Details",
-      content: <div className="leading-relaxed">{Markdoc.renderers.react(renderable, React)}</div>,
+      content: (
+        <div className="leading-relaxed">
+          {Markdoc.renderers.react(renderable, React)}
+        </div>
+      ),
     },
 
     {
@@ -84,7 +103,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
       ),
     },
   ];
-
 
   const tableData = [
     {
@@ -178,7 +196,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <>
           {keyStaticGame?.links.homepage && (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
-              <Link href={`${keyStaticGame?.links.homepage}`}> {keyStaticGame?.title}</Link>
+              <Link href={`${keyStaticGame?.links.homepage}`}>
+                {" "}
+                {keyStaticGame?.title}
+              </Link>
             </Button>
           )}
         </>
@@ -187,7 +208,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   ];
 
   return (
-    <main className="container mx-auto px-8">
+    <main className="container mx-auto">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -214,9 +235,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
         {keyStaticGame && (
           <>
-            <div className="w-full sm:w-9/12 sm:pr-8 px-12">
+            <div className="w-full px-12 sm:w-9/12 sm:pr-8">
               {keyStaticGame.screenshots.length && (
-                <Carousel className="sm:h-96 w-full sm:max-h-[750px] sm:min-h-[750px]">
+                <Carousel className="w-full sm:h-96 sm:max-h-[750px] sm:min-h-[750px]">
                   <CarouselContent>
                     {list.map((image, index) => (
                       <CarouselItem key={index}>
@@ -225,7 +246,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                           alt={image.alt}
                           width={1096}
                           height={750}
-                          className="h-full w-full object-cover rounded border"
+                          className="h-full w-full rounded border object-cover"
                         />
                       </CarouselItem>
                     ))}
@@ -238,7 +259,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
             <div className="pl-4 sm:w-3/12">
               <div className="flex justify-center py-8">
-                <Image alt="" src={`/content/games/${params.slug}/${keyStaticGame?.icon}`} width={250} height={100} />
+                <Image
+                  alt=""
+                  src={`/content/games/${params.slug}/${keyStaticGame?.icon}`}
+                  width={250}
+                  height={100}
+                />
               </div>
 
               <div className="flex-col space-y-2">
@@ -249,7 +275,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     asChild
                     className="w-full"
                   >
-                    <Link href={`${keyStaticGame?.links.homepage}`}> Play {keyStaticGame?.title}</Link>
+                    <Link href={`${keyStaticGame?.links.homepage}`}>
+                      {" "}
+                      Play {keyStaticGame?.title}
+                    </Link>
                   </Button>
                 )}
 
@@ -294,8 +323,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   );
 }
 
-
 export async function generateStaticParams() {
-  const gameSlugs = await reader.collections.games.list()
-  return gameSlugs.map((gameSlug) => ({ slug: gameSlug }))
+  const gameSlugs = await reader.collections.games.list();
+  return gameSlugs.map((gameSlug) => ({ slug: gameSlug }));
 }
