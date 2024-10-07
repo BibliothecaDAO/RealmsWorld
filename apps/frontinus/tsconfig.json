@@ -1,0 +1,13 @@
+{
+  "extends": "@realms-world/tsconfig/base.json",
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "target": "ESNext",
+    "module": "ESNext",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["app/*"]
+    }
+  }
+}

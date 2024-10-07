@@ -1,14 +1,14 @@
 "use client";
 
-import { StakingMigration } from "@/app/account/lords/Migration";
+import { StakingMigration } from "@/app/(app)/account/lords/Migration";
 import { useUIStore } from "@/providers/UIStoreProvider";
 
 import {
   Dialog,
   DialogContent,
-  DialogTitle,
-  ScrollArea,
-} from "@realms-world/ui";
+  DialogTitle
+} from "@realms-world/ui/components/ui/dialog";
+import { ScrollArea } from "@realms-world/ui/components/ui/scroll-area";
 
 export const StakingMigrationModal = () => {
   const { isStakingMigrationOpen, toggleStakingMigration } = useUIStore(

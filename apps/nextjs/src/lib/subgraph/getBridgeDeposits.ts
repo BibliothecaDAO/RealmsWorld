@@ -1,5 +1,5 @@
 import type { Deposit_filter, Withdrawal_filter } from "@/types/subgraph";
-import { env } from "@/env";
+import { env } from "env";
 
 const query = `query Deposits(
   $depositsWhere: Deposit_filter
@@ -58,7 +58,6 @@ export const getBridgeDeposits = async ({
   skip: number;*/
 }) => {
   try {
-
     const res = await fetch(env.NEXT_PUBLIC_SUBGRAPH_NAME, {
       method: "POST",
       headers: {

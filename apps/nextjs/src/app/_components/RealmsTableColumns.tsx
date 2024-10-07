@@ -4,8 +4,8 @@ import type { Realm } from "@/types/subgraph";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
-import { Button, Checkbox } from "@realms-world/ui";
-
+import { Checkbox } from "@realms-world/ui/components/ui/checkbox";
+import { Button } from "@realms-world/ui/components/ui/button";
 export const columns: ColumnDef<Realm>[] = [
   {
     id: "select",

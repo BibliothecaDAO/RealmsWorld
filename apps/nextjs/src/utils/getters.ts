@@ -19,6 +19,7 @@ export const getGamesByContract = (
 export function findCollectionKeyByAddress(
   address: string,
 ): keyof Collections | null {
+  console.log(address, CollectionAddresses)
   for (const collectionKey in CollectionAddresses) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const chainAddresses = (CollectionAddresses as any)[collectionKey];

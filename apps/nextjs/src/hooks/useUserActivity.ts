@@ -1,7 +1,7 @@
 import type { paths } from "@reservoir0x/reservoir-sdk";
 import { RESERVOIR_API_URL, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
-import { env } from "@/env";
 import { useQuery } from "@tanstack/react-query";
+import { env } from "env";
 
 import { CollectionAddresses } from "@realms-world/constants";
 

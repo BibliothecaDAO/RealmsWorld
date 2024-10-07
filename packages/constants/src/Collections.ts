@@ -106,3 +106,47 @@ export const REALMS_BRIDGE_ADDRESS: Record<number | string, string> = {
   [ChainId.SN_SEPOLIA]:
     "0x467f6b080db9734b8b0a2ccb7fd020914e47f2f62aa668f56c4124946e4eb70",
 };
+
+export interface RealmsL2CollectionInfo {
+  name: string;
+  link: string;
+  image: string;
+  addresses: Partial<{ [key in ChainId]: string }>;
+}
+export const REALMS_L2_COLLECTIONS: RealmsL2CollectionInfo[] = [
+  {
+    name: "Beasts",
+    link: "beasts",
+    image: "/collections/beasts.svg",
+    addresses: CollectionAddresses[Collections.BEASTS],
+  },
+  {
+    name: "Golden Token",
+    link: "goldentoken",
+    image: "/collections/goldentoken.svg",
+    addresses: CollectionAddresses[Collections.GOLDEN_TOKEN],
+  },
+  {
+    name: "Blobert",
+    link: "blobert",
+    image: "/collections/blobert.svg",
+    addresses: CollectionAddresses[Collections.BLOBERT],
+  },
+  {
+    name: "Pixel Banners (for Adventurers)",
+    link: "banners",
+    image: "/collections/banners.svg",
+    addresses: CollectionAddresses[Collections.BANNERS],
+  },
+];
+export function getAddressesForChainId(chainId: ChainId): string[] {
+  const addresses: string[] = [];
+  for (const collection in CollectionAddresses) {
+    const chainAddresses = CollectionAddresses[collection as Collections];
+    const address = chainAddresses[chainId];
+    if (address) {
+      addresses.push(address);
+    }
+  }
+  return addresses;
+}

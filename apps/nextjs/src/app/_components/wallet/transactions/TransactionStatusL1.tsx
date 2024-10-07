@@ -1,6 +1,6 @@
 import { useWaitForTransactionReceipt } from "wagmi";
 
-import { Badge } from "@realms-world/ui";
+import { Badge } from "@realms-world/ui/components/ui/badge";
 
 export function TransactionStatusL1({ hash }: { hash: string }) {
   const { data, isLoading } = useWaitForTransactionReceipt({

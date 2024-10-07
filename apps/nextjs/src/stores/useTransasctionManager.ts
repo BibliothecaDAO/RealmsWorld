@@ -1,4 +1,5 @@
 import type { TransactionType } from "@/constants/transactions";
+import type { RealmsWithdrawal, RealmsWithdrawalEvent } from "@/types/subgraph";
 import { isStarknetAddress } from "@/utils/utils";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -13,10 +14,22 @@ export interface Transaction {
   hash: string;
   timestamp: Date | string;
 }
+export interface CombinedTransaction
+  extends Transaction,
+    Partial<RealmsWithdrawal> {
+  tokenIds?: string[];
+}
 
-interface TransactionState {
+export interface TransactionState {
+  newTransactionCount: number;
   transactions: Transaction[];
+  combinedTransactions: CombinedTransaction[];
+  allTransactionsProcessed: boolean;
   addTx: (tx: Transaction) => void;
+  resetTransacationCount: () => void;
+  updateCombinedTransactions: (
+    combinedTransactions: CombinedTransaction[],
+  ) => void;
 }
 
 export const useTransactionManager = create<
@@ -26,6 +39,9 @@ export const useTransactionManager = create<
   persist(
     (set) => ({
       transactions: [],
+      combinedTransactions: [],
+      newTransactionCount: 0,
+      allTransactionsProcessed: false,
       addTx: (tx: Transaction) => {
         const paddedHash: string = isStarknetAddress(tx.hash)
           ? padAddress(tx.hash)
@@ -34,14 +50,27 @@ export const useTransactionManager = create<
           ...tx,
           hash: paddedHash,
         };
+
         return set((state) => ({
+          allTransactionsProcessed: false,
           transactions: [...state.transactions, updatedTransaction],
+          newTransactionCount: state.newTransactionCount + 1,
+        }));
+      },
+      resetTransacationCount: () => {
+        return set((state) => ({
+          allTransactionsProcessed: true,
+          newTransactionCount: 0,
+        }));
+      },
+      updateCombinedTransactions: (combinedTransactions) => {
+        return set((state) => ({
+          combinedTransactions: combinedTransactions,
         }));
       },
     }),
     {
-      name: "starknetTransactions", // unique name for localStorage key
-      //storage: createJSONStorage(() => localStorage),
+      name: "starknetTransactions",
     },
   ),
 );

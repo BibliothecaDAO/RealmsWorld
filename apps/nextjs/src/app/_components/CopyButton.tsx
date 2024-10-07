@@ -3,14 +3,13 @@
 import * as React from "react";
 import { CheckIcon, ClipboardIcon } from "lucide-react";
 
-import type { ButtonProps } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Button,
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/tooltip";
 import { cn } from "@realms-world/utils";
 
 export function CopyButton({

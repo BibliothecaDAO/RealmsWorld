@@ -8,7 +8,7 @@ import { Loader } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 
 //import { signIn } from "@realms-world/auth";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 import { StarknetLoginButton } from "../wallet/StarknetLoginButton";
 //import { SessionProvider, useSession } from "next-auth/react";

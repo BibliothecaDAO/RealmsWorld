@@ -27,11 +27,13 @@
     "push": "pnpm with-env drizzle-kit push",
     "studio": "drizzle-kit studio",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "update-tokens-price": "bun run  ./src/scripts/priceUpdate.ts",
+    "update-tokens-image": "bun run ./src/scripts/imageUpdate.ts",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@neondatabase/serverless": "0.9.4",
-    "@t3-oss/env-nextjs": "^0.11.0",
+    "@neondatabase/serverless": "0.9.5",
+    "@t3-oss/env-nextjs": "^0.11.1",
     "drizzle-orm": "^0.33.0",
     "drizzle-zod": "^0.5.1",
     "zod": "catalog:"

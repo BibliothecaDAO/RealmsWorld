@@ -7,8 +7,8 @@ import { useUIStore } from "@/providers/UIStoreProvider";
 import { shortenHex } from "@/utils/utils";
 import { useAccount } from "@starknet-react/core";
 
-import type { buttonVariants } from "@realms-world/ui";
-import { Button } from "@realms-world/ui";
+import type { buttonVariants } from "@realms-world/ui/components/ui/button";
+import { Button } from "@realms-world/ui/components/ui/button";
 import { Loader } from "lucide-react";
 
 export const StarknetLoginButton = ({
@@ -17,14 +17,16 @@ export const StarknetLoginButton = ({
   textClass,
   buttonClass,
   children,
+  newTransactionCount
 }: {
   openAccount?: boolean;
   variant?: VariantProps<typeof buttonVariants>["variant"];
   textClass?: string;
   buttonClass?: string;
-  children?: React.ReactNode;
+  children?: React.ReactNode,
+  newTransactionCount?: number
 }) => {
-  const { account, isConnected, isConnecting } = useAccount();
+  const { address, isConnected, isConnecting } = useAccount();
   const { toggleAccount, toggleStarknetLogin } = useUIStore((state) => state);
 
   const onConnectClick = () => {
@@ -45,13 +47,16 @@ export const StarknetLoginButton = ({
         <StarknetLogo className="h-6 w-6" />
         <span className={`pl-2 ${textClass ?? "sm:block"}`}>
           {isConnecting && <Loader className="animate-spin" />}
-          {account?.address ? (
-            <>{shortenHex(account.address, 8)}</>
+          {address ? (
+            <>{shortenHex(address, 8)}</>
           ) : (<>
             {children ?? "Starknet"}</>)
           }
         </span>
       </span>
+      {(isConnected && newTransactionCount) && newTransactionCount > 0 ? <span
+        className={'bg-green-600 w-[20px] absolute -top-1.5 -right-1.5 rounded-full text-black'}
+      >{newTransactionCount}</span> : null}
     </Button>
   );
 };

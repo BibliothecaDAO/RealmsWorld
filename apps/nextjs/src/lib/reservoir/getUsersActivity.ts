@@ -1,6 +1,6 @@
 import { RESERVOIR_API_URL } from "@/constants/env";
 import { reservoirLootCollectionSetId } from "@/constants/erc721Tokens";
-import { env } from "@/env";
+import { env } from "env";
 
 export const getUsersActivity = async ({ address }: { address: string }) => {
   try {

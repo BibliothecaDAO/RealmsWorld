@@ -18,7 +18,7 @@
     "@types/remarkable": "^2.0.8",
     "autoprefixer": "^10.4.19",
     "graphql": "^16.9.0",
-    "highlight.js": "^11.9.0",
+    "highlight.js": "^11.10.0",
     "highlightjs-solidity": "^2.0.6",
     "postcss": "^8.4.41",
     "react": "catalog:react18",

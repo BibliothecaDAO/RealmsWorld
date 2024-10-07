@@ -24,8 +24,13 @@
   "deno.enable": false,
   "deno.lint": false,
   "deno.unstable": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
+    // Sometimes vscode prettier doesn't format .tsx file without this config.
+    // see also: https://stackoverflow.com/questions/61731587/vscode-prettier-doesnt-format-tsx-file
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 
   /*"deno.enable": true,

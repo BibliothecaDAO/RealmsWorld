@@ -12,7 +12,7 @@ import StarkScanLogo from "@/icons/starkscan.svg";
 import VoyagerLogo from "@/icons/voyager.svg";
 import { evaluate } from "@starkware-industries/commons-js-utils";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 interface Transfer {
   type: (typeof ActionType)[keyof typeof ActionType];

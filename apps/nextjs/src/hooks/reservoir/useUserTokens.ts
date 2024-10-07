@@ -10,7 +10,6 @@ export const useUserTokens = ({ address }: { address?: string }) => {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res);
           return res as paths["/users/{user}/tokens/v10"]["get"]["responses"]["200"]["schema"];
         }),
     enabled: !!address,

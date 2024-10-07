@@ -2,7 +2,7 @@
 import React from "react";
 import { Game } from "@/types";
 
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 interface OverviewProps {
   game: Game;

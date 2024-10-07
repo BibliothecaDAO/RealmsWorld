@@ -1,7 +1,7 @@
 import type { RealmsWithdrawal } from "@/types/subgraph";
 import type { TransactionFinalityStatus } from "starknet";
-import { env } from "@/env";
 import { useQuery } from "@tanstack/react-query";
+import { env } from "env";
 
 const query = `query Withdrawals(
     $l1Address: String
@@ -49,6 +49,7 @@ export const usePendingRealmsWithdrawals = ({
   } else {
     variables.status = ["ACCEPTED_ON_L1", "FINISHED"];
   }
+
   return useQuery({
     queryKey: ["pendingRealmsWithdrawals" + address + status],
     queryFn: async () =>
@@ -67,6 +68,5 @@ export const usePendingRealmsWithdrawals = ({
           return res.data?.withdrawals;
         }),
     enabled: !!address,
-    refetchInterval: 20000,
   });
 };

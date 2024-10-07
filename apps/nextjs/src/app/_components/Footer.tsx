@@ -1,19 +1,20 @@
 import RWLogo from "@/icons/rw-logo.svg";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const Footer = () => {
   return (
-    <footer className="w-full px-4 py-24 sm:pl-36 sm:pt-24 ">
-      <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+    <footer className="w-full px-4 sm:pl-36">
+      <div className="mx-auto w-full max-w-screen-lg p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <RWLogo className=" w-[152px]" />
+            <RWLogo className="w-[152px]" />
           </div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-8">
             <div>
-              <h2 className="mb-6 text-sm font-semibold uppercase ">
+              <h2 className="mb-6 text-sm font-semibold uppercase">
                 Resources
               </h2>
-              <ul className="font-medium ">
+              <ul className="font-medium">
                 <li className="mb-4">
                   <a
                     href="https://bibliothecadao.xyz/"
@@ -39,10 +40,7 @@ export const Footer = () => {
                   </a>
                 </li>
                 <li className="mb-4">
-                  <a
-                    href="/swap"
-                    className="hover:underline"
-                  >
+                  <a href="/swap" className="hover:underline">
                     Buy Lords
                   </a>
                 </li>
@@ -76,11 +74,11 @@ export const Footer = () => {
               <h2 className="mb-6 text-sm font-semibold uppercase">
                 Follow us
               </h2>
-              <ul className="font-medium ">
+              <ul className="font-medium">
                 <li className="mb-4">
                   <a
                     href="https://github.com/bibliothecaDAO"
-                    className="hover:underline "
+                    className="hover:underline"
                   >
                     Github
                   </a>
@@ -105,16 +103,16 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-        <hr className="my-6 border sm:mx-auto lg:my-8 " />
-        <div className="flex  sm:items-center justify-between">
-          <span className="text-sm sm:text-center  self-center">
+        <hr className="my-6 border sm:mx-auto lg:my-8" />
+        <div className="flex justify-between sm:items-center">
+          <span className="self-center text-sm sm:text-center">
             © {new Date().getFullYear()}{" "}
             <a href="https://flowbite.com/" className="hover:underline">
               BibliothecaDAO
             </a>
           </span>
-          <div className="mt-4 flex sm:mt-0 sm:justify-center self-center">
-            <a href="https://discord.gg/realmsworld" className="ms-5 ">
+          <div className="mt-4 flex self-center sm:mt-0 sm:justify-center">
+            <a href="https://discord.gg/realmsworld" className="ms-5">
               <svg
                 className="h-4 w-4"
                 aria-hidden="true"
@@ -126,7 +124,7 @@ export const Footer = () => {
               </svg>
               <span className="sr-only">Discord community</span>
             </a>
-            <a href="https://x.com/realmsworld" className="ms-5 ">
+            <a href="https://x.com/realmsworld" className="ms-5">
               <svg
                 className="h-4 w-4"
                 aria-hidden="true"
@@ -138,7 +136,7 @@ export const Footer = () => {
               </svg>
               <span className="sr-only">Twitter page</span>
             </a>
-            <a href="https://github.com/bibliothecaDAO" className="ms-5 ">
+            <a href="https://github.com/bibliothecaDAO" className="ms-5">
               <svg
                 className="h-4 w-4"
                 aria-hidden="true"

@@ -6,7 +6,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextResponse } from "next/server";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import { env } from "@/env";
+import { env } from "env";
 import { hash, shortString, uint256 } from "starknet";
 
 import type { SQL } from "@realms-world/db";

@@ -9,7 +9,7 @@ import {
 import { ExternalLinkIcon } from "lucide-react";
 
 import type { ChainId } from "@realms-world/constants";
-import { Button } from "@realms-world/ui";
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export const ExplorerLink = ({
   chainId,
@@ -35,7 +35,7 @@ export const ExplorerLink = ({
   return (
     <Button key={text} variant={"outline"} size={"xs"} asChild>
       <Link href={explorerURL} target="_blank">
-        {text ?? isL1 ? "Etherscan" : "Starkscan"}
+        {text}
         <ExternalLinkIcon className="h-4" />
       </Link>
     </Button>

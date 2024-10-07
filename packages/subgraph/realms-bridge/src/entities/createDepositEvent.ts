@@ -15,11 +15,7 @@ export function createDepositEvent(event: LogMessageToL2): DepositEvent {
 
   let ids = event.params.payload.slice(5);
   let tokenIds = new Array<BigInt>(0);
-  log.debug("tokenIds are following {}", [ids.toString()]);
   for (let i = 0; i < event.params.payload[4].toI32() * 2; i += 2) {
-    log.debug("converted is {}", [
-      convertUint256ToBigInt(ids[i], ids[i + 1]).toString(),
-    ]);
     tokenIds.push(convertUint256ToBigInt(ids[i], ids[i + 1]));
   }
   log.debug("tokenIds are is {}", [tokenIds.toString()]);
@@ -38,15 +34,7 @@ export function createDepositEvent(event: LogMessageToL2): DepositEvent {
   depositEvent.finishedAtDate = null;
   depositEvent.finishedTxHash = null;
 
-  log.debug("before save is {}", [
-    bigIntToAddressBytes(
-      event.params.toAddress,
-      ADDRESS_TYPE.STARKNET,
-    ).toHexString(),
-  ]);
-
   depositEvent.save();
-  log.debug("after save", []);
 
   return depositEvent;
 }

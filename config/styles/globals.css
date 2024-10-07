@@ -28,6 +28,9 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --site-header-height: 63px;
+    --site-footer-height: 40px;
+    --site-sidemenu-width: 102px;
   }
   .dark {
     --background: 69 9% 15%;

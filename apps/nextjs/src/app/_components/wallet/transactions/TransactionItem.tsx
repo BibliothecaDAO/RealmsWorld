@@ -1,9 +1,8 @@
-import type { CombinedTransaction } from "@/hooks/useTransactions";
-import type { Transaction } from "@/stores/useTransasctionManager";
+import type { CombinedTransaction } from "@/stores/useTransasctionManager";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { TransactionType } from "@/constants/transactions";
 
-import { Badge } from "@realms-world/ui";
+import { Badge } from "@realms-world/ui/components/ui/badge";
 
 import { ExplorerLink } from "../ExplorerLink";
 import { TransactionAction } from "./TransactionAction";

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { env } from "@/env";
+import { env } from "env";
 
 export const runtime = "edge";
 const query = `query UsersRealms(
@@ -51,7 +51,6 @@ export async function POST(request: Request) {
   const skip = searchParams.get("skip");
 
   const res = await fetch(env.NEXT_PUBLIC_REALMS_SUBGRAPH_NAME, {
-
     method: "POST",
     headers: {
       "content-type": "application/json",

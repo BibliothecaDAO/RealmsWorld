@@ -14,7 +14,7 @@ import { BlockTag } from "starknet";
 import { formatEther } from "viem";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
-import { useToast } from "@realms-world/ui";
+import { useToast } from "@realms-world/ui/components/ui/use-toast";
 
 import useStore from "../useStore";
 

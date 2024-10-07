@@ -1,6 +1,6 @@
-import type { Transaction } from "@/stores/useTransasctionManager";
-import type { RealmsWithdrawal, RealmsWithdrawalEvent } from "@/types/subgraph";
-import { useMemo } from "react";
+import type { CombinedTransaction } from "@/stores/useTransasctionManager";
+import type { RealmsWithdrawalEvent } from "@/types/subgraph";
+import { useEffect, useMemo } from "react";
 import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import {
   BridgeTransactionType,
@@ -14,24 +14,19 @@ import { useAccount as useStarknetAccount } from "@starknet-react/core";
 import { useAccount } from "wagmi";
 
 import type { RouterInputs, RouterOutputs } from "@realms-world/api";
-import type { ChainId } from "@realms-world/constants";
+import { ChainId } from "@realms-world/constants";
 import { padAddress } from "@realms-world/utils";
 
-export interface CombinedTransaction
-  extends Transaction,
-    Partial<RealmsWithdrawal> {
-  tokenIds?: string[];
-}
-
 export const useTransactions = () => {
-  const transactions = useStore(
-    useTransactionManager,
-    (state) => state.transactions,
-  );
+  const transactionState = useStore(useTransactionManager, (state) => state);
+  const transactions = transactionState?.transactions;
+
   const { address } = useAccount();
   const { address: l2Address } = useStarknetAccount();
 
+  // grabs all pending realm withdrawals
   const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({ address });
+
   const filters: RouterInputs["erc721Bridge"]["all"] = useMemo(
     () => ({
       l1Account: padAddress(address),
@@ -39,11 +34,9 @@ export const useTransactions = () => {
     }),
     [address, l2Address],
   );
-
   const { data: l2BridgeTransactions } = api.erc721Bridge.all.useQuery(
     filters,
     {
-      refetchInterval: 30000,
       enabled: !!address || !!l2Address,
     },
   );
@@ -67,6 +60,7 @@ export const useTransactions = () => {
         },
       ]),
     );
+
     pendingWithdrawals?.forEach((withdrawal) => {
       if (withdrawal.req_hash) {
         const matchingTransaction = map.get(withdrawal.req_hash);
@@ -109,7 +103,7 @@ export const useTransactions = () => {
     const transactionsArray = Array.from(l2TransactionsMap.values()).map(
       (tx) => ({
         ...tx,
-        req_hash: tx.req_hash ? BigInt(tx.req_hash) : undefined,
+        req_hash: tx.req_hash ? tx.req_hash : undefined,
       }),
     );
     // Add transactions to the map, deduplicating by hash
@@ -120,11 +114,13 @@ export const useTransactions = () => {
     });
 
     // Add any additional transactions that might not be in the l2TransactionsMap
-    (transactions ?? []).forEach((tx) => {
-      if (tx.hash && !transactionsMap.has(tx.hash)) {
-        transactionsMap.set(tx.hash, tx);
-      }
-    });
+    if (transactions?.length) {
+      transactions.forEach((tx) => {
+        if (tx.hash && !transactionsMap.has(tx.hash)) {
+          transactionsMap.set(tx.hash, tx);
+        }
+      });
+    }
 
     // Convert the map back to an array
     const deduplicatedArray = Array.from(transactionsMap.values());
@@ -138,6 +134,7 @@ export const useTransactions = () => {
 
     return deduplicatedArray;
   }, [l2TransactionsMap, transactions]);
+
   return {
     transactions: combinedTransactions,
   };

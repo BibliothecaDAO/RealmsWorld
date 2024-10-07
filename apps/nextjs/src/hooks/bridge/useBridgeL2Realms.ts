@@ -14,7 +14,7 @@ import {
   getCollectionAddresses,
   REALMS_BRIDGE_ADDRESS,
 } from "@realms-world/constants";
-import { toast } from "@realms-world/ui";
+import { toast } from "@realms-world/ui/components/ui/use-toast";
 
 import { useERC721Approval } from "../token/starknet/useERC721Approval";
 import useStore from "../useStore";

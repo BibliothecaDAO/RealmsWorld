@@ -6,23 +6,28 @@ import PieChart from "@/icons/pie-chart.svg";
 import RealmsL3 from "@/icons/realms_l3.svg";
 import { useUIStore } from "@/providers/UIStoreProvider";
 import { HammerIcon, Menu /*, ShieldQuestion*/ } from "lucide-react";
+import useStore from "@/hooks/useStore";
+import { useTransactionManager } from "@/stores/useTransasctionManager";
 import Crown from "@/icons/crown.svg";
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
-  Button,
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "@realms-world/ui";
+} from "@realms-world/ui/components/ui/navigation-menu";
 
 import { EthereumLoginButton } from "./wallet/EthereumLoginButton";
 import { LordsDropdown } from "./wallet/LordsDropdown";
 import { StarknetLoginButton } from "./wallet/StarknetLoginButton";
 
+
 export const TopNav = () => {
   const { toggleSidebar } = useUIStore((state) => state);
+  const transactionState = useStore(useTransactionManager, (state) => state);
+  const newTransactionCount = transactionState?.newTransactionCount;
 
   const aboutLinks = [
     /*{
@@ -50,7 +55,7 @@ export const TopNav = () => {
     },
     {
       title: "Blog",
-      href: "/blog",
+      href: "/blogs",
       icon: <Bookmark className="w-5" />,
     },
     {
@@ -63,7 +68,7 @@ export const TopNav = () => {
   return (
     <div
       id="topnav"
-      className={`fixed z-[100] w-full border-b-[3px] bg-background p-3 pl-4 sm:pl-8 md:pl-32`}
+      className={`fixed z-50 w-full border-b-[3px] bg-background p-3 pl-4 sm:pl-8 md:pl-32`}
     >
       <div className="flex justify-between w-full">
         <Button className="md:hidden" onClick={toggleSidebar}>
@@ -144,9 +149,11 @@ export const TopNav = () => {
             textClass="group-hover:block"
           />
           <StarknetLoginButton
+            buttonClass="relative"
             textClass="group-hover:block"
             variant={"default"}
             openAccount
+            newTransactionCount={newTransactionCount}
           />
         </div>
       </div>
