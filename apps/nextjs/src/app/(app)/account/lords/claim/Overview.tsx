@@ -69,12 +69,12 @@ export const Overview = () => {
 
   return (
     <div className="w-full">
-      {realmsBalance && <RealmDelegationWarning />}
+      {realmsBalance ? <RealmDelegationWarning /> : null}
       {l2Address ? (
         <>
           <div className="flex gap-8">
             <div className="w-full">
-              <div className="mt-4 grid grid-cols-3 gap-4">
+              <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
                 <Card>
                   <CardHeader>
                     <CardDescription>Claimable Lords</CardDescription>
@@ -136,7 +136,7 @@ export const Overview = () => {
                   <CardHeader>
                     <CardTitle>Past Claims</CardTitle>
                   </CardHeader>
-                  <CardContent className="grid grid-cols-4 gap-4">
+                  <CardContent className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                     <Card>
                       <CardHeader>
                         <CardDescription>Total Claimed</CardDescription>

@@ -7,6 +7,7 @@ import ViewTypeToggleGroup from "@/app/_components/ViewToggleGroup";
 import PortfolioItemsSortingSelect from "./PortfolioItemsSortingSelect";
 import { NftActions } from "./NftActions";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import PortfolioItemsFiltersModal from "./PortfolioItemsFiltersModal";
 
 // import type { WalletCollectionsApiResponse } from "../queries/getWalletData";
 //import ViewTypeToggleButton from "~/components/view-type-toggle-button";
@@ -44,14 +45,14 @@ export default function PortfolioItemsToolsBar({
   return (
     <div className={cn("mb-1 mt-1 sm:mt-2", className)}>
       <div className="flex items-center gap-2 md:gap-6">
-        {/*<PortfolioItemsFiltersModal
-                    walletAddress={walletAddress}
-                // walletCollectionsInitialData={walletCollectionsInitialData}
-                >
-                    <Button variant="secondary" size="icon-xl" className="sm:hidden">
-                        {filtersOpen ? <ArrowLeft /> : <Filter />}
-                    </Button>
-    </PortfolioItemsFiltersModal>*/}
+        <PortfolioItemsFiltersModal
+          walletAddress={walletAddress}
+          // walletCollectionsInitialData={walletCollectionsInitialData}
+        >
+          <Button variant="secondary" size="lg" className="ml-12 sm:hidden">
+            {filtersOpen ? <ArrowLeft /> : <Filter />}
+          </Button>
+        </PortfolioItemsFiltersModal>
         <Button
           onClick={toggleFiltersOpen}
           variant="secondary"

@@ -109,7 +109,7 @@ export const Portfolio = ({
             // walletCollectionsInitialData={walletCollectionsInitialData}
           />
           <div className="flex-1">
-            <div className="sticky top-[var(--site-header-height)] z-10 mb-6 border-b border-border bg-background px-5 pb-4 sm:pt-2 lg:mb-0 lg:border-none">
+            <div className="sticky top-[var(--site-header-height)] z-10 mb-6 border-b border-border bg-background px-5 pb-4 pt-2 lg:mb-0 lg:border-none">
               <PortfolioItemsToolsBar
                 filtersOpen={itemsFiltersOpen}
                 walletAddress={l2Address}
