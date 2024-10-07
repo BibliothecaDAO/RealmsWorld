@@ -35,7 +35,9 @@ export default function RootLayout({
         <SidebarLayout defaultOpen={isSidebarOpen}>
           <AppSidebar />
           <SidebarTrigger
-            className={cn("fixed z-40 ml-3 mt-5 h-8 w-8 border sm:top-6")}
+            className={cn(
+              "fixed z-30 ml-3 mt-5 h-8 w-8 border sm:top-1.5 sm:z-50",
+            )}
           />
           <div className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
             <AuthWrapper>{children}</AuthWrapper>
