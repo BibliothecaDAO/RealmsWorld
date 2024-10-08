@@ -171,6 +171,10 @@ export default config({
           label: "Banner Image",
           directory: "public/content/blogs",
         }),
+        previewImage: fields.image({
+          label: "Preview Image",
+          directory: "public/content/blogs",
+        }),
         subtitle: fields.text({ label: "Subtitle" }),
         content: fields.markdoc({
           label: "Content",

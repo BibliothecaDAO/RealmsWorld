@@ -11,7 +11,14 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const games = await reader.collections.games.all();
+  const allGames = await reader.collections.games.all();
+
+  const games = allGames.sort((a, b) => {
+    if (a.slug === "realms-eternum") return -1;
+    if (b.slug === "realms-eternum") return 1;
+    return 0;
+  });
+
   return (
     <PageLayout title="Onchain Games">
       <div className="mt-8 grid grid-cols-1 gap-4 px-4 sm:px-8 md:grid-cols-2 lg:grid-cols-3">
