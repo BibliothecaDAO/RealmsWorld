@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { GameCard } from "@/app/(app)/games/GameCard";
-import DojoDark from "@/icons/mark-dark.svg";
-import Starknet from "@/icons/starknet.svg";
 import { Button } from "@realms-world/ui/components/ui/button";
 
 import {

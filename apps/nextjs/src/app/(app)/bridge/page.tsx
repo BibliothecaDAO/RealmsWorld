@@ -29,15 +29,15 @@ export default function Page({
   return (
     <div className="relative z-10 p-2">
       <h2 className="mx-auto mb-6 text-center">The Lords Bridge</h2>
-      <div className=" container mx-auto w-full flex-col rounded-lg border bg-background p-2 md:w-[500px]">
+      <div className="container mx-auto w-full flex-col rounded-lg border bg-background p-2 md:w-[500px]">
         <div className="mb-2 flex w-full justify-center space-x-2 rounded text-xl">
           {tabs.map((tab) => (
             <NavLink
               className={cn(
                 "w-full text-base",
                 action === tab.link
-                  ? "bg-medium-dark-green !text-bright-yellow hover:!bg-white/50"
-                  : "!text-bright-yellow/40",
+                  ? "hover:bg-bg-bright-yellow cursor-default !text-medium-dark-green/80"
+                  : "bg-medium-dark-green !text-bright-yellow hover:bg-bright-yellow/50",
               )}
               size={"lg"}
               key={tab.name}

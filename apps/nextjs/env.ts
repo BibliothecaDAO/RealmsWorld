@@ -44,6 +44,7 @@ export const env = createEnv({
     NEXT_PUBLIC_ALCHEMY_API: z.string(),
     NEXT_PUBLIC_ETHPLORER_APIKEY: z.string(),
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_GITHUB_REPO_NAME: z.string().optional(),
     NEXT_PUBLIC_GITHUB_REPO_OWNER: z.string().optional(),
     NEXT_PUBLIC_ARK_MARKETPLACE_API: z.string().url(),
     NEXT_PUBLIC_ARK_ORDERBOOK_API: z.string().url(),
