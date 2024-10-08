@@ -35,7 +35,7 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  let game = await reader.collections.games.read(params.slug);
+  let game = await reader().collections.games.read(params.slug);
   return {
     title: `${game?.title}`,
     description: `${params.slug} - Created for Adventurers by Bibliotheca DAO`,
@@ -43,7 +43,7 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const keyStaticGame = await reader.collections.games.read(params.slug);
+  const keyStaticGame = await reader().collections.games.read(params.slug);
 
   if (!keyStaticGame) return;
   const { node } = await keyStaticGame.content();
@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }));
 
   // grab studio via developer slug from game so we can spit out the studio's title instead of its slug
-  const studio = await reader.collections.studios.read(
+  const studio = await reader().collections.studios.read(
     keyStaticGame?.developer || "",
   );
 
@@ -324,6 +324,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 }
 
 export async function generateStaticParams() {
-  const gameSlugs = await reader.collections.games.list();
+  const gameSlugs = await reader().collections.games.list();
   return gameSlugs.map((gameSlug) => ({ slug: gameSlug }));
 }

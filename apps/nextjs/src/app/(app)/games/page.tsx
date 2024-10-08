@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const allGames = await reader.collections.games.all();
+  const allGames = await reader().collections.games.all();
 
   const games = allGames.sort((a, b) => {
     if (a.slug === "realms-eternum") return -1;

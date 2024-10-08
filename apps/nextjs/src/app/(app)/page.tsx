@@ -19,7 +19,7 @@ import Image from "next/image";
 import { reader } from "@/utils/keystatic";
 
 export default async function Home() {
-  const games = await reader.collections.games.all();
+  const games = await reader().collections.games.all();
   const carouselItems = games
     .filter((a) => a.entry.status === "beta" || a.entry.status === "mainnet")
     .map((game) => ({

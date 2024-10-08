@@ -16,6 +16,7 @@ export default config({
       label: "Games",
       slugField: "title",
       path: "content/games/*",
+      previewUrl: `/preview/start?branch={branch}&to=/games/{slug}`,
       format: { contentField: "content" },
       columns: ["title", "icon"],
       schema: {
@@ -162,6 +163,7 @@ export default config({
       slugField: "title",
       path: "content/blogs/*",
       format: { contentField: "content" },
+      previewUrl: `/preview/start?branch={branch}&to=/blogs/{slug}`,
       columns: ["title", "subtitle"],
       schema: {
         author: fields.text({ label: "Author" }),
