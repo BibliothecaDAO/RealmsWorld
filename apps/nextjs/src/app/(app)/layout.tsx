@@ -68,16 +68,16 @@ export default function Layout(props: { children: React.ReactNode }) {
                         <TopNav />
                         <div className="flex-grow pt-[var(--site-header-height)] sm:mb-24 sm:pl-[var(--site-sidemenu-width)]">
                           {props.children}
+                          {isEnabled && (
+                            <Alert variant={"warning"} className="mx-4 w-full">
+                              Draft mode ({cookies().get("ks-branch")?.value}){" "}
+                              <form method="POST" action="/preview/end">
+                                <Button className="mt-4">End preview</Button>
+                              </form>
+                            </Alert>
+                          )}
+                          {isEnabled.toString()}
                         </div>
-                        {isEnabled && (
-                          <Alert className="w-full">
-                            Draft mode ({cookies().get("ks-branch")?.value}){" "}
-                            <form method="POST" action="/preview/end">
-                              <Button>End preview</Button>
-                            </form>
-                          </Alert>
-                        )}
-                        {isEnabled.toString()}
                         <Footer />
                       </div>
                     </main>
