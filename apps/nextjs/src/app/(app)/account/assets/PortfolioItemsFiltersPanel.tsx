@@ -28,7 +28,6 @@ export default function PortfolioItemsFitlersPanel({
         <PortfolioItemsFiltersContent
           walletAddress={walletAddress}
           className="h-full px-5 py-3"
-          selectable
           // walletCollectionsInitialData={walletCollectionsInitialData}
         />
       </div>
