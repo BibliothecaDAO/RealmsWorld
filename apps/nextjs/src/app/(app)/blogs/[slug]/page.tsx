@@ -18,7 +18,7 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  let blog = await reader.collections.blogs.read(params.slug);
+  let blog = await reader().collections.blogs.read(params.slug);
 
   return {
     title: `${blog?.title}`,
@@ -46,7 +46,7 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const blog = await reader.collections.blogs.read(params.slug);
+  const blog = await reader().collections.blogs.read(params.slug);
   if (!blog) {
     return <div>No Blog Found</div>;
   }
@@ -111,6 +111,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 }
 
 export async function generateStaticParams() {
-  const blogSlugs = await reader.collections.blogs.list();
+  const blogSlugs = await reader().collections.blogs.list();
   return blogSlugs.map((blogSlug) => ({ slug: blogSlug }));
 }

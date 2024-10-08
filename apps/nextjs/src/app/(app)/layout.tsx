@@ -7,7 +7,7 @@ import "@realms-world/styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { cache } from "react";
-import { headers } from "next/headers";
+import { headers, cookies, draftMode } from "next/headers";
 import { Footer } from "@/app/_components/Footer";
 import { StarknetLoginModal } from "@/app/_components/modal/StarknetLoginModal";
 import { TopNav } from "@/app/_components/TopNav";
@@ -21,6 +21,8 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster } from "@realms-world/ui/components/ui/toaster";
 import { TooltipProvider } from "@realms-world/ui/components/ui/tooltip";
 import { ArkClientProvider } from "@/lib/ark/useArkClient";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { Alert } from "@realms-world/ui/components/ui/alert";
 const bebas_neue = Bebas_Neue({
   subsets: ["latin"],
   variable: "--font-bebas-neue",
@@ -46,6 +48,8 @@ const backgroundImageStyle = {
 const getHeaders = cache(() => Promise.resolve(headers()));
 
 export default function Layout(props: { children: React.ReactNode }) {
+  const { isEnabled } = draftMode();
+
   return (
     <html lang="en">
       <body
@@ -64,6 +68,15 @@ export default function Layout(props: { children: React.ReactNode }) {
                         <TopNav />
                         <div className="flex-grow pt-[var(--site-header-height)] sm:mb-24 sm:pl-[var(--site-sidemenu-width)]">
                           {props.children}
+                          {isEnabled && (
+                            <Alert variant={"warning"} className="mx-4 w-full">
+                              Draft mode ({cookies().get("ks-branch")?.value}){" "}
+                              <form method="POST" action="/preview/end">
+                                <Button className="mt-4">End preview</Button>
+                              </form>
+                            </Alert>
+                          )}
+                          {isEnabled.toString()}
                         </div>
                         <Footer />
                       </div>

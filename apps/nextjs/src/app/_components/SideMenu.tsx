@@ -13,7 +13,7 @@ import Gamepad from "@/icons/gamepad.svg";
 import LordsIcon from "@/icons/lords.svg";
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
-import { Github, Twitter, User } from "lucide-react";
+import { Github, Newspaper, Twitter, User } from "lucide-react";
 
 import { Button } from "@realms-world/ui/components/ui/button";
 import { ScrollArea } from "@realms-world/ui/components/ui/scroll-area";
@@ -41,6 +41,11 @@ const Sidebar = () => {
       name: "Events",
       href: "/events",
       icon: <Calender className="w-[25px]" />,
+    },
+    {
+      name: "Blog",
+      href: "/blogs",
+      icon: <Newspaper className="w-[25px]" />,
     },
     {
       name: "Account",
