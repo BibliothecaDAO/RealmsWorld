@@ -27,6 +27,7 @@
     "@mui/material": "^5.15.15",
     "@mui/styles": "^5.15.15",
     "@next/mdx": "^14.2.5",
+    "@cartridge/connector": "^0.3.46",
     "@rainbow-me/rainbowkit": "^2",
     "@realms-world/api": "workspace:*",
     "@realms-world/auth": "workspace:*",

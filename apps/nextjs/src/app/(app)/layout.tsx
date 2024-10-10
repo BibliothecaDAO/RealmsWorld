@@ -76,7 +76,6 @@ export default function Layout(props: { children: React.ReactNode }) {
                               </form>
                             </Alert>
                           )}
-                          {isEnabled.toString()}
                         </div>
                         <Footer />
                       </div>
