@@ -40,6 +40,7 @@ import { formatDistanceToNow } from "date-fns";
 import { differenceInSeconds, getUnixTime, fromUnixTime } from "date-fns";
 import { motion } from "framer-motion";
 import { formatNumber } from "@realms-world/utils";
+import Link from "next/link";
 
 const WEEK_IN_SECONDS = 7 * 24 * 60 * 60; // 1 week in seconds
 const YEAR_IN_SECONDS = 365 * 24 * 60 * 60; // 1 year in seconds
@@ -253,6 +254,21 @@ export const VeLords = () => {
         </CardHeader>
         <CardFooter>
           <CardDescription>Your share of Pool</CardDescription>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <Link
+              className="text-flamingo underline"
+              href="https://dune.com/redbeard/velords"
+            >
+              More Statistics
+            </Link>
+          </CardTitle>
+        </CardHeader>
+        <CardFooter>
+          <CardDescription>On Dune Analytics</CardDescription>
         </CardFooter>
       </Card>
       {/*<Card>

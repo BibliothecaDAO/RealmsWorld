@@ -20,6 +20,7 @@ import {
   ArgentMobileConnector,
   isInArgentMobileAppBrowser,
 } from "starknetkit/argentMobile";
+import CartridgeConnector from "@cartridge/connector";
 import { InjectedConnector } from "starknetkit/injected";
 import { WebWalletConnector } from "starknetkit/webwallet";
 import { http, WagmiProvider } from "wagmi";
@@ -48,11 +49,11 @@ const starkConnectors = isInArgentMobileAppBrowser()
       }),
     ]
   : [
+      new CartridgeConnector({
+        rpc: "https://api.cartridge.gg/x/starknet/mainnet",
+      }),
       new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
       new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
-      new WebWalletConnector({
-        url: "https://web.argent.xyz",
-      }),
       ArgentMobileConnector.init({
         options: {
           url: typeof window !== "undefined" ? window.location.href : "",
@@ -61,6 +62,9 @@ const starkConnectors = isInArgentMobileAppBrowser()
             ? constants.NetworkName.SN_SEPOLIA
             : constants.NetworkName.SN_MAIN,
         },
+      }),
+      new WebWalletConnector({
+        url: "https://web.argent.xyz",
       }),
     ];
 
