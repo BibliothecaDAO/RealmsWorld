@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const studios = await reader.collections.studios.all();
+  const studios = await reader().collections.studios.all();
   return (
     <PageLayout title="Game Studios">
       <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">

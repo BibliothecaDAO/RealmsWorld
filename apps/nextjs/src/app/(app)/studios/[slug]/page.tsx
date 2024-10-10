@@ -21,7 +21,7 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  let studio = await reader.collections.studios.read(params.slug);
+  let studio = await reader().collections.studios.read(params.slug);
   return {
     title: `${studio?.title}`,
     description: `${params.slug} Profile - A game studio of the Realms Autonomous World`,
@@ -32,25 +32,32 @@ export async function generateMetadata({
   };
 }
 export default async function Page({ params }: { params: { slug: string } }) {
-  const studio = await reader.collections.studios.read(params.slug);
+  const studio = await reader().collections.studios.read(params.slug);
 
   if (!studio) return;
-  console.log(studio)
-  const { node } = await studio.content()
+  console.log(studio);
+  const { node } = await studio.content();
   const errors = Markdoc.validate(node);
   if (errors.length) {
     console.error(errors);
-    throw new Error('Invalid content');
+    throw new Error("Invalid content");
   }
   const renderable = Markdoc.transform(node);
-  const studioGames = await Promise.all(studio.games.map(async (game) => {
-    return (await reader.collections.games.read(game ?? "")) ?? "";
-  }));
+  const studioGames = await Promise.all(
+    studio.games.map(async (game) => {
+      return (await reader().collections.games.read(game ?? "")) ?? "";
+    }),
+  );
 
   const tabs = [
     {
       name: "Details",
-      content: <div className="leading-relaxed"> {Markdoc.renderers.react(renderable, React)}</div>,
+      content: (
+        <div className="leading-relaxed">
+          {" "}
+          {Markdoc.renderers.react(renderable, React)}
+        </div>
+      ),
     },
   ];
 
@@ -101,11 +108,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
             />
           </div>
           <SocialIcons
-            github={studio.links.github || ''}
-            telegram={studio.links.telegram || ''}
-            website={studio.links.homepage || ''}
-            x={studio.links.twitter || ''}
-            discord={studio.links.discord || ''}
+            github={studio.links.github || ""}
+            telegram={studio.links.telegram || ""}
+            website={studio.links.homepage || ""}
+            x={studio.links.twitter || ""}
+            discord={studio.links.discord || ""}
           />
 
           <div className="mb-2 flex-col space-y-2">
@@ -156,8 +163,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   );
 }
 
-
 export async function generateStaticParams() {
-  const studioSlugs = await reader.collections.studios.list()
-  return studioSlugs.map((studioSlug) => ({ slug: studioSlug }))
+  const studioSlugs = await reader().collections.studios.list();
+  return studioSlugs.map((studioSlug) => ({ slug: studioSlug }));
 }

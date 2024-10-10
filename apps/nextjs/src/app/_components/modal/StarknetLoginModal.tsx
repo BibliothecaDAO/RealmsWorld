@@ -1,12 +1,17 @@
 "use client";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useUIStore } from "@/providers/UIStoreProvider";
-import { useAccount, useConnect } from "@starknet-react/core";
+import { useAccount, useConnect, argent } from "@starknet-react/core";
+import type { Connector } from "@starknet-react/core";
 
-import { Dialog, DialogContent, DialogHeader } from "@realms-world/ui/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+} from "@realms-world/ui/components/ui/dialog";
 import { Button } from "@realms-world/ui/components/ui/button";
-import WalletIcons from "../wallet/WalletIcons";
-import { Loader2 } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
+import { DialogTitle } from "@mui/material";
 
 export const StarknetLoginModal = () => {
   const { connectAsync, connectors } = useConnect();
@@ -17,8 +22,6 @@ export const StarknetLoginModal = () => {
     isAccountOpen,
   } = useUIStore((state) => state);
   const { isConnected, isConnecting } = useAccount();
-
-
 
   const wallets = [
     {
@@ -85,6 +88,33 @@ export const StarknetLoginModal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
 
+  const [pendingConnectorId, setPendingConnectorId] = useState<
+    string | undefined
+  >(undefined);
+
+  const connect = useCallback(
+    async (connector: Connector) => {
+      //setModalEnabled(false)
+      setPendingConnectorId(connector.id);
+      try {
+        if (connector.available()) {
+          await connectAsync({ connector });
+        } else {
+          window.open(getConnectorDiscovery(connector.id));
+        }
+      } catch (error) {
+        //setModalEnabled(true);
+        console.error(error);
+      }
+      setPendingConnectorId(undefined);
+    },
+    [connectAsync],
+  );
+
+  function isWalletConnecting(connectorId: string) {
+    return pendingConnectorId === connectorId;
+  }
+
   return (
     <Dialog open={isStarknetLoginOpen} onOpenChange={toggleStarknetLogin}>
       <DialogContent className="w-full min-w-[350px] !pt-8">
@@ -96,9 +126,9 @@ export const StarknetLoginModal = () => {
           }}
           //className="fixed top-0 left-0 z-50 h-full w-72 bg-grey-11 md:w-[70vw]"
         >*/}
-        <DialogHeader>
+        <DialogTitle>
           <h6 className="-mt-3 mb-6 text-base">Connect Starknet Wallet</h6>
-        </DialogHeader>
+        </DialogTitle>
         <div className="flex flex-col space-y-2 self-center">
           {connectors.map((connector) => {
             const connectorInfo = wallets.find(
@@ -107,21 +137,33 @@ export const StarknetLoginModal = () => {
             return (
               <div className="mt-5 flex justify-center" key={connector.id}>
                 <Button
-                  className="w-full justify-between self-center px-4 py-6 font-sans text-lg font-light capitalize"
+                  className="w-full items-center justify-between self-center px-4 py-6 font-sans text-lg font-light capitalize"
                   variant={"outline"}
-                  onClick={() =>
-                    connector.available
-                      ? connectAsync({ connector })
-                      : window.open(getConnectorDiscovery(connector.id))
-                  }
+                  onClick={() => connect(connector)}
                 >
                   <div className="flex items-center justify-center">
-                    {isConnecting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <WalletIcons id={connector.id} />}
+                    {isWalletConnecting(connector.id) ? (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : connector.id !== "argentWebWallet" ? (
+                      <img
+                        src={
+                          connector.id === "argentMobile"
+                            ? argent().icon
+                            : (connector.icon.dark ?? connector.icon)
+                        }
+                        className="mr-3 size-6"
+                        alt={`${connector.name}`}
+                      />
+                    ) : (
+                      <Mail className="mr-3" />
+                    )}
 
                     {!connector.available ? "Install " : ""}
                     {connectorInfo?.name
                       ? `${connectorInfo.name}`
-                      : "Login with Email"}
+                      : connector.controller
+                        ? "Cartridge"
+                        : "Login with Email"}
                   </div>
                 </Button>
               </div>

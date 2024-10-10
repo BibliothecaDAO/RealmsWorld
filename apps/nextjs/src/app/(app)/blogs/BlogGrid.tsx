@@ -2,7 +2,7 @@ import { BlogCard } from "./BlogCard";
 import { reader } from "@/utils/keystatic";
 
 export const BlogGrid = async () => {
-  const blogs = await reader.collections.blogs.all();
+  const blogs = await reader().collections.blogs.all();
   const blogsSortedByDate = blogs.sort(function (a, b) {
     // Turn your strings into dates, and then subtract them
     // to get a value that is either negative, positive, or zero.
