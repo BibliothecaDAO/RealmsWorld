@@ -216,7 +216,7 @@ export function AppSidebar() {
             <SidebarLabel>Projects</SidebarLabel>
             <NavProjects projects={data.projects} />
           </SidebarItem>*/}
-        <SidebarItem className="mt-10">
+        {/*<SidebarItem className="mt-10">
           <SidebarLabel className="text-base">Help</SidebarLabel>
           <NavSecondary items={data.navSecondary} />
         </SidebarItem>

@@ -23,7 +23,6 @@ import { EthereumLoginButton } from "./wallet/EthereumLoginButton";
 import { LordsDropdown } from "./wallet/LordsDropdown";
 import { StarknetLoginButton } from "./wallet/StarknetLoginButton";
 
-
 export const TopNav = () => {
   const { toggleSidebar } = useUIStore((state) => state);
   const transactionState = useStore(useTransactionManager, (state) => state);
@@ -49,7 +48,7 @@ export const TopNav = () => {
   const communityLinks = [
     {
       title: "Frontinus House",
-      href: "https://frontinus.house",
+      href: "https://snapshot.box/#/sn:0x07bd3419669f9f0cc8f19e9e2457089cdd4804a4c41a5729ee9c7fd02ab8ab62",
       target: "_blank",
       icon: <RealmsL3 className="w-5 fill-current" />,
     },
@@ -70,11 +69,11 @@ export const TopNav = () => {
       id="topnav"
       className={`fixed z-50 w-full border-b-[3px] bg-background p-3 pl-4 sm:pl-8 md:pl-32`}
     >
-      <div className="flex justify-between w-full">
+      <div className="flex w-full justify-between">
         <Button className="md:hidden" onClick={toggleSidebar}>
           <Menu className="w-8" />
         </Button>
-        <Crown className="sm:hidden w-14 group-hover:opacity-0" />
+        <Crown className="w-14 group-hover:opacity-0 sm:hidden" />
       </div>
       <div className="hidden w-auto justify-end sm:flex">
         <div className="mr-12">
