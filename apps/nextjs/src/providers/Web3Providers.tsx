@@ -49,9 +49,9 @@ const starkConnectors = isInArgentMobileAppBrowser()
       }),
     ]
   : [
-      new CartridgeConnector({
+      /*new CartridgeConnector({
         rpc: "https://api.cartridge.gg/x/starknet/mainnet",
-      }),
+      }),*/
       new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
       new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
       ArgentMobileConnector.init({

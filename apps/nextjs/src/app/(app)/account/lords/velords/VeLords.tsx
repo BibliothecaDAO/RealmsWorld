@@ -260,6 +260,7 @@ export const VeLords = () => {
         <CardHeader>
           <CardTitle className="flex items-center">
             <Link
+              target="_blank"
               className="text-flamingo underline"
               href="https://dune.com/redbeard/velords"
             >
