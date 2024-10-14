@@ -10,6 +10,7 @@ import {
 } from "@starknet-react/core";
 
 import { LORDS, StakingAddresses } from "@realms-world/constants";
+import { useMemo } from "react";
 
 export const useVeLords = () => {
   const veLordsAddress = StakingAddresses.velords[SUPPORTED_L2_CHAIN_ID];
@@ -65,6 +66,11 @@ export const useVeLords = () => {
     }
   };
 
+  const claimCall = useMemo(
+    () => address && [rewardPool?.populate("claim", [address])],
+    [address, rewardPool],
+  );
+
   const claim = async (recipient?: Address) => {
     const endRecipient = recipient ?? address;
 
@@ -74,5 +80,5 @@ export const useVeLords = () => {
     return await claimRewards([rewardPool?.populate("claim", [endRecipient])]);
   };
 
-  return { manageLock, claim, withdraw };
+  return { manageLock, claim, withdraw, claimCall };
 };
