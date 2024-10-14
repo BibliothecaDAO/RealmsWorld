@@ -91,7 +91,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           className="w-full object-cover"
           height={600}
         />
-        <article className="prose prose-lg mx-auto mt-6 max-w-5xl px-6 pb-6 text-xl prose-headings:text-bright-yellow prose-p:font-thin prose-p:text-bright-yellow prose-a:text-flamingo prose-strong:text-bright-yellow prose-ol:text-bright-yellow prose-ul:text-bright-yellow md:mt-12">
+        <article className="prose prose-lg mx-auto mt-6 max-w-5xl pb-6 text-xl prose-headings:text-bright-yellow prose-p:font-thin prose-p:text-bright-yellow prose-a:text-flamingo prose-strong:text-bright-yellow prose-ol:text-bright-yellow prose-ul:text-bright-yellow md:mt-12">
           <div className="article-container">
             {Markdoc.renderers.react(renderable, React)}
           </div>

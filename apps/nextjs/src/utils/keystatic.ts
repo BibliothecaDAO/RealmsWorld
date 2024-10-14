@@ -37,3 +37,24 @@ export const reader = cache(() => {
 
 export type CollectionEntry<T extends keyof (typeof config)["collections"]> =
   Entry<(typeof config)["collections"][T]>;
+
+export const sortPostsByPublishDate = (
+  posts: Entry<(typeof config)["collections"]["blogs"]>[],
+): Entry<(typeof config)["collections"]["blogs"]>[] => {
+  return posts.slice().sort((postA, postB) => {
+    // Handle cases where publishDate is missing
+    if (!postA.publishDate) {
+      return 1; // Move posts without publishDate to the end
+    }
+    if (!postB.publishDate) {
+      return -1;
+    }
+
+    // Convert dates to comparable values
+    const dateA = new Date(postA.publishDate);
+    const dateB = new Date(postB.publishDate);
+
+    // Compare dates and return sort order
+    return dateB.getTime() - dateA.getTime();
+  });
+};
