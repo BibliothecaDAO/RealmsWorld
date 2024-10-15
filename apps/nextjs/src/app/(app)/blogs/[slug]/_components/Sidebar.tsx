@@ -33,7 +33,7 @@ export default async function RecentPosts({
             <>
               <BlogCard
                 horizontal
-                key={post.t}
+                key={post.title}
                 blog={post.entry}
                 slug={post.slug}
               />

@@ -39,7 +39,7 @@ const L2ERC721Table = ({
 }) => {
   const { isGrid } = useUIStore((state) => state);
   const grid =
-    "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5";
+    "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 p-3";
   const list = "grid grid-cols-1 w-full";
 
   const ref = useRef(null);
@@ -107,15 +107,17 @@ const L2ERC721Table = ({
     hasNextPage,
     isFetching,
   } = useSuspenseInfiniteQuery({
-    queryKey: ["erc721Tokens", contractAddress, ownerAddress, filters],
+    queryKey: ["erc721Tokens", contractAddress, ownerAddress, filters, buyNow],
     queryFn: async ({ pageParam }) => {
       return await getCollectionTokens({
         client: arkClient,
         collectionAddress: contractAddress,
         page: pageParam ?? 1,
-        ...filters,
+        buyNowOnly: buyNow,
+        filters,
       });
     },
+    initialPageParam: undefined as number | undefined,
     getNextPageParam: (lastPage) => lastPage.next_page,
   });
 

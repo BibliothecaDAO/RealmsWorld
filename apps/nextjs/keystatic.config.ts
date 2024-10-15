@@ -1,13 +1,20 @@
 import { collection, config, fields } from "@keystatic/core";
 import { env } from "env";
 
-export default config({
-  storage: {
-    kind: "github",
-    repo: `${env.NEXT_PUBLIC_GITHUB_REPO_OWNER}/${env.NEXT_PUBLIC_GITHUB_REPO_NAME}`,
-    pathPrefix: "apps/nextjs",
-  },
+function storage() {
+  if (env.NODE_ENV == "development") {
+    return { kind: "local" } as const;
+  } else {
+    return {
+      kind: "github",
+      repo: `${env.NEXT_PUBLIC_GITHUB_REPO_OWNER}/${env.NEXT_PUBLIC_GITHUB_REPO_NAME}`,
+      pathPrefix: "apps/nextjs",
+    } as const;
+  }
+}
 
+export default config({
+  storage: storage(),
   ui: {
     brand: { name: "Realms.World" },
   },
@@ -187,6 +194,44 @@ export default config({
             },
           },
         }),
+      },
+    }),
+    collections: collection({
+      label: "Collections",
+      slugField: "title",
+      path: "content/collections/*",
+      format: { contentField: "content" },
+      columns: ["title", "description"],
+      schema: {
+        title: fields.slug({
+          name: { label: "Title" },
+        }),
+        description: fields.text({ label: "Description" }),
+        content: fields.markdoc({ label: "Content" }),
+        links: fields.object(
+          {
+            homepage: fields.url({ label: "Website" }),
+            discord: fields.url({ label: "Discord" }),
+            twitter: fields.text({ label: "Twitter" }),
+            telegram: fields.url({ label: "Telegram" }),
+            github: fields.url({ label: "Github" }),
+          },
+          { label: "Links" },
+        ),
+        logo: fields.image({
+          label: "Logo",
+          directory: "public/content/studios",
+        }),
+        games: fields.array(
+          fields.relationship({
+            label: "Games",
+            collection: "games",
+          }),
+          {
+            label: "Games",
+            itemLabel: (props) => props.value,
+          },
+        ),
       },
     }),
   },

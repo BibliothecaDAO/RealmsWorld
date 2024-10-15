@@ -9,7 +9,7 @@ import LordsIcon from "@/icons/lords.svg";
 
 import type { RouterOutputs } from "@realms-world/api";
 import { Button } from "@realms-world/ui/components/ui/button";
-import { cn } from "@realms-world/utils";
+import { cn, formatNumber } from "@realms-world/utils";
 
 import { CardAction } from "./CardAction";
 import { useTokenListing } from "@/hooks/market/useTokenListing";
@@ -19,6 +19,7 @@ import Media from "@/app/_components/Media";
 import RealmResources from "./RealmResources";
 import { CollectionAddresses } from "@realms-world/constants";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { formatEther } from "viem";
 export const L2ERC721Card = ({
   token,
   layout = "grid",
@@ -121,9 +122,7 @@ const TokenAttributes = ({
   token,
   attributeKeys,
 }: {
-  token:
-    | CollectionToken
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token: CollectionToken;
   attributeKeys: string[];
 }) => {
   const metadata = useTokenMetadata(token);
@@ -149,53 +148,46 @@ const TokenAttributes = ({
 const GridDetails = ({
   token,
 }: {
-  token: CollectionToken;
+  token: CollectionToken | PortfolioToken;
   address?: string;
 }) => (
   <div className="flex h-full w-full flex-col justify-between p-3">
     <div className="flex justify-between pb-2">
       <span className="truncate">{token.metadata?.name ?? ""}</span>
+      <div className="flex justify-between font-sans">
+        <Price token={token} />
+        {/*token.last_price && (
+          <span className="flex text-bright-yellow/50">
+            {token.last_price}
+            <LordsIcon className="ml-2 h-4 w-4 self-center fill-current" />
+          </span>
+        )*/}
+      </div>
     </div>
     {token.metadata?.attributes &&
       token.collection_address ==
         CollectionAddresses.realms[SUPPORTED_L2_CHAIN_ID] && (
         <RealmResources traits={token.metadata?.attributes} />
       )}
-    <div className="flex justify-between font-sans">
-      {/*<Price token={token} />
-      {token.lastPrice && (
-        <span className="flex text-bright-yellow/50">
-          {token.lastPrice}
-          <LordsIcon className="ml-2 h-4 w-4 self-center fill-current" />
-        </span>
-      )}*/}
-    </div>
   </div>
 );
 
-const Price = ({
-  token,
-}: {
-  token: RouterOutputs["erc721Tokens"]["all"]["items"][number] & {
-    listings: RouterOutputs["erc721MarketEvents"]["all"]["items"];
-  };
-}) => {
+const Price = ({ token }: { token: CollectionToken | PortfolioToken }) => {
   const { lordsPrice } = useLordsPrice();
-  const listing = useTokenListing(token);
-  if (undefined === listing || null === listing) return null;
 
   return (
     <div className="flex justify-between">
-      {token.price && listing.price && (
+      {token.price && (
         <div>
           <div className="flex text-lg">
-            {listing.price}
+            {formatEther(BigInt(token.price))}
             <LordsIcon className="mx-auto ml-2 h-4 w-4 self-center fill-bright-yellow" />
           </div>
           <div className="-mt-0.5 text-xs text-bright-yellow/60">
-            {((lordsPrice?.usdPrice ?? 0) * parseFloat(listing.price)).toFixed(
-              2,
-            )}{" "}
+            {(
+              (lordsPrice?.usdPrice ?? 0) *
+              parseFloat(formatEther(BigInt(token.price)))
+            ).toFixed(2)}{" "}
             USD
           </div>
         </div>

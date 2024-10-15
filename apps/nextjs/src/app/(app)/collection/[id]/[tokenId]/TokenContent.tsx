@@ -5,11 +5,16 @@ import type { paths } from "@reservoir0x/reservoir-sdk";
 import { BuyButton } from "@/app/(app)/collection/reservoir/BuyModal";
 import { ListingModal } from "@/app/(app)/collection/reservoir/ListingModal";
 import { GameCard } from "@/app/(app)/games/GameCard";
-import { getGamesByContract } from "@/utils/getters";
+//import { getGamesByContract } from "@/utils/getters";
 import { useAccount } from "wagmi";
 
-import { games } from "@realms-world/constants";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@realms-world/ui/components/ui/tabs";
+//import { games } from "@realms-world/constants";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@realms-world/ui/components/ui/tabs";
 
 import { TokenActivity } from "./TokenActivity";
 
@@ -26,9 +31,9 @@ interface Props {
 export const TokenContent = ({ token, collection }: Props) => {
   const { address } = useAccount();
 
-  const comptatible_games = collection.id
+  /*const comptatible_games = collection.id
     ? getGamesByContract(games, collection.id)
-    : undefined;
+    : undefined;*/
 
   const owner = address
     ? token?.owner?.toUpperCase() === address.toUpperCase()
@@ -47,9 +52,9 @@ export const TokenContent = ({ token, collection }: Props) => {
       name: "Games",
       content: (
         <div className="grid gap-4 sm:grid-cols-2">
-          {comptatible_games?.map((game, index) => {
+          {/*comptatible_games?.map((game, index) => {
             return <GameCard key={index} game={game} />;
-          })}
+          })*/}
         </div>
       ),
     },

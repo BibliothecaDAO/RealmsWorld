@@ -74,15 +74,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </Breadcrumb>
         <div className="my-12 text-left">
           <h1 className="text-4xl font-bold">{blog?.title}</h1>
-          <p className="mt-2 text-xl">{blog?.subtitle}</p>
-          <div className="mt-8 text-xl font-bold">
-            <span>Posted on </span>
+          <div className="mt-4 font-sans text-xl font-bold text-muted">
             <time dateTime={blog?.publishDate || ""}>
               {new Date(blog?.publishDate || "").toLocaleDateString()}
             </time>
             <span> by </span>
             <span>{blog?.author}</span>
           </div>
+          <p className="mt-2 text-xl">{blog?.subtitle}</p>
         </div>
         <Image
           alt={blog?.title}

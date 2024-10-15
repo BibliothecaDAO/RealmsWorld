@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <div className="flex-grow pt-4">
       <CollectionSummary collectionId={params.id} />
-      <div className="mb-3 flex gap-4 overflow-x-auto border-b py-1">
+      <div className="flex gap-4 overflow-x-auto border-b py-1">
         {tabs.map((tab) => (
           <NavLink
             key={tab.name}
@@ -50,7 +50,7 @@ export default function RootLayout({
           </NavLink>
         ))}
       </div>
-      <div className="p-2">{children}</div>
+      {children}
     </div>
   );
 }
