@@ -91,7 +91,7 @@ export default function CollectionFilters({
   const showTraitsSection = data && Object.keys(data).length > 0;
 
   return (
-    <ScrollArea className="!sticky top-[var(--site-header-height)] z-10 hidden h-[calc(100vh-var(--site-header-height)-var(--site-footer-height))] w-64 flex-shrink-0 border-r border-border lg:block">
+    <ScrollArea className="!sticky top-[var(--site-header-height)] z-10 hidden h-[calc(100vh-var(--site-header-height)-var(--site-footer-height))] w-72 flex-shrink-0 border-r border-border lg:block">
       <CollectionFiltersContent buyNow={buyNow} setBuyNow={setBuyNow} />
       {showTraitsSection && (
         <div className="">

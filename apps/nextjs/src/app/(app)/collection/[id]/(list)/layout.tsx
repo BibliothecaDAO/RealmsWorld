@@ -17,7 +17,7 @@ export default function RootLayout({
     params.id == (Collections.GOLDEN_TOKEN as string);
   const tabs = [
     {
-      name: "Trade",
+      name: "Items",
       link: "",
     },
   ];
@@ -36,24 +36,21 @@ export default function RootLayout({
   );*/
 
   return (
-    <div className=" w-full pt-24 sm:pl-32 sm:pt-24">
-      <div className="flex-grow">
-        <CollectionSummary collectionId={params.id} />
-        <div className="mb-3 flex gap-4 overflow-x-auto border-b py-1  ">
-          {tabs.map((tab) => (
-            <NavLink
-              key={tab.name}
-              variant={"link"}
-              size={"sm"}
-              exact
-              href={`/collection/${params.id}${tab.link && "/" + tab.link}`}
-            >
-              {tab.name}
-            </NavLink>
-          ))}
-        </div>
-        <div className="p-2 ">{children}</div>
+    <div className="flex-grow pt-4">
+      <CollectionSummary collectionId={params.id} />
+      <div className="mb-3 flex gap-4 overflow-x-auto border-b py-1">
+        {tabs.map((tab) => (
+          <NavLink
+            key={tab.name}
+            variant={"link"}
+            exact
+            href={`/collection/${params.id}${tab.link && "/" + tab.link}`}
+          >
+            {tab.name}
+          </NavLink>
+        ))}
       </div>
+      <div className="p-2">{children}</div>
     </div>
   );
 }

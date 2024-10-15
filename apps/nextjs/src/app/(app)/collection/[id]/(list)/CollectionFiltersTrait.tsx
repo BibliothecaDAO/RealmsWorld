@@ -62,7 +62,7 @@ function CollectionFiltersTrait({
             <label
               key={`${name}-${key}`}
               htmlFor={`${name}-${key}`}
-              className="flex cursor-pointer justify-between rounded p-2 leading-none transition-all hover:bg-muted"
+              className="flex cursor-pointer items-center justify-between rounded p-2 leading-none transition-all hover:bg-muted"
             >
               <div className="flex items-center gap-2">
                 <Checkbox
@@ -70,9 +70,11 @@ function CollectionFiltersTrait({
                   checked={!!selectedTraits[name]?.includes(key)}
                   onClick={() => onChange(name, key)}
                 />
-                <div className="max-w-40 truncate leading-tight">{key}</div>
+                <div className="max-w-[11.4rem] truncate text-sm leading-tight">
+                  {key}
+                </div>
               </div>
-              <div className="text-muted-foreground">{trait[key]}</div>
+              <div className="text-xs text-muted-foreground">{trait[key]}</div>
             </label>
           ))}
         </div>
