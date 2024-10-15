@@ -14,6 +14,10 @@ export interface Collection {
   volume_7d_eth: number;
 }
 
+export type CollectionTrait = Record<string, number>;
+
+export type CollectionTraits = Record<string, CollectionTrait>;
+
 export interface TokenMetadataAttribute {
   display_type?: string;
   trait_type?: string;
@@ -206,3 +210,6 @@ export interface Token {
   token_id: string;
 }
 
+export interface Filters {
+  traits: Record<string, string[]>;
+}

@@ -115,6 +115,12 @@ export interface RealmsL2CollectionInfo {
 }
 export const REALMS_L2_COLLECTIONS: RealmsL2CollectionInfo[] = [
   {
+    name: "Realms",
+    link: "realms",
+    image: "/collections/realms.svg",
+    addresses: CollectionAddresses[Collections.REALMS],
+  },
+  {
     name: "Beasts",
     link: "beasts",
     image: "/collections/beasts.svg",

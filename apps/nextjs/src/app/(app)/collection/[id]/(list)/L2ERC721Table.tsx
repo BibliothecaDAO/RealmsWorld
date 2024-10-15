@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { NftActions } from "@/app/(app)/account/assets/NftActions";
@@ -18,6 +18,9 @@ import { TokenCardSkeleton } from "../../TokenCardSkeleton";
 import { L2ERC721Card } from "./L2ERC721Card";
 import { useArkClient } from "@/lib/ark/useArkClient";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { parseAsBoolean, parseAsJson, useQueryState } from "nuqs";
+import { Filters } from "@/types/ark";
+import CollectionFilters from "./CollectionFilters";
 
 const L2ERC721Table = ({
   contractAddress,
@@ -43,25 +46,56 @@ const L2ERC721Table = ({
 
   const searchParams = useSearchParams();
 
+  const [filtersPanelOpen, setFiltersPanelOpen] = useState(true);
+  const [filtersDialogOpen, setFiltersDialogOpen] = useState(false);
+
   const sortDirection = searchParams.get("sortDirection");
   const sortBy = searchParams.get("sortBy");
-  const buyNowOnly = searchParams.get("Status");
+  const [buyNow, setBuyNow] = useQueryState(
+    "buy_now",
+    parseAsBoolean.withDefault(false),
+  );
+  const [filters, setFilters] = useQueryState<Filters>(
+    "filters",
+    parseAsJson<Filters>().withDefault({
+      traits: {},
+    }),
+  );
 
-  const attributesObject: Record<string, string> = {};
-  for (const [key, value] of searchParams.entries()) {
-    attributesObject[key] = value;
-  }
-  const attributeFilter = cleanQuery(attributesObject);
+  const toggleFiltersPanel = () => setFiltersPanelOpen((open) => !open);
 
-  const filters: RouterInputs["erc721Tokens"]["all"] = {
-    limit,
-    contractAddress,
-    attributeFilter: attributeFilter,
-    sortDirection: sortDirection,
-    orderBy: sortBy,
-    buyNowOnly: buyNowOnly == "Buy Now Only",
+  const handlerFiltersChange = async (newFilters: Filters) => {
+    await setFilters(newFilters);
   };
 
+  const resetFiltersTraits = async () => {
+    await setFilters({
+      ...filters,
+      traits: {},
+    });
+  };
+
+  const removeFiltersTraits = async (key: string, value: string) => {
+    const newTraits = { ...filters.traits };
+    const values = newTraits[key] ?? [];
+    const newValues = values.filter((v) => v !== value);
+
+    if (newValues.length === 0) {
+      delete newTraits[key];
+    } else {
+      newTraits[key] = newValues;
+    }
+
+    await setFilters({
+      ...filters,
+      traits: newTraits,
+    });
+  };
+
+  const filtersCount = Object.values(filters.traits).reduce(
+    (acc, traitValues) => acc + traitValues.length,
+    0,
+  );
   if (ownerAddress) {
     filters.owner = ownerAddress;
   }
@@ -106,6 +140,16 @@ const L2ERC721Table = ({
 
   return (
     <>
+      <Suspense>
+        <CollectionFilters
+          collectionAddress={contractAddress}
+          filters={filters}
+          onFiltersChange={handlerFiltersChange}
+          isOpen={filtersPanelOpen}
+          buyNow={buyNow}
+          setBuyNow={setBuyNow}
+        />
+      </Suspense>
       {selectable && (
         <NftActions
           selectedTokenIds={selectedTokenIds}

@@ -16,6 +16,7 @@ import { useTokenListing } from "@/hooks/market/useTokenListing";
 import { useTokenMetadata } from "@/hooks/market/useTokenMetadata";
 import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 import Media from "@/app/_components/Media";
+import RealmResources from "./RealmResources";
 export const L2ERC721Card = ({
   token,
   layout = "grid",
@@ -153,7 +154,7 @@ const GridDetails = ({
     <div className="flex justify-between pb-2">
       <span className="truncate">{token.metadata?.name ?? ""}</span>
     </div>
-
+    <RealmResources traits={token.metadata?.attributes} />
     <div className="flex justify-between font-sans">
       {/*<Price token={token} />
       {token.lastPrice && (

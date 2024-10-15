@@ -14,6 +14,7 @@ import {
 import { L1ERC721Table } from "./L1ERC721Table";
 import L2ERC721Table from "./L2ERC721Table";
 import { TradeLayout } from "./Trade";
+import CollectionFilters from "./CollectionFilters";
 
 //export const runtime = "edge";
 
@@ -46,7 +47,8 @@ export default function Page({
 }) {
   const tokenAddresses = getCollectionAddresses(params.id);
 
-  if (!tokenAddresses) {
+  const l2TokenAddress = tokenAddresses?.[SUPPORTED_L2_CHAIN_ID];
+  if (!l2TokenAddress) {
     return <div>Collection Not Found</div>;
   }
   /* isSepoliaGoldenToken =
@@ -56,7 +58,7 @@ export default function Page({
   if (isSepoliaGoldenToken) {
     return <Mint contractId={params.id} />;
   }*/
-  if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
+  /* if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
     const l2TokenAddress = tokenAddresses[SUPPORTED_L2_CHAIN_ID];
     if (typeof l2TokenAddress === "string") {
       return <L2TokenData tokenAddress={l2TokenAddress} />;
@@ -72,7 +74,13 @@ export default function Page({
         />
       );
     }
-  }
+  }*/
+
+  return (
+    <div className="flex">
+      <L2ERC721Table contractAddress={l2TokenAddress} />
+    </div>
+  );
 }
 
 const L2TokenData = ({ tokenAddress }: { tokenAddress: string }) => {
