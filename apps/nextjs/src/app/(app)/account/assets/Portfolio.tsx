@@ -85,7 +85,6 @@ export const Portfolio = ({
   const viewRef = useRef(null);
   const isInView = useInView(viewRef);
   useEffect(() => {
-    console.log(isInView);
     if (isInView && !isFetchingNextPage) fetchNextPage();
   }, [isInView, fetchNextPage]);
   const {

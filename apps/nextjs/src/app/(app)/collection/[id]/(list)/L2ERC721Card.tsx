@@ -128,7 +128,7 @@ const TokenAttributes = ({
   const metadata = useTokenMetadata(token);
   if (!metadata?.attributes) return null;
 
-  <table className="min-w-full bg-black font-sans text-xs">
+  <table className="h-full min-w-full bg-black font-sans text-xs">
     <tbody>
       {attributeKeys.map((key: string) => {
         const attribute = metadata.attributes.find(
@@ -164,11 +164,13 @@ const GridDetails = ({
         )*/}
       </div>
     </div>
-    {token.metadata?.attributes &&
-      token.collection_address ==
-        CollectionAddresses.realms[SUPPORTED_L2_CHAIN_ID] && (
-        <RealmResources traits={token.metadata?.attributes} />
-      )}
+    <div className="h-[48px]">
+      {token.metadata?.attributes &&
+        token.collection_address ==
+          CollectionAddresses.realms[SUPPORTED_L2_CHAIN_ID] && (
+          <RealmResources traits={token.metadata?.attributes} />
+        )}
+    </div>
   </div>
 );
 
