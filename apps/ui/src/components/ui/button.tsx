@@ -9,7 +9,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@realms-world/utils";
 
 const buttonVariants = cva(
-  "inline-flex whitespace-nowrap active:scale-95 inline-flex rounded items-center justify-center transition-colors  disabled:opacity-50 disabled:pointer-events-none uppercase font-sans focus-visible:ring-1 focus-visible:ring-ring",
+  "inline-flex whitespace-nowrap active:scale-95 inline-flex rounded items-center justify-center transition-colors  disabled:opacity-50 disabled:pointer-events-none uppercase font-sans focus-visible:ring-1 focus-visible:ring-ring gap-2 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {

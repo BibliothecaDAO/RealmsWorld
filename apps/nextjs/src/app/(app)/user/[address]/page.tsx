@@ -4,8 +4,7 @@ import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { isStarknetAddress } from "@/utils/utils";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
-
-import UserTokenGrid from "./UserTokenGrid";
+import { Portfolio } from "../../account/assets/Portfolio";
 
 export function generateMetadata({
   params,
@@ -25,14 +24,15 @@ export default function Page({ params }: { params: { address: string } }) {
 
   if (isStarknetAddress(params.address) && address) {
     return (
-      <L2ERC721Table contractAddress={address} ownerAddress={params.address} />
+      <>
+        <Portfolio walletAddress={params.address} />
+      </>
     );
   }
 
   return (
     <div className="w-full">
-      <span>{isStarknetAddress(params.address)}</span>
-      <UserTokenGrid address={params.address} continuation="" />
+      <span className="text-3xl">Only Starknet Addresses supported</span>
     </div>
   );
 }

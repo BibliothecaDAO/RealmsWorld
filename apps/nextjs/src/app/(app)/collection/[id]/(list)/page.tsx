@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getToken } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/server";
@@ -14,7 +14,6 @@ import {
 import { L1ERC721Table } from "./L1ERC721Table";
 import L2ERC721Table from "./L2ERC721Table";
 import { TradeLayout } from "./Trade";
-import CollectionFilters from "./CollectionFilters";
 
 //export const runtime = "edge";
 
@@ -76,11 +75,7 @@ export default function Page({
     }
   }*/
 
-  return (
-    <div className="flex">
-      <L2ERC721Table contractAddress={l2TokenAddress} />
-    </div>
-  );
+  return <L2ERC721Table contractAddress={l2TokenAddress} />;
 }
 
 const L2TokenData = ({ tokenAddress }: { tokenAddress: string }) => {

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { CheckIcon, ClipboardIcon } from "lucide-react";
 
-import { Button } from "@realms-world/ui/components/ui/button";
+import { Button, ButtonProps } from "@realms-world/ui/components/ui/button";
 import {
   Tooltip,
   TooltipContent,

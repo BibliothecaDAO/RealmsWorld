@@ -21,7 +21,6 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.string().url(),
-    INNGEST_EVENT_KEY: z.string().optional(),
   },
 
   /**

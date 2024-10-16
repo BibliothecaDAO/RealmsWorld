@@ -141,7 +141,7 @@ const L2ERC721Table = ({
   }
 
   return (
-    <>
+    <div className="flex">
       <Suspense>
         <CollectionFilters
           collectionAddress={contractAddress}
@@ -218,7 +218,7 @@ const L2ERC721Table = ({
           ))}
       </div>
       {infiniteScroll && <div className="col-span-12 mt-6" ref={ref} />}
-    </>
+    </div>
   );
 };
 export default L2ERC721Table;
