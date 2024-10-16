@@ -7,6 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@realms-world/ui/components/ui/tooltip"; // Assuming you're using a tooltip library
+import { Button } from "@realms-world/ui/components/ui/button";
 
 export default function RealmResources({
   traits,
@@ -32,12 +33,14 @@ export default function RealmResources({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <button
+                <Button
+                  variant={"outline"}
+                  size={"xs"}
+                  className="px-2 pt-1"
                   //onClick={() => setShowMore(!showMore)}
-                  className="text-sm underline"
                 >
                   {`+(${hiddenCount})`}
-                </button>
+                </Button>
               </TooltipTrigger>
 
               <TooltipContent

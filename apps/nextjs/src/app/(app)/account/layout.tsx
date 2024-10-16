@@ -36,7 +36,7 @@ export default function RootLayout({
           <AppSidebar />
           <SidebarTrigger
             className={cn(
-              "fixed z-30 ml-3 mt-5 h-8 w-8 border sm:top-1.5 sm:z-50",
+              "fixed top-24 z-30 ml-3 h-8 w-8 border sm:left-[98px] sm:top-5 sm:z-50",
             )}
           />
           <div className="flex flex-1 flex-col transition-all duration-300 ease-in-out">
