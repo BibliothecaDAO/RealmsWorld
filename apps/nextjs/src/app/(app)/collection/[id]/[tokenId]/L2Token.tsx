@@ -105,7 +105,7 @@ export const L2Token = ({
           ) : (
             "Not listed"
           )}{" "}
-          {erc721Token.owner == padAddress(address) ? (
+          {/*erc721Token.owner == padAddress(address) ? (
             <TokenOwnerActions token={token} />
           ) : (
             <div>
@@ -122,7 +122,7 @@ export const L2Token = ({
                 />
               )}
             </div>
-          )}
+          )*/}
         </div>
       </div>
       <Accordion

@@ -23,11 +23,14 @@ export const ListingCard = ({ listing, token }: ActivityCardProps) => {
   const getLocalizedDate = useMemo(() => {
     return expiryDiff.toLocaleString();
   }, [expiryDiff]);
-  const price = useTokenPrice(listing.listing.start_amount, listing.listing.currency_address);
+  const price = useTokenPrice(
+    listing.listing.start_amount,
+    listing.listing.currency_address,
+  );
 
   return (
-    <div className=" flex w-full flex-wrap border-b p-2">
-      <div className="flex w-1/2 self-center font-semibold sm:w-2/12 ">
+    <div className="flex w-full flex-wrap border-b p-2">
+      <div className="flex w-1/2 self-center font-semibold sm:w-2/12">
         <div className="flex items-center self-center">
           {price}
           <LordsIcon className="ml-2 h-5 w-5 fill-current" />
@@ -55,7 +58,7 @@ export const ListingCard = ({ listing, token }: ActivityCardProps) => {
         </div>
       </div>
       <div className="mt-2 flex w-1/2 justify-end sm:mt-0 sm:flex-grow">
-        {token && (
+        {/*token && (
           <BuyModal
             trigger={
               <Button variant={"outline"} size={"lg"}>
@@ -67,7 +70,7 @@ export const ListingCard = ({ listing, token }: ActivityCardProps) => {
             //collectionId={activity.collection_id}
             orderId={0}
           />
-        )}
+        )*/}
       </div>
     </div>
   );

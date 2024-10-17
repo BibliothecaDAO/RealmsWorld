@@ -112,7 +112,7 @@ const Sidebar = () => {
                   {menu.map((item, index) => {
                     return (
                       <Button
-                        className="group flex w-full justify-normal px-2 text-lg font-semibold normal-case transition-all duration-200"
+                        className="group flex w-full justify-normal px-2 text-lg font-semibold normal-case transition-all duration-200 [&_svg]:size-6"
                         key={index}
                         variant={"outline"}
                         onClick={() => {
