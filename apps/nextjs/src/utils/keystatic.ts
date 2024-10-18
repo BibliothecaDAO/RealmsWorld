@@ -1,12 +1,12 @@
 import path from "path";
 import type { Entry } from "@keystatic/core/reader";
-import { createGitHubReader } from "@keystatic/core/reader/github";
-import { createReader } from "@keystatic/core/reader";
 import { cache } from "react";
 import { cookies, draftMode } from "next/headers";
-
-import config from "../../keystatic.config";
+import { createReader } from "@keystatic/core/reader";
+import { createGitHubReader } from "@keystatic/core/reader/github";
 import { env } from "env";
+
+import type config from "../../keystatic.config";
 
 path.join(process.cwd(), "content");
 
@@ -23,9 +23,8 @@ export const reader = cache(() => {
     if (branch) {
       return createGitHubReader(config, {
         // Replace the below with your repo org an name
-        repo: `${env.NEXT_PUBLIC_GITHUB_REPO_OWNER}/${env.NEXT_PUBLIC_GITHUB_REPO_NAME}`,
+        repo: "REPO_ORG/REPO_NAME",
         ref: branch,
-        pathPrefix: "apps/nextjs",
         // Assuming an existing GitHub app
         token: cookies().get("keystatic-gh-access-token")?.value,
       });

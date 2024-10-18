@@ -1,8 +1,7 @@
 import * as React from "react";
+import { cn } from "@realms-world/utils";
 import { cva } from "class-variance-authority";
 import { CheckIcon, Loader2, X } from "lucide-react";
-
-import { cn } from "@realms-world/utils";
 
 import type { IconType } from "./types";
 import { useStepper } from "./use-stepper";

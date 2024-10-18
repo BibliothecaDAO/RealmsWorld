@@ -1,5 +1,30 @@
 "use client";
 
+import LordsIcon from "@/icons/lords.svg";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@realms-world/ui/components/ui/collapsible";
+/*import { NavProjects } from "./nav-projects"
+import { NavSecondary } from "./nav-secondary"
+import { NavUser } from "./nav-user"
+import { StorageCard } from "./storage-card"
+import { TeamSwitcher } from "./team-switcher"*/
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+} from "@realms-world/ui/components/ui/sidebar";
 import {
   Atom,
   Bird,
@@ -14,30 +39,16 @@ import {
   Map,
   PieChart,
   Rabbit,
-  UserRoundPen,
   Settings2,
   SquareTerminal,
   Star,
   Turtle,
+  UserRoundPen,
 } from "lucide-react";
-import LordsIcon from "@/icons/lords.svg";
 
-/*import { NavProjects } from "./nav-projects"
-import { NavSecondary } from "./nav-secondary"
-import { NavUser } from "./nav-user"
-import { StorageCard } from "./storage-card"
-import { TeamSwitcher } from "./team-switcher"*/
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarItem,
-  SidebarLabel,
-} from "@realms-world/ui/components/ui/sidebar";
 import { NavMain } from "./NavMain";
-import { NavUser } from "./NavUser";
 import { NavSecondary } from "./NavSecondary";
+import { NavUser } from "./NavUser";
 
 export enum Layer {
   "Ethereum",
@@ -209,20 +220,43 @@ export function AppSidebar() {
         {/*<TeamSwitcher teams={data.teams} />*/}
       </SidebarHeader>
       <SidebarContent>
-        <SidebarItem className="py-1">
-          <NavMain items={data.navMain} searchResults={data.searchResults} />
-        </SidebarItem>
-        {/*<SidebarItem className="mt-6">
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <Collapsible defaultOpen className="group/collapsible">
+                {data.navMain.map((navItem) => (
+                  <SidebarMenuItem key={navItem.title}>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton asChild>
+                        <a href={navItem.url}>
+                          <navItem.icon />
+                          <span>{navItem.title}</span>
+                        </a>
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        <SidebarMenuSubItem />
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                ))}
+              </Collapsible>
+
+              {/*<SidebarItem className="mt-6">
             <SidebarLabel>Projects</SidebarLabel>
             <NavProjects projects={data.projects} />
           </SidebarItem>*/}
-        {/*<SidebarItem className="mt-10">
+              {/*<SidebarItem className="mt-10">
           <SidebarLabel className="text-base">Help</SidebarLabel>
           <NavSecondary items={data.navSecondary} />
         </SidebarItem>
         {/*<SidebarItem>
                         <StorageCard />
                     </SidebarItem>*/}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

@@ -2,9 +2,8 @@
 
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { Check, ChevronDown } from "lucide-react";
-
 import { cn } from "@realms-world/utils";
+import { Check, ChevronDown } from "lucide-react";
 
 const Select = SelectPrimitive.Root;
 
@@ -38,7 +37,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "animate-in fade-in-80 relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-background text-bright-yellow shadow-md",
+        "relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-background text-bright-yellow shadow-md animate-in fade-in-80",
         className,
       )}
       {...props}

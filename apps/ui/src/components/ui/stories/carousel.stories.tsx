@@ -1,6 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-
 import type { Game } from "@realms-world/constants";
+import type { Meta, StoryObj } from "@storybook/react";
 import { games } from "@realms-world/constants";
 
 import { Carousel } from "../carousel";

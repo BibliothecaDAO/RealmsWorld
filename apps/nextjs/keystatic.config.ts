@@ -160,7 +160,7 @@ export default config({
           }),
           {
             label: "Games",
-            itemLabel: (props) => props.value,
+            itemLabel: (props) => props.value ?? "",
           },
         ),
       },

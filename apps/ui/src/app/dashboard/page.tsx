@@ -1,11 +1,11 @@
-import { AppSidebar } from "@realms-world/ui/components/app-sidebar"
+import { AppSidebar } from "@realms-world/ui/components/app-sidebar";
 import {
   SidebarLayout,
   SidebarTrigger,
-} from "@realms-world/ui/components/ui/sidebar"
+} from "@realms-world/ui/components/ui/sidebar";
 
 export default async function Page() {
-  const { cookies } = await import("next/headers")
+  const { cookies } = await import("next/headers");
   return (
     <SidebarLayout
       defaultOpen={cookies().get("sidebar:state")?.value === "true"}
@@ -17,5 +17,5 @@ export default async function Page() {
         </div>
       </main>
     </SidebarLayout>
-  )
+  );
 }

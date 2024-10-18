@@ -1,6 +1,5 @@
-import { cva } from "class-variance-authority";
-
 import { cn } from "@realms-world/utils";
+import { cva } from "class-variance-authority";
 
 import { useStepper } from "./use-stepper";
 

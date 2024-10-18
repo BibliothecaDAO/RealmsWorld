@@ -40,7 +40,7 @@ export const TokenInformation = ({
 }) => {
   return (
     <>
-      <div className="mt-8 flex w-full flex-none flex-col sm:mt-16 md:w-1/3">
+      <div className="flex w-full flex-none flex-col md:w-1/3">
         {image ? (
           <Media
             mediaKey={imageMediaKey}
@@ -93,26 +93,25 @@ export const TokenInformation = ({
           ""
         )}
       </div>
-      <div className="my-1 mt-16 w-full px-4 md:w-2/3 md:px-4">
-        <div className="mb-8 flex justify-between">
-          <Button size={"sm"} variant={"default"} asChild>
-            <Link href={`/collection/${collectionId}`}>
-              <ArrowLeft className="mr-2 w-4 self-center" />{" "}
-              <span className="self-center">
-                {
-                  CollectionDetails[
-                    collectionId as keyof typeof CollectionDetails
-                  ].displayName
-                }
-              </span>
-            </Link>
-          </Button>
+      <div className="my-1 w-full px-4 md:w-2/3 md:px-4">
+        <div className="flex justify-between">
+          <Link
+            className="font-sans text-lg tracking-wider"
+            href={`/collection/${collectionId}`}
+          >
+            {
+              CollectionDetails[collectionId as keyof typeof CollectionDetails]
+                .displayName
+            }
+          </Link>
           <div className="flex space-x-4 text-lg">
             <span>#{tokenId}</span>
           </div>
         </div>
 
-        <h1 className="mb-8">{decodeURIComponent(name ?? "")}</h1>
+        <h1 className="mb-8 font-sans-serif text-5xl">
+          {decodeURIComponent(name ?? "")}
+        </h1>
         {owner && (
           <div className="flex space-x-6 text-lg">
             <div className="self-center">Owner </div>

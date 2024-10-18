@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import type { ReactElement } from "react";
+import clsx from "clsx";
 
 type Props = {
   isLabor?: boolean;

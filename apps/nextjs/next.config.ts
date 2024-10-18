@@ -1,14 +1,16 @@
 import { fileURLToPath } from "url";
 import MillionLint from "@million/lint";
 import createMDX from "@next/mdx";
-import createJiti from "jiti";
-
-// Import env files to validate at build time. Use jiti so we can load .ts files in here.
-createJiti(fileURLToPath(import.meta.url))("./env");
+import { createJiti } from "jiti";
+import type { NextConfig } from 'next'
+import {env} from 'env'
+/*// Import env files to validate at build time. Use jiti so we can load .ts files in here.
+await createJiti(fileURLToPath(import.meta.url)).import("./env");*/
 
 /** @type {import("next").NextConfig} */
 
-const config = {
+const nextConfig: NextConfig = {
+
   reactStrictMode: true,
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
@@ -113,8 +115,8 @@ const withMDX = createMDX({
 });
 
 const enhancedConfig =
-  !process.env.NODE_ENV === "production"
-    ? MillionLint.next({ rsc: true, auto: { rsc: true } })(withMDX(config))
-    : withMDX(config);
+  !(env.NODE_ENV === "production")
+    ? MillionLint.next({ rsc: true, auto: { rsc: true } })(withMDX(nextConfig))
+    : withMDX(nextConfig);
 
-export default enhancedConfig;
+export default withMDX(nextConfig);

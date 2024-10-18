@@ -6,14 +6,13 @@ import type {
 import { cookies } from "next/headers";
 import { skipCSRFCheck } from "@auth/core";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { db } from "@realms-world/db/client";
+import { Account, Session, User } from "@realms-world/db/schema";
 import CredentialsProvider from "next-auth/providers/credentials";
 //import { getCsrfToken } from "next-auth/react";
 //import Discord from "next-auth/providers/discord";
 import { SiwsTypedData } from "siws";
 import { constants, RpcProvider } from "starknet";
-
-import { db } from "@realms-world/db/client";
-import { Account, Session, User } from "@realms-world/db/schema";
 
 import { env } from "../env";
 
@@ -74,7 +73,7 @@ export const authConfig = {
           const mainProvider = new RpcProvider({
             nodeUrl: "https://starknet-mainnet.public.blastapi.io",
           });
-          const csrf = cookies()
+          const csrf = (await cookies())
             .get("next-auth.csrf-token")
             ?.value.split("|")[0];
           let starknetProvider = sepoliaProvider;

@@ -1,10 +1,9 @@
 import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
+import { cn } from "@realms-world/utils";
 import { cva } from "class-variance-authority";
 import { Loader } from "lucide-react";
-
-import { cn } from "@realms-world/utils";
 
 const iconButtonVariants = cva(
   cn(
