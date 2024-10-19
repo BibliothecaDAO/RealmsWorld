@@ -8,7 +8,8 @@ import { getCollectionAddresses } from "@realms-world/constants";
 import { OwnerDistribution } from "./OwnerDistribution";
 import { TopOwners } from "./TopOwners";
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const tokenAddresses = getCollectionAddresses(params.id);
   if (!tokenAddresses?.[SUPPORTED_L1_CHAIN_ID]) {
     return <h3 className="mt-8 text-center">Coming Soon</h3>;

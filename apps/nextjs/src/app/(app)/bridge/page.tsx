@@ -10,11 +10,17 @@ export const metadata: Metadata = {
   description: "...",
 };
 
-export default function Page({
-  searchParams: { action = "deposit" },
-}: {
-  searchParams: { action?: string };
-}) {
+export default async function Page(
+  props: {
+    searchParams: Promise<{ action?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+
+  const {
+    action = "deposit"
+  } = searchParams;
+
   const tabs = [
     {
       name: "Deposit",

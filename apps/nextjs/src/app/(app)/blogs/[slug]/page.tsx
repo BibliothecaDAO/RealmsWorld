@@ -13,11 +13,12 @@ import React from "react";
 import Markdoc from "@markdoc/markdoc";
 import { reader } from "@/utils/keystatic";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   let blog = await reader().collections.blogs.read(params.slug);
 
   return {
@@ -45,7 +46,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const blog = await reader().collections.blogs.read(params.slug);
   if (!blog) {
     return <div>No Blog Found</div>;

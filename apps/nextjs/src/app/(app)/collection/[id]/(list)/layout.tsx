@@ -5,13 +5,18 @@ import { env } from "env";
 import { Collections } from "@realms-world/constants";
 import { NavLink } from "@realms-world/ui/components/ui/nav-link";
 
-export default function RootLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { id: string };
-}) {
+export default async function RootLayout(
+  props: {
+    children: React.ReactNode;
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const isMintable =
     env.NEXT_PUBLIC_IS_TESTNET == "true" &&
     params.id == (Collections.GOLDEN_TOKEN as string);

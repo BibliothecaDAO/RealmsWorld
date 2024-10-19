@@ -7,11 +7,12 @@ import Markdoc from "@markdoc/markdoc";
 import { Button } from "@realms-world/ui/components/ui/button";
 import { reader } from "@/utils/keystatic";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   let event = await reader().collections.events.read(params.slug);
   return {
     title: `${event?.name}`,
@@ -19,7 +20,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const event = await reader().collections.events.read(params.slug);
   if (!event) {
     return <div>No Event Found</div>;

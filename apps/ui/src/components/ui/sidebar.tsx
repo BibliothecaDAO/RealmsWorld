@@ -17,7 +17,7 @@ import {
 import { useIsMobile } from "@realms-world/ui/hooks/use-mobile";
 import { cn } from "@realms-world/utils";
 import { cva } from "class-variance-authority";
-import { PanelLeft } from "lucide-react";
+import { PanelLeft, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -270,7 +270,7 @@ const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
   React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, open } = useSidebar();
 
   return (
     <Button
@@ -285,7 +285,7 @@ const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      <PanelLeft />
+      {open ? <PanelLeftClose /> : <PanelLeftOpen />}
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );

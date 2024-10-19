@@ -19,16 +19,17 @@ async function getData({ id }: { id: string }) {
   };
 }
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const { article } = await getData({ id: params.slug });
 
   return {
@@ -56,7 +57,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function Article({ params: { slug } }: ArticlePageProps) {
+export default async function Article(props: ArticlePageProps) {
+  const params = await props.params;
+
+  const {
+    slug
+  } = params;
+
   const { article } = await getData({ id: slug });
 
   return (

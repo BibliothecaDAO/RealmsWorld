@@ -17,11 +17,18 @@ import { TokenInformation } from "./TokenInformation";
 import { marketPlaceClientBuilder } from "@/lib/ark/client";
 import { getToken } from "@/lib/ark/getToken";
 
-export function generateMetadata({
-  params: { tokenId, id },
-}: {
-  params: { id: string; tokenId: string };
-}): Metadata {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ id: string; tokenId: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    tokenId,
+    id
+  } = params;
+
   const collection = CollectionDetails[id as Collections].displayName;
   return {
     title: `${collection} #${tokenId}`,
@@ -35,11 +42,12 @@ export function generateMetadata({
   };
 }
 
-export default function Page({
-  params,
-}: {
-  params: { id: string; tokenId: string };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ id: string; tokenId: string }>;
+  }
+) {
+  const params = await props.params;
   const tokenAddresses = getCollectionAddresses(params.id);
   if (!tokenAddresses) {
     return <div>Collection Not Found</div>;

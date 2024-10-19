@@ -17,11 +17,12 @@ import { TradeLayout } from "./Trade";
 
 //export const runtime = "edge";
 
-export function generateMetadata({
-  params,
-}: {
-  params: { id: string };
-}): Metadata {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const collection = CollectionDetails[params.id as Collections];
   return {
     title: `${collection.displayName}`,
@@ -35,15 +36,16 @@ export function generateMetadata({
   };
 }
 
-export default function Page({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams?: {
-    page?: string;
-  };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ id: string }>;
+    searchParams?: Promise<{
+      page?: string;
+    }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const tokenAddresses = getCollectionAddresses(params.id);
 
   const l2TokenAddress = tokenAddresses?.[SUPPORTED_L2_CHAIN_ID];

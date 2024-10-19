@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import LordsIcon from "@/icons/lords.svg";
 import {
   Collapsible,
@@ -20,16 +21,20 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
+  SidebarMenuSubButton,
   SidebarMenuSubItem,
+  SidebarRail,
 } from "@realms-world/ui/components/ui/sidebar";
 import {
   Atom,
   Bird,
   BookOpen,
   Bot,
+  ChevronRight,
   Code2,
   Earth,
   Eclipse,
@@ -214,34 +219,55 @@ export const data = {
 
 export function AppSidebar() {
   return (
-    <Sidebar asideClassname="left-[var(--site-sidemenu-width)] top-[var(--site-header-height)]">
-      <SidebarHeader className="font-sans text-xl tracking-wide">
-        Your Account
-        {/*<TeamSwitcher teams={data.teams} />*/}
+    <Sidebar className="left-[var(--site-sidemenu-width)] top-[var(--site-header-height)]">
+      <SidebarHeader className="h-16 border-b border-sidebar-border">
+        <NavUser />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              <Collapsible defaultOpen className="group/collapsible">
-                {data.navMain.map((navItem) => (
-                  <SidebarMenuItem key={navItem.title}>
-                    <CollapsibleTrigger asChild>
-                      <SidebarMenuButton asChild>
-                        <a href={navItem.url}>
-                          <navItem.icon />
-                          <span>{navItem.title}</span>
-                        </a>
-                      </SidebarMenuButton>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <SidebarMenuSub>
-                        <SidebarMenuSubItem />
-                      </SidebarMenuSub>
-                    </CollapsibleContent>
+              {data.navMain.map((item) => (
+                <Collapsible
+                  key={item.title}
+                  asChild
+                  defaultOpen={item.isActive}
+                >
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip={item.title}>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span className="font-sans text-lg tracking-wider">
+                          {item.title}
+                        </span>
+                      </a>
+                    </SidebarMenuButton>
+                    {item.items.length ? (
+                      <>
+                        <CollapsibleTrigger asChild>
+                          <SidebarMenuAction className="data-[state=open]:rotate-90">
+                            <ChevronRight />
+                            <span className="sr-only">Toggle</span>
+                          </SidebarMenuAction>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {item.items.map((subItem) => (
+                              <SidebarMenuSubItem key={subItem.title}>
+                                <SidebarMenuSubButton asChild>
+                                  <a href={subItem.url}>
+                                    <span>{subItem.title}</span>
+                                  </a>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            ))}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </>
+                    ) : null}
                   </SidebarMenuItem>
-                ))}
-              </Collapsible>
+                </Collapsible>
+              ))}
 
               {/*<SidebarItem className="mt-6">
             <SidebarLabel>Projects</SidebarLabel>
@@ -258,9 +284,8 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser />
-      </SidebarFooter>
+      <SidebarFooter></SidebarFooter>
+      <SidebarRail className="[[data-side=left][data-collapsible=offcanvas]_&]:-right-[calc(var(--site-sidemenu-width)+15px)]" />
     </Sidebar>
   );
 }

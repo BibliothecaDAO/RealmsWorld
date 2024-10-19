@@ -8,13 +8,14 @@ import { ActivityCard } from "./ActivityCard";
 import { CollectionActivity } from "./CollectionActivity";
 import { L2ActivityTable } from "./L2ActivityTable";
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams: { types?: string[] | string };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ id: string }>;
+    searchParams: Promise<{ types?: string[] | string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const tokenAddresses = getCollectionAddresses(params.id);
   if (!tokenAddresses) {
     return <div>Collection Not Found</div>;

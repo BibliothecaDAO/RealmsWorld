@@ -6,18 +6,20 @@ import { isStarknetAddress } from "@/utils/utils";
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
 import { Portfolio } from "../../account/assets/Portfolio";
 
-export function generateMetadata({
-  params,
-}: {
-  params: { address: string };
-}): Metadata {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ address: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   return {
     title: `${params.address}`,
     description: `${params.address} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
-export default function Page({ params }: { params: { address: string } }) {
+export default async function Page(props: { params: Promise<{ address: string }> }) {
+  const params = await props.params;
   const address = getCollectionAddresses(Collections.GOLDEN_TOKEN)?.[
     SUPPORTED_L2_CHAIN_ID
   ];

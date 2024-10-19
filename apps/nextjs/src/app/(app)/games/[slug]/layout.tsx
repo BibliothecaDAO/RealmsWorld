@@ -1,14 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 
-export default function RootLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { id: string };
-}) {
+export default function RootLayout(
+  props: {
+    children: React.ReactNode;
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = use(props.params);
+
+  const {
+    children
+  } = props;
+
   const defaultImage = "/backgrounds/dummy_background.png";
   // const imageUrl =
   //   "url(" +

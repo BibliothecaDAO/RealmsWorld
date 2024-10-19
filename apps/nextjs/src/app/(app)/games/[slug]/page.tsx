@@ -30,11 +30,12 @@ import {
   TabsContent,
 } from "@realms-world/ui/components/ui/tabs";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   let game = await reader().collections.games.read(params.slug);
   return {
     title: `${game?.title}`,
@@ -42,7 +43,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const keyStaticGame = await reader().collections.games.read(params.slug);
 
   if (!keyStaticGame) return;
@@ -82,9 +84,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <div className="flex flex-wrap">
               {keyStaticGame?.tokens?.map((token, index) => (
                 //token === Tokens.LORDS ? (
-                <Link href="/swap">
+                (<Link href="/swap">
                   <Button key={index}>{token}</Button>
-                </Link>
+                </Link>)
                 /*) : (
                   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                   <Button href={`/tokens/${token}`} key={index}>

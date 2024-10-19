@@ -4,22 +4,24 @@ import type { Metadata } from "next";
 import { ActivityCard } from "@/app/(app)/collection/[id]/(list)/activity/ActivityCard";
 import { getUsersActivity } from "@/lib/reservoir/getUsersActivity";
 
-export function generateMetadata({
-  params,
-}: {
-  params: { address: string };
-}): Metadata {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ address: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   return {
     title: `Atlas - Collections Profile: ${params.address}`,
     description: `Collection Details page for ${params.address} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { address: string };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ address: string }>;
+  }
+) {
+  const params = await props.params;
   const { activities }: { activities: Activity[] } = await getUsersActivity({
     address: params.address,
   });
