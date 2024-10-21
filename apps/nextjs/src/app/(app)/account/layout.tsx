@@ -24,8 +24,8 @@ export default async function RootLayout({
     () => import("@/app/_components/modal/NftBridgeModal"),
   );
   const sidebarState =
-    (await cookies()).get(SIDEBAR_STATE_COOKIE)?.value ?? "true";
-  const isSidebarOpen = sidebarState === "true";
+    (await cookies()).get(SIDEBAR_STATE_COOKIE)?.value ?? "false";
+  const isSidebarOpen = sidebarState !== "true";
 
   return (
     <SessionProvider>

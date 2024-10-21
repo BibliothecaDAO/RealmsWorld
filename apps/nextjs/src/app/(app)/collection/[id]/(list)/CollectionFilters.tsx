@@ -1,6 +1,9 @@
 "use client";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
+import type { Filters } from "@/types/ark";
+import { useState } from "react";
+import { getCollectionTraits } from "@/lib/ark/getCollectionTraits";
+import { useArkClient } from "@/lib/ark/useArkClient";
 import { Button } from "@realms-world/ui/components/ui/button";
 import {
   Dialog,
@@ -8,13 +11,10 @@ import {
   DialogTitle,
 } from "@realms-world/ui/components/ui/dialog";
 import { ScrollArea } from "@realms-world/ui/components/ui/scroll-area";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 
-import type { Filters } from "@/types/ark";
-import { getCollectionTraits } from "@/lib/ark/getCollectionTraits";
-import CollectionFiltersTrait from "./CollectionFiltersTrait";
-import { useArkClient } from "@/lib/ark/useArkClient";
 import CollectionFiltersContent from "./CollectionFiltersContent";
-import { useState } from "react";
+import CollectionFiltersTrait from "./CollectionFiltersTrait";
 
 interface CollectionFiltersProps {
   collectionAddress: string;
@@ -91,7 +91,7 @@ export default function CollectionFilters({
   const showTraitsSection = data && Object.keys(data).length > 0;
 
   return (
-    <ScrollArea className="!sticky top-[var(--site-header-height)] z-10 hidden h-[calc(100vh-var(--site-header-height)-var(--site-footer-height))] w-72 flex-shrink-0 border-r border-border lg:block">
+    <ScrollArea className="!sticky top-[var(--site-header-height)] z-10 hidden h-[calc(100vh-var(--site-header-height))] w-72 flex-shrink-0 border-r border-border lg:block">
       <CollectionFiltersContent buyNow={buyNow} setBuyNow={setBuyNow} />
       {showTraitsSection && (
         <div className="">

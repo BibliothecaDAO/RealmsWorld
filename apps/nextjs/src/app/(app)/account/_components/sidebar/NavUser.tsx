@@ -1,4 +1,7 @@
+import ProfilePicture from "@/app/_components/ProfilePicture";
 import { StarknetLoginButton } from "@/app/_components/wallet/StarknetLoginButton";
+import EthereumLogo from "@/icons/ethereum.svg";
+import StarknetLogo from "@/icons/starknet.svg";
 import { shortenHex } from "@/utils/utils";
 import {
   Avatar,
@@ -29,6 +32,7 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react";
+import { useAccount as useL1Account } from "wagmi";
 
 export function NavUser({
   user,
@@ -40,12 +44,11 @@ export function NavUser({
   };
 }) {
   const { address } = useAccount();
+  const { address: l1Address } = useL1Account();
+
   const { isMobile } = useSidebar();
 
   const { disconnect } = useDisconnect();
-  {
-    address && shortenHex(address, 8);
-  }
   return (
     <>
       {address ? (
@@ -57,9 +60,8 @@ export function NavUser({
                   size="lg"
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src={user?.avatar} alt={user?.name} />
-                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <Avatar>
+                    <ProfilePicture address={address} />
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold">
@@ -77,9 +79,8 @@ export function NavUser({
               >
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                    <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage src={user?.avatar} alt={user?.name} />
-                      <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                    <Avatar>
+                      <StarknetLogo />
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold">
@@ -89,8 +90,23 @@ export function NavUser({
                     </div>
                   </div>
                 </DropdownMenuLabel>
+                {l1Address && (
+                  <DropdownMenuLabel className="p-0 font-normal">
+                    <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                      <Avatar>
+                        <EthereumLogo />
+                      </Avatar>
+                      <div className="grid flex-1 text-left text-sm leading-tight">
+                        <span className="truncate font-semibold">
+                          {shortenHex(l1Address, 8)}
+                        </span>
+                        <span className="truncate text-xs">{user?.email}</span>
+                      </div>
+                    </div>
+                  </DropdownMenuLabel>
+                )}
                 <DropdownMenuSeparator />
-                <DropdownMenuGroup>
+                {/*<DropdownMenuGroup>
                   <DropdownMenuItem>
                     <Sparkles />
                     Upgrade to Pro
@@ -111,8 +127,8 @@ export function NavUser({
                     Notifications
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
+              <DropdownMenuSeparator />*/}
+                <DropdownMenuItem onClick={() => disconnect()}>
                   <LogOut />
                   Log out
                 </DropdownMenuItem>

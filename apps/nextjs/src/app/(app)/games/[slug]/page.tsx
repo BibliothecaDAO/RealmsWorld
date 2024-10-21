@@ -1,49 +1,48 @@
 import type { Metadata } from "next";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { StatusDot } from "@/app/_components/StatusDot";
 import { reader } from "@/utils/keystatic";
 import Markdoc from "@markdoc/markdoc";
-import React from "react";
 import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
-
-import { Button } from "@realms-world/ui/components/ui/button";
 import { Badge } from "@realms-world/ui/components/ui/badge";
 import {
   Breadcrumb,
-  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbSeparator,
 } from "@realms-world/ui/components/ui/breadcrumb";
+import { Button } from "@realms-world/ui/components/ui/button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
   CarouselNext,
+  CarouselPrevious,
 } from "@realms-world/ui/components/ui/carousel";
 import {
   Tabs,
+  TabsContent,
   TabsList,
   TabsTrigger,
-  TabsContent,
 } from "@realms-world/ui/components/ui/tabs";
 
-export async function generateMetadata(
-  props: {
-    params: Promise<{ slug: string }>;
-  }
-): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
   const params = await props.params;
-  let game = await reader().collections.games.read(params.slug);
+  const game = await reader().collections.games.read(params.slug);
   return {
     title: `${game?.title}`,
     description: `${params.slug} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
-export default async function Page(props: { params: Promise<{ slug: string }> }) {
+export default async function Page(props: {
+  params: Promise<{ slug: string }>;
+}) {
   const params = await props.params;
   const keyStaticGame = await reader().collections.games.read(params.slug);
 
@@ -55,15 +54,15 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
     throw new Error("Invalid content");
   }
   const renderable = Markdoc.transform(node);
-  const screenshotList = keyStaticGame?.screenshots;
+  const screenshotList = keyStaticGame.screenshots;
   const list = [...screenshotList].map((image, index) => ({
     src: `/content/games/${params.slug}/${image}`,
-    alt: `${keyStaticGame?.title} Screenshot ${index}`,
+    alt: `${keyStaticGame.title} Screenshot ${index}`,
   }));
 
   // grab studio via developer slug from game so we can spit out the studio's title instead of its slug
   const studio = await reader().collections.studios.read(
-    keyStaticGame?.developer || "",
+    keyStaticGame.developer || "",
   );
 
   const tabs = [
@@ -82,11 +81,11 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
         <div>
           <div className="flex gap-x-2">
             <div className="flex flex-wrap">
-              {keyStaticGame?.tokens?.map((token, index) => (
+              {keyStaticGame.tokens.map((token, index) => (
                 //token === Tokens.LORDS ? (
-                (<Link href="/swap">
+                <Link href="/swap">
                   <Button key={index}>{token}</Button>
-                </Link>)
+                </Link>
                 /*) : (
                   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                   <Button href={`/tokens/${token}`} key={index}>
@@ -94,7 +93,7 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
                   </Button>
                 ),*/
               ))}
-              {keyStaticGame?.collections?.map((collection, index) => (
+              {keyStaticGame.collections.map((collection, index) => (
                 <Link href={`/collection/${collection}`}>
                   <Button key={index}>{collection}</Button>
                 </Link>
@@ -110,17 +109,17 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
     {
       key: "Studio",
       value: (
-        <Link href={`/studios/${keyStaticGame?.developer ?? ""}`}>
+        <Link href={`/studios/${keyStaticGame.developer ?? ""}`}>
           {studio?.title}
         </Link>
       ),
     },
-    { key: "Status", value: keyStaticGame?.status },
+    { key: "Status", value: keyStaticGame.status },
     {
       key: "Chain",
       value: (
         <div className="flex justify-end">
-          {keyStaticGame?.chains.map((a, i) =>
+          {keyStaticGame.chains.map((a, i) =>
             String(a) === "420" ? (
               <Link key={i} href="/network" className="h-full self-center">
                 {" "}
@@ -145,7 +144,7 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
       key: "Category",
       value: (
         <div className="flex flex-wrap justify-end">
-          {keyStaticGame?.genres?.map((a, i) => (
+          {keyStaticGame.genres.map((a, i) => (
             <Badge key={i} variant={"outline"}>
               {a}
             </Badge>
@@ -153,14 +152,14 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
         </div>
       ),
     },
-    { key: "Token", value: keyStaticGame?.tokens },
+    { key: "Token", value: keyStaticGame.tokens },
     {
       key: "White Paper",
       value: (
         <>
-          {keyStaticGame?.whitepaper ? (
+          {keyStaticGame.whitepaper ? (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
-              <Link href={keyStaticGame?.whitepaper}>White paper</Link>
+              <Link href={keyStaticGame.whitepaper}>White paper</Link>
             </Button>
           ) : (
             "No whitepaper available"
@@ -172,9 +171,9 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
       key: "Mainnet",
       value: (
         <>
-          {keyStaticGame?.links.mainnet && (
+          {keyStaticGame.links.mainnet && (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
-              <Link href={keyStaticGame?.links.mainnet}> Mainnet build</Link>
+              <Link href={keyStaticGame.links.mainnet}> Mainnet build</Link>
             </Button>
           )}
         </>
@@ -184,9 +183,9 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
       key: "Testnet",
       value: (
         <>
-          {keyStaticGame?.links.testnet && (
+          {keyStaticGame.links.testnet && (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
-              <Link href={keyStaticGame?.links.testnet}>Testnet Build</Link>
+              <Link href={keyStaticGame.links.testnet}>Testnet Build</Link>
             </Button>
           )}
         </>
@@ -196,11 +195,11 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
       key: "Homepage",
       value: (
         <>
-          {keyStaticGame?.links.homepage && (
+          {keyStaticGame.links.homepage && (
             <Button size={"xs"} variant={"outline"} asChild className="w-full">
-              <Link href={`${keyStaticGame?.links.homepage}`}>
+              <Link href={`${keyStaticGame.links.homepage}`}>
                 {" "}
-                {keyStaticGame?.title}
+                {keyStaticGame.title}
               </Link>
             </Button>
           )}
@@ -210,7 +209,7 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
   ];
 
   return (
-    <main className="container mx-auto">
+    <main className="px-4">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -225,101 +224,98 @@ export default async function Page(props: { params: Promise<{ slug: string }> })
 
       <div className="flex flex-wrap">
         <div className="my-4 w-full">
-          <h1 className="text-3xl sm:text-5xl">{keyStaticGame?.title}</h1>
+          <h1 className="text-3xl sm:text-5xl">{keyStaticGame.title}</h1>
         </div>
 
         <div className="mb-8 flex w-full space-x-2 font-sans uppercase">
           <Badge variant={"outline"}>
-            {StatusDot(keyStaticGame?.status)}
-            {keyStaticGame?.status}
+            {StatusDot(keyStaticGame.status)}
+            {keyStaticGame.status}
           </Badge>
         </div>
+        <div className="flex gap-x-8">
+          <div className="w-full px-12 sm:w-9/12">
+            {keyStaticGame.screenshots.length && (
+              <Carousel className="w-full sm:h-96 sm:max-h-[750px] sm:min-h-[750px]">
+                <CarouselContent>
+                  {list.map((image, index) => (
+                    <CarouselItem key={index}>
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        width={1096}
+                        height={750}
+                        className="h-full w-full rounded border object-cover"
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            )}
+          </div>
 
-        {keyStaticGame && (
-          <>
-            <div className="w-full px-12 sm:w-9/12 sm:pr-8">
-              {keyStaticGame.screenshots.length && (
-                <Carousel className="w-full sm:h-96 sm:max-h-[750px] sm:min-h-[750px]">
-                  <CarouselContent>
-                    {list.map((image, index) => (
-                      <CarouselItem key={index}>
-                        <Image
-                          src={image.src}
-                          alt={image.alt}
-                          width={1096}
-                          height={750}
-                          className="h-full w-full rounded border object-cover"
-                        />
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
+          <div className="pl-4 sm:w-3/12">
+            <div className="flex justify-center py-8">
+              <Image
+                alt=""
+                src={`/content/games/${params.slug}/${keyStaticGame.icon}`}
+                width={250}
+                height={100}
+              />
+            </div>
+
+            <div className="flex-col space-y-2">
+              {keyStaticGame.playable && keyStaticGame.links.homepage && (
+                <Button
+                  size={"lg"}
+                  variant={"default"}
+                  asChild
+                  className="w-full"
+                >
+                  <Link href={`${keyStaticGame.links.homepage}`}>
+                    {" "}
+                    Play {keyStaticGame.title}
+                  </Link>
+                </Button>
               )}
-            </div>
 
-            <div className="pl-4 sm:w-3/12">
-              <div className="flex justify-center py-8">
-                <Image
-                  alt=""
-                  src={`/content/games/${params.slug}/${keyStaticGame?.icon}`}
-                  width={250}
-                  height={100}
-                />
-              </div>
-
-              <div className="flex-col space-y-2">
-                {keyStaticGame?.playable && keyStaticGame?.links.homepage && (
-                  <Button
-                    size={"lg"}
-                    variant={"default"}
-                    asChild
-                    className="w-full"
-                  >
-                    <Link href={`${keyStaticGame?.links.homepage}`}>
-                      {" "}
-                      Play {keyStaticGame?.title}
-                    </Link>
-                  </Button>
-                )}
-
-                <table className="w-full divide-y py-8 text-sm capitalize">
-                  {tableData.map((data, index) => (
-                    <tr key={index}>
-                      <td className="whitespace-nowrap px-2 py-2 font-sans text-bright-yellow/70">
-                        {data.key}
-                      </td>
-                      <td className="whitespace-nowrap px-2 py-2 text-right">
-                        {data.value}
-                      </td>
-                    </tr>
-                  ))}
-                </table>
-              </div>
-
-              <Tabs defaultValue={tabs[0]?.name}>
-                <TabsList>
-                  {tabs.map((tab, index) => (
-                    <TabsTrigger value={tab.name} key={index}>
-                      {tab.name}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-
-                {tabs.map((tab, index) => (
-                  <TabsContent
-                    className="rounded border bg-background p-4"
-                    value={tab.name}
-                    key={index}
-                  >
-                    {tab.content}
-                  </TabsContent>
+              <table className="w-full divide-y py-8 text-sm capitalize">
+                {tableData.map((data, index) => (
+                  <tr key={index}>
+                    <td className="whitespace-nowrap px-2 py-2 font-sans text-bright-yellow/70">
+                      {data.key}
+                    </td>
+                    <td className="whitespace-nowrap px-2 py-2 text-right">
+                      {data.value}
+                    </td>
+                  </tr>
                 ))}
-              </Tabs>
+              </table>
             </div>
-          </>
-        )}
+
+            <Tabs defaultValue={tabs[0]?.name}>
+              <TabsList>
+                {tabs.map((tab, index) => (
+                  <TabsTrigger value={tab.name} key={index}>
+                    {tab.name}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              {tabs.map((tab, index) => (
+                <TabsContent
+                  className="rounded border bg-background p-4"
+                  value={tab.name}
+                  key={index}
+                >
+                  {tab.content}
+                </TabsContent>
+              ))}
+            </Tabs>
+          </div>
+        </div>
       </div>
     </main>
   );

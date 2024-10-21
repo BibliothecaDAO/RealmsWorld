@@ -1,25 +1,26 @@
-import Image from "next/image";
+import type { CollectionToken, PortfolioToken } from "@/types/ark";
 import Link from "next/link";
 import { AnimatedMap } from "@/app/_components/AnimatedMap";
+import Media from "@/app/_components/Media";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useLordsPrice } from "@/hooks/lords/useLordsPrice";
-import type { CollectionToken, PortfolioToken } from "@/types/ark";
-
-import { useStarkDisplayName } from "@/hooks/useStarkName";
-import LordsIcon from "@/icons/lords.svg";
-
-import type { RouterOutputs } from "@realms-world/api";
-import { Button } from "@realms-world/ui/components/ui/button";
-import { cn, formatNumber } from "@realms-world/utils";
-
-import { CardAction } from "./CardAction";
 import { useTokenListing } from "@/hooks/market/useTokenListing";
 import { useTokenMetadata } from "@/hooks/market/useTokenMetadata";
-import { ViewOnMarketplace } from "../../ViewOnMarketplace";
-import Media from "@/app/_components/Media";
-import RealmResources from "./RealmResources";
-import { CollectionAddresses } from "@realms-world/constants";
-import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { useStarkDisplayName } from "@/hooks/useStarkName";
+import LordsIcon from "@/icons/lords.svg";
+import {
+  CollectionAddresses,
+  getCollectionFromAddress,
+} from "@realms-world/constants";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { cn, formatNumber } from "@realms-world/utils";
+import { Info } from "lucide-react";
 import { formatEther } from "viem";
+
+import { ViewOnMarketplace } from "../../ViewOnMarketplace";
+import { CardAction } from "./CardAction";
+import RealmResources from "./RealmResources";
+
 export const L2ERC721Card = ({
   token,
   layout = "grid",
@@ -49,7 +50,7 @@ export const L2ERC721Card = ({
           {token.metadata?.image ? (
             <Media
               src={token.metadata.image}
-              alt={token.metadata.name ?? `beasts-${token.token_id}`}
+              alt={token.metadata.name}
               mediaKey={token.metadata.image_key}
               className={isGrid ? "mx-auto" : ""}
               width={imageSize}
@@ -73,10 +74,20 @@ export const L2ERC721Card = ({
             />
             {
               !selectable && (
-                <ViewOnMarketplace
-                  collection={token.contract_address ?? ""}
-                  tokenId={token.token_id}
-                />
+                <div className="flex gap-x-4">
+                  <ViewOnMarketplace
+                    collection={token.collection_address}
+                    icon
+                    tokenId={token.token_id}
+                  />
+                  <Link
+                    href={`/collection/${getCollectionFromAddress(token.collection_address)}/${token.token_id}`}
+                  >
+                    <Button>
+                      <Info />
+                    </Button>
+                  </Link>
+                </div>
               )
               /* <CardAction token={token} />*/
             }
@@ -168,7 +179,7 @@ const GridDetails = ({
       {token.metadata?.attributes &&
         token.collection_address ==
           CollectionAddresses.realms[SUPPORTED_L2_CHAIN_ID] && (
-          <RealmResources traits={token.metadata?.attributes} />
+          <RealmResources traits={token.metadata.attributes} />
         )}
     </div>
   </div>
