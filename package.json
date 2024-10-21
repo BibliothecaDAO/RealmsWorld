@@ -26,12 +26,12 @@
   },
   "dependencies": {
     "@manypkg/cli": "^0.22.0",
-    "@turbo/gen": "^2.2.1",
+    "@turbo/gen": "^2.2.3",
     "million": "^3.1.11",
     "npm-check-updates": "^17.1.4",
     "prettier": "catalog:",
     "tsup": "^8.3.0",
-    "turbo": "2.2.1",
+    "turbo": "2.2.3",
     "typescript": "catalog:"
   },
   "pnpm": {

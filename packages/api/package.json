@@ -23,7 +23,7 @@
     "@realms-world/db": "workspace:*",
     "@realms-world/utils": "workspace:*",
     "@trpc/server": "11.0.0-rc.477",
-    "drizzle-pagination": "1.0.10",
+    "drizzle-pagination": "1.0.11",
     "superjson": "2.2.1",
     "zod": "catalog:"
   },
