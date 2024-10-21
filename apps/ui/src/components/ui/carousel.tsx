@@ -1,11 +1,11 @@
 "use client";
 
-import * as React from "react";
-import useEmblaCarousel from "embla-carousel-react";
 import type { UseEmblaCarouselType } from "embla-carousel-react";
+import * as React from "react";
+import { cn } from "@realms-world/utils";
+import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-import { cn } from "@realms-world/utils";
 import { Button } from "./button";
 
 type CarouselApi = UseEmblaCarouselType[1];

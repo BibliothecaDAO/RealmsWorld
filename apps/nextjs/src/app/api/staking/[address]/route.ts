@@ -10,10 +10,8 @@ const UserClaim = UserClaims.map((claim) => ({
   originalAmount: claim.amount,
 }));
 
-export function GET(
-  request: NextRequest,
-  { params }: { params: { address: string } },
-) {
+export async function GET(request: NextRequest, props: { params: Promise<{ address: string }> }) {
+  const params = await props.params;
   //const query: any = await request.json();
 
   try {

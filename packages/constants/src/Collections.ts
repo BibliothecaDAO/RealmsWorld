@@ -1,5 +1,6 @@
 import { ChainId } from "./Chains";
-import { Studios } from "./Studios";
+
+//import { Studios } from "./Studios";
 
 export enum Collections {
   REALMS = "realms",
@@ -48,33 +49,33 @@ export const CollectionDetails: {
   readonly [key in Collections]: {
     royalties: number;
     displayName: string;
-    developer: Studios;
+    //developer: Studios;
   };
 } = {
   [Collections.REALMS]: {
     royalties: 0,
     displayName: "Realms",
-    developer: Studios.BIBLIO_DAO,
+    //developer: Studios.BIBLIO_DAO,
   },
   [Collections.BEASTS]: {
     royalties: 500,
     displayName: "Beasts",
-    developer: Studios.BIBLIO_DAO,
+    //developer: Studios.BIBLIO_DAO,
   },
   [Collections.GOLDEN_TOKEN]: {
     royalties: 500,
     displayName: "Golden Token",
-    developer: Studios.BIBLIO_DAO,
+    //developer: Studios.BIBLIO_DAO,
   },
   [Collections.BLOBERT]: {
     royalties: 500,
     displayName: "Blobert",
-    developer: Studios.BIBLIO_DAO,
+    //developer: Studios.BIBLIO_DAO,
   },
   [Collections.BANNERS]: {
     royalties: 500,
     displayName: "Pixel Banners (for Adventurers)",
-    developer: Studios.BANNERS_FOR_ADVENTURERS,
+    //developer: Studios.BANNERS_FOR_ADVENTURERS,
   },
 };
 export function getCollectionAddresses(
@@ -114,6 +115,12 @@ export interface RealmsL2CollectionInfo {
   addresses: Partial<{ [key in ChainId]: string }>;
 }
 export const REALMS_L2_COLLECTIONS: RealmsL2CollectionInfo[] = [
+  {
+    name: "Realms",
+    link: "realms",
+    image: "/collections/realms.svg",
+    addresses: CollectionAddresses[Collections.REALMS],
+  },
   {
     name: "Beasts",
     link: "beasts",

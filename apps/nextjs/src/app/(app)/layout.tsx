@@ -45,10 +45,11 @@ const backgroundImageStyle = {
   backgroundOpacity: 0.1,
 };
 
-const getHeaders = cache(() => Promise.resolve(headers()));
+const getHeaders = cache(async() => Promise.resolve(await headers()));
 
-export default function Layout(props: { children: React.ReactNode }) {
-  const { isEnabled } = draftMode();
+export default async function Layout(props: { children: React.ReactNode }) {
+  const { isEnabled } = await draftMode();
+  const cookieStore = await cookies()
 
   return (
     <html lang="en">
@@ -70,7 +71,7 @@ export default function Layout(props: { children: React.ReactNode }) {
                           {props.children}
                           {isEnabled && (
                             <Alert variant={"warning"} className="mx-4 w-full">
-                              Draft mode ({cookies().get("ks-branch")?.value}){" "}
+                              Draft mode ({cookieStore.get("ks-branch")?.value}){" "}
                               <form method="POST" action="/preview/end">
                                 <Button className="mt-4">End preview</Button>
                               </form>

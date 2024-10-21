@@ -16,11 +16,12 @@ import {
 } from "@realms-world/ui/components/ui/tabs";
 import { Button } from "@realms-world/ui/components/ui/button";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   let studio = await reader().collections.studios.read(params.slug);
   return {
     title: `${studio?.title}`,
@@ -31,7 +32,8 @@ export async function generateMetadata({
     },
   };
 }
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const studio = await reader().collections.studios.read(params.slug);
 
   if (!studio) return;

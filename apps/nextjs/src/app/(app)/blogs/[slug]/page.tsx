@@ -13,11 +13,12 @@ import React from "react";
 import Markdoc from "@markdoc/markdoc";
 import { reader } from "@/utils/keystatic";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   let blog = await reader().collections.blogs.read(params.slug);
 
   return {
@@ -45,7 +46,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const blog = await reader().collections.blogs.read(params.slug);
   if (!blog) {
     return <div>No Blog Found</div>;
@@ -74,15 +76,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </Breadcrumb>
         <div className="my-12 text-left">
           <h1 className="text-4xl font-bold">{blog?.title}</h1>
-          <p className="mt-2 text-xl">{blog?.subtitle}</p>
-          <div className="mt-8 text-xl font-bold">
-            <span>Posted on </span>
+          <div className="mt-4 font-sans text-xl font-bold text-muted">
             <time dateTime={blog?.publishDate || ""}>
               {new Date(blog?.publishDate || "").toLocaleDateString()}
             </time>
             <span> by </span>
             <span>{blog?.author}</span>
           </div>
+          <p className="mt-2 text-xl">{blog?.subtitle}</p>
         </div>
         <Image
           alt={blog?.title}
@@ -91,7 +92,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           className="w-full object-cover"
           height={600}
         />
-        <article className="prose prose-lg mx-auto mt-6 max-w-5xl px-6 pb-6 text-xl prose-headings:text-bright-yellow prose-p:font-thin prose-p:text-bright-yellow prose-a:text-flamingo prose-strong:text-bright-yellow prose-ol:text-bright-yellow prose-ul:text-bright-yellow md:mt-12">
+        <article className="prose prose-lg mx-auto mt-6 max-w-5xl pb-6 text-xl prose-headings:text-bright-yellow prose-p:font-thin prose-p:text-bright-yellow prose-a:text-flamingo prose-strong:text-bright-yellow prose-ol:text-bright-yellow prose-ul:text-bright-yellow md:mt-12">
           <div className="article-container">
             {Markdoc.renderers.react(renderable, React)}
           </div>

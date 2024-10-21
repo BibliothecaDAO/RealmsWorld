@@ -1,12 +1,16 @@
 import path from "path";
 import type { Entry } from "@keystatic/core/reader";
-import { createGitHubReader } from "@keystatic/core/reader/github";
-import { createReader } from "@keystatic/core/reader";
+import type {
+  UnsafeUnwrappedCookies,
+  UnsafeUnwrappedDraftMode,
+} from "next/headers";
 import { cache } from "react";
 import { cookies, draftMode } from "next/headers";
+import { createReader } from "@keystatic/core/reader";
+import { createGitHubReader } from "@keystatic/core/reader/github";
+import { env } from "env";
 
 import config from "../../keystatic.config";
-import { env } from "env";
 
 path.join(process.cwd(), "content");
 
@@ -14,20 +18,24 @@ export const reader = cache(() => {
   let isDraftModeEnabled = false;
   // draftMode throws in e.g. generateStaticParams
   try {
-    isDraftModeEnabled = draftMode().isEnabled;
+    isDraftModeEnabled = (draftMode() as unknown as UnsafeUnwrappedDraftMode)
+      .isEnabled;
   } catch {}
 
   if (isDraftModeEnabled) {
-    const branch = cookies().get("ks-branch")?.value;
+    const branch = (cookies() as unknown as UnsafeUnwrappedCookies).get(
+      "ks-branch",
+    )?.value;
 
     if (branch) {
       return createGitHubReader(config, {
         // Replace the below with your repo org an name
-        repo: `${env.NEXT_PUBLIC_GITHUB_REPO_OWNER}/${env.NEXT_PUBLIC_GITHUB_REPO_NAME}`,
+        repo: "REPO_ORG/REPO_NAME",
         ref: branch,
-        pathPrefix: "apps/nextjs",
         // Assuming an existing GitHub app
-        token: cookies().get("keystatic-gh-access-token")?.value,
+        token: (cookies() as unknown as UnsafeUnwrappedCookies).get(
+          "keystatic-gh-access-token",
+        )?.value,
       });
     }
   }
@@ -37,3 +45,24 @@ export const reader = cache(() => {
 
 export type CollectionEntry<T extends keyof (typeof config)["collections"]> =
   Entry<(typeof config)["collections"][T]>;
+
+export const sortPostsByPublishDate = (
+  posts: Entry<(typeof config)["collections"]["blogs"]>[],
+): Entry<(typeof config)["collections"]["blogs"]>[] => {
+  return posts.slice().sort((postA, postB) => {
+    // Handle cases where publishDate is missing
+    if (!postA.publishDate) {
+      return 1; // Move posts without publishDate to the end
+    }
+    if (!postB.publishDate) {
+      return -1;
+    }
+
+    // Convert dates to comparable values
+    const dateA = new Date(postA.publishDate);
+    const dateB = new Date(postB.publishDate);
+
+    // Compare dates and return sort order
+    return dateB.getTime() - dateA.getTime();
+  });
+};

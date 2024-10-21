@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { GameCard } from "@/app/(app)/games/GameCard";
+import { reader } from "@/utils/keystatic";
 import { Button } from "@realms-world/ui/components/ui/button";
-
 import {
   Carousel,
   CarouselContent,
@@ -15,8 +16,6 @@ import { Partners } from "../_components/Partners";
 import { BlogGrid } from "./blogs/BlogGrid";
 import CollectionsList from "./collection/CollectionsList";
 import { EventGrid } from "./events/EventGrid";
-import Image from "next/image";
-import { reader } from "@/utils/keystatic";
 
 export default async function Home() {
   const games = await reader().collections.games.all();
@@ -24,7 +23,7 @@ export default async function Home() {
     .filter((a) => a.entry.status === "beta" || a.entry.status === "mainnet")
     .map((game) => ({
       alt: game.entry.title,
-      src: `/content/games/${game.slug}/${game?.entry.coverImage}`,
+      src: `/content/games/${game.slug}/${game.entry.coverImage}`,
       description: game.entry.description,
       href: `/games/${game.slug}`,
       title: game.entry.title,

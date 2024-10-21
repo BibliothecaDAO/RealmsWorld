@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { SUPPORTED_L1_CHAIN_ID, SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { getAttributes } from "@/lib/reservoir/getAttributes";
 import { getToken } from "@/lib/reservoir/getToken";
 import { api } from "@/trpc/server";
@@ -17,11 +17,12 @@ import { TradeLayout } from "./Trade";
 
 //export const runtime = "edge";
 
-export function generateMetadata({
-  params,
-}: {
-  params: { id: string };
-}): Metadata {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const collection = CollectionDetails[params.id as Collections];
   return {
     title: `${collection.displayName}`,
@@ -35,18 +36,20 @@ export function generateMetadata({
   };
 }
 
-export default function Page({
-  params,
-  searchParams,
-}: {
-  params: { id: string };
-  searchParams?: {
-    page?: string;
-  };
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ id: string }>;
+    searchParams?: Promise<{
+      page?: string;
+    }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const tokenAddresses = getCollectionAddresses(params.id);
 
-  if (!tokenAddresses) {
+  const l2TokenAddress = tokenAddresses?.[SUPPORTED_L2_CHAIN_ID];
+  if (!l2TokenAddress) {
     return <div>Collection Not Found</div>;
   }
   /* isSepoliaGoldenToken =
@@ -56,7 +59,7 @@ export default function Page({
   if (isSepoliaGoldenToken) {
     return <Mint contractId={params.id} />;
   }*/
-  if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
+  /* if (tokenAddresses[SUPPORTED_L2_CHAIN_ID]) {
     const l2TokenAddress = tokenAddresses[SUPPORTED_L2_CHAIN_ID];
     if (typeof l2TokenAddress === "string") {
       return <L2TokenData tokenAddress={l2TokenAddress} />;
@@ -72,7 +75,9 @@ export default function Page({
         />
       );
     }
-  }
+  }*/
+
+  return <L2ERC721Table contractAddress={l2TokenAddress} />;
 }
 
 const L2TokenData = ({ tokenAddress }: { tokenAddress: string }) => {

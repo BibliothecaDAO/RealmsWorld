@@ -1,14 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { use } from "react";
 
-export default function RootLayout({
-  children,
-  params,
-}: {
+export default function RootLayout(props: {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const params = use(props.params);
+
+  const { children } = props;
+
   const defaultImage = "/backgrounds/dummy_background.png";
   // const imageUrl =
   //   "url(" +
@@ -16,15 +17,14 @@ export default function RootLayout({
   //   ")";
   return (
     <div
-      className="mt-24 h-full w-full"
-    // style={
-    //   {
-    //     "--image-url": imageUrl,
-    //   } as React.CSSProperties
-    // }
+      className="h-full w-full pt-4"
+      // style={
+      //   {
+      //     "--image-url": imageUrl,
+      //   } as React.CSSProperties
+      // }
     >
       {children}
-
     </div>
   );
 }

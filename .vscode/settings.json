@@ -14,7 +14,7 @@
     { "pattern": "tooling/*/" }
   ],
   "eslint.runtime": "node",
-  "tailwindCSS.experimental.configFile": "./tooling/tailwind/index.ts",
+  "tailwindCSS.experimental.configFile": "./tooling/tailwind/web.ts",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.autoImportFileExcludePatterns": [
@@ -24,12 +24,7 @@
   "deno.enable": false,
   "deno.lint": false,
   "deno.unstable": false,
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    // Sometimes vscode prettier doesn't format .tsx file without this config.
-    // see also: https://stackoverflow.com/questions/61731587/vscode-prettier-doesnt-format-tsx-file
+  "[typescript,typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 

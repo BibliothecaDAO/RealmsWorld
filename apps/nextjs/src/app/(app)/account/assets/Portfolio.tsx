@@ -24,22 +24,19 @@ import { CollectionItemsDataFallback } from "@/app/_components/LoadingSkeletonGr
 export const Portfolio = ({
   collectionAddress,
   selectable,
+  walletAddress,
 }: {
   collectionAddress?: string;
   selectable?: boolean;
+  walletAddress?: string;
 }) => {
   const [itemsFiltersOpen, setItemsFiltersOpen] = useState(false);
   const [viewType, setViewType] = useState<ViewType>("large-grid");
-
-  const [activeChain, setActiveChain] = useState("l1");
-  const { address } = useAccount();
   const { address: l2Address } = useL2Account();
 
-  const { data: pendingWithdrawals } = usePendingRealmsWithdrawals({
-    address,
-    status: "ACCEPTED_ON_L1",
-  });
   const { marketplace: arkClient } = useArkClient();
+
+  const address = walletAddress ?? l2Address;
 
   const {
     data: infiniteData,
@@ -48,10 +45,10 @@ export const Portfolio = ({
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ["walletTokens", collectionAddress, l2Address],
+    queryKey: ["walletTokens", collectionAddress, address],
     refetchInterval: 10_000,
     placeholderData: keepPreviousData,
-    enabled: !!l2Address,
+    enabled: !!address,
     getNextPageParam: (lastPage: PortfolioCollectionApiResponse) =>
       lastPage.next_page,
     // initialData: isSSR
@@ -65,7 +62,7 @@ export const Portfolio = ({
       getPortfolioTokens({
         client: arkClient,
         page: pageParam,
-        walletAddress: l2Address ? l2Address : "",
+        walletAddress: address ? address : "",
         collectionAddress: collectionAddress,
       }),
   });
@@ -85,7 +82,6 @@ export const Portfolio = ({
   const viewRef = useRef(null);
   const isInView = useInView(viewRef);
   useEffect(() => {
-    console.log(isInView);
     if (isInView && !isFetchingNextPage) fetchNextPage();
   }, [isInView, fetchNextPage]);
   const {
@@ -99,10 +95,10 @@ export const Portfolio = ({
   } = useNftSelection({ userAddress: l2Address! });
   return (
     <>
-      {l2Address ? (
+      {address ? (
         <div className="flex w-full">
           <PortfolioItemsFiltersPanel
-            walletAddress={l2Address}
+            walletAddress={address}
             filtersOpen={itemsFiltersOpen}
             className="sticky top-[var(--site-header-height)] hidden h-[calc(100vh-var(--site-header-height))] sm:block"
             selectable
@@ -112,7 +108,7 @@ export const Portfolio = ({
             <div className="sticky top-[var(--site-header-height)] z-10 mb-6 border-b border-border bg-background px-5 pb-4 pt-2 lg:mb-0 lg:border-none">
               <PortfolioItemsToolsBar
                 filtersOpen={itemsFiltersOpen}
-                walletAddress={l2Address}
+                walletAddress={address}
                 // walletCollectionsInitialData={walletCollectionsInitialData}
                 toggleFiltersOpen={() =>
                   setItemsFiltersOpen((previous) => !previous)

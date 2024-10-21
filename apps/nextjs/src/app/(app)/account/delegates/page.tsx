@@ -14,11 +14,17 @@ export function generateMetadata(): Metadata {
   };
 }
 
-export default function Page({
-  searchParams: { search },
-}: {
-  searchParams: { search?: string };
-}) {
+export default async function Page(
+  props: {
+    searchParams: Promise<{ search?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+
+  const {
+    search
+  } = searchParams;
+
   const filters: RouterInputs["delegates"]["all"] = {
     limit: 200,
     search: search,

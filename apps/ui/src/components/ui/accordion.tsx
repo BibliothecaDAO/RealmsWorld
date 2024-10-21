@@ -2,9 +2,8 @@
 
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDownIcon } from "lucide-react";
-
 import { cn } from "@realms-world/utils";
+import { ChevronDownIcon } from "lucide-react";
 
 const Accordion = AccordionPrimitive.Root;
 

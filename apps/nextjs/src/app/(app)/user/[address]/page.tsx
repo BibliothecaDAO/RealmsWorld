@@ -4,35 +4,37 @@ import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { isStarknetAddress } from "@/utils/utils";
 
 import { Collections, getCollectionAddresses } from "@realms-world/constants";
+import { Portfolio } from "../../account/assets/Portfolio";
 
-import UserTokenGrid from "./UserTokenGrid";
-
-export function generateMetadata({
-  params,
-}: {
-  params: { address: string };
-}): Metadata {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ address: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   return {
     title: `${params.address}`,
     description: `${params.address} - Created for Adventurers by Bibliotheca DAO`,
   };
 }
 
-export default function Page({ params }: { params: { address: string } }) {
+export default async function Page(props: { params: Promise<{ address: string }> }) {
+  const params = await props.params;
   const address = getCollectionAddresses(Collections.GOLDEN_TOKEN)?.[
     SUPPORTED_L2_CHAIN_ID
   ];
 
   if (isStarknetAddress(params.address) && address) {
     return (
-      <L2ERC721Table contractAddress={address} ownerAddress={params.address} />
+      <>
+        <Portfolio walletAddress={params.address} />
+      </>
     );
   }
 
   return (
     <div className="w-full">
-      <span>{isStarknetAddress(params.address)}</span>
-      <UserTokenGrid address={params.address} continuation="" />
+      <span className="text-3xl">Only Starknet Addresses supported</span>
     </div>
   );
 }

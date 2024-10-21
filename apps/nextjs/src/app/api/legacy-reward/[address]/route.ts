@@ -3,10 +3,8 @@ import { NextResponse } from "next/server";
 
 import UserClaims from "../claim.json";
 
-export function GET(
-  request: NextRequest,
-  { params }: { params: { address: string } },
-) {
+export async function GET(request: NextRequest, props: { params: Promise<{ address: string }> }) {
+  const params = await props.params;
   //const query: any = await request.json();
 
   try {

@@ -41,6 +41,7 @@ import { differenceInSeconds, getUnixTime, fromUnixTime } from "date-fns";
 import { motion } from "framer-motion";
 import { formatNumber } from "@realms-world/utils";
 import Link from "next/link";
+import { useSimulateTransactions } from "@/hooks/useSimulateTransactions";
 
 const WEEK_IN_SECONDS = 7 * 24 * 60 * 60; // 1 week in seconds
 const YEAR_IN_SECONDS = 365 * 24 * 60 * 60; // 1 year in seconds
@@ -192,7 +193,7 @@ export const VeLords = () => {
     return 0n;
   }, [ownerLordsLock]);
 
-  const { claim, manageLock, withdraw } = useVeLords();
+  const { claim, manageLock, withdraw, claimCall } = useVeLords();
 
   const newLockEndTime = useMemo(() => {
     const currentTime = getUnixTime(new Date());
@@ -214,6 +215,12 @@ export const VeLords = () => {
       setLockWeeks(0);
     }
   };
+  const { data: simulateData, error: simulateError } = useSimulateTransactions({
+    calls: claimCall,
+  });
+
+  const lordsClaimable =
+    simulateData?.[0]?.transaction_trace.execute_invocation.result[2];
 
   return (
     <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
@@ -521,8 +528,12 @@ export const VeLords = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex gap-4">
-                  You have <span className="text-3xl font-bold">0</span> Lords
-                  to claim
+                  You have{" "}
+                  <span className="text-3xl font-bold">
+                    {lordsClaimable &&
+                      formatNumber(formatEther(BigInt(lordsClaimable)))}
+                  </span>{" "}
+                  Lords to claim
                 </div>
               </CardContent>
               <CardFooter>

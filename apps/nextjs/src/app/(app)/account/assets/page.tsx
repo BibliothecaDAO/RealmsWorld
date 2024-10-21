@@ -1,8 +1,4 @@
 import type { Metadata } from "next";
-
-import { Collections } from "@realms-world/constants";
-
-import { BridgeNftWrapper } from "./BridgeNftWrapper";
 import { Portfolio } from "./Portfolio";
 
 export function generateMetadata(): Metadata {

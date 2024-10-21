@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import * as React from "react";
-import { cva } from "class-variance-authority";
-
 import { cn } from "@realms-world/utils";
+import { cva } from "class-variance-authority";
 
 import type { StepSharedProps } from "./types";
 import { Collapsible, CollapsibleContent } from "../collapsible";
@@ -17,7 +16,7 @@ type VerticalStepProps = StepSharedProps & {
 
 const verticalStepVariants = cva(
   [
-    "flex flex-col relative transition-all duration-200",
+    "relative flex flex-col transition-all duration-200",
     "data-[completed=true]:[&:not(:last-child)]:after:bg-primary",
     "data-[invalid=true]:[&:not(:last-child)]:after:bg-destructive",
   ],
@@ -25,15 +24,15 @@ const verticalStepVariants = cva(
     variants: {
       variant: {
         circle: cn(
-          "[&:not(:last-child)]:pb-[var(--step-gap)] [&:not(:last-child)]:gap-[var(--step-gap)]",
-          "[&:not(:last-child)]:after:content-[''] [&:not(:last-child)]:after:w-[2px] [&:not(:last-child)]:after:bg-border",
+          "[&:not(:last-child)]:gap-[var(--step-gap)] [&:not(:last-child)]:pb-[var(--step-gap)]",
+          "[&:not(:last-child)]:after:w-[2px] [&:not(:last-child)]:after:bg-border [&:not(:last-child)]:after:content-['']",
           "[&:not(:last-child)]:after:inset-x-[calc(var(--step-icon-size)/2)]",
           "[&:not(:last-child)]:after:absolute",
           "[&:not(:last-child)]:after:top-[calc(var(--step-icon-size)+var(--step-gap))]",
           "[&:not(:last-child)]:after:bottom-[var(--step-gap)]",
           "[&:not(:last-child)]:after:transition-all [&:not(:last-child)]:after:duration-200",
         ),
-        line: "flex-1 border-t-0 mb-4",
+        line: "mb-4 flex-1 border-t-0",
       },
     },
   },

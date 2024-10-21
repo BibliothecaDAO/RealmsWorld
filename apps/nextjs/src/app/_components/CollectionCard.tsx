@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { formatEther } from "viem";
 
 interface Props {
   name: string | undefined;
@@ -27,9 +28,11 @@ export const CollectionCard = ({ name, link, price, symbol, image }: Props) => {
       <div className="flex flex-grow justify-between pl-4">
         <h5 className="self-center text-2xl">{name}</h5>
       </div>
-      {/*<div className="self-center">
-        {price} {symbol}
-      </div>*/}
+      {price ? (
+        <div className="self-center">
+          {formatEther(BigInt(price))} {symbol}
+        </div>
+      ) : null}
     </Link>
   );
 };

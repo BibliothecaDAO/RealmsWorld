@@ -1,4 +1,4 @@
-import type { CollectionToken } from "@/types/ark";
+import type { CollectionToken, Filters } from "@/types/ark";
 import { createSearchParamsCache, parseAsStringLiteral } from "nuqs/server";
 
 import type { ArkClient } from "./client";
@@ -33,6 +33,7 @@ interface GetCollectionTokensParams {
   client: ArkClient;
   collectionAddress: string;
   page?: number;
+  filters?: Filters;
   itemsPerPage?: number;
   sortBy?: string;
   sortDirection?: string;
@@ -44,6 +45,7 @@ export async function getCollectionTokens({
   collectionAddress,
   page = 1,
   itemsPerPage = 50,
+  filters,
   sortBy = "price",
   sortDirection = "asc",
   buyNowOnly = false,
@@ -55,6 +57,10 @@ export async function getCollectionTokens({
     `page=${page}`,
     `buy_now=${buyNowOnly ? "true" : "false"}`,
   ];
+
+  if (Object.keys(filters?.traits ?? {}).length) {
+    queryParams.push(`filters=${encodeURIComponent(JSON.stringify(filters))}`);
+  }
 
   try {
     return await client.fetch(

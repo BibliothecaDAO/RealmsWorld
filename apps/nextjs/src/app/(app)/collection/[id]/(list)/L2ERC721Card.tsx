@@ -1,21 +1,26 @@
-import Image from "next/image";
+import type { CollectionToken, PortfolioToken } from "@/types/ark";
 import Link from "next/link";
 import { AnimatedMap } from "@/app/_components/AnimatedMap";
+import Media from "@/app/_components/Media";
+import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
 import { useLordsPrice } from "@/hooks/lords/useLordsPrice";
-import type { CollectionToken, PortfolioToken } from "@/types/ark";
-
-import { useStarkDisplayName } from "@/hooks/useStarkName";
-import LordsIcon from "@/icons/lords.svg";
-
-import type { RouterOutputs } from "@realms-world/api";
-import { Button } from "@realms-world/ui/components/ui/button";
-import { cn } from "@realms-world/utils";
-
-import { CardAction } from "./CardAction";
 import { useTokenListing } from "@/hooks/market/useTokenListing";
 import { useTokenMetadata } from "@/hooks/market/useTokenMetadata";
+import { useStarkDisplayName } from "@/hooks/useStarkName";
+import LordsIcon from "@/icons/lords.svg";
+import {
+  CollectionAddresses,
+  getCollectionFromAddress,
+} from "@realms-world/constants";
+import { Button } from "@realms-world/ui/components/ui/button";
+import { cn, formatNumber } from "@realms-world/utils";
+import { Info } from "lucide-react";
+import { formatEther } from "viem";
+
 import { ViewOnMarketplace } from "../../ViewOnMarketplace";
-import Media from "@/app/_components/Media";
+import { CardAction } from "./CardAction";
+import RealmResources from "./RealmResources";
+
 export const L2ERC721Card = ({
   token,
   layout = "grid",
@@ -45,7 +50,7 @@ export const L2ERC721Card = ({
           {token.metadata?.image ? (
             <Media
               src={token.metadata.image}
-              alt={token.metadata.name ?? `beasts-${token.token_id}`}
+              alt={token.metadata.name}
               mediaKey={token.metadata.image_key}
               className={isGrid ? "mx-auto" : ""}
               width={imageSize}
@@ -69,10 +74,20 @@ export const L2ERC721Card = ({
             />
             {
               !selectable && (
-                <ViewOnMarketplace
-                  collection={token.contract_address ?? ""}
-                  tokenId={token.token_id}
-                />
+                <div className="flex gap-x-4">
+                  <ViewOnMarketplace
+                    collection={token.collection_address}
+                    icon
+                    tokenId={token.token_id}
+                  />
+                  <Link
+                    href={`/collection/${getCollectionFromAddress(token.collection_address)}/${token.token_id}`}
+                  >
+                    <Button>
+                      <Info />
+                    </Button>
+                  </Link>
+                </div>
               )
               /* <CardAction token={token} />*/
             }
@@ -118,15 +133,13 @@ const TokenAttributes = ({
   token,
   attributeKeys,
 }: {
-  token:
-    | CollectionToken
-    | RouterOutputs["erc721Tokens"]["all"]["items"][number];
+  token: CollectionToken;
   attributeKeys: string[];
 }) => {
   const metadata = useTokenMetadata(token);
   if (!metadata?.attributes) return null;
 
-  <table className="min-w-full bg-black font-sans text-xs">
+  <table className="h-full min-w-full bg-black font-sans text-xs">
     <tbody>
       {attributeKeys.map((key: string) => {
         const attribute = metadata.attributes.find(
@@ -146,49 +159,48 @@ const TokenAttributes = ({
 const GridDetails = ({
   token,
 }: {
-  token: CollectionToken;
+  token: CollectionToken | PortfolioToken;
   address?: string;
 }) => (
   <div className="flex h-full w-full flex-col justify-between p-3">
     <div className="flex justify-between pb-2">
       <span className="truncate">{token.metadata?.name ?? ""}</span>
+      <div className="flex justify-between font-sans">
+        <Price token={token} />
+        {/*token.last_price && (
+          <span className="flex text-bright-yellow/50">
+            {token.last_price}
+            <LordsIcon className="ml-2 h-4 w-4 self-center fill-current" />
+          </span>
+        )*/}
+      </div>
     </div>
-
-    <div className="flex justify-between font-sans">
-      {/*<Price token={token} />
-      {token.lastPrice && (
-        <span className="flex text-bright-yellow/50">
-          {token.lastPrice}
-          <LordsIcon className="ml-2 h-4 w-4 self-center fill-current" />
-        </span>
-      )}*/}
+    <div className="h-[48px]">
+      {token.metadata?.attributes &&
+        token.collection_address ==
+          CollectionAddresses.realms[SUPPORTED_L2_CHAIN_ID] && (
+          <RealmResources traits={token.metadata.attributes} />
+        )}
     </div>
   </div>
 );
 
-const Price = ({
-  token,
-}: {
-  token: RouterOutputs["erc721Tokens"]["all"]["items"][number] & {
-    listings: RouterOutputs["erc721MarketEvents"]["all"]["items"];
-  };
-}) => {
+const Price = ({ token }: { token: CollectionToken | PortfolioToken }) => {
   const { lordsPrice } = useLordsPrice();
-  const listing = useTokenListing(token);
-  if (undefined === listing || null === listing) return null;
 
   return (
     <div className="flex justify-between">
-      {token.price && listing.price && (
+      {token.price && (
         <div>
           <div className="flex text-lg">
-            {listing.price}
+            {formatEther(BigInt(token.price))}
             <LordsIcon className="mx-auto ml-2 h-4 w-4 self-center fill-bright-yellow" />
           </div>
           <div className="-mt-0.5 text-xs text-bright-yellow/60">
-            {((lordsPrice?.usdPrice ?? 0) * parseFloat(listing.price)).toFixed(
-              2,
-            )}{" "}
+            {(
+              (lordsPrice?.usdPrice ?? 0) *
+              parseFloat(formatEther(BigInt(token.price)))
+            ).toFixed(2)}{" "}
             USD
           </div>
         </div>

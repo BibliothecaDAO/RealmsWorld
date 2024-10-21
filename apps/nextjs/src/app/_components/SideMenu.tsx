@@ -14,6 +14,7 @@ import LordsIcon from "@/icons/lords.svg";
 import RWLogo from "@/icons/rw-logo.svg";
 import SideHeaderImg from "@/icons/side-header.svg";
 import { Github, Newspaper, Twitter, User } from "lucide-react";
+import { cn } from "@realms-world/utils";
 
 import { Button } from "@realms-world/ui/components/ui/button";
 import { ScrollArea } from "@realms-world/ui/components/ui/scroll-area";
@@ -96,7 +97,11 @@ const Sidebar = () => {
         onClick={toggleSidebar}
       >
         <Crown className="absolute w-14 group-hover:opacity-0" />
-        <RWLogo className="absolute w-[152px] fill-white opacity-0 transition-all duration-500 group-hover:opacity-100" />
+        <RWLogo
+          className={cn(
+            "invisible absolute w-[152px] fill-white opacity-0 transition-all duration-500 group-hover:visible group-hover:opacity-100",
+          )}
+        />
       </Link>
       <div className="h-full pt-[calc(var(--site-header-height)_-_3px)]">
         <div className="z-50 h-full w-full border-t-[3px] pb-3">
@@ -107,7 +112,7 @@ const Sidebar = () => {
                   {menu.map((item, index) => {
                     return (
                       <Button
-                        className="group flex w-full justify-normal px-2 text-lg font-semibold normal-case transition-all duration-200"
+                        className="group flex w-full justify-normal px-2 text-lg font-semibold normal-case transition-all duration-200 [&_svg]:size-6"
                         key={index}
                         variant={"outline"}
                         onClick={() => {

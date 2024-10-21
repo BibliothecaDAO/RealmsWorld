@@ -10,7 +10,7 @@ export const BlogGrid = async () => {
   });
 
   return (
-    <div className="sm:p4-4 grid grid-cols-1 gap-4 px-8 md:grid-cols-3">
+    <div className="sm:p4-4 grid grid-cols-1 gap-4 px-8 md:grid-cols-3 lg:grid-cols-4">
       {blogsSortedByDate.map((blog, index) => (
         <BlogCard key={index} blog={blog.entry} slug={blog.slug} />
       ))}

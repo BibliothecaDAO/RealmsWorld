@@ -4,8 +4,8 @@
   "rsc": false,
   "tsx": true,
   "tailwind": {
-    "config": "tailwind.config.js",
-    "css": "@realms-world/styles/globals.css",
+    "config": "../../tooling/tailwind/web.ts",
+    "css": "../../config/styles/globals.css",
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""

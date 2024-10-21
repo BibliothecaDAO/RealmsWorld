@@ -5,11 +5,10 @@ import type { DateRange } from "react-day-picker";
 import * as React from "react";
 import { Time } from "@internationalized/date";
 import * as Primitives from "@radix-ui/react-popover";
+import { cn } from "@realms-world/utils";
 import { cva } from "class-variance-authority";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon, Minus } from "lucide-react";
-
-import { cn } from "@realms-world/utils";
 
 import { Button } from "./button";
 import { Calendar as CalendarPrimitive } from "./calendar";
@@ -633,8 +632,9 @@ const RangeDatePicker = ({
       return null;
     }
 
-    return `${range.from ? formatDate(range.from, showTimePicker) : ""} - ${range.to ? formatDate(range.to, showTimePicker) : ""
-      }`;
+    return `${range.from ? formatDate(range.from, showTimePicker) : ""} - ${
+      range.to ? formatDate(range.to, showTimePicker) : ""
+    }`;
   }, [range, showTimePicker]);
 
   const onApply = () => {
@@ -733,19 +733,19 @@ const RangeDatePicker = ({
 
 type DatePickerProps = (
   | {
-    mode?: "single";
-    presets?: DatePreset[];
-    defaultValue?: Date;
-    value?: Date;
-    onChange?: (date: Date | undefined) => void;
-  }
+      mode?: "single";
+      presets?: DatePreset[];
+      defaultValue?: Date;
+      value?: Date;
+      onChange?: (date: Date | undefined) => void;
+    }
   | {
-    mode: "range";
-    presets?: DateRangePreset[];
-    defaultValue?: DateRange;
-    value?: DateRange;
-    onChange?: (dateRange: DateRange | undefined) => void;
-  }
+      mode: "range";
+      presets?: DateRangePreset[];
+      defaultValue?: DateRange;
+      value?: DateRange;
+      onChange?: (dateRange: DateRange | undefined) => void;
+    }
 ) &
   PickerProps;
 

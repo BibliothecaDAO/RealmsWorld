@@ -1,27 +1,12 @@
 "use client";
 
-import {
-  Atom,
-  Bird,
-  BookOpen,
-  Bot,
-  Code2,
-  Earth,
-  Eclipse,
-  Frame,
-  History,
-  LifeBuoy,
-  Map,
-  PieChart,
-  Rabbit,
-  UserRoundPen,
-  Settings2,
-  SquareTerminal,
-  Star,
-  Turtle,
-} from "lucide-react";
+import Link from "next/link";
 import LordsIcon from "@/icons/lords.svg";
-
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@realms-world/ui/components/ui/collapsible";
 /*import { NavProjects } from "./nav-projects"
 import { NavSecondary } from "./nav-secondary"
 import { NavUser } from "./nav-user"
@@ -31,13 +16,44 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
-  SidebarItem,
-  SidebarLabel,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarRail,
 } from "@realms-world/ui/components/ui/sidebar";
+import {
+  Atom,
+  Bird,
+  BookOpen,
+  Bot,
+  ChevronRight,
+  Code2,
+  Earth,
+  Eclipse,
+  Frame,
+  History,
+  LifeBuoy,
+  Map,
+  PieChart,
+  Rabbit,
+  Settings2,
+  SquareTerminal,
+  Star,
+  Turtle,
+  UserRoundPen,
+} from "lucide-react";
+
 import { NavMain } from "./NavMain";
-import { NavUser } from "./NavUser";
 import { NavSecondary } from "./NavSecondary";
+import { NavUser } from "./NavUser";
 
 export enum Layer {
   "Ethereum",
@@ -203,30 +219,73 @@ export const data = {
 
 export function AppSidebar() {
   return (
-    <Sidebar asideClassname="left-[var(--site-sidemenu-width)] top-[var(--site-header-height)]">
-      <SidebarHeader className="font-sans text-xl tracking-wide">
-        Your Account
-        {/*<TeamSwitcher teams={data.teams} />*/}
+    <Sidebar className="left-[var(--site-sidemenu-width)] top-[var(--site-header-height)]">
+      <SidebarHeader className="h-16 border-b border-sidebar-border">
+        <NavUser />
       </SidebarHeader>
       <SidebarContent>
-        <SidebarItem className="py-1">
-          <NavMain items={data.navMain} searchResults={data.searchResults} />
-        </SidebarItem>
-        {/*<SidebarItem className="mt-6">
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {data.navMain.map((item) => (
+                <Collapsible
+                  key={item.title}
+                  asChild
+                  defaultOpen={item.isActive}
+                >
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild tooltip={item.title}>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span className="font-sans text-lg tracking-wider">
+                          {item.title}
+                        </span>
+                      </a>
+                    </SidebarMenuButton>
+                    {item.items.length ? (
+                      <>
+                        <CollapsibleTrigger asChild>
+                          <SidebarMenuAction className="data-[state=open]:rotate-90">
+                            <ChevronRight />
+                            <span className="sr-only">Toggle</span>
+                          </SidebarMenuAction>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {item.items.map((subItem) => (
+                              <SidebarMenuSubItem key={subItem.title}>
+                                <SidebarMenuSubButton asChild>
+                                  <a href={subItem.url}>
+                                    <span>{subItem.title}</span>
+                                  </a>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            ))}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </>
+                    ) : null}
+                  </SidebarMenuItem>
+                </Collapsible>
+              ))}
+
+              {/*<SidebarItem className="mt-6">
             <SidebarLabel>Projects</SidebarLabel>
             <NavProjects projects={data.projects} />
           </SidebarItem>*/}
-        {/*<SidebarItem className="mt-10">
+              {/*<SidebarItem className="mt-10">
           <SidebarLabel className="text-base">Help</SidebarLabel>
           <NavSecondary items={data.navSecondary} />
         </SidebarItem>
         {/*<SidebarItem>
                         <StorageCard />
                     </SidebarItem>*/}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser />
-      </SidebarFooter>
+      <SidebarFooter></SidebarFooter>
+      <SidebarRail className="[[data-side=left][data-collapsible=offcanvas]_&]:-right-[calc(var(--site-sidemenu-width)+15px)]" />
     </Sidebar>
   );
 }

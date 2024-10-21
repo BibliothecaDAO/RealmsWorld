@@ -3,10 +3,9 @@
 import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 import * as ToastPrimitives from "@radix-ui/react-toast";
+import { cn } from "@realms-world/utils";
 import { cva } from "class-variance-authority";
 import { X } from "lucide-react";
-
-import { cn } from "@realms-world/utils";
 
 const ToastProvider = ToastPrimitives.Provider;
 
@@ -32,10 +31,10 @@ const toastVariants = cva(
       variant: {
         default: "border bg-background",
         destructive:
-          "destructive group border-4 border-border-destructive-weaker bg-background-destructive text-text-inverse",
+          "destructive border-border-destructive-weaker bg-background-destructive text-text-inverse group border-4",
         success:
-          "success group border-4 border-border-success-weaker bg-background-success text-text-inverse",
-        info: "info group border-4 border-border-info-weaker bg-background-info text-text-inverse",
+          "success border-border-success-weaker bg-background-success text-text-inverse group border-4",
+        info: "info border-border-info-weaker bg-background-info text-text-inverse group border-4",
       },
     },
     defaultVariants: {

@@ -31,6 +31,14 @@
     --site-header-height: 63px;
     --site-footer-height: 40px;
     --site-sidemenu-width: 102px;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
     --background: 69 9% 15%;
@@ -107,6 +115,14 @@
     --lightness: 0.26;
     --limit: 320;
     --distance: 8;
+    --sidebar-background: 69 9% 15%;
+    --sidebar-foreground: 36 88.9% 85.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 68 5% 29%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -202,29 +218,6 @@ body::-webkit-scrollbar-thumb,
   @apply bg-black;
 }
 
-/* .tab-container {
-  @apply mb-4 mt-4 flex;
-}
-
-.tab-button {
-  @apply mr-1 rounded-t border-b-4 border-transparent px-4 py-2 font-semibold transition-all;
-}
-
-.tab-button:not(:last-child) {
-  @apply mr-1;
-}
-
-.tab-button.active {
-  @apply bg-slate-800 text-white;
-}
-
-.tab-button.inactive {
-  @apply border-gray-400 bg-gray-300 text-black;
-}
-
-.tab-button.inactive:hover {
-  @apply bg-gray-400;
-} */
 .mask-transparent::before {
   @apply absolute bottom-0 left-0 right-0 top-0 z-0;
   mask-image: linear-gradient(to bottom, white 200px, transparent);
@@ -232,78 +225,4 @@ body::-webkit-scrollbar-thumb,
 }
 .mask-transparent {
   position: relative;
-}
-
-.rings {
-  transform-style: preserve-3d;
-  width: 85%;
-  max-width: 300px;
-  aspect-ratio: 1;
-  position: relative;
-  transform: translate3d(0, 0, 100vmin) rotateX(-32deg) rotateY(-32deg)
-    rotateX(90deg);
-}
-
-.ringAnimation {
-  --scale-base: calc(((100 / var(--count)) * var(--index)) * 1%);
-  --scale-top: calc(((100 / var(--count)) * var(--index)) * 1%);
-  width: calc(((100 / var(--count)) * var(--index)) * 1%);
-  aspect-ratio: 1;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  transform: translate3d(0, 0, calc(var(--distance) * -1vmin));
-  animation: float calc(var(--speed) * 1s) infinite var(--ease);
-  animation-delay: calc(
-    sin((var(--index) / var(--count)) * 45deg) * var(--speed) * -1s
-  );
-}
-
-.ringAnimation::after {
-  content: "";
-  border: 2px solid
-    oklch(var(--lightness, 0.5) var(--chroma, 0.25) var(--base, 8));
-  border-radius: calc(var(--radius) * 1%);
-  position: absolute;
-  inset: 0;
-}
-
-.ringAnimation::after {
-  animation: hue calc(var(--speed) * 1s) infinite var(--ease);
-  animation-delay: calc(
-    sin((var(--index) / var(--count)) * 45deg) * var(--speed) * -1s
-  );
-}
-
-@keyframes hue {
-  50% {
-    filter: hue-rotate(calc((var(--limit) - var(--base)) * 1deg));
-  }
-}
-
-@keyframes float {
-  50% {
-    transform: translate3d(0, 0, calc(var(--distance) * 1vmin));
-  }
-  0%,
-  45% {
-    width: var(--scale-base);
-  }
-  75% {
-    width: var(--scale-top);
-  }
-}
-
-@keyframes float-alternate {
-  100% {
-    transform: translate3d(0, 0, calc(var(--distance) * 1vmin));
-  }
-  0%,
-  45% {
-    width: var(--scale-base);
-  }
-  75% {
-    width: var(--scale-top);
-  }
 }
