@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { StatusDot } from "@/app/_components/StatusDot";
+import keystatic from "@/app/(keystatic)/keystatic/keystatic";
 import { reader } from "@/utils/keystatic";
 import Markdoc from "@markdoc/markdoc";
 import { CHAIN_IDS_TO_NAMES } from "@realms-world/constants";
@@ -235,25 +236,39 @@ export default async function Page(props: {
         </div>
         <div className="flex gap-x-8">
           <div className="w-full px-12 sm:w-9/12">
-            {keyStaticGame.screenshots.length && (
+            {keyStaticGame.screenshots.length ? (
               <Carousel className="w-full sm:h-96 sm:max-h-[750px] sm:min-h-[750px]">
                 <CarouselContent>
                   {list.map((image, index) => (
                     <CarouselItem key={index}>
-                      <Image
-                        src={image.src}
-                        alt={image.alt}
-                        width={1096}
-                        height={750}
-                        className="h-full w-full rounded border object-cover"
-                      />
+                      {image.src.endsWith("webm") ? (
+                        <video
+                          width={400}
+                          height={750}
+                          controls
+                          autoPlay
+                          preload="none"
+                          className="mx-auto sm:min-h-[650px]"
+                        >
+                          <source src={image.src} type="video/webm" />
+                          Your browser does not support the video tag.
+                        </video>
+                      ) : (
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          width={1096}
+                          height={750}
+                          className="h-full w-full rounded border object-cover"
+                        />
+                      )}
                     </CarouselItem>
                   ))}
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />
               </Carousel>
-            )}
+            ) : null}
           </div>
 
           <div className="pl-4 sm:w-3/12">
