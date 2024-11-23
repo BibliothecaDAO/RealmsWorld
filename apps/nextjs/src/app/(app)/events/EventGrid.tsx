@@ -23,7 +23,7 @@ export const EventGrid = async ({ isHomepage }: EventGridProps) => {
       {upcomingEvents.length ? (
         <div className="mb-4">
           <h2 className="mb-2 text-xl font-bold">Upcoming Events</h2>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-4">
             {upcomingEvents.map((event, index) => (
               <EventCard key={index} event={event.entry} slug={event.slug} />
             ))}
