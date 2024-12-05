@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
-import { env } from "env";
+import ControllerConnector from "@cartridge/connector/controller";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import {
@@ -16,17 +16,18 @@ import {
   publicProvider as starkPublicProvider,
   //useInjectedConnectors,
 } from "@starknet-react/core";
+import { env } from "env";
+import { constants } from "starknet";
 import {
   ArgentMobileConnector,
   isInArgentMobileAppBrowser,
 } from "starknetkit/argentMobile";
-import CartridgeConnector from "@cartridge/connector";
 import { InjectedConnector } from "starknetkit/injected";
 import { WebWalletConnector } from "starknetkit/webwallet";
 import { http, WagmiProvider } from "wagmi";
 import { mainnet, sepolia } from "wagmi/chains";
+
 import { TransferLogProvider } from "./TransferLogProvider";
-import { constants } from "starknet";
 
 const starkProvider = env.NEXT_PUBLIC_BLAST_API
   ? blastProvider({
@@ -49,9 +50,11 @@ const starkConnectors = isInArgentMobileAppBrowser()
       }),
     ]
   : [
-      /*new CartridgeConnector({
-        rpc: "https://api.cartridge.gg/x/starknet/mainnet",
-      }),*/
+      new ControllerConnector({
+        rpc:
+          "https://api.cartridge.gg/x/starknet/" +
+          (isTestnet ? "sepolia" : "mainnet"),
+      }),
       new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
       new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
       ArgentMobileConnector.init({

@@ -16,7 +16,8 @@
   "dependencies": {
     "@ark-project/react": "1.1.2",
     "@avnu/avnu-sdk": "^2.1.1",
-    "@cartridge/connector": "^0.4.0",
+    "@cartridge/connector": "^0.5.1",
+    "@cartridge/controller": "^0.5.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@keystatic/core": "^0.5.36",
