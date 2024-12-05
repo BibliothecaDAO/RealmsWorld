@@ -8,6 +8,7 @@ export enum Collections {
   GOLDEN_TOKEN = "goldentoken",
   BLOBERT = "blobert",
   BANNERS = "banners",
+  ETERNUM_0 = "eternum-0",
 }
 
 export const CollectionAddresses: {
@@ -44,6 +45,10 @@ export const CollectionAddresses: {
       "0x02d66679de61a5c6d57afd21e005a8c96118bd60315fd79a4521d68f5e5430d1",
     [ChainId.SN_SEPOLIA]: "",
   },
+  [Collections.ETERNUM_0]: {
+    [ChainId.SN_MAIN]:
+      "0x057675b9c0bd62b096a2e15502a37b290fa766ead21c33eda42993e48a714b80",
+  },
 };
 export const CollectionDetails: {
   readonly [key in Collections]: {
@@ -75,6 +80,11 @@ export const CollectionDetails: {
   [Collections.BANNERS]: {
     royalties: 500,
     displayName: "Pixel Banners (for Adventurers)",
+    //developer: Studios.BANNERS_FOR_ADVENTURERS,
+  },
+  [Collections.ETERNUM_0]: {
+    royalties: 500,
+    displayName: "Eternum Season 0 Pass",
     //developer: Studios.BANNERS_FOR_ADVENTURERS,
   },
 };
@@ -120,6 +130,12 @@ export const REALMS_L2_COLLECTIONS: RealmsL2CollectionInfo[] = [
     link: "realms",
     image: "/collections/realms.svg",
     addresses: CollectionAddresses[Collections.REALMS],
+  },
+  {
+    name: "Eternum Season 0 Pass",
+    link: "eternum-0",
+    image: "/collections/eternum.png",
+    addresses: CollectionAddresses[Collections.ETERNUM_0],
   },
   {
     name: "Beasts",

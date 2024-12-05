@@ -259,7 +259,7 @@ export default async function Page(props: {
                           alt={image.alt}
                           width={1096}
                           height={750}
-                          className="h-full w-full rounded border object-cover"
+                          className="h-full w-full rounded border object-contain sm:max-h-[750px]"
                         />
                       )}
                     </CarouselItem>
