@@ -37,7 +37,7 @@ const starkProvider = env.NEXT_PUBLIC_BLAST_API
 
 const isTestnet = env.NEXT_PUBLIC_IS_TESTNET === "true";
 const theme = "eternum";
-const slot = "eternum-rc1-1";
+const slot = "realms-world-04";
 const namespace = "eternum";
 const colorMode = "dark";
 
