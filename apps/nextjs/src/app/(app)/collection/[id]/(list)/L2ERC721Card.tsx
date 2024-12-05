@@ -177,8 +177,10 @@ const GridDetails = ({
     </div>
     <div className="h-[48px]">
       {token.metadata?.attributes &&
-        token.collection_address ==
-          CollectionAddresses.realms[SUPPORTED_L2_CHAIN_ID] && (
+        [
+          CollectionAddresses["eternum-0"][SUPPORTED_L2_CHAIN_ID],
+          CollectionAddresses.realms[SUPPORTED_L2_CHAIN_ID],
+        ].includes(token.collection_address) && (
           <RealmResources traits={token.metadata.attributes} />
         )}
     </div>

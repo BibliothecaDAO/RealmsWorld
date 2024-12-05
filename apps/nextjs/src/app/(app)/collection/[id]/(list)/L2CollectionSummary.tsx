@@ -1,21 +1,21 @@
 import type { ContractDetails } from "@/types";
+import type { Collections, Game } from "@realms-world/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
+import Gamepad from "@/icons/gamepad.svg";
 import LordsIcon from "@/icons/lords.svg";
-
-import type { Collections, Game } from "@realms-world/constants";
+import { marketPlaceClientBuilder } from "@/lib/ark/client";
+import { getCollections } from "@/lib/ark/getCollection";
+import { reader } from "@/utils/keystatic";
 import {
   CollectionDetails,
   getCollectionAddresses,
 } from "@realms-world/constants";
 import { Button } from "@realms-world/ui/components/ui/button";
-import { ViewOnMarketplace } from "../../ViewOnMarketplace";
-import { getCollections } from "@/lib/ark/getCollection";
-import { marketPlaceClientBuilder } from "@/lib/ark/client";
-import { reader } from "@/utils/keystatic";
 import { formatEther } from "viem";
-import Gamepad from "@/icons/gamepad.svg";
+
+import { ViewOnMarketplace } from "../../ViewOnMarketplace";
 
 export default async function L2CollectionSummary({
   collectionId,
@@ -26,14 +26,12 @@ export default async function L2CollectionSummary({
     await reader().collections.collections.read(collectionId);
 
   const collectionGames = await Promise.all(
-    collectionContent.games.map(async (game, index) => {
-      return (
-        {
-          ...(await reader().collections.games.read(game ?? "")),
-          slug: collectionContent.games[index],
-        } ?? ""
-      );
-    }),
+    collectionContent?.games.map(async (game, index) => {
+      return {
+        ...(await reader().collections.games.read(game ?? "")),
+        slug: collectionContent.games[index],
+      };
+    }) ?? [],
   );
   const l2CollectionAddress =
     getCollectionAddresses(collectionId)?.[SUPPORTED_L2_CHAIN_ID];
