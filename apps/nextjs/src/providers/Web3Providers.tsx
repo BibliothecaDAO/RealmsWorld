@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
-import { env } from "env";
+import ControllerConnector from "@cartridge/connector/controller";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { darkTheme, ReservoirKitProvider } from "@reservoir0x/reservoir-kit-ui";
 import {
@@ -16,17 +16,18 @@ import {
   publicProvider as starkPublicProvider,
   //useInjectedConnectors,
 } from "@starknet-react/core";
+import { env } from "env";
+import { constants } from "starknet";
 import {
   ArgentMobileConnector,
   isInArgentMobileAppBrowser,
 } from "starknetkit/argentMobile";
-import CartridgeConnector from "@cartridge/connector";
 import { InjectedConnector } from "starknetkit/injected";
 import { WebWalletConnector } from "starknetkit/webwallet";
 import { http, WagmiProvider } from "wagmi";
 import { mainnet, sepolia } from "wagmi/chains";
+
 import { TransferLogProvider } from "./TransferLogProvider";
-import { constants } from "starknet";
 
 const starkProvider = env.NEXT_PUBLIC_BLAST_API
   ? blastProvider({
@@ -35,6 +36,21 @@ const starkProvider = env.NEXT_PUBLIC_BLAST_API
   : starkPublicProvider();
 
 const isTestnet = env.NEXT_PUBLIC_IS_TESTNET === "true";
+const theme = "eternum";
+const slot = "eternum-rc1-1";
+const namespace = "eternum";
+const colorMode = "dark";
+
+const cartridgeController = new ControllerConnector({
+  policies: [],
+  rpc:
+    "https://api.cartridge.gg/x/starknet/" +
+    (isTestnet ? "sepolia" : "mainnet"),
+  theme,
+  colorMode,
+  namespace,
+  slot,
+});
 
 const starkConnectors = isInArgentMobileAppBrowser()
   ? [
@@ -49,9 +65,7 @@ const starkConnectors = isInArgentMobileAppBrowser()
       }),
     ]
   : [
-      /*new CartridgeConnector({
-        rpc: "https://api.cartridge.gg/x/starknet/mainnet",
-      }),*/
+      cartridgeController,
       new InjectedConnector({ options: { id: "braavos", name: "Braavos" } }),
       new InjectedConnector({ options: { id: "argentX", name: "Argent X" } }),
       ArgentMobileConnector.init({
@@ -68,7 +82,7 @@ const starkConnectors = isInArgentMobileAppBrowser()
       }),
     ];
 
-const theme = darkTheme({
+const reservoirTheme = darkTheme({
   headlineFont: "Sans Serif",
   font: "Serif",
   primaryColor: "#323aa8",
@@ -124,7 +138,7 @@ export function Web3Providers({ children }: { children: ReactElement }) {
                   },
                 ],
               }}
-              theme={theme}
+              theme={reservoirTheme}
             >
               {children}
             </ReservoirKitProvider>
