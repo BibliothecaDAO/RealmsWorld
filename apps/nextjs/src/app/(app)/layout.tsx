@@ -45,7 +45,7 @@ const backgroundImageStyle = {
   backgroundOpacity: 0.1,
 };
 
-const getHeaders = cache(async() => Promise.resolve(await headers()));
+const getHeaders = cache(async () => Promise.resolve(await headers()));
 
 export default async function Layout(props: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode();
@@ -98,7 +98,7 @@ export default async function Layout(props: { children: React.ReactNode }) {
 
 const title = "Home to the Adventurers";
 const description =
-  "Created for Adventurers by Bibliotheca DAO - your window into the onchain world of Realms and the Lootverse.";
+  "Join the rebel gamers at Realms.World for fully onchain games + AI agents";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -121,7 +121,7 @@ export const metadata: Metadata = {
     siteId: "1467726470533754880",
     creator: "@bibliothecadao",
     creatorId: "1467726470533754880",
-    images: ["https://realms.world/backgrounds/banner.png"],
+    images: ["https://realms.world/realms-og.png"],
   },
   openGraph: {
     title: "Realms.World |" + title,
@@ -130,13 +130,13 @@ export const metadata: Metadata = {
     siteName: "Realms World",
     images: [
       {
-        url: "https://realms.world/backgrounds/banner.png",
+        url: "https://realms.world/realms-og.png",
         width: 800,
         height: 600,
         alt: "Realms Autonomous World",
       },
       {
-        url: "https://realms.world/backgrounds/banner.png",
+        url: "https://realms.world/realms-og.png",
         width: 1800,
         height: 1600,
         alt: "Realms Autonomous World",
