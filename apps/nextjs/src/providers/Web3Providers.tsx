@@ -94,7 +94,13 @@ export const config = getDefaultConfig({
   projectId: env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
   chains: [isTestnet ? sepolia : mainnet],
   ssr: true,
-  transports: isTestnet ? { [sepolia.id]: http() } : { [mainnet.id]: http() },
+  transports: isTestnet
+    ? { [sepolia.id]: http() }
+    : {
+        [mainnet.id]: http(
+          "https://mainnet.infura.io/v3/ee98f29298784027b0afa71b7e05d3ed",
+        ),
+      },
 });
 
 export function Web3Providers({ children }: { children: ReactElement }) {
