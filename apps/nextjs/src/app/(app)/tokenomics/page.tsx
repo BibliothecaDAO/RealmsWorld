@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { NETWORK_NAME, SUPPORTED_L1_CHAIN_ID } from "@/constants/env";
 import { stakingAddresses } from "@/constants/staking";
-import { env } from "env";
 import { getRealmNFTHolders } from "@/lib/subgraph/getRealmNFTHolders";
 import { getWalletRealmsHeld } from "@/lib/subgraph/getWalletRealmsHeld";
-
 import { getDaoAddressesArrayByChain } from "@realms-world/constants/src/DAO";
+import { env } from "env";
 
 import { PageLayout } from "../../_components/PageLayout";
 import { DashBoard } from "./Dashboard";
@@ -133,17 +132,20 @@ export default async function Page() {
 
   return (
     <PageLayout title="$Lords Tokenomics">
-      <div className="pb-8 md:text-2xl">
-        The $Lords token is the native token of the Realms Autonomous World. It
-        is governed by BibliothecaDAO who controls the issuance of the token.
+      <div className="sm:px-4">
+        <div className="pb-8 md:text-2xl">
+          The $Lords token is the native token of the Realms Autonomous World.
+          It is governed by BibliothecaDAO who controls the issuance of the
+          token.
+        </div>
+        <DashBoard
+          tokenInfo={tokenData}
+          totalValueLocked={totalValueLocked}
+          exchangesVolume={exchangesVolume}
+          totalStakedRealms={totalStakedRealms}
+          realmNFTHolders={realmNFTHolders.length}
+        />
       </div>
-      <DashBoard
-        tokenInfo={tokenData}
-        totalValueLocked={totalValueLocked}
-        exchangesVolume={exchangesVolume}
-        totalStakedRealms={totalStakedRealms}
-        realmNFTHolders={realmNFTHolders.length}
-      />
     </PageLayout>
   );
 }

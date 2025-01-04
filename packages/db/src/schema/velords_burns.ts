@@ -1,6 +1,6 @@
 import { bigint, numeric, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
-export const velords_burns = pgTable("velords_burns", {
+export const velords_burns2 = pgTable("velords_burns", {
   _cursor: bigint("_cursor", { mode: "number" }),
   hash: text("hash").primaryKey(),
   amount: numeric("amount", { precision: 78, scale: 8 }).notNull(),
