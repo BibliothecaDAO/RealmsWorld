@@ -1,5 +1,4 @@
-import { api } from "@/trpc/react";
-import { DuneClient, QueryParameter } from "@duneanalytics/client-sdk";
+import { DuneClient } from "@duneanalytics/client-sdk";
 import { db } from "@realms-world/db/client";
 import { schema } from "@realms-world/db/schema";
 import { env } from "env";
@@ -22,8 +21,9 @@ export async function GET(request: Request) {
         (row: Record<string, unknown>) => ({
           source: row.Name as string,
           amount: row.amount as string,
+          transaction_hash: row.transaction_hash as string,
           //block_time: new Date(row.block_time),
-          //epoch: row.epoch ? new Date(row.epoch) : null,
+          epoch: row.epoch ? new Date(row.epoch) : null,
           epoch_total_amount: row.epoch_total_amount as string,
           sender_epoch_total_amount: row.sender_epoch_total_amount as string,
         }),

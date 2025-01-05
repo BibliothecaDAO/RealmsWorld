@@ -1,8 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { GameCard } from "@/app/(app)/games/GameCard";
+import LordsIcon from "@/icons/lords.svg";
+import { api } from "@/trpc/server";
 import { reader } from "@/utils/keystatic";
 import { Button } from "@realms-world/ui/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@realms-world/ui/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -10,9 +18,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@realms-world/ui/components/ui/carousel";
+import { formatNumber } from "@realms-world/utils";
 
 import { PageLayout } from "../_components/PageLayout";
 import { Partners } from "../_components/Partners";
+import { VeLordsRewardsChart } from "./account/lords/velords/VeLordsRewardsChart";
 import { BlogGrid } from "./blogs/BlogGrid";
 import CollectionsList from "./collection/CollectionsList";
 
@@ -36,6 +46,8 @@ export default async function Home() {
       href: `/games/${game.slug}`,
       title: game.entry.title,
     }));
+
+  const veLordsBurns = await api.veLordsBurns.sumByWeek();
 
   return (
     <PageLayout>
@@ -71,6 +83,7 @@ export default async function Home() {
         <CarouselPrevious className="left-2 sm:left-4 md:left-6 lg:left-8" />
         <CarouselNext className="right-2 sm:right-4 md:right-6 lg:right-8" />
       </Carousel>
+
       <div className="px-4 sm:px-6 md:px-8">
         <Partners />
 
@@ -90,10 +103,60 @@ export default async function Home() {
           <BlogGrid />
         </div>
 
-        {/*<div className="my-12 sm:my-16 md:my-20 lg:my-24">
-          <h2 className="mb-4 font-sans text-xl sm:text-2xl md:text-3xl">Events</h2>
-          <EventGrid isHomepage={true} />
-        </div>*/}
+        <div className="relative my-12 h-[300px] w-full overflow-hidden rounded-lg">
+          <div>
+            <Image
+              src="/velords-banner-bg.jpg"
+              alt="veLords background"
+              fill
+              className="object-cover brightness-50"
+            />
+          </div>
+          <div className="relative z-10 flex h-full flex-col items-center justify-center p-6">
+            <h2 className="mb-8 text-center text-4xl font-bold md:text-5xl">
+              veLords - Lords Staking
+            </h2>
+
+            <div className="grid w-full max-w-4xl grid-cols-1 gap-6 md:grid-cols-3">
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-muted">APY</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold">{formatNumber(12.34)}%</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-muted">
+                    Lords Locked
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold">
+                    <LordsIcon />
+                    {formatNumber(1234567)}
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-muted">
+                    90d Lords Rewards
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold">
+                    <LordsIcon />
+                    {formatNumber(98765)}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
 
         <hr className="my-6 border sm:my-8" />
         <div className="my-12 sm:my-16 md:my-20">
