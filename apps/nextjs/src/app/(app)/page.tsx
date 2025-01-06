@@ -47,8 +47,8 @@ export default async function Home() {
       title: game.entry.title,
     }));
 
-  const veLordsBurns = await api.veLordsBurns.sumByWeek();
-
+  const veLordsBurns = await api.veLordsBurns.all({});
+  console.log(veLordsBurns);
   return (
     <PageLayout>
       <Carousel className="w-full">
@@ -103,14 +103,15 @@ export default async function Home() {
           <BlogGrid />
         </div>
 
-        <div className="relative my-12 h-[300px] w-full overflow-hidden rounded-lg">
-          <div>
+        <div className="relative my-12 h-[600px] w-full overflow-hidden rounded-lg">
+          <div className="absolute inset-0">
             <Image
               src="/velords-banner-bg.jpg"
               alt="veLords background"
               fill
               className="object-cover brightness-50"
             />
+            <VeLordsRewardsChart data={veLordsBurns} totalSupply={1000000000} />
           </div>
           <div className="relative z-10 flex h-full flex-col items-center justify-center p-6">
             <h2 className="mb-8 text-center text-4xl font-bold md:text-5xl">
@@ -134,8 +135,8 @@ export default async function Home() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-bold">
-                    <LordsIcon />
+                  <p className="flex text-2xl font-bold">
+                    <LordsIcon className="mr-3 w-5" />
                     {formatNumber(1234567)}
                   </p>
                 </CardContent>
@@ -148,8 +149,8 @@ export default async function Home() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-2xl font-bold">
-                    <LordsIcon />
+                  <p className="flex text-2xl font-bold">
+                    <LordsIcon className="mr-3 w-5" />
                     {formatNumber(98765)}
                   </p>
                 </CardContent>

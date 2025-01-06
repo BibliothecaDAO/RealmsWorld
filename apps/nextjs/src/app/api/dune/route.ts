@@ -23,7 +23,7 @@ export async function GET(request: Request) {
           amount: row.amount as string,
           transaction_hash: row.transaction_hash as string,
           //block_time: new Date(row.block_time),
-          epoch: row.epoch ? new Date(row.epoch) : null,
+          epoch: new Date(row.epoch as string),
           epoch_total_amount: row.epoch_total_amount as string,
           sender_epoch_total_amount: row.sender_epoch_total_amount as string,
         }),
@@ -37,7 +37,7 @@ export async function GET(request: Request) {
           .returning({
             source: schema.velords_burns.source,
             amount: schema.velords_burns.amount,
-            //epoch: schema.velords_burns.epoch,
+            epoch: schema.velords_burns.epoch,
           });
 
         console.log(tokenAttributeResult);
