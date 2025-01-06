@@ -22,12 +22,12 @@ export async function GET(request: Request) {
           amount: row.amount as string,
           transaction_hash: row.transaction_hash as string,
           //block_time: new Date(row.block_time),
-          epoch: row.epoch as Date,
+          epoch: new Date(row.epoch),
           epoch_total_amount: row.epoch_total_amount as string,
           sender_epoch_total_amount: row.sender_epoch_total_amount as string,
         }),
       ) satisfies (typeof schema.velords_burns.$inferInsert)[];
-      console.log(filteredRows);
+      console.log(filteredRows.slice(-6));
 
       try {
         const tokenAttributeResult = await db
@@ -36,7 +36,7 @@ export async function GET(request: Request) {
           .returning({
             source: schema.velords_burns.source,
             amount: schema.velords_burns.amount,
-            epoch: schema.velords_burns.epoch,
+            //epoch: schema.velords_burns.epoch,
           });
 
         console.log(tokenAttributeResult);
