@@ -18,19 +18,19 @@ export const veLordsBurnsRouter = {
     .query(({ ctx, input }) => {
       const { sender, startTimestamp, endTimestamp } = input;
       const whereFilter: SQL[] = sender
-        ? [eq(velords_burns2.sender, sender.toLowerCase())]
+        ? [eq(velords_burns.source, sender.toLowerCase())]
         : [];
 
-      if (startTimestamp) {
-        whereFilter.push(gte(velords_burns2.timestamp, startTimestamp));
+      /*if (startTimestamp) {
+        whereFilter.push(gte(velords_burns.timestamp, startTimestamp));
       }
       if (endTimestamp) {
-        whereFilter.push(lte(velords_burns2.timestamp, endTimestamp));
-      }
+        whereFilter.push(lte(velords_burns.timestamp, endTimestamp));
+      }*/
 
-      return ctx.db.query.velords_burns2.findMany({
+      return ctx.db.query.velords_burns.findMany({
         where: and(...whereFilter),
-        orderBy: desc(velords_burns2.timestamp),
+        //orderBy: desc(velords_burns.timestamp),
       });
     }),
 

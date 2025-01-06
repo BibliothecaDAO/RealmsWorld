@@ -14,7 +14,6 @@ export async function GET(request: Request) {
 
   try {
     const executionResult = await client.getLatestResult({ queryId: queryID });
-    console.log(executionResult.result?.rows);
     if (executionResult.result?.rows) {
       // Filter and transform the rows to match schema
       const filteredRows = executionResult.result.rows.map(
@@ -23,12 +22,12 @@ export async function GET(request: Request) {
           amount: row.amount as string,
           transaction_hash: row.transaction_hash as string,
           //block_time: new Date(row.block_time),
-          epoch: new Date(row.epoch as string),
+          epoch: row.epoch as Date,
           epoch_total_amount: row.epoch_total_amount as string,
           sender_epoch_total_amount: row.sender_epoch_total_amount as string,
         }),
       ) satisfies (typeof schema.velords_burns.$inferInsert)[];
-      console.log(filteredRows[0]);
+      console.log(filteredRows);
 
       try {
         const tokenAttributeResult = await db

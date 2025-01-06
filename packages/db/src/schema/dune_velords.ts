@@ -13,7 +13,10 @@ export const velords_burns = pgTable(
     amount: numeric("amount").notNull(),
     transaction_hash: text("transaction_hash").notNull(),
     //block_time: timestamp("block_time").notNull(),
-    //epoch: timestamp("epoch"),
+    epoch: timestamp("epoch", {
+      mode: "date",
+      precision: 3,
+    }).notNull(),
     epoch_total_amount: numeric("epoch_total_amount").notNull(),
     sender_epoch_total_amount: numeric("sender_epoch_total_amount").notNull(),
   },
