@@ -1,7 +1,11 @@
 import type { SQL } from "@realms-world/db";
 import type { TRPCRouterRecord } from "@trpc/server";
 import { and, desc, eq, gte, lte, sql } from "@realms-world/db";
-import { velords_burns, velords_burns2 } from "@realms-world/db/schema";
+import {
+  velords_burns,
+  velords_burns2,
+  velords_supply,
+} from "@realms-world/db/schema";
 import { z } from "zod";
 
 import { publicProcedure } from "../trpc";
@@ -33,6 +37,12 @@ export const veLordsBurnsRouter = {
         //orderBy: desc(velords_burns.timestamp),
       });
     }),
+
+  totalLordsSupply: publicProcedure.query(({ ctx }) => {
+    return ctx.db.query.velords_supply.findFirst({
+      orderBy: [desc(velords_supply.block_time)],
+    });
+  }),
 
   byHash: publicProcedure
     .input(z.object({ hash: z.string() }))

@@ -22,3 +22,13 @@ export const velords_burns = pgTable(
   },
   (t) => [primaryKey({ columns: [t.amount, t.transaction_hash] })],
 );
+
+export const velords_supply = pgTable("dune_velords_supply", {
+  old_supply: text("old_supply").notNull(),
+  new_supply: numeric("new_supply").notNull(),
+  transaction_hash: text("transaction_hash").notNull().primaryKey(),
+  block_time: timestamp("block_time", {
+    mode: "date",
+    precision: 3,
+  }).notNull(),
+});
