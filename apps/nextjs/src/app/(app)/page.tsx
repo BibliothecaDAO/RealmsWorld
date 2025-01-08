@@ -24,6 +24,10 @@ import CollectionsList from "./collection/CollectionsList";
 
 export default async function Home() {
   const games = await reader().collections.games.all();
+
+  // Randomize the order of games
+  const shuffledGames = games.sort(() => Math.random() - 0.5);
+
   const carouselItems = games
     .filter((a) => a.slug === "realms-eternum")
     .concat(
@@ -90,11 +94,11 @@ export default async function Home() {
             All Games
           </h2>
           <div className="">
-            <Carousel opts={{ dragFree: true }} className="w-full">
+            <Carousel opts={{ startIndex: 1 }} className="w-full">
               <CarouselContent>
-                {games.map((game, index) => (
+                {shuffledGames.map((game, index) => (
                   <CarouselItem
-                    className="translate-3d flex-[0_0_25%] pl-0"
+                    className="translate-3d flex-[0_0_55%] pl-1 sm:flex-[0_0_25%]"
                     key={index}
                   >
                     <GameCard
