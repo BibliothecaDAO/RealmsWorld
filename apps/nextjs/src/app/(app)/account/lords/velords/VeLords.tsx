@@ -153,7 +153,8 @@ export const VeLords = () => {
     blockIdentifier: BlockTag.PENDING as BlockNumber,
   });
 
-  const { data: veLordsBurns } = api.veLordsBurns.sumByWeek.useQuery();
+  //const { data: veLordsBurns } = api.veLordsBurns.sumByWeek.useQuery();
+  const { data: veLordsBurns } = api.veLordsBurns.all.useQuery({});
 
   const [amount, setAmount] = useState<string>("");
   const [lockWeeks, setLockWeeks] = useState<number>(0);
@@ -310,7 +311,6 @@ export const VeLords = () => {
               </CardHeader>
               <CardContent>
                 <div className="prose text-primary">
-                  {" "}
                   <p>Lock your Lords for veLords and:</p>
                   <ul className="ml-5 list-disc">
                     <li>

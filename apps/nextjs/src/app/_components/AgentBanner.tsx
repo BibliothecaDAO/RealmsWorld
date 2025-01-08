@@ -9,15 +9,20 @@ export const AgentBanner = () => {
   const isInView = useInView(ref, { margin: "-250px" }); // Trigger animation once
   return (
     <div ref={ref} className="my-12 flex flex-col items-center md:flex-row">
-      <div className="w-full md:w-1/2">
+      <motion.div
+        className="mx-4 w-full px-16 md:w-1/2"
+        initial={{ x: "-100%", opacity: 0 }}
+        animate={isInView ? { x: 0, opacity: 1 } : {}}
+        transition={{ type: "spring", stiffness: 50, damping: 20 }}
+      >
         <Image
           src="/elizaOS.avif"
           alt="Banner Image"
-          width={800}
-          height={600}
+          width={400}
+          height={300}
           className="h-full w-full object-cover"
         />
-      </div>
+      </motion.div>
       <div className="w-full p-4 md:w-1/2">
         <div className="mx-auto max-w-lg">
           <motion.h2
@@ -40,7 +45,7 @@ export const AgentBanner = () => {
             thrive in Realms World
           </motion.p>
           <motion.a
-            className="mt-4 text-sm sm:text-base md:text-lg"
+            className="mt-4 text-xs underline sm:text-base md:text-lg"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.6, duration: 1 }}
