@@ -1,6 +1,7 @@
 import * as auth from "./auth";
 import * as bridge from "./bridge";
 import * as delegates from "./delegates";
+import * as velords_burns from "./dune_velords";
 import * as erc721AttributeKeys from "./erc721_attribute_keys";
 import * as erc721Attributes from "./erc721_attributes";
 import * as erc721Bridge from "./erc721_bridge";
@@ -23,11 +24,13 @@ export * from "./delegates";
 export * from "./erc721_bridge";
 export * from "./lords_rewards";
 export * from "./velords_burns";
+export * from "./dune_velords";
 
 export const schema = {
   ...auth,
   ...bridge,
   ...delegates,
+  ...velords_burns,
   ...erc721Attributes,
   ...erc721AttributeKeys,
   ...erc721Bridge,

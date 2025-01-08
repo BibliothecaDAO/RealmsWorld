@@ -1,16 +1,30 @@
 "use client";
 
-import { Line, LineChart, CartesianGrid, YAxis, XAxis } from "recharts";
-import LordsIcon from "@/icons/lords.svg";
-
 import type { ChartConfig } from "@realms-world/ui/components/ui/chart";
+import LordsIcon from "@/icons/lords.svg";
 import {
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
 } from "@realms-world/ui/components/ui/chart";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Line,
+  LineChart,
+  XAxis,
+  YAxis,
+} from "recharts";
+
+const sourceColors = {
+  "Loot Survivor Fees": "hsl(36 88.9% 85.9%)",
+  "veLords Early Exit Fees": "hsl(240 88.9% 85.9%)",
+  Crypts: "hsl(120 88.9% 85.9%)",
+  // Add more sources and colors as needed
+} as const;
 
 const chartConfig = {
   total_amount: {
@@ -28,20 +42,60 @@ export function VeLordsRewardsChart({
   data,
   totalSupply,
 }: {
-  data?: { total_amount: string; week: string }[];
+  data?: {
+    source: string;
+    amount: string;
+    transaction_hash: string;
+    epoch: Date;
+    epoch_total_amount: string;
+    sender_epoch_total_amount: string;
+  }[];
   totalSupply?: number;
 }) {
   const parsedData = totalSupply
-    ? data?.map((item) => ({
-        week: new Date(item.week).toISOString().split("T")[0], // Convert to YYYY-MM-DD
-        total_amount: parseFloat(item.total_amount),
-        apy: ((parseInt(item.total_amount) * 52) / totalSupply) * 100,
-      }))
-    : [];
+    ? data
+        ?.reduce(
+          (acc, item) => {
+            const week = new Date(item.epoch).toISOString().split("T")[0];
+            const existingWeek = acc.find((d) => d.week === week);
 
+            if (existingWeek) {
+              // Add to existing week
+              existingWeek.amounts[item.source] =
+                (existingWeek.amounts[item.source] || 0) +
+                parseFloat(item.amount);
+              existingWeek.total_amount += parseFloat(item.amount);
+              // Recalculate APY based on total
+              existingWeek.apy =
+                ((existingWeek.total_amount * 52) / totalSupply) * 100;
+            } else {
+              // Create new week entry
+              acc.push({
+                week,
+                amounts: {
+                  [item.source]: parseFloat(item.amount),
+                },
+                total_amount: parseFloat(item.amount),
+                apy: ((parseFloat(item.amount) * 52) / totalSupply) * 100,
+              });
+            }
+            return acc;
+          },
+          [] as {
+            week: string;
+            amounts: Record<string, number>;
+            total_amount: number;
+            apy: number;
+          }[],
+        )
+        .sort((a, b) => a.week.localeCompare(b.week))
+    : [];
   return (
-    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-      <LineChart data={parsedData}>
+    <ChartContainer
+      config={chartConfig}
+      className="max-h-[800px] min-h-[200px] w-full"
+    >
+      <BarChart data={parsedData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="week"
@@ -52,22 +106,20 @@ export function VeLordsRewardsChart({
           }}
         />
         <YAxis
-          yAxisId="apy"
-          dataKey="apy"
+          yAxisId="amount"
           label={{
-            value: "% APY (4 year lock)",
+            value: "Total Lords Rewards",
             angle: -90,
             position: "insideLeft",
             offset: 18,
           }}
         />
         <YAxis
-          yAxisId="total_amount"
+          yAxisId="apy"
           orientation="right"
-          dataKey="total_amount"
-          allowDataOverflow={true}
+          dataKey="apy"
           label={{
-            value: "Total Lords Rewards",
+            value: "% APY (4 year lock)",
             angle: -90,
             position: "outside",
             offset: 25,
@@ -75,25 +127,34 @@ export function VeLordsRewardsChart({
         />
         <ChartTooltip content={<ChartTooltipContent />} />
         <ChartLegend content={<ChartLegendContent />} />
-        <Line
-          dataKey="total_amount"
-          type="monotone"
-          yAxisId="total_amount"
-          stroke="var(--color-total_amount)"
-          fill="var(--color-total_amount)"
-          radius={4}
-          activeDot={{ r: 8 }}
-        />
+
+        {/* Stacked bars for each source */}
+        {Object.keys(sourceColors).map((source, index) => (
+          <Bar
+            key={source}
+            dataKey={`amounts.${source}`}
+            label={source}
+            stackId="rewards"
+            yAxisId="amount"
+            fill={sourceColors[source]}
+            stroke={sourceColors[source]}
+            radius={
+              index === Object.keys(sourceColors).length - 1
+                ? [4, 4, 0, 0]
+                : [0, 0, 0, 0]
+            }
+          />
+        ))}
+
         <Line
           dataKey="apy"
           type="monotone"
           yAxisId="apy"
-          fill="var(--color-apy)"
           stroke="var(--color-apy)"
-          radius={4}
+          fill="var(--color-apy)"
           activeDot={{ r: 8 }}
         />
-      </LineChart>
+      </BarChart>
     </ChartContainer>
   );
 }

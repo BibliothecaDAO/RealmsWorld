@@ -1,16 +1,19 @@
 "use client";
 
+import type { Address } from "@starknet-react/core";
+import type { BlockNumber } from "starknet";
 import { useMemo, useState } from "react";
+import Link from "next/link";
+import { VeLords as VeLordsABI } from "@/abi/L2/VeLords";
 import { TokenInput } from "@/app/_components/TokenInput";
 import { TokenBalance } from "@/app/(app)/bridge/TokenBalance";
 import { SUPPORTED_L2_CHAIN_ID } from "@/constants/env";
-import type { Address } from "@starknet-react/core";
-import { useAccount, useBalance, useReadContract } from "@starknet-react/core";
-import { formatEther, parseEther } from "viem";
-import { VeLords as VeLordsABI } from "@/abi/L2/VeLords";
+import { useVeLords } from "@/hooks/staking/useVeLords";
+import { useSimulateTransactions } from "@/hooks/useSimulateTransactions";
 import LordsIcon from "@/icons/lords.svg";
-
+import { api } from "@/trpc/react";
 import { LORDS, StakingAddresses } from "@realms-world/constants";
+import { Badge } from "@realms-world/ui/components/ui/badge";
 import { Button } from "@realms-world/ui/components/ui/button";
 import {
   Card,
@@ -22,26 +25,26 @@ import {
 } from "@realms-world/ui/components/ui/card";
 import { Input } from "@realms-world/ui/components/ui/input";
 import { Label } from "@realms-world/ui/components/ui/label";
+import { Slider } from "@realms-world/ui/components/ui/slider";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@realms-world/ui/components/ui/tabs";
-import { Slider } from "@realms-world/ui/components/ui/slider";
-import { Badge } from "@realms-world/ui/components/ui/badge";
-
-import { useVeLords } from "@/hooks/staking/useVeLords";
-import type { BlockNumber } from "starknet";
-import { BlockTag } from "starknet";
-import { VeLordsRewardsChart } from "./VeLordsRewardsChart";
-import { api } from "@/trpc/react";
-import { formatDistanceToNow } from "date-fns";
-import { differenceInSeconds, getUnixTime, fromUnixTime } from "date-fns";
-import { motion } from "framer-motion";
 import { formatNumber } from "@realms-world/utils";
-import Link from "next/link";
-import { useSimulateTransactions } from "@/hooks/useSimulateTransactions";
+import { useAccount, useBalance, useReadContract } from "@starknet-react/core";
+import {
+  differenceInSeconds,
+  formatDistanceToNow,
+  fromUnixTime,
+  getUnixTime,
+} from "date-fns";
+import { motion } from "framer-motion";
+import { BlockTag } from "starknet";
+import { formatEther, parseEther } from "viem";
+
+import { VeLordsRewardsChart } from "./VeLordsRewardsChart";
 
 const WEEK_IN_SECONDS = 7 * 24 * 60 * 60; // 1 week in seconds
 const YEAR_IN_SECONDS = 365 * 24 * 60 * 60; // 1 year in seconds
@@ -170,7 +173,7 @@ export const VeLords = () => {
   }, [ownerLordsLock?.end_time, lockWeeks]);
 
   const timeUntilUnlock = ownerLordsLock?.end_time
-    ? getTimeUntil(Number(ownerLordsLock?.end_time))
+    ? getTimeUntil(Number(ownerLordsLock.end_time))
     : undefined;
   const weeksToUnlock = toWeeks(timeUntilUnlock);
 
@@ -228,7 +231,7 @@ export const VeLords = () => {
         <CardHeader>
           <CardTitle className="flex items-center">
             {ownerLordsLock?.amount &&
-              formatNumber(Number(formatEther(ownerLordsLock?.amount)))}
+              formatNumber(Number(formatEther(ownerLordsLock.amount)))}
             <LordsIcon className="ml-2 h-7 w-7 fill-current" />
           </CardTitle>
         </CardHeader>
@@ -370,7 +373,7 @@ export const VeLords = () => {
                         </span>
                         <span className="text-sm opacity-80">
                           until{" "}
-                          {ownerLordsLock?.end_time &&
+                          {ownerLordsLock.end_time &&
                             formatLockEndTime(Number(ownerLordsLock.end_time))}
                         </span>
                       </Badge>

@@ -1,12 +1,21 @@
 "use client";
 
-import type { UseEmblaCarouselType } from "embla-carousel-react";
+import type {
+  EmblaCarouselType,
+  EmblaEventType,
+  UseEmblaCarouselType,
+} from "embla-carousel";
 import * as React from "react";
 import { cn } from "@realms-world/utils";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { Button } from "./button";
+
+const TWEEN_FACTOR_BASE = 0.15;
+
+const numberWithinRange = (number: number, min: number, max: number): number =>
+  Math.min(Math.max(number, min), max);
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -118,6 +127,77 @@ const Carousel = React.forwardRef<
         api.off("select", onSelect);
       };
     }, [api, onSelect]);
+
+    const tweenFactor = React.useRef(0);
+    const tweenNodes = React.useRef<HTMLElement[]>([]);
+
+    const setTweenNodes = React.useCallback((api: EmblaCarouselType): void => {
+      tweenNodes.current = api.slideNodes().map((slideNode) => {
+        return slideNode.querySelector(".embla__scale") as HTMLElement;
+      });
+    }, []);
+
+    const setTweenFactor = React.useCallback((api: EmblaCarouselType) => {
+      tweenFactor.current = TWEEN_FACTOR_BASE * api.scrollSnapList().length;
+    }, []);
+
+    const tweenScale = React.useCallback(
+      (api: EmblaCarouselType, eventName?: EmblaEventType) => {
+        const engine = api.internalEngine();
+        const scrollProgress = api.scrollProgress();
+        const slidesInView = api.slidesInView();
+        const isScrollEvent = eventName === "scroll";
+
+        api.scrollSnapList().forEach((scrollSnap, snapIndex) => {
+          let diffToTarget = scrollSnap - scrollProgress;
+          const slidesInSnap = engine.slideRegistry[snapIndex];
+
+          slidesInSnap.forEach((slideIndex) => {
+            if (isScrollEvent && !slidesInView.includes(slideIndex)) return;
+
+            if (engine.options.loop) {
+              engine.slideLooper.loopPoints.forEach((loopItem) => {
+                const target = loopItem.target();
+
+                if (slideIndex === loopItem.index && target !== 0) {
+                  const sign = Math.sign(target);
+
+                  if (sign === -1) {
+                    diffToTarget = scrollSnap - (1 + scrollProgress);
+                  }
+                  if (sign === 1) {
+                    diffToTarget = scrollSnap + (1 - scrollProgress);
+                  }
+                }
+              });
+            }
+
+            const tweenValue = 1 - Math.abs(diffToTarget * tweenFactor.current);
+            const scale = numberWithinRange(tweenValue, 0, 1).toString();
+            const tweenNode = tweenNodes.current[slideIndex];
+            if (tweenNode) {
+              tweenNode.style.transform = `scale(${scale})`;
+            }
+          });
+        });
+      },
+      [],
+    );
+
+    React.useEffect(() => {
+      if (!api) return;
+
+      setTweenNodes(api);
+      setTweenFactor(api);
+      tweenScale(api);
+
+      api
+        .on("reInit", setTweenNodes)
+        .on("reInit", setTweenFactor)
+        .on("reInit", tweenScale)
+        .on("scroll", tweenScale)
+        .on("slideFocus", tweenScale);
+    }, [api, tweenScale]);
 
     return (
       <CarouselContext.Provider
