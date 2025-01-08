@@ -2,16 +2,9 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { GameCard } from "@/app/(app)/games/GameCard";
-import LordsIcon from "@/icons/lords.svg";
 import { api, HydrateClient } from "@/trpc/server";
 import { reader } from "@/utils/keystatic";
 import { Button } from "@realms-world/ui/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@realms-world/ui/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -19,12 +12,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@realms-world/ui/components/ui/carousel";
-import { formatNumber } from "@realms-world/utils";
 
+import { AgentBanner } from "../_components/AgentBanner";
 import { PageLayout } from "../_components/PageLayout";
 import { Partners } from "../_components/Partners";
 import { VeLordsBanner } from "../_components/VeLordsBanner";
-import { VeLordsRewardsChart } from "./account/lords/velords/VeLordsRewardsChart";
 import { BlogGrid } from "./blogs/BlogGrid";
 import CollectionsList from "./collection/CollectionsList";
 
@@ -97,11 +89,32 @@ export default async function Home() {
           <h2 className="mb-4 font-sans text-xl sm:text-2xl md:text-3xl">
             All Games
           </h2>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {games.map((game, index) => (
-              <GameCard key={index} game={game.entry} slug={game.slug} />
-            ))}
+          <div className="">
+            <Carousel opts={{ dragFree: true }} className="w-full">
+              <CarouselContent>
+                {games.map((game, index) => (
+                  <CarouselItem
+                    className="translate-3d flex-[0_0_25%] pl-0"
+                    key={index}
+                  >
+                    <GameCard
+                      className="embla__scale"
+                      key={index}
+                      game={game.entry}
+                      slug={game.slug}
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2 sm:left-4 md:left-6 lg:left-8" />
+              <CarouselNext className="right-2 sm:right-4 md:right-6 lg:right-8" />
+            </Carousel>
           </div>
+
+          <Suspense fallback={<div>Loading...</div>}>
+            <VeLordsBanner />
+          </Suspense>
+          <AgentBanner />
 
           <div className="my-12 sm:my-16 md:my-20 lg:my-24">
             <h2 className="mb-4 font-sans text-xl sm:text-2xl md:text-3xl">
@@ -109,10 +122,6 @@ export default async function Home() {
             </h2>
             <BlogGrid />
           </div>
-
-          <Suspense fallback={<div>Loading...</div>}>
-            <VeLordsBanner />
-          </Suspense>
 
           <hr className="my-6 border sm:my-8" />
           <div className="my-12 sm:my-16 md:my-20">

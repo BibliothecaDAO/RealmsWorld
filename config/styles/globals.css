@@ -226,3 +226,7 @@ body::-webkit-scrollbar-thumb,
 .mask-transparent {
   position: relative;
 }
+
+.translate-3d {
+  transform: translate3d(0, 0, 0);
+}

@@ -39,7 +39,7 @@ export function VeLordsBanner() {
         <div className="hidden sm:block sm:w-1/2">
           <VeLordsRewardsChart
             data={data}
-            //totalSupply={totalSupply.new_supply}
+            totalSupply={totalSupplyData?.new_supply}
           />
         </div>
       </div>
@@ -67,7 +67,7 @@ export function VeLordsBanner() {
             <CardContent>
               <p className="flex text-2xl font-bold">
                 <LordsIcon className="mr-3 w-5" />
-                {formatNumber(1234567)}
+                {formatNumber(Number(totalSupplyData?.new_supply ?? 0))}
               </p>
             </CardContent>
           </Card>
