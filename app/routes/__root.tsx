@@ -8,7 +8,7 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { Spinner } from "./-components/spinner";
-import type { trpcQueryUtils } from "../router";
+import type { queryClient, trpcQueryUtils } from "../router";
 import {
   SidebarInset,
   SidebarProvider,
@@ -25,9 +25,12 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Header } from "@/components/layout/header";
 import { StarknetProvider } from "@/providers/starknet";
+import { ArkClient } from "@/lib/ark/client";
 
 export interface RouterAppContext {
   trpcQueryUtils: typeof trpcQueryUtils;
+  queryClient: typeof queryClient;
+  arkClient: ArkClient;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -41,20 +44,20 @@ function RootComponent() {
     <>
       <div className={`min-h-screen flex flex-col`}>
         <StarknetProvider>
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
-            <Header />
-            <Outlet />
-            {/*<div
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <Header />
+              <Outlet />
+              {/*<div
             className={`text-3xl duration-300 delay-0 opacity-0 ${
               isFetching ? ` duration-1000 opacity-40` : ''
             }`}
           >
             <Spinner />
           </div>*/}
-          </SidebarInset>
-        </SidebarProvider>
+            </SidebarInset>
+          </SidebarProvider>
         </StarknetProvider>
       </div>
       <TanStackRouterDevtools position="bottom-left" />
