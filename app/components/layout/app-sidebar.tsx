@@ -28,6 +28,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import RWLogo from "@/components/icons/rw-logo.svg";
+import { Link } from "@tanstack/react-router";
 // This is sample data.
 const data = {
   user: {
@@ -55,21 +56,21 @@ const data = {
   assets: [
     {
       title: "Realms",
-      url: "#",
+      url: "/realms",
       icon: Banknote,
       isActive: true,
       items: [
         {
           title: "Starknet Bridge",
-          url: "#",
+          url: "/realms/bridge",
         },
         {
           title: "Claim Rewards",
-          url: "#",
+          url: "/realms/claim",
         },
         {
           title: "Eternum Season Passes",
-          url: "#",
+          url: "https://empire.realms.world/season-passes",
         },
       ],
     },
@@ -86,11 +87,10 @@ const data = {
           title: "Banners",
           url: "#",
         },
-
       ],
     },
   ],
-  
+
   lords: [
     {
       title: "veLords (staking)",
@@ -125,11 +125,10 @@ const data = {
           title: "Legacy Claims",
           url: "#",
         },
-
       ],
     },
   ],
-  
+
   governance: [
     {
       title: "Delegation",
@@ -151,9 +150,7 @@ const data = {
       title: "Proposals",
       url: "#",
       icon: BookOpen,
-      items: [
-
-      ],
+      items: [],
     },
   ],
   information: [
@@ -233,14 +230,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="items-center">
-        <RWLogo className="w-24 h-auto" />
+        <Link to="/">
+          <RWLogo className="max-w-24 group-data-[state=expanded]:w-24 h-auto" />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <NavMain label="Game Assets" items={data.assets} />
         <NavMain label="Lords" items={data.lords} />
         <NavMain label="Governance" items={data.governance} />
         <NavMain label="Information" items={data.information} />
-
       </SidebarContent>
       <SidebarFooter>{/* <NavUser user={data.user} /> */}</SidebarFooter>
       <SidebarRail />

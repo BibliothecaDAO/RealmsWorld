@@ -13,7 +13,10 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
+import { Route as RealmsIndexImport } from './routes/realms.index'
 import { Route as DashboardIndexImport } from './routes/dashboard.index'
+import { Route as RealmsClaimImport } from './routes/realms.claim'
+import { Route as RealmsBridgeImport } from './routes/realms.bridge'
 import { Route as DashboardPostsImport } from './routes/dashboard.posts'
 import { Route as DashboardPostsIndexImport } from './routes/dashboard.posts.index'
 import { Route as DashboardPostsPostIdImport } from './routes/dashboard.posts.$postId'
@@ -32,10 +35,28 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const RealmsIndexRoute = RealmsIndexImport.update({
+  id: '/realms/',
+  path: '/realms/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const DashboardIndexRoute = DashboardIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => DashboardRoute,
+} as any)
+
+const RealmsClaimRoute = RealmsClaimImport.update({
+  id: '/realms/claim',
+  path: '/realms/claim',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RealmsBridgeRoute = RealmsBridgeImport.update({
+  id: '/realms/bridge',
+  path: '/realms/bridge',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const DashboardPostsRoute = DashboardPostsImport.update({
@@ -81,12 +102,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardPostsImport
       parentRoute: typeof DashboardImport
     }
+    '/realms/bridge': {
+      id: '/realms/bridge'
+      path: '/realms/bridge'
+      fullPath: '/realms/bridge'
+      preLoaderRoute: typeof RealmsBridgeImport
+      parentRoute: typeof rootRoute
+    }
+    '/realms/claim': {
+      id: '/realms/claim'
+      path: '/realms/claim'
+      fullPath: '/realms/claim'
+      preLoaderRoute: typeof RealmsClaimImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard/': {
       id: '/dashboard/'
       path: '/'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexImport
       parentRoute: typeof DashboardImport
+    }
+    '/realms/': {
+      id: '/realms/'
+      path: '/realms'
+      fullPath: '/realms'
+      preLoaderRoute: typeof RealmsIndexImport
+      parentRoute: typeof rootRoute
     }
     '/dashboard/posts/$postId': {
       id: '/dashboard/posts/$postId'
@@ -139,14 +181,20 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/dashboard/posts': typeof DashboardPostsRouteWithChildren
+  '/realms/bridge': typeof RealmsBridgeRoute
+  '/realms/claim': typeof RealmsClaimRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/realms': typeof RealmsIndexRoute
   '/dashboard/posts/$postId': typeof DashboardPostsPostIdRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/realms/bridge': typeof RealmsBridgeRoute
+  '/realms/claim': typeof RealmsClaimRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/realms': typeof RealmsIndexRoute
   '/dashboard/posts/$postId': typeof DashboardPostsPostIdRoute
   '/dashboard/posts': typeof DashboardPostsIndexRoute
 }
@@ -156,7 +204,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/dashboard/posts': typeof DashboardPostsRouteWithChildren
+  '/realms/bridge': typeof RealmsBridgeRoute
+  '/realms/claim': typeof RealmsClaimRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/realms/': typeof RealmsIndexRoute
   '/dashboard/posts/$postId': typeof DashboardPostsPostIdRoute
   '/dashboard/posts/': typeof DashboardPostsIndexRoute
 }
@@ -167,17 +218,30 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/dashboard/posts'
+    | '/realms/bridge'
+    | '/realms/claim'
     | '/dashboard/'
+    | '/realms'
     | '/dashboard/posts/$postId'
     | '/dashboard/posts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/dashboard/posts/$postId' | '/dashboard/posts'
+  to:
+    | '/'
+    | '/realms/bridge'
+    | '/realms/claim'
+    | '/dashboard'
+    | '/realms'
+    | '/dashboard/posts/$postId'
+    | '/dashboard/posts'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
     | '/dashboard/posts'
+    | '/realms/bridge'
+    | '/realms/claim'
     | '/dashboard/'
+    | '/realms/'
     | '/dashboard/posts/$postId'
     | '/dashboard/posts/'
   fileRoutesById: FileRoutesById
@@ -186,11 +250,17 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRouteWithChildren
+  RealmsBridgeRoute: typeof RealmsBridgeRoute
+  RealmsClaimRoute: typeof RealmsClaimRoute
+  RealmsIndexRoute: typeof RealmsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRouteWithChildren,
+  RealmsBridgeRoute: RealmsBridgeRoute,
+  RealmsClaimRoute: RealmsClaimRoute,
+  RealmsIndexRoute: RealmsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -204,7 +274,10 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/dashboard"
+        "/dashboard",
+        "/realms/bridge",
+        "/realms/claim",
+        "/realms/"
       ]
     },
     "/": {
@@ -225,9 +298,18 @@ export const routeTree = rootRoute
         "/dashboard/posts/"
       ]
     },
+    "/realms/bridge": {
+      "filePath": "realms.bridge.tsx"
+    },
+    "/realms/claim": {
+      "filePath": "realms.claim.tsx"
+    },
     "/dashboard/": {
       "filePath": "dashboard.index.tsx",
       "parent": "/dashboard"
+    },
+    "/realms/": {
+      "filePath": "realms.index.tsx"
     },
     "/dashboard/posts/$postId": {
       "filePath": "dashboard.posts.$postId.tsx",
