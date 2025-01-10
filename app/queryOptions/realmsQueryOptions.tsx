@@ -5,11 +5,13 @@ import { ArkClient } from "@/lib/ark/client";
 export const realmsQueryOptions = ({
   walletAddress,
   client,
+  collectionAddress
 }: {
   walletAddress: string;
+  collectionAddress?: string;
   client: ArkClient;
 }) =>
   queryOptions({
-    queryKey: ["realms" + walletAddress],
-    queryFn: () => getPortfolioTokens({walletAddress, client}),
+    queryKey: ["realms" + walletAddress + collectionAddress],
+    queryFn: () => getPortfolioTokens({walletAddress, client, collectionAddress}),
   });

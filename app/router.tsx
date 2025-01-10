@@ -34,6 +34,7 @@ export const trpcQueryUtils = createTRPCQueryUtils({
 export const arkClient = marketPlaceClientBuilder(window.fetch.bind(window));
 
 export function createRouter() {
+  
   const router = createTanStackRouter({
     routeTree,
     defaultPreload: 'intent',

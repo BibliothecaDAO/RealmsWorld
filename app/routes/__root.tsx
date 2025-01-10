@@ -26,6 +26,8 @@ import {
 import { Header } from "@/components/layout/header";
 import { StarknetProvider } from "@/providers/starknet";
 import { ArkClient } from "@/lib/ark/client";
+import { useAccount, UseAccountResult } from "@starknet-react/core";
+import { ThemeProvider } from "@/providers/theme";
 
 export interface RouterAppContext {
   trpcQueryUtils: typeof trpcQueryUtils;
@@ -39,25 +41,26 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 
 function RootComponent() {
   const isFetching = useRouterState({ select: (s) => s.isLoading });
-
   return (
     <>
       <div className={`min-h-screen flex flex-col`}>
         <StarknetProvider>
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>
-              <Header />
-              <Outlet />
-              {/*<div
+          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            <SidebarProvider>
+              <AppSidebar />
+              <SidebarInset>
+                <Header />
+                <Outlet />
+                {/*<div
             className={`text-3xl duration-300 delay-0 opacity-0 ${
               isFetching ? ` duration-1000 opacity-40` : ''
             }`}
           >
             <Spinner />
           </div>*/}
-            </SidebarInset>
-          </SidebarProvider>
+              </SidebarInset>
+            </SidebarProvider>
+          </ThemeProvider>
         </StarknetProvider>
       </div>
       <TanStackRouterDevtools position="bottom-left" />
