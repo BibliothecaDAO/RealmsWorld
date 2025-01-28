@@ -1,16 +1,7 @@
-
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./app/*"]
-    },
-    "strict": true,
-    "esModuleInterop": true,
-    "jsx": "react-jsx",
-    "target": "ESNext",
-    "moduleResolution": "Bundler",
-    "skipLibCheck": true,
-    "lib": ["DOM", "DOM.Iterable", "ES2022"]
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
