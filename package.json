@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "pnpm --filter @realms-world/account-portal dev",
     "apibara:start": "pnpm --filter @realms-world/apibara start",
-    "build": "tsc -b && vite build",
+    "apibara:build": "pnpm --filter @realms-world/apibara build",
     "lint": "eslint ."
   },
   "devDependencies": {
