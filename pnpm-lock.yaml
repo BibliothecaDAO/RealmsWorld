@@ -38,6 +38,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.10.0
         version: 3.10.0(react-hook-form@7.54.2(react@19.0.0))
+      '@radix-ui/react-accordion':
+        specifier: ^1.2.2
+        version: 1.2.2(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.4
         version: 1.1.5(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -231,6 +234,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.5.1)
+      dotenv-cli:
+        specifier: ^7.4.2
+        version: 7.4.4
       postcss:
         specifier: ^8.4.49
         version: 8.5.1
@@ -247,20 +253,20 @@ importers:
   packages/apibara:
     dependencies:
       '@apibara/evm':
-        specifier: 2.0.1-beta.29
-        version: 2.0.1-beta.29(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
+        specifier: 2.0.1-beta.30
+        version: 2.0.1-beta.30(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@apibara/indexer':
-        specifier: 2.0.0-beta.37
-        version: 2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)
+        specifier: 2.0.0-beta.38
+        version: 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)
       '@apibara/plugin-drizzle':
-        specifier: 2.0.0-beta.36
-        version: 2.0.0-beta.36(bufferutil@4.0.9)(drizzle-orm@0.37.0(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(@types/react@19.0.8)(pg@8.13.1)(react@19.0.0))(pg@8.13.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)
+        specifier: 2.0.0-beta.37
+        version: 2.0.0-beta.37(bufferutil@4.0.9)(drizzle-orm@0.37.0(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(@types/react@19.0.8)(pg@8.13.1)(react@19.0.0))(pg@8.13.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)
       '@apibara/protocol':
-        specifier: 2.0.0-beta.37
-        version: 2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
+        specifier: 2.0.0-beta.38
+        version: 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@apibara/starknet':
-        specifier: 2.0.0-beta.37
-        version: 2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
+        specifier: 2.0.0-beta.38
+        version: 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@realms-world/constants':
         specifier: workspace:*
         version: link:../constants
@@ -268,8 +274,8 @@ importers:
         specifier: workspace:*
         version: link:../db
       apibara:
-        specifier: 2.0.0-beta.37
-        version: 2.0.0-beta.37(bufferutil@4.0.9)(magicast@0.3.5)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)
+        specifier: 2.0.0-beta.38
+        version: 2.0.0-beta.38(bufferutil@4.0.9)(magicast@0.3.5)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)
       drizzle-orm:
         specifier: ^0.37
         version: 0.37.0(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(@types/react@19.0.8)(pg@8.13.1)(react@19.0.0)
@@ -295,6 +301,9 @@ importers:
       '@types/pg':
         specifier: ^8.11.10
         version: 8.11.11
+      dotenv-cli:
+        specifier: ^7.4.2
+        version: 7.4.4
       drizzle-kit:
         specifier: ^0.29.0
         version: 0.29.1
@@ -358,25 +367,25 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@apibara/evm@2.0.1-beta.29':
-    resolution: {integrity: sha512-4CoyLuGMpEdFL0fJdn06KJw31l++hsaB8bCE+DQGtIt9C4+aZFhTZArUo7ZTxthS29TEVjIFmOMGiGptFNicKw==}
+  '@apibara/evm@2.0.1-beta.30':
+    resolution: {integrity: sha512-W7zCS7/n+raxnbATXVmge9Tb+syv/qUj7nCLvXlvBw6NNRx7fgpMDHzEqgrlePQaj0/j7zx7qwxGE7x71t6FRA==}
 
-  '@apibara/indexer@2.0.0-beta.37':
-    resolution: {integrity: sha512-Vqg1OuoNB2RpyuUfcGH7ZxP0aUziMuNWxZojDkyfEcfinfV40PKzuUVjCc94amQG0OnyCDULuO1jGSoIWpbpdg==}
+  '@apibara/indexer@2.0.0-beta.38':
+    resolution: {integrity: sha512-pAnfypNcj+i6dlF8eCGrw4Of2OnRehoK1ThNjV4ZvrXE3P/DI6AR6HvDflAcEjea2ooqNk7xrKXjIhJtJdNGJg==}
     peerDependencies:
       vitest: ^1.6.0
 
-  '@apibara/plugin-drizzle@2.0.0-beta.36':
-    resolution: {integrity: sha512-/aOesh7vnJ0im5NlA/95t+ewNTCGqRV/9FaiQeLGVk2br8Mkt/nqSZzJY8u6xThXHuuf+2vFwgblqPSLjdZFQQ==}
+  '@apibara/plugin-drizzle@2.0.0-beta.37':
+    resolution: {integrity: sha512-v4MoyzM+xxtWp9yPc/LLuZeV64r/fsTWWYnsuTKPiBbX9jYoI75s1qOquCSaQ4kg2SgQyunADenvt8XK3QUEIA==}
     peerDependencies:
       drizzle-orm: ^0.37.0
       pg: ^8.13.1
 
-  '@apibara/protocol@2.0.0-beta.37':
-    resolution: {integrity: sha512-9TGeumU3MxMv50tcIEjB0OfnA0IX13q7g3vURYW2Jr+HPzHRM4T8ALwuh2TFa37pCW/b3yMaORsyGn6O08rVqw==}
+  '@apibara/protocol@2.0.0-beta.38':
+    resolution: {integrity: sha512-2r4Bd84priFBNAIpX4X0EhIsa6zeXGwgnRWy8eYJnP3ukBWjFY5s6CIc1fN1zCogXO/1QGQ3YtGjFm3/CL+hMA==}
 
-  '@apibara/starknet@2.0.0-beta.37':
-    resolution: {integrity: sha512-THcixqJ4alFjixrKRMq2z87R3ttT272SqHT/MBBJh0kojjWXNzeBgbbGr0zfuNIA4ZvdGfEJaRUD7Xj9d1ExjQ==}
+  '@apibara/starknet@2.0.0-beta.38':
+    resolution: {integrity: sha512-shUuGoecdrsUU6ILAjvUzLSxvMqMNmF7ed43d44g+FYvt1hu2fo3mLCfJQjg6jLD84JoWsBVgg9/fx54C0WmJg==}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -1899,6 +1908,19 @@ packages:
 
   '@radix-ui/primitive@1.1.1':
     resolution: {integrity: sha512-SJ31y+Q/zAyShtXJc8x83i9TYdbAfHZ++tUZnvjJJqFjzsdUnKsxPL6IEtBlxKkU7yzer//GQtZSV4GbldL3YA==}
+
+  '@radix-ui/react-accordion@1.2.2':
+    resolution: {integrity: sha512-b1oh54x4DMCdGsB4/7ahiSrViXxaBwRPotiZNnYXjLha9vfuURSAZErki6qjDoSIV0eXx5v57XnTGVtGwnfp2g==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
 
   '@radix-ui/react-alert-dialog@1.1.5':
     resolution: {integrity: sha512-1Y2sI17QzSZP58RjGtrklfSGIf3AF7U/HkD3aAcAnhOUJrm7+7GG1wRDFaUlSe0nW5B/t4mYd/+7RNbP2Wexug==}
@@ -3566,8 +3588,8 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
-  apibara@2.0.0-beta.37:
-    resolution: {integrity: sha512-NK25mOKrEZWYJgERwcE1mhtslXfaxcorTCC0C0/x7cE7jowivlWxYj5dchCsgebLAMpEZDlu+lHOMleqOXmA1w==}
+  apibara@2.0.0-beta.38:
+    resolution: {integrity: sha512-HZr3K1grjjAxR8ggOljG1FLfunjlcKdj/VqqIxuvCWVK2mWoe6LKwzgNisbXtg+k3IiBh3oqq8pAWmzWT3P/fw==}
     hasBin: true
 
   archiver-utils@5.0.2:
@@ -6856,9 +6878,9 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@apibara/evm@2.0.1-beta.29(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)':
+  '@apibara/evm@2.0.1-beta.30(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)':
     dependencies:
-      '@apibara/protocol': 2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
+      '@apibara/protocol': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@effect/schema': 0.67.24(effect@3.12.7)
       effect: 3.12.7
       long: 5.2.4
@@ -6871,9 +6893,9 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@apibara/indexer@2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)':
+  '@apibara/indexer@2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)':
     dependencies:
-      '@apibara/protocol': 2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
+      '@apibara/protocol': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@opentelemetry/api': 1.9.0
       ci-info: 4.1.0
       consola: 3.4.0
@@ -6888,10 +6910,10 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@apibara/plugin-drizzle@2.0.0-beta.36(bufferutil@4.0.9)(drizzle-orm@0.37.0(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(@types/react@19.0.8)(pg@8.13.1)(react@19.0.0))(pg@8.13.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)':
+  '@apibara/plugin-drizzle@2.0.0-beta.37(bufferutil@4.0.9)(drizzle-orm@0.37.0(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(@types/react@19.0.8)(pg@8.13.1)(react@19.0.0))(pg@8.13.1)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)':
     dependencies:
-      '@apibara/indexer': 2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)
-      '@apibara/protocol': 2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
+      '@apibara/indexer': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)
+      '@apibara/protocol': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
       drizzle-orm: 0.37.0(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(@types/react@19.0.8)(pg@8.13.1)(react@19.0.0)
       pg: 8.13.1
       postgres-range: 1.1.4
@@ -6902,7 +6924,7 @@ snapshots:
       - vitest
       - zod
 
-  '@apibara/protocol@2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)':
+  '@apibara/protocol@2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)':
     dependencies:
       '@effect/schema': 0.67.24(effect@3.12.7)
       effect: 3.12.7
@@ -6917,9 +6939,9 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@apibara/starknet@2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)':
+  '@apibara/starknet@2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)':
     dependencies:
-      '@apibara/protocol': 2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
+      '@apibara/protocol': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@effect/schema': 0.67.24(effect@3.12.7)
       '@scure/starknet': 1.1.0
       abi-wan-kanabi: 2.2.4
@@ -8179,6 +8201,23 @@ snapshots:
       '@babel/runtime': 7.26.7
 
   '@radix-ui/primitive@1.1.1': {}
+
+  '@radix-ui/react-accordion@1.2.2(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@radix-ui/primitive': 1.1.1
+      '@radix-ui/react-collapsible': 1.1.2(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-collection': 1.1.1(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-compose-refs': 1.1.1(@types/react@19.0.8)(react@19.0.0)
+      '@radix-ui/react-context': 1.1.1(@types/react@19.0.8)(react@19.0.0)
+      '@radix-ui/react-direction': 1.1.0(@types/react@19.0.8)(react@19.0.0)
+      '@radix-ui/react-id': 1.1.0(@types/react@19.0.8)(react@19.0.0)
+      '@radix-ui/react-primitive': 2.0.1(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-use-controllable-state': 1.1.0(@types/react@19.0.8)(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    optionalDependencies:
+      '@types/react': 19.0.8
+      '@types/react-dom': 19.0.3(@types/react@19.0.8)
 
   '@radix-ui/react-alert-dialog@1.1.5(@types/react-dom@19.0.3(@types/react@19.0.8))(@types/react@19.0.8)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -10959,10 +10998,10 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
-  apibara@2.0.0-beta.37(bufferutil@4.0.9)(magicast@0.3.5)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1):
+  apibara@2.0.0-beta.38(bufferutil@4.0.9)(magicast@0.3.5)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1):
     dependencies:
-      '@apibara/indexer': 2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)
-      '@apibara/protocol': 2.0.0-beta.37(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
+      '@apibara/indexer': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.0(@types/node@20.17.16)(terser@5.37.0))(zod@3.24.1)
+      '@apibara/protocol': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.1)
       '@rollup/plugin-commonjs': 26.0.3(rollup@4.32.1)
       '@rollup/plugin-json': 6.1.0(rollup@4.32.1)
       '@rollup/plugin-node-resolve': 15.3.1(rollup@4.32.1)
@@ -13246,7 +13285,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 20.17.16
+      '@types/node': 22.12.0
       long: 5.2.4
 
   proxy-compare@2.5.1: {}
