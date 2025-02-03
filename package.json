@@ -9,6 +9,7 @@
   "packageManager": "pnpm@9.15.2",
   "scripts": {
     "dev": "pnpm --filter @realms-world/account-portal dev",
+    "apibara:start": "pnpm --filter @realms-world/apibara start",
     "build": "tsc -b && vite build",
     "lint": "eslint ."
   },
