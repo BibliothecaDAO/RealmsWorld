@@ -11,6 +11,7 @@
     "dev": "pnpm --filter @realms-world/account-portal dev",
     "apibara:start": "pnpm --filter @realms-world/apibara start",
     "apibara:build": "pnpm --filter @realms-world/apibara build",
+    "db:push": "pnpm --filter @realms-world/db with-env drizzle-kit push",
     "lint": "eslint ."
   },
   "devDependencies": {
