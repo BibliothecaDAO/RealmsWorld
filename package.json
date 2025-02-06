@@ -18,6 +18,7 @@
     "@eslint/js": "^9.19.0",
     "eslint": "^9.19.0",
     "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.16"
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "typescript-eslint": "^8.23.0"
   }
 }
