@@ -12,13 +12,15 @@
     "apibara:start": "pnpm --filter @realms-world/apibara start",
     "apibara:build": "pnpm --filter @realms-world/apibara build",
     "db:push": "pnpm --filter @realms-world/db with-env drizzle-kit push",
-    "lint": "eslint ."
+    "lint": "pnpm --recursive run lint"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
+    "@realms-world/eslint-config": "workspace:*",
     "eslint": "^9.19.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "typescript-eslint": "^8.23.0"
-  }
+  },
+  "prettier": "@realms-world/prettier-config"
 }
