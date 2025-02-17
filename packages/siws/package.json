@@ -1,7 +1,6 @@
 {
-  "name": "siws",
+  "name": "@realms-world/siws",
   "version": "0.0.1",
-  "private": true,
   "description": "Sign-In with Starknet helper library",
   "type": "module",
   "exports": {
@@ -22,7 +21,7 @@
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
-  "author": "Nethermind",
+  "author": "Redbeard",
   "license": "Apache-2.0",
   "keywords": [
     "starknet",
