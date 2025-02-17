@@ -1,50 +1,48 @@
-# React + TypeScript + Vite
+<a href="https://twitter.com/lootrealms">
+<img src="https://img.shields.io/twitter/follow/lootrealms?style=social"/>
+</a>
+<a href="https://twitter.com/BibliothecaDAO">
+<img src="https://img.shields.io/twitter/follow/BibliothecaDAO?style=social"/>
+</a>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![discord](https://img.shields.io/badge/join-bibliothecadao-black?logo=discord&logoColor=white)](https://discord.gg/realmsworld)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Currently, two official plugins are available:
+![background](/apps/docs/assets/images/bg.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Realms.World - The Hub for the AW
 
-## Expanding the ESLint configuration
+### Realms.World is the information and activity hub for the Realms Autonomous World.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+[Realms.World](https://realms.world) is the central hub for the Realms Autonomous World, offering a comprehensive marketplace NFTs on Ethereum and Starknet. Features include:
 
-- Configure the top-level `parserOptions` property like this:
+- L1 Marketplace
+- L2 onchain Marketplace
+- Onchain Game Catalog
+- BibliothecaDAO metrics
+- Frontinus House
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+#### Quick Links
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- [Getting Started](#getting-started)
+- [Client Documentation](https://docs.realms.world/client-development)
+- [Developer Documentation](https://docs.realms.world)
+- [Add a Game](https://docs.realms.world/games)
+- [Add a Event](https://docs.realms.world/events)
+- [Add a Post](https://docs.realms.world/posts)
+- [License](./LICENSE)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Contributing
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+We welcome contributions from the community to help improve Realms.World.
+
+1. Fork the repository. Read the [guide](https://docs.realms.world/)
+2. Create a new branch for your changes.
+3. Make your changes and commit them to your branch. Make sure CI passes.
+4. Submit a pull request with a detailed description of your changes.
+
+We will review your contribution and provide feedback. Once your changes have been approved, they will be merged into the main branch.
+
+## License
+
+Realms.World is an open-source project released under the MIT License. This license allows you to freely use, modify, and distribute the code, as long as you include the original copyright and permission notice in any copy of the software or substantial portions of it
