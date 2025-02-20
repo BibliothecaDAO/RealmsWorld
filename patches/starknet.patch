@@ -1,0 +1,48 @@
+diff --git a/dist/index.js b/dist/index.js
+index d5ee251bc7a46a5385616968f5b7f21fec61843b..c2339a1fa6354f85a318e523d0d0882e7008908f 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -258,8 +258,8 @@ var ETransactionVersion3 = /* @__PURE__ */ ((ETransactionVersion36) => {
+ })(ETransactionVersion3 || {});
+ 
+ // src/types/api/index.ts
+-var RPCSPEC07 = __toESM(require("starknet-types-07"));
+-__reExport(api_exports, require("starknet-types-07"));
++var RPCSPEC07 = __toESM(require("@starknet-io/types-js"));
++__reExport(api_exports, require("@starknet-io/types-js"));
+ 
+ // src/utils/encode.ts
+ var encode_exports = {};
+@@ -533,7 +533,7 @@ var BlockTag = /* @__PURE__ */ ((BlockTag2) => {
+ })(BlockTag || {});
+ 
+ // src/types/typedData.ts
+-var import_starknet_types_07 = require("starknet-types-07");
++var import_starknet_types_07 = require("@starknet-io/types-js");
+ 
+ // src/utils/assert.ts
+ function assert(condition, message) {
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 285af31faefdbc90f1747463970f8e5c650e35e4..09434d626f01eb9661712247faa2e56a58bc692c 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -150,8 +150,8 @@ var ETransactionVersion3 = /* @__PURE__ */ ((ETransactionVersion36) => {
+ 
+ // src/types/api/index.ts
+ __reExport(api_exports, starknet_types_07_star);
+-import * as RPCSPEC07 from "starknet-types-07";
+-import * as starknet_types_07_star from "starknet-types-07";
++import * as RPCSPEC07 from "@starknet-io/types-js";
++import * as starknet_types_07_star from "@starknet-io/types-js";
+ 
+ // src/utils/encode.ts
+ var encode_exports = {};
+@@ -427,7 +427,7 @@ var BlockTag = /* @__PURE__ */ ((BlockTag2) => {
+ // src/types/typedData.ts
+ import {
+   TypedDataRevision
+-} from "starknet-types-07";
++} from "@starknet-io/types-js";
+ 
+ // src/utils/assert.ts
+ function assert(condition, message) {

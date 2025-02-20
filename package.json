@@ -22,5 +22,10 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "typescript-eslint": "^8.23.0"
   },
-  "prettier": "@realms-world/prettier-config"
+  "prettier": "@realms-world/prettier-config",
+  "pnpm": {
+    "patchedDependencies": {
+      "starknet": "patches/starknet.patch"
+    }
+  }
 }
