@@ -330,20 +330,20 @@ importers:
   packages/apibara:
     dependencies:
       '@apibara/evm':
-        specifier: 2.1.0-beta.4
-        version: 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+        specifier: 2.0.1-beta.30
+        version: 2.0.1-beta.30(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@apibara/indexer':
-        specifier: 2.1.0-beta.4
-        version: 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)
+        specifier: 2.0.0-beta.38
+        version: 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)
       '@apibara/plugin-drizzle':
-        specifier: 2.1.0-beta.4
-        version: 2.1.0-beta.4(bufferutil@4.0.9)(drizzle-orm@0.39.3(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(pg@8.13.3))(pg@8.13.3)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)
+        specifier: 2.0.0-beta.37
+        version: 2.0.0-beta.37(bufferutil@4.0.9)(drizzle-orm@0.39.3(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(pg@8.13.3))(pg@8.13.3)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)
       '@apibara/protocol':
-        specifier: 2.1.0-beta.4
-        version: 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+        specifier: 2.0.0-beta.38
+        version: 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@apibara/starknet':
-        specifier: 2.1.0-beta.4
-        version: 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+        specifier: 2.0.0-beta.38
+        version: 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@realms-world/constants':
         specifier: workspace:*
         version: link:../constants
@@ -351,8 +351,8 @@ importers:
         specifier: workspace:*
         version: link:../db
       apibara:
-        specifier: 2.1.0-beta.4
-        version: 2.1.0-beta.4(bufferutil@4.0.9)(magicast@0.3.5)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)
+        specifier: 2.0.0-beta.38
+        version: 2.0.0-beta.38(bufferutil@4.0.9)(magicast@0.3.5)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)
       drizzle-orm:
         specifier: 'catalog:'
         version: 0.39.3(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(pg@8.13.3)
@@ -506,25 +506,25 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@apibara/evm@2.1.0-beta.4':
-    resolution: {integrity: sha512-K8LPeNir9hkeYcrGPgmkugiVArdeC66wSnDTDaRfOtr5mY3s47Nw15PN4s5xKKUJyGAFA75PGz+e/CLgi554YQ==}
+  '@apibara/evm@2.0.1-beta.30':
+    resolution: {integrity: sha512-W7zCS7/n+raxnbATXVmge9Tb+syv/qUj7nCLvXlvBw6NNRx7fgpMDHzEqgrlePQaj0/j7zx7qwxGE7x71t6FRA==}
 
-  '@apibara/indexer@2.1.0-beta.4':
-    resolution: {integrity: sha512-l8a8OkPPc4rzrHZ3xSyswtZbCVwhY9PjtBnwwUuOXJFEVb3lBtKUifYtOc1nfvpzk0RVpU+DkKRwugRQbzuAgg==}
+  '@apibara/indexer@2.0.0-beta.38':
+    resolution: {integrity: sha512-pAnfypNcj+i6dlF8eCGrw4Of2OnRehoK1ThNjV4ZvrXE3P/DI6AR6HvDflAcEjea2ooqNk7xrKXjIhJtJdNGJg==}
     peerDependencies:
       vitest: ^1.6.0
 
-  '@apibara/plugin-drizzle@2.1.0-beta.4':
-    resolution: {integrity: sha512-Gqkj6tp6z6n2pW7MW5a7cNKaRSE/+53xXapWZ/c8+yKgCuiuSX2YlxFgS7V1ZWmSAcIr7ncb+RtRZE/+J9AlYA==}
+  '@apibara/plugin-drizzle@2.0.0-beta.37':
+    resolution: {integrity: sha512-v4MoyzM+xxtWp9yPc/LLuZeV64r/fsTWWYnsuTKPiBbX9jYoI75s1qOquCSaQ4kg2SgQyunADenvt8XK3QUEIA==}
     peerDependencies:
       drizzle-orm: ^0.37.0
       pg: ^8.13.1
 
-  '@apibara/protocol@2.1.0-beta.4':
-    resolution: {integrity: sha512-RZ6AOQtyhiv8L87t+/8ywWvXiQVcIiO5gp1P/hf6qGgKqz7jKX6bmJkwqUPUzdxV9FSOZfuZNzgGFHJGd9kzwQ==}
+  '@apibara/protocol@2.0.0-beta.38':
+    resolution: {integrity: sha512-2r4Bd84priFBNAIpX4X0EhIsa6zeXGwgnRWy8eYJnP3ukBWjFY5s6CIc1fN1zCogXO/1QGQ3YtGjFm3/CL+hMA==}
 
-  '@apibara/starknet@2.1.0-beta.4':
-    resolution: {integrity: sha512-/qyjvJh89Ggp6nuF1RfQR33XEc7UzmVlrMCPt/oS4wfOOXti08HOJewcYqQrgKEzCBZB0P6SF629N1b58qAo8Q==}
+  '@apibara/starknet@2.0.0-beta.38':
+    resolution: {integrity: sha512-shUuGoecdrsUU6ILAjvUzLSxvMqMNmF7ed43d44g+FYvt1hu2fo3mLCfJQjg6jLD84JoWsBVgg9/fx54C0WmJg==}
 
   '@ardatan/relay-compiler@12.0.2':
     resolution: {integrity: sha512-UTorfzSOtTN0PT80f8GiME2a30CliifqgZBKxhN3FESvdp5oEZWAO7nscMVKWoVl+NJy1tnNX0uMWCPBbMJdjg==}
@@ -715,6 +715,7 @@ packages:
 
   '@effect/schema@0.67.24':
     resolution: {integrity: sha512-IaJYTqvWxOCTio8PHHtiZALDfYkUX90lElsqtQtuCTcrR14nzxwUb1gPye5iS3rZjbcc4NiDsROBJJs4+wMP0g==}
+    deprecated: this package has been merged into the main effect package
     peerDependencies:
       effect: ^3.3.3
 
@@ -3799,9 +3800,6 @@ packages:
   '@trpc/server@10.45.2':
     resolution: {integrity: sha512-wOrSThNNE4HUnuhJG6PfDRp4L2009KDVxsd+2VYH8ro6o/7/jwYZ8Uu5j+VaW+mOmc8EHerHzGcdbGNQSAUPgg==}
 
-  '@ts-morph/common@0.26.1':
-    resolution: {integrity: sha512-Sn28TGl/4cFpcM+jwsH1wLncYq3FtN/BIpem+HOygfBWPT5pAeS5dB4VFVzV8FbnOKHpDLZmvAl4AjPEev5idA==}
-
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -4259,8 +4257,8 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
-  apibara@2.1.0-beta.4:
-    resolution: {integrity: sha512-HhhfY+PBVohdU+lsbhv773mmiAiTP38Bb0BXvrrS49mnrcxJoXeMBCmRihEVA0O0bGYtD3GTlD/KhigTcqG85w==}
+  apibara@2.0.0-beta.38:
+    resolution: {integrity: sha512-HZr3K1grjjAxR8ggOljG1FLfunjlcKdj/VqqIxuvCWVK2mWoe6LKwzgNisbXtg+k3IiBh3oqq8pAWmzWT3P/fw==}
     hasBin: true
 
   archiver-utils@5.0.2:
@@ -4672,9 +4670,6 @@ packages:
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
-
-  code-block-writer@13.0.3:
-    resolution: {integrity: sha512-Oofo0pq3IKnsFtuHqSF7TqBfr71aeyZDVJ0HpmqB7FBM2qEigL0iPONSCZSO9pE9dZTAxANe5XHG9Uy0YMv8cg==}
 
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -6435,10 +6430,6 @@ packages:
   keyvaluestorage-interface@1.0.0:
     resolution: {integrity: sha512-8t6Q3TclQ4uZynJY9IGr2+SsIGwK9JHcO6ootkHCGA0CrQCRy+VkouYNO2xicET6b9al7QKzpebNow+gkpCL8g==}
 
-  kleur@3.0.3:
-    resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
-    engines: {node: '>=6'}
-
   klona@2.0.6:
     resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
     engines: {node: '>= 8'}
@@ -7238,9 +7229,6 @@ packages:
   pascal-case@3.1.2:
     resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
 
-  path-browserify@1.0.1:
-    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
-
   path-case@3.0.4:
     resolution: {integrity: sha512-qO4qCFjXqVTrcbPt/hQfhTQ+VhFsqNKOPtytgNKkKxSoEp3XPUQ8ObFuePylOIok5gjn69ry8XiULxCwot3Wfg==}
 
@@ -7525,10 +7513,6 @@ packages:
 
   promise@7.3.1:
     resolution: {integrity: sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==}
-
-  prompts@2.4.2:
-    resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
-    engines: {node: '>= 6'}
 
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -8016,9 +8000,6 @@ packages:
   signedsource@1.0.0:
     resolution: {integrity: sha512-6+eerH9fEnNmi/hyM1DXcRK3pWdoMQtlkQ+ns0ntzunjKqp5i3sKCc80ym8Fib3iaYhdJUOPdhlJWj1tvge2Ww==}
 
-  sisteransi@1.0.5:
-    resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
-
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -8336,9 +8317,6 @@ packages:
 
   ts-mixer@6.0.4:
     resolution: {integrity: sha512-ufKpbmrugz5Aou4wcr5Wc1UUFWOLhq+Fm6qa6P0w0K5Qw2yhaUoiWszhCVuNQyNwrlGiscHOmqYoAox1PtvgjA==}
-
-  ts-morph@25.0.1:
-    resolution: {integrity: sha512-QJEiTdnz1YjrB3JFhd626gX4rKHDLSjSVMvGGG4v7ONc3RBwa0Eei98G9AT9uNFDMtV54JyuXsFeC+OH0n6bXQ==}
 
   tsconfck@3.1.5:
     resolution: {integrity: sha512-CLDfGgUp7XPswWnezWwsCRxNmgQjhYq3VXHM0/XIRxhVrKw0M1if9agzryh1QS3nxjCROvV+xWxoJO1YctzzWg==}
@@ -9064,9 +9042,9 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@apibara/evm@2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
+  '@apibara/evm@2.0.1-beta.30(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
     dependencies:
-      '@apibara/protocol': 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@apibara/protocol': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@effect/schema': 0.67.24(effect@3.13.2)
       effect: 3.13.2
       long: 5.3.1
@@ -9079,9 +9057,9 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@apibara/indexer@2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)':
+  '@apibara/indexer@2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)':
     dependencies:
-      '@apibara/protocol': 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@apibara/protocol': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@opentelemetry/api': 1.9.0
       ci-info: 4.1.0
       consola: 3.4.0
@@ -9096,10 +9074,10 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@apibara/plugin-drizzle@2.1.0-beta.4(bufferutil@4.0.9)(drizzle-orm@0.39.3(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(pg@8.13.3))(pg@8.13.3)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)':
+  '@apibara/plugin-drizzle@2.0.0-beta.37(bufferutil@4.0.9)(drizzle-orm@0.39.3(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(pg@8.13.3))(pg@8.13.3)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)':
     dependencies:
-      '@apibara/indexer': 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)
-      '@apibara/protocol': 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@apibara/indexer': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)
+      '@apibara/protocol': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       drizzle-orm: 0.39.3(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(pg@8.13.3)
       pg: 8.13.3
       postgres-range: 1.1.4
@@ -9110,7 +9088,7 @@ snapshots:
       - vitest
       - zod
 
-  '@apibara/protocol@2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
+  '@apibara/protocol@2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
     dependencies:
       '@effect/schema': 0.67.24(effect@3.13.2)
       effect: 3.13.2
@@ -9125,9 +9103,9 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@apibara/starknet@2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
+  '@apibara/starknet@2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
     dependencies:
-      '@apibara/protocol': 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@apibara/protocol': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@effect/schema': 0.67.24(effect@3.13.2)
       '@scure/starknet': 1.1.0
       abi-wan-kanabi: 2.2.4
@@ -13035,12 +13013,6 @@ snapshots:
 
   '@trpc/server@10.45.2': {}
 
-  '@ts-morph/common@0.26.1':
-    dependencies:
-      fast-glob: 3.3.3
-      minimatch: 9.0.5
-      path-browserify: 1.0.1
-
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.26.9
@@ -14019,10 +13991,10 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
-  apibara@2.1.0-beta.4(bufferutil@4.0.9)(magicast@0.3.5)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2):
+  apibara@2.0.0-beta.38(bufferutil@4.0.9)(magicast@0.3.5)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2):
     dependencies:
-      '@apibara/indexer': 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)
-      '@apibara/protocol': 2.1.0-beta.4(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@apibara/indexer': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.1)(terser@5.39.0))(zod@3.24.2)
+      '@apibara/protocol': 2.0.0-beta.38(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@rollup/plugin-commonjs': 26.0.3(rollup@4.34.8)
       '@rollup/plugin-json': 6.1.0(rollup@4.34.8)
       '@rollup/plugin-node-resolve': 15.3.1(rollup@4.34.8)
@@ -14041,13 +14013,9 @@ snapshots:
       ohash: 1.1.4
       pathe: 1.1.2
       perfect-debounce: 1.0.0
-      picocolors: 1.1.1
       pkg-types: 1.3.1
-      prettier: 3.5.2
-      prompts: 2.4.2
       rollup: 4.34.8
       rollup-plugin-esbuild: 6.2.0(esbuild@0.23.1)(rollup@4.34.8)
-      ts-morph: 25.0.1
       tslib: 2.8.1
       untyped: 1.5.2
     transitivePeerDependencies:
@@ -14556,8 +14524,6 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
       - '@types/react-dom'
-
-  code-block-writer@13.0.3: {}
 
   color-convert@2.0.1:
     dependencies:
@@ -16595,8 +16561,6 @@ snapshots:
 
   keyvaluestorage-interface@1.0.0: {}
 
-  kleur@3.0.3: {}
-
   klona@2.0.6: {}
 
   knitwork@1.2.0: {}
@@ -17690,8 +17654,6 @@ snapshots:
       no-case: 3.0.4
       tslib: 2.8.1
 
-  path-browserify@1.0.1: {}
-
   path-case@3.0.4:
     dependencies:
       dot-case: 3.0.4
@@ -17887,11 +17849,6 @@ snapshots:
   promise@7.3.1:
     dependencies:
       asap: 2.0.6
-
-  prompts@2.4.2:
-    dependencies:
-      kleur: 3.0.3
-      sisteransi: 1.0.5
 
   prop-types@15.8.1:
     dependencies:
@@ -18492,8 +18449,6 @@ snapshots:
 
   signedsource@1.0.0: {}
 
-  sisteransi@1.0.5: {}
-
   slash@3.0.0: {}
 
   slash@5.1.0: {}
@@ -18876,11 +18831,6 @@ snapshots:
   ts-log@2.2.7: {}
 
   ts-mixer@6.0.4: {}
-
-  ts-morph@25.0.1:
-    dependencies:
-      '@ts-morph/common': 0.26.1
-      code-block-writer: 13.0.3
 
   tsconfck@3.1.5(typescript@5.7.3):
     optionalDependencies:
