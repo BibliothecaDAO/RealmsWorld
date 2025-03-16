@@ -36,3 +36,6 @@ vite.config.js.timestamp_*
 vite.config.ts.timestamp_*
 app.config.js.timestamp_*
 app.config.ts.timestamp_*
+packages/db/drizzle/meta/
+
+*.sql

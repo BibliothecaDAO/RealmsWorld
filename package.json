@@ -12,6 +12,7 @@
     "apibara:start": "pnpm --filter @realms-world/apibara start",
     "apibara:build": "pnpm --filter @realms-world/apibara build",
     "db:push": "pnpm --filter @realms-world/db with-env drizzle-kit push",
+    "db:pull": "pnpm --filter @realms-world/db with-env drizzle-kit pull",
     "lint": "pnpm --recursive run lint"
   },
   "devDependencies": {
