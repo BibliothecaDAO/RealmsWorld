@@ -336,20 +336,20 @@ importers:
   packages/apibara:
     dependencies:
       '@apibara/evm':
-        specifier: 2.1.0-beta.14
-        version: 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+        specifier: 2.1.0-beta.20
+        version: 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@apibara/indexer':
-        specifier: 2.1.0-beta.14
-        version: 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)
+        specifier: 2.1.0-beta.20
+        version: 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)
       '@apibara/plugin-drizzle':
-        specifier: 2.1.0-beta.14
-        version: 2.1.0-beta.14(bufferutil@4.0.9)(drizzle-orm@0.39.3(@electric-sql/pglite@0.2.17)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(kysely@0.27.5)(pg@8.13.3))(pg@8.13.3)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)
+        specifier: 2.1.0-beta.20
+        version: 2.1.0-beta.20(bufferutil@4.0.9)(drizzle-orm@0.39.3(@electric-sql/pglite@0.2.17)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(kysely@0.27.5)(pg@8.13.3))(pg@8.13.3)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)
       '@apibara/protocol':
-        specifier: 2.1.0-beta.14
-        version: 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+        specifier: 2.1.0-beta.20
+        version: 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@apibara/starknet':
-        specifier: 2.1.0-beta.14
-        version: 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+        specifier: 2.1.0-beta.20
+        version: 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@electric-sql/pglite':
         specifier: ^0.2.17
         version: 0.2.17
@@ -360,8 +360,8 @@ importers:
         specifier: workspace:*
         version: link:../db
       apibara:
-        specifier: 2.1.0-beta.14
-        version: 2.1.0-beta.14(@babel/runtime@7.26.9)(bufferutil@4.0.9)(magicast@0.3.5)(rollup@4.34.8)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)
+        specifier: 2.1.0-beta.20
+        version: 2.1.0-beta.20(@babel/runtime@7.26.9)(bufferutil@4.0.9)(magicast@0.3.5)(rollup@4.34.8)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)
       drizzle-orm:
         specifier: 'catalog:'
         version: 0.39.3(@electric-sql/pglite@0.2.17)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(kysely@0.27.5)(pg@8.13.3)
@@ -530,25 +530,25 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@apibara/evm@2.1.0-beta.14':
-    resolution: {integrity: sha512-jd2DTteP8zgcvNWXXnTxC/QypzO6bCLBiOh8KjG7/cCZh6z3npa5kFmsifRB7UNj1P+fHbyf89JnapeFzpY6Dw==}
+  '@apibara/evm@2.1.0-beta.20':
+    resolution: {integrity: sha512-4k4Rk2D1hukwN8g72WUdITz5C9rAY46+1QxFEUMPPz00tqF54iPVf5OfDpo2W5zZspLXkW6+YWFplEC34bK9EA==}
 
-  '@apibara/indexer@2.1.0-beta.14':
-    resolution: {integrity: sha512-UeYm2hm3dmoy1v4N8DLolBV1ec/tDSi0pWk+eMncsZKV01X7i8QsGVSix4o5F+3ifRMAp8YY/RAGAyshILiwDQ==}
+  '@apibara/indexer@2.1.0-beta.20':
+    resolution: {integrity: sha512-zbSqyZlXcE3Mq0zKf18X7SvMZpk3Y4D3QdRhxrijOIPbqzZn7tzVMd29730jyEh5VbBGIjx5jDaODuuwG96qAg==}
     peerDependencies:
       vitest: ^1.6.0
 
-  '@apibara/plugin-drizzle@2.1.0-beta.14':
-    resolution: {integrity: sha512-EcWO8HZm67wAne8k7KFWJOTmxeWLBIeFPJNpdxdpYm8SzQh1qjcBhzcHIScrIb4hiiIklheKRcIiP526zNf55A==}
+  '@apibara/plugin-drizzle@2.1.0-beta.20':
+    resolution: {integrity: sha512-J5C7G8WlfryL8dPG2+CVgzNW/35xQRlFUkVUDQ4ibAR9yResMZ6Q5tpe9467fu7P3R087KCfumFr4RyXGWEeTg==}
     peerDependencies:
-      drizzle-orm: ^0.37.0
-      pg: ^8.13.1
+      drizzle-orm: <1
+      pg: '>=8'
 
-  '@apibara/protocol@2.1.0-beta.14':
-    resolution: {integrity: sha512-fHIj408+ezUQ/oP5yYjSbrCUSRfB2d+m1nlAfCCgrLL+haxmPyx2rYUPaZIQFB5y2FSwPJVpdm5nRxZmYAulHg==}
+  '@apibara/protocol@2.1.0-beta.20':
+    resolution: {integrity: sha512-jWFRssswqDqP8WsJ0Ttlo3z2AV6zoXVnoWukhQNzbZ5sZDjbb2lVmZLZODRN2f7uj1jpp1iIaWp4Q9XlgOTGQA==}
 
-  '@apibara/starknet@2.1.0-beta.14':
-    resolution: {integrity: sha512-+AZzNi1I0w7bIWbKZsXiYz/jRC/UGhuJcwXX1kdhYHXj6+N6vi03HskOnmj2VjsgULql1A95qklJbWjweO1NKg==}
+  '@apibara/starknet@2.1.0-beta.20':
+    resolution: {integrity: sha512-QKPyRu4oI+pXBh+tzB952EoazaSO/svCZ/74GqnWlnw3i60SqykU5ryk2wB0e06YT+990s3DD0HsLTsjIdxSlg==}
 
   '@ardatan/relay-compiler@12.0.2':
     resolution: {integrity: sha512-UTorfzSOtTN0PT80f8GiME2a30CliifqgZBKxhN3FESvdp5oEZWAO7nscMVKWoVl+NJy1tnNX0uMWCPBbMJdjg==}
@@ -4495,8 +4495,8 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
-  apibara@2.1.0-beta.14:
-    resolution: {integrity: sha512-4N1+jD2TYP7uBcrysWZlw8MjK3R4AqFVMgA/s06Z8pouFcZcXQ1tOLOaYFm5jlMGj/u+Sfgt0CAKWQExm7jQzQ==}
+  apibara@2.1.0-beta.20:
+    resolution: {integrity: sha512-mYWzXx4/ln0kB96ojOX6N3ZMr0MNIhOQoP39AKK5IIyN3BZ5dSxf0tpMh3v6pLg0vdiVJFw5FdxlwivK9cgDYg==}
     hasBin: true
 
   archiver-utils@5.0.2:
@@ -5023,6 +5023,10 @@ packages:
 
   consola@3.4.0:
     resolution: {integrity: sha512-EiPU8G6dQG0GFHNR8ljnZFki/8a+cQwEQ+7wpxdChl02Q8HXlwEZWD5lqAF8vC2sEC3Tehr8hy7vErz88LHyUA==}
+    engines: {node: ^14.18.0 || >=16.10.0}
+
+  consola@3.4.2:
+    resolution: {integrity: sha512-5IKcdX0nnYavi6G7TtOhwkYzyjfJlatbjMjuLSfE2kYT5pMDOilZ4OvMhi637CcDICTmz3wARPoyhqyX1Y+XvA==}
     engines: {node: ^14.18.0 || >=16.10.0}
 
   constant-case@3.0.4:
@@ -9808,9 +9812,9 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@apibara/evm@2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
+  '@apibara/evm@2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
     dependencies:
-      '@apibara/protocol': 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@apibara/protocol': 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@effect/schema': 0.67.24(effect@3.13.2)
       effect: 3.13.2
       long: 5.3.1
@@ -9823,12 +9827,12 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@apibara/indexer@2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)':
+  '@apibara/indexer@2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)':
     dependencies:
-      '@apibara/protocol': 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@apibara/protocol': 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@opentelemetry/api': 1.9.0
       ci-info: 4.1.0
-      consola: 3.4.0
+      consola: 3.4.2
       hookable: 5.5.3
       klona: 2.0.6
       nice-grpc: 2.1.11
@@ -9840,10 +9844,10 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@apibara/plugin-drizzle@2.1.0-beta.14(bufferutil@4.0.9)(drizzle-orm@0.39.3(@electric-sql/pglite@0.2.17)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(kysely@0.27.5)(pg@8.13.3))(pg@8.13.3)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)':
+  '@apibara/plugin-drizzle@2.1.0-beta.20(bufferutil@4.0.9)(drizzle-orm@0.39.3(@electric-sql/pglite@0.2.17)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(kysely@0.27.5)(pg@8.13.3))(pg@8.13.3)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)':
     dependencies:
-      '@apibara/indexer': 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)
-      '@apibara/protocol': 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@apibara/indexer': 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)
+      '@apibara/protocol': 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       drizzle-orm: 0.39.3(@electric-sql/pglite@0.2.17)(@neondatabase/serverless@0.10.4)(@opentelemetry/api@1.9.0)(@types/pg@8.11.11)(kysely@0.27.5)(pg@8.13.3)
       pg: 8.13.3
       postgres-range: 1.1.4
@@ -9854,7 +9858,7 @@ snapshots:
       - vitest
       - zod
 
-  '@apibara/protocol@2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
+  '@apibara/protocol@2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
     dependencies:
       '@effect/schema': 0.67.24(effect@3.13.2)
       effect: 3.13.2
@@ -9869,9 +9873,9 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@apibara/starknet@2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
+  '@apibara/starknet@2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)':
     dependencies:
-      '@apibara/protocol': 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@apibara/protocol': 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@effect/schema': 0.67.24(effect@3.13.2)
       '@scure/starknet': 1.1.0
       abi-wan-kanabi: 2.2.4
@@ -14864,16 +14868,16 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
-  apibara@2.1.0-beta.14(@babel/runtime@7.26.9)(bufferutil@4.0.9)(magicast@0.3.5)(rollup@4.34.8)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2):
+  apibara@2.1.0-beta.20(@babel/runtime@7.26.9)(bufferutil@4.0.9)(magicast@0.3.5)(rollup@4.34.8)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2):
     dependencies:
-      '@apibara/indexer': 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)
-      '@apibara/protocol': 2.1.0-beta.14(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
+      '@apibara/indexer': 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(vitest@1.6.1(@types/node@20.17.19)(lightningcss@1.29.2)(terser@5.39.0))(zod@3.24.2)
+      '@apibara/protocol': 2.1.0-beta.20(bufferutil@4.0.9)(typescript@5.7.3)(utf-8-validate@5.0.10)(zod@3.24.2)
       '@rollup/plugin-replace': 6.0.2(rollup@4.34.8)
       '@rollup/plugin-virtual': 3.0.2(rollup@4.34.8)
       c12: 1.11.2(magicast@0.3.5)
       chokidar: 3.6.0
       citty: 0.1.6
-      consola: 3.4.0
+      consola: 3.4.2
       defu: 6.1.4
       fs-extra: 11.3.0
       hookable: 5.5.3
@@ -15533,6 +15537,8 @@ snapshots:
   confbox@0.1.8: {}
 
   consola@3.4.0: {}
+
+  consola@3.4.2: {}
 
   constant-case@3.0.4:
     dependencies:
