@@ -10,26 +10,19 @@
 
 ![background](/apps/docs/assets/images/bg.png)
 
-# Realms.World - The Hub for the AW
+# Realms.World Account Portal 
 
-### Realms.World is the information and activity hub for the Realms Autonomous World.
+### The account potal 
 
 [Realms.World](https://realms.world) is the central hub for the Realms Autonomous World, offering a comprehensive marketplace NFTs on Ethereum and Starknet. Features include:
 
-- L1 Marketplace
-- L2 onchain Marketplace
-- Onchain Game Catalog
-- BibliothecaDAO metrics
-- Frontinus House
+- Realms Bridge (Ethereum <> Starknet)
+- Realms rewards and VeLords functionality
+- Governance (delegation and voting)
 
 #### Quick Links
 
 - [Getting Started](#getting-started)
-- [Client Documentation](https://docs.realms.world/client-development)
-- [Developer Documentation](https://docs.realms.world)
-- [Add a Game](https://docs.realms.world/games)
-- [Add a Event](https://docs.realms.world/events)
-- [Add a Post](https://docs.realms.world/posts)
 - [License](./LICENSE)
 
 ### Contributing
