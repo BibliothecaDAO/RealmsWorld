@@ -16,13 +16,13 @@ import { DelegateCardSkeleton } from "../governance/delegate-card-skeleton";
 
 export function HomepageSkeleton() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Assets Section */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Realms Card */}
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg">Realms</CardTitle>
+            <CardTitle className="">Realms</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
@@ -44,7 +44,7 @@ export function HomepageSkeleton() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex gap-2 pt-4">
+          <CardFooter className="flex gap-2 pt-2">
             <Button variant="outline" size="sm" className="w-full" disabled>
               <BridgeIcon className="mr-2 h-4 w-4" />
               Bridge
@@ -59,7 +59,7 @@ export function HomepageSkeleton() {
         {/* Lords Card */}
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg">
+            <CardTitle className="flex items-center gap-2">
               <LordsIcon className="h-6 w-6" />
               Lords
             </CardTitle>
@@ -96,16 +96,16 @@ export function HomepageSkeleton() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Claims Section */}
         <Card>
           <CardHeader className="pb-4">
-            <CardTitle className="text-lg">Available Claims</CardTitle>
+            <CardTitle className="">Available Claims</CardTitle>
           </CardHeader>
-          <CardContent className="p-6">
+          <CardContent>
             <div className="space-y-4">
               <div className="rounded-lg border p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <LordsIcon className="h-6 w-6" />
                     <div>
@@ -120,7 +120,7 @@ export function HomepageSkeleton() {
               </div>
 
               <div className="rounded-lg border p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <LordsIcon className="h-6 w-6" />
                     <div>
@@ -135,9 +135,12 @@ export function HomepageSkeleton() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="pt-0">
-            <Button className="w-full" disabled>
-              Claim All Rewards
+          <CardFooter className="flex flex-col gap-2 pt-0 sm:flex-row">
+            <Button className="flex-1" variant="outline" disabled>
+              Claim Realms
+            </Button>
+            <Button className="flex-1" variant="outline" disabled>
+              Claim veLords
             </Button>
           </CardFooter>
         </Card>
@@ -150,13 +153,13 @@ export function HomepageSkeleton() {
 
       {/* Proposals Section */}
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between pb-4">
-          <CardTitle className="text-lg">Recent Proposals</CardTitle>
+        <CardHeader className="flex flex-row items-center justify-between gap-3 pb-4">
+          <CardTitle className="">Recent Proposals</CardTitle>
           <Button variant="outline" size="sm" disabled>
             View All
           </Button>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent>
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
               <div key={i} className="border-b pb-4 last:border-0">
@@ -170,14 +173,14 @@ export function HomepageSkeleton() {
 
       {/* Realms Grid */}
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between pb-4">
-          <CardTitle className="text-lg">Your Realms</CardTitle>
+        <CardHeader className="flex flex-row items-center justify-between gap-3 pb-4">
+          <CardTitle className="">Your Realms</CardTitle>
           <Button variant="outline" size="sm" disabled>
             View All
           </Button>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-6">
             {[1, 2, 3, 4, 5].map((i) => (
               <div
                 key={i}

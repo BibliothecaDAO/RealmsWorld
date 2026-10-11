@@ -1,3 +1,9 @@
+import type { Address } from "@starknet-start/react";
+import type { Call } from "starknet";
+import { useMemo, useState } from "react";
+import { L2_C1ERC20 } from "@/abi/L2/C1ERC20";
+import { VeLords } from "@/abi/L2/VeLords";
+import LordsIcon from "@/components/icons/lords.svg?react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -12,21 +18,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { getTimeUntil, toWeeks, WEEK_IN_SECONDS } from "@/utils/time";
-import { formatNumber, SUPPORTED_L2_CHAIN_ID } from "@/utils/utils";
-import { formatDistanceToNow, getUnixTime } from "date-fns";
-import { Check, Plus, Wallet } from "lucide-react";
-import { useMemo, useState } from "react";
-import LordsIcon from "@/components/icons/lords.svg?react";
-import { formatEther } from "viem";
-import type { Address} from "@starknet-start/react";
-import { useAccount, useContract } from "@starknet-start/react";
-import { L2_C1ERC20 } from "@/abi/L2/C1ERC20";
-import { LORDS, StakingAddresses } from "@realms-world/constants";
-import type { Call } from "starknet";
-import { VeLords } from "@/abi/L2/VeLords";
 import { toast } from "@/hooks/use-toast";
 import { parseOptionalStakeAmount } from "@/lib/velords-utils";
+import { getTimeUntil, toWeeks, WEEK_IN_SECONDS } from "@/utils/time";
+import { formatNumber, SUPPORTED_L2_CHAIN_ID } from "@/utils/utils";
+import { useAccount, useContract } from "@starknet-start/react";
+import { formatDistanceToNow, getUnixTime } from "date-fns";
+import { Check, Plus, Wallet } from "lucide-react";
+import { formatEther } from "viem";
+
+import { LORDS, StakingAddresses } from "@realms-world/constants";
 
 function formatLockEndTime(timestamp: number): string {
   const date = new Date(timestamp * 1000);
@@ -135,18 +136,19 @@ export function StakeDialog({
 
       setIsSubmitting(true);
       const hash = await manageLordsLock(calls);
-        toast({
-          description: (
-            <div className="flex items-center gap-2">
-              <Check /> Lords Lock Update successful {hash.transaction_hash}
-            </div>
-          ),
-        });
-        setOpen(false);
+      toast({
+        description: (
+          <div className="flex items-center gap-2">
+            <Check /> Lords Lock Update successful {hash.transaction_hash}
+          </div>
+        ),
+      });
+      setOpen(false);
     } catch (error) {
       toast({
         variant: "destructive",
-        description: error instanceof Error ? error.message : "Unable to update lock.",
+        description:
+          error instanceof Error ? error.message : "Unable to update lock.",
       });
     } finally {
       setIsSubmitting(false);
@@ -177,36 +179,37 @@ export function StakeDialog({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button onClick={() => setOpen(true)}>
-          <Plus className="w-4 h-4" /> 
+          <Plus className="h-4 w-4" />
           {isLockExpired ? "Create New Lock" : "Stake"}
         </Button>
       </DialogTrigger>
       <DialogPortal>
         <DialogOverlay />
-        <DialogContent>
-          <DialogTitle className="text-xl font-bold mb-4">
+        <DialogContent className="max-h-[90dvh] overflow-y-auto">
+          <DialogTitle className="mb-4 text-xl font-bold">
             {isLockExpired ? "Create New $LORDS Lock" : "$LORDS Staking"}
           </DialogTitle>
           {isLockExpired && (
-            <div className="mb-4 p-3 bg-warning/10 border border-warning rounded-md">
-              <p className="text-sm text-warning-foreground">
-                Your previous lock has expired. You can create a new lock or withdraw your Lords.
+            <div className="bg-warning/10 border-warning mb-4 rounded-md border p-3">
+              <p className="text-warning-foreground text-sm">
+                Your previous lock has expired. You can create a new lock or
+                withdraw your Lords.
               </p>
             </div>
           )}
           <div>
             <Label>Current Lock</Label>
-            <div className="flex gap-4 my-4">
-              <Card>
+            <div className="my-4 flex flex-col gap-3 sm:flex-row sm:gap-4">
+              <Card className="flex-1">
                 <CardHeader className="p-3">
                   <CardTitle className="text-sm">Locked Lords</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {ownerLordsLock?.amount ? (
                     <div className="flex items-center gap-2">
-                      <LordsIcon className="w-4 h-4" />{" "}
+                      <LordsIcon className="h-4 w-4" />{" "}
                       {formatNumber(
-                        Number(formatEther(BigInt(ownerLordsLock.amount)))
+                        Number(formatEther(BigInt(ownerLordsLock.amount))),
                       )}
                     </div>
                   ) : (
@@ -227,20 +230,20 @@ export function StakeDialog({
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <div className="flex flex-col mb-3">
-              <div className="flex justify-between">
+            <div className="mb-3 flex flex-col">
+              <div className="flex flex-wrap items-center justify-between gap-2">
                 <Label className="flex-1">Stake Lords</Label>
-                <div className="flex justify-end items-end gap-2">
+                <div className="flex flex-wrap items-center justify-end gap-2">
                   <Button
                     onClick={() => setStakeByFraction(1)}
                     variant={"link"}
-                    className="p-1 h-7"
+                    className="h-8 p-1"
                   >
-                    <Wallet className="w-4 mr-1" />
+                    <Wallet className="mr-1 w-4" />
                     {lordsBalance ? formatNumber(Number(lordsBalance)) : "0"}
                   </Button>
                   <Button
-                    className="p-1 h-7 rounded"
+                    className="h-8 min-w-11 rounded px-2"
                     variant="outline"
                     size="sm"
                     onClick={() => setStakeByFraction(1)}
@@ -248,7 +251,7 @@ export function StakeDialog({
                     Max
                   </Button>
                   <Button
-                    className="p-1 h-7 rounded"
+                    className="h-8 min-w-11 rounded px-2"
                     variant="outline"
                     size="sm"
                     onClick={() => setStakeByFraction(0.5)}
@@ -256,7 +259,7 @@ export function StakeDialog({
                     50%
                   </Button>
                   <Button
-                    className="p-1 h-7 rounded"
+                    className="h-8 min-w-11 rounded px-2"
                     variant="outline"
                     size="sm"
                     onClick={() => setStakeByFraction(0.25)}
@@ -265,7 +268,7 @@ export function StakeDialog({
                   </Button>
                 </div>
               </div>
-              <div className="border flex items-center pl-4 mt-2">
+              <div className="mt-2 flex items-center border pl-4">
                 <div className="flex items-center gap-2 uppercase">
                   <LordsIcon className="w-7" />
                   Lords
@@ -274,12 +277,14 @@ export function StakeDialog({
                   value={stakeAmount}
                   onChange={handleInputChange}
                   placeholder="0.00"
-                  className="border-0 px-4 py-3 h-12 md:text-xl text-right"
+                  className="h-12 border-0 px-4 py-3 text-right md:text-xl"
                 />
               </div>
             </div>
             <Label>
-              {isLockExpired ? "Lock Duration" : `Lock Duration (+${lockWeeks} weeks)`}
+              {isLockExpired
+                ? "Lock Duration"
+                : `Lock Duration (+${lockWeeks} weeks)`}
             </Label>
             <Slider
               className="my-2"
@@ -291,7 +296,7 @@ export function StakeDialog({
               disabled={!canExtendLock}
             />
             {lockWeeks > 0 ? (
-              <p className="text-sm text-muted">
+              <p className="text-muted text-sm">
                 New lock end:{" "}
                 <span className="text-muted-foreground">
                   {formatLockEndTime(newLockEndTime)}

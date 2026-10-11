@@ -23,11 +23,13 @@ const GridDetails = ({
   tokenId: number;
   address?: string;
 }) => (
-  <div className="flex h-full w-full flex-col justify-between">
-    <div className="pb-2">
-      <span className="truncate">{token?.name ?? `Realm #${tokenId}`}</span>
+  <div className="flex h-full w-full min-w-0 flex-col justify-between">
+    <div className="min-w-0 pb-2">
+      <span className="block truncate">
+        {token?.name ?? `Realm #${tokenId}`}
+      </span>
     </div>
-    <div className="h-[48px]">
+    <div className="h-[48px] overflow-hidden">
       <RealmResources traits={token?.attributes ?? []} />
     </div>
   </div>
@@ -67,7 +69,7 @@ export const RealmCard = ({
           </span>
         )}
       </div>
-      <CardContent className="p-4">
+      <CardContent className="p-3 sm:p-4">
         <GridDetails token={parsedMetadata} tokenId={token.token_id} />
       </CardContent>
     </Card>

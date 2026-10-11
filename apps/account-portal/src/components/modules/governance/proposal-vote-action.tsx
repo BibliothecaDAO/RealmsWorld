@@ -23,8 +23,8 @@ export const ProposalVoteAction = ({ proposal }: { proposal: Proposal }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [voteReason, setVoteReason] = useState("");
   const proposalTitle =
-    ((proposal as { metadata?: { title?: string } }).metadata?.title ??
-      "this proposal");
+    (proposal as { metadata?: { title?: string } }).metadata?.title ??
+    "this proposal";
   const { address } = useAccount();
   const { requestConnect } = useStarknetWallet();
 
@@ -63,28 +63,28 @@ export const ProposalVoteAction = ({ proposal }: { proposal: Proposal }) => {
           onClick={() => openVoteDialog(Choice.For)}
           variant="outline"
           size="icon"
-          className="rounded-full border-success bg-success/10 hover:bg-success/20"
+          className="border-success bg-success/10 hover:bg-success/20 size-11 rounded-full sm:size-9"
           title="Vote FOR"
         >
-          <Check className="h-5 w-5 text-success" />
+          <Check className="text-success h-5 w-5" />
         </Button>
         <Button
           onClick={() => openVoteDialog(Choice.Abstain)}
           variant="outline"
           size="icon"
-          className="rounded-full border-muted-foreground bg-muted hover:bg-muted/80"
+          className="border-muted-foreground bg-muted hover:bg-muted/80 size-11 rounded-full sm:size-9"
           title="Vote ABSTAIN"
         >
-          <Minus className="h-5 w-5 text-muted-foreground" />
+          <Minus className="text-muted-foreground h-5 w-5" />
         </Button>
         <Button
           onClick={() => openVoteDialog(Choice.Against)}
           variant="outline"
           size="icon"
-          className="rounded-full border-destructive bg-destructive/10 hover:bg-destructive/20"
+          className="border-destructive bg-destructive/10 hover:bg-destructive/20 size-11 rounded-full sm:size-9"
           title="Vote AGAINST"
         >
-          <X className="h-5 w-5 text-destructive" />
+          <X className="text-destructive h-5 w-5" />
         </Button>
       </div>
 
@@ -93,7 +93,9 @@ export const ProposalVoteAction = ({ proposal }: { proposal: Proposal }) => {
           <DialogHeader>
             <DialogTitle>Confirm Your Vote</DialogTitle>
             <DialogDescription>
-              You are voting on: {proposalTitle}
+              <span className="break-words">
+                You are voting on: {proposalTitle}
+              </span>
             </DialogDescription>
           </DialogHeader>
 
@@ -103,7 +105,7 @@ export const ProposalVoteAction = ({ proposal }: { proposal: Proposal }) => {
               onValueChange={(value) =>
                 setSelectedChoice(Number(value) as Choice)
               }
-              className="grid grid-cols-3 gap-4"
+              className="grid grid-cols-3 gap-2 sm:gap-4"
             >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem
@@ -113,7 +115,7 @@ export const ProposalVoteAction = ({ proposal }: { proposal: Proposal }) => {
                 />
                 <Label
                   htmlFor="vote-for"
-                  className="flex items-center text-success"
+                  className="text-success flex items-center"
                 >
                   <Check className="mr-1 h-4 w-4" /> For
                 </Label>
@@ -127,7 +129,7 @@ export const ProposalVoteAction = ({ proposal }: { proposal: Proposal }) => {
                 />
                 <Label
                   htmlFor="vote-abstain"
-                  className="flex items-center text-muted-foreground"
+                  className="text-muted-foreground flex items-center"
                 >
                   <Minus className="mr-1 h-4 w-4" /> Abstain
                 </Label>
@@ -141,7 +143,7 @@ export const ProposalVoteAction = ({ proposal }: { proposal: Proposal }) => {
                 />
                 <Label
                   htmlFor="vote-against"
-                  className="flex items-center text-destructive"
+                  className="text-destructive flex items-center"
                 >
                   <X className="mr-1 h-4 w-4" /> Against
                 </Label>
@@ -159,7 +161,7 @@ export const ProposalVoteAction = ({ proposal }: { proposal: Proposal }) => {
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="gap-2">
             <Button onClick={() => setDialogOpen(false)} variant="outline">
               Cancel
             </Button>

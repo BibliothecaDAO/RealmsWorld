@@ -78,11 +78,14 @@ export function Header() {
             />
           </Link>
         </div>
-        <div className="flex flex-1 items-center justify-between px-3 sm:px-4">
-          <div className="flex items-center justify-between gap-2">
+        <div className="flex min-w-0 flex-1 items-center justify-between gap-2 px-3 sm:px-4">
+          <div className="flex min-w-0 items-center gap-2">
             <SidebarTrigger className="-ml-1" />
             <ModeToggle />
-            <Separator orientation="vertical" className="mr-2 h-4" />
+            <Separator
+              orientation="vertical"
+              className="mr-2 hidden h-4 sm:block"
+            />
             <Breadcrumbs />
           </div>
           {address ? (
@@ -91,25 +94,27 @@ export function Header() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="flex items-center gap-2 rounded-xl px-3"
+                  className="flex shrink-0 items-center gap-2 rounded-xl px-2.5 sm:px-3"
                 >
                   <img
-                    className="w-7"
+                    className="w-6 shrink-0 sm:w-7"
                     src={getConnectorIcon(connector)}
                     alt={connector?.name ?? "Wallet"}
                   />
                   {shortenAddress(address)}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent align="end">
                 <DropdownMenuLabel className="flex flex-col gap-6 p-4">
-                  <div className="flex items-center gap-2">
+                  <div className="flex min-w-0 items-center gap-2">
                     <Avatar className="mr-1 size-8">
                       <AvatarImage
                         src={`https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${address}`}
                       />
                     </Avatar>
-                    <div className="text-xl">{shortenAddress(address)}</div>
+                    <div className="truncate text-xl">
+                      {shortenAddress(address)}
+                    </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <a

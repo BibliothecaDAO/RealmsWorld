@@ -39,14 +39,13 @@ export const ClaimRewards = () => {
   const explorer = useExplorer();
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="flex flex-col gap-6 p-4 sm:p-6">
       <div className="space-y-2">
-        <p className="realm-eyebrow">Realms</p>
         <h1 className="realm-page-title text-3xl sm:text-4xl">
           Past Realms Claims Dashboard
         </h1>
       </div>
-      <div className="grid gap-6 sm:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
         {/* Claim Rewards Section */}
         <Card className="relative overflow-hidden">
           <CardHeader>
@@ -96,8 +95,8 @@ export const ClaimRewards = () => {
           <CardTitle>Past Claim Transactions</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
+          <div className="-mx-2 overflow-x-auto sm:mx-0">
+            <table className="min-w-full divide-y divide-gray-200 text-sm whitespace-nowrap">
               <thead>
                 <tr>
                   <th className="px-4 py-2 text-left">Date</th>
@@ -107,6 +106,18 @@ export const ClaimRewards = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
+                {!pastLordsClaims?.length && (
+                  <tr>
+                    <td
+                      colSpan={4}
+                      className="text-muted-foreground px-4 py-8 text-center"
+                    >
+                      {address
+                        ? "No past claims found."
+                        : "Connect your Starknet wallet to view past claims."}
+                    </td>
+                  </tr>
+                )}
                 {pastLordsClaims?.map((tx) => (
                   <tr key={tx.hash}>
                     <td className="px-4 py-2">{tx.timestamp}</td>

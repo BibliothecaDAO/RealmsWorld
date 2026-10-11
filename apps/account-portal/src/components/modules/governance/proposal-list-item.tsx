@@ -34,8 +34,7 @@ export const ProposalListItem = ({
   const isActive = proposal.max_end * 1000 > Date.now();
   const scoresTotal = Number(proposal.scores_total);
   const scoresFor = Number(proposal.scores_1);
-  const progressValue =
-    scoresTotal > 0 ? (scoresFor / scoresTotal) * 100 : 0;
+  const progressValue = scoresTotal > 0 ? (scoresFor / scoresTotal) * 100 : 0;
 
   return (
     <div className="flex flex-col gap-3 border-b py-4 last:border-b-0 sm:flex-row sm:items-center sm:gap-4">
@@ -46,10 +45,10 @@ export const ProposalListItem = ({
       >
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-1">
-            <h4 className="realm-card-title line-clamp-2">
+            <h4 className="realm-card-title line-clamp-2 break-words">
               {proposal.metadata?.title ?? `Proposal #${proposal.id}`}
             </h4>
-            <div className="text-muted-foreground text-sm">
+            <div className="text-muted-foreground truncate text-sm">
               {getProposalId(proposal)} by{" "}
               {name || shortenAddress(proposal.author.id)}
             </div>
@@ -67,19 +66,19 @@ export const ProposalListItem = ({
       </Link>
 
       {isActive ? (
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <ProposalVoteAction proposal={proposal} />
         </div>
       ) : (
-        <div className="flex flex-shrink-0 flex-col items-end gap-2">
+        <div className="flex shrink-0 flex-col gap-2 sm:items-end">
           <Progress
             value={progressValue}
-            className="w-full bg-destructive/60 sm:w-32"
+            className="bg-destructive/60 w-full sm:w-32"
             indicatorColor="bg-success"
           />
 
           <div className="text-muted-foreground text-sm">
-            <div className="flex items-center gap-2">
+            <div className="flex min-h-5 items-center gap-2">
               {voteChoice == 4 ? (
                 ""
               ) : voteChoice === 1 ? (

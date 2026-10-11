@@ -10,8 +10,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Label } from "@/components/ui/label";
-import { getVelordsSourceLabel } from "@/lib/velords-sources";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { getVelordsSourceLabel } from "@/lib/velords-sources";
 import { Bar, BarChart, CartesianGrid, Line, XAxis, YAxis } from "recharts";
 import { formatUnits } from "viem";
 
@@ -31,6 +31,15 @@ const fallbackSourceColors = [
   "hsl(var(--chart-4))",
   "hsl(var(--chart-5))",
 ];
+
+const compactFormatter = new Intl.NumberFormat("en-US", {
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
+
+function compactNumber(value: number) {
+  return Number.isFinite(value) ? compactFormatter.format(value) : "0";
+}
 
 const chartConfig = {
   total_amount: {
@@ -64,9 +73,9 @@ export function VeLordsRewardsChart({
   isLoading?: boolean;
   errorMessage?: string;
 }) {
-  const [localSelectedPeriod, setLocalSelectedPeriod] = useState<"3m" | "6m" | "1y">(
-    "3m",
-  );
+  const [localSelectedPeriod, setLocalSelectedPeriod] = useState<
+    "3m" | "6m" | "1y"
+  >("3m");
   const currentSelectedPeriod = selectedPeriod ?? localSelectedPeriod;
 
   const handlePeriodChange = (value: string) => {
@@ -140,7 +149,8 @@ export function VeLordsRewardsChart({
       const senderLabel = getVelordsSourceLabel(item.sender);
 
       const weekData = allWeeks[week];
-      weekData.amounts[senderLabel] = (weekData.amounts[senderLabel] || 0) + formattedAmount;
+      weekData.amounts[senderLabel] =
+        (weekData.amounts[senderLabel] || 0) + formattedAmount;
       weekData.total_amount += formattedAmount;
       weekData.apy =
         totalSupply && totalSupply > 0
@@ -154,14 +164,17 @@ export function VeLordsRewardsChart({
   }, [data, totalSupplyRaw]);
 
   const allSenderLabels = useMemo(
-    () => Array.from(new Set(data?.map((item) => getVelordsSourceLabel(item.sender)) ?? [])),
+    () =>
+      Array.from(
+        new Set(data?.map((item) => getVelordsSourceLabel(item.sender)) ?? []),
+      ),
     [data],
   );
 
   // Build dynamic chart config using labels
   const dynamicChartConfig: Record<
     string,
-      { label: string; color: string; icon?: typeof LordsIcon }
+    { label: string; color: string; icon?: typeof LordsIcon }
   > &
     typeof chartConfig = {
     ...chartConfig,
@@ -177,7 +190,10 @@ export function VeLordsRewardsChart({
             const knownColor = senderAddress
               ? sourceColors[senderAddress as keyof typeof sourceColors]
               : undefined;
-            return knownColor ?? fallbackSourceColors[index % fallbackSourceColors.length];
+            return (
+              knownColor ??
+              fallbackSourceColors[index % fallbackSourceColors.length]
+            );
           })(),
         },
       ]),
@@ -186,32 +202,32 @@ export function VeLordsRewardsChart({
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>Lords Rewards per Week</div>
-        <div className="flex items-center space-x-4">
-          <Label htmlFor="time-period" className="text-sm font-medium">
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-medium whitespace-nowrap">
             Time Period:
-          </Label>
+          </span>
           <RadioGroup
             value={currentSelectedPeriod}
             onValueChange={handlePeriodChange}
-            className="flex space-x-2"
+            className="flex gap-3"
           >
             <div className="flex items-center space-x-1">
               <RadioGroupItem value="3m" id="3m" />
-              <Label htmlFor="3m" className="text-sm">
+              <Label htmlFor="3m" className="cursor-pointer py-2 pl-1 text-sm">
                 3m
               </Label>
             </div>
             <div className="flex items-center space-x-1">
               <RadioGroupItem value="6m" id="6m" />
-              <Label htmlFor="6m" className="text-sm">
+              <Label htmlFor="6m" className="cursor-pointer py-2 pl-1 text-sm">
                 6m
               </Label>
             </div>
             <div className="flex items-center space-x-1">
               <RadioGroupItem value="1y" id="1y" />
-              <Label htmlFor="1y" className="text-sm">
+              <Label htmlFor="1y" className="cursor-pointer py-2 pl-1 text-sm">
                 1y
               </Label>
             </div>
@@ -221,76 +237,83 @@ export function VeLordsRewardsChart({
 
       <ChartContainer
         config={dynamicChartConfig}
-        className="max-h-[800px] w-full overflow-x-auto"
+        className="!aspect-auto h-[320px] w-full px-2 pb-4 sm:h-[380px] sm:px-4"
       >
         {errorMessage ? (
           <div className="text-destructive p-6 text-sm">{errorMessage}</div>
         ) : isLoading ? (
-          <div className="p-6 text-sm text-muted-foreground">Loading chart data...</div>
+          <div className="text-muted-foreground p-6 text-sm">
+            Loading chart data...
+          </div>
         ) : parsedData.length === 0 ? (
-          <div className="p-6 text-sm text-muted-foreground">
+          <div className="text-muted-foreground p-6 text-sm">
             No rewards data is available for this period.
           </div>
         ) : (
-        <BarChart data={parsedData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="week"
-            label={{
-              value: "Week Starting",
-              position: "insideBottomLeft",
-              offset: -5,
-            }}
-          />
-          <YAxis
-            yAxisId="amount"
-            label={{
-              value: "Total Lords Rewards",
-              angle: -90,
-              position: "insideLeft",
-              offset: 18,
-            }}
-          />
-          <YAxis
-            yAxisId="apy"
-            orientation="right"
-            dataKey="apy"
-            label={{
-              value: "% APY (4 year lock)",
-              angle: -90,
-              position: "outside",
-              offset: 25,
-            }}
-          />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <ChartLegend content={<ChartLegendContent />} />
-
-          {/* Stacked bars for each source (using labels) */}
-          {allSenderLabels.map((label, index) => (
-            <Bar
-              key={label}
-              dataKey={`amounts.${label}`}
-              stackId="rewards"
+          <BarChart
+            data={parsedData}
+            margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              dataKey="week"
+              tickLine={false}
+              minTickGap={32}
+              tickFormatter={(value: string) => value.slice(5)}
+            />
+            <YAxis
               yAxisId="amount"
-              fill={dynamicChartConfig[`amounts.${label}`].color}
-              stroke={dynamicChartConfig[`amounts.${label}`].color}
-              radius={
-                index === allSenderLabels.length - 1
-                  ? [4, 4, 0, 0]
-                  : [0, 0, 0, 0]
+              width={44}
+              tickLine={false}
+              tickFormatter={(value: number) => compactNumber(value)}
+            />
+            <YAxis
+              yAxisId="apy"
+              orientation="right"
+              dataKey="apy"
+              width={40}
+              tickLine={false}
+              tickFormatter={(value: number) => `${compactNumber(value)}%`}
+            />
+            <ChartTooltip
+              content={
+                <ChartTooltipContent
+                  labelFormatter={(v) => `Week of ${String(v)}`}
+                />
               }
             />
-          ))}
+            <ChartLegend
+              content={
+                <ChartLegendContent className="flex-wrap gap-x-4 gap-y-1" />
+              }
+            />
 
-          <Line
-            dataKey="apy"
-            type="monotone"
-            yAxisId="apy"
-            stroke="var(--color-apy)"
-            fill="var(--color-apy)"
-            activeDot={{ r: 8 }}
-          />
-        </BarChart>
+            {/* Stacked bars for each source (using labels) */}
+            {allSenderLabels.map((label, index) => (
+              <Bar
+                key={label}
+                dataKey={`amounts.${label}`}
+                stackId="rewards"
+                yAxisId="amount"
+                fill={dynamicChartConfig[`amounts.${label}`].color}
+                stroke={dynamicChartConfig[`amounts.${label}`].color}
+                radius={
+                  index === allSenderLabels.length - 1
+                    ? [4, 4, 0, 0]
+                    : [0, 0, 0, 0]
+                }
+              />
+            ))}
+
+            <Line
+              dataKey="apy"
+              type="monotone"
+              yAxisId="apy"
+              stroke="var(--color-apy)"
+              fill="var(--color-apy)"
+              activeDot={{ r: 8 }}
+            />
+          </BarChart>
         )}
       </ChartContainer>
     </Card>

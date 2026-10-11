@@ -110,15 +110,15 @@ export function UnlockDialog({
       </DialogTrigger>
       <DialogPortal>
         <DialogOverlay />
-        <DialogContent>
+        <DialogContent className="max-h-[90dvh] overflow-y-auto">
           <DialogTitle className="flex items-center gap-3 text-xl font-bold">
             <Unlock className="h-6 w-6" />
             {isLockExpired ? "Withdraw Lords" : "Early Withdrawal"}
           </DialogTitle>
           <div>
             <Label>Current Lock</Label>
-            <div className="my-4 flex gap-4">
-              <Card>
+            <div className="my-4 flex flex-col gap-3 sm:flex-row sm:gap-4">
+              <Card className="flex-1">
                 <CardHeader className="p-3">
                   <CardTitle className="text-sm">Locked Lords</CardTitle>
                 </CardHeader>
@@ -150,19 +150,22 @@ export function UnlockDialog({
           <div className="mb-4 flex flex-col gap-4">
             {isLockExpired ? (
               <p className="">
-                Your lock has expired. You can withdraw your Lords without penalty.
+                Your lock has expired. You can withdraw your Lords without
+                penalty.
               </p>
             ) : (
               <p className="">
-                Pay a penalty determined by lock duration to withdraw your locked
-                Lords early
+                Pay a penalty determined by lock duration to withdraw your
+                locked Lords early
               </p>
             )}
             <div className="flex">
               <Card className="w-auto">
                 <CardHeader className="p-3">
                   <CardTitle className="text-sm">
-                    {isLockExpired ? "Amount to Withdraw" : "After Withdrawal Penalty"}
+                    {isLockExpired
+                      ? "Amount to Withdraw"
+                      : "After Withdrawal Penalty"}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -179,7 +182,7 @@ export function UnlockDialog({
                         )}
                       </div>
                       {!isLockExpired && (
-                        <div className="text-xs text-destructive">
+                        <div className="text-destructive text-xs">
                           Penalty: {formatEther(BigInt(penalty))} LORDS (
                           {(
                             (Number(penalty) / Number(ownerLordsLock.amount)) *

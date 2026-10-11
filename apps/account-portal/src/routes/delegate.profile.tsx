@@ -67,15 +67,40 @@ function RouteComponent() {
         } as React.CSSProperties
       }
     >
-      <SidebarInset>
-        <div className="container mx-auto space-y-4 px-4 py-6 sm:px-6 sm:py-8">
-          <p className="realm-eyebrow">Governance</p>
+      <SidebarInset className="min-w-0">
+        <div className="container mx-auto min-w-0 space-y-4 px-4 py-6 sm:px-6 sm:py-8">
           <h1 className="realm-page-title text-3xl sm:text-4xl">
-            Your Profile {shortenAddress(session?.user.id)}
+            Your Profile{" "}
+            <span className="break-all">
+              {shortenAddress(session?.user.id)}
+            </span>
           </h1>
+          {delegate && (
+            <Card className="md:hidden">
+              <CardContent className="space-y-3 p-4 text-sm">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="flex items-center gap-2 font-medium">
+                    <Vote className="text-primary h-4 w-4" /> Delegated Votes
+                  </span>
+                  <Badge variant="outline" className="text-primary text-lg">
+                    {formatNumber(Number(delegate.delegatedVotes)) || "0"}{" "}
+                    Realms
+                  </Badge>
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="flex items-center gap-2 font-medium">
+                    <Users className="text-primary h-4 w-4" /> Token Holders
+                  </span>
+                  <Badge variant="outline" className="text-primary text-lg">
+                    {delegate.tokenHoldersRepresentedAmount || "0"}
+                  </Badge>
+                </div>
+              </CardContent>
+            </Card>
+          )}
           {!isLoading && (
             <Card>
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <DelegateProfileForm
                   delegate={
                     delegate?.delegateProfile
@@ -114,7 +139,7 @@ function RouteComponent() {
             <SidebarGroupLabel>Profile Information</SidebarGroupLabel>
             <div className="p-4 text-sm">
               {name ? (
-                <p>{name}</p>
+                <p className="break-all">{name}</p>
               ) : (
                 <p>Connect your wallet to view your profile information</p>
               )}

@@ -28,19 +28,23 @@ function RealmsComponent() {
     status: inventory?.status,
   });
   if (!address) {
-    return <div>Connect Starknet Wallet to view your Realms</div>;
+    return (
+      <div className="text-muted-foreground flex min-h-[40vh] items-center justify-center p-6 text-center">
+        Connect your Starknet wallet to view your Realms
+      </div>
+    );
   }
 
   return (
-    <div className="flex flex-col gap-2 p-4">
-      <div className="flex gap-2">
+    <div className="flex flex-col gap-4 p-4">
+      <div className="flex flex-wrap gap-2">
         <Link to={`/realms/bridge`}>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="h-10 sm:h-8">
             <BridgeIcon className="h-5! w-5!" /> Starknet Bridge
           </Button>
         </Link>
         <Link to={`/realms/claims`}>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="h-10 sm:h-8">
             <HandCoins /> Claim Lords
           </Button>
         </Link>
@@ -55,14 +59,18 @@ function RealmsComponent() {
         />
       )}
       {inventoryViewState === "ready" && (
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
-          {l2Realms.length
-            ? l2Realms.map((realm) => {
-                return (
-                  <RealmCard key={realm.token_id} token={realm} isGrid={true} />
-                );
-              })
-            : "No Realms Found in wallet"}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
+          {l2Realms.length ? (
+            l2Realms.map((realm) => {
+              return (
+                <RealmCard key={realm.token_id} token={realm} isGrid={true} />
+              );
+            })
+          ) : (
+            <p className="text-muted-foreground col-span-full py-8 text-center">
+              No Realms Found in wallet
+            </p>
+          )}
         </div>
       )}
     </div>

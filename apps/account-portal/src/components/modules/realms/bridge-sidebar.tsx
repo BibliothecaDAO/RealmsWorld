@@ -143,17 +143,17 @@ const BridgeSidebar: React.FC<BridgeSidebarProps> = ({
       className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
     >
       <SidebarHeader className="space-y-3">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <span className="text-muted-foreground text-sm">Ethereum Wallet</span>
           <EthereumConnect />
         </div>
         <SidebarSeparator className="mx-0" />
-        <h2 className="realm-card-title">
+        <h2 className="realm-card-title text-balance">
           Bridging {selectedRows.length} Realms to
           {selectedAsset === "Ethereum" ? " Starknet" : " Ethereum"}
         </h2>
         <SidebarGroup>
-          <div className="mb-4 flex flex-wrap gap-2">
+          <div className="mb-4 flex max-h-32 flex-wrap gap-2 overflow-y-auto">
             {selectedRows.map((row) => (
               <span
                 className="rounded border p-1 text-sm"

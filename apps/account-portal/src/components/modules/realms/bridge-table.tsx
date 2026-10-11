@@ -1,22 +1,19 @@
+import type { BridgeRealm } from "@/types/ark";
+import type { ColumnDef, Table as ReactTable } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
-import type {
-  ColumnDef,
-  Table as ReactTable} from "@tanstack/react-table";
-import {
-  flexRender,
-} from "@tanstack/react-table";
+import { flexRender } from "@tanstack/react-table";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+
 import RealmResources from "./realm-resources";
-import type { BridgeRealm } from "@/types/ark";
 
 export const columns: ColumnDef<BridgeRealm>[] = [
   {
@@ -53,7 +50,11 @@ export const columns: ColumnDef<BridgeRealm>[] = [
     accessorKey: "name",
     header: () => <div className="">Name</div>,
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("name")}</div>;
+      return (
+        <div className="font-medium whitespace-nowrap">
+          {row.getValue("name")}
+        </div>
+      );
     },
   },
   {
@@ -61,7 +62,7 @@ export const columns: ColumnDef<BridgeRealm>[] = [
     header: () => <div className="">Resources</div>,
     cell: ({ row }) => {
       return (
-        <div className="font-medium">
+        <div className="font-medium whitespace-nowrap">
           {row.getValue("attributes") ? (
             <RealmResources traits={row.getValue("attributes")} />
           ) : null}
@@ -76,10 +77,9 @@ interface BridgeTableProps {
 }
 
 export const BridgeTable: React.FC<BridgeTableProps> = ({ table }) => {
-
   return (
-    <div>
-      <div className="rounded-md border">
+    <div className="min-w-0">
+      <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -91,7 +91,7 @@ export const BridgeTable: React.FC<BridgeTableProps> = ({ table }) => {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -104,6 +104,7 @@ export const BridgeTable: React.FC<BridgeTableProps> = ({ table }) => {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
+                  className="cursor-pointer"
                   data-state={row.getIsSelected() && "selected"}
                   onClick={() => {
                     row.toggleSelected();
@@ -113,7 +114,7 @@ export const BridgeTable: React.FC<BridgeTableProps> = ({ table }) => {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -132,15 +133,16 @@ export const BridgeTable: React.FC<BridgeTableProps> = ({ table }) => {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+      <div className="flex items-center justify-end gap-2 py-4">
+        <div className="text-muted-foreground flex-1 text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="space-x-2">
+        <div className="flex gap-2">
           <Button
             variant="outline"
             size="sm"
+            aria-label="Previous page"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
@@ -149,6 +151,7 @@ export const BridgeTable: React.FC<BridgeTableProps> = ({ table }) => {
           <Button
             variant="outline"
             size="sm"
+            aria-label="Next page"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >

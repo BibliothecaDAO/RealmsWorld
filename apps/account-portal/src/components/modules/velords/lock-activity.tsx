@@ -28,7 +28,9 @@ export function VelordsLockActivity({
       </CardHeader>
       <CardContent>
         {isLoading ? (
-          <div className="text-muted-foreground text-sm">Loading lock activity...</div>
+          <div className="text-muted-foreground text-sm">
+            Loading lock activity...
+          </div>
         ) : data.length === 0 ? (
           <div className="text-muted-foreground text-sm">
             No lock activity is available for this period.
@@ -45,9 +47,13 @@ export function VelordsLockActivity({
             <TableBody>
               {data.map((row) => (
                 <TableRow key={row.week}>
-                  <TableCell>{row.week}</TableCell>
+                  <TableCell className="whitespace-nowrap tabular-nums">
+                    {row.week}
+                  </TableCell>
                   <TableCell className="text-right">{row.updates}</TableCell>
-                  <TableCell className="text-right">{row.uniqueWallets}</TableCell>
+                  <TableCell className="text-right">
+                    {row.uniqueWallets}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -57,4 +63,3 @@ export function VelordsLockActivity({
     </Card>
   );
 }
-

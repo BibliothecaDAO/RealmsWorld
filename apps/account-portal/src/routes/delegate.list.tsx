@@ -27,13 +27,13 @@ function RouteComponent() {
   const [sortMethod, setSortMethod] = useState<"desc" | "random">("random");
 
   return (
-    <div className="h-screen overflow-auto">
+    <div className="h-screen min-w-0 overflow-auto">
       {/* Sticky search input */}
-      <div className="bg-card/85 top-0 z-10 mb-4 flex justify-between gap-6 rounded-xl border p-3 backdrop-blur-sm sm:sticky">
+      <div className="bg-card/85 top-0 z-10 mb-4 flex items-center justify-between gap-3 rounded-xl border p-2 backdrop-blur-sm sm:sticky sm:gap-6 sm:p-3">
         <Input
           type="text"
-          className="h-12 w-full rounded border p-3"
-          placeholder="Search delegate address..."
+          className="h-12 min-w-0 flex-1 rounded border p-3"
+          placeholder="Search delegates..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -41,7 +41,7 @@ function RouteComponent() {
       </div>
       <Suspense
         fallback={
-          <div className="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 p-1 sm:gap-6 sm:p-4 md:grid-cols-2 xl:grid-cols-3">
             {Array.from({ length: 6 }).map((_, index) => (
               <DelegateCardSkeleton key={index} />
             ))}

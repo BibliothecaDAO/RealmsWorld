@@ -9,7 +9,11 @@ import { BridgeTable } from "@/components/modules/realms/bridge-table";
 import { OwnershipStatusAlert } from "@/components/modules/realms/ownership-status-alert";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  useSidebar,
+} from "@/components/ui/sidebar";
 import { useStarknetWallet } from "@/hooks/use-starknet-wallet";
 import { getL1RealmsQueryOptions } from "@/lib/getL1Realms";
 import { getRealmInventoryQueryOptions } from "@/lib/realms/get-realm-inventory";
@@ -65,6 +69,21 @@ function parseRealmMetadata(
   } catch {
     return {};
   }
+}
+
+function MobileBridgeBar({ selectedCount }: { selectedCount: number }) {
+  const { isMobile, toggleSidebar } = useSidebar();
+  if (!isMobile) return null;
+
+  return (
+    <div className="bg-background/95 sticky bottom-0 z-10 -mx-4 mt-auto border-t py-3 pr-20 pl-4 backdrop-blur">
+      <Button className="h-11 w-full" onClick={toggleSidebar}>
+        {selectedCount
+          ? `Review & bridge ${selectedCount} Realm${selectedCount === 1 ? "" : "s"}`
+          : "Open bridge panel & history"}
+      </Button>
+    </div>
+  );
 }
 
 function RouteComponent() {
@@ -172,10 +191,10 @@ function RouteComponent() {
       }
       className="flex flex-1"
     >
-      <SidebarInset className="px-6">
-        <PageHeader eyebrow="Realms" title="Starknet Bridge" className="mt-6" />
-        <div className="mb-6 flex items-center justify-center gap-3">
-          <div className="realm-subtle-panel flex items-center gap-2 rounded-lg px-4 py-2.5">
+      <SidebarInset className="px-4 sm:px-6">
+        <PageHeader title="Starknet Bridge" className="mt-4 sm:mt-6" />
+        <div className="mb-6 flex items-center justify-center gap-2 sm:gap-3">
+          <div className="realm-subtle-panel flex min-w-0 flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 sm:flex-none sm:px-4">
             <span className="text-muted-foreground text-sm">From</span>
             {selectedAsset === "Ethereum" ? (
               <>
@@ -193,11 +212,12 @@ function RouteComponent() {
             size="icon"
             variant="outline"
             onClick={swapAssets}
-            className="rounded-full"
+            aria-label="Swap bridge direction"
+            className="size-10 shrink-0 rounded-full"
           >
             <ArrowLeftRight className="h-4 w-4" />
           </Button>
-          <div className="realm-subtle-panel flex items-center gap-2 rounded-lg px-4 py-2.5">
+          <div className="realm-subtle-panel flex min-w-0 flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 sm:flex-none sm:px-4">
             <span className="text-muted-foreground text-sm">To</span>
             {selectedAsset === "Ethereum" ? (
               <>
@@ -215,7 +235,7 @@ function RouteComponent() {
         {selectedAsset === "Ethereum" && !l1Address && (
           <Alert variant="warning" className="mb-4 rounded">
             <TriangleAlert className="h-5 w-5" />
-            <AlertTitle className="text-lg">
+            <AlertTitle className="text-base sm:text-lg">
               Your Ethereum wallet is not connected
             </AlertTitle>
             <AlertDescription>
@@ -227,7 +247,7 @@ function RouteComponent() {
         {selectedAsset === "Starknet" && !l2Address && (
           <Alert variant="warning" className="mb-4 rounded">
             <TriangleAlert className="h-5 w-5" />
-            <AlertTitle className="text-lg">
+            <AlertTitle className="text-base sm:text-lg">
               Your Starknet wallet is not connected
             </AlertTitle>
             <AlertDescription>
@@ -259,6 +279,9 @@ function RouteComponent() {
             <BridgeTable table={table} />
           </Suspense>
         )}
+        <MobileBridgeBar
+          selectedCount={bridgeDisabled ? 0 : selectedRows.length}
+        />
       </SidebarInset>
       <BridgeSidebar
         disabled={bridgeDisabled}
