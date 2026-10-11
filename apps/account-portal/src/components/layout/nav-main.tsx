@@ -1,6 +1,4 @@
-"use client";
-
-import type { LucideIcon } from "lucide-react";
+import type { NavGroup } from "./nav-config";
 import {
   Collapsible,
   CollapsibleContent,
@@ -16,56 +14,74 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 
-export function NavMain({
-  items,
-  label,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-  label: string;
-}) {
+import { isActivePath, isExternal } from "./nav-config";
+
+/** Internal or external link; forwards Slot props (className, data-*) from SidebarMenuButton. */
+function NavLink({
+  url,
+  ...props
+}: React.ComponentProps<"a"> & { url: string }) {
+  return isExternal(url) ? (
+    <a href={url} target="_blank" rel="noopener noreferrer" {...props} />
+  ) : (
+    <Link to={url} {...props} />
+  );
+}
+
+export function NavMain({ group }: { group: NavGroup }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{label}</SidebarGroupLabel>
+      <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) =>
-          item.items ? (
+        {group.items.map((item) => {
+          const childActive =
+            item.items?.some((sub) => isActivePath(pathname, sub.url)) ?? false;
+          const active = childActive || isActivePath(pathname, item.url);
+
+          if (!item.items) {
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton asChild tooltip={item.title} isActive={active}>
+                  <NavLink url={item.url}>
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </NavLink>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            );
+          }
+
+          return (
             <Collapsible
               key={item.title}
               asChild
-              defaultOpen={item.isActive}
+              defaultOpen={childActive}
               className="group/collapsible"
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip={item.title}>
-                    {item.icon && <item.icon />}
+                  <SidebarMenuButton tooltip={item.title} isActive={active}>
+                    <item.icon />
                     <span>{item.title}</span>
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <SidebarMenuSub>
-                    {item.items.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild>
-                          <Link
-                            to={subItem.url}
-                            activeProps={{ className: `text-sidebar-ring` }}
-                          >
-                            <span>{subItem.title}</span>
-                          </Link>
+                    {item.items.map((sub) => (
+                      <SidebarMenuSubItem key={sub.title}>
+                        <SidebarMenuSubButton
+                          asChild
+                          isActive={isActivePath(pathname, sub.url)}
+                        >
+                          <NavLink url={sub.url}>
+                            <span>{sub.title}</span>
+                          </NavLink>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}
@@ -73,20 +89,8 @@ export function NavMain({
                 </CollapsibleContent>
               </SidebarMenuItem>
             </Collapsible>
-          ) : (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild tooltip={item.title}>
-                <Link
-                  to={item.url}
-                  activeProps={{ className: `font-bold` }}
-                >
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ),
-        )}
+          );
+        })}
       </SidebarMenu>
     </SidebarGroup>
   );

@@ -1,12 +1,17 @@
 import { Suspense } from "react";
+import BridgeIcon from "@/components/icons/bridge.svg?react";
 import { EthereumConnect } from "@/components/layout/ethereum-connect";
 import { LoginCard } from "@/components/layout/login-card";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { Homepage } from "@/components/modules/homepage/homepage";
 import { HomepageSkeleton } from "@/components/modules/homepage/homepage-skeleteon";
+import { Button } from "@/components/ui/button";
 import { getProposalsQueryOptions } from "@/lib/snapshot/getProposals";
 import { SUPPORTED_L2_CHAIN_ID } from "@/utils/utils";
 import { useAccount } from "@starknet-start/react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Gavel } from "lucide-react";
 
 import { SnapshotSpaceAddresses } from "@realms-world/constants";
 
@@ -28,22 +33,44 @@ export const Route = createFileRoute("/")({
 function IndexComponent() {
   const { address } = useAccount();
   if (!address) {
-    return <LoginCard />;
+    return (
+      <PageContainer width="narrow">
+        <LoginCard />
+      </PageContainer>
+    );
   }
   return (
-    <div className="realm-shell flex flex-col gap-4 px-4 py-6 sm:px-6 sm:py-8">
-      {/* Dashboard Statistics */}
-      <div>
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-          <div className="space-y-1">
-            <h1 className="realm-page-title text-3xl sm:text-4xl">Dashboard</h1>
-          </div>
-          <EthereumConnect />
-        </div>
-        <Suspense fallback={<HomepageSkeleton />}>
-          <Homepage address={address} />
-        </Suspense>
-      </div>
-    </div>
+    <PageContainer>
+      <PageHeader
+        className="mb-0"
+        eyebrow="Account"
+        title="Dashboard"
+        description="Your Realms, LORDS, rewards and governance across Ethereum and Starknet."
+        actions={
+          <>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/realms/bridge">
+                <BridgeIcon />
+                Bridge
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="sm">
+              <a
+                href="https://market.realms.world"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Gavel />
+                Market
+              </a>
+            </Button>
+            <EthereumConnect />
+          </>
+        }
+      />
+      <Suspense fallback={<HomepageSkeleton />}>
+        <Homepage address={address} />
+      </Suspense>
+    </PageContainer>
   );
 }

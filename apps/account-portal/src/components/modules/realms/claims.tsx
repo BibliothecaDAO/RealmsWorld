@@ -1,6 +1,16 @@
+import { runWithErrorToast } from "@/utils/run-with-error-toast";
+import type { ReactNode } from "react";
 import LordsIcon from "@/components/icons/lords.svg?react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SectionCard } from "@/components/ui/section-card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useL2RealmsClaims } from "@/hooks/use-l2-realms-claims";
 import { getRealmsLordsClaimsQueryOptions } from "@/lib/getRealmsLordsClaims";
 import { formatNumber, shortenAddress } from "@/utils/utils";
@@ -9,142 +19,151 @@ import { useQuery } from "@tanstack/react-query";
 import { ExternalLink } from "lucide-react";
 import { formatEther } from "viem";
 
+const BIP_80_URL =
+  "https://snapshot.box/#/sn:0x07bd3419669f9f0cc8f19e9e2457089cdd4804a4c41a5729ee9c7fd02ab8ab62/proposal/53";
+
+export interface PastRealmsClaim {
+  hash: string;
+  timestamp: ReactNode;
+  amount: string;
+  recipient: string;
+}
+
+export interface RealmsClaimsViewProps {
+  claimable: ReactNode;
+  isConnected: boolean;
+  isSubmitting?: boolean;
+  onClaim?: () => void;
+  pastClaims: PastRealmsClaim[];
+  transactionUrl: (hash: string) => string;
+}
+
+/** Presentational Realms LORDS claims page body: claim card, BIP-80 notice and history. */
+export function RealmsClaimsView({
+  claimable,
+  isConnected,
+  isSubmitting = false,
+  onClaim,
+  pastClaims,
+  transactionUrl,
+}: RealmsClaimsViewProps) {
+  return (
+    <>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <SectionCard
+          title="Claimable LORDS"
+          description="Remaining Realms emissions on Starknet."
+          footer={
+            <Button
+              onClick={onClaim}
+              className="w-full"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Claiming…" : "Claim LORDS"}
+            </Button>
+          }
+        >
+          <div className="flex items-center gap-3">
+            <span className="bg-muted flex size-11 shrink-0 items-center justify-center rounded-md">
+              <LordsIcon className="size-6" />
+            </span>
+            <span className="realm-stat truncate text-3xl font-semibold">
+              {claimable}
+            </span>
+          </div>
+        </SectionCard>
+        <SectionCard
+          title="LORDS rewards have ended"
+          description="Weekly Realms emissions are no longer distributed."
+        >
+          <p className="text-muted-foreground text-sm">
+            The Realms DAO voted to end weekly LORDS rewards in{" "}
+            <a
+              href={BIP_80_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline-offset-4 hover:underline"
+            >
+              BIP-80
+            </a>
+            . LORDS are now directed to game rewards for Eternum seasons. Any
+            balance accrued before then can still be claimed.
+          </p>
+        </SectionCard>
+      </div>
+
+      <SectionCard title="Past claims" contentClassName="px-0 sm:px-6">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Date</TableHead>
+              <TableHead className="text-right">Amount (LORDS)</TableHead>
+              <TableHead>Recipient</TableHead>
+              <TableHead>Transaction</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {pastClaims.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={4}
+                  className="text-muted-foreground py-8 text-center"
+                >
+                  {isConnected
+                    ? "No past claims found."
+                    : "Connect your Starknet wallet to view past claims."}
+                </TableCell>
+              </TableRow>
+            ) : (
+              pastClaims.map((tx) => (
+                <TableRow key={tx.hash}>
+                  <TableCell className="realm-stat whitespace-nowrap">
+                    {tx.timestamp}
+                  </TableCell>
+                  <TableCell className="realm-stat text-right">
+                    {formatNumber(Number(formatEther(BigInt(tx.amount))))}
+                  </TableCell>
+                  <TableCell className="font-mono text-xs">
+                    {shortenAddress(tx.recipient)}
+                  </TableCell>
+                  <TableCell>
+                    <a
+                      href={transactionUrl(tx.hash)}
+                      className="text-primary inline-flex items-center gap-1.5 font-mono text-xs underline-offset-4 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {shortenAddress(tx.hash)}
+                      <ExternalLink className="size-3.5" />
+                    </a>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </SectionCard>
+    </>
+  );
+}
+
 export const ClaimRewards = () => {
   const { address } = useAccount();
   const pastLordsClaimsQuery = useQuery(
     getRealmsLordsClaimsQueryOptions({ address }),
   );
-  const pastLordsClaims = pastLordsClaimsQuery.data;
-  /*const [claimTransactions, setClaimTransactions] = useState<
-    ClaimTransaction[]
-  >([]);*/
-
   const { balance, isSubmitting, claimRewards } = useL2RealmsClaims();
-
-  // Handle the claim rewards click event.
-  const handleClaimRewards = async () => {
-    await claimRewards();
-    // Optionally update the transactions table with the new claim.
-    /*setClaimTransactions((prev) => [
-      {
-        id: prev.length + 1,
-        transactionHash: hash.transaction_hash,
-        date: new Date().toLocaleString(),
-        amount: formatNumber(Number(formatEther(balance as bigint))),
-        status: "Pending", // You might update this once confirmed.
-      },
-      ...prev,
-    ]);*/
-  };
   const explorer = useExplorer();
 
   return (
-    <div className="flex flex-col gap-6 p-4 sm:p-6">
-      <div className="space-y-2">
-        <h1 className="realm-page-title text-3xl sm:text-4xl">
-          Past Realms Claims Dashboard
-        </h1>
-      </div>
-      <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
-        {/* Claim Rewards Section */}
-        <Card className="relative overflow-hidden">
-          <CardHeader>
-            <CardTitle>Claim Rewards</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-2">
-                <LordsIcon className="w-9" />
-                <span className="realm-stat text-3xl font-bold">
-                  {balance && formatNumber(Number(formatEther(balance)))}
-                </span>{" "}
-                claimable
-              </div>
-
-              <Button
-                onClick={handleClaimRewards}
-                className="w-full"
-                disabled={isSubmitting}
-              >
-                Claim Lords
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-        {/* Rewards Info Section */}
-        <Card className="relative overflow-hidden">
-          <CardHeader>
-            <CardTitle>Lords Rewards have ended!</CardTitle>
-          </CardHeader>
-          <CardContent>
-            The Realms DAO voted to end weekly Lords Rewards in{" "}
-            <a
-              href="https://snapshot.box/#/sn:0x07bd3419669f9f0cc8f19e9e2457089cdd4804a4c41a5729ee9c7fd02ab8ab62/proposal/53"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              BIP-80 and the Lords have now been directed to game rewards for
-              Eterenum seasons
-            </a>
-          </CardContent>
-        </Card>
-      </div>
-      {/* Past Claim Transactions Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Past Claim Transactions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="-mx-2 overflow-x-auto sm:mx-0">
-            <table className="min-w-full divide-y divide-gray-200 text-sm whitespace-nowrap">
-              <thead>
-                <tr>
-                  <th className="px-4 py-2 text-left">Date</th>
-                  <th className="px-4 py-2 text-left">Amount (Lords)</th>
-                  <th className="px-4 py-2 text-left">Recipient</th>
-                  <th className="px-4 py-2 text-left">Transaction Hash</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {!pastLordsClaims?.length && (
-                  <tr>
-                    <td
-                      colSpan={4}
-                      className="text-muted-foreground px-4 py-8 text-center"
-                    >
-                      {address
-                        ? "No past claims found."
-                        : "Connect your Starknet wallet to view past claims."}
-                    </td>
-                  </tr>
-                )}
-                {pastLordsClaims?.map((tx) => (
-                  <tr key={tx.hash}>
-                    <td className="px-4 py-2">{tx.timestamp}</td>
-                    <td className="px-4 py-2">
-                      {formatNumber(Number(formatEther(BigInt(tx.amount))))}
-                    </td>
-                    <td className="px-4 py-2">
-                      {shortenAddress(tx.recipient)}
-                    </td>
-                    <td className="px-4 py-2">
-                      <a
-                        href={explorer.transaction(tx.hash)}
-                        className="flex items-center gap-2 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {shortenAddress(tx.hash)} <ExternalLink />
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <RealmsClaimsView
+      claimable={balance ? formatNumber(Number(formatEther(balance))) : 0}
+      isConnected={!!address}
+      isSubmitting={isSubmitting}
+      onClaim={() => void runWithErrorToast(claimRewards, "Unable to claim rewards")}
+      pastClaims={pastLordsClaimsQuery.data ?? []}
+      transactionUrl={(hash) => explorer.transaction(hash)}
+    />
   );
 };
 

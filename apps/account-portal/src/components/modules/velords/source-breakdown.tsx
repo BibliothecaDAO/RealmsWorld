@@ -1,4 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SectionCard } from "@/components/ui/section-card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -11,7 +12,7 @@ import { getVelordsSourceLabel } from "@/lib/velords-sources";
 import { formatNumber, shortenAddress } from "@/utils/utils";
 import { formatUnits } from "viem";
 
-interface SourceBreakdownItem {
+export interface SourceBreakdownItem {
   sender: string;
   totalWei: string;
   txCount: number;
@@ -26,48 +27,55 @@ export function VelordsSourceBreakdown({
   isLoading?: boolean;
 }) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Rewards Source Breakdown</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {isLoading ? (
-          <div className="text-muted-foreground text-sm">Loading source breakdown...</div>
-        ) : data.length === 0 ? (
-          <div className="text-muted-foreground text-sm">
-            No rewards source data is available for this period.
-          </div>
-        ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Source</TableHead>
-                <TableHead className="text-right">LORDS</TableHead>
-                <TableHead className="text-right">Share</TableHead>
-                <TableHead className="text-right">Txs</TableHead>
+    <SectionCard
+      title="Reward sources"
+      description="Where this period's LORDS rewards came from."
+    >
+      {isLoading ? (
+        <div className="space-y-2">
+          {Array.from({ length: 4 }, (_, i) => (
+            <Skeleton key={i} className="h-10 w-full" />
+          ))}
+        </div>
+      ) : data.length === 0 ? (
+        <p className="text-muted-foreground py-6 text-center text-sm">
+          No rewards source data for this period.
+        </p>
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Source</TableHead>
+              <TableHead className="text-right">LORDS</TableHead>
+              <TableHead className="text-right">Share</TableHead>
+              <TableHead className="text-right">Txs</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.map((item) => (
+              <TableRow key={item.sender}>
+                <TableCell>
+                  <div className="font-medium">
+                    {getVelordsSourceLabel(item.sender)}
+                  </div>
+                  <div className="text-muted-foreground font-mono text-xs">
+                    {shortenAddress(item.sender)}
+                  </div>
+                </TableCell>
+                <TableCell className="realm-stat text-right">
+                  {formatNumber(Number(formatUnits(BigInt(item.totalWei), 18)))}
+                </TableCell>
+                <TableCell className="realm-stat text-right">
+                  {item.sharePercent}%
+                </TableCell>
+                <TableCell className="realm-stat text-right">
+                  {item.txCount}
+                </TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.map((item) => (
-                <TableRow key={item.sender}>
-                  <TableCell>
-                    <div className="font-medium">{getVelordsSourceLabel(item.sender)}</div>
-                    <div className="text-muted-foreground text-xs">
-                      {shortenAddress(item.sender)}
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {formatNumber(Number(formatUnits(BigInt(item.totalWei), 18)))}
-                  </TableCell>
-                  <TableCell className="text-right">{item.sharePercent}%</TableCell>
-                  <TableCell className="text-right">{item.txCount}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-      </CardContent>
-    </Card>
+            ))}
+          </TableBody>
+        </Table>
+      )}
+    </SectionCard>
   );
 }
-

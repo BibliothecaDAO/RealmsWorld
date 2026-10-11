@@ -1,0 +1,25 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Start here" />
+
+# Account portal component workbench
+
+This Storybook renders the account portal's production components with the app's Tailwind styles
+(`src/styles.css`) and local brand fonts. **Dark is the default theme**; use the toolbar to review light
+and the viewport control for mobile.
+
+- **Foundations** — colour roles, type hierarchy, radius and elevation (shared with the marketplace).
+- **UI** — shadcn primitives (`src/components/ui`).
+- **Layout** — page shell and page header.
+- **Dashboard** — homepage sections rendered from fixture props; no wallet or network is needed.
+
+## Token rule
+
+Use semantic utilities only: `bg-card`, `text-muted-foreground`, `border-border`, `text-primary`,
+`text-trade-up`… Never `bg-[#…]`, `text-[color:var(--…)]`, one-off `shadow-[…]` or ad-hoc radii.
+Add new roles to `src/styles.css` (`:root`, `.dark` and `@theme inline`) instead.
+
+## Commands
+
+- `pnpm --filter @realms-world/account-portal storybook` — dev server on :6006
+- `pnpm --filter @realms-world/account-portal storybook:build` — static build to `storybook-static/`

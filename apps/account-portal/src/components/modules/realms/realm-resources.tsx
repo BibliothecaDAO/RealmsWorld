@@ -26,11 +26,11 @@ export default function RealmResources({
   const hiddenCount = resources.length - visibleCount;
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex min-w-0 items-center gap-1.5">
       {resources.slice(0, visibleCount).map((resource, index) => (
         <div
           key={index}
-          className="bg-secondary flex items-center gap-2 rounded-lg p-2"
+          className="bg-secondary flex shrink-0 items-center rounded-md p-1.5"
         >
           {resource.value && (
             <ResourceIcon size="md" resource={resource.value.toString()} />
@@ -42,17 +42,22 @@ export default function RealmResources({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant={"outline"} size={"sm"} className="px-2 pt-1">
-                  {`+(${hiddenCount})`}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="realm-chip h-8 min-w-8 shrink-0 px-1.5"
+                  aria-label={`${hiddenCount} more resources`}
+                >
+                  +{hiddenCount}
                 </Button>
               </TooltipTrigger>
 
               <TooltipContent
-                className="h-16 max-w-48 p-2"
+                className="max-w-56 p-2"
                 id="resource-tooltip"
                 side="top"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   {resources.slice(visibleCount).map((resource, index) => (
                     <div key={index} className="flex items-center gap-2">
                       <div>

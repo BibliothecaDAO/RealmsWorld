@@ -14,15 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarSeparator,
-} from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
 import { useBridgeL2Realms } from "@/hooks/bridge/useBridgeL2Realms";
 import {
   isStarknetAccountDeployed,
@@ -137,22 +129,18 @@ const BridgeSidebar: React.FC<BridgeSidebarProps> = ({
   };
 
   return (
-    <Sidebar
-      side="right"
-      variant="inset"
-      className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
-    >
-      <SidebarHeader className="space-y-3">
+    <div className="flex min-w-0 flex-col gap-4">
+      <div className="space-y-3">
         <div className="flex items-center justify-between gap-2">
           <span className="text-muted-foreground text-sm">Ethereum Wallet</span>
           <EthereumConnect />
         </div>
-        <SidebarSeparator className="mx-0" />
+        <Separator />
         <h2 className="realm-card-title text-balance">
           Bridging {selectedRows.length} Realms to
           {selectedAsset === "Ethereum" ? " Starknet" : " Ethereum"}
         </h2>
-        <SidebarGroup>
+        <div>
           <div className="mb-4 flex max-h-32 flex-wrap gap-2 overflow-y-auto">
             {selectedRows.map((row) => (
               <span
@@ -251,31 +239,26 @@ const BridgeSidebar: React.FC<BridgeSidebarProps> = ({
               </Popover>
             </div>
           )}
-        </SidebarGroup>
-      </SidebarHeader>
-      <SidebarContent className="p-2">
-        <SidebarSeparator className="mx-0 mt-4" />
+        </div>
+      </div>
+      <div>
+        <Separator className="mb-2" />
 
         <Collapsible defaultOpen className="group/collapsible">
-          <SidebarGroupLabel
-            asChild
-            className="group/label text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground w-full text-sm"
-          >
-            <CollapsibleTrigger className="h-10">
-              Transaction History
-              <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
-            </CollapsibleTrigger>
-          </SidebarGroupLabel>
+          <CollapsibleTrigger className="realm-group-title hover:bg-accent flex h-10 w-full items-center rounded-md px-2 text-left">
+            Transaction history
+            <ChevronRight className="text-muted-foreground ml-auto size-4 transition-transform group-data-[state=open]/collapsible:rotate-90" />
+          </CollapsibleTrigger>
           <CollapsibleContent>
-            <SidebarGroupContent>
+            <div className="pt-2">
               <Suspense fallback={<BridgeTransactionHistorySkeleton />}>
                 {(l1Address ?? l2Address) && <BridgeTransactionItems />}
               </Suspense>
-            </SidebarGroupContent>
+            </div>
           </CollapsibleContent>
         </Collapsible>
-      </SidebarContent>
-    </Sidebar>
+      </div>
+    </div>
   );
 };
 

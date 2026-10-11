@@ -1,35 +1,32 @@
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, MinusCircle, XCircle } from "lucide-react";
 
+const choices = {
+  1: {
+    label: "Yes",
+    icon: CheckCircle2,
+    className: "border-success text-success",
+  },
+  2: {
+    label: "No",
+    icon: XCircle,
+    className: "border-destructive text-destructive",
+  },
+  3: {
+    label: "Abstain",
+    icon: MinusCircle,
+    className: "border-border-strong text-muted-foreground",
+  },
+} as const;
+
 export const ProposalUserVoteBadge = ({ choice }: { choice: 1 | 2 | 3 }) => {
+  const config = choices[choice] as (typeof choices)[1 | 2 | 3] | undefined;
+  if (!config) return null;
+  const Icon = config.icon;
   return (
-    <>
-      {choice === 1 && (
-        <Badge
-          variant="outline"
-          className="border-success text-success hover:bg-success/20 flex w-fit rounded py-2"
-        >
-          <CheckCircle2 className="text-success mr-2 h-5 w-5" /> Yes
-        </Badge>
-      )}
-
-      {choice === 2 && (
-        <Badge
-          variant="outline"
-          className="border-destructive bg-destructive/10 hover:bg-destructive/20 flex rounded py-2"
-        >
-          <XCircle className="text-destructive mr-2 h-5 w-5" /> No
-        </Badge>
-      )}
-
-      {choice === 3 && (
-        <Badge
-          variant="outline"
-          className="border-muted-foreground bg-muted/20 hover:bg-muted flex rounded py-2"
-        >
-          <MinusCircle className="text-muted-foreground mr-2 h-5 w-5" /> Abstain
-        </Badge>
-      )}
-    </>
+    <Badge variant="outline" className={config.className}>
+      <Icon />
+      {config.label}
+    </Badge>
   );
 };

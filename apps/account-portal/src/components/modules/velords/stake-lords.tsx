@@ -42,11 +42,11 @@ import { UnlockDialog } from "./unlock-dialog";
 const chartConfig = {
   locked: {
     label: "Staked",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
   unlocked: {
     label: "Available",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig;
 
@@ -104,7 +104,7 @@ export const StakeLords = () => {
   return (
     <Card className="flex flex-col">
       <CardHeader className="pb-0">
-        <CardTitle>Lords Staking</CardTitle>
+        <CardTitle>LORDS staking</CardTitle>
         <CardDescription>
           Your balances of locked and unlocked $LORDS
         </CardDescription>
@@ -118,12 +118,12 @@ export const StakeLords = () => {
                 {formatNumber(availableLords)}
               </CardContent>
               <CardFooter className="text-muted-foreground px-4 pb-3 text-sm">
-                Lords Available
+                LORDS available
               </CardFooter>
             </Card>
             <ChartContainer
               config={chartConfig}
-              className="relative h-[180px] w-full"
+              className="relative h-44 w-full"
             >
               <RadialBarChart
                 accessibilityLayer
@@ -139,7 +139,7 @@ export const StakeLords = () => {
                   content={
                     <ChartTooltipContent
                       hideLabel
-                      className="ml-2 min-w-[180px]"
+                      className="ml-2 min-w-44"
                     />
                   }
                 />

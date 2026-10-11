@@ -1,6 +1,8 @@
-import { PageHeader } from "@/components/layout/page-header";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { createFileRoute } from "@tanstack/react-router";
+import { PageContainer } from "@/components/layout/page-container";
+import { StatusState } from "@/components/layout/status-state";
+import { Button } from "@/components/ui/button";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Hourglass } from "lucide-react";
 
 export const Route = createFileRoute("/coming-soon/")({
   component: RouteComponent,
@@ -8,17 +10,18 @@ export const Route = createFileRoute("/coming-soon/")({
 
 function RouteComponent() {
   return (
-    <div className="realm-shell flex min-h-screen items-center justify-center px-6">
-      <Card className="w-full max-w-xl text-center">
-        <CardHeader>
-          <PageHeader
-            title="Coming Soon"
-            description="We're working hard to bring you an amazing new experience. Stay tuned!"
-            className="mb-0 text-center md:flex-col md:items-center"
-          />
-        </CardHeader>
-        <CardContent />
-      </Card>
-    </div>
+    <PageContainer width="narrow" className="min-h-96 justify-center">
+      <StatusState
+        icon={<Hourglass />}
+        eyebrow="In the forge"
+        title="Coming Soon"
+        description="We're working hard to bring you an amazing new experience. Stay tuned!"
+        actions={
+          <Button asChild variant="outline" className="w-full sm:w-auto">
+            <Link to="/">Back to dashboard</Link>
+          </Button>
+        }
+      />
+    </PageContainer>
   );
 }

@@ -28,7 +28,7 @@ function FeatureItem({
 
 export function LoginCard() {
   return (
-    <Card className="mx-auto mt-6 w-[calc(100%-2rem)] max-w-md sm:mt-12">
+    <Card className="mx-auto mt-6 w-full max-w-md sm:mt-12">
       <CardHeader className="pb-2 text-center">
         <CardTitle className="text-2xl">Welcome to Realms Portal</CardTitle>
         <CardDescription>

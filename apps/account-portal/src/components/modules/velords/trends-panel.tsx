@@ -101,8 +101,6 @@ const sourcePalette = [
   "var(--color-chart-3)",
   "var(--color-chart-4)",
   "var(--color-chart-5)",
-  "hsl(208 94% 68%)",
-  "hsl(12 84% 66%)",
 ] as const;
 
 export function VelordsTrendsPanel({
@@ -227,7 +225,7 @@ export function VelordsTrendsPanel({
         <CardContent className="px-2 sm:px-6">
           <ChartContainer
             config={baseChartConfig}
-            className="!aspect-auto h-[280px] w-full sm:h-[320px]"
+            className="!aspect-auto h-72 w-full sm:h-80"
           >
             <ComposedChart data={rewardsMomentum}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -269,7 +267,7 @@ export function VelordsTrendsPanel({
         <CardContent className="px-2 sm:px-6">
           <ChartContainer
             config={sourceShareConfig}
-            className="!aspect-auto h-[280px] w-full sm:h-[320px]"
+            className="!aspect-auto h-72 w-full sm:h-80"
           >
             <AreaChart data={sourceShareData.points}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -311,7 +309,7 @@ export function VelordsTrendsPanel({
         <CardContent className="px-2 sm:px-6">
           <ChartContainer
             config={baseChartConfig}
-            className="!aspect-auto h-[280px] w-full sm:h-[320px]"
+            className="!aspect-auto h-72 w-full sm:h-80"
           >
             <ComposedChart data={concentrationPoints}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -377,7 +375,7 @@ export function VelordsTrendsPanel({
           </div>
           <ChartContainer
             config={baseChartConfig}
-            className="!aspect-auto h-[280px] w-full sm:h-[320px]"
+            className="!aspect-auto h-72 w-full sm:h-80"
           >
             <ComposedChart data={lockParticipationPoints}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -438,7 +436,7 @@ export function VelordsTrendsPanel({
           </div>
           <ChartContainer
             config={baseChartConfig}
-            className="!aspect-auto h-[280px] w-full sm:h-[320px]"
+            className="!aspect-auto h-72 w-full sm:h-80"
           >
             <LineChart data={cumulativePoints}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />

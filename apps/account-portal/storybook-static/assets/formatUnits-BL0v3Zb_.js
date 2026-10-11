@@ -1,0 +1,1 @@
+function l(r,n){let t=r.toString();const i=t.startsWith("-");i&&(t=t.slice(1)),t=t.padStart(n,"0");let[a,e]=[t.slice(0,t.length-n),t.slice(t.length-n)];return e=e.replace(/(0+)$/,""),`${i?"-":""}${a||"0"}${e?`.${e}`:""}`}export{l as f};

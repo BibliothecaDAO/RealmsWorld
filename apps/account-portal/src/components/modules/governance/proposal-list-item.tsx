@@ -1,4 +1,5 @@
-import type { Proposal } from "@/gql/graphql";
+import type { Proposal } from "@/gql/snapshot/graphql";
+import type { ReactNode } from "react";
 import { Progress } from "@/components/ui/progress";
 import { useStarkDisplayName } from "@/hooks/use-stark-name";
 import { shortenAddress } from "@/utils/utils";
@@ -6,7 +7,117 @@ import { Link } from "@tanstack/react-router";
 import { formatDistanceToNow } from "date-fns";
 import { CheckCircle2, XCircle } from "lucide-react";
 
+import {
+  getProposalStatus,
+  isProposalActive,
+  ProposalStatusBadge,
+} from "./proposal-status";
 import { ProposalVoteAction } from "./proposal-vote-action";
+
+export type ProposalRowData = Pick<
+  Proposal,
+  | "id"
+  | "proposal_id"
+  | "max_end"
+  | "vote_count"
+  | "scores_total"
+  | "scores_1"
+  | "scores_2"
+  | "scores_3"
+> & { metadata?: { title?: string | null } | null; author: { id: string } };
+
+export function getProposalShortId(proposalId: string | number) {
+  const id = proposalId.toString();
+  if (id.startsWith("0x")) return `#${id.slice(2, 7)}`;
+  if ([46, 59].includes(id.length)) return `#${id.slice(-5)}`;
+  return `#${id}`;
+}
+
+/** Delegate vote line: 4 = no delegate, 1 = for, 3 = against, otherwise did not vote. */
+function DelegateVote({ voteChoice }: { voteChoice?: number }) {
+  if (voteChoice == 4) return null;
+  if (voteChoice === 1) {
+    return (
+      <span className="text-success flex items-center gap-1.5">
+        Delegate: <CheckCircle2 className="size-4" /> For
+      </span>
+    );
+  }
+  if (voteChoice === 3) {
+    return (
+      <span className="text-destructive flex items-center gap-1.5">
+        Delegate: <XCircle className="size-4" /> Against
+      </span>
+    );
+  }
+  return <span>Delegate did not vote</span>;
+}
+
+/** Presentational proposal row. `voteAction` is rendered while voting is open. */
+export function ProposalRow({
+  proposal,
+  authorName,
+  voteChoice,
+  voteAction,
+}: {
+  proposal: ProposalRowData;
+  authorName?: string;
+  voteChoice?: number;
+  voteAction?: ReactNode;
+}) {
+  const isActive = isProposalActive(proposal);
+  const scoresTotal = Number(proposal.scores_total);
+  const scoresFor = Number(proposal.scores_1);
+  const progressValue = scoresTotal > 0 ? (scoresFor / scoresTotal) * 100 : 0;
+  const status = getProposalStatus(proposal);
+
+  return (
+    <div className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4">
+      <Link
+        to="/proposal/$id"
+        params={{ id: proposal.proposal_id.toString() }}
+        className="group min-w-0 flex-1 space-y-1.5"
+      >
+        <div className="flex flex-wrap items-center gap-2">
+          <ProposalStatusBadge status={status} />
+          <span className="realm-chip text-muted-foreground">
+            {getProposalShortId(proposal.proposal_id)}
+          </span>
+        </div>
+        <h3 className="realm-card-title group-hover:text-primary line-clamp-2 break-words transition-colors">
+          {proposal.metadata?.title ?? `Proposal #${proposal.id}`}
+        </h3>
+        <div className="text-muted-foreground flex flex-wrap gap-x-4 gap-y-1 text-sm">
+          <span className="min-w-0 truncate">
+            by {authorName || shortenAddress(proposal.author.id)}
+          </span>
+          <span>{proposal.vote_count} voters</span>
+          <span className="realm-stat">{proposal.scores_total} votes</span>
+          <span>
+            {formatDistanceToNow(proposal.max_end * 1000)}{" "}
+            {isActive ? "left" : "ago"}
+          </span>
+        </div>
+      </Link>
+
+      {isActive ? (
+        <div className="shrink-0">{voteAction}</div>
+      ) : (
+        <div className="flex shrink-0 flex-col gap-2 sm:items-end">
+          <Progress
+            value={progressValue}
+            aria-label={`${Math.round(progressValue)}% voted for`}
+            className="bg-destructive/60 w-full sm:w-32"
+            indicatorColor="bg-success"
+          />
+          <div className="text-muted-foreground flex min-h-5 items-center text-sm">
+            <DelegateVote voteChoice={voteChoice} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export const ProposalListItem = ({
   proposal,
@@ -16,88 +127,12 @@ export const ProposalListItem = ({
   voteChoice: number;
 }) => {
   const name = useStarkDisplayName(proposal.author.id as `0x${string}`);
-
-  function getProposalId(proposal: Proposal) {
-    const proposalId = proposal.proposal_id.toString();
-
-    if (proposalId.startsWith("0x")) {
-      return `#${proposalId.slice(2, 7)}`;
-    }
-
-    if ([46, 59].includes(proposalId.length)) {
-      return `#${proposalId.slice(-5)}`;
-    }
-
-    return `#${proposalId}`;
-  }
-
-  const isActive = proposal.max_end * 1000 > Date.now();
-  const scoresTotal = Number(proposal.scores_total);
-  const scoresFor = Number(proposal.scores_1);
-  const progressValue = scoresTotal > 0 ? (scoresFor / scoresTotal) * 100 : 0;
-
   return (
-    <div className="flex flex-col gap-3 border-b py-4 last:border-b-0 sm:flex-row sm:items-center sm:gap-4">
-      <Link
-        to={`/proposal/$id`}
-        params={{ id: proposal.proposal_id.toString() }}
-        className="min-w-0 flex-1"
-      >
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col gap-1">
-            <h4 className="realm-card-title line-clamp-2 break-words">
-              {proposal.metadata?.title ?? `Proposal #${proposal.id}`}
-            </h4>
-            <div className="text-muted-foreground truncate text-sm">
-              {getProposalId(proposal)} by{" "}
-              {name || shortenAddress(proposal.author.id)}
-            </div>
-          </div>
-
-          <div className="text-muted-foreground flex flex-wrap gap-x-4 gap-y-1 text-sm">
-            <span>{proposal.vote_count} voters</span>
-            <span>{proposal.scores_total} votes</span>
-            <span>
-              {formatDistanceToNow(proposal.max_end * 1000)}{" "}
-              {isActive ? "left" : "ago"}
-            </span>
-          </div>
-        </div>
-      </Link>
-
-      {isActive ? (
-        <div className="shrink-0">
-          <ProposalVoteAction proposal={proposal} />
-        </div>
-      ) : (
-        <div className="flex shrink-0 flex-col gap-2 sm:items-end">
-          <Progress
-            value={progressValue}
-            className="bg-destructive/60 w-full sm:w-32"
-            indicatorColor="bg-success"
-          />
-
-          <div className="text-muted-foreground text-sm">
-            <div className="flex min-h-5 items-center gap-2">
-              {voteChoice == 4 ? (
-                ""
-              ) : voteChoice === 1 ? (
-                <>
-                  Delegate: <CheckCircle2 className="h-4 w-4" />
-                  For
-                </>
-              ) : voteChoice === 3 ? (
-                <>
-                  Delegate: <XCircle className="h-4 w-4" />
-                  Against
-                </>
-              ) : (
-                "Delegate did not vote"
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    <ProposalRow
+      proposal={proposal}
+      authorName={name}
+      voteChoice={voteChoice}
+      voteAction={<ProposalVoteAction proposal={proposal} />}
+    />
   );
 };

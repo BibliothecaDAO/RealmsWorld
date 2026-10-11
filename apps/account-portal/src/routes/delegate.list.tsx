@@ -1,10 +1,15 @@
 import { Suspense, useDeferredValue, useState } from "react";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { DelegateCardSkeleton } from "@/components/modules/governance/delegate-card-skeleton";
-import DelegateList from "@/components/modules/governance/delegate-list";
+import DelegateList, {
+  DelegateGrid,
+} from "@/components/modules/governance/delegate-list";
 import { DelegateListActions } from "@/components/modules/governance/delegate-list-actions";
 import { Input } from "@/components/ui/input";
 import { getDelegatesQueryOptions } from "@/lib/getDelegates";
 import { createFileRoute } from "@tanstack/react-router";
+import { Search } from "lucide-react";
 
 export const Route = createFileRoute("/delegate/list")({
   component: RouteComponent,
@@ -21,31 +26,39 @@ export const Route = createFileRoute("/delegate/list")({
 });
 
 function RouteComponent() {
-  // Local state for the search string.
   const [searchQuery, setSearchQuery] = useState("");
   const deferredSearchQuery = useDeferredValue(searchQuery);
   const [sortMethod, setSortMethod] = useState<"desc" | "random">("random");
 
   return (
-    <div className="h-screen min-w-0 overflow-auto">
-      {/* Sticky search input */}
-      <div className="bg-card/85 top-0 z-10 mb-4 flex items-center justify-between gap-3 rounded-xl border p-2 backdrop-blur-sm sm:sticky sm:gap-6 sm:p-3">
-        <Input
-          type="text"
-          className="h-12 min-w-0 flex-1 rounded border p-3"
-          placeholder="Search delegates..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+    <PageContainer className="min-w-0">
+      <PageHeader
+        className="mb-0"
+        eyebrow="Governance"
+        title="Delegates"
+        description="Choose who votes with your Realms in the DAO, or delegate to yourself."
+      />
+      <div className="bg-card/85 border-border z-10 flex flex-col gap-3 rounded-lg border p-3 backdrop-blur-sm sm:sticky sm:top-(--header-height) sm:flex-row sm:items-center">
+        <div className="relative min-w-0 flex-1">
+          <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+          <Input
+            type="text"
+            className="pl-9"
+            placeholder="Search delegates..."
+            aria-label="Search delegates"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
         <DelegateListActions onSortChange={setSortMethod} />
       </div>
       <Suspense
         fallback={
-          <div className="grid grid-cols-1 gap-4 p-1 sm:gap-6 sm:p-4 md:grid-cols-2 xl:grid-cols-3">
+          <DelegateGrid>
             {Array.from({ length: 6 }).map((_, index) => (
               <DelegateCardSkeleton key={index} />
             ))}
-          </div>
+          </DelegateGrid>
         }
       >
         <DelegateList
@@ -53,6 +66,6 @@ function RouteComponent() {
           sortMethod={sortMethod}
         />
       </Suspense>
-    </div>
+    </PageContainer>
   );
 }
