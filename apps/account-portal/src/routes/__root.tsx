@@ -1,7 +1,10 @@
 /// <reference types="vite/client" />
 import { lazy, Suspense } from "react";
 import { AppSidebar } from "@/components/layout/app-sidebar";
-import { Header } from "@/components/layout/header";
+import { SiteHeader } from "@/components/layout/header";
+import { NavUser } from "@/components/layout/nav-user";
+import { RouteProgress } from "@/components/layout/route-progress";
+import { WrongNetworkDialog } from "@/components/layout/wrong-network-dialog";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ThemeProvider } from "@/providers/theme";
 import appCss from "@/styles.css?url";
@@ -98,11 +101,11 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
-    <html lang="en">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
-      <body className="overflow-hidden">
+      <body>
         <ScriptOnce>
           {`(() => {
             const theme = localStorage.getItem('${THEME_STORAGE_KEY}');
@@ -112,26 +115,24 @@ function RootComponent() {
             document.documentElement.classList.toggle('dark', shouldUseDark);
           })();`}
         </ScriptOnce>
-        <div
-          className={`flex h-screen flex-col [--header-height:calc(--spacing(14))]`}
-        >
-          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-            <StarknetProvider>
-              <AppKitProvider queryClient={queryClient}>
-                  <SidebarProvider className="flex h-full flex-col">
-                    <Header />
-                    <div className="flex min-h-0 flex-1">
-                      <AppSidebar />
-                      <SidebarInset className="min-h-auto overflow-auto">
-                        <Outlet />
-                      </SidebarInset>
-                    </div>
-                    <Toaster />
-                  </SidebarProvider>
-              </AppKitProvider>
-            </StarknetProvider>
-          </ThemeProvider>
-        </div>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <StarknetProvider>
+            <AppKitProvider queryClient={queryClient}>
+              <SidebarProvider className="[--header-height:calc(--spacing(14))]">
+                <RouteProgress />
+                <AppSidebar footer={<NavUser />} />
+                <SidebarInset>
+                  <SiteHeader />
+                  <div id="main-content" className="main-content flex-1">
+                    <Outlet />
+                  </div>
+                </SidebarInset>
+                <WrongNetworkDialog />
+                <Toaster />
+              </SidebarProvider>
+            </AppKitProvider>
+          </StarknetProvider>
+        </ThemeProvider>
         {import.meta.env.DEV && (
           <Suspense fallback={null}>
             {TanStackRouterDevtools && (

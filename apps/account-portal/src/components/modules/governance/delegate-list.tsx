@@ -1,7 +1,28 @@
+import type { ReactNode } from "react";
 import { getDelegatesQueryOptions } from "@/lib/getDelegates";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { Users } from "lucide-react";
 
 import { DelegateCard } from "./delegate-card";
+
+/** Responsive grid shared by the delegate list, its skeleton and stories. */
+export function DelegateGrid({ children }: { children: ReactNode }) {
+  return (
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {children}
+    </div>
+  );
+}
+
+export function DelegateListEmpty({ searchQuery }: { searchQuery?: string }) {
+  return (
+    <div className="border-border text-muted-foreground flex flex-col items-center gap-2 rounded-lg border border-dashed px-4 py-12 text-center text-sm">
+      <Users className="text-primary size-6" />
+      <p className="realm-group-title">No delegates found</p>
+      {searchQuery ? <p>Nothing matches “{searchQuery}”.</p> : null}
+    </div>
+  );
+}
 
 function DelegateList({
   searchQuery,
@@ -18,12 +39,16 @@ function DelegateList({
       orderBy: sortMethod,
     }),
   );
+  const items = delegatesQuery.data.items;
+  if (items.length === 0) {
+    return <DelegateListEmpty searchQuery={searchQuery} />;
+  }
   return (
-    <div className="grid grid-cols-1 gap-4 p-1 sm:gap-6 sm:p-4 md:grid-cols-2 xl:grid-cols-3">
-      {delegatesQuery.data.items.map((delegate) => (
+    <DelegateGrid>
+      {items.map((delegate) => (
         <DelegateCard key={delegate.id} delegate={delegate} />
       ))}
-    </div>
+    </DelegateGrid>
   );
 }
 

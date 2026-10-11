@@ -1,0 +1,164 @@
+import type { RealmInventoryToken } from "@/lib/realms/get-realm-inventory";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
+import { Button } from "@/components/ui/button";
+import { SectionCard } from "@/components/ui/section-card";
+import { Gavel } from "lucide-react";
+import { fn } from "storybook/test";
+
+import { ClaimsPanel } from "./claims-panel";
+import { DashboardStats, DashboardStatsSkeleton } from "./dashboard-stats";
+import { NoDelegateCard } from "./governance-panel";
+import { HomepageSkeleton } from "./homepage-skeleteon";
+import { ProposalListSkeleton } from "./proposal-list-skeleton";
+import { RealmsPreview } from "./realms-preview";
+
+const realm = (id: number, name: string): RealmInventoryToken => ({
+  token_id: id,
+  metadata_status: "unavailable",
+  metadata: JSON.stringify({
+    name,
+    description: "",
+    image: "",
+    attributes: [
+      { trait_type: "Resource", value: "Wood" },
+      { trait_type: "Resource", value: "Stone" },
+      { trait_type: "Resource", value: "Coal" },
+    ],
+  }),
+});
+
+const realms = [
+  realm(1, "Stolsli"),
+  realm(23, "Ilum"),
+  realm(144, "Smutmum"),
+  realm(512, "Nhalnar"),
+  realm(3324, "Azebiz"),
+  realm(4001, "Olsosi"),
+  realm(6700, "Grahbem"),
+];
+
+const stats = {
+  realmsL1: 3,
+  realmsL2: realms.length,
+  lordsL1: "12.4K",
+  lordsL2: "48.2K",
+  lordsStaked: "124.5K",
+};
+
+const claims = {
+  realmsClaimable: "1,284",
+  veLordsClaimable: "312",
+  canClaimRealms: true,
+  canClaimVeLords: true,
+  onClaimRealms: fn(),
+  onClaimVeLords: fn(),
+};
+
+const meta = {
+  title: "Dashboard/Sections",
+  parameters: { layout: "padded" },
+} satisfies Meta;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Stats: Story = { render: () => <DashboardStats {...stats} /> };
+export const StatsLoading: Story = { render: () => <DashboardStatsSkeleton /> };
+
+export const Claims: Story = {
+  render: () => (
+    <div className="max-w-xl">
+      <ClaimsPanel {...claims} />
+    </div>
+  ),
+};
+export const ClaimsEmpty: Story = {
+  render: () => (
+    <div className="max-w-xl">
+      <ClaimsPanel
+        {...claims}
+        realmsClaimable={0}
+        veLordsClaimable={0}
+        canClaimRealms={false}
+        canClaimVeLords={false}
+      />
+    </div>
+  ),
+};
+export const ClaimsSubmitting: Story = {
+  render: () => (
+    <div className="max-w-xl">
+      <ClaimsPanel {...claims} isClaimingRealms />
+    </div>
+  ),
+};
+
+export const NoDelegate: Story = {
+  render: () => (
+    <div className="max-w-xl">
+      <NoDelegateCard />
+    </div>
+  ),
+};
+
+export const Realms: Story = {
+  render: () => <RealmsPreview viewState="ready" tokens={realms} status="ready" />,
+};
+export const RealmsEmpty: Story = {
+  render: () => <RealmsPreview viewState="ready" tokens={[]} status="ready" />,
+};
+export const RealmsLoading: Story = {
+  render: () => <RealmsPreview viewState="loading" tokens={[]} />,
+};
+export const RealmsSyncing: Story = {
+  render: () => <RealmsPreview viewState="syncing" tokens={[]} status="syncing" />,
+};
+export const RealmsError: Story = {
+  render: () => <RealmsPreview viewState="error" tokens={[]} onRetry={fn()} />,
+};
+
+function DashboardPage() {
+  return (
+    <PageContainer>
+      <PageHeader
+        className="mb-0"
+        eyebrow="Account"
+        title="Dashboard"
+        description="Your Realms, LORDS, rewards and governance across Ethereum and Starknet."
+        actions={
+          <Button variant="outline" size="sm">
+            <Gavel />
+            Market
+          </Button>
+        }
+      />
+      <DashboardStats {...stats} />
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <ClaimsPanel {...claims} />
+        <NoDelegateCard />
+      </div>
+      <SectionCard title="Recent proposals" contentClassName="pt-0">
+        <ProposalListSkeleton />
+      </SectionCard>
+      <RealmsPreview viewState="ready" tokens={realms} status="ready" />
+    </PageContainer>
+  );
+}
+
+export const FullPage: Story = {
+  name: "Full page",
+  parameters: { layout: "fullscreen" },
+  render: () => <DashboardPage />,
+};
+
+export const FullPageLoading: Story = {
+  name: "Full page · loading",
+  parameters: { layout: "fullscreen" },
+  render: () => (
+    <PageContainer>
+      <PageHeader className="mb-0" eyebrow="Account" title="Dashboard" />
+      <HomepageSkeleton />
+    </PageContainer>
+  ),
+};

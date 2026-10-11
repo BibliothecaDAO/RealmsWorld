@@ -18,132 +18,132 @@ interface Resource {
 
 const Components: Record<string, Resource> = Object.freeze({
   Adamantine: {
-    component: <img src={`/realms/resources/20.png`} />,
+    component: <img alt="" src={`/realms/resources/20.png`} />,
     name: "Adamantine",
   },
   AlchemicalSilver: {
-    component: <img src={`/realms/resources/19.png`} />,
+    component: <img alt="" src={`/realms/resources/19.png`} />,
     name: "Alchemical Silver",
   },
   Coal: {
-    component: <img src={`/realms/resources/3.png`} />,
+    component: <img alt="" src={`/realms/resources/3.png`} />,
     name: "Coal",
   },
   ColdIron: {
-    component: <img src={`/realms/resources/8.png`} />,
+    component: <img alt="" src={`/realms/resources/8.png`} />,
     name: "Cold Iron",
   },
   Copper: {
-    component: <img src={`/realms/resources/4.png`} />,
+    component: <img alt="" src={`/realms/resources/4.png`} />,
     name: "Copper",
   },
   DeepCrystal: {
-    component: <img src={`/realms/resources/14.png`} />,
+    component: <img alt="" src={`/realms/resources/14.png`} />,
     name: "Deep Crystal",
   },
   Diamonds: {
-    component: <img src={`/realms/resources/11.png`} />,
+    component: <img alt="" src={`/realms/resources/11.png`} />,
     name: "Diamonds",
   },
   Dragonhide: {
-    component: <img src={`/realms/resources/22.png`} />,
+    component: <img alt="" src={`/realms/resources/22.png`} />,
     name: "Dragonhide",
   },
   EtherealSilica: {
-    component: <img src={`/realms/resources/16.png`} />,
+    component: <img alt="" src={`/realms/resources/16.png`} />,
     name: "Ethereal Silica",
   },
   Gold: {
-    component: <img src={`/realms/resources/9.png`} />,
+    component: <img alt="" src={`/realms/resources/9.png`} />,
     name: "Gold",
   },
   Hartwood: {
-    component: <img src={`/realms/resources/10.png`} />,
+    component: <img alt="" src={`/realms/resources/10.png`} />,
     name: "Hartwood",
   },
   Ignium: {
-    component: <img src={`/realms/resources/15.png`} />,
+    component: <img alt="" src={`/realms/resources/15.png`} />,
     name: "Ignium",
   },
   Ironwood: {
-    component: <img src={`/realms/resources/7.png`} />,
+    component: <img alt="" src={`/realms/resources/7.png`} />,
     name: "Ironwood",
   },
   Mithral: {
-    component: <img src={`/realms/resources/21.png`} />,
+    component: <img alt="" src={`/realms/resources/21.png`} />,
     name: "Mithral",
   },
   Obsidian: {
-    component: <img src={`/realms/resources/5.png`} />,
+    component: <img alt="" src={`/realms/resources/5.png`} />,
     name: "Obsidian",
   },
   Ruby: {
-    component: <img src={`/realms/resources/13.png`} />,
+    component: <img alt="" src={`/realms/resources/13.png`} />,
     name: "Ruby",
   },
   Sapphire: {
-    component: <img src={`/realms/resources/12.png`} />,
+    component: <img alt="" src={`/realms/resources/12.png`} />,
     name: "Sapphire",
   },
   Silver: {
-    component: <img src={`/realms/resources/6.png`} />,
+    component: <img alt="" src={`/realms/resources/6.png`} />,
     name: "Silver",
   },
   Stone: {
-    component: <img src={`/realms/resources/2.png`} />,
+    component: <img alt="" src={`/realms/resources/2.png`} />,
     name: "Stone",
   },
   TrueIce: {
-    component: <img src={`/realms/resources/17.png`} />,
+    component: <img alt="" src={`/realms/resources/17.png`} />,
     name: "TrueIce",
   },
   TwilightQuartz: {
-    component: <img src={`/realms/resources/18.png`} />,
+    component: <img alt="" src={`/realms/resources/18.png`} />,
     name: "Twilight Quartz",
   },
   Wood: {
-    component: <img src={`/realms/resources/1.png`} />,
+    component: <img alt="" src={`/realms/resources/1.png`} />,
     name: "Wood",
   },
   Lords: {
-    component: <img src={`/realms/resources/coin.png`} />,
+    component: <img alt="" src={`/realms/resources/coin.png`} />,
     name: "Lords",
   },
   Fish: {
-    component: <img src={`/realms/resources/255.png`} />,
+    component: <img alt="" src={`/realms/resources/255.png`} />,
     name: "Fish",
   },
   Wheat: {
-    component: <img src={`/realms/resources/254.png`} />,
+    component: <img alt="" src={`/realms/resources/254.png`} />,
     name: "Wheat",
   },
   Donkey: {
-    component: <img src={`/images/buildings/thumb/trade.png`} />,
+    component: <img alt="" src={`/images/buildings/thumb/trade.png`} />,
     name: "Donkey",
   },
-  Knight: { component: <img src={`/images/icons/250.png`} />, name: "Knight" },
+  Knight: { component: <img alt="" src={`/images/icons/250.png`} />, name: "Knight" },
   Crossbowman: {
-    component: <img src={`/images/icons/251.png`} />,
+    component: <img alt="" src={`/images/icons/251.png`} />,
     name: "Crossbowman",
   },
   Paladin: {
-    component: <img src={`/images/icons/252.png`} />,
+    component: <img alt="" src={`/images/icons/252.png`} />,
     name: "Paladin",
   },
   AncientFragment: {
-    component: <img src={`/realms/resources/29.png`} />,
+    component: <img alt="" src={`/realms/resources/29.png`} />,
     name: "Ancient Fragment",
   },
   House: {
-    component: <img src={`/images/buildings/thumb/house.png`} />,
+    component: <img alt="" src={`/images/buildings/thumb/house.png`} />,
     name: "House",
   },
   Silo: {
-    component: <img src={`/images/buildings/thumb/silo.png`} />,
+    component: <img alt="" src={`/images/buildings/thumb/silo.png`} />,
     name: "Silo",
   },
   Timeglass: {
-    component: <img src={`/images/buildings/thumb/timeglass.png`} />,
+    component: <img alt="" src={`/images/buildings/thumb/timeglass.png`} />,
     name: "Timeglass",
   },
 });

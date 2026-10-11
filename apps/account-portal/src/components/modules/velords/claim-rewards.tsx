@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/collapsible";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
+import { useTokenColors } from "@/hooks/use-token-colors";
 import useVeLordsClaims from "@/hooks/use-velords-claims";
 import { formatNumber } from "@/utils/utils";
 import Confetti from "react-confetti";
@@ -29,13 +30,17 @@ export const VelordsRewards = () => {
     claimRewards,
     claimIsSubmitting,
   } = useVeLordsClaims();
+  const confettiColors = useTokenColors(
+    ["--primary", "--chart-1", "--chart-5", "--realm-accent-ember"],
+    ["#e7cf88", "#c4874a", "#f1dc9d"],
+  );
   const handleClaimRewards = async () => {
     try {
       const hash = await claimRewards();
       toast({
         description: (
           <div className="flex items-center gap-2">
-            Claim Lords successful {hash.transaction_hash}
+            LORDS claimed · {hash.transaction_hash}
           </div>
         ),
       });
@@ -52,20 +57,7 @@ export const VelordsRewards = () => {
     <Card className="relative overflow-hidden">
       {lordsClaimable && Number(lordsClaimable) > 0 ? (
         <Confetti
-          colors={[
-            "#f6c297",
-            "#f8d0a8",
-            "#f4b688",
-            "#f7c8a0",
-            "#f5c09f",
-            "#f9d8b0",
-            "#f3ae80",
-            "#f2a670",
-            "#f1b080",
-            "#f0c0a0",
-            "#f8e0c0",
-            "#f6b090",
-          ]}
+          colors={confettiColors}
           opacity={0.5}
           width={600} // Adjust width as needed
           height={300} // Adjust height as needed
@@ -75,17 +67,17 @@ export const VelordsRewards = () => {
         />
       ) : null}
       <CardHeader>
-        <CardTitle>Your Claimable Lords</CardTitle>
+        <CardTitle>veLORDS rewards</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center gap-2">
             <LordsIcon className="w-9 shrink-0" />
-            <span className="text-3xl font-bold tabular-nums">
+            <span className="realm-stat text-3xl font-semibold">
               {lordsClaimable &&
                 formatNumber(Number(formatEther(lordsClaimable)))}
             </span>{" "}
-            Lords to claim
+            <span className="text-muted-foreground text-sm">LORDS to claim</span>
           </div>
           <Collapsible>
             <CollapsibleTrigger asChild>
@@ -107,7 +99,7 @@ export const VelordsRewards = () => {
             </CollapsibleContent>
           </Collapsible>
           <Button
-            onClick={handleClaimRewards}
+            onClick={() => void handleClaimRewards()}
             className="w-full"
             disabled={
               claimIsSubmitting ||
@@ -116,13 +108,13 @@ export const VelordsRewards = () => {
               lordsClaimable <= 0n
             }
           >
-            Claim Lords
+            {claimIsSubmitting ? "Claiming…" : "Claim LORDS"}
           </Button>
         </div>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 leading-none font-medium">
-          Rewards for veLords are distributed at weekly epochs
+      <CardFooter className="text-muted-foreground flex-col gap-2 text-xs">
+        <div className="flex items-center gap-2">
+          veLORDS rewards are distributed at weekly epochs
         </div>
       </CardFooter>
     </Card>

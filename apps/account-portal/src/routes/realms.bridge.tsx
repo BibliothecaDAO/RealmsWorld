@@ -1,19 +1,22 @@
 import type { BridgeRealm, TokenMetadataAttribute } from "@/types/ark";
 import type { RowSelectionState } from "@tanstack/react-table";
 import { Suspense, useEffect, useMemo, useState } from "react";
-import EthereumIcon from "@/components/icons/ethereum.svg?react";
-import StarknetIcon from "@/components/icons/starknet.svg?react";
+import { PageContainer } from "@/components/layout/page-container";
 import { PageHeader } from "@/components/layout/page-header";
+import { BridgeDirection } from "@/components/modules/realms/bridge-direction";
 import BridgeSidebar from "@/components/modules/realms/bridge-sidebar";
 import { BridgeTable } from "@/components/modules/realms/bridge-table";
 import { OwnershipStatusAlert } from "@/components/modules/realms/ownership-status-alert";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
-  SidebarInset,
-  SidebarProvider,
-  useSidebar,
-} from "@/components/ui/sidebar";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useStarknetWallet } from "@/hooks/use-starknet-wallet";
 import { getL1RealmsQueryOptions } from "@/lib/getL1Realms";
 import { getRealmInventoryQueryOptions } from "@/lib/realms/get-realm-inventory";
@@ -25,7 +28,7 @@ import { useAccount } from "@starknet-start/react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useReactTable } from "@tanstack/react-table";
-import { ArrowLeftRight, TriangleAlert } from "lucide-react";
+import { TriangleAlert } from "lucide-react";
 import { useAccount as useL1Account } from "wagmi";
 
 import {
@@ -71,13 +74,29 @@ function parseRealmMetadata(
   }
 }
 
-function MobileBridgeBar({ selectedCount }: { selectedCount: number }) {
-  const { isMobile, toggleSidebar } = useSidebar();
-  if (!isMobile) return null;
+/** Matches Tailwind's lg breakpoint; false during SSR so the server renders the mobile bar. */
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  return isDesktop;
+}
 
+function MobileBridgeBar({
+  selectedCount,
+  onOpen,
+}: {
+  selectedCount: number;
+  onOpen: () => void;
+}) {
   return (
-    <div className="bg-background/95 sticky bottom-0 z-10 -mx-4 mt-auto border-t py-3 pr-20 pl-4 backdrop-blur">
-      <Button className="h-11 w-full" onClick={toggleSidebar}>
+    <div className="bg-background/95 sticky bottom-0 z-10 -mx-4 mt-auto border-t px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6 lg:hidden">
+      <Button className="h-11 w-full" onClick={onOpen}>
         {selectedCount
           ? `Review & bridge ${selectedCount} Realm${selectedCount === 1 ? "" : "s"}`
           : "Open bridge panel & history"}
@@ -87,6 +106,8 @@ function MobileBridgeBar({ selectedCount }: { selectedCount: number }) {
 }
 
 function RouteComponent() {
+  const isDesktop = useIsDesktop();
+  const [panelOpen, setPanelOpen] = useState(false);
   const { address: l1Address } = useL1Account();
   const { address: l2Address } = useAccount();
 
@@ -181,114 +202,99 @@ function RouteComponent() {
     selectedAsset !== "Starknet" || starknetInventoryReady;
   const bridgeDisabled = selectedAsset === "Starknet" && !canShowInventory;
 
+  const bridgePanel = (
+    <BridgeSidebar
+      disabled={bridgeDisabled}
+      selectedRows={bridgeDisabled ? [] : selectedRows}
+      setRowSelection={setRowSelection}
+      selectedAsset={selectedAsset}
+    />
+  );
+
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "32rem",
-          "--sidebar-width-mobile": "26rem",
-        } as React.CSSProperties
-      }
-      className="flex flex-1"
-    >
-      <SidebarInset className="px-4 sm:px-6">
-        <PageHeader title="Starknet Bridge" className="mt-4 sm:mt-6" />
-        <div className="mb-6 flex items-center justify-center gap-2 sm:gap-3">
-          <div className="realm-subtle-panel flex min-w-0 flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 sm:flex-none sm:px-4">
-            <span className="text-muted-foreground text-sm">From</span>
-            {selectedAsset === "Ethereum" ? (
-              <>
-                <EthereumIcon className="h-5 w-5" />
-                <span className="font-semibold">Ethereum</span>
-              </>
-            ) : (
-              <>
-                <StarknetIcon className="h-5 w-5" />
-                <span className="font-semibold">Starknet</span>
-              </>
-            )}
-          </div>
-          <Button
-            size="icon"
-            variant="outline"
-            onClick={swapAssets}
-            aria-label="Swap bridge direction"
-            className="size-10 shrink-0 rounded-full"
-          >
-            <ArrowLeftRight className="h-4 w-4" />
-          </Button>
-          <div className="realm-subtle-panel flex min-w-0 flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 sm:flex-none sm:px-4">
-            <span className="text-muted-foreground text-sm">To</span>
-            {selectedAsset === "Ethereum" ? (
-              <>
-                <StarknetIcon className="h-5 w-5" />
-                <span className="font-semibold">Starknet</span>
-              </>
-            ) : (
-              <>
-                <EthereumIcon className="h-5 w-5" />
-                <span className="font-semibold">Ethereum</span>
-              </>
-            )}
-          </div>
-        </div>
-        {selectedAsset === "Ethereum" && !l1Address && (
-          <Alert variant="warning" className="mb-4 rounded">
-            <TriangleAlert className="h-5 w-5" />
-            <AlertTitle className="text-base sm:text-lg">
-              Your Ethereum wallet is not connected
-            </AlertTitle>
-            <AlertDescription>
-              Connect your Ethereum wallet using the sidebar to view and bridge
-              your Realms
-            </AlertDescription>
-          </Alert>
-        )}
-        {selectedAsset === "Starknet" && !l2Address && (
-          <Alert variant="warning" className="mb-4 rounded">
-            <TriangleAlert className="h-5 w-5" />
-            <AlertTitle className="text-base sm:text-lg">
-              Your Starknet wallet is not connected
-            </AlertTitle>
-            <AlertDescription>
-              <Button
-                className="h-auto p-0"
-                variant="link"
-                onClick={() => void requestConnect()}
-              >
-                Connect your Starknet wallet
-              </Button>{" "}
-              to view and bridge your Realms
-            </AlertDescription>
-          </Alert>
-        )}
-        {selectedAsset === "Starknet" &&
-          l2Address &&
-          (l2InventoryViewState === "loading" ? (
-            <div className="mb-4">Loading Realm inventory...</div>
-          ) : (
-            <OwnershipStatusAlert
-              className="mb-4"
-              status={l2Inventory?.status}
-              isError={l2InventoryViewState === "error"}
-              onRetry={() => void l2RealmsQuery.refetch()}
-            />
-          ))}
-        {canShowInventory && (
-          <Suspense fallback={<div>Loading...</div>}>
-            <BridgeTable table={table} />
-          </Suspense>
-        )}
-        <MobileBridgeBar
-          selectedCount={bridgeDisabled ? 0 : selectedRows.length}
-        />
-      </SidebarInset>
-      <BridgeSidebar
-        disabled={bridgeDisabled}
-        selectedRows={bridgeDisabled ? [] : selectedRows}
-        setRowSelection={setRowSelection}
-        selectedAsset={selectedAsset}
+    <PageContainer width="full" className="flex-1">
+      <PageHeader
+        className="mb-0"
+        eyebrow="Realms"
+        title="Starknet bridge"
+        description="Move Realms between Ethereum and Starknet. Select Realms below, then review and bridge from the panel."
       />
-    </SidebarProvider>
+      <div className="grid flex-1 grid-cols-1 items-start gap-6 lg:grid-cols-3">
+        <div className="flex min-w-0 flex-col gap-6 lg:col-span-2">
+          <div className="max-w-2xl">
+            <BridgeDirection from={selectedAsset} onSwap={swapAssets} />
+          </div>
+          {selectedAsset === "Ethereum" && !l1Address && (
+            <Alert variant="warning">
+              <TriangleAlert />
+              <AlertTitle>Your Ethereum wallet is not connected</AlertTitle>
+              <AlertDescription>
+                Connect your Ethereum wallet using the bridge panel to view and
+                bridge your Realms.
+              </AlertDescription>
+            </Alert>
+          )}
+          {selectedAsset === "Starknet" && !l2Address && (
+            <Alert variant="warning">
+              <TriangleAlert />
+              <AlertTitle>Your Starknet wallet is not connected</AlertTitle>
+              <AlertDescription>
+                <span>
+                  <Button
+                    className="h-auto p-0"
+                    variant="link"
+                    onClick={() => void requestConnect()}
+                  >
+                    Connect your Starknet wallet
+                  </Button>{" "}
+                  to view and bridge your Realms.
+                </span>
+              </AlertDescription>
+            </Alert>
+          )}
+          {selectedAsset === "Starknet" &&
+            l2Address &&
+            (l2InventoryViewState === "loading" ? (
+              <Skeleton className="h-16 w-full rounded-lg" />
+            ) : (
+              <OwnershipStatusAlert
+                status={l2Inventory?.status}
+                isError={l2InventoryViewState === "error"}
+                onRetry={() => void l2RealmsQuery.refetch()}
+              />
+            ))}
+          {canShowInventory && (
+            <Suspense
+              fallback={<Skeleton className="h-96 w-full rounded-xl" />}
+            >
+              <BridgeTable table={table} />
+            </Suspense>
+          )}
+        </div>
+        {isDesktop ? (
+          <aside className="bg-card border-border rounded-lg border p-4 lg:sticky lg:top-20">
+            {bridgePanel}
+          </aside>
+        ) : null}
+      </div>
+      <MobileBridgeBar
+        selectedCount={bridgeDisabled ? 0 : selectedRows.length}
+        onOpen={() => setPanelOpen(true)}
+      />
+      <Sheet open={!isDesktop && panelOpen} onOpenChange={setPanelOpen}>
+        <SheetContent
+          side="right"
+          className="w-full overflow-y-auto sm:max-w-md"
+        >
+          <SheetHeader>
+            <SheetTitle>Bridge Realms</SheetTitle>
+            <SheetDescription>
+              Review your selection and bridge between Ethereum and Starknet.
+            </SheetDescription>
+          </SheetHeader>
+          <div className="px-4 pb-6">{!isDesktop ? bridgePanel : null}</div>
+        </SheetContent>
+      </Sheet>
+    </PageContainer>
   );
 }

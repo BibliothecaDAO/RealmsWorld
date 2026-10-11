@@ -1,17 +1,10 @@
 import { LoginCard } from "@/components/layout/login-card";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { DelegateProfileForm } from "@/components/modules/governance/delegate-profile-form";
+import { DelegateStats } from "@/components/modules/governance/delegate-stats";
 import { Login } from "@/components/modules/governance/sign-in-with-starknet";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar";
+import { SectionCard } from "@/components/ui/section-card";
 import { useStarkDisplayName } from "@/hooks/use-stark-name";
 import {
   createDelegateProfile,
@@ -19,13 +12,12 @@ import {
 } from "@/lib/getDelegates";
 import { auth } from "@/utils/auth";
 import { authClient } from "@/utils/auth-client";
-import { formatNumber, shortenAddress } from "@/utils/utils";
+import { shortenAddress } from "@/utils/utils";
 import { useAccount } from "@starknet-start/react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
-import { Users, Vote } from "lucide-react";
 
 const getUser = createServerFn({ method: "GET" }).handler(async () => {
   const { headers } = getRequest();
@@ -55,181 +47,83 @@ function RouteComponent() {
   const { data: session } = authClient.useSession();
 
   if (!address) {
-    return <LoginCard />;
+    return (
+      <PageContainer width="narrow">
+        <LoginCard />
+      </PageContainer>
+    );
   }
 
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "25rem",
-          "--sidebar-width-mobile": "25rem",
-        } as React.CSSProperties
-      }
-    >
-      <SidebarInset className="min-w-0">
-        <div className="container mx-auto min-w-0 space-y-4 px-4 py-6 sm:px-6 sm:py-8">
-          <h1 className="realm-page-title text-3xl sm:text-4xl">
-            Your Profile{" "}
-            <span className="break-all">
-              {shortenAddress(session?.user.id)}
-            </span>
-          </h1>
-          {delegate && (
-            <Card className="md:hidden">
-              <CardContent className="space-y-3 p-4 text-sm">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="flex items-center gap-2 font-medium">
-                    <Vote className="text-primary h-4 w-4" /> Delegated Votes
-                  </span>
-                  <Badge variant="outline" className="text-primary text-lg">
-                    {formatNumber(Number(delegate.delegatedVotes)) || "0"}{" "}
-                    Realms
-                  </Badge>
-                </div>
-                <div className="flex items-center justify-between gap-3">
-                  <span className="flex items-center gap-2 font-medium">
-                    <Users className="text-primary h-4 w-4" /> Token Holders
-                  </span>
-                  <Badge variant="outline" className="text-primary text-lg">
-                    {delegate.tokenHoldersRepresentedAmount || "0"}
-                  </Badge>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-          {!isLoading && (
-            <Card>
-              <CardContent className="p-4 sm:p-6">
-                <DelegateProfileForm
-                  delegate={
-                    delegate?.delegateProfile
-                      ? {
-                          delegateProfile: {
-                            statement: delegate.delegateProfile.statement,
-                            interests:
-                              delegate.delegateProfile.interests ?? undefined,
-                            twitter: delegate.delegateProfile.twitter ?? "",
-                            github: delegate.delegateProfile.github ?? "",
-                            telegram: delegate.delegateProfile.telegram ?? "",
-                            discord: delegate.delegateProfile.discord ?? "",
-                          },
-                        }
-                      : undefined
-                  }
-                  onSubmit={async (data) => {
-                    await createDelegateProfile({ data });
-                  }}
-                />
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </SidebarInset>
-      <Sidebar
-        side="right"
-        variant="inset"
-        className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
-      >
-        <SidebarContent>
-          <SidebarHeader>
-            <Login />
-          </SidebarHeader>
-          <SidebarGroup>
-            <SidebarGroupLabel>Profile Information</SidebarGroupLabel>
-            <div className="p-4 text-sm">
+    <PageContainer>
+      <PageHeader
+        className="mb-0"
+        eyebrow="Governance"
+        title="Your Delegate Profile"
+        description={
+          <>
+            Tell token holders what you stand for.{" "}
+            {session?.user.id ? (
+              <span className="realm-stat break-all">
+                {shortenAddress(session.user.id)}
+              </span>
+            ) : null}
+          </>
+        }
+      />
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
+        {!isLoading && (
+          <SectionCard
+            className="lg:col-span-2"
+            title="Profile"
+            description="Your statement, interests and socials are shown on the delegate list."
+          >
+            <DelegateProfileForm
+              delegate={
+                delegate?.delegateProfile
+                  ? {
+                      delegateProfile: {
+                        statement: delegate.delegateProfile.statement,
+                        interests:
+                          delegate.delegateProfile.interests ?? undefined,
+                        twitter: delegate.delegateProfile.twitter ?? "",
+                        github: delegate.delegateProfile.github ?? "",
+                        telegram: delegate.delegateProfile.telegram ?? "",
+                        discord: delegate.delegateProfile.discord ?? "",
+                      },
+                    }
+                  : undefined
+              }
+              onSubmit={async (data) => {
+                await createDelegateProfile({ data });
+              }}
+            />
+          </SectionCard>
+        )}
+        <aside className="flex flex-col gap-6 lg:sticky lg:top-20">
+          <SectionCard title="Account">
+            <div className="space-y-3 text-sm">
+              <Login />
               {name ? (
-                <p className="break-all">{name}</p>
+                <p className="realm-stat break-all">{name}</p>
               ) : (
-                <p>Connect your wallet to view your profile information</p>
+                <p className="text-muted-foreground">
+                  Connect your wallet to view your profile information
+                </p>
               )}
             </div>
-          </SidebarGroup>
-
+          </SectionCard>
           {delegate && (
-            <SidebarGroup>
-              <SidebarGroupLabel>Delegation Statistics</SidebarGroupLabel>
-              <div className="space-y-4 p-4">
-                <div className="flex items-center gap-3">
-                  <Vote className="text-primary h-5 w-5" />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">
-                        Delegated Votes
-                      </span>
-                      <Badge variant="outline" className="text-primary text-xl">
-                        {formatNumber(Number(delegate.delegatedVotes)) || "0"}{" "}
-                        Realms
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <Users className="text-primary h-5 w-5" />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">
-                        Token Holders Represented
-                      </span>
-                      <Badge variant="outline" className="text-primary text-xl">
-                        {delegate.tokenHoldersRepresentedAmount || "0"}
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-
-                {/*<div className="flex items-center gap-3">
-                  <BarChart3 className="text-primary h-5 w-5" />
-                  <div className="flex-1">
-                    <div className="mb-1 flex justify-between">
-                      <span className="text-sm font-medium">
-                        Voting Participation
-                      </span>
-                      <span className="text-muted-foreground text-sm">
-                        {delegate.participationRate || "75"}%
-                      </span>
-                    </div>
-                    <Progress
-                      value={delegate.participationRate || 75}
-                      className="h-2"
-                    />
-                  </div>
-                </div>
-
-                <div className="text-muted-foreground mt-2 text-xs">
-                  <p className="flex justify-between">
-                    <span>Total Proposals Voted:</span>
-                    <span>{delegate.votedProposalsCount || "12"}</span>
-                  </p>
-                  <p className="flex justify-between">
-                    <span>Last Vote:</span>
-                    <span>
-                      {delegate.lastVoteTimestamp
-                        ? new Date(
-                            delegate.lastVoteTimestamp,
-                          ).toLocaleDateString()
-                        : "2 days ago"}
-                    </span>
-                  </p>
-                </div>*/}
-              </div>
-            </SidebarGroup>
+            <SectionCard title="Delegation">
+              <DelegateStats
+                className="grid grid-cols-2 gap-3 lg:grid-cols-1"
+                delegatedVotes={delegate.delegatedVotes}
+                tokenHolders={delegate.tokenHoldersRepresentedAmount}
+              />
+            </SectionCard>
           )}
-
-          {/*<SidebarGroup>
-            <SidebarGroupLabel>Actions</SidebarGroupLabel>
-            <div className="flex flex-col gap-2 p-4">
-              <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded px-4 py-2 text-sm">
-                Manage Delegations
-              </button>
-              <button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 rounded px-4 py-2 text-sm">
-                View Voting History
-              </button>
-            </div>
-          </SidebarGroup>*/}
-        </SidebarContent>
-      </Sidebar>
-    </SidebarProvider>
+        </aside>
+      </div>
+    </PageContainer>
   );
 }

@@ -1,6 +1,11 @@
 import BridgeIcon from "@/components/icons/bridge.svg?react";
-import { OwnershipStatusAlert } from "@/components/modules/realms/ownership-status-alert";
-import { RealmCard } from "@/components/modules/realms/realm-card";
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
+import { StarknetWalletButton } from "@/components/layout/starknet-wallet-button";
+import {
+  RealmsConnectPrompt,
+  RealmsInventory,
+} from "@/components/modules/realms/realms-inventory";
 import { Button } from "@/components/ui/button";
 import { getRealmInventoryQueryOptions } from "@/lib/realms/get-realm-inventory";
 import { getRealmInventoryViewState } from "@/lib/realms/inventory-ui";
@@ -12,6 +17,26 @@ import { HandCoins } from "lucide-react";
 export const Route = createFileRoute("/realms/")({
   component: RealmsComponent,
 });
+
+function RealmsActions() {
+  return (
+    <>
+      <Button asChild variant="outline" size="sm">
+        <Link to="/realms/bridge">
+          <BridgeIcon />
+          Bridge
+        </Link>
+      </Button>
+      <Button asChild variant="outline" size="sm">
+        <Link to="/realms/claims">
+          <HandCoins />
+          Claims
+        </Link>
+      </Button>
+    </>
+  );
+}
+
 function RealmsComponent() {
   const { address } = useAccount();
 
@@ -27,52 +52,26 @@ function RealmsComponent() {
     isError: l2RealmsQuery.isError,
     status: inventory?.status,
   });
-  if (!address) {
-    return (
-      <div className="text-muted-foreground flex min-h-[40vh] items-center justify-center p-6 text-center">
-        Connect your Starknet wallet to view your Realms
-      </div>
-    );
-  }
 
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <div className="flex flex-wrap gap-2">
-        <Link to={`/realms/bridge`}>
-          <Button variant="outline" size="sm" className="h-10 sm:h-8">
-            <BridgeIcon className="h-5! w-5!" /> Starknet Bridge
-          </Button>
-        </Link>
-        <Link to={`/realms/claims`}>
-          <Button variant="outline" size="sm" className="h-10 sm:h-8">
-            <HandCoins /> Claim Lords
-          </Button>
-        </Link>
-      </div>
-      {inventoryViewState === "loading" ? (
-        <div>Loading Realm inventory...</div>
-      ) : (
-        <OwnershipStatusAlert
+    <PageContainer>
+      <PageHeader
+        className="mb-0"
+        eyebrow="Realms"
+        title="Your Realms"
+        description="Realms held by your Starknet wallet. Bridge more from Ethereum at any time."
+        actions={<RealmsActions />}
+      />
+      {address ? (
+        <RealmsInventory
+          viewState={inventoryViewState}
+          tokens={l2Realms}
           status={inventory?.status}
-          isError={inventoryViewState === "error"}
           onRetry={() => void l2RealmsQuery.refetch()}
         />
+      ) : (
+        <RealmsConnectPrompt action={<StarknetWalletButton />} />
       )}
-      {inventoryViewState === "ready" && (
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
-          {l2Realms.length ? (
-            l2Realms.map((realm) => {
-              return (
-                <RealmCard key={realm.token_id} token={realm} isGrid={true} />
-              );
-            })
-          ) : (
-            <p className="text-muted-foreground col-span-full py-8 text-center">
-              No Realms Found in wallet
-            </p>
-          )}
-        </div>
-      )}
-    </div>
+    </PageContainer>
   );
 }

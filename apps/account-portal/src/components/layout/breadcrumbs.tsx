@@ -1,27 +1,52 @@
-import { isMatch, Link, useMatches } from "@tanstack/react-router";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { Fragment } from "react";
 
-export const Breadcrumbs = () => {
-  const matches = useMatches();
-  if (matches.some((match) => match.status === "pending")) return null;
+import { getBreadcrumbs } from "./nav-config";
 
-  const matchesWithCrumbs = matches.filter((match) =>
-    isMatch(match, "loaderData.crumb"),
-  );
+export function Breadcrumbs() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const crumbs = getBreadcrumbs(pathname);
 
   return (
-    <nav className="hidden min-w-0 sm:block">
-      <ul className="flex items-center gap-2 whitespace-nowrap">
-        {matchesWithCrumbs.map((match, i) => (
-          <li key={match.id} className="flex gap-2">
-            <Link className="text-primary" from={match.fullPath}>
-              {match.loaderData?.crumb}
-            </Link>
-            {i + 1 < matchesWithCrumbs.length ? (
-              <span className="">{">"}</span>
-            ) : null}
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <Breadcrumb className="min-w-0">
+      <BreadcrumbList className="flex-nowrap">
+        <BreadcrumbItem className={crumbs.length ? "hidden sm:inline-flex" : ""}>
+          {crumbs.length ? (
+            <BreadcrumbLink asChild>
+              <Link to="/">Portal</Link>
+            </BreadcrumbLink>
+          ) : (
+            <BreadcrumbPage>Dashboard</BreadcrumbPage>
+          )}
+        </BreadcrumbItem>
+        {crumbs.map((crumb, i) => {
+          const last = i === crumbs.length - 1;
+          return (
+            <Fragment key={crumb.url}>
+              <BreadcrumbSeparator
+                className="hidden sm:block"
+              />
+              <BreadcrumbItem className={last ? "min-w-0" : "hidden sm:inline-flex"}>
+                {last ? (
+                  <BreadcrumbPage className="truncate">{crumb.label}</BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link to={crumb.url}>{crumb.label}</Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+            </Fragment>
+          );
+        })}
+      </BreadcrumbList>
+    </Breadcrumb>
   );
-};
+}

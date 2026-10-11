@@ -1,0 +1,1 @@
+import{j as t,c as o}from"./iframe-CmnNeUbh.js";function a({className:e,...n}){return t.jsx("div",{"data-slot":"skeleton","aria-hidden":"true",className:o("bg-muted/70 animate-pulse motion-reduce:animate-none rounded-md",e),...n})}a.__docgenInfo={description:"",methods:[],displayName:"Skeleton"};export{a as S};

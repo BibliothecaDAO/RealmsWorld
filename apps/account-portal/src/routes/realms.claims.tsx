@@ -1,3 +1,5 @@
+import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/layout/page-header";
 import { ClaimRewards } from "@/components/modules/realms/claims";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -7,8 +9,14 @@ export const Route = createFileRoute("/realms/claims")({
 
 function RouteComponent() {
   return (
-    <div>
+    <PageContainer>
+      <PageHeader
+        className="mb-0"
+        eyebrow="Realms"
+        title="Realms claims"
+        description="Claim remaining LORDS emissions for Realms held on Starknet and review past claims."
+      />
       <ClaimRewards />
-    </div>
+    </PageContainer>
   );
 }

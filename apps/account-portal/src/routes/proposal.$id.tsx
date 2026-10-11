@@ -1,17 +1,19 @@
+import { NotFoundView } from "@/components/layout/not-found";
+import { PageContainer } from "@/components/layout/page-container";
+import {
+  ProposalArticle,
+  ProposalVotePanel,
+} from "@/components/modules/governance/proposal-detail";
+import { getProposalShortId } from "@/components/modules/governance/proposal-list-item";
 import { ProposalResults } from "@/components/modules/governance/proposal-results";
+import {
+  getProposalStatus,
+  isProposalActive,
+} from "@/components/modules/governance/proposal-status";
 import { ProposalUserVoteBadge } from "@/components/modules/governance/proposal-user-vote-badge";
 import { ProposalVoteAction } from "@/components/modules/governance/proposal-vote-action";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { MarkdownRenderer } from "@/components/ui/markdown-renderer";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarInset,
-  SidebarProvider,
-} from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
+import { SectionCard } from "@/components/ui/section-card";
 import { useCurrentDelegate } from "@/hooks/governance/use-current-delegate";
 import { useVotingPower } from "@/hooks/governance/use-voting-power";
 import { useStarkDisplayName } from "@/hooks/use-stark-name";
@@ -24,25 +26,12 @@ import {
   SUPPORTED_L2_CHAIN_ID,
 } from "@/utils/utils";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { formatDistanceToNow } from "date-fns";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { env } from "env";
-import { CheckCircle2, MinusCircle, XCircle } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { num } from "starknet";
 
 import { SnapshotSpaceAddresses } from "@realms-world/constants";
-
-// Define the expected types for the proposal data we need
-/*interface ProposalData {
-  metadata?: {
-    title?: string;
-    body?: string;
-  };
-  author?: {
-    id: string;
-  };
-  created?: number;
-}*/
 
 export const Route = createFileRoute("/proposal/$id")({
   component: RouteComponent,
@@ -85,12 +74,17 @@ function RouteComponent() {
   const name = useStarkDisplayName(authorAddress);
 
   if (!proposal) {
-    return <div>Proposal not found</div>;
+    return (
+      <PageContainer width="narrow">
+        <NotFoundView
+          title="Proposal not found"
+          description="This proposal does not exist or has been removed."
+        />
+      </PageContainer>
+    );
   }
 
-  const title = proposal.metadata?.title as string;
   let body = proposal.metadata?.body as string;
-  const authorId = proposal.author.id;
   const createdTime = proposal.created
     ? new Date(proposal.created * 1000)
     : null;
@@ -100,132 +94,49 @@ function RouteComponent() {
       match.replace("ipfs://", env.VITE_PUBLIC_IPFS_GATEWAY ?? ""),
     );
   }
-  const isActive = proposal.max_end * 1000 > Date.now();
-
-  // Determine proposal status if vote has ended
-  const getProposalStatus = () => {
-    if (isActive) return null;
-
-    if (
-      (proposal.scores_total ?? 0) >= 1500 &&
-      Number(proposal.scores_1 ?? 0) > Number(proposal.scores_2 ?? 0)
-    ) {
-      return {
-        label: "Passed",
-        className: "text-success border-success",
-        icon: CheckCircle2,
-      };
-    } else if ((proposal.scores_total ?? 0) < 1500) {
-      return {
-        label: "Quorum not met",
-        className: "text-sm text-muted-foreground border-muted-foreground",
-        icon: XCircle,
-      };
-    } else {
-      return {
-        label: "Failed",
-        className: "border-destructive text-destructive",
-        icon: MinusCircle,
-      };
-    }
-  };
-  const proposalStatus = getProposalStatus();
+  const isActive = isProposalActive(proposal);
 
   const votePanel = (
-    <>
-      {votingPower && (
-        <Badge
-          variant={"outline"}
-          className="mx-auto flex max-w-30 justify-center rounded text-center text-lg"
-        >
-          {Number(votingPower).toString()} Realms
-        </Badge>
-      )}
-      <SidebarGroup>
-        {isActive && (
-          <>
-            <SidebarGroupLabel>Cast Your Vote</SidebarGroupLabel>
-            <ProposalVoteAction proposal={proposal} />
-          </>
-        )}
-        {userVoteRef && (
-          <>
-            <SidebarGroupLabel>You Voted:</SidebarGroupLabel>
-            <ProposalUserVoteBadge choice={userVoteRef.choice} />
-          </>
-        )}
-      </SidebarGroup>
-      <SidebarGroup>
-        <SidebarGroupLabel>Results</SidebarGroupLabel>
-        <ProposalResults proposal={proposal} />
-      </SidebarGroup>
-    </>
+    <ProposalVotePanel
+      votingPower={votingPower ? Number(votingPower).toString() : undefined}
+      voteAction={
+        isActive ? <ProposalVoteAction proposal={proposal} /> : undefined
+      }
+      userVote={
+        userVoteRef ? (
+          <ProposalUserVoteBadge choice={userVoteRef.choice} />
+        ) : undefined
+      }
+      results={<ProposalResults proposal={proposal} />}
+    />
   );
 
   return (
-    <SidebarProvider
-      style={{
-        "--sidebar-width": "20rem",
-        "--sidebar-width-mobile": "20rem",
-      }}
-    >
-      <SidebarInset className="min-w-0">
-        <div className="container mx-auto max-w-4xl min-w-0 px-4 py-6 sm:px-6 sm:py-8">
-          <Card className="mb-6 sm:mb-8">
-            <CardHeader>
-              <div className="flex flex-col gap-2">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <h1 className="realm-page-title min-w-0 text-2xl break-words sm:text-4xl">
-                    {title}
-                  </h1>
-                  {proposalStatus && (
-                    <Badge
-                      variant={"outline"}
-                      className={"text-base " + proposalStatus.className}
-                    >
-                      <proposalStatus.icon className="mr-1.5 w-5" />
-                      {proposalStatus.label}
-                    </Badge>
-                  )}
-                </div>
-                <div className="text-muted-foreground flex min-w-0 flex-wrap items-center gap-x-2 text-sm">
-                  {authorId && (
-                    <>
-                      <span className="min-w-0 truncate">
-                        Proposed by {name || shortenAddress(proposal.author.id)}
-                      </span>
-                      <span>•</span>
-                    </>
-                  )}
-                  {createdTime && (
-                    <span>{formatDistanceToNow(createdTime)} ago</span>
-                  )}
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              {body && (
-                <div className="text-card-foreground min-w-0 break-words [&_img]:h-auto [&_img]:max-w-full [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto">
-                  <MarkdownRenderer content={body} />
-                </div>
-              )}
-            </CardContent>
-          </Card>
-          {/* Sidebars are off-canvas on mobile, so surface voting inline. */}
-          <Card className="mb-6 md:hidden">
-            <CardContent className="flex flex-col gap-3 pt-6">
-              {votePanel}
-            </CardContent>
-          </Card>
-        </div>
-      </SidebarInset>
-      <Sidebar
-        side="right"
-        variant="inset"
-        className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
-      >
-        <SidebarContent>{votePanel}</SidebarContent>
-      </Sidebar>
-    </SidebarProvider>
+    <PageContainer>
+      <Button asChild variant="ghost" size="sm" className="-ml-2 w-fit">
+        <Link to="/proposal/list">
+          <ArrowLeft />
+          All proposals
+        </Link>
+      </Button>
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
+        <ProposalArticle
+          className="lg:col-span-2"
+          title={proposal.metadata?.title as string}
+          shortId={getProposalShortId(proposal.proposal_id)}
+          author={
+            proposal.author.id
+              ? name || shortenAddress(proposal.author.id)
+              : undefined
+          }
+          createdAt={createdTime}
+          status={getProposalStatus(proposal)}
+          body={body}
+        />
+        <aside className="lg:sticky lg:top-20">
+          <SectionCard title="Vote">{votePanel}</SectionCard>
+        </aside>
+      </div>
+    </PageContainer>
   );
 }

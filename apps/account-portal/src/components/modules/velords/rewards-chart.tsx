@@ -17,19 +17,17 @@ import { formatUnits } from "viem";
 
 const sourceColors = {
   "0x045c587318c9ebcf2fbe21febf288ee2e3597a21cd48676005a5770a50d433c5":
-    "hsl(120 88.9% 85.9%)",
+    "var(--chart-1)",
   "0x047230028629128ac5bfbb384d32f925e70e329b624fc5d82e9c60f5746795cd":
-    "hsl(36 88.9% 85.9%)",
-  //Crypts: "hsl(120 88.9% 85.9%)",
-  // Add more sources and colors as needed
+    "var(--chart-2)",
 } as const;
 
 const fallbackSourceColors = [
-  "hsl(var(--chart-1))",
-  "hsl(var(--chart-2))",
-  "hsl(var(--chart-3))",
-  "hsl(var(--chart-4))",
-  "hsl(var(--chart-5))",
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
+  "var(--chart-5)",
 ];
 
 const compactFormatter = new Intl.NumberFormat("en-US", {
@@ -44,12 +42,12 @@ function compactNumber(value: number) {
 const chartConfig = {
   total_amount: {
     label: "Lords",
-    color: "hsl(36 88.9% 85.9%)",
+    color: "var(--chart-1)",
     icon: LordsIcon,
   },
   apy: {
     label: "APY %",
-    color: "hsl(338.33 100% 78.82%)",
+    color: "var(--chart-4)",
   },
 } satisfies ChartConfig;
 
@@ -203,7 +201,7 @@ export function VeLordsRewardsChart({
   return (
     <Card>
       <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>Lords Rewards per Week</div>
+        <div>LORDS rewards per week</div>
         <div className="flex items-center gap-3">
           <span className="text-sm font-medium whitespace-nowrap">
             Time Period:
@@ -237,7 +235,7 @@ export function VeLordsRewardsChart({
 
       <ChartContainer
         config={dynamicChartConfig}
-        className="!aspect-auto h-[320px] w-full px-2 pb-4 sm:h-[380px] sm:px-4"
+        className="!aspect-auto h-80 w-full px-2 pb-4 sm:h-96 sm:px-4"
       >
         {errorMessage ? (
           <div className="text-destructive p-6 text-sm">{errorMessage}</div>

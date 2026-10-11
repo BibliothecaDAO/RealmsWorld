@@ -4,7 +4,7 @@ import reactConfig from "@realms-world/eslint-config/react";
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: ["dist/**", ".storybook/**", ".vercel", ".output", "byukd/"],
+    ignores: ["dist/**", ".storybook/**", "storybook-static/**", ".vercel", ".output", "byukd/"],
   },
   ...baseConfig,
   ...reactConfig,

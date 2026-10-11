@@ -26,11 +26,9 @@ export function DelegateListActions({
     num.toHex(currentDelegate ?? "") as `0x${string}`,
   );
 
-  // New state for sort/filter method
   const [sortMethod, setSortMethod] = useState<"desc" | "random">("random");
 
   const toggleSortMethod = () => {
-    // Toggle sort method and notify the parent via the onSortChange callback
     setSortMethod((prevMethod) => {
       const newMethod = prevMethod === "desc" ? "random" : "desc";
       if (onSortChange) {
@@ -41,39 +39,28 @@ export function DelegateListActions({
   };
 
   return (
-    <div className="flex shrink-0 flex-wrap items-center justify-end gap-2 sm:px-2">
+    <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
       {currentDelegate ? (
-        <>
-          <Label className="text-muted-foreground hidden text-xs sm:block">
-            Delegate:
-          </Label>
-          <Badge
-            className="mr-2 hidden max-w-40 truncate rounded-full sm:inline-flex"
-            variant={"outline"}
-          >
+        <div className="hidden items-center gap-2 sm:flex">
+          <Label className="realm-label">Delegate</Label>
+          <Badge className="max-w-40 truncate" variant="outline">
             {name}
           </Badge>
-        </>
+        </div>
       ) : (
         address && (
-          <Button className="h-12 sm:h-10" onClick={() => delegateRealms()}>
-            Delegate to self
-          </Button>
+          <Button onClick={() => delegateRealms()}>Delegate to self</Button>
         )
       )}
-      <Button
-        variant="outline"
-        className="h-12 sm:h-10"
-        onClick={toggleSortMethod}
-      >
+      <Button variant="outline" onClick={toggleSortMethod}>
         {sortMethod === "desc" ? (
           <>
-            <TrendingDown className="mr-2 h-4 w-4" />
+            <TrendingDown />
             Desc votes
           </>
         ) : (
           <>
-            <Shuffle className="mr-2 h-4 w-4" />
+            <Shuffle />
             Random
           </>
         )}

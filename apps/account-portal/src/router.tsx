@@ -20,6 +20,8 @@ export function getRouter() {
       },
     },
     defaultPreload: "intent",
+    // Cross-fade main content on navigation (styles.css scopes it to #main-content).
+    defaultViewTransition: true,
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,
     //scrollRestoration: true,

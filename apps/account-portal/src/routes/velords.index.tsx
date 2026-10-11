@@ -1,10 +1,16 @@
 import { lazy, Suspense, useMemo } from "react";
+import { PageContainer } from "@/components/layout/page-container";
 import { PageHeader } from "@/components/layout/page-header";
 import { VelordsLockActivity } from "@/components/modules/velords/lock-activity";
 import { VelordsSourceBreakdown } from "@/components/modules/velords/source-breakdown";
+import { VelordsPosition } from "@/components/modules/velords/velords-position";
+import {
+  MetricValueSkeleton,
+  VelordsStats,
+} from "@/components/modules/velords/velords-stats";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MetricCard } from "@/components/ui/metric-card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useVelordsData } from "@/hooks/use-velords-data";
@@ -224,184 +230,164 @@ function RouteComponent() {
     }
   };
 
+  const tvlDisplay =
+    typeof tvl === "number" && Number.isFinite(tvl)
+      ? `$${tvl.toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+      : isTVLLoading
+        ? undefined
+        : "$0";
+
   return (
-    <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-6 sm:px-6 sm:py-8">
-        <PageHeader
-          title="veLords Dashboard"
-          description="Stake $LORDS in the Lordship Protocol and monitor reward performance."
-          actions={
-            <>
-              <Button variant="outline" onClick={handleCopyLink}>
-                <Link2 className="mr-2 h-4 w-4" />
-                Copy Link
-              </Button>
-              <Button variant="outline" onClick={handleCopySummary}>
-                <Copy className="mr-2 h-4 w-4" />
-                Copy Summary
-              </Button>
-            </>
+    <PageContainer>
+      <PageHeader
+        className="mb-0"
+        eyebrow="Lordship Protocol"
+        title="veLORDS"
+        description="Stake LORDS for voting power and a share of weekly protocol rewards."
+        actions={
+          <>
+            <Button variant="outline" size="sm" onClick={handleCopyLink}>
+              <Link2 />
+              Copy link
+            </Button>
+            <Button variant="outline" size="sm" onClick={handleCopySummary}>
+              <Copy />
+              Copy summary
+            </Button>
+          </>
+        }
+      />
+
+      <VelordsStats>
+        <MetricCard
+          compact
+          label="Voting power"
+          value={totalSupply ?? <MetricValueSkeleton />}
+          hint={
+            userBalance !== undefined && userSharePercent !== undefined
+              ? `You: ${userBalance} (${userSharePercent}%)`
+              : undefined
           }
         />
+        <MetricCard
+          compact
+          label="LORDS locked"
+          value={lordsLocked ?? <MetricValueSkeleton />}
+        />
+        <MetricCard compact label="TVL" value={tvlDisplay ?? <MetricValueSkeleton />} />
+        <MetricCard
+          compact
+          label="Rewards · 7d"
+          value={rewards7d ?? <MetricValueSkeleton />}
+        />
+        <MetricCard
+          compact
+          label="Rewards · 30d"
+          value={rewards30d ?? <MetricValueSkeleton />}
+        />
+        <MetricCard
+          compact
+          label="Trailing APY · 4w"
+          value={`${formatNumber(trailingApy, 2)}%`}
+          valueClassName="text-trade-up"
+        />
+      </VelordsStats>
 
-        <div className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-3">
-          <MetricCard
-            label="Total Voting Power (veLORDS)"
-            value={totalSupply ?? "Loading..."}
-            hint={
-              userBalance !== undefined && userSharePercent !== undefined
-                ? `Your share: ${userBalance} (${userSharePercent}%)`
-                : undefined
-            }
-          />
-          <MetricCard
-            label="LORDS Locked"
-            value={lordsLocked ?? "Loading..."}
-          />
-          <MetricCard
-            label="TVL"
-            value={
-              typeof tvl === "number" && Number.isFinite(tvl)
-                ? `$${tvl.toLocaleString(undefined, { maximumFractionDigits: 0 })}`
-                : isTVLLoading
-                  ? "Loading..."
-                  : "$0"
-            }
-          />
-          <MetricCard label="Rewards (7d)" value={rewards7d ?? "Loading..."} />
-          <MetricCard
-            label="Rewards (30d)"
-            value={rewards30d ?? "Loading..."}
-          />
-          <MetricCard
-            label="Trailing APY (4w avg)"
-            value={`${formatNumber(trailingApy, 2)}%`}
-          />
-        </div>
-
-        <div className="grid gap-6 lg:gap-8 xl:grid-cols-5">
-          <div className="space-y-6 xl:col-span-3">
-            <Suspense
-              fallback={
-                <div className="h-[360px] w-full animate-pulse rounded-md border" />
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-5">
+        <div className="flex min-w-0 flex-col gap-6 xl:col-span-3">
+          <Suspense fallback={<Skeleton className="h-96 w-full rounded-xl" />}>
+            <VeLordsRewardsChart
+              selectedPeriod={selectedPeriod}
+              totalSupplyRaw={totalSupplyRaw}
+              data={veLordsBurnsQuery.data ?? []}
+              onTimePeriodChange={handleTimePeriodChange}
+              isLoading={veLordsBurnsQuery.isLoading}
+              errorMessage={
+                veLordsBurnsQuery.error instanceof Error
+                  ? veLordsBurnsQuery.error.message
+                  : undefined
               }
-            >
-              <VeLordsRewardsChart
-                selectedPeriod={selectedPeriod}
-                totalSupplyRaw={totalSupplyRaw}
-                data={veLordsBurnsQuery.data ?? []}
-                onTimePeriodChange={handleTimePeriodChange}
-                isLoading={veLordsBurnsQuery.isLoading}
-                errorMessage={
-                  veLordsBurnsQuery.error instanceof Error
-                    ? veLordsBurnsQuery.error.message
-                    : undefined
-                }
-              />
-            </Suspense>
+            />
+          </Suspense>
 
-            <Tabs value={selectedView} onValueChange={handleViewChange}>
-              <TabsList className="max-w-full">
-                <TabsTrigger value="overview">Overview</TabsTrigger>
-                <TabsTrigger value="sources">Sources</TabsTrigger>
-                <TabsTrigger value="locks">Locks</TabsTrigger>
-                <TabsTrigger value="trends">Trends</TabsTrigger>
-              </TabsList>
-              <TabsContent value="overview">
-                <div className="grid gap-6 lg:grid-cols-2">
-                  <VelordsSourceBreakdown
-                    data={rewardsSeriesQuery.data?.sources ?? []}
-                    isLoading={rewardsSeriesQuery.isLoading}
-                  />
-                  <VelordsLockActivity
-                    data={lockActivityQuery.data?.weekly ?? []}
-                    isLoading={lockActivityQuery.isLoading}
-                  />
-                </div>
-              </TabsContent>
-              <TabsContent value="sources">
+          <Tabs
+            value={selectedView}
+            onValueChange={handleViewChange}
+            className="gap-4"
+          >
+            <TabsList className="max-w-full overflow-x-auto">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="sources">Sources</TabsTrigger>
+              <TabsTrigger value="locks">Locks</TabsTrigger>
+              <TabsTrigger value="trends">Trends</TabsTrigger>
+            </TabsList>
+            <TabsContent value="overview">
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <VelordsSourceBreakdown
                   data={rewardsSeriesQuery.data?.sources ?? []}
                   isLoading={rewardsSeriesQuery.isLoading}
                 />
-              </TabsContent>
-              <TabsContent value="locks">
                 <VelordsLockActivity
                   data={lockActivityQuery.data?.weekly ?? []}
                   isLoading={lockActivityQuery.isLoading}
                 />
-              </TabsContent>
-              <TabsContent value="trends">
-                <Suspense
-                  fallback={
-                    <div className="h-[640px] w-full animate-pulse rounded-md border" />
-                  }
-                >
-                  <VelordsTrendsPanel
-                    rewardsWeekly={rewardsSeriesQuery.data?.weekly ?? []}
-                    lockWeekly={lockActivityQuery.data?.weekly ?? []}
-                    isRewardsLoading={rewardsSeriesQuery.isLoading}
-                    isLocksLoading={lockActivityQuery.isLoading}
-                  />
-                </Suspense>
-              </TabsContent>
-            </Tabs>
-          </div>
-
-          <div className="space-y-6 xl:col-span-2">
-            <Card>
-              <CardHeader className="pb-2">
-                <CardTitle>Your Position</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-muted-foreground space-y-1 text-sm">
-                  <div>veLORDS Balance: {userBalance ?? "-"}</div>
-                  <div>
-                    Supply Share:{" "}
-                    {userSharePercent ? `${userSharePercent}%` : "-"}
-                  </div>
-                  <div>Locked LORDS: {userLocked?.amount ?? "-"}</div>
-                  <div>
-                    Unlock Time:{" "}
-                    {userLocked?.unlockTime
-                      ? new Date(
-                          userLocked.unlockTime * 1000,
-                        ).toLocaleDateString()
-                      : "-"}
-                  </div>
-                  <div>
-                    Est. Weekly Rewards:{" "}
-                    {estimatedWeeklyRewards !== undefined
-                      ? `~${formatNumber(estimatedWeeklyRewards, 2)} LORDS`
-                      : "-"}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
+              </div>
+            </TabsContent>
+            <TabsContent value="sources">
+              <VelordsSourceBreakdown
+                data={rewardsSeriesQuery.data?.sources ?? []}
+                isLoading={rewardsSeriesQuery.isLoading}
+              />
+            </TabsContent>
+            <TabsContent value="locks">
+              <VelordsLockActivity
+                data={lockActivityQuery.data?.weekly ?? []}
+                isLoading={lockActivityQuery.isLoading}
+              />
+            </TabsContent>
+            <TabsContent value="trends">
               <Suspense
-                fallback={
-                  <div className="h-[320px] w-full animate-pulse rounded-md border" />
-                }
+                fallback={<Skeleton className="h-160 w-full rounded-xl" />}
               >
-                <StakeLords />
+                <VelordsTrendsPanel
+                  rewardsWeekly={rewardsSeriesQuery.data?.weekly ?? []}
+                  lockWeekly={lockActivityQuery.data?.weekly ?? []}
+                  isRewardsLoading={rewardsSeriesQuery.isLoading}
+                  isLocksLoading={lockActivityQuery.isLoading}
+                />
               </Suspense>
-            </Card>
-            {address && (
-              <Card>
-                <Suspense
-                  fallback={
-                    <div className="h-[220px] w-full animate-pulse rounded-md border" />
-                  }
-                >
-                  <VelordsRewards />
-                </Suspense>
-              </Card>
-            )}
-          </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        <div className="flex min-w-0 flex-col gap-6 xl:col-span-2">
+          <VelordsPosition
+            balance={userBalance}
+            sharePercent={userSharePercent ? `${userSharePercent}%` : undefined}
+            locked={userLocked?.amount}
+            unlockDate={
+              userLocked?.unlockTime
+                ? new Date(userLocked.unlockTime * 1000).toLocaleDateString()
+                : undefined
+            }
+            estimatedWeeklyRewards={
+              estimatedWeeklyRewards !== undefined
+                ? `~${formatNumber(estimatedWeeklyRewards, 2)} LORDS`
+                : undefined
+            }
+          />
+          <Suspense fallback={<Skeleton className="h-80 w-full rounded-xl" />}>
+            <StakeLords />
+          </Suspense>
+          {address && (
+            <Suspense
+              fallback={<Skeleton className="h-56 w-full rounded-xl" />}
+            >
+              <VelordsRewards />
+            </Suspense>
+          )}
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }

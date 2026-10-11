@@ -29,7 +29,7 @@ const GridDetails = ({
         {token?.name ?? `Realm #${tokenId}`}
       </span>
     </div>
-    <div className="h-[48px] overflow-hidden">
+    <div className="h-11">
       <RealmResources traits={token?.attributes ?? []} />
     </div>
   </div>
