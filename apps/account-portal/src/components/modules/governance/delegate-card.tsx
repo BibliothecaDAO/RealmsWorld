@@ -59,22 +59,26 @@ export function DelegateCard({
   const name = useStarkDisplayName(delegate.user as `0x${string}`);
 
   return (
-    <Card key={delegate.id} className="">
+    <Card key={delegate.id} className="flex h-full min-w-0 flex-col">
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Avatar className="h-12 w-12">
+        <CardTitle className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+          <div className="flex min-w-0 items-center gap-3">
+            <Avatar className="h-12 w-12 shrink-0">
               <AvatarImage
                 alt={name}
                 src={`https://cdn.stamp.fyi/avatar/${delegate.user}?s=64`}
               />
             </Avatar>
-            <h2 className="text-xl">{name}</h2>
+            <h2 className="min-w-0 truncate text-xl" title={name}>
+              {name}
+            </h2>
           </div>
-          {isCurrentDelegate ? <Badge>Current Delegate</Badge> : null}
+          {isCurrentDelegate ? (
+            <Badge className="shrink-0">Current Delegate</Badge>
+          ) : null}
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2">
+      <CardContent className="flex flex-1 flex-col gap-2">
         <p className="realm-stat text-xl">
           {formatNumber(Number(delegate.delegatedVotes), 0)}{" "}
           <span className="text-muted-foreground text-sm uppercase">
@@ -100,12 +104,12 @@ export function DelegateCard({
                 <PopoverTrigger asChild>
                   <Badge
                     variant={"outline"}
-                    className="cursor-pointer px-1 py-0.5 text-xs"
+                    className="cursor-pointer px-1.5 py-0.5 text-xs"
                   >
                     +{delegate.delegateProfile.interests.length - 3}
                   </Badge>
                 </PopoverTrigger>
-                <PopoverContent className="w-96">
+                <PopoverContent className="w-[min(24rem,calc(100vw-2rem))]">
                   <div className="flex flex-wrap gap-1">
                     {delegate.delegateProfile.interests
                       .slice(3)
@@ -124,19 +128,20 @@ export function DelegateCard({
             )}
         </div>
 
-        <div className="mt-2 text-lg">
-          <ReadMore
-            id={delegate.id}
-            text={delegate.delegateProfile?.statement ?? ""}
-          />
-        </div>
-
+        {delegate.delegateProfile?.statement ? (
+          <div className="mt-2 text-base break-words">
+            <ReadMore
+              id={delegate.id}
+              text={delegate.delegateProfile.statement}
+            />
+          </div>
+        ) : null}
       </CardContent>
       <CardFooter>
         <Button
           disabled={isCurrentDelegate}
           onClick={() => handleDelegate()}
-          className=""
+          className="w-full sm:w-auto"
         >
           <UserPen className="h-4 w-4" />
           Choose Delegate

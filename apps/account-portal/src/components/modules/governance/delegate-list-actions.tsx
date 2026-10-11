@@ -41,20 +41,31 @@ export function DelegateListActions({
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 px-2 text-center sm:flex-row">
+    <div className="flex shrink-0 flex-wrap items-center justify-end gap-2 sm:px-2">
       {currentDelegate ? (
         <>
-          <Label className="text-muted-foreground text-xs">Delegate:</Label>
-          <Badge className="mr-2 rounded-full" variant={"outline"}>
+          <Label className="text-muted-foreground hidden text-xs sm:block">
+            Delegate:
+          </Label>
+          <Badge
+            className="mr-2 hidden max-w-40 truncate rounded-full sm:inline-flex"
+            variant={"outline"}
+          >
             {name}
           </Badge>
         </>
       ) : (
         address && (
-          <Button onClick={() => delegateRealms()}>Delegate to self</Button>
+          <Button className="h-12 sm:h-10" onClick={() => delegateRealms()}>
+            Delegate to self
+          </Button>
         )
       )}
-      <Button variant="outline" onClick={toggleSortMethod}>
+      <Button
+        variant="outline"
+        className="h-12 sm:h-10"
+        onClick={toggleSortMethod}
+      >
         {sortMethod === "desc" ? (
           <>
             <TrendingDown className="mr-2 h-4 w-4" />

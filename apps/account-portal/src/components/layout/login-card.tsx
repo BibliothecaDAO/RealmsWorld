@@ -19,9 +19,7 @@ function FeatureItem({
     <div className="flex items-baseline gap-2 px-1">
       <span className="text-primary text-xs">&#x25C6;</span>
       <div>
-        <h3 className="realm-card-title text-sm">
-          {title}
-        </h3>
+        <h3 className="realm-card-title text-sm">{title}</h3>
         <p className="text-muted-foreground text-xs">{description}</p>
       </div>
     </div>
@@ -30,9 +28,8 @@ function FeatureItem({
 
 export function LoginCard() {
   return (
-    <Card className="mx-auto mt-12 w-full max-w-md">
+    <Card className="mx-auto mt-6 w-[calc(100%-2rem)] max-w-md sm:mt-12">
       <CardHeader className="pb-2 text-center">
-        <p className="realm-eyebrow">Enter The Realm</p>
         <CardTitle className="text-2xl">Welcome to Realms Portal</CardTitle>
         <CardDescription>
           Connect your wallet to access the Realms ecosystem

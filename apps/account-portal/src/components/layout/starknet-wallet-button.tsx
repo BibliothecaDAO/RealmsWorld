@@ -68,7 +68,7 @@ export const StarknetWalletButton = ({
   }
 
   return (
-    <div className={cn("inline-flex items-stretch", className)}>
+    <div className={cn("inline-flex shrink-0 items-stretch", className)}>
       <Button
         onClick={connectPrimary}
         className={cn(
@@ -83,7 +83,9 @@ export const StarknetWalletButton = ({
             alt={`${lastConnector.name} logo`}
           />
         ) : null}
-        <span className="mx-auto">{label ?? "Connect wallet"}</span>
+        <span className="mx-auto whitespace-nowrap">
+          {label ?? "Connect wallet"}
+        </span>
       </Button>
       {hasConnectorPicker ? (
         <Button

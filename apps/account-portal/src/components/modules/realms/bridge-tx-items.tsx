@@ -89,7 +89,7 @@ const BridgeTransactionItems = () => {
           return (
             <AccordionItem key={transaction.id} value={transaction.id}>
               <AccordionTrigger className="flex w-full items-center justify-between hover:no-underline">
-                <div className="flex w-full justify-between px-2">
+                <div className="flex w-full min-w-0 justify-between gap-2 px-2">
                   <div className="flex flex-col justify-center">
                     <div className="flex items-center gap-2">
                       <TransactionChains fromChain={transaction.from_chain} />
@@ -98,8 +98,8 @@ const BridgeTransactionItems = () => {
                       {transaction.timestamp.toLocaleString()}
                     </span>
                   </div>
-                  <div className="flex flex-col items-end justify-end">
-                    <div className="flex gap-1">
+                  <div className="flex shrink-0 flex-col items-end justify-end">
+                    <div className="flex flex-wrap justify-end gap-1">
                       {transaction.token_ids.slice(0, 3).map((id) => (
                         <Badge variant="outline" className="w-fit" key={id}>
                           #{id}
@@ -143,12 +143,12 @@ const BridgeTransactionItems = () => {
                   >
                     {isCompleted ? "Completed" : "In Progress"}
                   </span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2 break-all">
                     {shortenAddress(transaction.from_address)}
                     <ArrowRight />
                     {shortenAddress(transaction.to_address)}
                   </div>
-                  <div className="mt-2 flex items-center gap-2">
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
                     {transaction.events.map((event) => {
                       const explorer = getBridgeEventExplorer(
                         history?.network ?? "mainnet",

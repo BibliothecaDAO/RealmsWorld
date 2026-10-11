@@ -82,6 +82,19 @@ const baseChartConfig = {
   },
 } satisfies ChartConfig;
 
+const compactFormatter = new Intl.NumberFormat("en-US", {
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
+
+function compact(value: number) {
+  return Number.isFinite(value) ? compactFormatter.format(value) : "0";
+}
+
+function shortWeek(value: string) {
+  return typeof value === "string" ? value.slice(5) : value;
+}
+
 const sourcePalette = [
   "var(--color-chart-1)",
   "var(--color-chart-2)",
@@ -116,8 +129,7 @@ export function VelordsTrendsPanel({
       return {
         rawKey,
         key,
-        label:
-          rawKey === "other" ? "Other" : getVelordsSourceLabel(rawKey),
+        label: rawKey === "other" ? "Other" : getVelordsSourceLabel(rawKey),
         color: sourcePalette[index % sourcePalette.length],
       };
     });
@@ -173,7 +185,8 @@ export function VelordsTrendsPanel({
     [rewardsWeekly],
   );
 
-  const latestUpdatesPerWallet = lockParticipationPoints.at(-1)?.updatesPerWallet ?? 0;
+  const latestUpdatesPerWallet =
+    lockParticipationPoints.at(-1)?.updatesPerWallet ?? 0;
 
   const isLoading = Boolean(
     (isRewardsLoading ?? false) || (isLocksLoading ?? false),
@@ -211,17 +224,27 @@ export function VelordsTrendsPanel({
         <CardHeader>
           <CardTitle>Rewards Momentum</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-2 sm:px-6">
           <ChartContainer
             config={baseChartConfig}
-            className="h-[320px] w-full !aspect-auto"
+            className="!aspect-auto h-[280px] w-full sm:h-[320px]"
           >
             <ComposedChart data={rewardsMomentum}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="week" tickLine={false} axisLine={false} minTickGap={28} />
-              <YAxis />
+              <XAxis
+                dataKey="week"
+                tickLine={false}
+                axisLine={false}
+                minTickGap={40}
+                tickFormatter={shortWeek}
+              />
+              <YAxis width={44} tickLine={false} tickFormatter={compact} />
               <ChartTooltip content={<ChartTooltipContent />} />
-              <ChartLegend content={<ChartLegendContent />} />
+              <ChartLegend
+                content={
+                  <ChartLegendContent className="flex-wrap gap-x-4 gap-y-1" />
+                }
+              />
               <Bar
                 dataKey="totalRewards"
                 fill="var(--color-totalRewards)"
@@ -243,17 +266,27 @@ export function VelordsTrendsPanel({
         <CardHeader>
           <CardTitle>Source Share Over Time</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-2 sm:px-6">
           <ChartContainer
             config={sourceShareConfig}
-            className="h-[320px] w-full !aspect-auto"
+            className="!aspect-auto h-[280px] w-full sm:h-[320px]"
           >
             <AreaChart data={sourceShareData.points}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="week" tickLine={false} axisLine={false} minTickGap={28} />
-              <YAxis domain={[0, 100]} />
+              <XAxis
+                dataKey="week"
+                tickLine={false}
+                axisLine={false}
+                minTickGap={40}
+                tickFormatter={shortWeek}
+              />
+              <YAxis width={36} tickLine={false} domain={[0, 100]} />
               <ChartTooltip content={<ChartTooltipContent />} />
-              <ChartLegend content={<ChartLegendContent />} />
+              <ChartLegend
+                content={
+                  <ChartLegendContent className="flex-wrap gap-x-4 gap-y-1" />
+                }
+              />
               {sourceShareData.sourceSeries.map((source) => (
                 <Area
                   key={source.key}
@@ -275,18 +308,39 @@ export function VelordsTrendsPanel({
         <CardHeader>
           <CardTitle>Source Concentration</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-2 sm:px-6">
           <ChartContainer
             config={baseChartConfig}
-            className="h-[320px] w-full !aspect-auto"
+            className="!aspect-auto h-[280px] w-full sm:h-[320px]"
           >
             <ComposedChart data={concentrationPoints}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="week" tickLine={false} axisLine={false} minTickGap={28} />
-              <YAxis yAxisId="share" domain={[0, 100]} />
-              <YAxis yAxisId="count" orientation="right" allowDecimals={false} />
+              <XAxis
+                dataKey="week"
+                tickLine={false}
+                axisLine={false}
+                minTickGap={40}
+                tickFormatter={shortWeek}
+              />
+              <YAxis
+                yAxisId="share"
+                width={36}
+                tickLine={false}
+                domain={[0, 100]}
+              />
+              <YAxis
+                yAxisId="count"
+                width={28}
+                tickLine={false}
+                orientation="right"
+                allowDecimals={false}
+              />
               <ChartTooltip content={<ChartTooltipContent />} />
-              <ChartLegend content={<ChartLegendContent />} />
+              <ChartLegend
+                content={
+                  <ChartLegendContent className="flex-wrap gap-x-4 gap-y-1" />
+                }
+              />
               <Line
                 dataKey="top1Share"
                 yAxisId="share"
@@ -317,20 +371,36 @@ export function VelordsTrendsPanel({
           <CardTitle>Lock Participation Trend</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="mb-3 text-sm text-muted-foreground">
-            Latest updates per active wallet: {formatNumber(latestUpdatesPerWallet, 2)}
+          <div className="text-muted-foreground mb-3 px-4 text-sm sm:px-0">
+            Latest updates per active wallet:{" "}
+            {formatNumber(latestUpdatesPerWallet, 2)}
           </div>
           <ChartContainer
             config={baseChartConfig}
-            className="h-[320px] w-full !aspect-auto"
+            className="!aspect-auto h-[280px] w-full sm:h-[320px]"
           >
             <ComposedChart data={lockParticipationPoints}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="week" tickLine={false} axisLine={false} minTickGap={28} />
-              <YAxis yAxisId="count" />
-              <YAxis yAxisId="ratio" orientation="right" />
+              <XAxis
+                dataKey="week"
+                tickLine={false}
+                axisLine={false}
+                minTickGap={40}
+                tickFormatter={shortWeek}
+              />
+              <YAxis yAxisId="count" width={36} tickLine={false} />
+              <YAxis
+                yAxisId="ratio"
+                width={36}
+                tickLine={false}
+                orientation="right"
+              />
               <ChartTooltip content={<ChartTooltipContent />} />
-              <ChartLegend content={<ChartLegendContent />} />
+              <ChartLegend
+                content={
+                  <ChartLegendContent className="flex-wrap gap-x-4 gap-y-1" />
+                }
+              />
               <Line
                 dataKey="updates"
                 yAxisId="count"
@@ -362,19 +432,30 @@ export function VelordsTrendsPanel({
           <CardTitle>Cumulative Rewards Curve</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="mb-3 text-sm text-muted-foreground">
-            Projected period total: {formatNumber(projectedPeriodTotal, 2)} LORDS
+          <div className="text-muted-foreground mb-3 px-4 text-sm sm:px-0">
+            Projected period total: {formatNumber(projectedPeriodTotal, 2)}{" "}
+            LORDS
           </div>
           <ChartContainer
             config={baseChartConfig}
-            className="h-[320px] w-full !aspect-auto"
+            className="!aspect-auto h-[280px] w-full sm:h-[320px]"
           >
             <LineChart data={cumulativePoints}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="week" tickLine={false} axisLine={false} minTickGap={28} />
-              <YAxis />
+              <XAxis
+                dataKey="week"
+                tickLine={false}
+                axisLine={false}
+                minTickGap={40}
+                tickFormatter={shortWeek}
+              />
+              <YAxis width={44} tickLine={false} tickFormatter={compact} />
               <ChartTooltip content={<ChartTooltipContent />} />
-              <ChartLegend content={<ChartLegendContent />} />
+              <ChartLegend
+                content={
+                  <ChartLegendContent className="flex-wrap gap-x-4 gap-y-1" />
+                }
+              />
               <ReferenceLine
                 y={projectedPeriodTotal}
                 stroke="var(--color-top3Share)"

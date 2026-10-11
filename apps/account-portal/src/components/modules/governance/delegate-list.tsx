@@ -19,7 +19,7 @@ function DelegateList({
     }),
   );
   return (
-    <div className="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 p-1 sm:gap-6 sm:p-4 md:grid-cols-2 xl:grid-cols-3">
       {delegatesQuery.data.items.map((delegate) => (
         <DelegateCard key={delegate.id} delegate={delegate} />
       ))}

@@ -3,7 +3,6 @@ import { cn } from "@/utils/utils";
 
 interface PageHeaderProps {
   title: ReactNode;
-  eyebrow?: ReactNode;
   description?: ReactNode;
   actions?: ReactNode;
   className?: string;
@@ -11,7 +10,6 @@ interface PageHeaderProps {
 
 export function PageHeader({
   title,
-  eyebrow,
   description,
   actions,
   className,
@@ -24,7 +22,6 @@ export function PageHeader({
       )}
     >
       <div className="space-y-2">
-        {eyebrow ? <p className="realm-eyebrow">{eyebrow}</p> : null}
         <h1 className="realm-page-title text-3xl sm:text-4xl">{title}</h1>
         {description ? (
           <p className="text-muted-foreground text-sm sm:text-base">

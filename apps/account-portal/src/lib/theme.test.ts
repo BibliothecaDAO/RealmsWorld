@@ -80,8 +80,8 @@ describe("account portal theme", () => {
   });
 
   it("maps semantic borders onto the realm gold palette", () => {
-    expect(styles).toContain("--border: oklch(0.52 0.04 75);");
-    expect(styles).toContain("--border: oklch(0.38 0.04 75);");
+    expect(styles).toContain("--border: oklch(0.52 0.04 75 / 22%);");
+    expect(styles).toContain("--border: oklch(0.72 0.05 75 / 13%);");
     expect(styles).toContain("border-color: var(--border);");
   });
 

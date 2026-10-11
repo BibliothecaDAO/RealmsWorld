@@ -5,14 +5,14 @@ export const Breadcrumbs = () => {
   if (matches.some((match) => match.status === "pending")) return null;
 
   const matchesWithCrumbs = matches.filter((match) =>
-    isMatch(match, "loaderData.crumb")
+    isMatch(match, "loaderData.crumb"),
   );
 
   return (
-    <nav>
-      <ul className="flex gap-2 items-center">
+    <nav className="hidden min-w-0 sm:block">
+      <ul className="flex items-center gap-2 whitespace-nowrap">
         {matchesWithCrumbs.map((match, i) => (
-          <li className="flex gap-2">
+          <li key={match.id} className="flex gap-2">
             <Link className="text-primary" from={match.fullPath}>
               {match.loaderData?.crumb}
             </Link>

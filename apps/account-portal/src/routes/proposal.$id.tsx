@@ -131,6 +131,37 @@ function RouteComponent() {
   };
   const proposalStatus = getProposalStatus();
 
+  const votePanel = (
+    <>
+      {votingPower && (
+        <Badge
+          variant={"outline"}
+          className="mx-auto flex max-w-30 justify-center rounded text-center text-lg"
+        >
+          {Number(votingPower).toString()} Realms
+        </Badge>
+      )}
+      <SidebarGroup>
+        {isActive && (
+          <>
+            <SidebarGroupLabel>Cast Your Vote</SidebarGroupLabel>
+            <ProposalVoteAction proposal={proposal} />
+          </>
+        )}
+        {userVoteRef && (
+          <>
+            <SidebarGroupLabel>You Voted:</SidebarGroupLabel>
+            <ProposalUserVoteBadge choice={userVoteRef.choice} />
+          </>
+        )}
+      </SidebarGroup>
+      <SidebarGroup>
+        <SidebarGroupLabel>Results</SidebarGroupLabel>
+        <ProposalResults proposal={proposal} />
+      </SidebarGroup>
+    </>
+  );
+
   return (
     <SidebarProvider
       style={{
@@ -138,14 +169,13 @@ function RouteComponent() {
         "--sidebar-width-mobile": "20rem",
       }}
     >
-      <SidebarInset>
-        <div className="container mx-auto max-w-4xl py-8">
-          <Card className="mb-8">
+      <SidebarInset className="min-w-0">
+        <div className="container mx-auto max-w-4xl min-w-0 px-4 py-6 sm:px-6 sm:py-8">
+          <Card className="mb-6 sm:mb-8">
             <CardHeader>
               <div className="flex flex-col gap-2">
-                <p className="realm-eyebrow">Governance</p>
-                <div className="flex items-center justify-between gap-3">
-                  <h1 className="realm-page-title text-3xl sm:text-4xl">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <h1 className="realm-page-title min-w-0 text-2xl break-words sm:text-4xl">
                     {title}
                   </h1>
                   {proposalStatus && (
@@ -158,10 +188,10 @@ function RouteComponent() {
                     </Badge>
                   )}
                 </div>
-                <div className="text-muted-foreground flex items-center gap-2 text-sm">
+                <div className="text-muted-foreground flex min-w-0 flex-wrap items-center gap-x-2 text-sm">
                   {authorId && (
                     <>
-                      <span>
+                      <span className="min-w-0 truncate">
                         Proposed by {name || shortenAddress(proposal.author.id)}
                       </span>
                       <span>•</span>
@@ -175,11 +205,16 @@ function RouteComponent() {
             </CardHeader>
             <CardContent>
               {body && (
-                <MarkdownRenderer
-                  content={body}
-                  className="text-card-foreground"
-                />
+                <div className="text-card-foreground min-w-0 break-words [&_img]:h-auto [&_img]:max-w-full [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto">
+                  <MarkdownRenderer content={body} />
+                </div>
               )}
+            </CardContent>
+          </Card>
+          {/* Sidebars are off-canvas on mobile, so surface voting inline. */}
+          <Card className="mb-6 md:hidden">
+            <CardContent className="flex flex-col gap-3 pt-6">
+              {votePanel}
             </CardContent>
           </Card>
         </div>
@@ -189,34 +224,7 @@ function RouteComponent() {
         variant="inset"
         className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
       >
-        <SidebarContent>
-          {votingPower && (
-            <Badge
-              variant={"outline"}
-              className="mx-auto flex max-w-30 justify-center rounded text-center text-lg"
-            >
-              {Number(votingPower).toString()} Realms
-            </Badge>
-          )}
-          <SidebarGroup>
-            {isActive && (
-              <>
-                <SidebarGroupLabel>Cast Your Vote</SidebarGroupLabel>
-                <ProposalVoteAction proposal={proposal} />
-              </>
-            )}
-            {userVoteRef && (
-              <>
-                <SidebarGroupLabel>You Voted:</SidebarGroupLabel>
-                <ProposalUserVoteBadge choice={userVoteRef.choice} />
-              </>
-            )}
-          </SidebarGroup>
-          <SidebarGroup>
-            <SidebarGroupLabel>Results</SidebarGroupLabel>
-            <ProposalResults proposal={proposal} />
-          </SidebarGroup>
-        </SidebarContent>
+        <SidebarContent>{votePanel}</SidebarContent>
       </Sidebar>
     </SidebarProvider>
   );

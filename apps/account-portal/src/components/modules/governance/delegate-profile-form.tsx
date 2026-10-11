@@ -89,7 +89,7 @@ export function DelegateProfileForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleFormSubmit)}
-        className="space-y-8"
+        className="min-w-0 space-y-6 sm:space-y-8"
       >
         <FormField
           disabled={!session}
@@ -120,7 +120,7 @@ export function DelegateProfileForm({
                   type="multiple"
                   variant="outline"
                   size="sm"
-                  className="grid grid-cols-2 justify-start sm:grid-cols-4 lg:grid-cols-6"
+                  className="grid grid-cols-2 justify-start gap-1.5 sm:grid-cols-4 lg:grid-cols-6"
                 >
                   {interests.map(({ value, label }) => (
                     <ToggleGroupItem

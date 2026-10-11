@@ -36,7 +36,6 @@ function IndexComponent() {
       <div>
         <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
           <div className="space-y-1">
-            <p className="realm-eyebrow">Account Portal</p>
             <h1 className="realm-page-title text-3xl sm:text-4xl">Dashboard</h1>
           </div>
           <EthereumConnect />

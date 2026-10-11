@@ -79,9 +79,9 @@ export const VelordsRewards = () => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-2">
-            <LordsIcon className="w-9" />
-            <span className="text-3xl font-bold">
+          <div className="flex flex-wrap items-center gap-2">
+            <LordsIcon className="w-9 shrink-0" />
+            <span className="text-3xl font-bold tabular-nums">
               {lordsClaimable &&
                 formatNumber(Number(formatEther(lordsClaimable)))}
             </span>{" "}
@@ -121,7 +121,7 @@ export const VelordsRewards = () => {
         </div>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
+        <div className="flex items-center gap-2 leading-none font-medium">
           Rewards for veLords are distributed at weekly epochs
         </div>
       </CardFooter>

@@ -228,7 +228,6 @@ function RouteComponent() {
     <div className="min-h-screen">
       <div className="container mx-auto px-4 py-6 sm:px-6 sm:py-8">
         <PageHeader
-          eyebrow="Lords"
           title="veLords Dashboard"
           description="Stake $LORDS in the Lordship Protocol and monitor reward performance."
           actions={
@@ -245,7 +244,7 @@ function RouteComponent() {
           }
         />
 
-        <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-3">
           <MetricCard
             label="Total Voting Power (veLORDS)"
             value={totalSupply ?? "Loading..."}
@@ -282,31 +281,27 @@ function RouteComponent() {
 
         <div className="grid gap-6 lg:gap-8 xl:grid-cols-5">
           <div className="space-y-6 xl:col-span-3">
-            <Card>
-              <CardContent className="p-6">
-                <Suspense
-                  fallback={
-                    <div className="h-[360px] w-full animate-pulse rounded-md border" />
-                  }
-                >
-                  <VeLordsRewardsChart
-                    selectedPeriod={selectedPeriod}
-                    totalSupplyRaw={totalSupplyRaw}
-                    data={veLordsBurnsQuery.data ?? []}
-                    onTimePeriodChange={handleTimePeriodChange}
-                    isLoading={veLordsBurnsQuery.isLoading}
-                    errorMessage={
-                      veLordsBurnsQuery.error instanceof Error
-                        ? veLordsBurnsQuery.error.message
-                        : undefined
-                    }
-                  />
-                </Suspense>
-              </CardContent>
-            </Card>
+            <Suspense
+              fallback={
+                <div className="h-[360px] w-full animate-pulse rounded-md border" />
+              }
+            >
+              <VeLordsRewardsChart
+                selectedPeriod={selectedPeriod}
+                totalSupplyRaw={totalSupplyRaw}
+                data={veLordsBurnsQuery.data ?? []}
+                onTimePeriodChange={handleTimePeriodChange}
+                isLoading={veLordsBurnsQuery.isLoading}
+                errorMessage={
+                  veLordsBurnsQuery.error instanceof Error
+                    ? veLordsBurnsQuery.error.message
+                    : undefined
+                }
+              />
+            </Suspense>
 
             <Tabs value={selectedView} onValueChange={handleViewChange}>
-              <TabsList>
+              <TabsList className="max-w-full">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="sources">Sources</TabsTrigger>
                 <TabsTrigger value="locks">Locks</TabsTrigger>
