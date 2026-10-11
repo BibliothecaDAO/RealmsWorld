@@ -10,15 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as VelordsIndexRouteImport } from './routes/velords.index'
-import { Route as RealmsIndexRouteImport } from './routes/realms.index'
 import { Route as ComingSoonIndexRouteImport } from './routes/coming-soon.index'
-import { Route as RealmsClaimsRouteImport } from './routes/realms.claims'
-import { Route as RealmsBridgeRouteImport } from './routes/realms.bridge'
-import { Route as ProposalListRouteImport } from './routes/proposal.list'
-import { Route as ProposalIdRouteImport } from './routes/proposal.$id'
-import { Route as DelegateProfileRouteImport } from './routes/delegate.profile'
 import { Route as DelegateListRouteImport } from './routes/delegate.list'
+import { Route as DelegateProfileRouteImport } from './routes/delegate.profile'
+import { Route as ProposalIdRouteImport } from './routes/proposal.$id'
+import { Route as ProposalListRouteImport } from './routes/proposal.list'
+import { Route as RealmsIndexRouteImport } from './routes/realms.index'
+import { Route as RealmsBridgeRouteImport } from './routes/realms.bridge'
+import { Route as RealmsClaimsRouteImport } from './routes/realms.claims'
+import { Route as VelordsIndexRouteImport } from './routes/velords.index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -26,39 +26,14 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VelordsIndexRoute = VelordsIndexRouteImport.update({
-  id: '/velords/',
-  path: '/velords/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RealmsIndexRoute = RealmsIndexRouteImport.update({
-  id: '/realms/',
-  path: '/realms/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ComingSoonIndexRoute = ComingSoonIndexRouteImport.update({
   id: '/coming-soon/',
   path: '/coming-soon/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RealmsClaimsRoute = RealmsClaimsRouteImport.update({
-  id: '/realms/claims',
-  path: '/realms/claims',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RealmsBridgeRoute = RealmsBridgeRouteImport.update({
-  id: '/realms/bridge',
-  path: '/realms/bridge',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProposalListRoute = ProposalListRouteImport.update({
-  id: '/proposal/list',
-  path: '/proposal/list',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProposalIdRoute = ProposalIdRouteImport.update({
-  id: '/proposal/$id',
-  path: '/proposal/$id',
+const DelegateListRoute = DelegateListRouteImport.update({
+  id: '/delegate/list',
+  path: '/delegate/list',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DelegateProfileRoute = DelegateProfileRouteImport.update({
@@ -66,9 +41,34 @@ const DelegateProfileRoute = DelegateProfileRouteImport.update({
   path: '/delegate/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DelegateListRoute = DelegateListRouteImport.update({
-  id: '/delegate/list',
-  path: '/delegate/list',
+const ProposalIdRoute = ProposalIdRouteImport.update({
+  id: '/proposal/$id',
+  path: '/proposal/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProposalListRoute = ProposalListRouteImport.update({
+  id: '/proposal/list',
+  path: '/proposal/list',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RealmsIndexRoute = RealmsIndexRouteImport.update({
+  id: '/realms/',
+  path: '/realms/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RealmsBridgeRoute = RealmsBridgeRouteImport.update({
+  id: '/realms/bridge',
+  path: '/realms/bridge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RealmsClaimsRoute = RealmsClaimsRouteImport.update({
+  id: '/realms/claims',
+  path: '/realms/claims',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VelordsIndexRoute = VelordsIndexRouteImport.update({
+  id: '/velords/',
+  path: '/velords/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -182,20 +182,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/velords/': {
-      id: '/velords/'
-      path: '/velords'
-      fullPath: '/velords/'
-      preLoaderRoute: typeof VelordsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/realms/': {
-      id: '/realms/'
-      path: '/realms'
-      fullPath: '/realms/'
-      preLoaderRoute: typeof RealmsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/coming-soon/': {
       id: '/coming-soon/'
       path: '/coming-soon'
@@ -203,32 +189,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComingSoonIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/realms/claims': {
-      id: '/realms/claims'
-      path: '/realms/claims'
-      fullPath: '/realms/claims'
-      preLoaderRoute: typeof RealmsClaimsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/realms/bridge': {
-      id: '/realms/bridge'
-      path: '/realms/bridge'
-      fullPath: '/realms/bridge'
-      preLoaderRoute: typeof RealmsBridgeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/proposal/list': {
-      id: '/proposal/list'
-      path: '/proposal/list'
-      fullPath: '/proposal/list'
-      preLoaderRoute: typeof ProposalListRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/proposal/$id': {
-      id: '/proposal/$id'
-      path: '/proposal/$id'
-      fullPath: '/proposal/$id'
-      preLoaderRoute: typeof ProposalIdRouteImport
+    '/delegate/list': {
+      id: '/delegate/list'
+      path: '/delegate/list'
+      fullPath: '/delegate/list'
+      preLoaderRoute: typeof DelegateListRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/delegate/profile': {
@@ -238,11 +203,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DelegateProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/delegate/list': {
-      id: '/delegate/list'
-      path: '/delegate/list'
-      fullPath: '/delegate/list'
-      preLoaderRoute: typeof DelegateListRouteImport
+    '/proposal/$id': {
+      id: '/proposal/$id'
+      path: '/proposal/$id'
+      fullPath: '/proposal/$id'
+      preLoaderRoute: typeof ProposalIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proposal/list': {
+      id: '/proposal/list'
+      path: '/proposal/list'
+      fullPath: '/proposal/list'
+      preLoaderRoute: typeof ProposalListRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/realms/': {
+      id: '/realms/'
+      path: '/realms'
+      fullPath: '/realms/'
+      preLoaderRoute: typeof RealmsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/realms/bridge': {
+      id: '/realms/bridge'
+      path: '/realms/bridge'
+      fullPath: '/realms/bridge'
+      preLoaderRoute: typeof RealmsBridgeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/realms/claims': {
+      id: '/realms/claims'
+      path: '/realms/claims'
+      fullPath: '/realms/claims'
+      preLoaderRoute: typeof RealmsClaimsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/velords/': {
+      id: '/velords/'
+      path: '/velords'
+      fullPath: '/velords/'
+      preLoaderRoute: typeof VelordsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
