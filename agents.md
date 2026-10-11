@@ -50,6 +50,7 @@ Use this file as the operating guide for keeping this repo healthy, maintainable
 
 ## Dependency and Build Discipline
 - When bumping package versions, build the app immediately after.
+- After TanStack Router/Start bumps, also smoke-test SSR (`node .output/server/index.mjs` + `curl` a few routes): incompatible router integrations build fine but 500 at runtime. Keep `@tanstack/react-start` and `@tanstack/react-router` on the versions Start pins, and use `@tanstack/react-router-ssr-query` (`setupRouterSsrQueryIntegration`), not the deprecated `@tanstack/react-router-with-query`.
 - Verify postbuild behavior when touching app packaging/deploy logic.
 - Keep shared dependency versions aligned with `pnpm-workspace.yaml` catalog and root overrides.
 - Keep pnpm lockfile settings aligned with repo config (for example `.npmrc` has `auto-install-peers=false` to match lockfile and avoid Vercel frozen-install failures).
