@@ -1,20 +1,17 @@
 import RWLogo from "@/components/icons/rw-logo.svg?react";
+import { useStarknetWallet } from "@/hooks/use-starknet-wallet";
 import { toast } from "@/hooks/use-toast";
 import useIsWrongNetwork from "@/hooks/use-wrong-network";
 import { getConnectorIcon } from "@/utils/connectWallet";
+import {
+  expectedStarknetChain,
+  expectedStarknetChainId,
+} from "@/utils/starknet-chain";
 import { cn, shortenAddress } from "@/utils/utils";
 import { Separator } from "@radix-ui/react-separator";
-import {
-  useAccount,
-  useDisconnect,
-  useExplorer,
-  useSwitchChain,
-} from "@starknet-start/react";
+import { useAccount, useExplorer, useSwitchChain } from "@starknet-start/react";
 import { Link } from "@tanstack/react-router";
-import { env } from "env";
 import { Check, Copy, ExternalLink, Unplug } from "lucide-react";
-
-import { ChainId } from "@realms-world/constants";
 
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -22,6 +19,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
@@ -39,17 +37,25 @@ import { StarknetWalletButton } from "./starknet-wallet-button";
 export function Header() {
   const { address, connector } = useAccount();
   const { open } = useSidebar();
-  const { disconnect } = useDisconnect();
+  const { disconnectWallet } = useStarknetWallet();
   const explorer = useExplorer();
-  const { isWrongNetwork /*, setIsWrongNetwork */ } = useIsWrongNetwork();
-  const { switchChainAsync } = useSwitchChain({
-    params: {
-      chainId:
-        env.VITE_PUBLIC_CHAIN === "sepolia"
-          ? (ChainId.SN_SEPOLIA as string)
-          : (ChainId.SN_MAIN as string),
-    },
+  const { isWrongNetwork } = useIsWrongNetwork();
+  const { switchChainAsync, isPending: isSwitchingChain } = useSwitchChain({
+    params: { chainId: expectedStarknetChainId },
   });
+
+  const handleSwitchChain = async () => {
+    try {
+      await switchChainAsync();
+    } catch (error) {
+      console.error("Failed to switch network:", error);
+      toast({
+        variant: "destructive",
+        title: "Unable to switch network",
+        description: `Please switch to ${expectedStarknetChain.name} manually in your wallet, or disconnect.`,
+      });
+    }
+  };
   return (
     <header
       className={cn(
@@ -87,7 +93,11 @@ export function Header() {
                   size="lg"
                   className="flex items-center gap-2 rounded-xl px-3"
                 >
-                  <img className="w-7" src={getConnectorIcon(connector)} />
+                  <img
+                    className="w-7"
+                    src={getConnectorIcon(connector)}
+                    alt={connector?.name ?? "Wallet"}
+                  />
                   {shortenAddress(address)}
                 </Button>
               </DropdownMenuTrigger>
@@ -140,39 +150,42 @@ export function Header() {
                     <Button
                       variant={"outline"}
                       className="rounded-full"
-                      onClick={() => disconnect()}
+                      onClick={() => void disconnectWallet()}
                     >
                       <Unplug /> Disconnect
                     </Button>
                   </div>
                 </DropdownMenuLabel>
-                {/*} <DropdownMenuSeparator />
-                <DropdownMenuLabel>Connect to Ethereum</DropdownMenuLabel>*/}
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <>
-              <StarknetWalletButton autoConnect pickerMode="sheet" />
-            </>
+            <StarknetWalletButton />
           )}
           <Dialog open={isWrongNetwork}>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Wrong Network</DialogTitle>
+                <DialogDescription>
+                  Your wallet is connected to a different network. Please switch
+                  to {expectedStarknetChain.name} to continue.
+                </DialogDescription>
               </DialogHeader>
-              <DialogDescription>
-                You are on the wrong network. Please switch to{" "}
-                {env.VITE_PUBLIC_CHAIN}
-                <div className="mt-6 flex items-center gap-2">
-                  {connector?.name == "Argent X" && (
-                    <Button onClick={() => switchChainAsync()}>
-                      Switch to {env.VITE_PUBLIC_CHAIN}
-                    </Button>
-                  )}
-                  or
-                  <Button onClick={() => disconnect()}>Disconnect</Button>
-                </div>
-              </DialogDescription>
+              <DialogFooter className="gap-2 sm:space-x-0">
+                <Button
+                  variant="outline"
+                  onClick={() => void disconnectWallet()}
+                >
+                  Disconnect
+                </Button>
+                <Button
+                  onClick={() => void handleSwitchChain()}
+                  disabled={isSwitchingChain}
+                >
+                  {isSwitchingChain
+                    ? "Switching..."
+                    : `Switch to ${expectedStarknetChain.name}`}
+                </Button>
+              </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>

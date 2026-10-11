@@ -155,8 +155,7 @@ function RouteComponent() {
   const swapAssets = () => {
     setSelectedAsset((prev) => (prev === "Ethereum" ? "Starknet" : "Ethereum"));
   };
-  //const { openConnectModal } = useConnectModal();
-  const { openStarknetKitModal } = useStarknetWallet();
+  const { requestConnect } = useStarknetWallet();
 
   const selectedRows = table.getFilteredSelectedRowModel().rows;
   const canShowInventory =
@@ -235,7 +234,7 @@ function RouteComponent() {
               <Button
                 className="h-auto p-0"
                 variant="link"
-                onClick={() => openStarknetKitModal()}
+                onClick={() => void requestConnect()}
               >
                 Connect your Starknet wallet
               </Button>{" "}
