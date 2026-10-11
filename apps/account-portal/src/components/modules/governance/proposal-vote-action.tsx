@@ -26,11 +26,11 @@ export const ProposalVoteAction = ({ proposal }: { proposal: Proposal }) => {
     ((proposal as { metadata?: { title?: string } }).metadata?.title ??
       "this proposal");
   const { address } = useAccount();
-  const { openStarknetKitModal } = useStarknetWallet();
+  const { requestConnect } = useStarknetWallet();
 
   const openVoteDialog = async (choice: Choice) => {
-    if (!address) {
-      await openStarknetKitModal();
+    if (!address && !(await requestConnect())) {
+      return;
     }
 
     setSelectedChoice(choice);
