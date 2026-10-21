@@ -14,8 +14,8 @@
   },
   "devDependencies": {
     "@better-auth/drizzle-adapter": "1.5.3",
-    "@cartridge/connector": "^0.13.9",
-    "@cartridge/controller": "^0.13.9",
+    "@cartridge/connector": "^0.13.16",
+    "@cartridge/controller": "^0.13.16",
     "@graphql-codegen/cli": "^5.0.7",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.12",
