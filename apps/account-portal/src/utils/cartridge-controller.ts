@@ -6,7 +6,7 @@ import { expectedStarknetChainId } from "./starknet-chain";
 // Module-level singleton so `extraWallets` keeps a stable identity. The
 // Controller constructor guards every `window` access and `lazyload` defers the
 // keychain iframe until first use, so creating it during SSR is safe.
-const controller = new Controller({
+export const cartridgeController = new Controller({
   slot: env.VITE_PUBLIC_SLOT,
   defaultChainId: expectedStarknetChainId,
   chains: [
@@ -16,4 +16,4 @@ const controller = new Controller({
   lazyload: true,
 });
 
-export const cartridgeControllerWallet = controller.asWalletStandard();
+export const cartridgeControllerWallet = cartridgeController.asWalletStandard();

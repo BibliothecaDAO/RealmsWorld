@@ -1,5 +1,9 @@
 import { useStarknetWallet } from "@/hooks/use-starknet-wallet";
 import { toast } from "@/hooks/use-toast";
+import {
+  cartridgeController,
+  cartridgeControllerWallet,
+} from "@/utils/cartridge-controller";
 import { getConnectorIcon } from "@/utils/connectWallet";
 import { shortenAddress } from "@/utils/utils";
 import { useAccount, useExplorer } from "@starknet-start/react";
@@ -8,6 +12,7 @@ import {
   ChevronsUpDown,
   Copy,
   ExternalLink,
+  Gamepad2,
   Unplug,
   Wallet,
 } from "lucide-react";
@@ -38,6 +43,8 @@ export interface NavUserViewProps {
   onConnect?: () => void;
   onCopy?: () => void;
   onDisconnect?: () => void;
+  /** Set only for Cartridge Controller; opens its inventory (send, tokens). */
+  onOpenController?: () => void;
 }
 
 /** Sidebar footer: wallet account menu (or connect button) plus theme toggle. */
@@ -49,6 +56,7 @@ export function NavUserView({
   onConnect,
   onCopy,
   onDisconnect,
+  onOpenController,
 }: NavUserViewProps) {
   const { isMobile } = useSidebar();
 
@@ -97,6 +105,11 @@ export function NavUserView({
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
+                {onOpenController ? (
+                  <DropdownMenuItem onSelect={onOpenController}>
+                    <Gamepad2 /> Open Controller
+                  </DropdownMenuItem>
+                ) : null}
                 <DropdownMenuItem onSelect={onCopy}>
                   <Copy /> Copy address
                 </DropdownMenuItem>
@@ -149,6 +162,21 @@ export function NavUser() {
       explorerUrl={address ? explorer.contract(address) : undefined}
       onConnect={() => void requestConnect()}
       onDisconnect={() => void disconnectWallet()}
+      onOpenController={
+        address && connector === cartridgeControllerWallet
+          ? () =>
+              void cartridgeController
+                .openProfile("inventory")
+                .catch((error: unknown) =>
+                  toast({
+                    variant: "destructive",
+                    title: "Couldn't open Controller",
+                    description:
+                      error instanceof Error ? error.message : undefined,
+                  }),
+                )
+          : undefined
+      }
       onCopy={() => {
         if (!address) return;
         void navigator.clipboard.writeText(address).then(
