@@ -32,6 +32,16 @@ function isUserRejection(error: unknown) {
   return typeof error === "string" && /reject|denied|cancel|abort/i.test(error);
 }
 
+// Cartridge's keychain iframe can fail to start when its stored session points
+// at a deleted Slot deployment; clearing cartridge.gg site data recovers it.
+function getConnectErrorMessage(error: unknown) {
+  const message = getErrorMessage(error);
+  if (/timeout waiting for keychain/i.test(message)) {
+    return "Cartridge didn't finish loading. Try a private window, or clear site data for cartridge.gg in your browser settings and reconnect.";
+  }
+  return message;
+}
+
 function getErrorMessage(error: unknown) {
   if (error instanceof Error && error.message) return error.message;
   if (typeof error === "object" && error !== null && "message" in error) {
@@ -71,7 +81,7 @@ export function useStarknetWallet() {
         toast({
           variant: "destructive",
           title: `Couldn't connect ${connector.name}`,
-          description: getErrorMessage(error),
+          description: getConnectErrorMessage(error),
         });
       }
       return false;
