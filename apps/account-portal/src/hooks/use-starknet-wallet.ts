@@ -1,7 +1,8 @@
 import type { WalletWithStarknetFeatures } from "@starknet-io/get-starknet-core";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import {
+  dedupeConnectors,
   disableAutoReconnect,
   getLastConnector,
   setLastConnectedWallet,
@@ -58,7 +59,11 @@ export function useStarknetWallet() {
   }
   const { openPicker } = picker;
   const { isConnected } = useAccount();
-  const { connectAsync, connectors } = useConnect();
+  const { connectAsync, connectors: allConnectors } = useConnect();
+  const connectors = useMemo(
+    () => dedupeConnectors(allConnectors),
+    [allConnectors],
+  );
   const { disconnectAsync } = useDisconnect();
   const [lastConnector, setLastConnector] =
     useState<WalletWithStarknetFeatures | null>(null);
