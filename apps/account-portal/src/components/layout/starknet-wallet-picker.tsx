@@ -11,8 +11,7 @@ import {
   StarknetWalletPickerContext,
   useStarknetWallet,
 } from "@/hooks/use-starknet-wallet";
-import { cartridgeControllerWallet } from "@/utils/cartridge-controller";
-import { getConnectorIcon } from "@/utils/connectWallet";
+import { getConnectorIcon, isCartridgeController } from "@/utils/connectWallet";
 import { cn } from "@/utils/utils";
 import { Loader2 } from "lucide-react";
 
@@ -49,7 +48,7 @@ function StarknetWalletPickerSheet({
   const selectWallet = async (connector: WalletWithStarknetFeatures) => {
     // Controller renders its UI in an in-page iframe that the sheet's focus
     // trap would fight with, so hand over before connecting.
-    if (connector === cartridgeControllerWallet) {
+    if (isCartridgeController(connector)) {
       onOpenChange(false);
       await connectWallet(connector);
       return;

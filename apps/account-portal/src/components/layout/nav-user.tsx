@@ -1,10 +1,7 @@
 import { useStarknetWallet } from "@/hooks/use-starknet-wallet";
 import { toast } from "@/hooks/use-toast";
-import {
-  cartridgeController,
-  cartridgeControllerWallet,
-} from "@/utils/cartridge-controller";
-import { getConnectorIcon } from "@/utils/connectWallet";
+import { cartridgeController } from "@/utils/cartridge-controller";
+import { getConnectorIcon, isCartridgeController } from "@/utils/connectWallet";
 import { shortenAddress } from "@/utils/utils";
 import { useAccount, useExplorer } from "@starknet-start/react";
 import {
@@ -163,7 +160,7 @@ export function NavUser() {
       onConnect={() => void requestConnect()}
       onDisconnect={() => void disconnectWallet()}
       onOpenController={
-        address && connector === cartridgeControllerWallet
+        address && isCartridgeController(connector)
           ? () =>
               void cartridgeController
                 .openProfile("inventory")

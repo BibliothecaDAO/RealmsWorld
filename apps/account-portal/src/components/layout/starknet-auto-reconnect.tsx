@@ -1,6 +1,7 @@
 import type { WalletWithStarknetFeatures } from "@starknet-io/get-starknet-core";
 import { useEffect, useState } from "react";
 import {
+  dedupeConnectors,
   getLastConnectedWalletName,
   isAutoReconnectDisabled,
 } from "@/utils/connectWallet";
@@ -59,7 +60,9 @@ export function StarknetAutoReconnect() {
       return;
     }
 
-    const connector = connectors.find((item) => item.name === lastWalletName);
+    const connector = dedupeConnectors(connectors).find(
+      (item) => item.name === lastWalletName,
+    );
     if (!connector) return;
 
     hasAttemptedReconnect = true;
